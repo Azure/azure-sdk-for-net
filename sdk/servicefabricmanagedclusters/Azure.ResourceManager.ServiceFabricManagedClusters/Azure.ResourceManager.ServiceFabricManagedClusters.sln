@@ -7,6 +7,8 @@ Project("{6DCAB4D3-2129-465B-8529-90771D6748DC}") = "Azure.ResourceManager.Servi
 EndProject
 Project("{6DCAB4D3-2129-465B-8529-90771D6748DC}") = "Azure.ResourceManager.ServiceFabricManagedClusters.Tests", "tests\Azure.ResourceManager.ServiceFabricManagedClusters.Tests.csproj", "{997F4467-AD51-41FF-A43E-B67644DEF4EC}"
 EndProject
+Project("{6DCAB4D3-2129-465B-8529-90771D6748DC}") = "Azure.ResourceManager.ServiceFabricManagedClusters.Samples", "samples\Azure.ResourceManager.ServiceFabricManagedClusters.Samples.csproj", "{4FF786AD-FED6-433E-A817-EF33D1910B18}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

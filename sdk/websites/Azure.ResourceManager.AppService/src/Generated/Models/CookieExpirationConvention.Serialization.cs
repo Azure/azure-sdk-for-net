@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static CookieExpirationConvention ToCookieExpirationConvention(this string value)
         {
-            if (string.Equals(value, "FixedTime", StringComparison.InvariantCultureIgnoreCase)) return CookieExpirationConvention.FixedTime;
-            if (string.Equals(value, "IdentityProviderDerived", StringComparison.InvariantCultureIgnoreCase)) return CookieExpirationConvention.IdentityProviderDerived;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FixedTime")) return CookieExpirationConvention.FixedTime;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IdentityProviderDerived")) return CookieExpirationConvention.IdentityProviderDerived;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CookieExpirationConvention value.");
         }
     }

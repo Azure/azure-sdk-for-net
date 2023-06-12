@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("@apiVersion");
+                writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
@@ -25,6 +25,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MethodRequest DeserializeMethodRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("methodName", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -51,22 +55,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "LivePipelineSetRequestBody": return LivePipelineSetRequestBody.DeserializeLivePipelineSetRequestBody(element);
                 }
             }
-            string methodName = default;
-            Optional<string> apiVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("methodName"))
-                {
-                    methodName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("@apiVersion"))
-                {
-                    apiVersion = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MethodRequest(methodName, apiVersion.Value);
+            return UnknownMethodRequest.DeserializeUnknownMethodRequest(element);
         }
     }
 }

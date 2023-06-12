@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> A class representing the AlertProcessingRule data model. </summary>
+    /// <summary>
+    /// A class representing the AlertProcessingRule data model.
+    /// Alert processing rule object containing target scopes, conditions and scheduling logic.
+    /// </summary>
     public partial class AlertProcessingRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AlertProcessingRuleData. </summary>
@@ -29,12 +32,12 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Alert processing rule properties. </param>
-        internal AlertProcessingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceAlertProcessingRuleProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal AlertProcessingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AlertProcessingRuleProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
         /// <summary> Alert processing rule properties. </summary>
-        public ServiceAlertProcessingRuleProperties Properties { get; set; }
+        public AlertProcessingRuleProperties Properties { get; set; }
     }
 }

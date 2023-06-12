@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static JobOffer DeserializeJobOffer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string jobId = default;
             int capacityCost = default;
@@ -22,36 +26,34 @@ namespace Azure.Communication.JobRouter.Models
             Optional<DateTimeOffset> expiryTimeUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityCost"))
+                if (property.NameEquals("capacityCost"u8))
                 {
                     capacityCost = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("offerTimeUtc"))
+                if (property.NameEquals("offerTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offerTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiryTimeUtc"))
+                if (property.NameEquals("expiryTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTimeUtc = property.Value.GetDateTimeOffset("O");

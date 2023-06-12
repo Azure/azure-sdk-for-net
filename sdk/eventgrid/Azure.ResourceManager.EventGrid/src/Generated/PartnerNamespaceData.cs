@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the PartnerNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the PartnerNamespace data model.
+    /// EventGrid Partner Namespace.
+    /// </summary>
     public partial class PartnerNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PartnerNamespaceData. </summary>
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </param>
-        /// <param name="endpointUri"> Endpoint for the partner namespace. </param>
+        /// <param name="endpoint"> Endpoint for the partner namespace. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules&quot; /&gt;
@@ -48,12 +51,12 @@ namespace Azure.ResourceManager.EventGrid
         /// This determines if events published to this partner namespace should use the source attribute in the event payload
         /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
         /// </param>
-        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, Uri endpointUri, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode) : base(id, name, resourceType, systemData, tags, location)
+        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode) : base(id, name, resourceType, systemData, tags, location)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             PartnerRegistrationFullyQualifiedId = partnerRegistrationFullyQualifiedId;
-            EndpointUri = endpointUri;
+            Endpoint = endpoint;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
             IsLocalAuthDisabled = isLocalAuthDisabled;
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         public ResourceIdentifier PartnerRegistrationFullyQualifiedId { get; set; }
         /// <summary> Endpoint for the partner namespace. </summary>
-        public Uri EndpointUri { get; }
+        public Uri Endpoint { get; }
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules&quot; /&gt;

@@ -194,16 +194,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static Alert GetResourceGroupLevel(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            public static Alert GetResourceGroupLevel(this IAlertsOperations operations, string resourceGroupName, string alertName)
             {
-                return operations.GetResourceGroupLevelAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                return operations.GetResourceGroupLevelAsync(resourceGroupName, alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -213,19 +213,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> GetResourceGroupLevelAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> GetResourceGroupLevelAsync(this IAlertsOperations operations, string resourceGroupName, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourceGroupLevelWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, alertName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -333,13 +333,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            public static void UpdateResourceGroupLevelStateToResolve(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static void UpdateSubscriptionLevelStateToInProgress(this IAlertsOperations operations, string alertName)
             {
-                operations.UpdateResourceGroupLevelStateToResolveAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelStateToInProgressAsync(alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -350,17 +346,13 @@ namespace Microsoft.Azure.Management.Security
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToResolveAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelStateToInProgressAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelStateToInProgressWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -369,16 +361,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelStateToDismiss(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            public static void UpdateResourceGroupLevelStateToResolve(this IAlertsOperations operations, string resourceGroupName, string alertName)
             {
-                operations.UpdateResourceGroupLevelStateToDismissAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelStateToResolveAsync(resourceGroupName, alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -387,19 +379,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToDismissAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelStateToResolveAsync(this IAlertsOperations operations, string resourceGroupName, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(resourceGroupName, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -408,16 +400,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelStateToActivate(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            public static void UpdateResourceGroupLevelStateToDismiss(this IAlertsOperations operations, string resourceGroupName, string alertName)
             {
-                operations.UpdateResourceGroupLevelStateToActivateAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelStateToDismissAsync(resourceGroupName, alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -426,19 +418,97 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToActivateAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelStateToDismissAsync(this IAlertsOperations operations, string resourceGroupName, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(resourceGroupName, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            public static void UpdateResourceGroupLevelStateToActivate(this IAlertsOperations operations, string resourceGroupName, string alertName)
+            {
+                operations.UpdateResourceGroupLevelStateToActivateAsync(resourceGroupName, alertName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateResourceGroupLevelStateToActivateAsync(this IAlertsOperations operations, string resourceGroupName, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(resourceGroupName, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            public static void UpdateResourceGroupLevelStateToInProgress(this IAlertsOperations operations, string resourceGroupName, string alertName)
+            {
+                operations.UpdateResourceGroupLevelStateToInProgressAsync(resourceGroupName, alertName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateResourceGroupLevelStateToInProgressAsync(this IAlertsOperations operations, string resourceGroupName, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateResourceGroupLevelStateToInProgressWithHttpMessagesAsync(resourceGroupName, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -21,16 +22,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/> is null. </exception>
         protected InfrastructureConfiguration(string appResourceGroup)
         {
-            if (appResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(appResourceGroup));
-            }
+            Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
 
             AppResourceGroup = appResourceGroup;
         }
 
         /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup)
         {
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
             AppResourceGroup = appResourceGroup;
         }
 
-        /// <summary> The deployment Type. </summary>
+        /// <summary> The type of SAP deployment, single server or Three tier. </summary>
         internal SapDeploymentType DeploymentType { get; set; }
         /// <summary> The application resource group where SAP system resources will be deployed. </summary>
         public string AppResourceGroup { get; set; }

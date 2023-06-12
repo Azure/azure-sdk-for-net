@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourceGeneralInformation DeserializeLogicApiResourceGeneralInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> iconUrl = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
@@ -23,46 +27,43 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("iconUrl"))
+                if (property.NameEquals("iconUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        iconUrl = null;
                         continue;
                     }
                     iconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termsOfUseUrl"))
+                if (property.NameEquals("termsOfUseUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        termsOfUseUrl = null;
                         continue;
                     }
                     termsOfUseUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("releaseTag"))
+                if (property.NameEquals("releaseTag"u8))
                 {
                     releaseTag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new LogicApiTier(property.Value.GetString());

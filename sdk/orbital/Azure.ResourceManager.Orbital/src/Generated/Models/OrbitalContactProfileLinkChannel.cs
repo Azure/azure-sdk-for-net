@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="endPoint"/> is null. </exception>
         public OrbitalContactProfileLinkChannel(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalContactEndpoint endPoint)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (endPoint == null)
-            {
-                throw new ArgumentNullException(nameof(endPoint));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(endPoint, nameof(endPoint));
 
             Name = name;
             CenterFrequencyMHz = centerFrequencyMHz;

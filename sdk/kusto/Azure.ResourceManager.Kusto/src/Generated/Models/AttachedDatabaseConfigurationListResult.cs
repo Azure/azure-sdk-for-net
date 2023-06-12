@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
         internal AttachedDatabaseConfigurationListResult()
         {
-            Value = new ChangeTrackingList<AttachedDatabaseConfigurationData>();
+            Value = new ChangeTrackingList<KustoAttachedDatabaseConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
         /// <param name="value"> The list of attached database configurations. </param>
-        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<AttachedDatabaseConfigurationData> value)
+        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<KustoAttachedDatabaseConfigurationData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of attached database configurations. </summary>
-        public IReadOnlyList<AttachedDatabaseConfigurationData> Value { get; }
+        public IReadOnlyList<KustoAttachedDatabaseConfigurationData> Value { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The EmailRegistration service client.
+    // Data plane generated client.
     /// <summary> The EmailRegistration service client. </summary>
     public partial class EmailRegistrationClient
     {
@@ -60,90 +60,23 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Activates the tenant and email combination using the activation code received. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Activates the tenant and email combination using the activation code received.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call ActivateAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.ActivateAsync(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call ActivateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         activationCode = "<activationCode>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Activates the email registration for current tenant
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>TenantEmailRegistration</c>:
-        /// <code>{
-        ///   properties: {
-        ///     activationCode: string, # Required. Activation code for the registration.
-        ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-        ///     email: string, # Optional. The email to register.
-        ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-        ///     tenantId: string, # Optional. The tenant id to register.
-        ///   }, # Optional. Tenant email registration property bag.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TenantEmailRegistration</c>:
-        /// <code>{
-        ///   properties: {
-        ///     activationCode: string, # Required. Activation code for the registration.
-        ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-        ///     email: string, # Optional. The email to register.
-        ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-        ///     tenantId: string, # Optional. The tenant id to register.
-        ///   }, # Optional. Tenant email registration property bag.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='ActivateAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> ActivateAsync(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -162,90 +95,23 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Activates the tenant and email combination using the activation code received. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Activates the tenant and email combination using the activation code received.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call Activate with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.Activate(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call Activate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         activationCode = "<activationCode>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Activates the email registration for current tenant
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>TenantEmailRegistration</c>:
-        /// <code>{
-        ///   properties: {
-        ///     activationCode: string, # Required. Activation code for the registration.
-        ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-        ///     email: string, # Optional. The email to register.
-        ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-        ///     tenantId: string, # Optional. The tenant id to register.
-        ///   }, # Optional. Tenant email registration property bag.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TenantEmailRegistration</c>:
-        /// <code>{
-        ///   properties: {
-        ///     activationCode: string, # Required. Activation code for the registration.
-        ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-        ///     email: string, # Optional. The email to register.
-        ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-        ///     tenantId: string, # Optional. The tenant id to register.
-        ///   }, # Optional. Tenant email registration property bag.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Activate(RequestContent,string,RequestContext)']/*" />
         public virtual Response Activate(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -264,63 +130,21 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Registers the tenant and email combination for activation. </summary>
+        /// <summary>
+        /// [Protocol Method] Registers the tenant and email combination for activation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call RegisterAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.RegisterAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call RegisterAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.RegisterAsync("<repeatabilityRequestId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Register an email for the current tenant
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TenantEmailRegistration</c>:
-        /// <code>{
-        ///   properties: {
-        ///     activationCode: string, # Required. Activation code for the registration.
-        ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-        ///     email: string, # Optional. The email to register.
-        ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-        ///     tenantId: string, # Optional. The tenant id to register.
-        ///   }, # Optional. Tenant email registration property bag.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='RegisterAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> RegisterAsync(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");
@@ -337,63 +161,21 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Registers the tenant and email combination for activation. </summary>
+        /// <summary>
+        /// [Protocol Method] Registers the tenant and email combination for activation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call Register and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.Register();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call Register with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.Register("<repeatabilityRequestId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Register an email for the current tenant
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TenantEmailRegistration</c>:
-        /// <code>{
-        ///   properties: {
-        ///     activationCode: string, # Required. Activation code for the registration.
-        ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-        ///     email: string, # Optional. The email to register.
-        ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-        ///     tenantId: string, # Optional. The tenant id to register.
-        ///   }, # Optional. Tenant email registration property bag.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Register(string,RequestContext)']/*" />
         public virtual Response Register(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");

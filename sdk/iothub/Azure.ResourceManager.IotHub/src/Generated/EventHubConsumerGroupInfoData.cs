@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the EventHubConsumerGroupInfo data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubConsumerGroupInfo data model.
+    /// The properties of the EventHubConsumerGroupInfo object.
+    /// </summary>
     public partial class EventHubConsumerGroupInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
@@ -35,7 +38,36 @@ namespace Azure.ResourceManager.IotHub
             ETag = etag;
         }
 
-        /// <summary> The tags. </summary>
+        /// <summary>
+        /// The tags.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
         /// <summary> The etag. </summary>
         public ETag? ETag { get; }

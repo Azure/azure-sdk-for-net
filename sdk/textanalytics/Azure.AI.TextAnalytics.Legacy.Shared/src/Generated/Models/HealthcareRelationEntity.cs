@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -18,14 +19,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> or <paramref name="role"/> is null. </exception>
         internal HealthcareRelationEntity(string @ref, string role)
         {
-            if (@ref == null)
-            {
-                throw new ArgumentNullException(nameof(@ref));
-            }
-            if (role == null)
-            {
-                throw new ArgumentNullException(nameof(role));
-            }
+            Argument.AssertNotNull(@ref, nameof(@ref));
+            Argument.AssertNotNull(role, nameof(role));
 
             Ref = @ref;
             Role = role;

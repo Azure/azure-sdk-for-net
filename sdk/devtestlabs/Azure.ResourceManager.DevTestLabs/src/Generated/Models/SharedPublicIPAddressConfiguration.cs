@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SharedPublicIPAddressConfiguration. </summary>
         public SharedPublicIPAddressConfiguration()
         {
-            InboundNatRules = new ChangeTrackingList<InboundNatRule>();
+            InboundNatRules = new ChangeTrackingList<DevTestLabInboundNatRule>();
         }
 
         /// <summary> Initializes a new instance of SharedPublicIPAddressConfiguration. </summary>
         /// <param name="inboundNatRules"> The incoming NAT rules. </param>
-        internal SharedPublicIPAddressConfiguration(IList<InboundNatRule> inboundNatRules)
+        internal SharedPublicIPAddressConfiguration(IList<DevTestLabInboundNatRule> inboundNatRules)
         {
             InboundNatRules = inboundNatRules;
         }
 
         /// <summary> The incoming NAT rules. </summary>
-        public IList<InboundNatRule> InboundNatRules { get; }
+        public IList<DevTestLabInboundNatRule> InboundNatRules { get; }
     }
 }

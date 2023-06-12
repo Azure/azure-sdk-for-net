@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static AvsPrivateCloudProvisioningState Succeeded { get; } = new AvsPrivateCloudProvisioningState(SucceededValue);
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsPrivateCloudProvisioningState Deleting { get; } = new AvsPrivateCloudProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static AvsPrivateCloudProvisioningState Updating { get; } = new AvsPrivateCloudProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static AvsPrivateCloudProvisioningState Canceled { get; } = new AvsPrivateCloudProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="AvsPrivateCloudProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AvsPrivateCloudProvisioningState left, AvsPrivateCloudProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudProvisioningState"/> values are not the same. </summary>

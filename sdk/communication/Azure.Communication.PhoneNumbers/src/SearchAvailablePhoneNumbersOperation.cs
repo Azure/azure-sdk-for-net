@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers
         internal SearchAvailablePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<PhoneNumberSearchResult>(clientDiagnostics, nextLinkOperation, response, "SearchAvailablePhoneNumbersOperation");
+            _operation = new OperationInternal<PhoneNumberSearchResult>(nextLinkOperation, clientDiagnostics, response, "SearchAvailablePhoneNumbersOperation");
 
             if (response.Headers.TryGetValue<string>("operation-id", out var id))
             {

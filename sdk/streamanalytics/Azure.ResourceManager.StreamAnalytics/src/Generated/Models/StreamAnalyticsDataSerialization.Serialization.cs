@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static StreamAnalyticsDataSerialization DeserializeStreamAnalyticsDataSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -33,16 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element);
                 }
             }
-            EventSerializationType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new EventSerializationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownStreamAnalyticsDataSerialization(type);
+            return UnknownSerialization.DeserializeUnknownSerialization(element);
         }
     }
 }

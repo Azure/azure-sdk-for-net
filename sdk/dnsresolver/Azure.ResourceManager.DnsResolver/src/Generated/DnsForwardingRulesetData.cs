@@ -16,7 +16,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsForwardingRuleset data model. </summary>
+    /// <summary>
+    /// A class representing the DnsForwardingRuleset data model.
+    /// Describes a DNS forwarding ruleset.
+    /// </summary>
     public partial class DnsForwardingRulesetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
@@ -25,10 +28,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
         public DnsForwardingRulesetData(AzureLocation location, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints) : base(location)
         {
-            if (dnsResolverOutboundEndpoints == null)
-            {
-                throw new ArgumentNullException(nameof(dnsResolverOutboundEndpoints));
-            }
+            Argument.AssertNotNull(dnsResolverOutboundEndpoints, nameof(dnsResolverOutboundEndpoints));
 
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints.ToList();
         }

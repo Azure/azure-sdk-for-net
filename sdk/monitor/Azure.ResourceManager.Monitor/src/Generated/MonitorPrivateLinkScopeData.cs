@@ -13,7 +13,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the MonitorPrivateLinkScope data model. </summary>
+    /// <summary>
+    /// A class representing the MonitorPrivateLinkScope data model.
+    /// An Azure Monitor PrivateLinkScope definition.
+    /// </summary>
     public partial class MonitorPrivateLinkScopeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
         public MonitorPrivateLinkScopeData(AzureLocation location, MonitorPrivateLinkAccessModeSettings accessModeSettings) : base(location)
         {
-            if (accessModeSettings == null)
-            {
-                throw new ArgumentNullException(nameof(accessModeSettings));
-            }
+            Argument.AssertNotNull(accessModeSettings, nameof(accessModeSettings));
 
             PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
             AccessModeSettings = accessModeSettings;

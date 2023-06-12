@@ -928,6 +928,77 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCanCheckpointAfterStoppping()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(1);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a set of events.
+
+            var partitions = new HashSet<string>();
+            var segmentEventCount = 25;
+            var beforeCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var afterCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var sourceEvents = Enumerable.Concat(beforeCheckpointEvents, afterCheckpointEvents).ToList();
+            var checkpointEvent = beforeCheckpointEvents.Last();
+            var checkpointArgs = default(ProcessEventArgs);
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the first half of the events and checkpoint.
+
+            Func<ProcessEventArgs, Task> processedEventCallback = args =>
+            {
+                if (args.Data.IsEquivalentTo(checkpointEvent))
+                {
+                    partitions.Add(args.Partition.PartitionId);
+                    checkpointArgs = args;
+                }
+
+                return Task.CompletedTask;
+            };
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var checkpointStore = new InMemoryCheckpointStore(_ => { });
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, checkpointStore, options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += beforeCheckpointProcessHandler;
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+
+            // Validate that a single partition was processed and a checkpoint can be written.
+
+            Assert.That(partitions.Count, Is.EqualTo(1), "All events should have been processed from a single partition.");
+            Assert.That(checkpointArgs, Is.Not.Null, "The checkpoint arguments should have been captured.");
+            Assert.That(async () => await checkpointArgs.UpdateCheckpointAsync(cancellationSource.Token), Throws.Nothing, "Checkpointing should be safe after stopping.");
+
+            // Validate a checkpoint was created and that events were processed.
+
+            var checkpoint = await checkpointStore.GetCheckpointAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, partitions.First(), cancellationSource.Token);
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
+            Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+        }
+
+        /// <summary>
         ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
         ///   a connection based on a connection string.
         /// </summary>
@@ -1122,7 +1193,11 @@ namespace Azure.Messaging.EventHubs.Tests
         private Func<ProcessErrorEventArgs, Task> CreateAssertingErrorHandler() =>
             args =>
             {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
+                // If there is an inner exception, it will have more interesting details for investigation.
+
+                var ex = args.Exception.InnerException ?? args.Exception;
+
+                Assert.Fail($"Processor Error Surfaced ({ ex.GetType().Name }): {Environment.NewLine}\t{ args.Exception }");
                 return Task.CompletedTask;
             };
 

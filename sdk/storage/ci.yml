@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/storage/
+    exclude:
+    - sdk/storage/Azure.ResourceManager.Storage/
 
 pr:
   branches:
@@ -20,13 +22,14 @@ pr:
   paths:
     include:
     - sdk/storage/
-    - sdk/compute/
-    - sdk/network/
+    exclude:
+    - sdk/storage/Azure.ResourceManager.Storage/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: storage
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Storage.Blobs
@@ -43,6 +46,10 @@ extends:
       safeName: AzureStorageQueues
     - name: Azure.Storage.Blobs.ChangeFeed
       safeName: AzureStorageBlobsChangeFeed
+    - name: Azure.Storage.DataMovement
+      safeName: AzureStorageDataMovement
+    - name: Azure.Storage.DataMovement.Blobs
+      safeName: AzureStorageDataMovementBlobs
     - name: Microsoft.Azure.WebJobs.Extensions.Storage
       safeName: MicrosoftAzureWebJobsExtensionsStorage
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs

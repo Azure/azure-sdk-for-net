@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> Options for rendering static images. </summary>
     public class RouteMatrixOptions
@@ -63,12 +63,12 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </description></item>
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
         /// </summary>
-        public int? VehicleMaxSpeedInKmPerHour { get; set; }
+        public int? VehicleMaxSpeedInKilometersPerHour { get; set; }
 
         /// <summary> Weight of the vehicle in kilograms. </summary>
         public int? VehicleWeightInKilograms { get; set; }
@@ -87,7 +87,7 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary>
         /// Possible values:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> <c>true</c> - Do consider all available traffic information during routing </description></item>
         /// <item><description> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </description></item>
         /// </list>

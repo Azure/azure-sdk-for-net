@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of ListQueryKeysResult. </summary>
         internal ListQueryKeysResult()
         {
-            Value = new ChangeTrackingList<QueryKey>();
+            Value = new ChangeTrackingList<SearchServiceQueryKey>();
         }
 
         /// <summary> Initializes a new instance of ListQueryKeysResult. </summary>
         /// <param name="value"> The query keys for the Azure Cognitive Search service. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of query keys. Returned when the total number of requested query keys exceed maximum page size. </param>
-        internal ListQueryKeysResult(IReadOnlyList<QueryKey> value, string nextLink)
+        internal ListQueryKeysResult(IReadOnlyList<SearchServiceQueryKey> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The query keys for the Azure Cognitive Search service. </summary>
-        public IReadOnlyList<QueryKey> Value { get; }
+        public IReadOnlyList<SearchServiceQueryKey> Value { get; }
         /// <summary> Request URL that can be used to query next page of query keys. Returned when the total number of requested query keys exceed maximum page size. </summary>
         public string NextLink { get; }
     }

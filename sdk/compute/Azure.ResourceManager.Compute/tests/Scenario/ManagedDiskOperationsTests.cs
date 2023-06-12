@@ -10,10 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [ClientTestFixture(true, "2022-07-02", "2021-04-01", "2019-07-01")]
     public class ManagedDiskOperationsTests : ComputeTestBase
     {
-        public ManagedDiskOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+        public ManagedDiskOperationsTests(bool isAsync, string apiVersion)
+            : base(isAsync, ManagedDiskResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 
@@ -60,6 +61,25 @@ namespace Azure.ResourceManager.Compute.Tests
             ManagedDiskResource updatedDisk = lro.Value;
 
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("testDisk-");
+            var disk = await CreateDiskAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            ManagedDiskResource updated = await disk.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
         }
     }
 }

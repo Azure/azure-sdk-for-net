@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         public ScheduleTrigger(ScheduleTriggerRecurrence recurrence)
         {
-            if (recurrence == null)
-            {
-                throw new ArgumentNullException(nameof(recurrence));
-            }
+            Argument.AssertNotNull(recurrence, nameof(recurrence));
 
             Recurrence = recurrence;
             TriggerType = "ScheduleTrigger";

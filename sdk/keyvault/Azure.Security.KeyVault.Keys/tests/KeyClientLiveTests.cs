@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [RecordedTest]
         [PremiumOnly]
-        public async Task CreateEcWithCurveKey([EnumValues]KeyCurveName curveName)
+        public async Task CreateEcWithCurveKey([EnumValues] KeyCurveName curveName)
         {
             var ecCurveKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false)
             {

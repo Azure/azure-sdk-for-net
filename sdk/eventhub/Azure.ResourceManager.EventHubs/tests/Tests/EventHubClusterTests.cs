@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.NotNull(subResource);
 
             //update the cluster
-            cluster.Data.Tags.Add("key", "value");
+            cluster.Data.Tags.Add("key1", "value1");
             cluster = (await cluster.UpdateAsync(WaitUntil.Completed, cluster.Data)).Value;
-            Assert.AreEqual(cluster.Data.Tags["key"], "value");
+            Assert.AreEqual(cluster.Data.Tags["key1"], "value1");
 
             //delete the cluster
             await cluster.DeleteAsync(WaitUntil.Completed);

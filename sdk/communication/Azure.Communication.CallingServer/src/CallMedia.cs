@@ -247,20 +247,19 @@ namespace Azure.Communication.CallingServer
 
             if (recognizeOptions is CallMediaRecognizeDtmfOptions recognizeDtmfOptions)
             {
-                DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal();
-                if (recognizeDtmfOptions.InterToneTimeout != null)
-                    dtmfConfigurations.InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeout.TotalSeconds;
-                if (recognizeDtmfOptions.MaxTonesToCollect > 0)
-                    dtmfConfigurations.MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect;
-                dtmfConfigurations.StopTones = recognizeDtmfOptions.StopTones;
+                DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()
+                {
+                    InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeout.TotalSeconds,
+                    MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect,
+                    StopTones = recognizeDtmfOptions.StopTones
+                };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))
                 {
                     DtmfOptions = dtmfConfigurations,
                     InterruptPrompt = recognizeDtmfOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeout.TotalSeconds
                 };
-                if (recognizeDtmfOptions.InitialSilenceTimeout != null)
-                    recognizeConfigurationsInternal.InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeout.TotalSeconds;
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
 

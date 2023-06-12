@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="reason"/> is null. </exception>
         public DataBoxJobCancellationReason(string reason)
         {
-            if (reason == null)
-            {
-                throw new ArgumentNullException(nameof(reason));
-            }
+            Argument.AssertNotNull(reason, nameof(reason));
 
             Reason = reason;
         }

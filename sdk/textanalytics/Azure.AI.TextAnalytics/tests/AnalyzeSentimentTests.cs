@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -39,6 +40,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task AnalyzeSentimentWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -308,9 +310,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true }, default);
 
-            foreach (AnalyzeSentimentResult docs in results)
+            foreach (AnalyzeSentimentResult result in results)
             {
-                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.False(result.HasError);
+                CheckAnalyzeSentimentProperties(result.DocumentSentiment);
             }
 
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
@@ -434,8 +438,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [Ignore("LRO not implemented")]
         public async Task AnalyzeSentimentWithMultipleActions()
         {
@@ -526,7 +531,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("AnalyzeSentimentOptions.IncludeOpinionMining is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
-        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)
+        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = default)
         {
             Assert.IsNotNull(doc.ConfidenceScores.Positive);
             Assert.IsNotNull(doc.ConfidenceScores.Neutral);

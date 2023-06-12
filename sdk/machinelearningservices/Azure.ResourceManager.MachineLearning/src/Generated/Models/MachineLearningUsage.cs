@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
+        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Specifies the resource type. </summary>
         public string UsageType { get; }
         /// <summary> An enum describing the unit of usage measurement. </summary>
-        public UsageUnit? Unit { get; }
+        public MachineLearningUsageUnit? Unit { get; }
         /// <summary> The current usage of the resource. </summary>
         public long? CurrentValue { get; }
         /// <summary> The maximum permitted usage of the resource. </summary>
         public long? Limit { get; }
         /// <summary> The name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public MachineLearningUsageName Name { get; }
     }
 }

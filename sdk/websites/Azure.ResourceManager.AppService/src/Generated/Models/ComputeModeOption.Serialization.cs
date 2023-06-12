@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ComputeModeOption ToComputeModeOption(this string value)
         {
-            if (string.Equals(value, "Shared", StringComparison.InvariantCultureIgnoreCase)) return ComputeModeOption.Shared;
-            if (string.Equals(value, "Dedicated", StringComparison.InvariantCultureIgnoreCase)) return ComputeModeOption.Dedicated;
-            if (string.Equals(value, "Dynamic", StringComparison.InvariantCultureIgnoreCase)) return ComputeModeOption.Dynamic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Shared")) return ComputeModeOption.Shared;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dedicated")) return ComputeModeOption.Dedicated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dynamic")) return ComputeModeOption.Dynamic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeModeOption value.");
         }
     }

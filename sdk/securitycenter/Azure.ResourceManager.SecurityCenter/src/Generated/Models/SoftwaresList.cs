@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SoftwaresList. </summary>
         internal SoftwaresList()
         {
-            Value = new ChangeTrackingList<SoftwareData>();
+            Value = new ChangeTrackingList<SoftwareInventoryData>();
         }
 
         /// <summary> Initializes a new instance of SoftwaresList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SoftwaresList(IReadOnlyList<SoftwareData> value, string nextLink)
+        internal SoftwaresList(IReadOnlyList<SoftwareInventoryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<SoftwareData> Value { get; }
+        public IReadOnlyList<SoftwareInventoryData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

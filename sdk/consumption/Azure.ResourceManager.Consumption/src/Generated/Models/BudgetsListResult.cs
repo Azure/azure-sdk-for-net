@@ -11,27 +11,42 @@ using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing budgets. It contains a list of available budgets in the scope provided. </summary>
+    /// <summary>
+    /// Result of listing budgets. It contains a list of available budgets in the scope provided.
+    /// Serialized Name: BudgetsListResult
+    /// </summary>
     internal partial class BudgetsListResult
     {
         /// <summary> Initializes a new instance of BudgetsListResult. </summary>
         internal BudgetsListResult()
         {
-            Value = new ChangeTrackingList<BudgetData>();
+            Value = new ChangeTrackingList<ConsumptionBudgetData>();
         }
 
         /// <summary> Initializes a new instance of BudgetsListResult. </summary>
-        /// <param name="value"> The list of budgets. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal BudgetsListResult(IReadOnlyList<BudgetData> value, string nextLink)
+        /// <param name="value">
+        /// The list of budgets.
+        /// Serialized Name: BudgetsListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: BudgetsListResult.nextLink
+        /// </param>
+        internal BudgetsListResult(IReadOnlyList<ConsumptionBudgetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of budgets. </summary>
-        public IReadOnlyList<BudgetData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The list of budgets.
+        /// Serialized Name: BudgetsListResult.value
+        /// </summary>
+        public IReadOnlyList<ConsumptionBudgetData> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: BudgetsListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

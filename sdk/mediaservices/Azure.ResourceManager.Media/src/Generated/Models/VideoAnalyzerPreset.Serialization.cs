@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InsightsToExtract))
             {
-                writer.WritePropertyName("insightsToExtract");
+                writer.WritePropertyName("insightsToExtract"u8);
                 writer.WriteStringValue(InsightsToExtract.Value.ToString());
             }
             if (Optional.IsDefined(AudioLanguage))
             {
-                writer.WritePropertyName("audioLanguage");
+                writer.WritePropertyName("audioLanguage"u8);
                 writer.WriteStringValue(AudioLanguage);
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
-                writer.WritePropertyName("experimentalOptions");
+                writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExperimentalOptions)
                 {
@@ -42,13 +42,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static VideoAnalyzerPreset DeserializeVideoAnalyzerPreset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InsightsType> insightsToExtract = default;
             Optional<string> audioLanguage = default;
             Optional<AudioAnalysisMode> mode = default;
@@ -56,36 +60,33 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("insightsToExtract"))
+                if (property.NameEquals("insightsToExtract"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     insightsToExtract = new InsightsType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("audioLanguage"))
+                if (property.NameEquals("audioLanguage"u8))
                 {
                     audioLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new AudioAnalysisMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("experimentalOptions"))
+                if (property.NameEquals("experimentalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                     experimentalOptions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

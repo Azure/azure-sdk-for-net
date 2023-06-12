@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Shared;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -40,6 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Fact]
         public void VerifyEventSource_Informational() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
 
         [Fact]
         public void VerifyEventSource_Verbose() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteVerbose, expectedId: 5, expectedName: "WriteVerbose");
@@ -120,7 +125,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override void OnEventSourceCreated(EventSource eventSource)
             {
-                if (eventSource?.Name == AzureMonitorExporterEventSource.EventSourceName)
+                if (eventSource.Name == AzureMonitorExporterEventSource.EventSourceName)
                 {
                     this.eventSources.Add(eventSource);
                     this.EnableEvents(eventSource, EventLevel.Verbose, EventKeywords.All);

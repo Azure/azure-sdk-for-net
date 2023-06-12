@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM monitoring for AzureDevOps offering. </summary>
-    public partial class CspmMonitorAzureDevOpsOffering : CloudOffering
+    public partial class CspmMonitorAzureDevOpsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of CspmMonitorAzureDevOpsOffering. </summary>
         public CspmMonitorAzureDevOpsOffering()

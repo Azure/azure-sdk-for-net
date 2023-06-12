@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacityReservations"))
+                if (property.NameEquals("capacityReservations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CapacityReservationInstanceViewWithName> array = new List<CapacityReservationInstanceViewWithName>();

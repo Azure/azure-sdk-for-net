@@ -9,13 +9,16 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/9918d83b021f4abe956ca3be5df358482f50433a/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/c1bf995dbab472761ba4da53ed33c7b621ff8bd9/specification/cosmos-db/resource-manager/readme.md
+tag: package-preview-2022-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -27,6 +30,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}/throughputSettings/default: MongoDBCollectionThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default: CosmosDBSqlDatabaseThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default: CosmosDBSqlContainerThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}/throughputSettings/default: CassandraViewThroughputSetting
 operation-id-mappings:
   CassandraKeyspaceThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
@@ -108,13 +112,26 @@ rename-rules:
   Etag: ETag|etag
   Mongodb: MongoDB
   VNet: Vnet
+  API: Api
+  Db: DB
 
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
-  RestorableMongodbResources_List: GetRestorableMongoDBResources
+  RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
+  RestorableSqlResources_List: GetAllRestorableSqlResourceData
 
 rename-mapping:
+  MongoRoleDefinitionGetResults: MongoDBRoleDefinition
+  MongoUserDefinitionGetResults: MongoDBUserDefinition
+  MongoRoleDefinitionType: MongoDBRoleDefinitionType
+  Privilege: MongoDBPrivilege
+  Role: MongoDBRole
+  Role.db: DBName
+  MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
+  PrivilegeResourceInfo: PrivilegeResourceInfoResource
+  MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
+  MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
   SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
@@ -133,7 +150,13 @@ rename-mapping:
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
   CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
+  ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
+  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
+  ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
+  ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
+  ClientEncryptionKeyGetResults: CosmosDBSqlClientEncryptionKey
   DatabaseRestoreResource: DatabaseRestoreResourceInfo
+  GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
   GremlinDatabaseResource: GremlinDatabaseResourceInfo
   GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
@@ -148,6 +171,9 @@ rename-mapping:
   RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
   RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
   RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
+  RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
+  RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
+  RestorableTablePropertiesResource: ExtendedRestorableTableResourceInfo
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
@@ -229,6 +255,12 @@ rename-mapping:
   RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
   RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
   RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
+  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
+  RestorableTablePropertiesResource.ownerId: TableName
+  RestorableTablePropertiesResource.ownerResourceId: TableId
   CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
   CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   ContainerPartitionKey.systemKey: IsSystemKey
@@ -244,6 +276,31 @@ rename-mapping:
   MongoIndexOptions: MongoDBIndexConfig
   BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
+  RestorableSqlResourcesGetResult: RestorableSqlResourceData
+  RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
+  RestorableTableResourcesGetResult: RestorableTableResourceData
+  ServiceResourceProperties: CosmosDBServiceProperties
+  ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
+  ServiceResource: CosmosDBService
+  ServiceResourceListResult: CosmosDBServiceListResult
+  DataTransferServiceResourceProperties: DataTransferServiceProperties
+  SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
+  GraphAPIComputeServiceResourceProperties: GraphApiComputeServiceProperties
+  MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
+  RegionalServiceResource: CosmosDBRegionalService
+  SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
+  GraphAPIComputeRegionalServiceResource: GraphApiComputeRegionalService
+  DataTransferRegionalServiceResource: DataTransferRegionalService
+  MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
+  ServiceStatus: CosmosDBServiceStatus
+  ServiceSize: CosmosDBServiceSize
+  ServiceType: CosmosDBServiceType
+  AccountKeyMetadata.generationTime: GeneratedOn
+  PrivilegeResource: MongoDBPrivilegeResourceInfo
+  PrivilegeResource.db: DBName
+  MinimalTlsVersion: CosmosDBMinimalTlsVersion
+  BackupResource: CassandraClusterBackupResource
 
 prepend-rp-prefix:
 - UniqueKey
@@ -278,6 +335,9 @@ prepend-rp-prefix:
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
+
+models-to-treat-empty-string-as-null:
+  - CosmosDBAccountData
 
 directive:
 # The notebook is offline due to security issues
@@ -471,6 +531,18 @@ directive:
 - rename-model:
     from: RestorableMongodbDatabaseGetResult
     to: RestorableMongoDBDatabase
+- rename-model:
+    from: RestorableGremlinDatabaseGetResult
+    to: RestorableGremlinDatabase
+- rename-model:
+    from: RestorableGremlinGraphGetResult
+    to: RestorableGremlinGraph
+- rename-model:
+    from: RestorableTableGetResult
+    to: RestorableTable
+- rename-model:
+    from: KeyWrapMetadata
+    to: CosmosDBKeyWrapMetadata
 # same as `Metric`
 - rename-model:
     from: Metric

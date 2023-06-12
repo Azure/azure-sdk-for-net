@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/blueprint/ci.mgmt.yml
+    - sdk/blueprint/Azure.ResourceManager.Blueprint/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: blueprint
+    BuildSnippets: false
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Blueprint
+      safeName: AzureResourceManagerBlueprint

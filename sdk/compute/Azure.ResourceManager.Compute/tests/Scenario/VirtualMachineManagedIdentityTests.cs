@@ -13,10 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-11-01")]
     public class VirtualMachineManagedIdentityTests : VirtualMachineTestBase
     {
-        public VirtualMachineManagedIdentityTests(bool async)
-            : base(async)//, RecordedTestMode.Record)
+        public VirtualMachineManagedIdentityTests(bool async, string apiVersion)
+            : base(async, VirtualMachineResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 

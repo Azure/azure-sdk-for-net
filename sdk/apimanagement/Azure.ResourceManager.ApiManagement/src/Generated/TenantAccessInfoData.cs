@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the TenantAccessInfo data model. </summary>
+    /// <summary>
+    /// A class representing the TenantAccessInfo data model.
+    /// Tenant Settings.
+    /// </summary>
     public partial class TenantAccessInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of TenantAccessInfoData. </summary>

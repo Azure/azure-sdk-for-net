@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("partitionScheme");
+            writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
             writer.WriteEndObject();
         }
 
         internal static SingletonPartitionScheme DeserializeSingletonPartitionScheme(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PartitionScheme partitionScheme = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionScheme"))
+                if (property.NameEquals("partitionScheme"u8))
                 {
                     partitionScheme = new PartitionScheme(property.Value.GetString());
                     continue;

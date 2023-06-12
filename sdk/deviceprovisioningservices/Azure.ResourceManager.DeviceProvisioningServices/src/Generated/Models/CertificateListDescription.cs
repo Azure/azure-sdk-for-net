@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of CertificateListDescription. </summary>
         internal CertificateListDescription()
         {
-            Value = new ChangeTrackingList<CertificateResponseData>();
+            Value = new ChangeTrackingList<DeviceProvisioningServicesCertificateData>();
         }
 
         /// <summary> Initializes a new instance of CertificateListDescription. </summary>
         /// <param name="value"> The array of Certificate objects. </param>
-        internal CertificateListDescription(IReadOnlyList<CertificateResponseData> value)
+        internal CertificateListDescription(IReadOnlyList<DeviceProvisioningServicesCertificateData> value)
         {
             Value = value;
         }
 
         /// <summary> The array of Certificate objects. </summary>
-        public IReadOnlyList<CertificateResponseData> Value { get; }
+        public IReadOnlyList<DeviceProvisioningServicesCertificateData> Value { get; }
     }
 }

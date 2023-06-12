@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeepCreatedOriginGroup(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Origins = new ChangeTrackingList<WritableSubResource>();

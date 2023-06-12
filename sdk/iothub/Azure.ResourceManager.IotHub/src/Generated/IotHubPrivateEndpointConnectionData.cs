@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the IotHubPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the IotHubPrivateEndpointConnection data model.
+    /// The private endpoint connection of an IotHub
+    /// </summary>
     public partial class IotHubPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionData. </summary>
@@ -20,10 +23,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IotHubPrivateEndpointConnectionData(IotHubPrivateEndpointConnectionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

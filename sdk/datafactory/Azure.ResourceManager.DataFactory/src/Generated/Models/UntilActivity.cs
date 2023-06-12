@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,18 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="expression"/> or <paramref name="activities"/> is null. </exception>
         public UntilActivity(string name, FactoryExpressionDefinition expression, IEnumerable<PipelineActivity> activities) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
-            if (activities == null)
-            {
-                throw new ArgumentNullException(nameof(activities));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(expression, nameof(expression));
+            Argument.AssertNotNull(activities, nameof(activities));
 
             Expression = expression;
             Activities = activities.ToList();

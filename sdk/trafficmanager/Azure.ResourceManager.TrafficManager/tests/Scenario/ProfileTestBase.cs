@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         protected internal const string EndpointType = "Microsoft.Network/trafficManagerProfiles/" + EndpointTypeName;
 
         protected internal SubscriptionResource _subscription;
-        protected internal ProfileCollection _profileCollection;
+        protected internal TrafficManagerProfileCollection _profileCollection;
         protected internal ResourceGroupResource _resourceGroup;
         protected internal string _profileName;
 
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                 "resourceGroupName",
                 AzureLocation.EastUS);
 
-            _profileCollection = _resourceGroup.GetProfiles();
+            _profileCollection = _resourceGroup.GetTrafficManagerProfiles();
 
-            ProfileData profileData = new ProfileData
+            TrafficManagerProfileData profileData = new TrafficManagerProfileData
             {
                 Name = _profileName,
                 Location = "global",
                 TrafficRoutingMethod = TrafficRoutingMethod.Weighted,
-                DnsConfig = new DnsConfig { RelativeName = _profileName },
-                MonitorConfig = new MonitorConfig { Port = 80, Protocol = MonitorProtocol.Http, Path = "/public/health-probe" }
+                DnsConfig = new TrafficManagerDnsConfig { RelativeName = _profileName },
+                MonitorConfig = new TrafficManagerMonitorConfig { Port = 80, Protocol = TrafficManagerMonitorProtocol.Http, Path = "/public/health-probe" }
             };
 
             profileData.Endpoints.Add(
-                 new EndpointData
+                 new TrafficManagerEndpointData
                  {
                      Name = EndpointName1,
                      Target = "az-int-black.int.microsoftmetrics.com",
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                  });
 
             profileData.Endpoints.Add(
-                 new EndpointData
+                 new TrafficManagerEndpointData
                  {
                      Name = EndpointName2,
                      Target = "az-int-red.int.microsoftmetrics.com",
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [TearDown]
         public async Task TearDown()
         {
-            ProfileResource profileResource =
-                new ProfileResource(
+            TrafficManagerProfileResource profileResource =
+                new TrafficManagerProfileResource(
                     Client,
-                    ProfileResource.CreateResourceIdentifier(
+                    TrafficManagerProfileResource.CreateResourceIdentifier(
                         _subscription.Data.SubscriptionId,
                         _resourceGroup.Data.Name,
                         _profileName));
@@ -101,6 +101,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             await _resourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
-        protected internal async Task<ProfileResource> GetDefaultProfile() => await _profileCollection.GetAsync(_profileName);
+        protected internal async Task<TrafficManagerProfileResource> GetDefaultProfile() => await _profileCollection.GetAsync(_profileName);
     }
 }

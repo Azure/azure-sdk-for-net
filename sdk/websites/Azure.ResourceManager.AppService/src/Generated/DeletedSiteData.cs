@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DeletedSite data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedSite data model.
+    /// A deleted app.
+    /// </summary>
     public partial class DeletedSiteData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedSiteData. </summary>

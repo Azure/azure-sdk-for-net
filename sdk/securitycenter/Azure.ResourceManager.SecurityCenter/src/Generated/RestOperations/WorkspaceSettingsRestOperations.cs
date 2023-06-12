@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceSettingData>> GetAsync(string subscriptionId, string workspaceSettingName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityWorkspaceSettingData>> GetAsync(string subscriptionId, string workspaceSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        WorkspaceSettingData value = default;
+                        SecurityWorkspaceSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceSettingData.DeserializeWorkspaceSettingData(document.RootElement);
+                        value = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkspaceSettingData)null, message.Response);
+                    return Response.FromValue((SecurityWorkspaceSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceSettingData> Get(string subscriptionId, string workspaceSettingName, CancellationToken cancellationToken = default)
+        public Response<SecurityWorkspaceSettingData> Get(string subscriptionId, string workspaceSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        WorkspaceSettingData value = default;
+                        SecurityWorkspaceSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceSettingData.DeserializeWorkspaceSettingData(document.RootElement);
+                        value = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkspaceSettingData)null, message.Response);
+                    return Response.FromValue((SecurityWorkspaceSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string workspaceSettingName, WorkspaceSettingData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string workspaceSettingName, SecurityWorkspaceSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceSettingData>> CreateAsync(string subscriptionId, string workspaceSettingName, WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityWorkspaceSettingData>> CreateAsync(string subscriptionId, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        WorkspaceSettingData value = default;
+                        SecurityWorkspaceSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceSettingData.DeserializeWorkspaceSettingData(document.RootElement);
+                        value = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceSettingData> Create(string subscriptionId, string workspaceSettingName, WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public Response<SecurityWorkspaceSettingData> Create(string subscriptionId, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        WorkspaceSettingData value = default;
+                        SecurityWorkspaceSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceSettingData.DeserializeWorkspaceSettingData(document.RootElement);
+                        value = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string workspaceSettingName, WorkspaceSettingData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string workspaceSettingName, SecurityWorkspaceSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceSettingData>> UpdateAsync(string subscriptionId, string workspaceSettingName, WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityWorkspaceSettingData>> UpdateAsync(string subscriptionId, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        WorkspaceSettingData value = default;
+                        SecurityWorkspaceSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceSettingData.DeserializeWorkspaceSettingData(document.RootElement);
+                        value = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceSettingData> Update(string subscriptionId, string workspaceSettingName, WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public Response<SecurityWorkspaceSettingData> Update(string subscriptionId, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        WorkspaceSettingData value = default;
+                        SecurityWorkspaceSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceSettingData.DeserializeWorkspaceSettingData(document.RootElement);
+                        value = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

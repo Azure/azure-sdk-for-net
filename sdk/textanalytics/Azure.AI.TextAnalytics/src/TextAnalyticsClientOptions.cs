@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_05_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;
 
         /// <summary>
         /// The versions of the Text Analytics or Language service supported by this client library.
@@ -38,6 +38,11 @@ namespace Azure.AI.TextAnalytics
             /// Version 2022-05-01
             /// </summary>
             V2022_05_01 = 3,
+
+            /// <summary>
+            /// Version 2023-04-01
+            /// </summary>
+            V2023_04_01 = 4,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -87,6 +92,7 @@ namespace Azure.AI.TextAnalytics
                 ServiceVersion.V3_0 => "v3.0",
                 ServiceVersion.V3_1 => "v3.1",
                 ServiceVersion.V2022_05_01 => "2022-05-01",
+                ServiceVersion.V2023_04_01 => "2023-04-01",
 
                 _ => throw new ArgumentException($"Version {version} not supported."),
             };

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmServer data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmServer data model.
+    /// The VmmServers resource definition.
+    /// </summary>
     public partial class ScVmmServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmServerData. </summary>
@@ -24,14 +27,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="fqdn"/> is null. </exception>
         public ScVmmServerData(AzureLocation location, ExtendedLocation extendedLocation, string fqdn) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
-            if (fqdn == null)
-            {
-                throw new ArgumentNullException(nameof(fqdn));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(fqdn, nameof(fqdn));
 
             ExtendedLocation = extendedLocation;
             Fqdn = fqdn;

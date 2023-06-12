@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AzureResourceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AzureResourceBaseProperties DeserializeAzureResourceBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -29,16 +33,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element);
                 }
             }
-            AzureResourceType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new AzureResourceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAzureResourceBaseProperties(type);
+            return UnknownAzureResourcePropertiesBase.DeserializeUnknownAzureResourcePropertiesBase(element);
         }
     }
 }

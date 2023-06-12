@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of CloudEndpointChangeEnumerationStatus. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="lastEnumerationStatus"> Status of last completed change enumeration. </param>
         /// <param name="activity"> Change enumeration activity. </param>
-        internal CloudEndpointChangeEnumerationStatus(DateTimeOffset? lastUpdatedTimestamp, CloudEndpointLastChangeEnumerationStatus lastEnumerationStatus, CloudEndpointChangeEnumerationActivity activity)
+        internal CloudEndpointChangeEnumerationStatus(DateTimeOffset? lastUpdatedOn, CloudEndpointLastChangeEnumerationStatus lastEnumerationStatus, CloudEndpointChangeEnumerationActivity activity)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             LastEnumerationStatus = lastEnumerationStatus;
             Activity = activity;
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Status of last completed change enumeration. </summary>
         public CloudEndpointLastChangeEnumerationStatus LastEnumerationStatus { get; }
         /// <summary> Change enumeration activity. </summary>

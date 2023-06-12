@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Media.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ContextAdaptiveBinaryArithmeticCoderValue = "Cabac";
-        private const string ContextAdaptiveVariableLengthCoderValue = "Cavlc";
+        private const string CabacValue = "Cabac";
+        private const string CavlcValue = "Cavlc";
 
         /// <summary> Context Adaptive Binary Arithmetic Coder (CABAC) entropy encoding. </summary>
-        public static LayerEntropyMode ContextAdaptiveBinaryArithmeticCoder { get; } = new LayerEntropyMode(ContextAdaptiveBinaryArithmeticCoderValue);
+        public static LayerEntropyMode Cabac { get; } = new LayerEntropyMode(CabacValue);
         /// <summary> Context Adaptive Variable Length Coder (CAVLC) entropy encoding. </summary>
-        public static LayerEntropyMode ContextAdaptiveVariableLengthCoder { get; } = new LayerEntropyMode(ContextAdaptiveVariableLengthCoderValue);
+        public static LayerEntropyMode Cavlc { get; } = new LayerEntropyMode(CavlcValue);
         /// <summary> Determines if two <see cref="LayerEntropyMode"/> values are the same. </summary>
         public static bool operator ==(LayerEntropyMode left, LayerEntropyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LayerEntropyMode"/> values are not the same. </summary>

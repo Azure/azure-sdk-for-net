@@ -39,6 +39,22 @@ namespace Azure.Template.Tests.Samples
             #endregion
         }
 
+        public void GenerateClientAccessUri()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+
+            var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
+
+            #region Snippet:GetClientAccessUri
+            // Generate client access URI for userA
+            serviceClient.GetClientAccessUri(userId: "userA");
+            // Generate client access URI with initial permissions
+            serviceClient.GetClientAccessUri(roles: new string[] { "webpubsub.joinLeaveGroup.group1", "webpubsub.sendToGroup.group1" });
+            // Generate client access URI with initial groups to join when the connection connects
+            serviceClient.GetClientAccessUri(groups: new string[] { "group1", "group2" });
+            #endregion
+        }
+
         public void HelloWorldWithConnectionString()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -62,6 +78,33 @@ namespace Azure.Template.Tests.Samples
                         Bar = 42
                     }),
                     ContentType.ApplicationJson);
+            #endregion
+        }
+
+        public void MessageWithFilter()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+
+            #region Snippet:WebPubSubSendWithFilter
+            var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
+
+            // Use filter to send text message to anonymous connections
+            serviceClient.SendToAll(
+                    RequestContent.Create("Hello World!"),
+                    ContentType.TextPlain,
+                    filter: ClientConnectionFilter.Create($"userId eq {null}"));
+
+            // Use filter to send JSON message to connections in groupA but not in groupB
+            var group1 = "GroupA";
+            var group2 = "GroupB";
+            serviceClient.SendToAll(RequestContent.Create(
+                    new
+                    {
+                        Foo = "Hello World!",
+                        Bar = 42
+                    }),
+                    ContentType.ApplicationJson,
+                    filter: ClientConnectionFilter.Create($"{group1} in groups and not({group2} in groups)"));
             #endregion
         }
 
@@ -92,6 +135,16 @@ namespace Azure.Template.Tests.Samples
             }
 
             client.RemoveUserFromGroup("some_group", "some_user");
+            #endregion
+        }
+
+        public void RemoveConnectionFromAllGroups()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+
+            #region Snippet:WebPubSubRemoveConnectionFromAllGroups
+            var client = new WebPubSubServiceClient(connectionString, "some_hub");
+            client.RemoveConnectionFromAllGroups("some_connection");
             #endregion
         }
 

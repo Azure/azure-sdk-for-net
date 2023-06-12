@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> id = default;
             Optional<string> address = default;
@@ -26,36 +30,34 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nextHopIds"))
+                if (property.NameEquals("nextHopIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,11 +68,10 @@ namespace Azure.ResourceManager.Network.Models
                     nextHopIds = array;
                     continue;
                 }
-                if (property.NameEquals("previousHopIds"))
+                if (property.NameEquals("previousHopIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -81,11 +82,10 @@ namespace Azure.ResourceManager.Network.Models
                     previousHopIds = array;
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HopLink> array = new List<HopLink>();
@@ -96,11 +96,10 @@ namespace Azure.ResourceManager.Network.Models
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("previousLinks"))
+                if (property.NameEquals("previousLinks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HopLink> array = new List<HopLink>();
@@ -111,11 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                     previousLinks = array;
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();

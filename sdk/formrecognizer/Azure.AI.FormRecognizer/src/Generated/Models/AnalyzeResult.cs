@@ -21,21 +21,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
-        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/>, <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (pages == null)
-            {
-                throw new ArgumentNullException(nameof(pages));
-            }
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(pages, nameof(pages));
 
             ApiVersion = apiVersion;
             ModelId = modelId;
@@ -62,7 +54,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="styles"> Extracted font styles. </param>
         /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
-        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;

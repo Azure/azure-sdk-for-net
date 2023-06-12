@@ -8,6 +8,9 @@ input-file:
 generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
+protocol-method-list:
+  - Service_SubmitBatch
+  - Container_SubmitBatch
 ```
 
 ### Batch returns a 202

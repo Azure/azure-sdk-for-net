@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Containers AWS offering. </summary>
-    public partial class DefenderForContainersAwsOffering : CloudOffering
+    public partial class DefenderForContainersAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
         public DefenderForContainersAwsOffering()
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kinesisToS3"> The kinesis to s3 connection configuration. </param>
         /// <param name="containerVulnerabilityAssessment"> The container vulnerability assessment configuration. </param>
         /// <param name="containerVulnerabilityAssessmentTask"> The container vulnerability assessment task configuration. </param>
-        /// <param name="enableContainerVulnerabilityAssessment"> Enable container vulnerability assessment feature. </param>
-        /// <param name="autoProvisioning"> Is audit logs pipeline auto provisioning enabled. </param>
+        /// <param name="isContainerVulnerabilityAssessmentEnabled"> Enable container vulnerability assessment feature. </param>
+        /// <param name="isAutoProvisioningEnabled"> Is audit logs pipeline auto provisioning enabled. </param>
         /// <param name="kubeAuditRetentionTime"> The retention time in days of kube audit logs set on the CloudWatch log group. </param>
         /// <param name="scubaExternalId"> The externalId used by the data reader to prevent the confused deputy attack. </param>
-        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment, DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask, bool? enableContainerVulnerabilityAssessment, bool? autoProvisioning, long? kubeAuditRetentionTime, string scubaExternalId) : base(offeringType, description)
+        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment, DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask, bool? isContainerVulnerabilityAssessmentEnabled, bool? isAutoProvisioningEnabled, long? kubeAuditRetentionTime, string scubaExternalId) : base(offeringType, description)
         {
             KubernetesService = kubernetesService;
             KubernetesScubaReader = kubernetesScubaReader;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             KinesisToS3 = kinesisToS3;
             ContainerVulnerabilityAssessment = containerVulnerabilityAssessment;
             ContainerVulnerabilityAssessmentTask = containerVulnerabilityAssessmentTask;
-            EnableContainerVulnerabilityAssessment = enableContainerVulnerabilityAssessment;
-            AutoProvisioning = autoProvisioning;
+            IsContainerVulnerabilityAssessmentEnabled = isContainerVulnerabilityAssessmentEnabled;
+            IsAutoProvisioningEnabled = isAutoProvisioningEnabled;
             KubeAuditRetentionTime = kubeAuditRetentionTime;
             ScubaExternalId = scubaExternalId;
             OfferingType = offeringType;
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Enable container vulnerability assessment feature. </summary>
-        public bool? EnableContainerVulnerabilityAssessment { get; set; }
+        public bool? IsContainerVulnerabilityAssessmentEnabled { get; set; }
         /// <summary> Is audit logs pipeline auto provisioning enabled. </summary>
-        public bool? AutoProvisioning { get; set; }
+        public bool? IsAutoProvisioningEnabled { get; set; }
         /// <summary> The retention time in days of kube audit logs set on the CloudWatch log group. </summary>
         public long? KubeAuditRetentionTime { get; set; }
         /// <summary> The externalId used by the data reader to prevent the confused deputy attack. </summary>

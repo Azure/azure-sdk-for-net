@@ -31,14 +31,14 @@ namespace Compute.Tests
         /// Delete restore point
         /// Delete restore point collection
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Restore Points are created in a different sub")]
         [Trait("Name", "CreateRpcAndRestorePoints")]
         public void CreateRpcAndRestorePoints()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                string location = "centraluseuap";
+                string location = "southcentralus";
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);                
                 EnsureClientsInitialized(context);
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -51,11 +51,15 @@ namespace Compute.Tests
                 {
                     StorageAccount storageAccountForDisks = CreateStorageAccount(rgName, storageAccountForDisksName);
                     // create the VM
-                    VirtualMachine createdVM = CreateVM(rgName, availabilitySetName, storageAccountForDisks, imageRef, out inputVM,
+                    VirtualMachine createdVM = CreateVM(rgName, availabilitySetName, storageAccountForDisks.Name, imageRef, out inputVM,
                         (vm) =>
                         {
                             vm.DiagnosticsProfile = GetManagedDiagnosticsProfile();
-                        }, hasManagedDisks: true);
+                        }, hasManagedDisks: true,
+                        vmSize: "Standard_M16ms",
+                        osDiskStorageAccountType: "Premium_LRS",
+                        dataDiskStorageAccountType: "Premium_LRS",
+                        writeAcceleratorEnabled: true);
                     DataDisk dataDisk = createdVM.StorageProfile.DataDisks[0];
                     string dataDiskId = dataDisk.ManagedDisk.Id;
                     OSDisk osDisk = createdVM.StorageProfile.OsDisk;
@@ -180,7 +184,7 @@ namespace Compute.Tests
         /// Create restore point for VM with SecurityType as TrustedLaunch
         /// Verify SecurityType of DiskRestorePoint
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Restore Points are created in a different sub")]
         [Trait("Name", "CreateLocalRestorePointWithSecurityProfile")]
         public void CreateLocalRestorePointWithSecurityProfile()
         {
@@ -349,11 +353,15 @@ namespace Compute.Tests
             Assert.NotNull(restorePoint.Id);
             Assert.Equal(ProvisioningState.Succeeded.ToString(), restorePoint.ProvisioningState);
             Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, restorePoint.ConsistencyMode);
+            Assert.Equal(HyperVGenerationType.V1, restorePoint.SourceMetadata.HyperVGeneration);
             RestorePointSourceVMStorageProfile storageProfile = restorePoint.SourceMetadata.StorageProfile;
             Assert.Equal(osDisk.Name, storageProfile.OsDisk.Name, ignoreCase: true);
+            Assert.True(osDisk.WriteAcceleratorEnabled ?? false);
             Assert.Equal(osDisk.ManagedDisk.Id, storageProfile.OsDisk.ManagedDisk.Id, ignoreCase: true);
             Assert.NotNull(restorePoint.SourceMetadata.VmId);
             Assert.Equal(vmSize, restorePoint.SourceMetadata.HardwareProfile.VmSize);
+            Assert.Equal(EncryptionType.EncryptionAtRestWithPlatformKey, storageProfile.OsDisk.DiskRestorePoint.Encryption.Type);
+
             if (isRemoteCopy)
             {
                 Assert.Equal(sourceRestorePointId, restorePoint.SourceRestorePoint.Id);

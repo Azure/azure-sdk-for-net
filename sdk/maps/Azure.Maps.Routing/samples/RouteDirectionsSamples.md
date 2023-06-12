@@ -80,7 +80,7 @@ RouteDirectionOptions options = new RouteDirectionOptions()
     RouteType = RouteType.Fastest,
     UseTrafficData = true,
     TravelMode = TravelMode.Bicycle,
-    Language = "en-US",
+    Language = RoutingLanguage.EnglishUsa,
 };
 
 // Create Route direction query object
@@ -107,7 +107,7 @@ foreach (RouteLeg leg in result.Value.Routes[0].Legs)
 
 You can send batch synchronous Route Direction request when route direction queries `<= 100` requests:
 
-```C# Snippet:SyncRequestRouteDirectionsBatch
+```C# Snippet:GetDirectionsImmediateBatch
 // Create a list of route direction queries
 IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
@@ -128,7 +128,7 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Call synchronous route direction batch request
-Response<RouteDirectionsBatchResult> response = client.SyncRequestRouteDirectionsBatch(queries);
+Response<RouteDirectionsBatchResult> response = client.GetDirectionsImmediateBatch(queries);
 ```
 
 ## Asynchronous Route Direction Batch Request
@@ -156,7 +156,7 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Invoke asynchronous route direction batch request, we can get the result later via assigning `WaitUntil.Started`
-RequestRouteDirectionsOperation operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
+GetDirectionsOperation operation = await client.GetDirectionsBatchAsync(WaitUntil.Started, queries);
 
 // After a while, get the result back
 Response<RouteDirectionsBatchResult> result = operation.WaitForCompletion();
@@ -185,7 +185,7 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Invoke asynchronous route direction batch request
-RequestRouteDirectionsOperation operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
+GetDirectionsOperation operation = client.GetDirectionsBatch(WaitUntil.Started, queries);
 
 // Get the operation ID and store somewhere
 string operationId = operation.Id;
@@ -196,7 +196,7 @@ Within 14 days, you can use the same operation ID to fetch the same result. One 
 ```C# Snippet:AsyncRequestRouteDirectionsBatchWithOperationId2
 // Within 14 days, users can retrive the cached result with operation ID
 // The `endpoint` argument in `client` should be the same!
-RequestRouteDirectionsOperation newRouteDirectionOperation = new RequestRouteDirectionsOperation(client, operationId);
+GetDirectionsOperation newRouteDirectionOperation = new GetDirectionsOperation(client, operationId);
 Response<RouteDirectionsBatchResult> result = newRouteDirectionOperation.WaitForCompletion();
 ```
 

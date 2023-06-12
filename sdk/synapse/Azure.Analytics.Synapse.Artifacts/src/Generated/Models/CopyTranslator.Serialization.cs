@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -19,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
@@ -31,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CopyTranslator DeserializeCopyTranslator(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -38,20 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "TabularTranslator": return TabularTranslator.DeserializeTabularTranslator(element);
                 }
             }
-            string type = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new CopyTranslator(type, additionalProperties);
+            return UnknownCopyTranslator.DeserializeUnknownCopyTranslator(element);
         }
 
         internal partial class CopyTranslatorConverter : JsonConverter<CopyTranslator>

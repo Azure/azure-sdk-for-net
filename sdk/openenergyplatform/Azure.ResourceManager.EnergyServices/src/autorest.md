@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: EnergyServices
 namespace: Azure.ResourceManager.EnergyServices
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/2feaf7f24cc26a7274c9fd79015ae62b1d273986/specification/oep/resource-manager/readme.md
-tag: package-2022-04-04-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

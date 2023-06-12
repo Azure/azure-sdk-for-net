@@ -44,10 +44,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="provisioningState">Possible values include:
         /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
         /// 'Migrating'</param>
-        public GalleryApplicationVersionUpdate(GalleryApplicationVersionPublishingProfile publishingProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
+        public GalleryApplicationVersionUpdate(GalleryApplicationVersionPublishingProfile publishingProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryApplicationVersionSafetyProfile safetyProfile = default(GalleryApplicationVersionSafetyProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
             : base(id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
+            SafetyProfile = safetyProfile;
             ProvisioningState = provisioningState;
             ReplicationStatus = replicationStatus;
             CustomInit();
@@ -62,6 +63,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publishingProfile")]
         public GalleryApplicationVersionPublishingProfile PublishingProfile { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.safetyProfile")]
+        public GalleryApplicationVersionSafetyProfile SafetyProfile { get; set; }
 
         /// <summary>
         /// Gets possible values include: 'Creating', 'Updating', 'Failed',

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloudAddon data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloudAddon data model.
+    /// An addon resource
+    /// </summary>
     public partial class AvsPrivateCloudAddonData : ResourceData
     {
         /// <summary> Initializes a new instance of AvsPrivateCloudAddonData. </summary>
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="properties">
         /// The properties of an addon resource
         /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
+        /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
         /// </param>
         internal AvsPrivateCloudAddonData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudAddonProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary>
         /// The properties of an addon resource
         /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
+        /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
         /// </summary>
         public AvsPrivateCloudAddonProperties Properties { get; set; }
     }

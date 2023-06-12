@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationChannelData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabNotificationChannelData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        NotificationChannelData value = default;
+                        DevTestLabNotificationChannelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationChannelData.DeserializeNotificationChannelData(document.RootElement);
+                        value = DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NotificationChannelData)null, message.Response);
+                    return Response.FromValue((DevTestLabNotificationChannelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationChannelData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<DevTestLabNotificationChannelData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        NotificationChannelData value = default;
+                        DevTestLabNotificationChannelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationChannelData.DeserializeNotificationChannelData(document.RootElement);
+                        value = DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NotificationChannelData)null, message.Response);
+                    return Response.FromValue((DevTestLabNotificationChannelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, NotificationChannelData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationChannelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, NotificationChannelData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabNotificationChannelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                 case 201:
                     {
-                        NotificationChannelData value = default;
+                        DevTestLabNotificationChannelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationChannelData.DeserializeNotificationChannelData(document.RootElement);
+                        value = DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationChannelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, NotificationChannelData data, CancellationToken cancellationToken = default)
+        public Response<DevTestLabNotificationChannelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,9 +318,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                 case 201:
                     {
-                        NotificationChannelData value = default;
+                        DevTestLabNotificationChannelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationChannelData.DeserializeNotificationChannelData(document.RootElement);
+                        value = DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, NotificationChannelPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationChannelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, NotificationChannelPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabNotificationChannelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -453,9 +453,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        NotificationChannelData value = default;
+                        DevTestLabNotificationChannelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationChannelData.DeserializeNotificationChannelData(document.RootElement);
+                        value = DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationChannelData> Update(string subscriptionId, string resourceGroupName, string labName, string name, NotificationChannelPatch patch, CancellationToken cancellationToken = default)
+        public Response<DevTestLabNotificationChannelData> Update(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -486,9 +486,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        NotificationChannelData value = default;
+                        DevTestLabNotificationChannelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationChannelData.DeserializeNotificationChannelData(document.RootElement);
+                        value = DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateNotifyRequest(string subscriptionId, string resourceGroupName, string labName, string name, NotifyContent content)
+        internal HttpMessage CreateNotifyRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelNotifyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> NotifyAsync(string subscriptionId, string resourceGroupName, string labName, string name, NotifyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> NotifyAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelNotifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Notify(string subscriptionId, string resourceGroupName, string labName, string name, NotifyContent content, CancellationToken cancellationToken = default)
+        public Response Notify(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabNotificationChannelNotifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

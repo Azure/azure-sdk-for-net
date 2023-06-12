@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    /// <summary> A class representing the IotCentralApp data model. </summary>
+    /// <summary>
+    /// A class representing the IotCentralApp data model.
+    /// The IoT Central application.
+    /// </summary>
     public partial class IotCentralAppData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IotCentralAppData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public IotCentralAppData(AzureLocation location, IotCentralAppSkuInfo sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();

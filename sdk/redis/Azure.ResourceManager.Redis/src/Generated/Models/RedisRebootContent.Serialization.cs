@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RebootType))
             {
-                writer.WritePropertyName("rebootType");
+                writer.WritePropertyName("rebootType"u8);
                 writer.WriteStringValue(RebootType.Value.ToString());
             }
             if (Optional.IsDefined(ShardId))
             {
-                writer.WritePropertyName("shardId");
+                writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
             if (Optional.IsCollectionDefined(Ports))
             {
-                writer.WritePropertyName("ports");
+                writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ports)
                 {

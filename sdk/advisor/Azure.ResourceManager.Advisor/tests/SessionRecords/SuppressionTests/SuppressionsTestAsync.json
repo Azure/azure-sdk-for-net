@@ -1,0 +1,638 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a1be5056461c0040a043e4fc9b0bf486-1004ca3865957545-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0aee4d6c69fd74516b2875be88af9a42",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 08 Oct 2022 07:09:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e494d2d3-72bb-4c94-a361-c07b49d7763a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e494d2d3-72bb-4c94-a361-c07b49d7763a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T070956Z:e494d2d3-72bb-4c94-a361-c07b49d7763a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Advisor/recommendations?api-version=2020-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1e607cb410573d429e034cdbe2d82b03-0f894bffd13fe344-00",
+        "User-Agent": "azsdk-net-ResourceManager.Advisor/1.0.0-alpha.20221008.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4f54737eb8392201e826c929df478f7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "13935",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 08 Oct 2022 07:09:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "af1d22c7-920c-45cc-97c9-3e915f499e30",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "599",
+        "x-ms-request-id": "af1d22c7-920c-45cc-97c9-3e915f499e30",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T070956Z:af1d22c7-920c-45cc-97c9-3e915f499e30"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Medium",
+              "impactedField": "Microsoft.ContainerService/managedClusters",
+              "impactedValue": "kdebug-mingzhe",
+              "lastUpdated": "2022-10-07T22:59:59.381682Z",
+              "recommendationTypeId": "4c72c554-1573-4ce8-8bbf-7b2aab0bf297",
+              "shortDescription": {
+                "problem": "Update cluster\u0027s service principal",
+                "solution": "Update cluster\u0027s service principal"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mingzhe_test/providers/Microsoft.ContainerService/managedClusters/kdebug-mingzhe"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mingzhe_test/providers/Microsoft.ContainerService/managedClusters/kdebug-mingzhe/providers/Microsoft.Advisor/recommendations/72bae09f-ba56-0eec-3784-a712f1ffb250",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "72bae09f-ba56-0eec-3784-a712f1ffb250"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "Microsoft.App/containerApps",
+              "impactedValue": "sample-container-app",
+              "lastUpdated": "2022-10-07T23:10:19.5470866Z",
+              "recommendationTypeId": "9be5f344-6fa5-4abc-a1f2-61ae6192a075",
+              "shortDescription": {
+                "problem": "Increase the minimal replica count for your container app",
+                "solution": "Increase the minimal replica count for your container app"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testContainerApp/providers/Microsoft.App/containerapps/sample-container-app"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testContainerApp/providers/Microsoft.App/containerapps/sample-container-app/providers/Microsoft.Advisor/recommendations/200c8338-47ca-3f59-0b8a-875e59bc0d58",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "200c8338-47ca-3f59-0b8a-875e59bc0d58"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "Microsoft.App/containerApps",
+              "impactedValue": "container-app-process-2901",
+              "lastUpdated": "2022-10-07T23:10:19.5470866Z",
+              "recommendationTypeId": "9be5f344-6fa5-4abc-a1f2-61ae6192a075",
+              "shortDescription": {
+                "problem": "Increase the minimal replica count for your container app",
+                "solution": "Increase the minimal replica count for your container app"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testContainerApp/providers/Microsoft.App/containerapps/container-app-process-2901"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testContainerApp/providers/Microsoft.App/containerapps/container-app-process-2901/providers/Microsoft.Advisor/recommendations/020c2aad-6aae-c0a5-50f2-d2d3f843985f",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "020c2aad-6aae-c0a5-50f2-d2d3f843985f"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "Microsoft.App/containerApps",
+              "impactedValue": "container-app-order-6468",
+              "lastUpdated": "2022-10-07T23:10:19.5470866Z",
+              "recommendationTypeId": "9be5f344-6fa5-4abc-a1f2-61ae6192a075",
+              "shortDescription": {
+                "problem": "Increase the minimal replica count for your container app",
+                "solution": "Increase the minimal replica count for your container app"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testContainerApp/providers/Microsoft.App/containerapps/container-app-order-6468"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testContainerApp/providers/Microsoft.App/containerapps/container-app-order-6468/providers/Microsoft.Advisor/recommendations/81fa01dd-7dba-de73-dbd9-be50ba883fa2",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "81fa01dd-7dba-de73-dbd9-be50ba883fa2"
+          },
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Medium",
+              "impactedField": "MICROSOFT.KEYVAULT/MANAGEDHSMS",
+              "impactedValue": "sdktestvault1942",
+              "lastUpdated": "2022-10-07T23:02:21.7887964Z",
+              "recommendationTypeId": "12278831-341f-4933-85e6-40560e4a3405",
+              "shortDescription": {
+                "problem": "Create a backup of HSM",
+                "solution": "Create a backup of HSM"
+              },
+              "extendedProperties": {
+                "PoolName": "sdktestvault1942",
+                "Remind": " wasn\u0027t backed up since created or in at least 90 days",
+                "ver": "1.0"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg7612/providers/Microsoft.KeyVault/managedHSMs/sdktestvault1942"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg7612/providers/Microsoft.KeyVault/managedHSMs/sdktestvault1942/providers/Microsoft.Advisor/recommendations/f8ab2903-4710-3b65-d03b-c131f0c07024",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "f8ab2903-4710-3b65-d03b-c131f0c07024"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "MICROSOFT.NETWORK/VIRTUALNETWORKS",
+              "impactedValue": "contosocsvnet",
+              "lastUpdated": "2022-10-08T00:52:20.3405384Z",
+              "recommendationTypeId": "56f0c458-521d-4b8b-a704-c0a099483d19",
+              "shortDescription": {
+                "problem": "Use NAT gateway for outbound connectivity",
+                "solution": "Use NAT gateway for outbound connectivity"
+              },
+              "extendedProperties": {
+                "region": "eastus2"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/feng_test/providers/microsoft.network/virtualnetworks/contosocsvnet"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/feng_test/providers/microsoft.network/virtualnetworks/contosocsvnet/providers/Microsoft.Advisor/recommendations/4c8e0417-daff-deb5-5577-561a3a8a4194",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "4c8e0417-daff-deb5-5577-561a3a8a4194"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "MICROSOFT.NETWORK/VIRTUALNETWORKS",
+              "impactedValue": "fengvnet",
+              "lastUpdated": "2022-10-08T00:52:20.3405384Z",
+              "recommendationTypeId": "56f0c458-521d-4b8b-a704-c0a099483d19",
+              "shortDescription": {
+                "problem": "Use NAT gateway for outbound connectivity",
+                "solution": "Use NAT gateway for outbound connectivity"
+              },
+              "extendedProperties": {
+                "region": "northeurope"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/feng_test/providers/microsoft.network/virtualnetworks/fengvnet"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/feng_test/providers/microsoft.network/virtualnetworks/fengvnet/providers/Microsoft.Advisor/recommendations/ea5e4bf2-70cb-33ba-a649-cb42efe1c16b",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "ea5e4bf2-70cb-33ba-a649-cb42efe1c16b"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "MICROSOFT.NETWORK/VIRTUALNETWORKS",
+              "impactedValue": "autorestresources2-vnet",
+              "lastUpdated": "2022-10-08T00:52:20.3405384Z",
+              "recommendationTypeId": "56f0c458-521d-4b8b-a704-c0a099483d19",
+              "shortDescription": {
+                "problem": "Use NAT gateway for outbound connectivity",
+                "solution": "Use NAT gateway for outbound connectivity"
+              },
+              "extendedProperties": {
+                "region": "westus"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/autorestresources2/providers/microsoft.network/virtualnetworks/autorestresources2-vnet"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/autorestresources2/providers/microsoft.network/virtualnetworks/autorestresources2-vnet/providers/Microsoft.Advisor/recommendations/d453219d-ca36-1617-2622-8a517a618492",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "d453219d-ca36-1617-2622-8a517a618492"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "MICROSOFT.NETWORK/VIRTUALNETWORKS",
+              "impactedValue": "aks-vnet-38287780",
+              "lastUpdated": "2022-10-08T00:52:20.3405384Z",
+              "recommendationTypeId": "56f0c458-521d-4b8b-a704-c0a099483d19",
+              "shortDescription": {
+                "problem": "Use NAT gateway for outbound connectivity",
+                "solution": "Use NAT gateway for outbound connectivity"
+              },
+              "extendedProperties": {
+                "region": "eastus"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mc_testaksrg5670_akscluster9837_eastus/providers/microsoft.network/virtualnetworks/aks-vnet-38287780"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mc_testaksrg5670_akscluster9837_eastus/providers/microsoft.network/virtualnetworks/aks-vnet-38287780/providers/Microsoft.Advisor/recommendations/4e9282fd-636e-1fdd-9505-e3f01d777575",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "4e9282fd-636e-1fdd-9505-e3f01d777575"
+          },
+          {
+            "properties": {
+              "category": "HighAvailability",
+              "impact": "Medium",
+              "impactedField": "MICROSOFT.NETWORK/VIRTUALNETWORKS",
+              "impactedValue": "orbital-network",
+              "lastUpdated": "2022-10-08T00:52:20.3405384Z",
+              "recommendationTypeId": "56f0c458-521d-4b8b-a704-c0a099483d19",
+              "shortDescription": {
+                "problem": "Use NAT gateway for outbound connectivity",
+                "solution": "Use NAT gateway for outbound connectivity"
+              },
+              "extendedProperties": {
+                "region": "westus2"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/feng_test/providers/microsoft.network/virtualnetworks/orbital-network"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/feng_test/providers/microsoft.network/virtualnetworks/orbital-network/providers/Microsoft.Advisor/recommendations/a72e3abc-3e36-5c7d-02dc-c6e658292f9c",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "a72e3abc-3e36-5c7d-02dc-c6e658292f9c"
+          },
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Low",
+              "impactedField": "Microsoft.ContainerService/managedClusters",
+              "impactedValue": "kdebug-mingzhe",
+              "lastUpdated": "2022-10-07T23:04:58.8647775Z",
+              "recommendationTypeId": "878fe7fb-d5ef-46f8-b477-72fd91699bbe",
+              "shortDescription": {
+                "problem": "Use Uptime SLA",
+                "solution": "Use Uptime SLA"
+              },
+              "extendedProperties": {
+                "RpTenant": "westus3"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mingzhe_test/providers/Microsoft.ContainerService/managedClusters/kdebug-mingzhe"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mingzhe_test/providers/Microsoft.ContainerService/managedClusters/kdebug-mingzhe/providers/Microsoft.Advisor/recommendations/cfed4bf7-925e-d9e8-b297-7c8def424111",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "cfed4bf7-925e-d9e8-b297-7c8def424111"
+          },
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Low",
+              "impactedField": "Microsoft.ContainerService/managedClusters",
+              "impactedValue": "akscluster9837",
+              "lastUpdated": "2022-10-07T23:03:58.0620683Z",
+              "recommendationTypeId": "878fe7fb-d5ef-46f8-b477-72fd91699bbe",
+              "shortDescription": {
+                "problem": "Use Uptime SLA",
+                "solution": "Use Uptime SLA"
+              },
+              "extendedProperties": {
+                "RpTenant": "eastus"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/d5aecd42-c373-ed44-4661-ee6f0092bc7f",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "d5aecd42-c373-ed44-4661-ee6f0092bc7f"
+          },
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Low",
+              "impactedField": "Microsoft.ContainerService/managedClusters",
+              "impactedValue": "kdebug-mingzhe",
+              "lastUpdated": "2022-10-07T23:15:52.3074448Z",
+              "recommendationTypeId": "79dd48e7-cd34-4f35-a8be-a7d483353c1c",
+              "shortDescription": {
+                "problem": "Use Ephemeral OS disk",
+                "solution": "Use Ephemeral OS disk"
+              },
+              "extendedProperties": {
+                "RpTenant": "westus3"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mingzhe_test/providers/Microsoft.ContainerService/managedClusters/kdebug-mingzhe"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/mingzhe_test/providers/Microsoft.ContainerService/managedClusters/kdebug-mingzhe/providers/Microsoft.Advisor/recommendations/c4440055-cf5a-9ff2-5a06-81807b34807f",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "c4440055-cf5a-9ff2-5a06-81807b34807f"
+          },
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Low",
+              "impactedField": "Microsoft.ContainerService/managedClusters",
+              "impactedValue": "akscluster9837",
+              "lastUpdated": "2022-10-07T23:04:58.8193749Z",
+              "recommendationTypeId": "79dd48e7-cd34-4f35-a8be-a7d483353c1c",
+              "shortDescription": {
+                "problem": "Use Ephemeral OS disk",
+                "solution": "Use Ephemeral OS disk"
+              },
+              "extendedProperties": {
+                "RpTenant": "eastus"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/21219579-fcb9-93e0-bb42-72d1a0667ceb",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "21219579-fcb9-93e0-bb42-72d1a0667ceb"
+          },
+          {
+            "properties": {
+              "category": "OperationalExcellence",
+              "impact": "Low",
+              "impactedField": "Microsoft.ContainerService/managedClusters",
+              "impactedValue": "akscluster9837",
+              "lastUpdated": "2022-10-08T02:12:14.3941703Z",
+              "recommendationTypeId": "c2f34a5d-2742-4c3d-9247-e0a8b85c3e51",
+              "shortDescription": {
+                "problem": "Enable the Cluster Autoscaler",
+                "solution": "Enable the Cluster Autoscaler"
+              },
+              "suppressionIds": [
+                "edace906-c1bc-3953-bb03-31e89dbaef4d"
+              ],
+              "extendedProperties": {
+                "RpTenant": "eastus"
+              },
+              "resourceMetadata": {
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837"
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154",
+            "type": "Microsoft.Advisor/recommendations",
+            "name": "3dee50b6-d744-f5b0-1017-04d6b877b154"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154?api-version=2020-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-aedd593bb851ab458914ad208782c945-7b2de089205e2945-00",
+        "User-Agent": "azsdk-net-ResourceManager.Advisor/1.0.0-alpha.20221008.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "238654fa0b1a34bda7dd97772df6ffc4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "985",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 08 Oct 2022 07:09:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "666fe4ae-0d91-40fa-9027-7bb576b4474e",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "598",
+        "x-ms-request-id": "666fe4ae-0d91-40fa-9027-7bb576b4474e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T070957Z:666fe4ae-0d91-40fa-9027-7bb576b4474e"
+      },
+      "ResponseBody": {
+        "properties": {
+          "category": "OperationalExcellence",
+          "impact": "Low",
+          "impactedField": "Microsoft.ContainerService/managedClusters",
+          "impactedValue": "akscluster9837",
+          "lastUpdated": "2022-10-08T02:12:14.3941703Z",
+          "recommendationTypeId": "c2f34a5d-2742-4c3d-9247-e0a8b85c3e51",
+          "shortDescription": {
+            "problem": "Enable the Cluster Autoscaler",
+            "solution": "Enable the Cluster Autoscaler"
+          },
+          "suppressionIds": [
+            "edace906-c1bc-3953-bb03-31e89dbaef4d"
+          ],
+          "extendedProperties": {
+            "RpTenant": "eastus"
+          },
+          "resourceMetadata": {
+            "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837"
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154",
+        "type": "Microsoft.Advisor/recommendations",
+        "name": "3dee50b6-d744-f5b0-1017-04d6b877b154"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154/suppressions/NetSdkTest286?api-version=2020-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json",
+        "traceparent": "00-eb1fae409030534dab7d08927cf66b26-d6143dcd06504b45-00",
+        "User-Agent": "azsdk-net-ResourceManager.Advisor/1.0.0-alpha.20221008.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dd16868c99b34bb3cc22d69f27942399",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "ttl": "01:00:00"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 08 Oct 2022 07:09:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8d9618c4-c017-4ff3-b039-04b52d874aeb",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "8d9618c4-c017-4ff3-b039-04b52d874aeb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T070958Z:8d9618c4-c017-4ff3-b039-04b52d874aeb"
+      },
+      "ResponseBody": {
+        "properties": {
+          "suppressionId": "00803532-cf5e-21df-c259-34bbb0421a0c",
+          "ttl": "01:00:00",
+          "expirationTimeStamp": "2022-10-08T08:09:58.0488561Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154/suppressions/NetSdkTest286",
+        "type": "Microsoft.Advisor/suppressions",
+        "name": "NetSdkTest286"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154/suppressions/NetSdkTest286?api-version=2020-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1abd098984e69c4ab5ca7c26c42a4e9d-c886cdc2bf133042-00",
+        "User-Agent": "azsdk-net-ResourceManager.Advisor/1.0.0-alpha.20221008.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2933c4f92876b6721fa85c2089f4f227",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 08 Oct 2022 07:09:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "96c40f95-b1cf-446e-b280-29e8fc12f6d0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "96c40f95-b1cf-446e-b280-29e8fc12f6d0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T070958Z:96c40f95-b1cf-446e-b280-29e8fc12f6d0"
+      },
+      "ResponseBody": {
+        "properties": {
+          "suppressionId": "00803532-cf5e-21df-c259-34bbb0421a0c",
+          "ttl": "01:00:00",
+          "expirationTimeStamp": "2022-10-08T08:09:58.0488561Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154/suppressions/NetSdkTest286",
+        "type": "Microsoft.Advisor/suppressions",
+        "name": "NetSdkTest286"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154/suppressions/NetSdkTest286?api-version=2020-01-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-608e8157a90bc544805a276b6341a523-4ca9d00de5532a4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Advisor/1.0.0-alpha.20221008.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c052c3049e79bb46d2d84de9e6957f48",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Sat, 08 Oct 2022 07:09:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4ea2fe1c-36c0-4db8-b23a-1a9f9e89a341",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "4ea2fe1c-36c0-4db8-b23a-1a9f9e89a341",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T070959Z:4ea2fe1c-36c0-4db8-b23a-1a9f9e89a341"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testaksrg5670/providers/Microsoft.ContainerService/managedClusters/akscluster9837/providers/Microsoft.Advisor/recommendations/3dee50b6-d744-f5b0-1017-04d6b877b154/suppressions/NetSdkTest286?api-version=2020-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8b49a36f8470e940bf014f494bdac424-f611c7a22d46144c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Advisor/1.0.0-alpha.20221008.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3134de739bcb63ef145fbe0b3d92c1d7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "103",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 08 Oct 2022 07:09:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cdbbdb23-10f1-49b2-a96d-9388e8d4e41b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "cdbbdb23-10f1-49b2-a96d-9388e8d4e41b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221008T071000Z:cdbbdb23-10f1-49b2-a96d-9388e8d4e41b"
+      },
+      "ResponseBody": {
+        "error": {
+          "message": "Suppression Id:00803532-cf5e-21df-c259-34bbb0421a0c not found",
+          "code": "NotFound"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1332939960",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

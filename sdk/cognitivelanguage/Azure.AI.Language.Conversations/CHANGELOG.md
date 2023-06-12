@@ -1,14 +1,53 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
+- Added support for service version 2023-04-01.
+
 ### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 1.0.0 when those types and members did not exist.
+
+- Removed support for service version 2022-05-15-preview.
+- Removed support for service version 2022-10-01-preview.
+- Removed support for "ConversationalPIITask" analysis.
+- Removed support for "ConversationalSentimentTask" analysis.
+- Removed `ConversationsAudience`.
+- Removed `ConversationsClientOptions.Audience`.
+- Removed `ConversationAuthoringClient.AssignDeploymentResources` and `AssignDeploymentResourcesAsync`.
+- Removed `ConversationAuthoringClient.DeleteDeploymentFromResources` and `DeleteDeploymentFromResourcesAsync`.
+- Removed `ConversationAuthoringClient.GetAssignDeploymentResourcesStatus` and `GetAssignDeploymentResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.GetAssignedResourceDeployments` and `GetAssignedResourceDeploymentsAsync`.
+- Removed `ConversationAuthoringClient.GetDeploymentDeleteFromResourcesStatus` and `GetDeploymentDeleteFromResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.GetDeploymentResources` and `GetDeploymentResourcesAsync`.
+- Removed `ConversationAuthoringClient.GetUnassignDeploymentResourcesStatus` and `GetUnassignDeploymentResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`.
+- Renamed `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` that took a `WaitUntil` parameter to `AnalyzeConversations` and `AnalyzeConversationsAsync`.
+- Renamed `ConversationAnalysisClient.CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync` to `CancelAnalyzeConversations` and `CancelAnalyzeConversationsAsync`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2022-11-10)
+
+### Features Added
+
+- Added `ConversationsClientOptions.Audience` to set the audience to use for authentication with Azure Active Directory (AAD).
+- Added methods to the `ConversationAuthoringClient` to manage deployment resources:
+  - `AssignDeploymentResources` and `AssignDeploymentResourcesAsync`
+  - `DeleteDeploymentFromResources` and `DeleteDeploymentFromResourcesAsync`
+  - `GetAssignDeploymentResourcesStatus` and `GetAssignDeploymentResourcesStatusAsync`
+  - `GetAssignedResourceDeployments` and `GetAssignedResourceDeploymentsAsync`
+  - `GetDeploymentDeleteFromResourcesStatus` and `GetDeploymentDeleteFromResourcesStatusAsync`
+  - `GetDeploymentResources` and `GetDeploymentResourcesAsync`
+  - `GetLoadSnapshotStatus` and `GetLoadSnapshotStatusAsync`
+  - `GetUnassignDeploymentResourcesStatus` and `GetUnassignDeploymentResourcesStatusAsync`
+  - `LoadSnapshot` and `LoadSnapshotAsync`
+  - `UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`
+- Added an overload to `ConversationAuthoringClient.ExportProject` and `ExportProjectAsync` to add the `trainedModelLabel` parameter.
 
 ## 1.1.0-beta.1 (2022-07-01)
 

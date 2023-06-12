@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServerFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServerFirewallRule data model.
+    /// Represents a server firewall rule.
+    /// </summary>
     public partial class PostgreSqlFlexibleServerFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFirewallRuleData. </summary>
@@ -21,14 +24,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public PostgreSqlFlexibleServerFirewallRuleData(IPAddress startIPAddress, IPAddress endIPAddress)
         {
-            if (startIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(startIPAddress));
-            }
-            if (endIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(endIPAddress));
-            }
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;

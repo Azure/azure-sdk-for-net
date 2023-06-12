@@ -42,12 +42,12 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenWriteAsync(
             PageBlobClient client,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             int internalBufferSize)
         {
             return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = transferValidation,
                 BufferSize = internalBufferSize
             });
         }
@@ -55,7 +55,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override Task ParallelUploadAsync(
             PageBlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions)
         {
             TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "PageBlobClient contains no definition for parallel upload.");
@@ -65,11 +65,11 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<Response> UploadPartitionAsync(
             PageBlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions)
+            UploadTransferValidationOptions transferValidation)
         {
             return (await client.UploadPagesAsync(source, 0, new PageBlobUploadPagesOptions
             {
-                TransferValidationOptions = hashingOptions
+                TransferValidation = transferValidation
             })).GetRawResponse();
         }
 
@@ -84,5 +84,27 @@ namespace Azure.Storage.Blobs.Tests
         {
             return true;
         }
+
+        #region Test Overrides
+        // base test uses non-512 multiples to help with edge cases. Fix those values here.
+        [Test]
+        public override async Task OpenWriteSuccessfulHashComputation(
+            [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
+            [Values(Constants.KB)] int streamBufferSize,
+            [Values(512)] int dataSize)
+            => await base.OpenWriteSuccessfulHashComputation(algorithm, streamBufferSize, dataSize);
+
+        [Test]
+        public override async Task OpenWriteSucceedsWithCallerProvidedCrc(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 512)] int bufferSize)
+            => await base.OpenWriteSucceedsWithCallerProvidedCrc(dataSize, bufferSize);
+
+        [Test]
+        public override async Task OpenWriteFailsOnCallerProvidedCrcMismatch(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 512)] int bufferSize)
+            => await base.OpenWriteFailsOnCallerProvidedCrcMismatch(dataSize, bufferSize);
+        #endregion
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> The CompanyInformation. </summary>
@@ -21,7 +23,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="address"> Company&apos;s address for the customer submitting the Program Brief. </param>
         /// <param name="contactInformation"> Contact Information. </param>
         /// <param name="customerCareInformation"> Customer Care Information. </param>
-        internal CompanyInformation(string name, string url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
+        internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
         {
             Name = name;
             Url = url;
@@ -33,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Legal entity name for customer submitting Program Brief. </summary>
         public string Name { get; set; }
         /// <summary> Company URL for customer submitting Program Brief. </summary>
-        public string Url { get; set; }
+        public Uri Url { get; set; }
         /// <summary> Company&apos;s address for the customer submitting the Program Brief. </summary>
         public string Address { get; set; }
         /// <summary> Contact Information. </summary>

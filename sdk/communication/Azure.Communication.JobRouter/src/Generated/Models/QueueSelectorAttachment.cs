@@ -7,8 +7,12 @@
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> An attachment of label selectors to resolve a queue to a job from a classification policy. </summary>
-    public partial class QueueSelectorAttachment
+    /// <summary>
+    /// An attachment of label selectors to resolve a queue to a job from a classification policy
+    /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ConditionalQueueSelectorAttachment"/>, <see cref="PassThroughQueueSelectorAttachment"/>, <see cref="RuleEngineQueueSelectorAttachment"/>, <see cref="StaticQueueSelectorAttachment"/> and <see cref="WeightedAllocationQueueSelectorAttachment"/>.
+    /// </summary>
+    public abstract partial class QueueSelectorAttachment
     {
 
         /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>

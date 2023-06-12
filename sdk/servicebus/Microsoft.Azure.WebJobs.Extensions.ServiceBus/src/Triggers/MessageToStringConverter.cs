@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
                 }
 
                 throw new NotSupportedException(
-                    $"A message with a body of type {value?.GetType()} cannot be bound to a string.");
+                    $"A message with a value type of {value?.GetType()} cannot be bound to a string.");
             }
             else
             {

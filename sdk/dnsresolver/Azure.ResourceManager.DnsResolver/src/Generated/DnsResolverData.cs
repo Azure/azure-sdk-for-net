@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsResolver data model. </summary>
+    /// <summary>
+    /// A class representing the DnsResolver data model.
+    /// Describes a DNS resolver.
+    /// </summary>
     public partial class DnsResolverData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DnsResolverData. </summary>
@@ -24,10 +27,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsResolverData(AzureLocation location, WritableSubResource virtualNetwork) : base(location)
         {
-            if (virtualNetwork == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetwork));
-            }
+            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
             VirtualNetwork = virtualNetwork;
         }

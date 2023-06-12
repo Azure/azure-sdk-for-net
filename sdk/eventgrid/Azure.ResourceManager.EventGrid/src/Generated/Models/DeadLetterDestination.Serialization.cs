@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DeadLetterDestination DeserializeDeadLetterDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("endpointType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -29,16 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "StorageBlob": return StorageBlobDeadLetterDestination.DeserializeStorageBlobDeadLetterDestination(element);
                 }
             }
-            DeadLetterEndPointType endpointType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointType"))
-                {
-                    endpointType = new DeadLetterEndPointType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDeadLetterDestination(endpointType);
+            return UnknownDeadLetterDestination.DeserializeUnknownDeadLetterDestination(element);
         }
     }
 }

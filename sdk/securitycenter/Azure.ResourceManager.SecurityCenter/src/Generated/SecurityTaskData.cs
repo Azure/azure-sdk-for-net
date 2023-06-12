@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityTask data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityTask data model.
+    /// Security task that we recommend to do in order to strengthen security
+    /// </summary>
     public partial class SecurityTaskData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityTaskData. </summary>
@@ -26,27 +29,27 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
-        /// <param name="creationTimeUtc"> The time this task was discovered in UTC. </param>
+        /// <param name="createdOn"> The time this task was discovered in UTC. </param>
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangeTimeUtc"> The time this task&apos;s details were last changed in UTC. </param>
+        /// <param name="lastStateChangedOn"> The time this task&apos;s details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
-        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string state, DateTimeOffset? creationTimeUtc, SecurityTaskParameters securityTaskParameters, DateTimeOffset? lastStateChangeTimeUtc, string subState) : base(id, name, resourceType, systemData)
+        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string state, DateTimeOffset? createdOn, SecurityTaskProperties securityTaskParameters, DateTimeOffset? lastStateChangedOn, string subState) : base(id, name, resourceType, systemData)
         {
             State = state;
-            CreationTimeUtc = creationTimeUtc;
+            CreatedOn = createdOn;
             SecurityTaskParameters = securityTaskParameters;
-            LastStateChangeTimeUtc = lastStateChangeTimeUtc;
+            LastStateChangedOn = lastStateChangedOn;
             SubState = subState;
         }
 
         /// <summary> State of the task (Active, Resolved etc.). </summary>
         public string State { get; }
         /// <summary> The time this task was discovered in UTC. </summary>
-        public DateTimeOffset? CreationTimeUtc { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskParameters SecurityTaskParameters { get; set; }
+        public SecurityTaskProperties SecurityTaskParameters { get; set; }
         /// <summary> The time this task&apos;s details were last changed in UTC. </summary>
-        public DateTimeOffset? LastStateChangeTimeUtc { get; }
+        public DateTimeOffset? LastStateChangedOn { get; }
         /// <summary> Additional data on the state of the task. </summary>
         public string SubState { get; }
     }

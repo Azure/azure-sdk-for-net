@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Deployment model version. </param>
-        internal CognitiveServicesAccountDeploymentModel(string format, string name, string version)
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        internal CognitiveServicesAccountDeploymentModel(string format, string name, string version, ServiceAccountCallRateLimit callRateLimit)
         {
             Format = format;
             Name = name;
             Version = version;
+            CallRateLimit = callRateLimit;
         }
 
         /// <summary> Deployment model format. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Name { get; set; }
         /// <summary> Deployment model version. </summary>
         public string Version { get; set; }
+        /// <summary> The call rate limit Cognitive Services account. </summary>
+        public ServiceAccountCallRateLimit CallRateLimit { get; }
     }
 }

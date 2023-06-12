@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the VerifiedPartner data model. </summary>
+    /// <summary>
+    /// A class representing the VerifiedPartner data model.
+    /// Verified partner information
+    /// </summary>
     public partial class VerifiedPartnerData : ResourceData
     {
         /// <summary> Initializes a new instance of VerifiedPartnerData. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="environmentId"> environment id for which user is an admin. </param>
         /// <param name="environmentName"> Name of the environment. </param>
         /// <param name="planData"> Billing plan information. </param>
-        internal LinkableEnvironmentResult(string environmentId, string environmentName, PlanData planData)
+        internal LinkableEnvironmentResult(string environmentId, string environmentName, DynatraceBillingPlanInfo planData)
         {
             EnvironmentId = environmentId;
             EnvironmentName = environmentName;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Name of the environment. </summary>
         public string EnvironmentName { get; }
         /// <summary> Billing plan information. </summary>
-        public PlanData PlanData { get; }
+        public DynatraceBillingPlanInfo PlanData { get; }
     }
 }

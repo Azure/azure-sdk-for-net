@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the TagResource data model. </summary>
+    /// <summary>
+    /// A class representing the TagResource data model.
+    /// Wrapper resource for tags API requests and responses.
+    /// </summary>
     public partial class TagResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of TagResourceData. </summary>
@@ -21,10 +24,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TagResourceData(Tag properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

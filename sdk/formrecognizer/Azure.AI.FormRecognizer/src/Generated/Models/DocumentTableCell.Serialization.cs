@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentTableCell DeserializeDocumentTableCell(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DocumentTableCellKind> kind = default;
             int rowIndex = default;
             int columnIndex = default;
@@ -25,56 +29,52 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new DocumentTableCellKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rowIndex"))
+                if (property.NameEquals("rowIndex"u8))
                 {
                     rowIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("columnIndex"))
+                if (property.NameEquals("columnIndex"u8))
                 {
                     columnIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rowSpan"))
+                if (property.NameEquals("rowSpan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowSpan = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("columnSpan"))
+                if (property.NameEquals("columnSpan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     columnSpan = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingRegions"))
+                if (property.NameEquals("boundingRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BoundingRegion> array = new List<BoundingRegion>();
@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     boundingRegions = array;
                     continue;
                 }
-                if (property.NameEquals("spans"))
+                if (property.NameEquals("spans"u8))
                 {
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())

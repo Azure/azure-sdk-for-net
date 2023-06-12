@@ -245,7 +245,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         {
             if (_receiver is ServiceBusSessionReceiver || _sessionEventArgs != null)
             {
-                throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
+                throw new InvalidOperationException("Messages cannot be locked when working with session-enabled entities. Locks are handled at the session level." +
+                                                    "In order to manually renew the session lock, bind to the 'ServiceBusSessionMessageActions' type and call 'RenewSessionLockAsync'.");
             }
             if (_receiver != null)
             {

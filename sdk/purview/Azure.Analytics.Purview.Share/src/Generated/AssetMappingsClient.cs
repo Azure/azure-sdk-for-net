@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The AssetMappings service client.
+    // Data plane generated client.
     /// <summary> The AssetMappings service client. </summary>
     public partial class AssetMappingsClient
     {
@@ -63,78 +60,24 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Get AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAssetMappingAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get an asset mapping for a received share
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the blob storage account asset mapping.
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappingAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAssetMappingAsync(string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -154,78 +97,24 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Get AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Get AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAssetMapping with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get an asset mapping for a received share
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the blob storage account asset mapping.
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMapping(string,string,RequestContext)']/*" />
         public virtual Response GetAssetMapping(string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -245,7 +134,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> List AssetMappings in a received share. </summary>
+        /// <summary>
+        /// [Protocol Method] List AssetMappings in a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -255,76 +153,26 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAssetMappingsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAssetMappingsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// List asset mappings for a received share
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AssetMappingListValue</c>:
-        /// <code>{
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappingsAsync(string,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAssetMappingsAsync(string receivedShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetAssetMappingsImplementationAsync("AssetMappingsClient.GetAssetMappings", receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
-        private AsyncPageable<BinaryData> GetAssetMappingsImplementationAsync(string diagnosticsScopeName, string receivedShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context)
-                        : CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> List AssetMappings in a received share. </summary>
+        /// <summary>
+        /// [Protocol Method] List AssetMappings in a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -334,226 +182,36 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAssetMappings with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// foreach (var data in client.GetAssetMappings("<receivedShareName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAssetMappings with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// foreach (var data in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// List asset mappings for a received share
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>AssetMappingListValue</c>:
-        /// <code>{
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappings(string,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAssetMappings(string receivedShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetAssetMappingsImplementation("AssetMappingsClient.GetAssetMappings", receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
-        private Pageable<BinaryData> GetAssetMappingsImplementation(string diagnosticsScopeName, string receivedShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context)
-                        : CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>
+        /// <summary>
+        /// [Protocol Method] Maps a source asset in the sent share to a destination asset in the received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/>, <paramref name="assetMappingName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        ///         containerName = "<containerName>",
-        ///         folder = "<folder>",
-        ///         storageAccountResourceId = "<storageAccountResourceId>",
-        ///     },
-        ///     kind = "AdlsGen2Account",
-        /// };
-        /// 
-        /// var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        ///         containerName = "<containerName>",
-        ///         folder = "<folder>",
-        ///         mountPath = "<mountPath>",
-        ///         storageAccountResourceId = "<storageAccountResourceId>",
-        ///     },
-        ///     kind = "AdlsGen2Account",
-        /// };
-        /// 
-        /// var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Create an asset mapping on a received share
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the blob storage account asset mapping.
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the blob storage account asset mapping.
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateAsync(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -574,157 +232,26 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>
+        /// <summary>
+        /// [Protocol Method] Maps a source asset in the sent share to a destination asset in the received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/>, <paramref name="assetMappingName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call Create with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        ///         containerName = "<containerName>",
-        ///         folder = "<folder>",
-        ///         storageAccountResourceId = "<storageAccountResourceId>",
-        ///     },
-        ///     kind = "AdlsGen2Account",
-        /// };
-        /// 
-        /// var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call Create with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        ///         containerName = "<containerName>",
-        ///         folder = "<folder>",
-        ///         mountPath = "<mountPath>",
-        ///         storageAccountResourceId = "<storageAccountResourceId>",
-        ///     },
-        ///     kind = "AdlsGen2Account",
-        /// };
-        /// 
-        /// var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Create an asset mapping on a received share
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the blob storage account asset mapping.
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
-        /// <code>{
-        ///   properties: {
-        ///     assetId: Guid, # Required. The id of the sender asset.
-        ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
-        ///     containerName: string, # Required. Name of the container to received the shared paths.
-        ///     folder: string, # Required. Folder under which the shared paths will be reflected.
-        ///     location: string, # Optional. Location of the receiver storage account.
-        ///     mountPath: string, # Optional. Optional mount path for the shared paths.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
-        ///   }, # Required. Properties of the blob storage account asset mapping.
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='Create(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> Create(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -745,7 +272,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -754,19 +290,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks> Delete an asset mapping for a received share. </remarks>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -786,7 +310,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -795,19 +328,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks> Delete an asset mapping for a received share. </remarks>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='Delete(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation Delete(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));

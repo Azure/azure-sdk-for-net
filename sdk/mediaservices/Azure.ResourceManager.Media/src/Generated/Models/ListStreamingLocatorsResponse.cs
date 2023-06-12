@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
         internal ListStreamingLocatorsResponse()
         {
-            StreamingLocators = new ChangeTrackingList<AssetStreamingLocator>();
+            StreamingLocators = new ChangeTrackingList<MediaAssetStreamingLocator>();
         }
 
         /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
         /// <param name="streamingLocators"> The list of Streaming Locators. </param>
-        internal ListStreamingLocatorsResponse(IReadOnlyList<AssetStreamingLocator> streamingLocators)
+        internal ListStreamingLocatorsResponse(IReadOnlyList<MediaAssetStreamingLocator> streamingLocators)
         {
             StreamingLocators = streamingLocators;
         }
 
         /// <summary> The list of Streaming Locators. </summary>
-        public IReadOnlyList<AssetStreamingLocator> StreamingLocators { get; }
+        public IReadOnlyList<MediaAssetStreamingLocator> StreamingLocators { get; }
     }
 }

@@ -86,7 +86,7 @@ ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync(
 
 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 {
-    // This will through an InvalidOperationException because a "receive" cannot be
+    // This will throw an InvalidOperationException because a "receive" cannot be
     // routed through a different entity.
     await receiverA.CompleteMessageAsync(receivedMessage);
     await senderB.SendMessageAsync(new ServiceBusMessage());
@@ -94,9 +94,3 @@ using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
     ts.Complete();
 }
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample06_Transactions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample06_Transactions.cs)

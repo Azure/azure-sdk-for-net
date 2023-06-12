@@ -7,18 +7,14 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/containerregistry/resource-manager/readme.md
-tag: package-2022-02-preview
+# default tag is a preview version
+require: https://github.com/Azure/azure-rest-api-specs/blob/8a28143c7271d4496296ed47f70c3cb5a9981e57/specification/containerregistry/resource-manager/readme.md
+tag: package-2022-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-suppress-abstract-base-class:
-- ContainerRegistryRunContent
-- ContainerRegistryTaskStepProperties
-- ContainerRegistryTaskStepUpdateContent
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -242,6 +238,7 @@ rename-mapping:
   ExportPipelineTargetProperties.type: PipelineTargetType
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
+  ImportSource.registryUri: RegistryAddress
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -271,4 +268,8 @@ directive:
     where: $.definitions..expiry
     transform: >
       $['x-ms-client-name'] = 'ExpireOn';
+  - from: types.json
+    where: $.parameters.SubscriptionIdParameter.format
+    transform: >
+      return undefined;
 ```

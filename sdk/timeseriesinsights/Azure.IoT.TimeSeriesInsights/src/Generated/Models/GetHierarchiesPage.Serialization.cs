@@ -15,15 +15,18 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetHierarchiesPage DeserializeGetHierarchiesPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TimeSeriesHierarchy>> hierarchies = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hierarchies"))
+                if (property.NameEquals("hierarchies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesHierarchy> array = new List<TimeSeriesHierarchy>();
@@ -34,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchies = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

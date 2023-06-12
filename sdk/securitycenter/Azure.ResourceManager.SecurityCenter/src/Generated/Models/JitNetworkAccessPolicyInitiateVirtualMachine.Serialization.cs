@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("ports");
+            writer.WritePropertyName("ports"u8);
             writer.WriteStartArray();
             foreach (var item in Ports)
             {

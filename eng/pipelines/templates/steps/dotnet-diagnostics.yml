@@ -1,0 +1,13 @@
+parameters:
+- name: LogFilePath
+  type: string
+  default: $(Build.ArtifactStagingDirectory)/msbuild.binlog
+
+steps:
+- pwsh: |
+    if ('$(System.Debug)' -eq 'true') {
+      Write-Host "##vso[task.setvariable variable=DiagnosticArguments;]/binaryLogger:LogFile=${{ parameters.LogFilePath }}"
+    } else {
+      Write-Host "##vso[task.setvariable variable=DiagnosticArguments;]"
+    }
+  displayName: Set diagnostic arguments

@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> Content of the email. </summary>
     public partial class EmailContent
@@ -17,10 +18,7 @@ namespace Azure.Communication.Email.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/> is null. </exception>
         public EmailContent(string subject)
         {
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
+            Argument.AssertNotNull(subject, nameof(subject));
 
             Subject = subject;
         }

@@ -12,16 +12,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- This is needed for discovering tests in test explorer -->
-    <PackageReference Include="System.Runtime.InteropServices" />	
-  </ItemGroup>
-
   <PropertyGroup>
     <AssemblyTitle>Microsoft.Azure.Batch.FileStaging.Tests</AssemblyTitle>
     <Description>Azure Batch File Staging integration tests</Description>

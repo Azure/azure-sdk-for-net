@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -15,35 +14,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
     internal partial class VmHostsListResponse
     {
         /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
-        /// <param name="value"> The items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="nextLink"/> is null. </exception>
-        internal VmHostsListResponse(IEnumerable<VmInfo> value, string nextLink)
+        internal VmHostsListResponse()
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            Value = value.ToList();
-            NextLink = nextLink;
+            Value = new ChangeTrackingList<DynatraceMonitorVmInfo>();
         }
 
         /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal VmHostsListResponse(IReadOnlyList<VmInfo> value, string nextLink)
+        internal VmHostsListResponse(IReadOnlyList<DynatraceMonitorVmInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<VmInfo> Value { get; }
+        public IReadOnlyList<DynatraceMonitorVmInfo> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

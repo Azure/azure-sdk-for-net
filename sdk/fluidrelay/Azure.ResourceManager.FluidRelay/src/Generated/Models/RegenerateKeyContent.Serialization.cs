@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyName");
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName.ToSerialString());
             writer.WriteEndObject();
         }

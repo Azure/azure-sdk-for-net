@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public OrbitalSpacecraftLink(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalLinkDirection direction, OrbitalLinkPolarization polarization)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             CenterFrequencyMHz = centerFrequencyMHz;

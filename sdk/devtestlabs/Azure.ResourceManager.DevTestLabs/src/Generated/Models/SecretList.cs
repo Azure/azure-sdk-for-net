@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SecretList. </summary>
         internal SecretList()
         {
-            Value = new ChangeTrackingList<SecretData>();
+            Value = new ChangeTrackingList<DevTestLabSecretData>();
         }
 
         /// <summary> Initializes a new instance of SecretList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal SecretList(IReadOnlyList<SecretData> value, string nextLink)
+        internal SecretList(IReadOnlyList<DevTestLabSecretData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<SecretData> Value { get; }
+        public IReadOnlyList<DevTestLabSecretData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

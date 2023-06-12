@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="consumerEmail"> Email of the user who created the synchronization. </param>
         /// <param name="consumerName"> Name of the user who created the synchronization. </param>
         /// <param name="consumerTenantName"> Tenant name of the consumer who created the synchronization. </param>
-        /// <param name="durationMs"> synchronization duration. </param>
+        /// <param name="durationInMilliSeconds"> synchronization duration. </param>
         /// <param name="endOn"> End time of synchronization. </param>
         /// <param name="message"> message of synchronization. </param>
         /// <param name="startOn"> start time of synchronization. </param>
         /// <param name="status"> Raw Status. </param>
         /// <param name="synchronizationId"> Synchronization id. </param>
         /// <param name="synchronizationMode"> Synchronization mode. </param>
-        internal ShareSynchronization(string consumerEmail, string consumerName, string consumerTenantName, int? durationMs, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, string synchronizationId, SynchronizationMode? synchronizationMode)
+        internal ShareSynchronization(string consumerEmail, string consumerName, string consumerTenantName, int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid? synchronizationId, SynchronizationMode? synchronizationMode)
         {
             ConsumerEmail = consumerEmail;
             ConsumerName = consumerName;
             ConsumerTenantName = consumerTenantName;
-            DurationMs = durationMs;
+            DurationInMilliSeconds = durationInMilliSeconds;
             EndOn = endOn;
             Message = message;
             StartOn = startOn;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Tenant name of the consumer who created the synchronization. </summary>
         public string ConsumerTenantName { get; set; }
         /// <summary> synchronization duration. </summary>
-        public int? DurationMs { get; set; }
+        public int? DurationInMilliSeconds { get; set; }
         /// <summary> End time of synchronization. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> message of synchronization. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Raw Status. </summary>
         public string Status { get; set; }
         /// <summary> Synchronization id. </summary>
-        public string SynchronizationId { get; set; }
+        public Guid? SynchronizationId { get; set; }
         /// <summary> Synchronization mode. </summary>
         public SynchronizationMode? SynchronizationMode { get; }
     }

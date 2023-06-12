@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsResolverOutboundEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the DnsResolverOutboundEndpoint data model.
+    /// Describes an outbound endpoint for a DNS resolver.
+    /// </summary>
     public partial class DnsResolverOutboundEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DnsResolverOutboundEndpointData. </summary>
@@ -24,10 +27,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
-            if (subnet == null)
-            {
-                throw new ArgumentNullException(nameof(subnet));
-            }
+            Argument.AssertNotNull(subnet, nameof(subnet));
 
             Subnet = subnet;
         }

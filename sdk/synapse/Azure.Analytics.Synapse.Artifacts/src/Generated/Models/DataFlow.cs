@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Azure Synapse nested object which contains a flow with data movements and transformations. </summary>
+    /// <summary>
+    /// Azure Synapse nested object which contains a flow with data movements and transformations.
+    /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+    /// </summary>
     public partial class DataFlow
     {
         /// <summary> Initializes a new instance of DataFlow. </summary>

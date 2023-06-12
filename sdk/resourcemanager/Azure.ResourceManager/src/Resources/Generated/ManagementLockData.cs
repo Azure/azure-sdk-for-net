@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ManagementLock data model. </summary>
+    /// <summary>
+    /// A class representing the ManagementLock data model.
+    /// The lock information.
+    /// </summary>
     public partial class ManagementLockData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagementLockData. </summary>

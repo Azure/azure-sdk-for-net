@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TypeIds))
             {
-                writer.WritePropertyName("typeIds");
+                writer.WritePropertyName("typeIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in TypeIds)
                 {
@@ -27,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             if (Optional.IsCollectionDefined(Names))
             {
-                writer.WritePropertyName("names");
+                writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
                 foreach (var item in Names)
                 {

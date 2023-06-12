@@ -92,9 +92,30 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [1,24] hours range. If not provided, the default value of 24 hours will be used.
+
+```C# Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
+TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+string token = tokenResponse.Value.Token;
+DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+Console.WriteLine($"Token: {token}");
+Console.WriteLine($"Expires On: {expiresOn}");
+```
+
 ### Creating a user and a token in the same request
 ```C# Snippet:CreateCommunicationUserAndToken
 Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
+```
+
+It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [1,24] hours range. If not provided, the default value of 24 hours will be used.
+
+```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
 var (user, token) = response.Value;
 Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");

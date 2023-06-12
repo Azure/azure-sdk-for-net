@@ -17,7 +17,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29958")]
         public async Task SupportsAadAuthentication()
         {
             QuestionAnsweringClientOptions clientOptions = new QuestionAnsweringClientOptions()
@@ -66,11 +65,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersResult> response = await Client.GetAnswersAsync("How long should my Surface battery last?", TestEnvironment.Project, options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(2));
+            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.7).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
-            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 136 && answer.Source == "surface-pro-4-user-guide-EN.pdf"));
+            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 26 && answer.Source == "surface-book-user-guide-EN.pdf"));
         }
 
         [RecordedTest]
@@ -99,7 +98,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.6).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
-            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 132 && answer.ShortAnswer.Text?.Trim() == "two to four hours"));
+            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 23 && answer.ShortAnswer.Text?.Trim() == "two to four hours"));
         }
 
         [RecordedTest]
@@ -144,13 +143,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [RecordedTest]
         public async Task GetsKnowledgeBaseQuestion()
         {
-            Response<AnswersResult> response = await Client.GetAnswersAsync(133, TestEnvironment.Project);
+            Response<AnswersResult> response = await Client.GetAnswersAsync(24, TestEnvironment.Project);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(1));
 
             KnowledgeBaseAnswer answer = response.Value.Answers[0];
-            Assert.That(answer.QnaId, Is.EqualTo(133));
+            Assert.That(answer.QnaId, Is.EqualTo(24));
             Assert.That(answer.Questions, Has.All.EqualTo("Check the battery level"));
         }
 

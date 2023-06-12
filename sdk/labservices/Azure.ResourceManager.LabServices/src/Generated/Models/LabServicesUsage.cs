@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The core usage details. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="unit"> The unit details. </param>
         /// <param name="name"> The name. </param>
         /// <param name="id"> The fully qualified arm resource id. </param>
-        internal LabServicesUsage(long? currentValue, long? limit, UsageUnit? unit, UsageName name, string id)
+        internal LabServicesUsage(long? currentValue, long? limit, LabServicesUsageUnit? unit, LabServicesUsageName name, ResourceIdentifier id)
         {
             CurrentValue = currentValue;
             Limit = limit;
@@ -35,10 +37,10 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> The limit integer. </summary>
         public long? Limit { get; }
         /// <summary> The unit details. </summary>
-        public UsageUnit? Unit { get; }
+        public LabServicesUsageUnit? Unit { get; }
         /// <summary> The name. </summary>
-        public UsageName Name { get; }
+        public LabServicesUsageName Name { get; }
         /// <summary> The fully qualified arm resource id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

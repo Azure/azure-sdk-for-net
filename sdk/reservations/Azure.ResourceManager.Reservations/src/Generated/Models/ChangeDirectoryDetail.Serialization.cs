@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ChangeDirectoryDetail DeserializeChangeDirectoryDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ChangeDirectoryResult> reservationOrder = default;
             Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reservationOrder"))
+                if (property.NameEquals("reservationOrder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reservations"))
+                if (property.NameEquals("reservations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ChangeDirectoryResult> array = new List<ChangeDirectoryResult>();

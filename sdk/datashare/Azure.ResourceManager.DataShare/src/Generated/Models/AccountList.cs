@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of AccountList. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AccountList(IEnumerable<AccountData> value)
+        internal AccountList(IEnumerable<DataShareAccountData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of AccountList. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal AccountList(string nextLink, IReadOnlyList<AccountData> value)
+        internal AccountList(string nextLink, IReadOnlyList<DataShareAccountData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +38,6 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type DataTransferObjects. </summary>
-        public IReadOnlyList<AccountData> Value { get; }
+        public IReadOnlyList<DataShareAccountData> Value { get; }
     }
 }

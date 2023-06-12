@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         public string Scope { get; set; }
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Subscription name. </summary>
         public string DisplayName { get; set; }
         /// <summary> Primary subscription key. </summary>

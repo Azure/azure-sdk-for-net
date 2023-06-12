@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeoutSeconds))
             {
-                writer.WritePropertyName("timeoutSeconds");
+                writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
             if (Optional.IsDefined(RetryAttempts))
             {
-                writer.WritePropertyName("retryAttempts");
+                writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
             if (Optional.IsDefined(InitialRetryIntervalSeconds))
             {
-                writer.WritePropertyName("initialRetryIntervalSeconds");
+                writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
             if (Optional.IsDefined(MaximumRetryIntervalSeconds))
             {
-                writer.WritePropertyName("maximumRetryIntervalSeconds");
+                writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
             if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
             {
-                writer.WritePropertyName("retryIntervalBackoffMultiplier");
+                writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobStepExecutionOptions DeserializeJobStepExecutionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> timeoutSeconds = default;
             Optional<int> retryAttempts = default;
             Optional<int> initialRetryIntervalSeconds = default;
@@ -52,51 +56,46 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<float> retryIntervalBackoffMultiplier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeoutSeconds"))
+                if (property.NameEquals("timeoutSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeoutSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("retryAttempts"))
+                if (property.NameEquals("retryAttempts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retryAttempts = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("initialRetryIntervalSeconds"))
+                if (property.NameEquals("initialRetryIntervalSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialRetryIntervalSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximumRetryIntervalSeconds"))
+                if (property.NameEquals("maximumRetryIntervalSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumRetryIntervalSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("retryIntervalBackoffMultiplier"))
+                if (property.NameEquals("retryIntervalBackoffMultiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retryIntervalBackoffMultiplier = property.Value.GetSingle();

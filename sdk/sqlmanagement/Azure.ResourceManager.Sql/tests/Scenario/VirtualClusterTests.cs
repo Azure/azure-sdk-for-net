@@ -9,32 +9,23 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests.Scenario
+namespace Azure.ResourceManager.Sql.Tests
 {
-    public class VirtualClusterTests : SqlManagementClientBase
+    public class VirtualClusterTests : SqlManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private ResourceIdentifier _resourceGroupIdentifier;
 
         public VirtualClusterTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource rg = rgLro.Value;
-            _resourceGroupIdentifier = rg.Id;
-            await StopSessionRecordingAsync();
         }
 
         [SetUp]
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            var lro = await client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            _resourceGroup = lro.Value;
         }
 
         [TearDown]
@@ -54,10 +45,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately
             // Create Virtual Cluster
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
-            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             // 1.CheckIfExist

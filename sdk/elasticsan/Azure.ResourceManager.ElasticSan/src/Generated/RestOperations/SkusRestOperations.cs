@@ -37,13 +37,15 @@ namespace Azure.ResourceManager.ElasticSan
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string filter)
+        internal HttpMessage CreateListRequest(string subscriptionId, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ElasticSan/skus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -57,19 +59,24 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> List all the available Skus in the region and information related to them. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SkuInformationList>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ElasticSanSkuInformationList>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListRequest(subscriptionId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SkuInformationList value = default;
+                        ElasticSanSkuInformationList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuInformationList.DeserializeSkuInformationList(document.RootElement);
+                        value = ElasticSanSkuInformationList.DeserializeElasticSanSkuInformationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -78,19 +85,24 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> List all the available Skus in the region and information related to them. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SkuInformationList> List(string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ElasticSanSkuInformationList> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListRequest(subscriptionId, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SkuInformationList value = default;
+                        ElasticSanSkuInformationList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuInformationList.DeserializeSkuInformationList(document.RootElement);
+                        value = ElasticSanSkuInformationList.DeserializeElasticSanSkuInformationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

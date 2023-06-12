@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                     throw new ValidationException(ValidationRules.MinLength, "subscriptionId", 1);
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "attestationName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "attestationName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -959,7 +959,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "attestationName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1167,7 +1167,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "attestationName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1331,7 +1331,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1558,7 +1558,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "attestationName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1739,7 +1739,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "attestationName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1923,7 +1923,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2168,7 +2168,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2390,7 +2390,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

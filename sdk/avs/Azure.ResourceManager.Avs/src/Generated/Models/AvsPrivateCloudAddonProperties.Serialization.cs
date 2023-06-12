@@ -15,43 +15,28 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("addonType");
+            writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("addonType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element);
                     case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element);
                     case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element);
                     case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);
                 }
             }
-            AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("addonType"))
-                {
-                    addonType = new AddonType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new AddonProvisioningState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAvsPrivateCloudAddonProperties(addonType, Optional.ToNullable(provisioningState));
+            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element);
         }
     }
 }

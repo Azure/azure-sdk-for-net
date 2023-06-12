@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataflow"/> is null. </exception>
         public ExecuteDataFlowActivity(string name, DataFlowReference dataflow) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (dataflow == null)
-            {
-                throw new ArgumentNullException(nameof(dataflow));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(dataflow, nameof(dataflow));
 
             Dataflow = dataflow;
             Type = "ExecuteDataFlow";
@@ -48,7 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="traceLevel"> Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
-        internal ExecuteDataFlowActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataflow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, object traceLevel, object continueOnError, object runConcurrently) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
+        internal ExecuteDataFlowActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataflow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, object traceLevel, object continueOnError, object runConcurrently, object sourceStagingConcurrency) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Dataflow = dataflow;
             Staging = staging;
@@ -57,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             TraceLevel = traceLevel;
             ContinueOnError = continueOnError;
             RunConcurrently = runConcurrently;
+            SourceStagingConcurrency = sourceStagingConcurrency;
             Type = type ?? "ExecuteDataFlow";
         }
 
@@ -74,5 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ContinueOnError { get; set; }
         /// <summary> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </summary>
         public object RunConcurrently { get; set; }
+        /// <summary> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </summary>
+        public object SourceStagingConcurrency { get; set; }
     }
 }

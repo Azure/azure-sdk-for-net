@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="uri"/> is null. </exception>
         public BatchKeyVaultReference(ResourceIdentifier id, Uri uri)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Id = id;
             Uri = uri;

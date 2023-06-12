@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ServiceFabricList. </summary>
         internal ServiceFabricList()
         {
-            Value = new ChangeTrackingList<ServiceFabricData>();
+            Value = new ChangeTrackingList<DevTestLabServiceFabricData>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal ServiceFabricList(IReadOnlyList<ServiceFabricData> value, string nextLink)
+        internal ServiceFabricList(IReadOnlyList<DevTestLabServiceFabricData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<ServiceFabricData> Value { get; }
+        public IReadOnlyList<DevTestLabServiceFabricData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

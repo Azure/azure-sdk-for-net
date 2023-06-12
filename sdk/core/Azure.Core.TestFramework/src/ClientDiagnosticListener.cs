@@ -148,9 +148,11 @@ namespace Azure.Core.Tests
                 {
                     if (operationName == activity.Parent?.OperationName)
                     {
+#if NET5_0_OR_GREATER
                         // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
                         // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
                         throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+#endif
                     }
 
                     activity = activity.Parent;

@@ -15,32 +15,35 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PlanRequesterDetails DeserializePlanRequesterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> planId = default;
             Optional<string> planDisplayName = default;
-            Optional<IReadOnlyList<UserRequestDetails>> requesters = default;
+            Optional<IReadOnlyList<PlanRequesterInfo>> requesters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("planId"))
+                if (property.NameEquals("planId"u8))
                 {
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planDisplayName"))
+                if (property.NameEquals("planDisplayName"u8))
                 {
                     planDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requesters"))
+                if (property.NameEquals("requesters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserRequestDetails> array = new List<UserRequestDetails>();
+                    List<PlanRequesterInfo> array = new List<PlanRequesterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserRequestDetails.DeserializeUserRequestDetails(item));
+                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item));
                     }
                     requesters = array;
                     continue;

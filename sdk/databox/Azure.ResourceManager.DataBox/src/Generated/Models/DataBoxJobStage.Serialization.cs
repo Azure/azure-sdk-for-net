@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxStageName> stageName = default;
             Optional<string> displayName = default;
             Optional<DataBoxStageStatus> stageStatus = default;
@@ -22,46 +26,42 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<BinaryData> jobStageDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageName = new DataBoxStageName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stageStatus"))
+                if (property.NameEquals("stageStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageStatus = property.Value.GetString().ToDataBoxStageStatus();
                     continue;
                 }
-                if (property.NameEquals("stageTime"))
+                if (property.NameEquals("stageTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("jobStageDetails"))
+                if (property.NameEquals("jobStageDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobStageDetails = BinaryData.FromString(property.Value.GetRawText());

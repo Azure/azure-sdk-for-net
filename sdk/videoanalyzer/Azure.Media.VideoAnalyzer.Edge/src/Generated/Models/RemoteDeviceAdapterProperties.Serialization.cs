@@ -17,34 +17,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("target");
+            writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            writer.WritePropertyName("iotHubDeviceConnection");
+            writer.WritePropertyName("iotHubDeviceConnection"u8);
             writer.WriteObjectValue(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 
         internal static RemoteDeviceAdapterProperties DeserializeRemoteDeviceAdapterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             RemoteDeviceAdapterTarget target = default;
             IotHubDeviceConnection iotHubDeviceConnection = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = RemoteDeviceAdapterTarget.DeserializeRemoteDeviceAdapterTarget(property.Value);
                     continue;
                 }
-                if (property.NameEquals("iotHubDeviceConnection"))
+                if (property.NameEquals("iotHubDeviceConnection"u8))
                 {
                     iotHubDeviceConnection = IotHubDeviceConnection.DeserializeIotHubDeviceConnection(property.Value);
                     continue;

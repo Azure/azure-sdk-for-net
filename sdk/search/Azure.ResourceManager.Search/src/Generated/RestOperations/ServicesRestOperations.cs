@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-08-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -546,9 +546,9 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        SearchServiceNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = SearchServiceNameAvailabilityResult.DeserializeSearchServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckNameAvailability(string subscriptionId, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public Response<SearchServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -574,9 +574,9 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        SearchServiceNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = SearchServiceNameAvailabilityResult.DeserializeSearchServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>

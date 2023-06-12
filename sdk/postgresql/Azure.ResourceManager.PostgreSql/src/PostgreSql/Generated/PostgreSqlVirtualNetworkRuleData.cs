@@ -11,7 +11,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlVirtualNetworkRule data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlVirtualNetworkRule data model.
+    /// A virtual network rule.
+    /// </summary>
     public partial class PostgreSqlVirtualNetworkRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlVirtualNetworkRuleData. </summary>

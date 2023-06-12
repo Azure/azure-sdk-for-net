@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateThumbprint"/> is null. </exception>
         public ClusterClientCertificateThumbprint(bool isAdmin, BinaryData certificateThumbprint)
         {
-            if (certificateThumbprint == null)
-            {
-                throw new ArgumentNullException(nameof(certificateThumbprint));
-            }
+            Argument.AssertNotNull(certificateThumbprint, nameof(certificateThumbprint));
 
             IsAdmin = isAdmin;
             CertificateThumbprint = certificateThumbprint;

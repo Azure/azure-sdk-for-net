@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ManagedClusterUpgradeProfile data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedClusterUpgradeProfile data model.
+    /// The list of available upgrades for compute pools.
+    /// </summary>
     public partial class ManagedClusterUpgradeProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>
@@ -23,14 +26,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
         internal ManagedClusterUpgradeProfileData(ManagedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ManagedClusterPoolUpgradeProfile> agentPoolProfiles)
         {
-            if (controlPlaneProfile == null)
-            {
-                throw new ArgumentNullException(nameof(controlPlaneProfile));
-            }
-            if (agentPoolProfiles == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolProfiles));
-            }
+            Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
+            Argument.AssertNotNull(agentPoolProfiles, nameof(agentPoolProfiles));
 
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles.ToList();

@@ -15,19 +15,22 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 {
-    [Extension("AzureStorageBlobs", "Blobs")]
+    [Extension(Constants.WebJobsBlobExtensionName, "Blobs")]
     internal class BlobsExtensionConfigProvider : IExtensionConfigProvider,
         IConverter<BlobAttribute, BlobContainerClient>,
         IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>,
@@ -46,6 +49,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private readonly HttpRequestProcessor _httpRequestProcessor;
         private readonly IFunctionDataCache _functionDataCache;
 
+        private readonly IConfiguration _configuration;
+
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
             BlobTriggerAttributeBindingProvider triggerBinder,
@@ -55,8 +60,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
             IFunctionDataCache functionDataCache,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IConfiguration configuration)
         {
+            _configuration = configuration;
             _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
@@ -76,17 +83,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
-            ILoggerFactory loggerFactory) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory)
+            ILoggerFactory loggerFactory,
+            IConfiguration configuration) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory, configuration)
         {
         }
 
         public void Initialize(ExtensionConfigContext context)
         {
-            InitilizeBlobBindings(context);
+            InitializeBlobBindings(context);
             InitializeBlobTriggerBindings(context);
         }
 
-        private void InitilizeBlobBindings(ExtensionConfigContext context)
+        private void InitializeBlobBindings(ExtensionConfigContext context)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             Uri url = context.GetWebhookHandler();
@@ -100,6 +108,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             rule.BindToInput<MultiBlobContext>(this); // Intermediate private context to capture state
             rule.AddOpenConverter<MultiBlobContext, IEnumerable<BlobCollectionType>>(typeof(BlobCollectionConverter<>), this);
+            rule.AddOpenConverter<MultiBlobContext, BlobCollectionType[]>(typeof(BlobCollectionConverter<>), this);
+
+            rule.BindToInput<ParameterBindingData>((attr) => ConvertToParameterBindingData(attr)); // Precedence, must beat BindToStream
 
             // BindToStream will also handle the custom Stream-->T converters.
             rule.BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
@@ -127,6 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 BindToInput<Stream>(ConvertToCloudBlobStreamAsync);
 
             RegisterCommonConverters(rule);
+            rule.AddConverter<BlobBaseClient, ParameterBindingData>(ConvertBlobInputToParameterBindingData);
             rule.AddConverter(new StorageBlobConverter<BlobClient>());
         }
 
@@ -140,14 +152,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
+            rule.AddConverter<BlobBaseClient, ParameterBindingData>(ConvertToParameterBindingData);
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete. FluentBindingRule is "Not ready for public consumption."
         private void RegisterCommonConverters<T>(FluentBindingRule<T> rule) where T : Attribute
 #pragma warning restore CS0618 // Type or member is obsolete
         {
-            //  Converter manager already has Stream-->Byte[],String,TextReader
+            // Converter manager already has Stream-->Byte[],String,TextReader
             rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
+
             // Blob type is a property of an existing blob.
             rule.AddConverter(new StorageBlobConverter<AppendBlobClient>());
             rule.AddConverter(new StorageBlobConverter<BlockBlobClient>());
@@ -192,8 +206,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         #region CloudBlob rules
 
         // Produce a write only stream.
-        private async Task<Stream> ConvertToCloudBlobStreamAsync(
-           BlobAttribute blobAttribute, ValueBindingContext context)
+        private async Task<Stream> ConvertToCloudBlobStreamAsync(BlobAttribute blobAttribute, ValueBindingContext context)
         {
             var stream = await CreateStreamAsync(blobAttribute, context).ConfigureAwait(false);
             return stream;
@@ -203,6 +216,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             var blob = await GetBlobAsync(blobAttribute, cancellationToken, typeof(T)).ConfigureAwait(false);
             return (T)blob.BlobClient;
+        }
+
+        private ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
+        {
+            var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
+            return CreateParameterBindingData(blobAttribute.Connection, blobPath.BlobName, blobPath.ContainerName);
+        }
+
+        private ParameterBindingData ConvertToParameterBindingData(BlobBaseClient input, BlobTriggerAttribute blobTriggerAttribute)
+        {
+            return CreateParameterBindingData(blobTriggerAttribute.Connection, input.Name, input.BlobContainerName);
+        }
+
+        private ParameterBindingData ConvertBlobInputToParameterBindingData(BlobBaseClient input)
+        {
+            return CreateParameterBindingData(null, input.Name, input.BlobContainerName);
+        }
+
+        private ParameterBindingData CreateParameterBindingData(string connection, string blobName, string containerName)
+        {
+            string connectionName = !string.IsNullOrEmpty(connection) ? _nameResolver.ResolveWholeString(connection) : string.Empty;
+            var connectionSection = _blobServiceClientProvider.GetWebJobsConnectionStringSection(connectionName);
+
+            var blobDetails = new BlobParameterBindingDataContent()
+            {
+                Connection = connectionSection.Key,
+                BlobName = blobName,
+                ContainerName = containerName
+            };
+
+            var blobDetailsBinaryData = new BinaryData(blobDetails);
+            var bindingData = new ParameterBindingData("1.0", Constants.WebJobsBlobExtensionName, blobDetailsBinaryData, "application/json");
+            return bindingData;
         }
 
         #endregion
@@ -223,6 +269,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 typeof(BlockBlobClient),
                 typeof(PageBlobClient),
                 typeof(AppendBlobClient),
+                typeof(ParameterBindingData),
                 typeof(TextReader),
                 typeof(Stream),
                 typeof(BinaryData),
@@ -238,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         // Converter to produce an IEnumerable<T> for binding to multiple blobs.
         // T must have been matched by MultiBlobType
-        private class BlobCollectionConverter<T> : IAsyncConverter<MultiBlobContext, IEnumerable<T>>
+        private class BlobCollectionConverter<T> : IAsyncConverter<MultiBlobContext, IEnumerable<T>>, IAsyncConverter<MultiBlobContext, T[]>
         {
             private readonly FuncAsyncConverter<BlobBaseClient, T> _converter;
 
@@ -252,7 +299,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 }
             }
 
-            public async Task<IEnumerable<T>> ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
+            async Task<T[]> IAsyncConverter<MultiBlobContext, T[]>.ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
+            {
+                    IEnumerable<T> result = await ((IAsyncConverter<MultiBlobContext, IEnumerable<T>>)this).ConvertAsync(context, cancellationToken).ConfigureAwait(false);
+                    T[] convertedResult = result.ToArray();
+                    return convertedResult;
+            }
+
+            async Task<IEnumerable<T>> IAsyncConverter<MultiBlobContext, IEnumerable<T>>.ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
             {
                 // Query the blob container using the blob prefix (if specified)
                 // Note that we're explicitly using useFlatBlobListing=true to collapse
@@ -276,6 +330,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                     switch (blobItem.Properties.BlobType)
                     {
                         case BlobType.Block:
+                            if (typeof(T) == typeof(ParameterBindingData))
+                            {
+                                src = blobContainerClient.GetBlobClient(blobItem.Name);
+                            }
                             if (typeof(T) == typeof(BlobClient))
                             {
                                 // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.
@@ -315,7 +373,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             public BlobContainerClient Container;
         }
 
-        // Initial rule that captures the muti-blob context.
+        // Initial rule that captures the multi-blob context.
         // Then a converter morphs this to the user type
         MultiBlobContext IConverter<BlobAttribute, MultiBlobContext>.Convert(BlobAttribute attr)
         {
@@ -424,7 +482,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         }
 
         private BlobServiceClient GetClient(
-         BlobAttribute blobAttribute)
+            BlobAttribute blobAttribute)
         {
             return _blobServiceClientProvider.Get(blobAttribute.Connection, _nameResolver);
         }
@@ -488,6 +546,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 BlobName = blobUriBuilder.BlobName,
                 FunctionId = functionId
             };
+        }
+
+        private class BlobParameterBindingDataContent
+        {
+            public string Connection { get; set; }
+            public string ContainerName { get; set; }
+            public string BlobName { get; set; }
         }
     }
 }

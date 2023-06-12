@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="number"></param>
         /// <param name="protocol"></param>
         /// <param name="maxRequestAccessDuration"> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </param>
-        public JitNetworkAccessPortRule(int number, Protocol protocol, TimeSpan maxRequestAccessDuration)
+        public JitNetworkAccessPortRule(int number, JitNetworkAccessPortProtocol protocol, TimeSpan maxRequestAccessDuration)
         {
             Number = number;
             Protocol = protocol;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the &quot;allowedSourceAddressPrefixes&quot; parameter. Should be an IP address or CIDR, for example &quot;192.168.0.3&quot; or &quot;192.168.0.0/16&quot;. </param>
         /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the &quot;allowedSourceAddressPrefix&quot; parameter. </param>
         /// <param name="maxRequestAccessDuration"> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </param>
-        internal JitNetworkAccessPortRule(int number, Protocol protocol, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, TimeSpan maxRequestAccessDuration)
+        internal JitNetworkAccessPortRule(int number, JitNetworkAccessPortProtocol protocol, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, TimeSpan maxRequestAccessDuration)
         {
             Number = number;
             Protocol = protocol;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Gets or sets the number. </summary>
         public int Number { get; set; }
         /// <summary> Gets or sets the protocol. </summary>
-        public Protocol Protocol { get; set; }
+        public JitNetworkAccessPortProtocol Protocol { get; set; }
         /// <summary> Mutually exclusive with the &quot;allowedSourceAddressPrefixes&quot; parameter. Should be an IP address or CIDR, for example &quot;192.168.0.3&quot; or &quot;192.168.0.0/16&quot;. </summary>
         public string AllowedSourceAddressPrefix { get; set; }
         /// <summary> Mutually exclusive with the &quot;allowedSourceAddressPrefix&quot; parameter. </summary>

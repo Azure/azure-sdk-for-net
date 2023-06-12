@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fencingClientId"/> or <paramref name="fencingClientPassword"/> is null. </exception>
         public HighAvailabilitySoftwareConfiguration(string fencingClientId, string fencingClientPassword)
         {
-            if (fencingClientId == null)
-            {
-                throw new ArgumentNullException(nameof(fencingClientId));
-            }
-            if (fencingClientPassword == null)
-            {
-                throw new ArgumentNullException(nameof(fencingClientPassword));
-            }
+            Argument.AssertNotNull(fencingClientId, nameof(fencingClientId));
+            Argument.AssertNotNull(fencingClientPassword, nameof(fencingClientPassword));
 
             FencingClientId = fencingClientId;
             FencingClientPassword = fencingClientPassword;

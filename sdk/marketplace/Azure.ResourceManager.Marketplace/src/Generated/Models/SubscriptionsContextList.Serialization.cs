@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static SubscriptionsContextList DeserializeSubscriptionsContextList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> subscriptionsIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionsIds"))
+                if (property.NameEquals("subscriptionsIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

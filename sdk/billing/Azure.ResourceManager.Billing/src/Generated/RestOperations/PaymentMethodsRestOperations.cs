@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodData>> GetByUserAsync(string paymentMethodName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingPaymentMethodData>> GetByUserAsync(string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        PaymentMethodData value = default;
+                        BillingPaymentMethodData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodData.DeserializePaymentMethodData(document.RootElement);
+                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PaymentMethodData)null, message.Response);
+                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodData> GetByUser(string paymentMethodName, CancellationToken cancellationToken = default)
+        public Response<BillingPaymentMethodData> GetByUser(string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        PaymentMethodData value = default;
+                        BillingPaymentMethodData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PaymentMethodData.DeserializePaymentMethodData(document.RootElement);
+                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PaymentMethodData)null, message.Response);
+                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodData>> GetByBillingAccountAsync(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingPaymentMethodData>> GetByBillingAccountAsync(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        PaymentMethodData value = default;
+                        BillingPaymentMethodData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodData.DeserializePaymentMethodData(document.RootElement);
+                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PaymentMethodData)null, message.Response);
+                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodData> GetByBillingAccount(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public Response<BillingPaymentMethodData> GetByBillingAccount(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
@@ -351,13 +351,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        PaymentMethodData value = default;
+                        BillingPaymentMethodData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PaymentMethodData.DeserializePaymentMethodData(document.RootElement);
+                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PaymentMethodData)null, message.Response);
+                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodLinkData>> GetByBillingProfileAsync(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingPaymentMethodLinkData>> GetByBillingProfileAsync(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -475,13 +475,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        PaymentMethodLinkData value = default;
+                        BillingPaymentMethodLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodLinkData.DeserializePaymentMethodLinkData(document.RootElement);
+                        value = BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PaymentMethodLinkData)null, message.Response);
+                    return Response.FromValue((BillingPaymentMethodLinkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodLinkData> GetByBillingProfile(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public Response<BillingPaymentMethodLinkData> GetByBillingProfile(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -506,13 +506,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        PaymentMethodLinkData value = default;
+                        BillingPaymentMethodLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PaymentMethodLinkData.DeserializePaymentMethodLinkData(document.RootElement);
+                        value = BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PaymentMethodLinkData)null, message.Response);
+                    return Response.FromValue((BillingPaymentMethodLinkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

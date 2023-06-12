@@ -23,7 +23,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesAction"/>
         /// class based on the values of a <see cref="AnalyzeHealthcareEntitiesOptions"/>.
-        /// It sets the <see cref="ModelVersion"/> and <see cref="DisableServiceLogs"/> properties.
         /// </summary>
         public AnalyzeHealthcareEntitiesAction(AnalyzeHealthcareEntitiesOptions options)
         {

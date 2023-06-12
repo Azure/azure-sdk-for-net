@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="fileSystem"> Application logs to file system configuration. </param>
         /// <param name="azureTableStorage"> Application logs to azure table storage configuration. </param>
         /// <param name="azureBlobStorage"> Application logs to blob storage configuration. </param>
-        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AzureTableStorageApplicationLogsConfig azureTableStorage, AzureBlobStorageApplicationLogsConfig azureBlobStorage)
+        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AppServiceTableStorageApplicationLogsConfig azureTableStorage, AppServiceBlobStorageApplicationLogsConfig azureBlobStorage)
         {
             FileSystem = fileSystem;
             AzureTableStorage = azureTableStorage;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Application logs to file system configuration. </summary>
         internal FileSystemApplicationLogsConfig FileSystem { get; set; }
         /// <summary> Log level. </summary>
-        public LogLevel? FileSystemLevel
+        public WebAppLogLevel? FileSystemLevel
         {
             get => FileSystem is null ? default : FileSystem.Level;
             set
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application logs to azure table storage configuration. </summary>
-        public AzureTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
+        public AppServiceTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
         /// <summary> Application logs to blob storage configuration. </summary>
-        public AzureBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
+        public AppServiceBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
     }
 }

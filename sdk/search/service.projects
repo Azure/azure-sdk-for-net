@@ -3,4 +3,12 @@
     <!-- Remove deprecated track 1 packages from builds and live testing. -->
     <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.*\**\*.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Search.*\**\*.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+  </ItemGroup>
 </Project>

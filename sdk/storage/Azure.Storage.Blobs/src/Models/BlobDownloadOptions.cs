@@ -30,9 +30,7 @@ namespace Azure.Storage.Blobs.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Options for transfer validation settings on this operation.
-        /// When transfer validation options are set in the client, setting this parameter
-        /// acts as an override.
+        /// Optional override settings for this client's <see cref="BlobClientOptions.TransferValidation"/> settings.
         /// Set <see cref="DownloadTransferValidationOptions.AutoValidateChecksum"/> to false if you
         /// would like to skip SDK checksum validation and validate the checksum found
         /// in the <see cref="Response"/> object yourself.
@@ -41,6 +39,6 @@ namespace Azure.Storage.Blobs.Models
         /// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
         /// REST documentation</a> for range limitation details.
         /// </summary>
-        public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
+        public DownloadTransferValidationOptions TransferValidation { get; set; }
     }
 }

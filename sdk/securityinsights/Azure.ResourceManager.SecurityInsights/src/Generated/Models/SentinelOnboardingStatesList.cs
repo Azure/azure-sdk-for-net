@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -18,24 +19,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SentinelOnboardingStatesList(IEnumerable<SentinelOnboardingStateData> value)
+        internal SentinelOnboardingStatesList(IEnumerable<SecurityInsightsSentinelOnboardingStateData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
-        internal SentinelOnboardingStatesList(IReadOnlyList<SentinelOnboardingStateData> value)
+        internal SentinelOnboardingStatesList(IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of Sentinel onboarding states. </summary>
-        public IReadOnlyList<SentinelOnboardingStateData> Value { get; }
+        public IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> Value { get; }
     }
 }

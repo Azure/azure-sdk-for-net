@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.TrafficManager
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
-        public virtual ProfileCollection GetProfiles()
+        /// <summary> Gets a collection of TrafficManagerProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of TrafficManagerProfileResources and their operations over a TrafficManagerProfileResource. </returns>
+        public virtual TrafficManagerProfileCollection GetTrafficManagerProfiles()
         {
-            return GetCachedClient(Client => new ProfileCollection(Client, Id));
+            return GetCachedClient(Client => new TrafficManagerProfileCollection(Client, Id));
         }
     }
 }

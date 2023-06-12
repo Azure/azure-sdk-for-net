@@ -15,14 +15,14 @@ namespace Azure.Maps.Routing.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("features");
+            writer.WritePropertyName("features"u8);
             writer.WriteStartArray();
             foreach (var item in Features)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }

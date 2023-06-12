@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [JsonPropertyName("requestStatus")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Required]
-        public RequestStatusType RequestStatus { get; set; }
+        public RequestStatusType RequestStatus { get; internal set; }
 
         /// <summary>Gets or sets the status message.</summary>
         /// <value>The status message.</value>
@@ -62,19 +62,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A <see cref="string" /> that represents this instance.</returns>
         public override string ToString()
         {
-            JsonSerializerOptions options = new JsonSerializerOptions();
+            JsonSerializerOptions options = JsonSerializerOptions;
             options.Converters.Add(new AuthenticationEventResponseConverterFactory());
             return JsonSerializer.Serialize((object)this, options);
         }
 
-        internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
+       internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
         internal abstract AuthenticationEventResponse GetResponseObject();
 
         /// <summary>Set the response to Failed mode.</summary>
         /// <param name="exception">The exception to return in the response.</param>
+        /// <param name="internalError">Throw 500 internal server error.</param>
         /// <returns>The Underlying AuthEventResponse.</returns>
-        public abstract Task<AuthenticationEventResponse> Failed(Exception exception);
+        internal abstract Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError);
+
+        /// <summary>Set the response to Failed mode.</summary>
+        /// <param name="exception">The exception to return in the response.</param>
+        /// <returns>The Underlying AuthEventResponse.</returns>
+        public Task<AuthenticationEventResponse> Failed(Exception exception)
+        {
+            return Failed(exception, false);
+        }
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>

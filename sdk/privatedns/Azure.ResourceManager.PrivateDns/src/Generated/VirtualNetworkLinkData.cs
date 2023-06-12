@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the VirtualNetworkLink data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualNetworkLink data model.
+    /// Describes a link to virtual network for a Private DNS zone.
+    /// </summary>
     public partial class VirtualNetworkLinkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
@@ -34,14 +37,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="virtualNetwork"> The reference of the virtual network. </param>
         /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
         /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
+        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
             RegistrationEnabled = registrationEnabled;
             VirtualNetworkLinkState = virtualNetworkLinkState;
-            ProvisioningState = provisioningState;
+            PrivateDnsProvisioningState = privateDnsProvisioningState;
         }
 
         /// <summary> The ETag of the virtual network link. </summary>
@@ -65,6 +68,6 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public VirtualNetworkLinkState? VirtualNetworkLinkState { get; }
         /// <summary> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PrivateDnsProvisioningState? PrivateDnsProvisioningState { get; }
     }
 }

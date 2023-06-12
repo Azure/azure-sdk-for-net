@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Tests
             return InstrumentClient(new MapsRoutingClient(
                 credential: TestEnvironment.Credential,
                 clientId: TestEnvironment.MapAccountClientId,
-                options: InstrumentClientOptions(new MapsRouteClientOptions())
+                options: InstrumentClientOptions(new MapsRoutingClientOptions())
             ));
         }
     }

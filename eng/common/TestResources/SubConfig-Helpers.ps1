@@ -16,10 +16,45 @@ function GetUserName() {
     return $UserName
 }
 
-function GetBaseName([string]$user, [string]$serviceDirectoryName) {
+function GetBaseAndResourceGroupNames(
+    [string]$baseNameDefault,
+    [string]$resourceGroupNameDefault,
+    [string]$user,
+    [string]$serviceDirectoryName,
+    [bool]$CI
+) {
+    if ($baseNameDefault) {
+        $base = $baseNameDefault.ToLowerInvariant()
+        $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : ("rg-$baseNameDefault".ToLowerInvariant())
+        return $base, $group
+    }
+
+    if ($CI) {
+        $base = 't' + (New-Guid).ToString('n').Substring(0, 16)
+        # Format the resource group name based on resource group naming recommendations and limitations.
+        $generatedGroup = "rg-{0}-$base" -f ($serviceName -replace '[\.\\\/:]', '-').
+                            Substring(0, [Math]::Min($serviceDirectoryName.Length, 90 - $base.Length - 4)).
+                            Trim('-').
+                            ToLowerInvariant()
+        $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : $generatedGroup
+
+        Log "Generated resource base name '$base' and resource group name '$group' for CI build"
+
+        return $base, $group
+    }
+
     # Handle service directories in nested directories, e.g. `data/aztables`
     $serviceDirectorySafeName = $serviceDirectoryName -replace '[\./\\]', ''
-    return "$user$serviceDirectorySafeName".ToLowerInvariant()
+    # Seed off resource group name if set to avoid name conflicts with deployments where it is not set
+    $seed = $resourceGroupNameDefault ? $resourceGroupNameDefault : "${user}${serviceDirectorySafeName}"
+    $baseNameStream = [IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes("$seed"))
+    # Hash to keep resource names short enough to not break naming restrictions (e.g. keyvault name length)
+    $base = 't' + (Get-FileHash -InputStream $baseNameStream -Algorithm SHA256).Hash.Substring(0, 16).ToLowerInvariant()
+    $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : "rg-${user}${serviceDirectorySafeName}".ToLowerInvariant();
+
+    Log "BaseName was not set. Generating resource group name '$group' and resource base name '$base'"
+
+    return $base, $group
 }
 
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())

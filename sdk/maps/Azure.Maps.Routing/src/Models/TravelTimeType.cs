@@ -6,7 +6,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> What travel time we should consider when calculating route directions.
     /// Possible value is <see cref="TravelTimeType.All"/> to include all travel time including walking time when transfer between different transportation

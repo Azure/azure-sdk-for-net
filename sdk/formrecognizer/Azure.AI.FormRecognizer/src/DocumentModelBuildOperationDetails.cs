@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentModelBuildOperationDetails")]
     public partial class DocumentModelBuildOperationDetails
     {
         /// <summary>

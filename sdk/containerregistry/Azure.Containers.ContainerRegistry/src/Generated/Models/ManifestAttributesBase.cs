@@ -21,10 +21,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ManifestAttributesBase(string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
+            Argument.AssertNotNull(digest, nameof(digest));
 
             Digest = digest;
             CreatedOn = createdOn;

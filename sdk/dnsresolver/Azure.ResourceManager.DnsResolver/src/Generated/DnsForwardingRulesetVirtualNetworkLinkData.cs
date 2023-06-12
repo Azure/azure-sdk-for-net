@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsForwardingRulesetVirtualNetworkLink data model. </summary>
+    /// <summary>
+    /// A class representing the DnsForwardingRulesetVirtualNetworkLink data model.
+    /// Describes a virtual network link.
+    /// </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
         {
-            if (virtualNetwork == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetwork));
-            }
+            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
             VirtualNetwork = virtualNetwork;
             Metadata = new ChangeTrackingDictionary<string, string>();

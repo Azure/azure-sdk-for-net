@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MySql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("observationStartTime");
+            writer.WritePropertyName("observationStartTime"u8);
             writer.WriteStringValue(ObservationStartOn, "O");
-            writer.WritePropertyName("observationEndTime");
+            writer.WritePropertyName("observationEndTime"u8);
             writer.WriteStringValue(ObservationEndOn, "O");
-            writer.WritePropertyName("aggregationWindow");
+            writer.WritePropertyName("aggregationWindow"u8);
             writer.WriteStringValue(AggregationWindow);
             writer.WriteEndObject();
             writer.WriteEndObject();

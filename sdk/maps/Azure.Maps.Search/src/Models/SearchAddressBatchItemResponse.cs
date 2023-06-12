@@ -17,6 +17,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="error"> The error object. </param>
         internal SearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, ErrorDetail error) : base(summary, results)
         {
+            Summary = summary;
             ErrorDetail = error;
             ResponseError = new ResponseError(error?.Code, error?.Message);
         }

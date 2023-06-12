@@ -87,11 +87,4 @@ bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, 
 Debug.WriteLine($"Signature verified: {verified}");
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample4_DownloadCertificate.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample4_DownloadCertificate.cs)
-* [Asynchronous Sample4_DownloadCertificateAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample4_DownloadCertificateAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

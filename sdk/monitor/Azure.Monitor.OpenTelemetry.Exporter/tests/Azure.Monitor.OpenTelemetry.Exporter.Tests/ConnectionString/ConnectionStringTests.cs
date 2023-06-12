@@ -63,12 +63,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestParse_WithNull()
-        {
-            Assert.Throws<NullReferenceException>(() => AzureCoreConnectionString.Parse(null));
-        }
-
-        [Fact]
         public void TestParse_WithEmptyString()
         {
             Assert.Throws<InvalidOperationException>(() => AzureCoreConnectionString.Parse(string.Empty));

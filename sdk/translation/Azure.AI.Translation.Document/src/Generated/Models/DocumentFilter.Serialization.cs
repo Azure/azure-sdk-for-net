@@ -17,12 +17,12 @@ namespace Azure.AI.Translation.Document.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Prefix))
             {
-                writer.WritePropertyName("prefix");
+                writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
             if (Optional.IsDefined(Suffix))
             {
-                writer.WritePropertyName("suffix");
+                writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);
             }
             writer.WriteEndObject();

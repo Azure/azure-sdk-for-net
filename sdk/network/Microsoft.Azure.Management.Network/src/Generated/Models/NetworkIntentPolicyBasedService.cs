@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string None = "None";
         public const string All = "All";
+        public const string AllowRulesOnly = "AllowRulesOnly";
     }
 }

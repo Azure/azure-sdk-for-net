@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of DatabasePrincipalListResult. </summary>
         internal DatabasePrincipalListResult()
         {
-            Value = new ChangeTrackingList<DatabasePrincipal>();
+            Value = new ChangeTrackingList<KustoDatabasePrincipal>();
         }
 
         /// <summary> Initializes a new instance of DatabasePrincipalListResult. </summary>
         /// <param name="value"> The list of Kusto database principals. </param>
-        internal DatabasePrincipalListResult(IReadOnlyList<DatabasePrincipal> value)
+        internal DatabasePrincipalListResult(IReadOnlyList<KustoDatabasePrincipal> value)
         {
             Value = value;
         }
 
         /// <summary> The list of Kusto database principals. </summary>
-        public IReadOnlyList<DatabasePrincipal> Value { get; }
+        public IReadOnlyList<KustoDatabasePrincipal> Value { get; }
     }
 }

@@ -16,72 +16,72 @@ namespace Azure.ResourceManager.DataShare.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("synchronizationId");
+            writer.WritePropertyName("synchronizationId"u8);
             writer.WriteStringValue(SynchronizationId);
             writer.WriteEndObject();
         }
 
         internal static ShareSubscriptionSynchronization DeserializeShareSubscriptionSynchronization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> durationMs = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> status = default;
-            string synchronizationId = default;
+            Guid synchronizationId = default;
             Optional<SynchronizationMode> synchronizationMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("durationMs"))
+                if (property.NameEquals("durationMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("synchronizationId"))
+                if (property.NameEquals("synchronizationId"u8))
                 {
-                    synchronizationId = property.Value.GetString();
+                    synchronizationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("synchronizationMode"))
+                if (property.NameEquals("synchronizationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     synchronizationMode = new SynchronizationMode(property.Value.GetString());

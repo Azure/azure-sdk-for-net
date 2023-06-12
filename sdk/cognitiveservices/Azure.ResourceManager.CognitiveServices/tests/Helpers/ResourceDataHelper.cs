@@ -8,6 +8,7 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
 using System;
+using System.Numerics;
 
 namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
 {
@@ -73,7 +74,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
                 {
                     HostingModel = ServiceAccountHostingModel.Web,
                     PlanType = "TA",
-                    AutoRenew = false
+                    AutoRenew = false,
+                    Current = new CommitmentPeriod()
+                    {
+                        Tier = "T1"
+                    }
                 }
             };
             return data;
@@ -97,14 +102,13 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
                 {
                     Model = new CognitiveServicesAccountDeploymentModel()
                     {
-                        Name = "ada",
+                        Name = "text-ada-001",
                         Format = "OpenAI",
                         Version = "1"
                     },
                     ScaleSettings = new CognitiveServicesAccountDeploymentScaleSettings()
                     {
-                         ScaleType = CognitiveServicesAccountDeploymentScaleType.Manual,
-                         Capacity = 1
+                         ScaleType = CognitiveServicesAccountDeploymentScaleType.Standard,
                     }
                 }
             };

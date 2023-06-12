@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the OSOptionProfile data model. </summary>
+    /// <summary>
+    /// A class representing the OSOptionProfile data model.
+    /// The OS option profile.
+    /// </summary>
     public partial class OSOptionProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of OSOptionProfileData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="osOptionPropertyList"/> is null. </exception>
         internal OSOptionProfileData(IEnumerable<ContainerServiceOSOptionProperty> osOptionPropertyList)
         {
-            if (osOptionPropertyList == null)
-            {
-                throw new ArgumentNullException(nameof(osOptionPropertyList));
-            }
+            Argument.AssertNotNull(osOptionPropertyList, nameof(osOptionPropertyList));
 
             OSOptionPropertyList = osOptionPropertyList.ToList();
         }

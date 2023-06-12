@@ -23,9 +23,21 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Initializes a new instance of MediaComposition. </summary>
         /// <param name="id"> Id of the media composition. </param>
-        /// <param name="layout"> Configure a layout. </param>
-        /// <param name="inputs"> Inputs used in the composition. </param>
-        /// <param name="outputs"> Outputs used in the composition. </param>
+        /// <param name="layout">
+        /// Configure a layout
+        /// Please note <see cref="MediaCompositionLayout"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoGridLayout"/>, <see cref="CustomLayout"/>, <see cref="GridLayout"/>, <see cref="PresentationLayout"/> and <see cref="PresenterLayout"/>.
+        /// </param>
+        /// <param name="inputs">
+        /// Inputs used in the composition
+        /// Please note <see cref="MediaInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ActivePresenter"/>, <see cref="DominantSpeaker"/>, <see cref="GroupCallInput"/>, <see cref="ImageInput"/>, <see cref="ParticipantInput"/>, <see cref="RoomInput"/>, <see cref="RtmpInput"/>, <see cref="ScreenShare"/>, <see cref="SrtInput"/> and <see cref="TeamsMeetingInput"/>.
+        /// </param>
+        /// <param name="outputs">
+        /// Outputs used in the composition
+        /// Please note <see cref="MediaOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GroupCallOutput"/>, <see cref="RoomOutput"/>, <see cref="RtmpOutput"/>, <see cref="SrtOutput"/> and <see cref="TeamsMeetingOutput"/>.
+        /// </param>
         /// <param name="streamState"> Provides the state of the media composition. </param>
         internal MediaComposition(string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
         {
@@ -38,11 +50,23 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Id of the media composition. </summary>
         public string Id { get; set; }
-        /// <summary> Configure a layout. </summary>
+        /// <summary>
+        /// Configure a layout
+        /// Please note <see cref="MediaCompositionLayout"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoGridLayout"/>, <see cref="CustomLayout"/>, <see cref="GridLayout"/>, <see cref="PresentationLayout"/> and <see cref="PresenterLayout"/>.
+        /// </summary>
         public MediaCompositionLayout Layout { get; set; }
-        /// <summary> Inputs used in the composition. </summary>
+        /// <summary>
+        /// Inputs used in the composition
+        /// Please note <see cref="MediaInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ActivePresenter"/>, <see cref="DominantSpeaker"/>, <see cref="GroupCallInput"/>, <see cref="ImageInput"/>, <see cref="ParticipantInput"/>, <see cref="RoomInput"/>, <see cref="RtmpInput"/>, <see cref="ScreenShare"/>, <see cref="SrtInput"/> and <see cref="TeamsMeetingInput"/>.
+        /// </summary>
         public IDictionary<string, MediaInput> Inputs { get; }
-        /// <summary> Outputs used in the composition. </summary>
+        /// <summary>
+        /// Outputs used in the composition
+        /// Please note <see cref="MediaOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GroupCallOutput"/>, <see cref="RoomOutput"/>, <see cref="RtmpOutput"/>, <see cref="SrtOutput"/> and <see cref="TeamsMeetingOutput"/>.
+        /// </summary>
         public IDictionary<string, MediaOutput> Outputs { get; }
         /// <summary> Provides the state of the media composition. </summary>
         public CompositionStreamState StreamState { get; set; }

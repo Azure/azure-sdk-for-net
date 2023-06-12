@@ -1394,7 +1394,7 @@
           "format": "int32",
           "description": "Time to wait between DTMF inputs to stop recognizing.",
           "maximum": 60,
-          "minimum": 0,
+          "minimum": 1,
           "type": "integer"
         },
         "maxTonesToCollect": {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="category"> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the Kusto Service Environment reaches the service at. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal OutboundNetworkDependenciesEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, IList<EndpointDependency> endpoints, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal OutboundNetworkDependenciesEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, IList<EndpointDependency> endpoints, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Category = category;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> The endpoints that the Kusto Service Environment reaches the service at. </summary>
         public IList<EndpointDependency> Endpoints { get; }
         /// <summary> The provisioned state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState { get; }
     }
 }

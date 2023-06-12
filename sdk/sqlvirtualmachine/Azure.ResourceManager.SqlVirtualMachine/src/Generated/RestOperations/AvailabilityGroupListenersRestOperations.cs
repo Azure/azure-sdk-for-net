@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, string expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Gets an availability group listener. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailabilityGroupListenerData>> GetAsync(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AvailabilityGroupListenerData>> GetAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
 
-            using var message = CreateGetRequest(sqlVmGroupName, subscriptionId, resourceGroupName, availabilityGroupListenerName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Gets an availability group listener. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailabilityGroupListenerData> Get(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AvailabilityGroupListenerData> Get(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
 
-            using var message = CreateGetRequest(sqlVmGroupName, subscriptionId, resourceGroupName, availabilityGroupListenerName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,23 +158,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Creates or updates an availability group listener. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="data"> The availability group listener. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="availabilityGroupListenerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/>, <paramref name="availabilityGroupListenerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(sqlVmGroupName, subscriptionId, resourceGroupName, availabilityGroupListenerName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -187,23 +187,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Creates or updates an availability group listener. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="data"> The availability group listener. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="availabilityGroupListenerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/>, <paramref name="availabilityGroupListenerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(sqlVmGroupName, subscriptionId, resourceGroupName, availabilityGroupListenerName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -237,21 +237,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Deletes an availability group listener. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
 
-            using var message = CreateDeleteRequest(sqlVmGroupName, subscriptionId, resourceGroupName, availabilityGroupListenerName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -265,21 +265,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Deletes an availability group listener. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string sqlVmGroupName, string subscriptionId, string resourceGroupName, string availabilityGroupListenerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
 
-            using var message = CreateDeleteRequest(sqlVmGroupName, subscriptionId, resourceGroupName, availabilityGroupListenerName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateListByGroupRequest(string sqlVmGroupName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByGroupRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -314,19 +314,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Lists all availability group listeners in a SQL virtual machine group. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailabilityGroupListenerListResult>> ListByGroupAsync(string sqlVmGroupName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AvailabilityGroupListenerListResult>> ListByGroupAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListByGroupRequest(sqlVmGroupName, subscriptionId, resourceGroupName);
+            using var message = CreateListByGroupRequest(subscriptionId, resourceGroupName, sqlVmGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Lists all availability group listeners in a SQL virtual machine group. </summary>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailabilityGroupListenerListResult> ListByGroup(string sqlVmGroupName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AvailabilityGroupListenerListResult> ListByGroup(string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListByGroupRequest(sqlVmGroupName, subscriptionId, resourceGroupName);
+            using var message = CreateListByGroupRequest(subscriptionId, resourceGroupName, sqlVmGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateListByGroupNextPageRequest(string nextLink, string sqlVmGroupName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -387,20 +387,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary> Lists all availability group listeners in a SQL virtual machine group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailabilityGroupListenerListResult>> ListByGroupNextPageAsync(string nextLink, string sqlVmGroupName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AvailabilityGroupListenerListResult>> ListByGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListByGroupNextPageRequest(nextLink, sqlVmGroupName, subscriptionId, resourceGroupName);
+            using var message = CreateListByGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVmGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -418,20 +418,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary> Lists all availability group listeners in a SQL virtual machine group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailabilityGroupListenerListResult> ListByGroupNextPage(string nextLink, string sqlVmGroupName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AvailabilityGroupListenerListResult> ListByGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListByGroupNextPageRequest(nextLink, sqlVmGroupName, subscriptionId, resourceGroupName);
+            using var message = CreateListByGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVmGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

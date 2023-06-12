@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the LoadBalancingRule data model. </summary>
+    /// <summary>
+    /// A class representing the LoadBalancingRule data model.
+    /// A load balancing rule for a load balancer.
+    /// </summary>
     public partial class LoadBalancingRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>

@@ -22,6 +22,3 @@ SecretBundle secret = client.GetSecretValue("TestSecret");
 
 Console.WriteLine(secret.Value);
 ```
-
-To see the full example source files, see:
-* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs)

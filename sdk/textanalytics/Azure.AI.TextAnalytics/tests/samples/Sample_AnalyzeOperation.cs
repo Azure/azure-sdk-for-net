@@ -13,21 +13,24 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeOperation()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us.";
 
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.";
+            string documentB =
+                "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
+                + " so they helped me organize a little surprise for my partner. The room was clean and with the"
+                + " decoration I requested. It was perfect!";
 
-            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                                our anniversary so they helped me organize a little surprise for my partner.
-                                The room was clean and with the decoration I requested. It was perfect!";
-
-            var batchDocuments = new List<TextDocumentInput>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<TextDocumentInput> batchedDocuments = new()
             {
                 new TextDocumentInput("1", documentA)
                 {
@@ -39,14 +42,14 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            TextAnalyticsActions actions = new TextAnalyticsActions()
+            TextAnalyticsActions actions = new()
             {
                 ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
                 RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
+            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchedDocuments, actions);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
@@ -80,12 +83,12 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
                     Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
-                    foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
+                    foreach (RecognizeEntitiesResult documentResult in entitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
+                        Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
 
-                        foreach (CategorizedEntity entity in documentResults.Entities)
+                        foreach (CategorizedEntity entity in documentResult.Entities)
                         {
                             Console.WriteLine($"  Entity: {entity.Text}");
                             Console.WriteLine($"  Category: {entity.Category}");
@@ -94,7 +97,7 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
                             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
                         }
-                        Console.WriteLine("");
+                        Console.WriteLine();
                     }
                 }
 
@@ -111,7 +114,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         {
                             Console.WriteLine($"  {keyphrase}");
                         }
-                        Console.WriteLine("");
+                        Console.WriteLine();
                     }
                 }
             }

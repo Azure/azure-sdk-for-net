@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
         /// <summary> Initializes a new instance of AnswersResult. </summary>

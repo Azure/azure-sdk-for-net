@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.Redis.Tests
                 },
                 EnableNonSslPort = true
             };
-            var responseUpdate = (await responseCreate.UpdateAsync(patch)).Value;
+
+            var responseUpdate = (await responseCreate.UpdateAsync(WaitUntil.Completed,patch)).Value;
 
             Assert.AreEqual(DefaultLocation, responseUpdate.Data.Location);
             Assert.AreEqual(redisCacheName, responseUpdate.Data.Name);

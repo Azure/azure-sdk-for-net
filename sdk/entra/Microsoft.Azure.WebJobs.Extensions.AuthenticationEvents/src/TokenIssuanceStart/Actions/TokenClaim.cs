@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <summary>Gets or sets the identifier.</summary>
         /// <value>The identifier.</value>
         [JsonPropertyName("id")]
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Id { get; set; }
 
         /// <summary>Gets or sets the values.</summary>

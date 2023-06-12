@@ -104,7 +104,22 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2021-10-04 service version.
             /// </summary>
-            V2021_10_04 = 14
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15,
+
+            /// <summary>
+            /// The 2022-11-02 service version.
+            /// </summary>
+            V2022_11_02 = 16,
+
+            /// <summary>
+            /// The 2023-01-03 service version.
+            /// </summary>
+            V2023_01_03 = 17
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -152,13 +167,6 @@ namespace Azure.Storage.Queues
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
-
-        /// <summary>
-        /// Strategy to take when sending requests and retries between primary and secondary endpoints.
-        /// Ignored when <see cref="GeoRedundantSecondaryUri"/> is not set.
-        /// Defaults to <see cref="GeoRedundantReadMode.PrimaryThenSecondary"/>.
-        /// </summary>
-        public GeoRedundantReadMode GeoRedundantReadMode { get; set; }
 
         /// <summary>
         /// Gets or sets a message encoding that determines how <see cref="QueueMessage.Body"/> is represented in HTTP requests and responses.
@@ -273,7 +281,7 @@ namespace Azure.Storage.Queues
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri, GeoRedundantReadMode);
+            return this.Build(authentication, GeoRedundantSecondaryUri);
         }
 
         /// <summary>
@@ -283,7 +291,7 @@ namespace Azure.Storage.Queues
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri, GeoRedundantReadMode);
+            return this.Build(credentials, GeoRedundantSecondaryUri);
         }
     }
 }

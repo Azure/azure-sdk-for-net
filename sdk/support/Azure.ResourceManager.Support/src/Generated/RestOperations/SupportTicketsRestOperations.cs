@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailabilityInput input)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, SupportNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,33 +51,33 @@ namespace Azure.ResourceManager.Support
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, input);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        SupportNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = SupportNameAvailabilityResult.DeserializeSupportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription. </summary>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckNameAvailability(string subscriptionId, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public Response<SupportNameAvailabilityResult> CheckNameAvailability(string subscriptionId, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, input);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        SupportNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = SupportNameAvailabilityResult.DeserializeSupportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportTicketDetailData>> GetAsync(string subscriptionId, string supportTicketName, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportTicketData>> GetAsync(string subscriptionId, string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        SupportTicketDetailData value = default;
+                        SupportTicketData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SupportTicketDetailData.DeserializeSupportTicketDetailData(document.RootElement);
+                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SupportTicketDetailData)null, message.Response);
+                    return Response.FromValue((SupportTicketData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportTicketDetailData> Get(string subscriptionId, string supportTicketName, CancellationToken cancellationToken = default)
+        public Response<SupportTicketData> Get(string subscriptionId, string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
@@ -255,19 +255,19 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        SupportTicketDetailData value = default;
+                        SupportTicketData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SupportTicketDetailData.DeserializeSupportTicketDetailData(document.RootElement);
+                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SupportTicketDetailData)null, message.Response);
+                    return Response.FromValue((SupportTicketData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string supportTicketName, SupportTicketDetailPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string supportTicketName, SupportTicketPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportTicketDetailData>> UpdateAsync(string subscriptionId, string supportTicketName, SupportTicketDetailPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportTicketData>> UpdateAsync(string subscriptionId, string supportTicketName, SupportTicketPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
@@ -308,9 +308,9 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        SupportTicketDetailData value = default;
+                        SupportTicketData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SupportTicketDetailData.DeserializeSupportTicketDetailData(document.RootElement);
+                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportTicketDetailData> Update(string subscriptionId, string supportTicketName, SupportTicketDetailPatch patch, CancellationToken cancellationToken = default)
+        public Response<SupportTicketData> Update(string subscriptionId, string supportTicketName, SupportTicketPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        SupportTicketDetailData value = default;
+                        SupportTicketData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SupportTicketDetailData.DeserializeSupportTicketDetailData(document.RootElement);
+                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Support
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string supportTicketName, SupportTicketDetailData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string supportTicketName, SupportTicketData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string supportTicketName, SupportTicketDetailData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string supportTicketName, SupportTicketData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string supportTicketName, SupportTicketDetailData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string supportTicketName, SupportTicketData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SMBValue = "SMB";
-        private const string NFSValue = "NFS";
+        private const string SmbValue = "SMB";
+        private const string NfsValue = "NFS";
 
         /// <summary> SMB. </summary>
-        public static ShareAccessProtocol SMB { get; } = new ShareAccessProtocol(SMBValue);
+        public static ShareAccessProtocol Smb { get; } = new ShareAccessProtocol(SmbValue);
         /// <summary> NFS. </summary>
-        public static ShareAccessProtocol NFS { get; } = new ShareAccessProtocol(NFSValue);
+        public static ShareAccessProtocol Nfs { get; } = new ShareAccessProtocol(NfsValue);
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are the same. </summary>
         public static bool operator ==(ShareAccessProtocol left, ShareAccessProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are not the same. </summary>

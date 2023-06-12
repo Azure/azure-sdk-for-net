@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
         internal SubscriptionAliasListResult()
         {
-            Value = new ChangeTrackingList<SubscriptionAliasResponseData>();
+            Value = new ChangeTrackingList<SubscriptionAliasData>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
         /// <param name="value"> The list of alias. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal SubscriptionAliasListResult(IReadOnlyList<SubscriptionAliasResponseData> value, string nextLink)
+        internal SubscriptionAliasListResult(IReadOnlyList<SubscriptionAliasData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of alias. </summary>
-        public IReadOnlyList<SubscriptionAliasResponseData> Value { get; }
+        public IReadOnlyList<SubscriptionAliasData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

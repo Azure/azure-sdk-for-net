@@ -17,22 +17,32 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TierToCool))
             {
-                writer.WritePropertyName("tierToCool");
+                writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
             if (Optional.IsDefined(TierToArchive))
             {
-                writer.WritePropertyName("tierToArchive");
+                writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
+            }
+            if (Optional.IsDefined(TierToCold))
+            {
+                writer.WritePropertyName("tierToCold"u8);
+                writer.WriteObjectValue(TierToCold);
+            }
+            if (Optional.IsDefined(TierToHot))
+            {
+                writer.WritePropertyName("tierToHot"u8);
+                writer.WriteObjectValue(TierToHot);
             }
             if (Optional.IsDefined(Delete))
             {
-                writer.WritePropertyName("delete");
+                writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
             if (Optional.IsDefined(EnableAutoTierToHotFromCool))
             {
-                writer.WritePropertyName("enableAutoTierToHotFromCool");
+                writer.WritePropertyName("enableAutoTierToHotFromCool"u8);
                 writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
             }
             writer.WriteEndObject();
@@ -40,54 +50,74 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateAfterModification> tierToCool = default;
             Optional<DateAfterModification> tierToArchive = default;
+            Optional<DateAfterModification> tierToCold = default;
+            Optional<DateAfterModification> tierToHot = default;
             Optional<DateAfterModification> delete = default;
             Optional<bool> enableAutoTierToHotFromCool = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tierToCool"))
+                if (property.NameEquals("tierToCool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tierToArchive"))
+                if (property.NameEquals("tierToArchive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("delete"))
+                if (property.NameEquals("tierToCold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tierToCold = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tierToHot"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tierToHot = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("enableAutoTierToHotFromCool"))
+                if (property.NameEquals("enableAutoTierToHotFromCool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAutoTierToHotFromCool = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool));
+            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool));
         }
     }
 }

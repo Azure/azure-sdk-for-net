@@ -13,13 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the ContentKeyPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ContentKeyPolicy data model.
+    /// A Content Key Policy resource.
+    /// </summary>
     public partial class ContentKeyPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
         public ContentKeyPolicyData()
         {
-            Preferences = new ChangeTrackingList<ContentKeyPolicyPreference>();
+            Options = new ChangeTrackingList<ContentKeyPolicyOption>();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
@@ -31,14 +34,14 @@ namespace Azure.ResourceManager.Media
         /// <param name="createdOn"> The creation date of the Policy. </param>
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
-        /// <param name="preferences"> The Key Policy options. </param>
-        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyPreference> preferences) : base(id, name, resourceType, systemData)
+        /// <param name="options"> The Key Policy options. </param>
+        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyOption> options) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
-            Preferences = preferences;
+            Options = options;
         }
 
         /// <summary> The legacy Policy ID. </summary>
@@ -50,6 +53,6 @@ namespace Azure.ResourceManager.Media
         /// <summary> A description for the Policy. </summary>
         public string Description { get; set; }
         /// <summary> The Key Policy options. </summary>
-        public IList<ContentKeyPolicyPreference> Preferences { get; }
+        public IList<ContentKeyPolicyOption> Options { get; }
     }
 }

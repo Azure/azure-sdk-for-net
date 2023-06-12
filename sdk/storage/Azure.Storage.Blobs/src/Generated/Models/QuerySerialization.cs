@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public QuerySerialization(QueryFormat format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            Argument.AssertNotNull(format, nameof(format));
 
             Format = format;
         }

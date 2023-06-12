@@ -1,0 +1,324 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3508eccf683e764d9f515543218b709a-258c2a1d77d71a4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3341c53538cec4ae0571a0f0ea35a579",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 07:06:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "145de122-f55e-4ff7-8dfa-223e9d4f6bb1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "145de122-f55e-4ff7-8dfa-223e9d4f6bb1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T070633Z:145de122-f55e-4ff7-8dfa-223e9d4f6bb1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/locations/centralus?api-version=2015-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e5c1ca621c064446ba5ff01f7a5c9e3b-6461086bcb55934e-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221013.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d84d7b63a64116006cacb90b26d460e7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "1.0",
+        "Cache-Control": "no-cache",
+        "Content-Length": "210",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 07:06:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f407a799-16ae-4de3-949c-2ed336dd2943",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "99",
+        "x-ms-request-id": "d64162aa-2f74-4848-8778-ee785fc1f054",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T070634Z:f407a799-16ae-4de3-949c-2ed336dd2943"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/locations/centralus",
+        "name": "centralus",
+        "type": "Microsoft.Security/locations",
+        "properties": {
+          "homeRegionName": "centralus"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/locations/centralus/tasks?api-version=2015-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d8e3fa696984d249a534aea274624313-d3f790ea88228641-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221013.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0a99c9ed56a86d74cd467011f54cbfbc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "1.0",
+        "Cache-Control": "no-cache",
+        "Content-Length": "9220",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 07:06:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e725faa2-a342-4d34-ab7b-9cc9bd510eec",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "99",
+        "x-ms-request-id": "55cec93c-1fe9-4759-b0d1-5ebffa78152c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T070635Z:e725faa2-a342-4d34-ab7b-9cc9bd510eec"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/locations/centralus/tasks/ee6dbac7-d03a-c7e6-35c6-f7de83f868d2",
+            "name": "ee6dbac7-d03a-c7e6-35c6-f7de83f868d2",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2016-12-02T01:27:40.4940828Z",
+              "lastStateChangeTimeUtc": "2016-12-02T01:27:40.4940828Z",
+              "securityTaskParameters": {
+                "name": "Enable Security Contact Configuration in Policy",
+                "uniqueKey": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Security/locations/centralus/tasks/20700650-6363-cece-4633-ab3f1d9d8c3c",
+            "name": "20700650-6363-cece-4633-ab3f1d9d8c3c",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-01-24T15:51:00.3087899Z",
+              "lastStateChangeTimeUtc": "2022-01-24T15:51:00.3087899Z",
+              "securityTaskParameters": {
+                "vmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Compute/virtualMachines/test-vm-rg",
+                "vmName": "test-vm-rg",
+                "severity": "High",
+                "isOsDiskEncrypted": false,
+                "isDataDiskEncrypted": true,
+                "name": "EncryptionOnVm",
+                "uniqueKey": "EncryptionOnVmTaskParameters_/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Compute/virtualMachines/test-vm-rg",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Compute/virtualMachines/test-vm-rg"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Security/locations/centralus/tasks/f641af77-77a3-23cc-1d5c-a25217408c64",
+            "name": "f641af77-77a3-23cc-1d5c-a25217408c64",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-12T23:59:58.7023479Z",
+              "lastStateChangeTimeUtc": "2022-10-12T23:59:58.7023479Z",
+              "securityTaskParameters": {
+                "resourceType": "VirtualMachine",
+                "category": "Compute",
+                "assessmentKey": "9b7d740f-c271-4bfd-88fb-515680c33440",
+                "policyName": "File integrity monitoring should be enabled on machines",
+                "policyDefinitionId": "",
+                "severity": "High",
+                "name": "GenericSecuirtyTask",
+                "uniqueKey": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Compute/virtualMachines/test-vm-rg_9b7d740f-c271-4bfd-88fb-515680c33440",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AUTORESTRESOURCES2/providers/Microsoft.Compute/virtualMachines/test-vm-rg"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Security/locations/centralus/tasks/12b3059b-7e11-c1d4-f80c-5bddba2eeec3",
+            "name": "12b3059b-7e11-c1d4-f80c-5bddba2eeec3",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-12T23:59:58.7023479Z",
+              "lastStateChangeTimeUtc": "2022-10-12T23:59:58.7023479Z",
+              "securityTaskParameters": {
+                "resourceType": "VirtualMachine",
+                "category": "Compute",
+                "assessmentKey": "9b7d740f-c271-4bfd-88fb-515680c33440",
+                "policyName": "File integrity monitoring should be enabled on machines",
+                "policyDefinitionId": "",
+                "severity": "High",
+                "name": "GenericSecuirtyTask",
+                "uniqueKey": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Compute/virtualMachines/fengvm2_9b7d740f-c271-4bfd-88fb-515680c33440",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Compute/virtualMachines/fengvm2"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Security/locations/centralus/tasks/2e328059-3f1e-95b0-caf4-52d7b8eed9a1",
+            "name": "2e328059-3f1e-95b0-caf4-52d7b8eed9a1",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-01T04:25:50.0215265Z",
+              "lastStateChangeTimeUtc": "2022-10-01T04:25:50.0215265Z",
+              "securityTaskParameters": {
+                "vmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Compute/virtualMachines/fengvm2",
+                "vmName": "fengvm2",
+                "severity": "High",
+                "isOsDiskEncrypted": false,
+                "isDataDiskEncrypted": true,
+                "name": "EncryptionOnVm",
+                "uniqueKey": "EncryptionOnVmTaskParameters_/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Compute/virtualMachines/fengvm2",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/FENG_TEST/providers/Microsoft.Compute/virtualMachines/fengvm2"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MC_TESTAKSRG5670_AKSCLUSTER9837_EASTUS/providers/Microsoft.Security/locations/centralus/tasks/ef8dd210-8e3c-917b-4c33-ad8182825faf",
+            "name": "ef8dd210-8e3c-917b-4c33-ad8182825faf",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-12T23:59:58.858489Z",
+              "lastStateChangeTimeUtc": "2022-10-12T23:59:58.858489Z",
+              "securityTaskParameters": {
+                "resourceType": "Microsoft_Compute_virtualMachineScaleSets",
+                "category": "Compute",
+                "assessmentKey": "9b7d740f-c271-4bfd-88fb-515680c33440",
+                "policyName": "File integrity monitoring should be enabled on machines",
+                "policyDefinitionId": "",
+                "severity": "High",
+                "name": "GenericSecuirtyTask",
+                "uniqueKey": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MC_TESTAKSRG5670_AKSCLUSTER9837_EASTUS/providers/Microsoft.Compute/virtualMachineScaleSets/aks-aksagent-37604076-vmss_9b7d740f-c271-4bfd-88fb-515680c33440",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MC_TESTAKSRG5670_AKSCLUSTER9837_EASTUS/providers/Microsoft.Compute/virtualMachineScaleSets/aks-aksagent-37604076-vmss"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0000/providers/Microsoft.Security/locations/centralus/tasks/b1c6defe-d848-270d-c84e-6f811ef97a7c",
+            "name": "b1c6defe-d848-270d-c84e-6f811ef97a7c",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-12T16:25:47.7681728Z",
+              "lastStateChangeTimeUtc": "2022-10-12T16:25:47.7681728Z",
+              "securityTaskParameters": {
+                "vmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0000/providers/Microsoft.Compute/virtualMachines/vm0000",
+                "vmName": "vm0000",
+                "severity": "High",
+                "isOsDiskEncrypted": false,
+                "isDataDiskEncrypted": true,
+                "name": "EncryptionOnVm",
+                "uniqueKey": "EncryptionOnVmTaskParameters_/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0000/providers/Microsoft.Compute/virtualMachines/vm0000",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0000/providers/Microsoft.Compute/virtualMachines/vm0000"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0001/providers/Microsoft.Security/locations/centralus/tasks/e40b464a-e7a6-c6a5-0d63-8960417298f8",
+            "name": "e40b464a-e7a6-c6a5-0d63-8960417298f8",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-13T04:25:50.0909961Z",
+              "lastStateChangeTimeUtc": "2022-10-13T04:25:50.0909961Z",
+              "securityTaskParameters": {
+                "vmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0001/providers/Microsoft.Compute/virtualMachines/vm0000",
+                "vmName": "vm0000",
+                "severity": "High",
+                "isOsDiskEncrypted": false,
+                "isDataDiskEncrypted": true,
+                "name": "EncryptionOnVm",
+                "uniqueKey": "EncryptionOnVmTaskParameters_/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0001/providers/Microsoft.Compute/virtualMachines/vm0000",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG-0001/providers/Microsoft.Compute/virtualMachines/vm0000"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG8309/providers/Microsoft.Security/locations/centralus/tasks/9b5bbc26-f00d-fd6c-ac1e-bcd82a8fbca5",
+            "name": "9b5bbc26-f00d-fd6c-ac1e-bcd82a8fbca5",
+            "type": "Microsoft.Security/locations/centralus/tasks",
+            "properties": {
+              "state": "Active",
+              "subState": "NA",
+              "creationTimeUtc": "2022-10-13T04:25:50.0909961Z",
+              "lastStateChangeTimeUtc": "2022-10-13T04:25:50.0909961Z",
+              "securityTaskParameters": {
+                "vmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG8309/providers/Microsoft.Compute/virtualMachines/vm7710",
+                "vmName": "vm7710",
+                "severity": "High",
+                "isOsDiskEncrypted": false,
+                "isDataDiskEncrypted": true,
+                "name": "EncryptionOnVm",
+                "uniqueKey": "EncryptionOnVmTaskParameters_/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG8309/providers/Microsoft.Compute/virtualMachines/vm7710",
+                "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SECURITYCENTERRG8309/providers/Microsoft.Compute/virtualMachines/vm7710"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1055749118",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

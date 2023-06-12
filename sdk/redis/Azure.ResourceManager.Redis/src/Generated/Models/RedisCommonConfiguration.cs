@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
         /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
-        /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup. </param>
+        /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
         /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
         /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
         /// <param name="isAofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Specifies whether the rdb backup is enabled. </summary>
         public bool? IsRdbBackupEnabled { get; set; }
-        /// <summary> Specifies the frequency for creating rdb backup. </summary>
+        /// <summary> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </summary>
         public string RdbBackupFrequency { get; set; }
         /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
         public int? RdbBackupMaxSnapshotCount { get; set; }
@@ -86,12 +86,41 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
         public string PreferredDataArchiveAuthMethod { get; }
         /// <summary> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </summary>
-        public string PreferredDataPersistenceAuthMethod { get; }
+        public string PreferredDataPersistenceAuthMethod { get; set; }
         /// <summary> Zonal Configuration. </summary>
         public string ZonalConfiguration { get; }
         /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </summary>
         public string AuthNotRequired { get; set; }
-        /// <summary> Additional Properties. </summary>
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

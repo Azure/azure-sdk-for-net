@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AvsSubscriptionTrialAvailabilityResult DeserializeAvsSubscriptionTrialAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AvsSubscriptionTrialStatus> status = default;
             Optional<int> availableHosts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new AvsSubscriptionTrialStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availableHosts"))
+                if (property.NameEquals("availableHosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableHosts = property.Value.GetInt32();

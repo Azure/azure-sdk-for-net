@@ -16,8 +16,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the source.</summary>
         /// <value>The source.</value>
         [JsonPropertyName("source")]
-        [Required]
-        public string Source { get; set; } = string.Empty;
+        [RequireNonDefault]
+        public string Source { get; set; }
 
         /// <summary>Gets or sets the cloud event data type.</summary>
         /// <value>Data type of cloud event.</value>
@@ -34,7 +34,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             if (payload.Properties.ContainsKey("type"))
             {
                 Type = payload.GetPropertyValue("type");
-                Source = payload.GetPropertyValue("type");//REMOVE: To handle legacy code.
             }
 
             if (payload.Properties.ContainsKey("source"))

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmApplication data model. </summary>
+    /// <summary>
+    /// A class representing the ArmApplication data model.
+    /// Information about managed application.
+    /// </summary>
     public partial class ArmApplicationData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of ArmApplicationData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
         public ArmApplicationData(AzureLocation location, string kind) : base(location)
         {
-            if (kind == null)
-            {
-                throw new ArgumentNullException(nameof(kind));
-            }
+            Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
             Authorizations = new ChangeTrackingList<ArmApplicationAuthorization>();

@@ -12,8 +12,10 @@ namespace Azure.Storage.Blobs.Models
     public class AppendBlobOpenWriteOptions
     {
         /// <summary>
-        /// The size of the buffer to use.  Default is 4 MB,
-        /// max is 4 MB. See <see cref="AppendBlobClient.AppendBlobMaxAppendBlockBytes"/>.
+        /// The size of the buffer to use.  Default is 4 MB.
+        /// Beginning with x-ms-version 2022-11-02, the max buffer size is 100 MB.
+        /// For previous versions, the max buffer size is 4 MB.
+        /// See <see cref="AppendBlobClient.AppendBlobMaxAppendBlockBytes"/>.
         /// </summary>
         public long? BufferSize { get; set; }
 
@@ -29,9 +31,8 @@ namespace Azure.Storage.Blobs.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional override settings for this client's <see cref="BlobClientOptions.TransferValidation"/> settings.
         /// </summary>
-        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidation { get; set; }
     }
 }

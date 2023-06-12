@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authorizationType");
+            writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
         }
 
         internal static LinkedIntegrationRuntimeType DeserializeLinkedIntegrationRuntimeType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authorizationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -30,16 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "RBAC": return LinkedIntegrationRuntimeRbacAuthorization.DeserializeLinkedIntegrationRuntimeRbacAuthorization(element);
                 }
             }
-            string authorizationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authorizationType"))
-                {
-                    authorizationType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownLinkedIntegrationRuntimeType(authorizationType);
+            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
         }
     }
 }

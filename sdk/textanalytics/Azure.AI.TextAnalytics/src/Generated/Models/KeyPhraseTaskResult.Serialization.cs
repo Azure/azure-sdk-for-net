@@ -14,16 +14,20 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyPhraseResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
                     continue;

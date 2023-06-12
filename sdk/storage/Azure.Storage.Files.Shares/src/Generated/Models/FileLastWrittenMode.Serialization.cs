@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static FileLastWrittenMode ToFileLastWrittenMode(this string value)
         {
-            if (string.Equals(value, "Now", StringComparison.InvariantCultureIgnoreCase)) return FileLastWrittenMode.Now;
-            if (string.Equals(value, "Preserve", StringComparison.InvariantCultureIgnoreCase)) return FileLastWrittenMode.Preserve;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Now")) return FileLastWrittenMode.Now;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Preserve")) return FileLastWrittenMode.Preserve;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileLastWrittenMode value.");
         }
     }

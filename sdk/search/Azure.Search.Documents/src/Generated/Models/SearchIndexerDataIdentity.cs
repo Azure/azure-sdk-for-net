@@ -7,8 +7,12 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Abstract base type for data identities. </summary>
-    public partial class SearchIndexerDataIdentity
+    /// <summary>
+    /// Abstract base type for data identities.
+    /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
+    /// </summary>
+    public abstract partial class SearchIndexerDataIdentity
     {
         /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
         public SearchIndexerDataIdentity()

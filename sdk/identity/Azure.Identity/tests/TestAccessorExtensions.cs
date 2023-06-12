@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Reflection;
 using System.Security;
 using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -35,6 +37,14 @@ namespace Azure.Identity.Tests
         public static TokenCredential[] _sources(this DefaultAzureCredential credential)
         {
             return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as TokenCredential[];
+        }
+
+        public static void ConditionalAdd<T>(this List<T> list, bool condition, T item)
+        {
+            if (condition)
+            {
+                list.Add(item);
+            }
         }
     }
 }

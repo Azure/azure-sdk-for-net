@@ -22,10 +22,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static CjkBigramTokenFilterScripts ToCjkBigramTokenFilterScripts(this string value)
         {
-            if (string.Equals(value, "han", StringComparison.InvariantCultureIgnoreCase)) return CjkBigramTokenFilterScripts.Han;
-            if (string.Equals(value, "hiragana", StringComparison.InvariantCultureIgnoreCase)) return CjkBigramTokenFilterScripts.Hiragana;
-            if (string.Equals(value, "katakana", StringComparison.InvariantCultureIgnoreCase)) return CjkBigramTokenFilterScripts.Katakana;
-            if (string.Equals(value, "hangul", StringComparison.InvariantCultureIgnoreCase)) return CjkBigramTokenFilterScripts.Hangul;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "han")) return CjkBigramTokenFilterScripts.Han;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hiragana")) return CjkBigramTokenFilterScripts.Hiragana;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "katakana")) return CjkBigramTokenFilterScripts.Katakana;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hangul")) return CjkBigramTokenFilterScripts.Hangul;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CjkBigramTokenFilterScripts value.");
         }
     }

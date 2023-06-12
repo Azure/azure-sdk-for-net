@@ -10,27 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing lot summary. </summary>
+    /// <summary>
+    /// Result of listing lot summary.
+    /// Serialized Name: Lots
+    /// </summary>
     internal partial class Lots
     {
         /// <summary> Initializes a new instance of Lots. </summary>
         internal Lots()
         {
-            Value = new ChangeTrackingList<LotSummary>();
+            Value = new ChangeTrackingList<ConsumptionLotSummary>();
         }
 
         /// <summary> Initializes a new instance of Lots. </summary>
-        /// <param name="value"> The list of lot summary. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal Lots(IReadOnlyList<LotSummary> value, string nextLink)
+        /// <param name="value">
+        /// The list of lot summary.
+        /// Serialized Name: Lots.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: Lots.nextLink
+        /// </param>
+        internal Lots(IReadOnlyList<ConsumptionLotSummary> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of lot summary. </summary>
-        public IReadOnlyList<LotSummary> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The list of lot summary.
+        /// Serialized Name: Lots.value
+        /// </summary>
+        public IReadOnlyList<ConsumptionLotSummary> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: Lots.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

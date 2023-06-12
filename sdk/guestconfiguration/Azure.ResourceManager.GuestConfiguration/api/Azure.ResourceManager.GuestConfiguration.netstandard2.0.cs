@@ -7,22 +7,22 @@ namespace Azure.ResourceManager.GuestConfiguration
     }
     public static partial class GuestConfigurationExtensions
     {
-        public static Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string machineName) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>> GetGuestConfigurationVmAssignmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>> GetGuestConfigurationVmAssignmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmName) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmssName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>> GetGuestConfigurationVmssAssignmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmssName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>> GetGuestConfigurationVmssAssignmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmssName) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
     }
     public partial class GuestConfigurationHcrpAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>, System.Collections.IEnumerable
     {
@@ -140,6 +140,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot left, Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class ArmGuestConfigurationModelFactory
+    {
+        public static Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason AssignmentReportResourceComplianceReason(string phrase = null, string code = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo AssignmentReportResourceInfo(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), string assignmentResourceSettingName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason> reasons = null, System.BinaryData properties = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData GuestConfigurationAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo GuestConfigurationAssignmentInfo(string name = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo configuration = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties GuestConfigurationAssignmentProperties(string targetResourceId = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation guestConfiguration = null, Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), System.DateTimeOffset? lastComplianceStatusCheckedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier latestReportId = null, string parameterHash = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo latestAssignmentReport = null, string context = null, string assignmentHash = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState?), string resourceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo> vmssVmList = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport GuestConfigurationAssignmentReport(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails GuestConfigurationAssignmentReportDetails(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Guid? jobId = default(System.Guid?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? operationType = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> resources = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo GuestConfigurationAssignmentReportInfo(Azure.Core.ResourceIdentifier id = null, System.Guid? reportId = default(System.Guid?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo assignment = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo vm = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? operationType = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> resources = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties GuestConfigurationAssignmentReportProperties(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), System.Guid? reportId = default(System.Guid?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo assignment = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo vm = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails details = null, string vmssResourceId = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo GuestConfigurationInfo(string name = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation GuestConfigurationNavigation(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind? kind = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind?), string name = null, string version = null, System.Uri contentUri = null, string contentHash = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType? assignmentType = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType?), string assignmentSource = null, string contentType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> configurationParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> configurationProtectedParameters = null, Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting configurationSetting = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData GuestConfigurationResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo GuestConfigurationVmInfo(Azure.Core.ResourceIdentifier id = null, System.Guid? uuid = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo GuestConfigurationVmssVmInfo(System.Guid? vmId = default(System.Guid?), Azure.Core.ResourceIdentifier vmResourceId = null, Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), System.Guid? latestReportId = default(System.Guid?), System.DateTimeOffset? lastComplianceCheckedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting LcmConfigurationSetting(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode? configurationMode = default(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode?), bool? isModuleOverwriteAllowed = default(bool?), Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot? actionAfterReboot = default(Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot?), float? refreshFrequencyInMins = default(float?), bool? rebootIfNeeded = default(bool?), float? configurationModeFrequencyInMins = default(float?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssignedGuestConfigurationMachineComplianceStatus : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus>
     {
@@ -159,19 +177,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus left, Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssignmentReport
-    {
-        public AssignmentReport() { }
-        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo Assignment { get { throw null; } set { } }
-        public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
-        public System.Guid? ReportId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } set { } }
-    }
     public partial class AssignmentReportResourceComplianceReason
     {
         public AssignmentReportResourceComplianceReason() { }
@@ -186,22 +191,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public System.BinaryData Properties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason> Reasons { get { throw null; } }
     }
-    public partial class ConfigurationInfo
-    {
-        public ConfigurationInfo() { }
-        public string Name { get { throw null; } }
-        public string Version { get { throw null; } }
-    }
-    public partial class ConfigurationParameter
-    {
-        public ConfigurationParameter() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
     public partial class GuestConfigurationAssignmentInfo
     {
         public GuestConfigurationAssignmentInfo() { }
-        public Azure.ResourceManager.GuestConfiguration.Models.ConfigurationInfo Configuration { get { throw null; } set { } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo Configuration { get { throw null; } set { } }
         public string Name { get { throw null; } }
     }
     public partial class GuestConfigurationAssignmentProperties
@@ -212,7 +205,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string Context { get { throw null; } set { } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation GuestConfiguration { get { throw null; } set { } }
         public System.DateTimeOffset? LastComplianceStatusCheckedOn { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.AssignmentReport LatestAssignmentReport { get { throw null; } set { } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LatestReportId { get { throw null; } }
         public string ParameterHash { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState? ProvisioningState { get { throw null; } }
@@ -236,6 +229,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+    }
+    public partial class GuestConfigurationAssignmentReportInfo
+    {
+        public GuestConfigurationAssignmentReportInfo() { }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo Assignment { get { throw null; } set { } }
+        public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
+        public System.Guid? ReportId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } set { } }
     }
     public partial class GuestConfigurationAssignmentReportProperties
     {
@@ -287,6 +293,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class GuestConfigurationInfo
+    {
+        public GuestConfigurationInfo() { }
+        public string Name { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationKind : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind>
     {
@@ -309,8 +321,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public GuestConfigurationNavigation() { }
         public string AssignmentSource { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType? AssignmentType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.ConfigurationParameter> ConfigurationParameter { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.ConfigurationParameter> ConfigurationProtectedParameter { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> ConfigurationParameters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> ConfigurationProtectedParameters { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting ConfigurationSetting { get { throw null; } }
         public string ContentHash { get { throw null; } set { } }
         public string ContentType { get { throw null; } }
@@ -318,6 +330,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind? Kind { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+    }
+    public partial class GuestConfigurationParameter
+    {
+        public GuestConfigurationParameter() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState>

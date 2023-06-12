@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmVirtualMachineTemplate data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmVirtualMachineTemplate data model.
+    /// The VirtualMachineTemplates resource definition.
+    /// </summary>
     public partial class ScVmmVirtualMachineTemplateData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public ScVmmVirtualMachineTemplateData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaces>();

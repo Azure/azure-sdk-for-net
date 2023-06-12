@@ -711,7 +711,7 @@ namespace Microsoft.Azure.Management.Security
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
-            _url = _url.Replace("{taskUpdateActionType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(taskUpdateActionType, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{taskUpdateActionType}", System.Uri.EscapeDataString(taskUpdateActionType));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1368,7 +1368,7 @@ namespace Microsoft.Azure.Management.Security
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
-            _url = _url.Replace("{taskUpdateActionType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(taskUpdateActionType, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{taskUpdateActionType}", System.Uri.EscapeDataString(taskUpdateActionType));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
         public AzureKeyVaultSecretReference(LinkedServiceReference store, object secretName)
         {
-            if (store == null)
-            {
-                throw new ArgumentNullException(nameof(store));
-            }
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
+            Argument.AssertNotNull(store, nameof(store));
+            Argument.AssertNotNull(secretName, nameof(secretName));
 
             Store = store;
             SecretName = secretName;

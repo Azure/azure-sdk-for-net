@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
-                writer.WritePropertyName("queryStringCachingBehavior");
+                writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
             if (Optional.IsDefined(QueryParameters))
             {
-                writer.WritePropertyName("queryParameters");
+                writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
             if (Optional.IsDefined(CompressionSettings))
             {
-                writer.WritePropertyName("compressionSettings");
+                writer.WritePropertyName("compressionSettings"u8);
                 writer.WriteObjectValue(CompressionSettings);
             }
             writer.WriteEndObject();
@@ -35,31 +35,33 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorRouteCacheConfiguration DeserializeFrontDoorRouteCacheConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<string> queryParameters = default;
             Optional<RouteCacheCompressionSettings> compressionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryStringCachingBehavior"))
+                if (property.NameEquals("queryStringCachingBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryStringCachingBehavior = new FrontDoorQueryStringCachingBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryParameters"))
+                if (property.NameEquals("queryParameters"u8))
                 {
                     queryParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compressionSettings"))
+                if (property.NameEquals("compressionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value);

@@ -14,7 +14,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Service Bus, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Service Bus, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for creating a Service Bus namespace using the Azure portal. There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
@@ -41,14 +41,15 @@ For local development, use the `local.settings.json` file to store the connectio
 
 When deployed, use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
 
-#### Managed identity authentication
+#### Identity-based authentication
 
-If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Service Bus extension.
-To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
+If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Service Bus extension. Before doing so, you will need to ensure that permissions have been configured as described in the [Azure Functions developer guide](https://docs.microsoft.com/azure/azure-functions/functions-reference#grant-permission-to-the-identity).
+To use identity-based authentication provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
 
 ```json
 {
   "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "<connection_name>__fullyQualifiedNamespace": "<service_bus_namespace>.servicebus.windows.net"
   }
 }
@@ -60,6 +61,7 @@ Or in the case of deployed app set the same setting in [application settings](ht
 <connection_name>__fullyQualifiedNamespace=<service_bus_namespace>.servicebus.windows.net
 ```
 
+More details about configuring an identity-based connection can be found [here](https://learn.microsoft.com/azure/azure-functions/functions-reference?tabs=blob#configure-an-identity-based-connection).
 
 ## Key concepts
 

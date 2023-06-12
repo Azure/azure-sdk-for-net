@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static WorkloadNetworkDnsZoneProvisioningState Succeeded { get; } = new WorkloadNetworkDnsZoneProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkDnsZoneProvisioningState Deleting { get; } = new WorkloadNetworkDnsZoneProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static WorkloadNetworkDnsZoneProvisioningState Updating { get; } = new WorkloadNetworkDnsZoneProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static WorkloadNetworkDnsZoneProvisioningState Canceled { get; } = new WorkloadNetworkDnsZoneProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsZoneProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkDnsZoneProvisioningState left, WorkloadNetworkDnsZoneProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsZoneProvisioningState"/> values are not the same. </summary>

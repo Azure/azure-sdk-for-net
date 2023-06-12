@@ -20,10 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public BuildDocumentModelRequest(string modelId, DocumentBuildMode buildMode)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
             BuildMode = buildMode;
@@ -38,6 +35,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DocumentBuildMode BuildMode { get; }
         /// <summary> Azure Blob Storage location containing the training data. </summary>
         public AzureBlobContentSource AzureBlobSource { get; set; }
+        /// <summary> Azure Blob Storage file list specifying the training data. </summary>
+        public AzureBlobFileListSource AzureBlobFileListSource { get; set; }
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.StorageCache
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CacheResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CacheResources and their operations over a CacheResource. </returns>
-        public virtual CacheCollection GetCaches()
+        /// <summary> Gets a collection of StorageCacheResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of StorageCacheResources and their operations over a StorageCacheResource. </returns>
+        public virtual StorageCacheCollection GetStorageCaches()
         {
-            return GetCachedClient(Client => new CacheCollection(Client, Id));
+            return GetCachedClient(Client => new StorageCacheCollection(Client, Id));
         }
     }
 }

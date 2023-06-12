@@ -20,8 +20,8 @@ namespace Azure.Monitor.Query.Models
 
         public static ResultType ToResultType(this string value)
         {
-            if (string.Equals(value, "Data", StringComparison.InvariantCultureIgnoreCase)) return ResultType.Data;
-            if (string.Equals(value, "Metadata", StringComparison.InvariantCultureIgnoreCase)) return ResultType.Metadata;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Data")) return ResultType.Data;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Metadata")) return ResultType.Metadata;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultType value.");
         }
     }

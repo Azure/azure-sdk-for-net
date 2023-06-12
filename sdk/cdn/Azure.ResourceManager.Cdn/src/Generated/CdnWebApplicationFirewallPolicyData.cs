@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the CdnWebApplicationFirewallPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the CdnWebApplicationFirewallPolicy data model.
+    /// Defines web application firewall policy for Azure CDN.
+    /// </summary>
     public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
@@ -24,10 +27,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public CdnWebApplicationFirewallPolicyData(AzureLocation location, CdnSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             EndpointLinks = new ChangeTrackingList<SubResource>();

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of OrderList. </summary>
         internal OrderList()
         {
-            Value = new ChangeTrackingList<OrderData>();
+            Value = new ChangeTrackingList<DataBoxEdgeOrderData>();
         }
 
         /// <summary> Initializes a new instance of OrderList. </summary>
         /// <param name="value"> The list of orders. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal OrderList(IReadOnlyList<OrderData> value, string nextLink)
+        internal OrderList(IReadOnlyList<DataBoxEdgeOrderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of orders. </summary>
-        public IReadOnlyList<OrderData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeOrderData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

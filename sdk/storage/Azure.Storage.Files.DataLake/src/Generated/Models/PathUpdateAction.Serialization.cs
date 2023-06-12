@@ -23,11 +23,11 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static PathUpdateAction ToPathUpdateAction(this string value)
         {
-            if (string.Equals(value, "append", StringComparison.InvariantCultureIgnoreCase)) return PathUpdateAction.Append;
-            if (string.Equals(value, "flush", StringComparison.InvariantCultureIgnoreCase)) return PathUpdateAction.Flush;
-            if (string.Equals(value, "setProperties", StringComparison.InvariantCultureIgnoreCase)) return PathUpdateAction.SetProperties;
-            if (string.Equals(value, "setAccessControl", StringComparison.InvariantCultureIgnoreCase)) return PathUpdateAction.SetAccessControl;
-            if (string.Equals(value, "setAccessControlRecursive", StringComparison.InvariantCultureIgnoreCase)) return PathUpdateAction.SetAccessControlRecursive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "append")) return PathUpdateAction.Append;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "flush")) return PathUpdateAction.Flush;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setProperties")) return PathUpdateAction.SetProperties;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setAccessControl")) return PathUpdateAction.SetAccessControl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setAccessControlRecursive")) return PathUpdateAction.SetAccessControlRecursive;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathUpdateAction value.");
         }
     }

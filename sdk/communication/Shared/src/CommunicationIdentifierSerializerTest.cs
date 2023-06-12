@@ -11,7 +11,7 @@ namespace Azure.Communication
         private const string TestUserId = "User Id";
         private const string TestRawId = "Raw Id";
         private const string TestPhoneNumber = "+12223334444";
-        private const string TestPhoneNumberRawId = "4:12223334444";
+        private const string TestPhoneNumberRawId = "4:+12223334444";
         private const string TestTeamsUserId = "Microsoft Teams User Id";
         private const string TestTeamsCloud = "gcch";
 
@@ -83,6 +83,39 @@ namespace Azure.Communication
         }
 
         [Test]
+        public void DeserializeCommunicationUser_WithKind_DeserializesSuccessfully()
+        {
+            CommunicationUserIdentifier identifier = (CommunicationUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.CommunicationUser,
+                    CommunicationUser = new CommunicationUserIdentifierModel(TestUserId),
+                    RawId = TestRawId,
+                });
+
+            CommunicationUserIdentifier expectedIdentifier = new(TestUserId);
+
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializeCommunicationUser_WithKindAndNoUser_DeserializesUnknownIdentifier()
+        {
+            UnknownIdentifier identifier = (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsUser,
+                    RawId = TestRawId,
+                });
+
+            UnknownIdentifier expectedIdentifier = new(TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
         public void SerializeUnknown()
         {
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new UnknownIdentifier(TestRawId));
@@ -133,6 +166,40 @@ namespace Azure.Communication
         }
 
         [Test]
+        public void DeserializePhoneNumber_WithKind_DeserializesSuccessfully()
+        {
+            PhoneNumberIdentifier identifier = (PhoneNumberIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                            new CommunicationIdentifierModel
+                            {
+                                Kind = CommunicationIdentifierModelKind.PhoneNumber,
+                                PhoneNumber = new PhoneNumberIdentifierModel(TestPhoneNumber),
+                                RawId = TestRawId,
+                            });
+
+            PhoneNumberIdentifier expectedIdentifier = new(TestPhoneNumber, TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.PhoneNumber, identifier.PhoneNumber);
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializePhoneNumber_WithKindAndNoNumber_DeserializesUnknownIdentifier()
+        {
+            UnknownIdentifier identifier = (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.PhoneNumber,
+                    RawId = TestRawId,
+                });
+
+            UnknownIdentifier expectedIdentifier = new(TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
         [TestCase(false, null)]
         [TestCase(true, null)]
         [TestCase(false, TestRawId)]
@@ -169,6 +236,46 @@ namespace Azure.Communication
             Assert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
             Assert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
             Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsUser_WithKind_DeserializesSuccessfully()
+        {
+            MicrosoftTeamsUserIdentifier identifier = (MicrosoftTeamsUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsUser,
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId)
+                    {
+                        IsAnonymous = false,
+                        Cloud = TestTeamsCloud,
+                    },
+                    RawId = TestRawId,
+                });
+
+            MicrosoftTeamsUserIdentifier expectedIdentifier = new(TestTeamsUserId, false, CommunicationCloudEnvironment.Gcch, TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
+            Assert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
+            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsUser_WithKindAndNoUser_DeserializesUnknownIdentifier()
+        {
+            UnknownIdentifier identifier = (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsUser,
+                    RawId = TestRawId,
+                });
+
+            UnknownIdentifier expectedIdentifier = new(TestRawId);
+
             Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
             Assert.AreEqual(expectedIdentifier, identifier);
         }

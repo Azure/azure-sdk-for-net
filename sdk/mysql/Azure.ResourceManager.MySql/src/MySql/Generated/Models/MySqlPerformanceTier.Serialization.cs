@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlPerformanceTier DeserializeMySqlPerformanceTier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<int> maxBackupRetentionDays = default;
             Optional<int> minBackupRetentionDays = default;
@@ -25,76 +29,69 @@ namespace Azure.ResourceManager.MySql.Models
             Optional<IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxBackupRetentionDays"))
+                if (property.NameEquals("maxBackupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBackupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minBackupRetentionDays"))
+                if (property.NameEquals("minBackupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minBackupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxStorageMB"))
+                if (property.NameEquals("maxStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minLargeStorageMB"))
+                if (property.NameEquals("minLargeStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minLargeStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxLargeStorageMB"))
+                if (property.NameEquals("maxLargeStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxLargeStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minStorageMB"))
+                if (property.NameEquals("minStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minStorageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("serviceLevelObjectives"))
+                if (property.NameEquals("serviceLevelObjectives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlPerformanceTierServiceLevelObjectives> array = new List<MySqlPerformanceTierServiceLevelObjectives>();

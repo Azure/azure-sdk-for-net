@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An ADLS Gen 1 folder data set. </summary>
-    public partial class AdlsGen1FolderDataSet : DataSetData
+    public partial class AdlsGen1FolderDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of AdlsGen1FolderDataSet. </summary>
         /// <param name="accountName"> The ADLS account name. </param>
@@ -23,22 +23,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="folderPath"/>, <paramref name="resourceGroup"/> or <paramref name="subscriptionId"/> is null. </exception>
         public AdlsGen1FolderDataSet(string accountName, string folderPath, string resourceGroup, string subscriptionId)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (folderPath == null)
-            {
-                throw new ArgumentNullException(nameof(folderPath));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             AccountName = accountName;
             FolderPath = folderPath;
@@ -58,7 +46,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="folderPath"> The folder path within the ADLS account. </param>
         /// <param name="resourceGroup"> Resource group of ADLS account. </param>
         /// <param name="subscriptionId"> Subscription id of ADLS account. </param>
-        internal AdlsGen1FolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string accountName, string dataSetId, string folderPath, string resourceGroup, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen1FolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string accountName, Guid? dataSetId, string folderPath, string resourceGroup, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             AccountName = accountName;
             DataSetId = dataSetId;
@@ -71,7 +59,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> The ADLS account name. </summary>
         public string AccountName { get; set; }
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> The folder path within the ADLS account. </summary>
         public string FolderPath { get; set; }
         /// <summary> Resource group of ADLS account. </summary>

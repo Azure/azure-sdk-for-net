@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private const string EnglishDocument1 = @"A recent report by the Government Accountability Office found a dramatic increase in oil.";
-        private static readonly List<string> e_document1ExpectedOutput = new List<string>
+        private static readonly List<string> s_englishExpectedOutput1 = new List<string>
         {
             "recent",
             "Government",
@@ -30,13 +31,13 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         private const string EnglishDocument2 = @"Capital Call #20 for Berkshire Multifamily.";
-        private static readonly List<string> e_document2ExpectedOutput = new List<string>
+        private static readonly List<string> s_englishExpectedOutput2 = new List<string>
         {
             "Berkshire Multifamily",
         };
 
         private const string SpanishDocument1 = @"Un informe reciente de la Oficina de Responsabilidad del Gobierno encontró un aumento dramático en el petróleo.";
-        private static readonly List<string> s_document1ExpectedOutput = new List<string>
+        private static readonly List<string> s_spanishExpectedOutput1 = new List<string>
         {
             "reciente",
             "Responsabilidad",
@@ -46,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "petróleo",
         };
 
-        private static readonly List<string> e_batchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_englishBatchConvenienceDocuments = new List<string>
         {
             EnglishDocument1,
             EnglishDocument2
@@ -64,10 +65,26 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        [RecordedTest]
-        public async Task RecognizeCustomEntitiesWithADDTest()
+        private static readonly Dictionary<string, List<string>> s_englishExpectedBatchOutput = new()
         {
-            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            { "0", s_englishExpectedOutput1 },
+            { "1", s_englishExpectedOutput2 },
+        };
+
+        [SetUp]
+        public void TestSetup()
+        {
+            // These tests require a pre-trained, static resource,
+            // which is currently only available in the public cloud.
+            TestEnvironment.IgnoreIfNotPublicCloud();
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
+        public async Task RecognizeCustomEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true, useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -85,13 +102,14 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, e_document1ExpectedOutput);
+            ValidateInDocumentResult(entites, s_englishExpectedOutput1);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -109,13 +127,14 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, e_document1ExpectedOutput);
+            ValidateInDocumentResult(entites, s_englishExpectedOutput1);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesWithLanguageTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -138,13 +157,14 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_document1ExpectedOutput);
+            ValidateInDocumentResult(entites, s_spanishExpectedOutput1);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchWithErrorTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             var documents = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
@@ -177,9 +197,11 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchConvenienceTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            Dictionary<string, List<string>> expectedOutput = s_englishExpectedBatchOutput;
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -188,26 +210,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            var operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
+            var operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
 
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", e_document1ExpectedOutput },
-                { "1", e_document2ExpectedOutput },
-            };
-
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -225,17 +242,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", e_document1ExpectedOutput },
-                { "2", s_document1ExpectedOutput },
+                { "1", s_englishExpectedOutput1 },
+                { "2", s_spanishExpectedOutput1 },
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public void RecognizeCustomEntitiesBatchWithNullIdTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
@@ -251,10 +269,11 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task RecognizeCustomEntitiesWithMultipleActions()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -272,7 +291,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -289,9 +308,10 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task StartRecognizeCustomEntities()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName);
 
             await PollUntilTimeout(operation);
@@ -302,17 +322,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", e_document1ExpectedOutput },
-                { "2", s_document1ExpectedOutput },
+                { "1", s_englishExpectedOutput1 },
+                { "2", s_spanishExpectedOutput1 },
             };
 
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task StartRecognizeCustomEntitiesWithName()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName, new RecognizeCustomEntitiesOptions
             {
                 DisplayName = "StartRecognizeCustomEntitiesWithName",
@@ -327,11 +348,30 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", e_document1ExpectedOutput },
-                { "2", s_document1ExpectedOutput },
+                { "1", s_englishExpectedOutput1 },
+                { "2", s_spanishExpectedOutput1 },
             };
 
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeCustomEntitiesActions = new[]
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
+            Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
@@ -362,7 +402,10 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateBatchDocumentsResult(RecognizeCustomEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(
+            RecognizeCustomEntitiesResultCollection results,
+            Dictionary<string, List<string>> minimumExpectedOutput,
+            bool includeStatistics = default)
         {
             if (includeStatistics)
             {
@@ -375,27 +418,27 @@ namespace Azure.AI.TextAnalytics.Tests
             else
                 Assert.IsNull(results.Statistics);
 
-            foreach (RecognizeEntitiesResult entitiesInDocument in results)
+            foreach (RecognizeEntitiesResult result in results)
             {
-                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
 
-                Assert.False(entitiesInDocument.HasError);
+                Assert.False(result.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(entitiesInDocument.Statistics);
+                Assert.IsNotNull(result.Statistics);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
+                    Assert.Greater(result.Statistics.TransactionCount, 0);
                 }
                 else
                 {
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    Assert.AreEqual(0, result.Statistics.CharacterCount);
+                    Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumentResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+                ValidateInDocumentResult(result.Entities, minimumExpectedOutput[result.Id]);
             }
         }
     }

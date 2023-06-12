@@ -18,6 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class CryptographyClient : IKeyEncryptionKey
     {
+        private const string GetOperation = "get";
         private readonly string _keyId;
         private readonly KeyVaultPipeline _pipeline;
         private readonly RemoteCryptographyClient _remoteProvider;
@@ -36,6 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId">
         /// The key identifier of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
@@ -50,6 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId">
         /// The key identifier of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CryptographyClientOptions"/> the <see cref="CryptographyClient"/> for local or remote operations on Key Vault.</param>
@@ -191,10 +194,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
             await EncryptAsync(new EncryptParameters(algorithm, plaintext), cancellationToken).ConfigureAwait(false);
 
@@ -208,10 +215,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
             Encrypt(new EncryptParameters(algorithm, plaintext), cancellationToken);
 
@@ -224,11 +235,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="encryptParameters"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptParameters encryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(encryptParameters, nameof(encryptParameters));
@@ -283,11 +298,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="encryptParameters"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual EncryptResult Encrypt(EncryptParameters encryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(encryptParameters, nameof(encryptParameters));
@@ -346,6 +365,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
             await DecryptAsync(new DecryptParameters(algorithm, ciphertext), cancellationToken).ConfigureAwait(false);
 
@@ -363,6 +383,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
             Decrypt(new DecryptParameters(algorithm, ciphertext), cancellationToken);
 
@@ -380,6 +401,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(DecryptParameters decryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(decryptParameters, nameof(decryptParameters));
@@ -439,6 +461,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DecryptResult Decrypt(DecryptParameters decryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(decryptParameters, nameof(decryptParameters));
@@ -953,6 +976,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
@@ -1015,6 +1055,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
@@ -1077,6 +1134,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1140,6 +1214,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1202,6 +1293,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1265,6 +1373,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1327,6 +1452,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1390,6 +1532,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1441,6 +1600,64 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw;
             }
         }
+
+        /// <summary>
+        /// Creates an <see cref="RSA"/> implementation backed by this <see cref="CryptographyClient"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
+        /// <returns>An <see cref="RSAKeyVault"/> implementation backed by this <see cref="CryptographyClient"/>.</returns>
+        /// <remarks>
+        /// The <see cref="CryptographyClient"/> will attempt to download the public key synchronously.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual RSAKeyVault CreateRSA(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(CreateRSA)}");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                Initialize(GetOperation, cancellationToken);
+                return new RSAKeyVault(this, KeyId, KeyMaterial);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an <see cref="RSA"/> implementation backed by this <see cref="CryptographyClient"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
+        /// <returns>An <see cref="RSAKeyVault"/> implementation backed by this <see cref="CryptographyClient"/>.</returns>
+        /// <remarks>
+        /// The <see cref="CryptographyClient"/> will attempt to download the public key asynchronously.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<RSAKeyVault> CreateRSAAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(CreateRSA)}");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                await InitializeAsync(GetOperation, cancellationToken).ConfigureAwait(false);
+                return new RSAKeyVault(this, KeyId, KeyMaterial);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private JsonWebKey KeyMaterial => _provider is LocalCryptographyProvider local ? local.KeyMaterial : null;
 
         private void ThrowIfLocalOnly(string name)
         {

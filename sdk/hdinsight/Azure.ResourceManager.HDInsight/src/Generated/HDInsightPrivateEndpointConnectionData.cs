@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    /// <summary> A class representing the HDInsightPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HDInsightPrivateEndpointConnection data model.
+    /// The private endpoint connection.
+    /// </summary>
     public partial class HDInsightPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionData. </summary>
@@ -21,10 +24,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public HDInsightPrivateEndpointConnectionData(HDInsightPrivateLinkServiceConnectionState connectionState)
         {
-            if (connectionState == null)
-            {
-                throw new ArgumentNullException(nameof(connectionState));
-            }
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
             ConnectionState = connectionState;
         }

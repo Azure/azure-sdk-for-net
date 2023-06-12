@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mlWorkspaceName"/> is null. </exception>
         public AzureMLServiceLinkedService(BinaryData subscriptionId, BinaryData resourceGroupName, BinaryData mlWorkspaceName)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (mlWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(mlWorkspaceName));
-            }
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(mlWorkspaceName, nameof(mlWorkspaceName));
 
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;

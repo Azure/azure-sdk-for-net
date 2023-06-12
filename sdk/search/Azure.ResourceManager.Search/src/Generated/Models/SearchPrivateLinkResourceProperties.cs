@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search.Models
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
-            ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
+            ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>();
         }
 
         /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="requiredMembers"> The list of required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> The list of required DNS zone names of the private link resource. </param>
         /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service, that are supported by Azure Cognitive Search. </param>
-        internal SearchPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IReadOnlyList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes)
+        internal SearchPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The list of required DNS zone names of the private link resource. </summary>
         public IReadOnlyList<string> RequiredZoneNames { get; }
         /// <summary> The list of resources that are onboarded to private link service, that are supported by Azure Cognitive Search. </summary>
-        public IReadOnlyList<ShareablePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; }
+        public IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; }
     }
 }

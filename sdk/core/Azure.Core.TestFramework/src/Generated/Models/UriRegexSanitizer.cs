@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Core.TestFramework.Models
         /// <exception cref="ArgumentNullException"> <paramref name="regex"/> or <paramref name="value"/> is null. </exception>
         public UriRegexSanitizer(string regex, string value)
         {
-            if (regex == null)
-            {
-                throw new ArgumentNullException(nameof(regex));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(regex, nameof(regex));
+            Argument.AssertNotNull(value, nameof(value));
 
             Regex = regex;
             Value = value;

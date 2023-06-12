@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("accessRules");
+            writer.WritePropertyName("accessRules"u8);
             writer.WriteStartArray();
             foreach (var item in AccessRules)
             {
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NfsAccessPolicy DeserializeNfsAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<NfsAccessRule> accessRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessRules"))
+                if (property.NameEquals("accessRules"u8))
                 {
                     List<NfsAccessRule> array = new List<NfsAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())

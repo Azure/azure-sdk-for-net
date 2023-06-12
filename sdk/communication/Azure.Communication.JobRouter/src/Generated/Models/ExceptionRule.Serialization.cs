@@ -16,9 +16,9 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("trigger");
+            writer.WritePropertyName("trigger"u8);
             writer.WriteObjectValue(Trigger);
-            writer.WritePropertyName("actions");
+            writer.WritePropertyName("actions"u8);
             writer.WriteStartObject();
             foreach (var item in Actions)
             {
@@ -31,16 +31,20 @@ namespace Azure.Communication.JobRouter
 
         internal static ExceptionRule DeserializeExceptionRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             JobExceptionTrigger trigger = default;
             IDictionary<string, ExceptionAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
                     trigger = JobExceptionTrigger.DeserializeJobExceptionTrigger(property.Value);
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     Dictionary<string, ExceptionAction> dictionary = new Dictionary<string, ExceptionAction>();
                     foreach (var property0 in property.Value.EnumerateObject())

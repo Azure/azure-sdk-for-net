@@ -27,7 +27,7 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The sequence sections for the AMQP message body.
         /// </summary>
-        private IEnumerable<IList<object>>? _sequence;
+        private readonly IEnumerable<IList<object>>? _sequence;
 
         /// <summary>
         /// Gets the type of the message body.

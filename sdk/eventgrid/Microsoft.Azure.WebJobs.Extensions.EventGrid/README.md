@@ -109,8 +109,42 @@ public static class CloudEventTriggerFunction
     }
 }
 ```
-Note that creating a subscription of type Azure Function with the CloudEvent schema is not yet supported. Instead, you can select an Endpoint Type of Web Hook and use your function URL as the endpoint. The function URL can be found by going to the Code + Test blade of your function, and clicking the Get function URL button.
 
+It is also possible to bind to an array of events. This is useful if you have [batching enabled](https://learn.microsoft.com/azure/event-grid/delivery-and-retry#output-batching) for your Event Grid Subscription.
+
+```C# Snippet:EventGridEventBatchTriggerFunction
+public static class EventGridEventBatchTriggerFunction
+{
+    [FunctionName("EventGridEventBatchTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [EventGridTrigger] EventGridEvent[] events)
+    {
+        foreach (EventGridEvent eventGridEvent in events)
+        {
+            logger.LogInformation("Event received {type} {subject}", eventGridEvent.EventType, eventGridEvent.Subject);
+        }
+    }
+}
+```
+
+Similarly, for subscriptions configured with the CloudEvent schema:
+
+```C# Snippet:CloudEventBatchTriggerFunction
+public static class CloudEventBatchTriggerFunction
+{
+    [FunctionName("CloudEventBatchTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [EventGridTrigger] CloudEvent[] events)
+    {
+        foreach (CloudEvent cloudEvent in events)
+        {
+            logger.LogInformation("Event received {type} {subject}", cloudEvent.Type, cloudEvent.Subject);
+        }
+    }
+}
+```
 
 ## Troubleshooting
 

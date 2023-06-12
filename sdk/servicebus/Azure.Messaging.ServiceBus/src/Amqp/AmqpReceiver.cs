@@ -6,12 +6,12 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -101,6 +101,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override string SessionId { get; protected set; }
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
+        public override int PrefetchCount
+        {
+            get => _prefetchCount;
+            set
+            {
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
+                _prefetchCount = value;
+                if (_receiveLink.TryGetOpenedObject(out var link))
+                {
+                    link.SetTotalLinkCredit((uint)value, true, true);
+                }
+            }
+        }
+
+        private volatile int _prefetchCount;
+
         private Exception LinkException { get; set; }
 
         /// <summary>
@@ -172,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionReceiver = isSessionReceiver;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
+            _prefetchCount = (int)prefetchCount;
             Identifier = identifier;
             RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
@@ -343,7 +360,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (!_receiveLink.TryGetOpenedObject(out link))
                 {
-                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken)
+                    link = await _receiveLink.GetOrCreateAsync(timeout, cancellationToken)
                         .ConfigureAwait(false);
                 }
 
@@ -368,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
+                    receivedMessages.Add(_messageConverter.AmqpMessageToSBReceivedMessage(message));
                     message.Dispose();
                 }
 
@@ -459,10 +476,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
-            if (!MemoryMarshal.TryWrite(bufferForLockToken, ref lockToken))
-            {
-                lockToken.ToByteArray().AsSpan().CopyTo(bufferForLockToken);
-            }
+            GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken.AsSpan(0, SizeOfGuidInBytes));
 
             ArraySegment<byte> deliveryTag = new ArraySegment<byte>(bufferForLockToken, 0, SizeOfGuidInBytes);
             ReceivingAmqpLink receiveLink = null;
@@ -664,7 +678,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <remarks>
         /// In order to receive a message from the dead-letter queue, you will need a new
         /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
         /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
@@ -953,8 +967,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
-                UseMinimum(_connectionScope.SessionTimeout,
-                timeout.CalculateRemaining(stopWatch.GetElapsedTime())),
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                 cancellationToken)
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -984,7 +997,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                    message = _messageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage, true);
                     messages.Add(message);
                 }
 
@@ -1294,7 +1307,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = _messageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;
@@ -1336,9 +1349,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             RequestResponseLockedMessages.Dispose();
 
-            if (_receiveLink?.TryGetOpenedObject(out var _) == true)
+            if (_receiveLink?.TryGetOpenedObject(out var link) == true)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
+
+                if (!_isSessionReceiver && link.LinkCredit > 0)
+                {
+                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                }
+
                 await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
 
@@ -1386,19 +1407,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ServiceBusEventSource.Log.ManagementLinkClosed(
             Identifier,
             managementLink);
-
-        /// <summary>
-        /// Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        private static TimeSpan UseMinimum(
-            TimeSpan firstOption,
-            TimeSpan secondOption) =>
-            (firstOption < secondOption) ? firstOption : secondOption;
 
         /// <summary>
         /// Opens an AMQP link for use with session receiver operations.

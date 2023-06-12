@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,6 +23,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         private OperationsStatusRestOperations _operationsStatusRestClient;
         private ClientDiagnostics _redisEnterpriseClusterRedisEnterpriseClientDiagnostics;
         private RedisEnterpriseRestOperations _redisEnterpriseClusterRedisEnterpriseRestClient;
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         private OperationsStatusRestOperations OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics RedisEnterpriseClusterRedisEnterpriseClientDiagnostics => _redisEnterpriseClusterRedisEnterpriseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
         private RedisEnterpriseRestOperations RedisEnterpriseClusterRedisEnterpriseRestClient => _redisEnterpriseClusterRedisEnterpriseRestClient ??= new RedisEnterpriseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisEnterpriseClusterResource.ResourceType));
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,11 +53,19 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Gets the status of operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/operationsStatus/{operationId}
-        /// Operation Id: OperationsStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/operationsStatus/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="location"> The region the operation is in. </param>
-        /// <param name="operationId"> The operation&apos;s unique identifier. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RedisEnterpriseOperationStatus>> GetRedisEnterpriseOperationsStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
@@ -74,11 +85,19 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Gets the status of operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/operationsStatus/{operationId}
-        /// Operation Id: OperationsStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/operationsStatus/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="location"> The region the operation is in. </param>
-        /// <param name="operationId"> The operation&apos;s unique identifier. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RedisEnterpriseOperationStatus> GetRedisEnterpriseOperationsStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
@@ -98,86 +117,90 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Gets all RedisEnterprise clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/redisEnterprise
-        /// Operation Id: RedisEnterprise_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/redisEnterprise</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisEnterpriseClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
-                scope.Start();
-                try
-                {
-                    var response = await RedisEnterpriseClusterRedisEnterpriseRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisEnterpriseClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
-                scope.Start();
-                try
-                {
-                    var response = await RedisEnterpriseClusterRedisEnterpriseRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all RedisEnterprise clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/redisEnterprise
-        /// Operation Id: RedisEnterprise_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/redisEnterprise</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(CancellationToken cancellationToken = default)
         {
-            Page<RedisEnterpriseClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
-                scope.Start();
-                try
-                {
-                    var response = RedisEnterpriseClusterRedisEnterpriseRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisEnterpriseClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
-                scope.Start();
-                try
-                {
-                    var response = RedisEnterpriseClusterRedisEnterpriseRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about skus in specified location for the given subscription id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseSkus", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about skus in specified location for the given subscription id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseSkus", "value", null, cancellationToken);
         }
     }
 }

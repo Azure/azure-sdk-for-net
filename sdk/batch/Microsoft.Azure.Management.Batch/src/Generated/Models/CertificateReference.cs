@@ -20,6 +20,12 @@ namespace Microsoft.Azure.Management.Batch.Models
     /// A reference to a certificate to be installed on compute nodes in a
     /// pool. This must exist inside the same account as the pool.
     /// </summary>
+    /// <remarks>
+    /// Warning: This object is deprecated and will be removed after February,
+    /// 2024. Please use the [Azure KeyVault
+    /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+    /// instead.
+    /// </remarks>
     public partial class CertificateReference
     {
         /// <summary>

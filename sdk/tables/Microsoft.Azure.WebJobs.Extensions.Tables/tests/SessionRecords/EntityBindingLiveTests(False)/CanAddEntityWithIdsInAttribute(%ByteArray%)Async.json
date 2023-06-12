@@ -1,0 +1,153 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://t71f792aaca8f076dprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json;odata=nometadata",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-b2d46a1b28a73d7b74e7afd659dee51a-ad0c5553d133c7b1-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.9.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d45ce7755422e58eb606563963250cd6",
+        "x-ms-date": "Wed, 08 Mar 2023 07:42:56 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": {
+        "TableName": "testtableqSyau0rs"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
+        "Date": "Wed, 08 Mar 2023 07:43:04 GMT",
+        "Location": "https://t71f792aaca8f076dprim.table.core.windows.net/Tables(\u0027testtableqSyau0rs\u0027)",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d45ce7755422e58eb606563963250cd6",
+        "x-ms-request-id": "7f4c0836-0002-0028-7c91-510e12000000",
+        "x-ms-version": "2020-12-06"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://t71f792aaca8f076dprim.table.core.windows.net/$metadata#Tables/@Element",
+        "TableName": "testtableqSyau0rs"
+      }
+    },
+    {
+      "RequestUri": "https://t71f792aaca8f076dprim.table.core.windows.net/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "776",
+        "Content-Type": "multipart/mixed; boundary=batch_ec02a640-ee49-7bc7-1de1-0beda45a500a",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.9.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f617269d510587e91fe1b74048a0415c",
+        "x-ms-date": "Wed, 08 Mar 2023 07:42:59 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": "LS1iYXRjaF9lYzAyYTY0MC1lZTQ5LTdiYzctMWRlMS0wYmVkYTQ1YTUwMGENCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1jaGFuZ2VzZXRfM2Q2ZDgyZjktOGRlYS1iZjk1LTQ1NDUtZWE3Zjg5NDM3NDUzDQoNCi0tY2hhbmdlc2V0XzNkNmQ4MmY5LThkZWEtYmY5NS00NTQ1LWVhN2Y4OTQzNzQ1Mw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiaW5hcnkNCg0KUE9TVCBodHRwczovL3Q3MWY3OTJhYWNhOGYwNzZkcHJpbS50YWJsZS5jb3JlLndpbmRvd3MubmV0L3Rlc3R0YWJsZXFTeWF1MHJzPyRmb3JtYXQ9YXBwbGljYXRpb24lMkZqc29uJTNCb2RhdGElM0RtaW5pbWFsbWV0YWRhdGEgSFRUUC8xLjENCkhvc3Q6IHQ3MWY3OTJhYWNhOGYwNzZkcHJpbS50YWJsZS5jb3JlLndpbmRvd3MubmV0DQp4LW1zLXZlcnNpb246IDIwMjAtMTItMDYNCkRhdGFTZXJ2aWNlVmVyc2lvbjogMy4wDQpQcmVmZXI6IHJldHVybi1uby1jb250ZW50DQpBY2NlcHQ6IGFwcGxpY2F0aW9uL2pzb247b2RhdGE9bWluaW1hbG1ldGFkYXRhDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb247b2RhdGE9bm9tZXRhZGF0YQ0KDQp7IlZhbHVlIjoiRm9vIiwiUGFydGl0aW9uS2V5IjoiUEsiLCJSb3dLZXkiOiJSSyJ9DQotLWNoYW5nZXNldF8zZDZkODJmOS04ZGVhLWJmOTUtNDU0NS1lYTdmODk0Mzc0NTMtLQ0KDQotLWJhdGNoX2VjMDJhNjQwLWVlNDktN2JjNy0xZGUxLTBiZWRhNDVhNTAwYS0tDQo=",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "multipart/mixed; boundary=batchresponse_d674c219-5ac4-4d6b-b59e-7f3d1ddba614",
+        "Date": "Wed, 08 Mar 2023 07:43:05 GMT",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f617269d510587e91fe1b74048a0415c",
+        "x-ms-request-id": "7f4c090c-0002-0028-4691-510e12000000",
+        "x-ms-version": "2020-12-06"
+      },
+      "ResponseBody": "LS1iYXRjaHJlc3BvbnNlX2Q2NzRjMjE5LTVhYzQtNGQ2Yi1iNTllLTdmM2QxZGRiYTYxNA0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldHJlc3BvbnNlXzgyOTBlMDZkLTc0ZWQtNDNiYi04NGFkLWQ0YTM2NTIxNjhhYg0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzgyOTBlMDZkLTc0ZWQtNDNiYi04NGFkLWQ0YTM2NTIxNjhhYg0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiaW5hcnkNCg0KSFRUUC8xLjEgMjA0IE5vIENvbnRlbnQNClgtQ29udGVudC1UeXBlLU9wdGlvbnM6IG5vc25pZmYNCkNhY2hlLUNvbnRyb2w6IG5vLWNhY2hlDQpQcmVmZXJlbmNlLUFwcGxpZWQ6IHJldHVybi1uby1jb250ZW50DQpEYXRhU2VydmljZVZlcnNpb246IDMuMDsNCkxvY2F0aW9uOiBodHRwczovL3Q3MWY3OTJhYWNhOGYwNzZkcHJpbS50YWJsZS5jb3JlLndpbmRvd3MubmV0L3Rlc3R0YWJsZXFTeWF1MHJzKFBhcnRpdGlvbktleT0nUEsnLFJvd0tleT0nUksnKQ0KRGF0YVNlcnZpY2VJZDogaHR0cHM6Ly90NzFmNzkyYWFjYThmMDc2ZHByaW0udGFibGUuY29yZS53aW5kb3dzLm5ldC90ZXN0dGFibGVxU3lhdTBycyhQYXJ0aXRpb25LZXk9J1BLJyxSb3dLZXk9J1JLJykNCkVUYWc6IFcvImRhdGV0aW1lJzIwMjMtMDMtMDhUMDclM0E0MyUzQTA1Ljg3MDE3MDdaJyINCg0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzgyOTBlMDZkLTc0ZWQtNDNiYi04NGFkLWQ0YTM2NTIxNjhhYi0tDQotLWJhdGNocmVzcG9uc2VfZDY3NGMyMTktNWFjNC00ZDZiLWI1OWUtN2YzZDFkZGJhNjE0LS0NCg=="
+    },
+    {
+      "RequestUri": "https://t71f792aaca8f076dprim.table.core.windows.net/testtableqSyau0rs(PartitionKey=\u0027PK\u0027,RowKey=\u0027RK\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-dcf3c481d90528dbd610c38f658913d9-768ccf9ab54a4ac9-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.9.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e1404cb5cfb7b2ec1042a7040348f2d9",
+        "x-ms-date": "Wed, 08 Mar 2023 07:42:59 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
+        "Date": "Wed, 08 Mar 2023 07:43:05 GMT",
+        "ETag": "W/\u0022datetime\u00272023-03-08T07%3A43%3A05.8701707Z\u0027\u0022",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e1404cb5cfb7b2ec1042a7040348f2d9",
+        "x-ms-request-id": "7f4c0935-0002-0028-6d91-510e12000000",
+        "x-ms-version": "2020-12-06"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://t71f792aaca8f076dprim.table.core.windows.net/$metadata#testtableqSyau0rs/@Element",
+        "odata.etag": "W/\u0022datetime\u00272023-03-08T07%3A43%3A05.8701707Z\u0027\u0022",
+        "PartitionKey": "PK",
+        "RowKey": "RK",
+        "Timestamp": "2023-03-08T07:43:05.8701707Z",
+        "Value": "Foo"
+      }
+    },
+    {
+      "RequestUri": "https://t71f792aaca8f076dprim.table.core.windows.net/Tables(\u0027testtableqSyau0rs\u0027)",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c059d311e73ffdcdd11af7feed0bd95f-1fc0bcb993c9c4e1-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.9.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7e50b86d5a43a70499e61d09d65477a4",
+        "x-ms-date": "Wed, 08 Mar 2023 07:42:59 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 08 Mar 2023 07:43:06 GMT",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7e50b86d5a43a70499e61d09d65477a4",
+        "x-ms-request-id": "7f4c0954-0002-0028-0b91-510e12000000",
+        "x-ms-version": "2020-12-06"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2111213094",
+    "STORAGE_ENDPOINT_SUFFIX": "core.windows.net",
+    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
+    "TABLES_STORAGE_ACCOUNT_NAME": "t71f792aaca8f076dprim"
+  }
+}

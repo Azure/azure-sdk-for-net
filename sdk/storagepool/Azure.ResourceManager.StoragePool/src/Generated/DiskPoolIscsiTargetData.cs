@@ -13,7 +13,10 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPoolIscsiTarget data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPoolIscsiTarget data model.
+    /// Response for iSCSI Target requests.
+    /// </summary>
     public partial class DiskPoolIscsiTargetData : ResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetData. </summary>
@@ -24,10 +27,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="targetIqn"/> is null. </exception>
         public DiskPoolIscsiTargetData(DiskPoolIscsiTargetAclMode aclMode, string targetIqn, DiskPoolIscsiTargetProvisioningState provisioningState, StoragePoolOperationalStatus status)
         {
-            if (targetIqn == null)
-            {
-                throw new ArgumentNullException(nameof(targetIqn));
-            }
+            Argument.AssertNotNull(targetIqn, nameof(targetIqn));
 
             ManagedByExtended = new ChangeTrackingList<string>();
             AclMode = aclMode;

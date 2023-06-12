@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="automationRuleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="automationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsAutomationRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        AutomationRuleData value = default;
+                        SecurityInsightsAutomationRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutomationRuleData.DeserializeAutomationRuleData(document.RootElement);
+                        value = SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AutomationRuleData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsAutomationRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="automationRuleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="automationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationRuleData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsAutomationRuleData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        AutomationRuleData value = default;
+                        SecurityInsightsAutomationRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutomationRuleData.DeserializeAutomationRuleData(document.RootElement);
+                        value = SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AutomationRuleData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsAutomationRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRuleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, SecurityInsightsAutomationRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="automationRuleId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="automationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRuleData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsAutomationRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, SecurityInsightsAutomationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        AutomationRuleData value = default;
+                        SecurityInsightsAutomationRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AutomationRuleData.DeserializeAutomationRuleData(document.RootElement);
+                        value = SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="automationRuleId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="automationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRuleData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsAutomationRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId, SecurityInsightsAutomationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        AutomationRuleData value = default;
+                        SecurityInsightsAutomationRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AutomationRuleData.DeserializeAutomationRuleData(document.RootElement);
+                        value = SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

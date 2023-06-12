@@ -10,52 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersGcpOfferingArcAutoProvisioning : IUtf8JsonSerializable
+    internal partial class DefenderForServersGcpOfferingArcAutoProvisioning : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(Configuration))
-            {
-                writer.WritePropertyName("configuration");
-                writer.WriteObjectValue(Configuration);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static DefenderForServersGcpOfferingArcAutoProvisioning DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
-            Optional<DefenderForServersGcpOfferingArcAutoProvisioningConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    configuration = DefenderForServersGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersGcpOfferingArcAutoProvisioningConfiguration(property.Value);
-                    continue;
-                }
             }
-            return new DefenderForServersGcpOfferingArcAutoProvisioning(Optional.ToNullable(enabled), configuration.Value);
+            return new DefenderForServersGcpOfferingArcAutoProvisioning(Optional.ToNullable(enabled));
         }
     }
 }

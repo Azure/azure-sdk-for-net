@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System.Linq;
-using Azure.Maps.Search.Models;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using Azure.Maps.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -21,7 +21,11 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             #region Snippet:SearchAddress
-            var searchResult = await client.SearchAddressAsync("Seattle");
+            Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
+
+            SearchAddressResultItem resultItem = searchResult.Value.Results[0];
+            Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
+                resultItem.Position, resultItem.Address.FreeformAddress);
             #endregion
             Assert.AreEqual("Washington", searchResult.Value.Results[0].Address.CountrySubdivisionName);
         }
@@ -30,7 +34,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchMunicipality()
         {
             var client = CreateClient();
-            var searchResult = await client.SearchAddressAsync("Redmond", new SearchAddressOptions {
+            var searchResult = await client.SearchAddressAsync("Redmond", new SearchAddressOptions
+            {
                 EntityType = GeographicEntity.Municipality
             });
             Assert.AreEqual("Redmond, WA", searchResult.Value.Results[0].Address.FreeformAddress);
@@ -40,13 +45,15 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchAddressBiasedAroundCoordinates()
         {
             var client = CreateClient();
-            var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
+            var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions
+            {
                 Coordinates = new GeoPosition(121.56, 25.04),
-                Language = "en"
+                Language = SearchLanguage.EnglishUsa
             });
             Assert.AreEqual("Xinyi District", searchResult.Value.Results[0].Address.MunicipalitySubdivision);
 
-            searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
+            searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions
+            {
                 Coordinates = new GeoPosition(-122.0910, 47.6773)
             });
             Assert.AreEqual("Redmond", searchResult.Value.Results[0].Address.Municipality);
@@ -56,13 +63,15 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchAddressRestrictedByRegion()
         {
             var client = CreateClient();
-            var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
-                CountryFilter = new[]{ "FJI" }
+            var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions
+            {
+                CountryFilter = new[] { "FJI" }
             });
             Assert.AreEqual("Fiji", searchResult.Value.Results[0].Address.Country);
 
-            searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
-                CountryFilter = new[]{ "NZ" }
+            searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions
+            {
+                CountryFilter = new[] { "NZ" }
             });
             Assert.AreEqual("New Zealand", searchResult.Value.Results[0].Address.Country);
         }
@@ -83,7 +92,8 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             #region Snippet:SearchStructuredAddress
-            var address = new StructuredAddress {
+            var address = new StructuredAddress
+            {
                 CountryCode = "US",
                 StreetNumber = "15127",
                 StreetName = "NE 24th Street",
@@ -91,12 +101,16 @@ namespace Azure.Maps.Search.Tests
                 CountrySubdivision = "WA",
                 PostalCode = "98052"
             };
-            var searchResult = await client.SearchStructuredAddressAsync(address);
+            Response<SearchAddressResult> searchResult = await client.SearchStructuredAddressAsync(address);
+
+            SearchAddressResultItem resultItem = searchResult.Value.Results[0];
+            Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
+                resultItem.Position, resultItem.Address.FreeformAddress);
             #endregion
-            Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results[0].Address.FreeformAddress);
+            Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", resultItem.Address.FreeformAddress);
         }
 
-                [RecordedTest]
+        [RecordedTest]
         public void InvalidSearchStructuredAddressTest()
         {
             var client = CreateClient();
@@ -110,7 +124,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchStructuredPartialAddress()
         {
             var client = CreateClient();
-            var address = new StructuredAddress {
+            var address = new StructuredAddress
+            {
                 CountryCode = "NZ",
                 Municipality = "Closeburn"
             };
@@ -122,7 +137,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchAddressBatch()
         {
             var client = CreateClient();
-            var searchResult = await client.SearchAddressBatchAsync(new[] {
+            var searchResult = await client.GetImmediateSearchAddressBatchAsync(new[]
+            {
                 new SearchAddressQuery("Microsoft Campus"),
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
@@ -135,7 +151,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanPollSearchAddressBatch()
         {
             var client = CreateClient();
-            var operation = await client.StartSearchAddressBatchAsync(new[]{
+            var operation = await client.SearchAddressBatchAsync(WaitUntil.Started, new[]
+            {
                 new SearchAddressQuery("Microsoft Campus"),
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });

@@ -4,7 +4,7 @@ This sample illustrates how to use [Moq](https://github.com/Moq/moq4/) to create
 
 ## Define method that uses `ConfigurationClient`
 
-To show the usage of mocks, define a method that will be tested with mocked objects. For more details about this sample method, see "[Update a Configuration If Unchanged](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md)" sample.  
+To show the usage of mocks, define a method that will be tested with mocked objects. For more details about this sample method, see "[Update a Configuration If Unchanged](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md)" sample.
 
 ```C# Snippet:AzConfigSample7_MethodToTest
 private static async Task<int> UpdateAvailableVmsAsync(ConfigurationClient client, int releasedVMs, CancellationToken cancellationToken)
@@ -58,5 +58,3 @@ ConfigurationClient client = mockClient.Object;
 int availableVms = await UpdateAvailableVmsAsync(client, 2, default);
 Assert.AreEqual(12, availableVms);
 ```
-
-

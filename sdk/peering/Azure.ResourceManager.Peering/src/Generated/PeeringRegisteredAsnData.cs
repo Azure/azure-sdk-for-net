@@ -11,7 +11,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the PeeringRegisteredAsn data model. </summary>
+    /// <summary>
+    /// A class representing the PeeringRegisteredAsn data model.
+    /// The customer&apos;s ASN that is registered by the peering service provider.
+    /// </summary>
     public partial class PeeringRegisteredAsnData : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringRegisteredAsnData. </summary>

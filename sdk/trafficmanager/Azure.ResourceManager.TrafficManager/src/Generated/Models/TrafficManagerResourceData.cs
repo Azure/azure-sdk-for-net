@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The core properties of ARM resources. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        internal TrafficManagerResourceData(string id, string name, string resourceType)
+        internal TrafficManagerResourceData(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

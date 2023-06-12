@@ -6,6 +6,7 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 
 ## Table of contents
 
+- [Choosing the number of processors for the consumer group](#choosing-the-number-of-processors-for-the-consumer-group)
 - [Influencing load balancing behavior](#influencing-load-balancing-behavior)
     - [Load balancing strategy](#load-balancing-strategy)
     - [Load balancing intervals](#load-balancing-intervals)
@@ -17,6 +18,14 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 - [Configuring the client retry thresholds](#configuring-the-client-retry-thresholds)
 - [Configuring the timeout used for Event Hubs service operations](#configuring-the-timeout-used-for-event-hubs-service-operations)
 - [Using a custom retry policy](#using-a-custom-retry-policy)
+
+## Choosing the number of processors for the consumer group
+
+The `EventProcessorClient` will coordinate with other instances using the same consumer group and Blob Storage container to process the Event Hub cooperatively.  The processors will dynamically distribute and share the Event Hub's partitions, ensuring each has a single processor responsible for reading it.  As `EventProcessorClient` instances are added or removed from the group, partition ownership will be re-balanced to ensure the load is shared evenly among them.
+
+When a processor owns too many partitions, it will often experience contention in the thread pool, potentially leading to starvation. During this time, activities will stall causing delays in `EventProcessorClient` operations. Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
+
+Because of this, it is important to carefully consider how many `EventProcessorClient` instances are needed in the consumer group for your application.  Generally, it is recommended each processor own no more than 3 partitions for every 1 CPU core of the host. Since the ratio will vary for each application, it is often helpful to start with using 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for your application.
 
 ## Influencing load balancing behavior
 
@@ -57,7 +66,9 @@ var processor = new EventProcessorClient(
 
 ### Load balancing intervals
 
-There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingUpdateInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+
+It is recommended that the `PartitionOwnershipExpirationInterval` be at least 3 times greater than the `LoadBalancingUpdateInterval` and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.
 
 ```C# Snippet:EventHubs_Processor_Sample02_LoadBalancingIntervals
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";

@@ -14,42 +14,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AssociatedTagProperties tag = default;
             Optional<AssociatedApiProperties> api = default;
             Optional<AssociatedOperationProperties> operation = default;
             Optional<AssociatedProductProperties> product = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("product"))
+                if (property.NameEquals("product"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value);

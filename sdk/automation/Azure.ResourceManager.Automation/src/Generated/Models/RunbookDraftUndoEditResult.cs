@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
         /// <param name="statusCode"></param>
         /// <param name="requestId"></param>
-        internal RunbookDraftUndoEditResult(HttpStatusCode? statusCode, string requestId)
+        internal RunbookDraftUndoEditResult(AutomationHttpStatusCode? statusCode, string requestId)
         {
             StatusCode = statusCode;
             RequestId = requestId;
         }
 
         /// <summary> Gets the status code. </summary>
-        public HttpStatusCode? StatusCode { get; }
+        public AutomationHttpStatusCode? StatusCode { get; }
         /// <summary> Gets the request id. </summary>
         public string RequestId { get; }
     }

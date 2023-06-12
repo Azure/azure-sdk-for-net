@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal JobAssignment(string id, DateTimeOffset assignTime)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             AssignTime = assignTime;

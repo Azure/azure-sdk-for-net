@@ -17,7 +17,7 @@ namespace Azure.Identity
         internal const string MsiUnavailableError =
             "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
 
-        private Lazy<ManagedIdentitySource> _identitySource;
+        internal Lazy<ManagedIdentitySource> _identitySource;
         private MsalConfidentialClient _msal;
 
         protected ManagedIdentityClient()
@@ -43,6 +43,7 @@ namespace Azure.Identity
             }
 
             ClientId = options.ClientId;
+            ResourceIdentifier = options.ResourceIdentifier;
             Pipeline = options.Pipeline;
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
             _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
@@ -50,7 +51,9 @@ namespace Azure.Identity
 
         internal CredentialPipeline Pipeline { get; }
 
-        protected string ClientId { get; }
+        internal protected string ClientId { get; }
+
+        internal ResourceIdentifier ResourceIdentifier { get; }
 
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {

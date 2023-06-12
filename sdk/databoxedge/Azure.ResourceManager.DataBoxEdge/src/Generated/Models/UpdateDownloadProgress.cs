@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="totalBytesDownloaded"> Total bytes downloaded. </param>
         /// <param name="numberOfUpdatesToDownload"> Number of updates to download. </param>
         /// <param name="numberOfUpdatesDownloaded"> Number of updates downloaded. </param>
-        internal UpdateDownloadProgress(DownloadPhase? downloadPhase, int? percentComplete, double? totalBytesToDownload, double? totalBytesDownloaded, int? numberOfUpdatesToDownload, int? numberOfUpdatesDownloaded)
+        internal UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase, int? percentComplete, double? totalBytesToDownload, double? totalBytesDownloaded, int? numberOfUpdatesToDownload, int? numberOfUpdatesDownloaded)
         {
             DownloadPhase = downloadPhase;
             PercentComplete = percentComplete;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The download phase. </summary>
-        public DownloadPhase? DownloadPhase { get; }
+        public DataBoxEdgeDownloadPhase? DownloadPhase { get; }
         /// <summary> Percentage of completion. </summary>
         public int? PercentComplete { get; }
         /// <summary> Total bytes to download. </summary>

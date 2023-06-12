@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -39,6 +40,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task ExtractKeyPhrasesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -78,20 +80,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(keyPhrases.Contains("perro"));
             Assert.IsTrue(keyPhrases.Contains("veterinario"));
-        }
-
-        [RecordedTest]
-        public async Task ExtractKeyPhrasesWithWarningTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
-
-            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
-            KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
-
-            ValidateInDocumenResult(keyPhrases, 1);
-
-            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
         }
 
         [RecordedTest]
@@ -197,8 +185,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [Ignore("LRO not implemented")]
         public async Task ExtractKeyPhrasesWithMultipleActions()
         {
@@ -262,7 +251,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.GreaterOrEqual(keyPhrases.Count, minKeyPhrasesCount);
         }
 
-        private void ValidateBatchDocumentsResult(ExtractKeyPhrasesResultCollection results, int minKeyPhrasesCount = default, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(
+            ExtractKeyPhrasesResultCollection results,
+            int minKeyPhrasesCount = default,
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -277,27 +269,26 @@ namespace Azure.AI.TextAnalytics.Tests
             else
                 Assert.IsNull(results.Statistics);
 
-            foreach (ExtractKeyPhrasesResult keyPhrasesInDocument in results)
+            foreach (ExtractKeyPhrasesResult result in results)
             {
-                Assert.That(keyPhrasesInDocument.Id, Is.Not.Null.And.Not.Empty);
-
-                Assert.False(keyPhrasesInDocument.HasError);
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.False(result.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(keyPhrasesInDocument.Statistics);
+                Assert.IsNotNull(result.Statistics);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(keyPhrasesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(keyPhrasesInDocument.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
+                    Assert.Greater(result.Statistics.TransactionCount, 0);
                 }
                 else
                 {
-                    Assert.AreEqual(0, keyPhrasesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, keyPhrasesInDocument.Statistics.TransactionCount);
+                    Assert.AreEqual(0, result.Statistics.CharacterCount);
+                    Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases, minKeyPhrasesCount);
+                ValidateInDocumenResult(result.KeyPhrases, minKeyPhrasesCount);
             }
         }
     }

@@ -3,11 +3,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System;
-using System.Globalization;
-
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> Initializes a new instance of ReverseSearchAddressQuery. </summary>
     public class ReverseSearchAddressQuery

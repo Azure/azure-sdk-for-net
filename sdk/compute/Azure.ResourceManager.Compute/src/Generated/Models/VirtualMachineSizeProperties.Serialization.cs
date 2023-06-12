@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VCpusAvailable))
             {
-                writer.WritePropertyName("vCPUsAvailable");
+                writer.WritePropertyName("vCPUsAvailable"u8);
                 writer.WriteNumberValue(VCpusAvailable.Value);
             }
             if (Optional.IsDefined(VCpusPerCore))
             {
-                writer.WritePropertyName("vCPUsPerCore");
+                writer.WritePropertyName("vCPUsPerCore"u8);
                 writer.WriteNumberValue(VCpusPerCore.Value);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineSizeProperties DeserializeVirtualMachineSizeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> vCpusAvailable = default;
             Optional<int> vCpusPerCore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vCPUsAvailable"))
+                if (property.NameEquals("vCPUsAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCpusAvailable = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vCPUsPerCore"))
+                if (property.NameEquals("vCPUsPerCore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCpusPerCore = property.Value.GetInt32();

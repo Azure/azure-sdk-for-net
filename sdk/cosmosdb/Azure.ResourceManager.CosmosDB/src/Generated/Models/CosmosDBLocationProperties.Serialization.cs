@@ -21,36 +21,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBLocationProperties DeserializeCosmosDBLocationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> status = default;
             Optional<bool> supportsAvailabilityZone = default;
             Optional<bool> isResidencyRestricted = default;
             Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportsAvailabilityZone"))
+                if (property.NameEquals("status"u8))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("supportsAvailabilityZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportsAvailabilityZone = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isResidencyRestricted"))
+                if (property.NameEquals("isResidencyRestricted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isResidencyRestricted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupStorageRedundancies"))
+                if (property.NameEquals("backupStorageRedundancies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CosmosDBBackupStorageRedundancy> array = new List<CosmosDBBackupStorageRedundancy>();
@@ -62,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies));
+            return new CosmosDBLocationProperties(status.Value, Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies));
         }
     }
 }

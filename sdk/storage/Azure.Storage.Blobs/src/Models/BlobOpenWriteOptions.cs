@@ -52,13 +52,11 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Options for transfer validation settings on this operation.
-        /// When transfer validation options are set in the client, setting this parameter
-        /// acts as an override.
+        /// Optional override settings for this client's <see cref="BlobClientOptions.TransferValidation"/> settings.
         /// This operation does not allow <see cref="UploadTransferValidationOptions.PrecalculatedChecksum"/>
         /// to be set.
         /// </summary>
-        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidation { get; set; }
     }
 
     internal static class BlobOpenWriteOptionsExtensions
@@ -72,7 +70,7 @@ namespace Azure.Storage.Blobs.Models
                 HttpHeaders = options.HttpHeaders,
                 Metadata = options.Metadata,
                 Tags = options.Tags,
-                TransferValidationOptions = options.TransferValidationOptions,
+                TransferValidation = options.TransferValidation,
                 OperationName = $"{nameof(BlobClient)}.{nameof(BlockBlobClient.OpenWrite)}"
             };
     }

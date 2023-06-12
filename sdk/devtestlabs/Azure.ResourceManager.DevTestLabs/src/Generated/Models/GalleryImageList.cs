@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         internal GalleryImageList()
         {
-            Value = new ChangeTrackingList<GalleryImage>();
+            Value = new ChangeTrackingList<DevTestLabGalleryImage>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal GalleryImageList(IReadOnlyList<GalleryImage> value, string nextLink)
+        internal GalleryImageList(IReadOnlyList<DevTestLabGalleryImage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<GalleryImage> Value { get; }
+        public IReadOnlyList<DevTestLabGalleryImage> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
         public ServerTrustGroupServerInfo(ResourceIdentifier serverId)
         {
-            if (serverId == null)
-            {
-                throw new ArgumentNullException(nameof(serverId));
-            }
+            Argument.AssertNotNull(serverId, nameof(serverId));
 
             ServerId = serverId;
         }

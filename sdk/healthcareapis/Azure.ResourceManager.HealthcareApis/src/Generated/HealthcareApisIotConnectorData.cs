@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the HealthcareApisIotConnector data model. </summary>
+    /// <summary>
+    /// A class representing the HealthcareApisIotConnector data model.
+    /// IoT Connector definition.
+    /// </summary>
     public partial class HealthcareApisIotConnectorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorData. </summary>

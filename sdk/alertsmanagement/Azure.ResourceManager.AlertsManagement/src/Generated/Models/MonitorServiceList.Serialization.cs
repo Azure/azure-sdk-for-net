@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static MonitorServiceList DeserializeMonitorServiceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MonitorServiceDetails> data = default;
             ServiceAlertMetadataIdentifier metadataIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     List<MonitorServiceDetails> array = new List<MonitorServiceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("metadataIdentifier"))
+                if (property.NameEquals("metadataIdentifier"u8))
                 {
                     metadataIdentifier = new ServiceAlertMetadataIdentifier(property.Value.GetString());
                     continue;

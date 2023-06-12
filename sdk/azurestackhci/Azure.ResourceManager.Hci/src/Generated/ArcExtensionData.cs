@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the ArcExtension data model. </summary>
+    /// <summary>
+    /// A class representing the ArcExtension data model.
+    /// Details of a particular extension in HCI Cluster.
+    /// </summary>
     public partial class ArcExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of ArcExtensionData. </summary>
@@ -33,11 +36,12 @@ namespace Azure.ResourceManager.Hci
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="arcExtensionType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
         /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings) : base(id, name, resourceType, systemData)
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;
@@ -49,6 +53,7 @@ namespace Azure.ResourceManager.Hci
             ShouldAutoUpgradeMinorVersion = shouldAutoUpgradeMinorVersion;
             Settings = settings;
             ProtectedSettings = protectedSettings;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
         }
 
         /// <summary> Provisioning state of the Extension proxy resource. </summary>
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.Hci
         public string Publisher { get; set; }
         /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
         public string ArcExtensionType { get; set; }
-        /// <summary> Specifies the version of the script handler. </summary>
+        /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
         public string TypeHandlerVersion { get; set; }
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         public bool? ShouldAutoUpgradeMinorVersion { get; set; }
@@ -129,5 +134,7 @@ namespace Azure.ResourceManager.Hci
         /// </para>
         /// </summary>
         public BinaryData ProtectedSettings { get; set; }
+        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        public bool? EnableAutomaticUpgrade { get; set; }
     }
 }

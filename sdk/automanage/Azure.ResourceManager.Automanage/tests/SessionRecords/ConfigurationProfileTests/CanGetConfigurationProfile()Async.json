@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-503a61d98c732c88ca361100f8845641-2dded515ea7a1f21-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "94f304d847e4de1e118d63f3c790b543",
+        "traceparent": "00-222c5ce334fdd63ed73ff66228a7e82a-d8f7b0b728b4ce4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9c12b76efd6c0a47dd3b7791a6e7b77e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,23 +17,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "395",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Sep 2022 20:26:36 GMT",
+        "Date": "Thu, 29 Sep 2022 18:06:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ce0228a6-2155-4f9c-9e20-e4b8f6153f6e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11885",
-        "x-ms-request-id": "ce0228a6-2155-4f9c-9e20-e4b8f6153f6e",
-        "x-ms-routing-request-id": "WESTUS2:20220906T202636Z:ce0228a6-2155-4f9c-9e20-e4b8f6153f6e"
+        "x-ms-correlation-request-id": "ae3c7116-1950-41c4-9fa8-e27df31e4d48",
+        "x-ms-ratelimit-remaining-subscription-reads": "11907",
+        "x-ms-request-id": "ae3c7116-1950-41c4-9fa8-e27df31e4d48",
+        "x-ms-routing-request-id": "WESTUS2:20220929T180648Z:ae3c7116-1950-41c4-9fa8-e27df31e4d48"
       },
       "ResponseBody": {
-        "id": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2",
+        "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "fc9d0215-3964-4895-8df1-3801ccffb3e2",
+        "subscriptionId": "d0efb362-cb15-4021-9b3b-8c107b937d4c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "AMVM-SubLib-006",
+        "displayName": "AMVM-SubLib-019",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -43,16 +43,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourcegroups/SDKAutomanage-5382?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-4374?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-919f6493207107b95e763ee73ccddb16-8facbc5f49ce9dd7-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1a75f6c3cbe6138401a4e75cf9ff64bd",
+        "traceparent": "00-5f6aba94b3f6b770942645435af92de0-4a22169f2e527137-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a350f74fca7d1f72dbf238f7a106f791",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -63,19 +63,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "233",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Sep 2022 20:26:36 GMT",
+        "Date": "Thu, 29 Sep 2022 18:06:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b9648d9c-d724-447d-8956-432ed9e8db8f",
-        "x-ms-ratelimit-remaining-subscription-writes": "1159",
-        "x-ms-request-id": "b9648d9c-d724-447d-8956-432ed9e8db8f",
-        "x-ms-routing-request-id": "WESTUS2:20220906T202636Z:b9648d9c-d724-447d-8956-432ed9e8db8f"
+        "x-ms-correlation-request-id": "445a81b5-92fc-419a-bfaa-ff82f54932a4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1165",
+        "x-ms-request-id": "445a81b5-92fc-419a-bfaa-ff82f54932a4",
+        "x-ms-routing-request-id": "WESTUS2:20220929T180648Z:445a81b5-92fc-419a-bfaa-ff82f54932a4"
       },
       "ResponseBody": {
-        "id": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourceGroups/SDKAutomanage-5382",
-        "name": "SDKAutomanage-5382",
+        "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-4374",
+        "name": "SDKAutomanage-4374",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "properties": {
@@ -84,16 +84,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourceGroups/SDKAutomanage-5382/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-6501?api-version=2022-05-04",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-4374/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-2325?api-version=2022-05-04",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "478",
         "Content-Type": "application/json",
-        "traceparent": "00-b88d3e83ee9b440881862a557838330d-868a841109ff2082-00",
-        "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20220906.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "443e1501f8de7f5e378b0d3b1b45028a",
+        "traceparent": "00-bd4bc8ab1a28ebdc93bddf796ac1efa0-2918b07321eb0556-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20220929.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9513026639dc030a0a23ae0cc0b84f70",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -122,23 +122,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1025",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Sep 2022 20:26:37 GMT",
+        "Date": "Thu, 29 Sep 2022 18:06:49 GMT",
         "Expires": "-1",
-        "Location": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourceGroups/SDKAutomanage-5382/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-6501",
+        "Location": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-4374/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-2325",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:a4d240dc-d543-4b4e-a019-0a571290b85d",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "443e1501f8de7f5e378b0d3b1b45028a",
-        "x-ms-correlation-request-id": "cd439744-fd3d-420b-bb97-aaf52efd1d19",
-        "x-ms-ratelimit-remaining-subscription-writes": "1158",
-        "x-ms-request-id": "cd439744-fd3d-420b-bb97-aaf52efd1d19",
-        "x-ms-routing-request-id": "WESTUS2:20220906T202637Z:cd439744-fd3d-420b-bb97-aaf52efd1d19"
+        "x-ms-client-request-id": "9513026639dc030a0a23ae0cc0b84f70",
+        "x-ms-correlation-request-id": "0fe3b02b-e77d-4605-b396-b49e393bd057",
+        "x-ms-ratelimit-remaining-subscription-writes": "1164",
+        "x-ms-request-id": "0fe3b02b-e77d-4605-b396-b49e393bd057",
+        "x-ms-routing-request-id": "WESTUS2:20220929T180650Z:0fe3b02b-e77d-4605-b396-b49e393bd057"
       },
       "ResponseBody": {
-        "id": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourceGroups/SDKAutomanage-5382/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-6501",
-        "name": "SDKAutomanageProfile-6501",
+        "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-4374/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-2325",
+        "name": "SDKAutomanageProfile-2325",
         "type": "Microsoft.Automanage/configurationProfiles",
         "location": "eastus",
         "tags": {},
@@ -160,24 +160,24 @@
           }
         },
         "systemData": {
-          "createdAt": "2022-09-06T20:26:37.3568711\u002B00:00",
-          "createdBy": "32e0f2f9-e6a2-46c8-8e7d-931c57910f45",
+          "createdAt": "2022-09-29T18:06:49.5538315\u002B00:00",
+          "createdBy": "fe8c00ac-251c-4142-8d76-6e653ab21919",
           "createdByType": "Application",
-          "lastModifiedAt": "2022-09-06T20:26:37.3568711\u002B00:00",
-          "lastModifiedBy": "32e0f2f9-e6a2-46c8-8e7d-931c57910f45",
+          "lastModifiedAt": "2022-09-29T18:06:49.5538315\u002B00:00",
+          "lastModifiedBy": "fe8c00ac-251c-4142-8d76-6e653ab21919",
           "lastModifiedByType": "Application"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourceGroups/SDKAutomanage-5382/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-6501?api-version=2022-05-04",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-4374/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-2325?api-version=2022-05-04",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9d60b5e3a09a3fba54cfb6b918d54ae4-c8beee4f2437ee98-00",
-        "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20220906.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "417a141cbe7b281d0fd04679f7b59464",
+        "traceparent": "00-2cf6181bb004c3652c28123fc57ba8e2-a104fa2ad836cb79-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20220929.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2b7b503cca574839294d2155d2e59a70",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -186,22 +186,22 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1025",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Sep 2022 20:26:37 GMT",
+        "Date": "Thu, 29 Sep 2022 18:06:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:a4d240dc-d543-4b4e-a019-0a571290b85d",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "417a141cbe7b281d0fd04679f7b59464",
-        "x-ms-correlation-request-id": "0d9f71d4-804d-4fd6-bb77-a14514749723",
-        "x-ms-ratelimit-remaining-subscription-reads": "11884",
-        "x-ms-request-id": "0d9f71d4-804d-4fd6-bb77-a14514749723",
-        "x-ms-routing-request-id": "WESTUS2:20220906T202637Z:0d9f71d4-804d-4fd6-bb77-a14514749723"
+        "x-ms-client-request-id": "2b7b503cca574839294d2155d2e59a70",
+        "x-ms-correlation-request-id": "6842d8f2-56c5-4fa8-88fc-47c199aed266",
+        "x-ms-ratelimit-remaining-subscription-reads": "11906",
+        "x-ms-request-id": "6842d8f2-56c5-4fa8-88fc-47c199aed266",
+        "x-ms-routing-request-id": "WESTUS2:20220929T180650Z:6842d8f2-56c5-4fa8-88fc-47c199aed266"
       },
       "ResponseBody": {
-        "id": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2/resourceGroups/SDKAutomanage-5382/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-6501",
-        "name": "SDKAutomanageProfile-6501",
+        "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-4374/providers/Microsoft.Automanage/configurationProfiles/SDKAutomanageProfile-2325",
+        "name": "SDKAutomanageProfile-2325",
         "type": "Microsoft.Automanage/configurationProfiles",
         "location": "eastus",
         "tags": {},
@@ -223,11 +223,11 @@
           }
         },
         "systemData": {
-          "createdAt": "2022-09-06T20:26:37.3568711\u002B00:00",
-          "createdBy": "32e0f2f9-e6a2-46c8-8e7d-931c57910f45",
+          "createdAt": "2022-09-29T18:06:49.5538315\u002B00:00",
+          "createdBy": "fe8c00ac-251c-4142-8d76-6e653ab21919",
           "createdByType": "Application",
-          "lastModifiedAt": "2022-09-06T20:26:37.3568711\u002B00:00",
-          "lastModifiedBy": "32e0f2f9-e6a2-46c8-8e7d-931c57910f45",
+          "lastModifiedAt": "2022-09-29T18:06:49.5538315\u002B00:00",
+          "lastModifiedBy": "fe8c00ac-251c-4142-8d76-6e653ab21919",
           "lastModifiedByType": "Application"
         }
       }
@@ -235,8 +235,8 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1959291692",
+    "RandomSeed": "1764091509",
     "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "fc9d0215-3964-4895-8df1-3801ccffb3e2"
+    "SUBSCRIPTION_ID": "d0efb362-cb15-4021-9b3b-8c107b937d4c"
   }
 }

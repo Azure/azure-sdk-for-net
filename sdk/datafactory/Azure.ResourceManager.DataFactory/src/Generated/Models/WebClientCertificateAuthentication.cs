@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,18 +28,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
         public WebClientCertificateAuthentication(BinaryData uri, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (pfx == null)
-            {
-                throw new ArgumentNullException(nameof(pfx));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(pfx, nameof(pfx));
+            Argument.AssertNotNull(password, nameof(password));
 
             Pfx = pfx;
             Password = password;

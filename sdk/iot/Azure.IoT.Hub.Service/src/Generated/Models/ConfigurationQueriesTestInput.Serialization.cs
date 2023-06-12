@@ -17,12 +17,12 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetCondition))
             {
-                writer.WritePropertyName("targetCondition");
+                writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
             if (Optional.IsCollectionDefined(CustomMetricQueries))
             {
-                writer.WritePropertyName("customMetricQueries");
+                writer.WritePropertyName("customMetricQueries"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomMetricQueries)
                 {

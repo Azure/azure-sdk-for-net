@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTextTaskResult DeserializeAnalyzeTextTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -26,16 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     case "SentimentAnalysisResults": return SentimentTaskResult.DeserializeSentimentTaskResult(element);
                 }
             }
-            AnalyzeTextTaskResultsKind kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AnalyzeTextTaskResult(kind);
+            return UnknownAnalyzeTextTaskResult.DeserializeUnknownAnalyzeTextTaskResult(element);
         }
     }
 }

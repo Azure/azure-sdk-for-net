@@ -8,12 +8,16 @@ namespace Microsoft.Azure.WebPubSub.Common
     public sealed partial class ConnectEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         public ConnectEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, System.Collections.Generic.IReadOnlyDictionary<string, string[]> claims, System.Collections.Generic.IReadOnlyDictionary<string, string[]> query, System.Collections.Generic.IEnumerable<string> subprotocols, System.Collections.Generic.IEnumerable<Microsoft.Azure.WebPubSub.Common.WebPubSubClientCertificate> certificates) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        public ConnectEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, System.Collections.Generic.IReadOnlyDictionary<string, string[]> claims, System.Collections.Generic.IReadOnlyDictionary<string, string[]> query, System.Collections.Generic.IEnumerable<string> subprotocols, System.Collections.Generic.IEnumerable<Microsoft.Azure.WebPubSub.Common.WebPubSubClientCertificate> certificates, System.Collections.Generic.IReadOnlyDictionary<string, string[]> headers) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="claims")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("claims")]
         public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Claims { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="clientCertificates")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("clientCertificates")]
         public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.WebPubSubClientCertificate> ClientCertificates { get { throw null; } }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="headers")]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("headers")]
+        public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Headers { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="query")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("query")]
         public System.Collections.Generic.IReadOnlyDictionary<string, string[]> Query { get { throw null; } }

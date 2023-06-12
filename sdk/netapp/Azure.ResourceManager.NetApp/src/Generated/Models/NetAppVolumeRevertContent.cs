@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> revert a volume to the snapshot. </summary>
@@ -18,6 +16,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource id of the snapshot. </summary>
-        public ResourceIdentifier SnapshotId { get; set; }
+        public string SnapshotId { get; set; }
     }
 }

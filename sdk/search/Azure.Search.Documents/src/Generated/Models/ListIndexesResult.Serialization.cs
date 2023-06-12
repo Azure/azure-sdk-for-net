@@ -15,10 +15,14 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static ListIndexesResult DeserializeListIndexesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SearchIndex> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SearchIndex> array = new List<SearchIndex>();
                     foreach (var item in property.Value.EnumerateArray())

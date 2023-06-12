@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A word or phrase identified as an entity that can be categorized
-    /// as known type in a given taxonomy.  The set of categories recognized by the
-    /// Language service is described at
-    /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
+    /// A word or phrase that was recognized as an entity and categorized accordingly by the service's named entity
+    /// recognition model and taxonomy. For the list of supported categories and subcategories, see
+    /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
     /// </summary>
     public readonly struct CategorizedEntity
     {
@@ -31,40 +32,37 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the entity text as it appears in the input document.
+        /// The text corresponding to the recognized entity, as it appears in the input document.
         /// </summary>
         public string Text { get; }
 
         /// <summary>
-        /// Gets the entity category inferred by the Language service's
-        /// named entity recognition model.  The list of available categories is
-        /// described at
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
+        /// The category of the entity as recognized by the service's named entity recognition model. For the list of
+        /// supported categories, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
         /// </summary>
         public EntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the subcategory of the entity inferred by the Language service's
-        /// named entity recognition model.  This property may not have a value if
-        /// a subcategory doesn't exist for this entity.  The list of available categories and
-        /// subcategories is described at
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
+        /// The subcategory of the entity (if applicable) as recognized by the service's named entity recognition
+        /// model. For the list of supported categories and subcategories, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
         /// </summary>
         public string SubCategory { get; }
 
         /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// text substring matches this inferred entity.
+        /// The score between 0.0 and 1.0 indicating the confidence that the recognized entity accurately corresponds
+        /// to the text substring.
         /// </summary>
         public double ConfidenceScore { get; }
 
         /// <summary>
-        /// Gets the starting position for the matching text in the input document.
+        /// The starting position of the matching text in the input document.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the input document.
+        /// The length of the matching text in the input document.
         /// </summary>
         public int Length { get; }
     }

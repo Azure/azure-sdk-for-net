@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsForwardingRule data model. </summary>
+    /// <summary>
+    /// A class representing the DnsForwardingRule data model.
+    /// Describes a forwarding rule within a DNS forwarding ruleset.
+    /// </summary>
     public partial class DnsForwardingRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of DnsForwardingRuleData. </summary>
@@ -24,14 +27,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="targetDnsServers"/> is null. </exception>
         public DnsForwardingRuleData(string domainName, IEnumerable<TargetDnsServer> targetDnsServers)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (targetDnsServers == null)
-            {
-                throw new ArgumentNullException(nameof(targetDnsServers));
-            }
+            Argument.AssertNotNull(domainName, nameof(domainName));
+            Argument.AssertNotNull(targetDnsServers, nameof(targetDnsServers));
 
             DomainName = domainName;
             TargetDnsServers = targetDnsServers.ToList();

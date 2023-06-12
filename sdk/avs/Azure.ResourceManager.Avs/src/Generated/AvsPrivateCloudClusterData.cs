@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloudCluster data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloudCluster data model.
+    /// A cluster resource
+    /// </summary>
     public partial class AvsPrivateCloudClusterData : ResourceData
     {
         /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>
@@ -21,10 +24,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudClusterData(AvsSku sku)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             Hosts = new ChangeTrackingList<string>();

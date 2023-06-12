@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         /// <summary>
         ///   Performs the tasks needed to initialize the test.  This
-        ///   method runs once for for each test.
+        ///   method runs once for each test.
         /// </summary>
         ///
         [SetUp]
@@ -194,7 +194,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Subject = "subject",
                 To = "to",
                 ReplyTo = "replyTo",
-                ApplicationProperties = {{ "key", "value"}}
+                ApplicationProperties = {{ "key", "value"}},
+                PartitionKey = "partitionKey"
             };
             if (!string.IsNullOrEmpty(sessionId))
             {

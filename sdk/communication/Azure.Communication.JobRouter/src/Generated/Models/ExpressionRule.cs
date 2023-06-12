@@ -6,26 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing inline expression rules. </summary>
     public partial class ExpressionRule : RouterRule
     {
-        /// <summary> Initializes a new instance of ExpressionRule. </summary>
-        /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public ExpressionRule(string expression)
-        {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
-
-            Language = "powerFx";
-            Expression = expression;
-            Kind = "expression-rule";
-        }
 
         /// <summary> Initializes a new instance of ExpressionRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>

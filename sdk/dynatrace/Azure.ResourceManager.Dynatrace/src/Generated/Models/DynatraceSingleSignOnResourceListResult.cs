@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
@@ -17,34 +18,25 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="nextLink"/> is null. </exception>
-        internal DynatraceSingleSignOnResourceListResult(IEnumerable<DynatraceSingleSignOnResourceData> value, string nextLink)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DynatraceSingleSignOnResourceListResult(IEnumerable<DynatraceSingleSignOnData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
-            NextLink = nextLink;
         }
 
         /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal DynatraceSingleSignOnResourceListResult(IReadOnlyList<DynatraceSingleSignOnResourceData> value, string nextLink)
+        internal DynatraceSingleSignOnResourceListResult(IReadOnlyList<DynatraceSingleSignOnData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<DynatraceSingleSignOnResourceData> Value { get; }
+        public IReadOnlyList<DynatraceSingleSignOnData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

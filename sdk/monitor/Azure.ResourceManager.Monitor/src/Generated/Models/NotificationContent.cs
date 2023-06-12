@@ -15,14 +15,11 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class NotificationContent
     {
         /// <summary> Initializes a new instance of NotificationContent. </summary>
-        /// <param name="alertType"> The name of the supported alert type. </param>
+        /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
         public NotificationContent(string alertType)
         {
-            if (alertType == null)
-            {
-                throw new ArgumentNullException(nameof(alertType));
-            }
+            Argument.AssertNotNull(alertType, nameof(alertType));
 
             AlertType = alertType;
             EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
         }
 
-        /// <summary> The name of the supported alert type. </summary>
+        /// <summary> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </summary>
         public string AlertType { get; }
         /// <summary> The list of email receivers that are part of this action group. </summary>
         public IList<MonitorEmailReceiver> EmailReceivers { get; }

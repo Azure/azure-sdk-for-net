@@ -13,9 +13,14 @@ namespace Azure.Storage.Blobs.Models
     public partial struct BlobErrorCode
     {
         private const string SnaphotOperationRateExceededValue = "SnaphotOperationRateExceeded";
+        private const string IncrementalCopyOfEralierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEralierVersionSnapshotNotAllowed";
 
         /// <summary> SnaphotOperationRateExceeded. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobErrorCode SnaphotOperationRateExceeded { get; } = new BlobErrorCode(SnaphotOperationRateExceededValue);
+
+        /// <summary> IncrementalCopyOfEralierVersionSnapshotNotAllowed. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEralierVersionSnapshotNotAllowedValue);
     }
 }

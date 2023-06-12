@@ -15,17 +15,17 @@ extendedZipContent:
 
 # Shared
 - path: /sdk/core/Azure.Core/src/Shared/AuthorizationChallengeParser.cs
-  target: /Shared/AuthorizationChallengeParser.cs
+  target: /Shared/Core/AuthorizationChallengeParser.cs
 - path: /sdk/keyvault/Azure.Security.KeyVault.Shared/src/ChallengeBasedAuthenticationPolicy.cs
-  target: /Shared/ChallengeBasedAuthenticationPolicy.cs
+  target: /Shared/KeyVault/ChallengeBasedAuthenticationPolicy.cs
 ---
 
 # Share links to Storage objects using Azure Key Vault-managed storage accounts
 
-This sample demonstrates how to generate a client library for [Azure Key Vault-managed storage accounts](https://docs.microsoft.com/azure/key-vault/secrets/overview-storage-keys) and use it to generate [Shared Access Signature (SAS)](https://docs.microsoft.com/azure/storage/common/storage-sas-overview) tokens to Storage blobs or files.
+This sample demonstrates how to generate a client library for [Azure Key Vault-managed storage accounts](https://learn.microsoft.com/azure/key-vault/secrets/overview-storage-keys) and use it to generate [Shared Access Signature (SAS)](https://learn.microsoft.com/azure/storage/common/storage-sas-overview) tokens to Storage blobs or files.
 
 > [!NOTE]
-> We recommend you use [role-based access control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview) to secure access to your storage accounts. You can centrally manage access for users and applications to resources in a way that is consistent across Azure, and [works with Azure Active Directory](https://docs.microsoft.com/azure/storage/common/storage-auth-aad).
+> We recommend you use [role-based access control (RBAC)](https://learn.microsoft.com/azure/role-based-access-control/overview) to secure access to your storage accounts. You can centrally manage access for users and applications to resources in a way that is consistent across Azure, and [works with Azure Active Directory](https://learn.microsoft.com/azure/storage/common/storage-auth-aad).
 
 If you want to manage secrets, keys, or certificates, you can use our existing supported SDKs:
 
@@ -67,7 +67,7 @@ Before you can use this sample to create SAS tokens to share storage objects, yo
    az keyvault storage add --vault-name <KeyVaultName> -n <StorageAccountName> --active-key-name key1 --auto-regenerate-key --regeneration-period P90D --resource-id "/subscriptions/<SubscriptionID>/resourceGroups/<StorageAccountResourceGroupName>/providers/Microsoft.Storage/storageAccounts/<StorageAccountName>"
    ```
 
-For more detail about this process, read [Manage storage account keys with Key Vault and the Azure CLI](https://docs.microsoft.com/azure/key-vault/secrets/overview-storage-keys).
+For more detail about this process, read [Manage storage account keys with Key Vault and the Azure CLI](https://learn.microsoft.com/azure/key-vault/secrets/overview-storage-keys).
 
 ## Building the sample
 
@@ -85,10 +85,11 @@ dotnet build /t:CopySource /p:Destination=<ProjectDirectory>
 
 The sample project file and _Program.cs_ are not copied automatically. Only the source necessary to build the REST client is copied. You are welcome to copy and modify the rest of the sample source as needed.
 
-You also need to add a reference to Azure.Core in your project. In your project directory where you just copied source run:
+You also need to add references to Azure.Core and Microsoft.Azure.AutoRest.CSharp in your project. In your project directory where you just copied source run:
 
 ```dotnetcli
 dotnet add package Azure.Core
+dotnet add package Microsoft.Azure.AutoRest.CSharp --prerelease
 ```
 
 ## Using the sample
@@ -109,6 +110,6 @@ dotnet run -- --vault-name <KeyVaultName> --storage-account-name <StorageAccount
 
 ## Links
 
-- [About Azure Key Vault secrets](https://docs.microsoft.com/azure/key-vault/secrets/about-secrets)
+- [About Azure Key Vault secrets](https://learn.microsoft.com/azure/key-vault/secrets/about-secrets)
 - [Azure Key Vault samples](https://aka.ms/azsdk/net/keyvault/samples)
-- [Manage storage account keys with Key Vault and the Azure CLI](https://docs.microsoft.com/azure/key-vault/secrets/overview-storage-keys)
+- [Manage storage account keys with Key Vault and the Azure CLI](https://learn.microsoft.com/azure/key-vault/secrets/overview-storage-keys)

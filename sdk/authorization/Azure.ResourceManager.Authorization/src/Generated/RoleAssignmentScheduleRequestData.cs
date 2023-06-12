@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the RoleAssignmentScheduleRequest data model. </summary>
+    /// <summary>
+    /// A class representing the RoleAssignmentScheduleRequest data model.
+    /// Role Assignment schedule request
+    /// </summary>
     public partial class RoleAssignmentScheduleRequestData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestData. </summary>

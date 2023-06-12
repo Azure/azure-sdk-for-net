@@ -17,37 +17,39 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MachineLearningServicesModelRegisteredEventData DeserializeMachineLearningServicesModelRegisteredEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> modelName = default;
             Optional<string> modelVersion = default;
             Optional<object> modelTags = default;
             Optional<object> modelProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelName"))
+                if (property.NameEquals("modelName"u8))
                 {
                     modelName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelTags"))
+                if (property.NameEquals("modelTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelTags = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("modelProperties"))
+                if (property.NameEquals("modelProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelProperties = property.Value.GetObject();

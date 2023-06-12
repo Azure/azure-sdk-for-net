@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentLine")]
     public partial class DocumentLine
     {
         private readonly IReadOnlyList<DocumentWord> _mockWords;
@@ -41,7 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             get => throw new InvalidOperationException();
             set
             {
-                BoundingPolygon = ClientCommon.CovertToListOfPointF(value);
+                BoundingPolygon = ClientCommon.ConvertToListOfPointF(value);
             }
         }
 

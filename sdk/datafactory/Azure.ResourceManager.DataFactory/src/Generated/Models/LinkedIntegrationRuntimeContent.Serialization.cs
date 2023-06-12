@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("factoryName");
+            writer.WritePropertyName("factoryName"u8);
             writer.WriteStringValue(LinkedFactoryName);
             writer.WriteEndObject();
         }

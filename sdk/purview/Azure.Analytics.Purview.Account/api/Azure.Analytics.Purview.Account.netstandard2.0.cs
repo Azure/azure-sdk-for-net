@@ -56,3 +56,11 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRuleAsync(Azure.RequestContext context = null) { throw null; }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class PurviewAccountClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Account.PurviewAccountClient, Azure.Analytics.Purview.Account.PurviewAccountClientOptions> AddPurviewAccountClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Account.PurviewAccountClient, Azure.Analytics.Purview.Account.PurviewAccountClientOptions> AddPurviewAccountClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}

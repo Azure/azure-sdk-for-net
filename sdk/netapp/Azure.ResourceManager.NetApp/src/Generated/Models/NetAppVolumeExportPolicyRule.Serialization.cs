@@ -17,77 +17,77 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RuleIndex))
             {
-                writer.WritePropertyName("ruleIndex");
+                writer.WritePropertyName("ruleIndex"u8);
                 writer.WriteNumberValue(RuleIndex.Value);
             }
             if (Optional.IsDefined(IsUnixReadOnly))
             {
-                writer.WritePropertyName("unixReadOnly");
+                writer.WritePropertyName("unixReadOnly"u8);
                 writer.WriteBooleanValue(IsUnixReadOnly.Value);
             }
             if (Optional.IsDefined(IsUnixReadWrite))
             {
-                writer.WritePropertyName("unixReadWrite");
+                writer.WritePropertyName("unixReadWrite"u8);
                 writer.WriteBooleanValue(IsUnixReadWrite.Value);
             }
             if (Optional.IsDefined(IsKerberos5ReadOnly))
             {
-                writer.WritePropertyName("kerberos5ReadOnly");
+                writer.WritePropertyName("kerberos5ReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5ReadOnly.Value);
             }
             if (Optional.IsDefined(IsKerberos5ReadWrite))
             {
-                writer.WritePropertyName("kerberos5ReadWrite");
+                writer.WritePropertyName("kerberos5ReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5ReadWrite.Value);
             }
             if (Optional.IsDefined(IsKerberos5iReadOnly))
             {
-                writer.WritePropertyName("kerberos5iReadOnly");
+                writer.WritePropertyName("kerberos5iReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5iReadOnly.Value);
             }
             if (Optional.IsDefined(IsKerberos5iReadWrite))
             {
-                writer.WritePropertyName("kerberos5iReadWrite");
+                writer.WritePropertyName("kerberos5iReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5iReadWrite.Value);
             }
             if (Optional.IsDefined(IsKerberos5pReadOnly))
             {
-                writer.WritePropertyName("kerberos5pReadOnly");
+                writer.WritePropertyName("kerberos5pReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5pReadOnly.Value);
             }
             if (Optional.IsDefined(IsKerberos5pReadWrite))
             {
-                writer.WritePropertyName("kerberos5pReadWrite");
+                writer.WritePropertyName("kerberos5pReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5pReadWrite.Value);
             }
             if (Optional.IsDefined(AllowCifsProtocol))
             {
-                writer.WritePropertyName("cifs");
+                writer.WritePropertyName("cifs"u8);
                 writer.WriteBooleanValue(AllowCifsProtocol.Value);
             }
             if (Optional.IsDefined(AllowNfsV3Protocol))
             {
-                writer.WritePropertyName("nfsv3");
+                writer.WritePropertyName("nfsv3"u8);
                 writer.WriteBooleanValue(AllowNfsV3Protocol.Value);
             }
             if (Optional.IsDefined(AllowNfsV41Protocol))
             {
-                writer.WritePropertyName("nfsv41");
+                writer.WritePropertyName("nfsv41"u8);
                 writer.WriteBooleanValue(AllowNfsV41Protocol.Value);
             }
             if (Optional.IsDefined(AllowedClients))
             {
-                writer.WritePropertyName("allowedClients");
+                writer.WritePropertyName("allowedClients"u8);
                 writer.WriteStringValue(AllowedClients);
             }
             if (Optional.IsDefined(HasRootAccess))
             {
-                writer.WritePropertyName("hasRootAccess");
+                writer.WritePropertyName("hasRootAccess"u8);
                 writer.WriteBooleanValue(HasRootAccess.Value);
             }
             if (Optional.IsDefined(ChownMode))
             {
-                writer.WritePropertyName("chownMode");
+                writer.WritePropertyName("chownMode"u8);
                 writer.WriteStringValue(ChownMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeExportPolicyRule DeserializeNetAppVolumeExportPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> ruleIndex = default;
             Optional<bool> unixReadOnly = default;
             Optional<bool> unixReadWrite = default;
@@ -112,146 +116,132 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppChownMode> chownMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleIndex"))
+                if (property.NameEquals("ruleIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unixReadOnly"))
+                if (property.NameEquals("unixReadOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unixReadOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("unixReadWrite"))
+                if (property.NameEquals("unixReadWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unixReadWrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kerberos5ReadOnly"))
+                if (property.NameEquals("kerberos5ReadOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kerberos5ReadOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kerberos5ReadWrite"))
+                if (property.NameEquals("kerberos5ReadWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kerberos5ReadWrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kerberos5iReadOnly"))
+                if (property.NameEquals("kerberos5iReadOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kerberos5iReadOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kerberos5iReadWrite"))
+                if (property.NameEquals("kerberos5iReadWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kerberos5iReadWrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kerberos5pReadOnly"))
+                if (property.NameEquals("kerberos5pReadOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kerberos5pReadOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kerberos5pReadWrite"))
+                if (property.NameEquals("kerberos5pReadWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kerberos5pReadWrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cifs"))
+                if (property.NameEquals("cifs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cifs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nfsv3"))
+                if (property.NameEquals("nfsv3"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nfsv3 = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nfsv41"))
+                if (property.NameEquals("nfsv41"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nfsv41 = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowedClients"))
+                if (property.NameEquals("allowedClients"u8))
                 {
                     allowedClients = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasRootAccess"))
+                if (property.NameEquals("hasRootAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasRootAccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("chownMode"))
+                if (property.NameEquals("chownMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     chownMode = new NetAppChownMode(property.Value.GetString());

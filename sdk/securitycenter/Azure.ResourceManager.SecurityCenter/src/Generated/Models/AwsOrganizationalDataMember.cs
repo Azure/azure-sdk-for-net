@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The awsOrganization data for the member account. </summary>
-    public partial class AwsOrganizationalDataMember : AwsOrganizationalData
+    public partial class AwsOrganizationalDataMember : AwsOrganizationalInfo
     {
         /// <summary> Initializes a new instance of AwsOrganizationalDataMember. </summary>
         public AwsOrganizationalDataMember()

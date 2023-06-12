@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the properties of a video overlay. </summary>
-    public partial class VideoOverlay : OverlayBasicProperties
+    public partial class VideoOverlay : MediaOverlayBase
     {
         /// <summary> Initializes a new instance of VideoOverlay. </summary>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
         public VideoOverlay(string inputLabel) : base(inputLabel)
         {
-            if (inputLabel == null)
-            {
-                throw new ArgumentNullException(nameof(inputLabel));
-            }
+            Argument.AssertNotNull(inputLabel, nameof(inputLabel));
 
             OdataType = "#Microsoft.Media.VideoOverlay";
         }
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="position"> The location in the input video where the overlay is applied. </param>
         /// <param name="opacity"> The opacity of the overlay. This is a value in the range [0 - 1.0]. Default is 1.0 which mean the overlay is opaque. </param>
         /// <param name="cropRectangle"> An optional rectangular window used to crop the overlay image or video. </param>
-        internal VideoOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, RectangularWindowProperties position, double? opacity, RectangularWindowProperties cropRectangle) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
+        internal VideoOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, RectangularWindow position, double? opacity, RectangularWindow cropRectangle) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
         {
             Position = position;
             Opacity = opacity;
@@ -45,10 +43,10 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> The location in the input video where the overlay is applied. </summary>
-        public RectangularWindowProperties Position { get; set; }
+        public RectangularWindow Position { get; set; }
         /// <summary> The opacity of the overlay. This is a value in the range [0 - 1.0]. Default is 1.0 which mean the overlay is opaque. </summary>
         public double? Opacity { get; set; }
         /// <summary> An optional rectangular window used to crop the overlay image or video. </summary>
-        public RectangularWindowProperties CropRectangle { get; set; }
+        public RectangularWindow CropRectangle { get; set; }
     }
 }

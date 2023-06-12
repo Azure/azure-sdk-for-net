@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyDefinitionGroupNames"> Policy definition group names. </param>
         /// <param name="effect"> Policy effect, i.e. policy definition action. </param>
         /// <param name="results"> Compliance summary for the policy definition. </param>
-        internal PolicyDefinitionSummary(string policyDefinitionId, string policyDefinitionReferenceId, IReadOnlyList<string> policyDefinitionGroupNames, string effect, PolicySummaryResults results)
+        internal PolicyDefinitionSummary(ResourceIdentifier policyDefinitionId, string policyDefinitionReferenceId, IReadOnlyList<string> policyDefinitionGroupNames, string effect, PolicySummaryResults results)
         {
             PolicyDefinitionId = policyDefinitionId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Policy definition ID. </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary> Policy definition reference ID. </summary>
         public string PolicyDefinitionReferenceId { get; }
         /// <summary> Policy definition group names. </summary>

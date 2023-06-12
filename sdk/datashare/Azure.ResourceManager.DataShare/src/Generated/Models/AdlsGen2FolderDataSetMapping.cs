@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An ADLS Gen2 folder data set mapping. </summary>
-    public partial class AdlsGen2FolderDataSetMapping : DataSetMappingData
+    public partial class AdlsGen2FolderDataSetMapping : ShareDataSetMappingData
     {
         /// <summary> Initializes a new instance of AdlsGen2FolderDataSetMapping. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
@@ -22,33 +22,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSetId"/>, <paramref name="fileSystem"/>, <paramref name="folderPath"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public AdlsGen2FolderDataSetMapping(string dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystem"/>, <paramref name="folderPath"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public AdlsGen2FolderDataSetMapping(Guid dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            if (dataSetId == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetId));
-            }
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (folderPath == null)
-            {
-                throw new ArgumentNullException(nameof(folderPath));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(fileSystem, nameof(fileSystem));
+            Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             DataSetId = dataSetId;
             FileSystem = fileSystem;
@@ -73,7 +54,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal AdlsGen2FolderDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string dataSetId, DataSetMappingStatus? dataSetMappingStatus, string fileSystem, string folderPath, ProvisioningState? provisioningState, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen2FolderDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string fileSystem, string folderPath, DataShareProvisioningState? provisioningState, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
@@ -87,7 +68,7 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> The id of the source data set. </summary>
-        public string DataSetId { get; set; }
+        public Guid DataSetId { get; set; }
         /// <summary> Gets the status of the data set mapping. </summary>
         public DataSetMappingStatus? DataSetMappingStatus { get; }
         /// <summary> File system to which the folder belongs. </summary>
@@ -95,7 +76,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Folder path within the file system. </summary>
         public string FolderPath { get; set; }
         /// <summary> Provisioning state of the data set mapping. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
         /// <summary> Resource group of storage account. </summary>
         public string ResourceGroup { get; set; }
         /// <summary> Storage account name of the source data set. </summary>

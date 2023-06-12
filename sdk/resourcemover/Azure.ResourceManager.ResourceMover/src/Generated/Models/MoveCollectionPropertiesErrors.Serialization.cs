@@ -15,17 +15,20 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoveCollectionPropertiesErrors DeserializeMoveCollectionPropertiesErrors(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseError> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    properties = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

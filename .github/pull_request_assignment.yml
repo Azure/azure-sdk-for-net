@@ -4,18 +4,16 @@
     paths:
       - "sdk/**/Microsoft.Azure.Management*/**"
     reviewers:
-      - fengzhou-msft
       - archerzz
       - ArcturusZhang
-      - Yao725
+      - live1206
 
 - rule:
     # track 2 management
     paths:
-      - "sdk/**/Azure.ResourceManger*/**"
+      - "sdk/**/Azure.ResourceManager*/**"
     reviewers:
       - m-nash
-      - fengzhou-msft
       - archerzz
       - ArcturusZhang
-      - Yao725
+      - live1206

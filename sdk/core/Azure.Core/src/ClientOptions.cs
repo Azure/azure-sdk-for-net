@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -49,8 +50,10 @@ namespace Azure.Core
             if (clientOptions != null)
             {
                 Retry = new RetryOptions(clientOptions.Retry);
+                RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
+                ProtocolMethods = clientOptions.ProtocolMethods;
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -64,6 +67,7 @@ namespace Azure.Core
                 _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
+                ProtocolMethods = new ProtocolMethodOptions();
             }
         }
 
@@ -91,7 +95,20 @@ namespace Azure.Core
         public RetryOptions Retry { get; }
 
         /// <summary>
-        /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
+        /// Gets or sets the policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
+        /// The <see cref="RetryPolicy"/> type can be derived from to modify the default behavior without needing to fully implement the retry logic.
+        /// If <see cref="RetryPolicy.Process"/> is overriden or a custom <see cref="HttpPipelinePolicy"/> is specified,
+        /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
+        /// </summary>
+        public HttpPipelinePolicy? RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets the client options for prototol methods.
+        /// </summary>
+        public ProtocolMethodOptions ProtocolMethods { get; }
+
+        /// <summary>
+        /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/> otherwise use <see cref="HttpPipelinePosition.PerRetry"/>
         /// to run the policy for every retry. Note that the same instance of <paramref name="policy"/> would be added to all pipelines of client constructed using this <see cref="ClientOptions"/> object.
         /// </summary>

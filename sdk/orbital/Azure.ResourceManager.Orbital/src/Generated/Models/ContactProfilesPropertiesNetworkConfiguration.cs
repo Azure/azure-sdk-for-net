@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkSubnetId"/> is null. </exception>
         public ContactProfilesPropertiesNetworkConfiguration(ResourceIdentifier networkSubnetId)
         {
-            if (networkSubnetId == null)
-            {
-                throw new ArgumentNullException(nameof(networkSubnetId));
-            }
+            Argument.AssertNotNull(networkSubnetId, nameof(networkSubnetId));
 
             NetworkSubnetId = networkSubnetId;
         }

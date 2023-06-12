@@ -20,16 +20,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static AssignmentReportResourceComplianceReason DeserializeAssignmentReportResourceComplianceReason(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> phrase = default;
             Optional<string> code = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phrase"))
+                if (property.NameEquals("phrase"u8))
                 {
                     phrase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;

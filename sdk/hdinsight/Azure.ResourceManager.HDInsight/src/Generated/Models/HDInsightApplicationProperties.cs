@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="applicationType"> The application type. </param>
         /// <param name="applicationState"> The application state. </param>
         /// <param name="errors"> The list of errors. </param>
-        /// <param name="createdDate"> The application create date time. </param>
+        /// <param name="createdOn"> The application create date time. </param>
         /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
-        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, string createdDate, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations)
+        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, DateTimeOffset? createdOn, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations)
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ApplicationType = applicationType;
             ApplicationState = applicationState;
             Errors = errors;
-            CreatedDate = createdDate;
+            CreatedOn = createdOn;
             MarketplaceIdentifier = marketplaceIdentifier;
             PrivateLinkConfigurations = privateLinkConfigurations;
         }
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The list of errors. </summary>
         public IList<ResponseError> Errors { get; }
         /// <summary> The application create date time. </summary>
-        public string CreatedDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The marketplace identifier. </summary>
         public string MarketplaceIdentifier { get; }
         /// <summary> The private link configurations. </summary>

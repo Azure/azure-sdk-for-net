@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
             if (Optional.IsCollectionDefined(PlanIds))
             {
-                writer.WritePropertyName("planIds");
+                writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlanIds)
                 {

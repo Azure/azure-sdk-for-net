@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the WorkloadGroup data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadGroup data model.
+    /// Workload group operations for a data warehouse
+    /// </summary>
     public partial class WorkloadGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadGroupData. </summary>

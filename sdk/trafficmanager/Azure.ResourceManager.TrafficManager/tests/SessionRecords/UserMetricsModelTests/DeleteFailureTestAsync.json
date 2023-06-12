@@ -1,47 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/6bb9d374-1f0d-437e-8bbe-4bc892850065?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7ef36132ba6a42409ff0f142cd502c1e-26cc098f692c0642-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Framework 4.8.9032.0; Microsoft Windows 10.0.22622 )",
-        "x-ms-client-request-id": "ef236e89f9be4e856e059401290e349c",
+        "traceparent": "00-0ba44f857b0edecabf39a914ac8d9a84-59d74266a19bfa56-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "1810e6be38374956ae707b0c3d17cd3d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "541",
+        "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Aug 2022 05:15:49 GMT",
+        "Date": "Tue, 15 Nov 2022 13:32:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6b29b0a7-c263-4f1c-bc7b-72de54cca4cc",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "6b29b0a7-c263-4f1c-bc7b-72de54cca4cc",
-        "x-ms-routing-request-id": "WESTUS2:20220803T051549Z:6b29b0a7-c263-4f1c-bc7b-72de54cca4cc"
+        "x-ms-correlation-request-id": "5c072336-1e84-4da3-9801-b784246305b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11728",
+        "x-ms-request-id": "5c072336-1e84-4da3-9801-b784246305b4",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20221115T133240Z:5c072336-1e84-4da3-9801-b784246305b4"
       },
       "ResponseBody": {
-        "id": "/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327",
+        "id": "/subscriptions/6bb9d374-1f0d-437e-8bbe-4bc892850065",
         "authorizationSource": "RoleBased",
-        "managedByTenants": [
-          {
-            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
-          }
-        ],
-        "tags": {
-          "NRMS12581055": "20220228",
-          "NRMSBreakGlassNonHighRisk ": "NRMSBreakGlassNonHighRisk "
-        },
-        "subscriptionId": "fb9e7fe1-af44-47ef-852d-2d086a069327",
+        "managedByTenants": [],
+        "subscriptionId": "6bb9d374-1f0d-437e-8bbe-4bc892850065",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "GenevaMetrics_Int",
+        "displayName": "Azure DNS Managed Resolver (Test) (Monitoring) (Shoebox)",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -51,14 +43,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/5941c11c-485a-4a27-a87f-db38d642b886/providers/Microsoft.Network/trafficManagerUserMetricsKeys?api-version=2018-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5941c11c-485a-4a27-a87f-db38d642b886/providers/Microsoft.Network/trafficManagerUserMetricsKeys?api-version=2022-04-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-dfbde5354b920d4fb71b09a84923e7c9-d1a472fd60e0ea45-00",
-        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.0.0-alpha.20220802.1 (.NET Framework 4.8.9032.0; Microsoft Windows 10.0.22622 )",
-        "x-ms-client-request-id": "f86bcd457693e1a9589fa486c0b829e3",
+        "traceparent": "00-23231a3126f96fe0ac7e8c5ad174b073-e783c4df931cb896-00",
+        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.1.0-alpha.20221115.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "8c5acfa5467b1f07c43787dbf9c6d0ce",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -67,15 +59,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "129",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Aug 2022 05:15:49 GMT",
+        "Date": "Tue, 15 Nov 2022 13:32:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9919bf7c-e615-45ef-929c-9c885fafb36f",
+        "x-ms-correlation-request-id": "e380b824-b886-479f-b4d5-ec0cefc20b79",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "9919bf7c-e615-45ef-929c-9c885fafb36f",
-        "x-ms-routing-request-id": "WESTUS2:20220803T051549Z:9919bf7c-e615-45ef-929c-9c885fafb36f"
+        "x-ms-request-id": "e380b824-b886-479f-b4d5-ec0cefc20b79",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20221115T133240Z:e380b824-b886-479f-b4d5-ec0cefc20b79"
       },
       "ResponseBody": {
         "error": {
@@ -86,9 +78,9 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1760956002",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "229693415",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "fb9e7fe1-af44-47ef-852d-2d086a069327"
+    "SUBSCRIPTION_ID": "6bb9d374-1f0d-437e-8bbe-4bc892850065"
   }
 }

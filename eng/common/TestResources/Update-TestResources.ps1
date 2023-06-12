@@ -69,17 +69,13 @@ $exitActions = @({
     }
 })
 
-# Make sure $ResourceGroupName is set.
-if (!$ResourceGroupName) {
-    # Make sure $BaseName is set.
-    if (!$BaseName) {
-        $UserName = GetUserName
-        $BaseName = GetBaseName $UserName $ServiceDirectory
-        Log "BaseName was not set. Using default base name '$BaseName'"
-    }
-
-    $ResourceGroupName = "rg-$BaseName"
-}
+$serviceName = GetServiceLeafDirectoryName $ServiceDirectory
+$BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
+    -baseNameDefault $BaseName `
+    -resourceGroupNameDefault $ResourceGroupName `
+    -user (GetUserName) `
+    -serviceDirectoryName $serviceName `
+    -CI $false
 
 # This script is intended for interactive users. Make sure they are logged in or fail.
 $context = Get-AzContext

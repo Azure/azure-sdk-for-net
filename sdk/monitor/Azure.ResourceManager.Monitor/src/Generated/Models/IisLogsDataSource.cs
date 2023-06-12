@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public IisLogsDataSource(IEnumerable<string> streams)
         {
-            if (streams == null)
-            {
-                throw new ArgumentNullException(nameof(streams));
-            }
+            Argument.AssertNotNull(streams, nameof(streams));
 
             Streams = streams.ToList();
             LogDirectories = new ChangeTrackingList<string>();

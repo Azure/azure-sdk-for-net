@@ -39,7 +39,8 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 
             // Get received assets
             var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
-            var receivedAssetName = JsonDocument.Parse(receivedAssets.First()).RootElement.GetProperty("name").GetString();
+            using var jsonDocument = JsonDocument.Parse(receivedAssets.First());
+            var receivedAssetName = jsonDocument.RootElement.GetProperty("name").GetString();
 
             string assetMappingName = "receiver-asset-mapping";
             string receiverContainerName = "receivedcontainer";

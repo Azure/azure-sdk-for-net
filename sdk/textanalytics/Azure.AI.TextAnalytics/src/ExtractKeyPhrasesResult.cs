@@ -12,7 +12,10 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly KeyPhraseCollection _keyPhrases;
 
-        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, KeyPhraseCollection keyPhrases)
+        internal ExtractKeyPhrasesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            KeyPhraseCollection keyPhrases)
             : base(id, statistics)
         {
             _keyPhrases = keyPhrases;

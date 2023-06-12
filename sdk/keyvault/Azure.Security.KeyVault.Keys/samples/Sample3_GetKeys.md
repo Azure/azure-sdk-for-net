@@ -112,11 +112,4 @@ foreach (DeletedKey key in keysDeleted)
 }
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample3_GetKeys.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample3_GetKeys.cs)
-* [ASynchronous Sample3_GetKeysAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample3_GetKeysAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

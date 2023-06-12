@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
         public IReadOnlyList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
-        /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;. </summary>
         public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
         /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
         public ServerWorkspaceFeature? WorkspaceFeature { get; }
@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.Sql.Models
         public Guid? FederatedClientId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         public Uri KeyId { get; set; }
-        /// <summary> The Azure Active Directory identity of the server. </summary>
+        /// <summary> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </summary>
         public ServerExternalAdministrator Administrators { get; set; }
         /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
+        /// <summary> Status of external governance. </summary>
+        public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
     }
 }

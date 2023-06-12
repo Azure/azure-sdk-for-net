@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of FormulaList. </summary>
         internal FormulaList()
         {
-            Value = new ChangeTrackingList<FormulaData>();
+            Value = new ChangeTrackingList<DevTestLabFormulaData>();
         }
 
         /// <summary> Initializes a new instance of FormulaList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal FormulaList(IReadOnlyList<FormulaData> value, string nextLink)
+        internal FormulaList(IReadOnlyList<DevTestLabFormulaData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<FormulaData> Value { get; }
+        public IReadOnlyList<DevTestLabFormulaData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

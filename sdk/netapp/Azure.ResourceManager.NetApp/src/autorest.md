@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/netapp/resource-manager/readme.md
-tag: package-netapp-2022-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/7dcd41cd28d46eb256bac034760a7e2f0a036238/specification/netapp/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -63,6 +62,7 @@ override-operation-name:
   Backups_GetStatus: GetBackupStatus
   Backups_GetVolumeRestoreStatus: GetRestoreStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
+  QueryRegionInfoNetAppResource: QueryRegionInfoNetApp
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
@@ -86,16 +86,19 @@ prepend-rp-prefix:
   - ReplicationObject
   - ReplicationSchedule
   - VolumeStorageToNetworkProximity
+  - AccountEncryption
+  - KeySource
+  - KeyVaultProperties
+  - KeyVaultStatus
+  - RegionInfo
+  - EncryptionIdentity
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
-  Backup.properties.backupId: -|uuid
-  BackupPatch.properties.backupId: -|uuid
-  Snapshot.properties.snapshotId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
-  MountTargetProperties.ipAddress: -|ip-address
+  MountTargetProperties.ipAddress: -|ip-address  
   ActiveDirectory.kdcIP: -|ip-address
   ReplicationSchedule._10minutely: TenMinutely
   EndpointType.src: Source
@@ -111,9 +114,7 @@ rename-mapping:
   ExportPolicyRule.kerberos5pReadWrite: IsKerberos5pReadWrite
   ExportPolicyRule.nfsv3: AllowNfsV3Protocol
   ExportPolicyRule.nfsv41: AllowNfsV41Protocol
-  Volume.properties.snapshotId: -|uuid
   Volume.properties.fileSystemId: -|uuid
-  Volume.properties.backupId: -|uuid
   Volume.properties.networkSiblingSetId: -|uuid
   Volume.properties.coolAccess: IsCoolAccessEnabled
   Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
@@ -126,6 +127,7 @@ rename-mapping:
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
+  Volume.properties.dataStoreResourceId: -|arm-id  
   VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
   VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
@@ -158,7 +160,6 @@ rename-mapping:
   SubvolumeModel.properties.accessedTimeStamp: AccessedOn
   SubvolumeModel.properties.modifiedTimeStamp: ModifiedOn
   SubvolumeModel.properties.changedTimeStamp: ChangedOn
-  VolumeRevert.snapshotId: -|arm-id
   ReplicationObject.remoteVolumeResourceId: -|arm-id
   VolumeBackupProperties.backupPolicyId: -|arm-id
   VolumeBackupProperties.policyEnforced: IsPolicyEnforced
@@ -211,7 +212,15 @@ rename-mapping:
   VolumeBackupProperties: NetAppVolumeBackupConfiguration
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeGroup: NetAppVolumeGroupResult
-
+  RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
+  VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
+  VolumeRelocationProperties.relocationRequested: IsRelocationRequested
+  BreakFileLocksRequest.clientIp: -|ip-address
+  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent  
+  BackupRestoreFiles.destinationVolumeId: -|arm-id
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
+  VolumeRelocationProperties: NetAppVolumeRelocationProperties
+  FileAccessLogs: NetAppFileAccessLog
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 

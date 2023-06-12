@@ -606,6 +606,52 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
+            /// Update an existing Redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the Redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Redis operation.
+            /// </param>
+            public static RedisResource BeginUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParameters parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an existing Redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the Redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Redis operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RedisResource> BeginUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a Redis cache.
             /// </summary>
             /// <param name='operations'>

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The number of instances that can be used during this profile. </summary>
@@ -16,32 +14,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="minimum"> the minimum number of instances for the resource. </param>
         /// <param name="maximum"> the maximum number of instances for the resource. The actual maximum number of instances is limited by the cores that are available in the subscription. </param>
         /// <param name="default"> the number of instances that will be set if metrics are not available for evaluation. The default is only used if the current instance count is lower than the default. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="minimum"/>, <paramref name="maximum"/> or <paramref name="default"/> is null. </exception>
-        public MonitorScaleCapacity(string minimum, string maximum, string @default)
+        public MonitorScaleCapacity(int minimum, int maximum, int @default)
         {
-            if (minimum == null)
-            {
-                throw new ArgumentNullException(nameof(minimum));
-            }
-            if (maximum == null)
-            {
-                throw new ArgumentNullException(nameof(maximum));
-            }
-            if (@default == null)
-            {
-                throw new ArgumentNullException(nameof(@default));
-            }
-
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
         }
 
         /// <summary> the minimum number of instances for the resource. </summary>
-        public string Minimum { get; set; }
+        public int Minimum { get; set; }
         /// <summary> the maximum number of instances for the resource. The actual maximum number of instances is limited by the cores that are available in the subscription. </summary>
-        public string Maximum { get; set; }
+        public int Maximum { get; set; }
         /// <summary> the number of instances that will be set if metrics are not available for evaluation. The default is only used if the current instance count is lower than the default. </summary>
-        public string Default { get; set; }
+        public int Default { get; set; }
     }
 }

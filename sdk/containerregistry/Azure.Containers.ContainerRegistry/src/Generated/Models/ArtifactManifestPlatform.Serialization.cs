@@ -14,31 +14,33 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string digest = default;
             Optional<ArtifactArchitecture> architecture = default;
             Optional<ArtifactOperatingSystem> os = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     os = new ArtifactOperatingSystem(property.Value.GetString());

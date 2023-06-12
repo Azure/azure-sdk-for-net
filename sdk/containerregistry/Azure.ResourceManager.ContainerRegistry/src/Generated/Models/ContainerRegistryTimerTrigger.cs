@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="name"/> is null. </exception>
         public ContainerRegistryTimerTrigger(string schedule, string name)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(name, nameof(name));
 
             Schedule = schedule;
             Name = name;

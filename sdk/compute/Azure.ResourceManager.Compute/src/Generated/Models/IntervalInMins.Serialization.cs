@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static IntervalInMins ToIntervalInMins(this string value)
         {
-            if (string.Equals(value, "ThreeMins", StringComparison.InvariantCultureIgnoreCase)) return IntervalInMins.ThreeMins;
-            if (string.Equals(value, "FiveMins", StringComparison.InvariantCultureIgnoreCase)) return IntervalInMins.FiveMins;
-            if (string.Equals(value, "ThirtyMins", StringComparison.InvariantCultureIgnoreCase)) return IntervalInMins.ThirtyMins;
-            if (string.Equals(value, "SixtyMins", StringComparison.InvariantCultureIgnoreCase)) return IntervalInMins.SixtyMins;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ThreeMins")) return IntervalInMins.ThreeMins;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FiveMins")) return IntervalInMins.FiveMins;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ThirtyMins")) return IntervalInMins.ThirtyMins;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SixtyMins")) return IntervalInMins.SixtyMins;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IntervalInMins value.");
         }
     }

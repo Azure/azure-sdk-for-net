@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
         public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId)
         {
-            if (virtualNetworkResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkResourceId));
-            }
+            Argument.AssertNotNull(virtualNetworkResourceId, nameof(virtualNetworkResourceId));
 
             VirtualNetworkResourceId = virtualNetworkResourceId;
         }

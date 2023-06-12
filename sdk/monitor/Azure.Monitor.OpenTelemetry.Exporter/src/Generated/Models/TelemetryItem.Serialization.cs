@@ -17,31 +17,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("ver");
+                writer.WritePropertyName("ver"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("time");
-            writer.WriteStringValue(Time);
+            writer.WritePropertyName("time"u8);
+            writer.WriteStringValue(Time, "O");
             if (Optional.IsDefined(SampleRate))
             {
-                writer.WritePropertyName("sampleRate");
+                writer.WritePropertyName("sampleRate"u8);
                 writer.WriteNumberValue(SampleRate.Value);
             }
             if (Optional.IsDefined(Sequence))
             {
-                writer.WritePropertyName("seq");
+                writer.WritePropertyName("seq"u8);
                 writer.WriteStringValue(Sequence);
             }
             if (Optional.IsDefined(InstrumentationKey))
             {
-                writer.WritePropertyName("iKey");
+                writer.WritePropertyName("iKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);
             }
             writer.WriteEndObject();

@@ -9,6 +9,10 @@ omitted_paths:
   - samples/*
   - sdk/*/*.Management.*/*
   - sdk/*/*/perf/*
+  - sdk/*/*/stress/*
+  - sdk/*/*/integration/*
+  - sdk/*/*/tests/Samples/*
+  - sdk/*/*/tests/samples/*
   - sdk/*/*/samples/*
   - sdk/*/samples/*
   - sdk/*/swagger/*
@@ -69,16 +73,16 @@ known_presence_issues:
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.Cryptography','Track 1']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.Extensions','Track 1']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.WebKey','Track 1']
-  - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','Track 1']  
+  - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Common','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Data','Track 1']
-  - ['sdk/search/Microsoft.Azure.Search.Service','Track 1']  
+  - ['sdk/search/Microsoft.Azure.Search.Service','Track 1']
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','Track 1']
   - ['sdk/search/Microsoft.Azure.Search','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Common/CHANGELOG.md','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Data/CHANGELOG.md','Track 1']
   - ['sdk/search/Microsoft.Azure.Search.Service/CHANGELOG.md','Track 1']
-  
+
   - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator','https://github.com/Azure/azure-sdk-tools/issues/2444']
 
 known_content_issues:
@@ -100,13 +104,14 @@ known_content_issues:
   - ['sdk/eventhub/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/extensions/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/personalizer/README.md','Not a package: azure-sdk-tools/issues/42']
-  - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']  
+  - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/storage/README.md','Not a package: azure-sdk-tools/issues/42']
 
   - ['sdk/core/Azure.Core.Amqp/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.Experimental/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.TestFramework/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/core/Azure.Core.Expressions.DataFactory/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
         /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="httpRequest"> HTTPGet specifies the http request to perform. </param>
+        /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
         /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>
         /// <param name="periodSeconds"> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </param>
         /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="tcpSocketRequest"> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </param>
+        /// <param name="tcpSocket"> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </param>
         /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
         /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
         /// <param name="probeType"> The type of probe. </param>
-        internal ContainerAppProbe(int? failureThreshold, HttpRequestData httpRequest, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, TcpSocketRequestData tcpSocketRequest, long? terminationGracePeriodSeconds, int? timeoutSeconds, ProbeType? probeType)
+        internal ContainerAppProbe(int? failureThreshold, ContainerAppHttpRequestInfo httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppTcpSocketRequestInfo tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ContainerAppProbeType? probeType)
         {
             FailureThreshold = failureThreshold;
-            HttpRequest = httpRequest;
+            HttpGet = httpGet;
             InitialDelaySeconds = initialDelaySeconds;
             PeriodSeconds = periodSeconds;
             SuccessThreshold = successThreshold;
-            TcpSocketRequest = tcpSocketRequest;
+            TcpSocket = tcpSocket;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             TimeoutSeconds = timeoutSeconds;
             ProbeType = probeType;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </summary>
         public int? FailureThreshold { get; set; }
         /// <summary> HTTPGet specifies the http request to perform. </summary>
-        public HttpRequestData HttpRequest { get; set; }
+        public ContainerAppHttpRequestInfo HttpGet { get; set; }
         /// <summary> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </summary>
         public int? InitialDelaySeconds { get; set; }
         /// <summary> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </summary>
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </summary>
         public int? SuccessThreshold { get; set; }
         /// <summary> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </summary>
-        public TcpSocketRequestData TcpSocketRequest { get; set; }
+        public ContainerAppTcpSocketRequestInfo TcpSocket { get; set; }
         /// <summary> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </summary>
         public long? TerminationGracePeriodSeconds { get; set; }
         /// <summary> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </summary>
         public int? TimeoutSeconds { get; set; }
         /// <summary> The type of probe. </summary>
-        public ProbeType? ProbeType { get; set; }
+        public ContainerAppProbeType? ProbeType { get; set; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="canonicalizedResource"/> is null. </exception>
         public ServiceSasContent(string canonicalizedResource)
         {
-            if (canonicalizedResource == null)
-            {
-                throw new ArgumentNullException(nameof(canonicalizedResource));
-            }
+            Argument.AssertNotNull(canonicalizedResource, nameof(canonicalizedResource));
 
             CanonicalizedResource = canonicalizedResource;
         }

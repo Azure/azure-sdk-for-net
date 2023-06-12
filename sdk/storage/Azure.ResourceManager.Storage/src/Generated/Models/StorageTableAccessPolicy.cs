@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -17,29 +18,26 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public StorageTableAccessPolicy(string permission)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
+            Argument.AssertNotNull(permission, nameof(permission));
 
             Permission = permission;
         }
 
         /// <summary> Initializes a new instance of StorageTableAccessPolicy. </summary>
         /// <param name="startOn"> Start time of the access policy. </param>
-        /// <param name="expiresOn"> Expiry time of the access policy. </param>
+        /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include &apos;r&apos;,&apos;a&apos;,&apos;u&apos;,&apos;d&apos;. </param>
-        internal StorageTableAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expiresOn, string permission)
+        internal StorageTableAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission)
         {
             StartOn = startOn;
-            ExpiresOn = expiresOn;
+            ExpireOn = expireOn;
             Permission = permission;
         }
 
         /// <summary> Start time of the access policy. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiry time of the access policy. </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Required. List of abbreviated permissions. Supported permission values include &apos;r&apos;,&apos;a&apos;,&apos;u&apos;,&apos;d&apos;. </summary>
         public string Permission { get; set; }
     }

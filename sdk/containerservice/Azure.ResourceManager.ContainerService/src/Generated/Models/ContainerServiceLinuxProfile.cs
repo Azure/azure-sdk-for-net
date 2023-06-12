@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
         public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
         {
-            if (adminUsername == null)
-            {
-                throw new ArgumentNullException(nameof(adminUsername));
-            }
-            if (ssh == null)
-            {
-                throw new ArgumentNullException(nameof(ssh));
-            }
+            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
+            Argument.AssertNotNull(ssh, nameof(ssh));
 
             AdminUsername = adminUsername;
             Ssh = ssh;

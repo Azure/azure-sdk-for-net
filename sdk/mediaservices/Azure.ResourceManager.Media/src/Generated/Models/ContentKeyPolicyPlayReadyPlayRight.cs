@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="hasImageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="hasImageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="allowPassingVideoContentToUnknownOutput"> Configures Unknown output handling settings of the license. </param>
-        public ContentKeyPolicyPlayReadyPlayRight(bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput)
+        public ContentKeyPolicyPlayReadyPlayRight(bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput)
         {
             HasDigitalVideoOnlyContentRestriction = hasDigitalVideoOnlyContentRestriction;
             HasImageConstraintForAnalogComponentVideoRestriction = hasImageConstraintForAnalogComponentVideoRestriction;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="analogVideoOutputProtectionLevel"> Specifies the output protection level for compressed digital audio. </param>
         /// <param name="compressedDigitalAudioOutputProtectionLevel"> Specifies the output protection level for compressed digital audio. </param>
         /// <param name="uncompressedDigitalAudioOutputProtectionLevel"> Specifies the output protection level for uncompressed digital audio. </param>
-        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOutputProtectionLevel, int? compressedDigitalVideoOutputProtectionLevel, int? analogVideoOutputProtectionLevel, int? compressedDigitalAudioOutputProtectionLevel, int? uncompressedDigitalAudioOutputProtectionLevel)
+        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOutputProtectionLevel, int? compressedDigitalVideoOutputProtectionLevel, int? analogVideoOutputProtectionLevel, int? compressedDigitalAudioOutputProtectionLevel, int? uncompressedDigitalAudioOutputProtectionLevel)
         {
             FirstPlayExpiration = firstPlayExpiration;
             ScmsRestriction = scmsRestriction;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Enables the Image Constraint For Analog Component Video Restriction in the license. </summary>
         public bool HasImageConstraintForAnalogComputerMonitorRestriction { get; set; }
         /// <summary> Configures Unknown output handling settings of the license. </summary>
-        public ContentKeyPolicyPlayReadyUnknownOutputPassingSetting AllowPassingVideoContentToUnknownOutput { get; set; }
+        public ContentKeyPolicyPlayReadyUnknownOutputPassingOption AllowPassingVideoContentToUnknownOutput { get; set; }
         /// <summary> Specifies the output protection level for uncompressed digital video. </summary>
         public int? UncompressedDigitalVideoOutputProtectionLevel { get; set; }
         /// <summary> Specifies the output protection level for compressed digital video. </summary>

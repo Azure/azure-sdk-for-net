@@ -22,14 +22,13 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-string tableName = "OfficeSupplies1p2";
-var tableClient = serviceClient.GetTableClient(tableName);
+var tableClient2 = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-var tableClient = new TableClient(
+var tableClient3 = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -41,21 +40,20 @@ A table requires a [unique table name](https://docs.microsoft.com/rest/api/stora
 
 ### Using `TableServiceClient`
 
-To create a table, invoke `CreateTable` with the table name.
+To create a table, invoke `CreateTableIfNotExists` with the table name.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
-string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
 ### Using `TableClient`
 
-To create a table, invoke `Create` with the table name.
+To create a table, invoke `CreateIfNotExists` with the table name.
 
 ```C# Snippet:TablesSample1TableClientCreateTable
-tableClient.CreateIfNotExists();
+tableClient3.CreateIfNotExists();
 ```
 
 ## Delete a table
@@ -66,7 +64,6 @@ To delete the table, invoke `DeleteTable` with the table name.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
-string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 
@@ -75,7 +72,7 @@ serviceClient.DeleteTable(tableName);
 To delete the table, invoke `Delete` with the table name.
 
 ```C# Snippet:TablesSample1TableClientDeleteTable
-tableClient.Delete();
+tableClient3.Delete();
 ```
 
 ## Handle errors
@@ -97,9 +94,3 @@ catch (RequestFailedException e)
     Console.WriteLine(e.Message);
 }
 ```
-
----
-To see the full example source files, see:
-- [Synchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTable.cs)
-- [Asynchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableAsync.cs)
-- [CreateDeleteTableErrors](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableErrors.cs)

@@ -15,93 +15,92 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSku DeserializeAvailableLabServicesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<AvailableLabServicesSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<AvailableLabServicesSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AvailableLabServicesSkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<AvailableLabServicesSkuCost>> costs = default;
             Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new AvailableLabServicesSkuTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AvailableLabServicesSkuCapabilities> array = new List<AvailableLabServicesSkuCapabilities>();
+                    List<AvailableLabServicesSkuCapability> array = new List<AvailableLabServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCapabilities.DeserializeAvailableLabServicesSkuCapabilities(item));
+                        array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item));
                     }
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("costs"))
+                if (property.NameEquals("costs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableLabServicesSkuCost> array = new List<AvailableLabServicesSkuCost>();
@@ -112,11 +111,10 @@ namespace Azure.ResourceManager.LabServices.Models
                     costs = array;
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableLabServicesSkuRestrictions> array = new List<AvailableLabServicesSkuRestrictions>();

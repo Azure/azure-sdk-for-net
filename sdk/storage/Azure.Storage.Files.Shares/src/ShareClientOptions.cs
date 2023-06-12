@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -97,7 +98,22 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2021-10-04 service version.
             /// </summary>
-            V2021_10_04 = 14
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15,
+
+            /// <summary>
+            /// The 2022-11-02 service version.
+            /// </summary>
+            V2022_11_02 = 16,
+
+            /// <summary>
+            /// The 2023-01-03 service version.
+            /// </summary>
+            V2023_01_03 = 17
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -110,9 +126,37 @@ namespace Azure.Storage.Files.Shares
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Transfer validation options to be applied to blob transfers from this client.
+        /// Transfer validation options to be applied to file transfers from this client.
         /// </summary>
         public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// If set to true, trailing dot (.) will be allowed to suffex directory and file names.
+        /// If false, the trailing dot will be trimmed.
+        /// Supported by x-ms-version 2022-11-02 and above.
+        /// </summary>
+        public bool? AllowTrailingDot { get; set; }
+
+        /// <summary>
+        /// If set to true, trailing dot (.) will be allowed to source file names.
+        /// If false, the trailing dot will be trimmed.
+        /// Supported by x-ms-version 2022-11-02 and above.
+        /// Applicable to <see cref="ShareFileClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.UploadRangeFromUri(System.Uri, HttpRange, HttpRange, Models.ShareFileUploadRangeFromUriOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.UploadRangeFromUriAsync(System.Uri, HttpRange, HttpRange, Models.ShareFileUploadRangeFromUriOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.StartCopy(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.StartCopyAsync(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareDirectoryClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// and <see cref="ShareDirectoryClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        public bool? AllowSourceTrailingDot { get; set; }
+
+        /// <summary>
+        /// Share Token Intent.  For use with token authentication.  Used to indicate the intent of the request.
+        /// This is currently required when using token authentication.
+        /// </summary>
+        public ShareTokenIntent? ShareTokenIntent { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClientOptions"/>

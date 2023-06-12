@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitRoutesTableSummary DeserializeExpressRouteCircuitRoutesTableSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> neighbor = default;
             Optional<int> v = default;
             Optional<int> @as = default;
@@ -21,37 +25,35 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> statePfxRcd = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("neighbor"))
+                if (property.NameEquals("neighbor"u8))
                 {
                     neighbor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("v"))
+                if (property.NameEquals("v"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     v = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("as"))
+                if (property.NameEquals("as"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @as = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("upDown"))
+                if (property.NameEquals("upDown"u8))
                 {
                     upDown = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statePfxRcd"))
+                if (property.NameEquals("statePfxRcd"u8))
                 {
                     statePfxRcd = property.Value.GetString();
                     continue;

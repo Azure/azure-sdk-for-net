@@ -5,14 +5,13 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using System;
 using System.Threading;
 using System.Globalization;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class TableTests : StorageTestBase
+    public class TableTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private StorageAccountResource _storageAccount;
@@ -62,14 +61,14 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         AccessPolicy = new StorageTableAccessPolicy("raud")
                         {
-                            ExpiresOn = DateTimeOffset.Parse("2029-12-31T16:00:00.0000000Z")
+                            ExpireOn = DateTimeOffset.Parse("2029-12-31T16:00:00.0000000Z")
                         }
                     },
                     new StorageTableSignedIdentifier("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI")
                     {
                         AccessPolicy = new StorageTableAccessPolicy("ra")
                         {
-                            ExpiresOn = DateTimeOffset.Parse("2030-09-08T16:00:00.0000000Z")
+                            ExpireOn = DateTimeOffset.Parse("2030-09-08T16:00:00.0000000Z")
                         }
                     }
                 }

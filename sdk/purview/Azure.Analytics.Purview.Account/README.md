@@ -65,7 +65,7 @@ var credential = new DefaultAzureCredential();
 var client = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
 var Response response = await client.GetAccountPropertiesAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("name"));
 ```
 

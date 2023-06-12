@@ -1,0 +1,32 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ggjxscnapby3pev24a.file.preprod.core.windows.net/myshare/directory/file?comp=listhandles",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.14.0-alpha.20230224.1 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "62e3af49-9339-dac9-ff0d-f5ccc8c593db",
+        "x-ms-date": "Fri, 24 Feb 2023 20:38:24 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2023-01-03"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Fri, 24 Feb 2023 20:38:21 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "62e3af49-9339-dac9-ff0d-f5ccc8c593db",
+        "x-ms-request-id": "c963220b-701a-0008-258f-48c247000000",
+        "x-ms-version": "2023-01-03"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults\u003E\u003CEntries\u003E\u003CHandle\u003E\u003CHandleId\u003E196619\u003C/HandleId\u003E\u003CPath\u003Edirectory/file\u003C/Path\u003E\u003CFileId\u003E13835128424026341376\u003C/FileId\u003E\u003CParentId\u003E9223442405598953472\u003C/ParentId\u003E\u003CSessionId\u003E9259506403364569193\u003C/SessionId\u003E\u003CAccessRightList\u003E\u003CAccessRight\u003EWrite\u003C/AccessRight\u003E\u003C/AccessRightList\u003E\u003CClientIp\u003E131.107.160.103:3539\u003C/ClientIp\u003E\u003COpenTime\u003EFri, 24 Feb 2023 19:53:30 GMT\u003C/OpenTime\u003E\u003C/Handle\u003E\u003C/Entries\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2113558427",
+    "Storage_TestConfigDefault": "ProductionTenant\nggjxscnapby3pev24a\nU2FuaXRpemVk\nhttps://ggjxscnapby3pev24a.blob.core.windows.net\nhttps://ggjxscnapby3pev24a.file.preprod.core.windows.net\nhttps://ggjxscnapby3pev24a.queue.core.windows.net\nhttps://ggjxscnapby3pev24a.table.core.windows.net\n\n\n\n\nhttps://ggjxscnapby3pev24a-secondary.blob.core.windows.net\nhttps://ggjxscnapby3pev24a-secondary.file.preprod.core.windows.net\nhttps://ggjxscnapby3pev24a-secondary.queue.core.windows.net\nhttps://ggjxscnapby3pev24a-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://ggjxscnapby3pev24a.blob.core.windows.net/;QueueEndpoint=https://ggjxscnapby3pev24a.queue.core.windows.net/;FileEndpoint=https://ggjxscnapby3pev24a.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://ggjxscnapby3pev24a-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://ggjxscnapby3pev24a-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://ggjxscnapby3pev24a-secondary.file.preprod.core.windows.net/;AccountName=ggjxscnapby3pev24a;AccountKey=Sanitized\nseanscope1\n\n"
+  }
+}

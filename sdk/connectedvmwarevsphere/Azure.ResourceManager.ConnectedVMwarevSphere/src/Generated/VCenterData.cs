@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the VCenter data model. </summary>
+    /// <summary>
+    /// A class representing the VCenter data model.
+    /// Defines the vCenter.
+    /// </summary>
     public partial class VCenterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VCenterData. </summary>
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
         public VCenterData(AzureLocation location, string fqdn) : base(location)
         {
-            if (fqdn == null)
-            {
-                throw new ArgumentNullException(nameof(fqdn));
-            }
+            Argument.AssertNotNull(fqdn, nameof(fqdn));
 
             Fqdn = fqdn;
             Statuses = new ChangeTrackingList<ResourceStatus>();

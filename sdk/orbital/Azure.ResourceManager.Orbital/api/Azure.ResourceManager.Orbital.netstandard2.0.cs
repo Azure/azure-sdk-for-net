@@ -187,6 +187,8 @@ namespace Azure.ResourceManager.Orbital
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult> GetAllAvailableContacts(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult>> GetAllAvailableContactsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactResource> GetOrbitalContact(string contactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactResource>> GetOrbitalContactAsync(string contactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -201,6 +203,18 @@ namespace Azure.ResourceManager.Orbital
 }
 namespace Azure.ResourceManager.Orbital.Models
 {
+    public static partial class ArmOrbitalModelFactory
+    {
+        public static Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation AuthorizedGroundStation(string groundStationName = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Orbital.AvailableGroundStationData AvailableGroundStationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string city = null, string providerName = null, float? longitudeDegrees = default(float?), float? latitudeDegrees = default(float?), float? altitudeMeters = default(float?), Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode? releaseMode = default(Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode?)) { throw null; }
+        public static Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact OrbitalAvailableContact(Azure.Core.ResourceIdentifier spacecraftId = null, string groundStationName = null, float? maximumElevationDegrees = default(float?), System.DateTimeOffset? txStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? txEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? rxStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? rxEndOn = default(System.DateTimeOffset?), float? startAzimuthDegrees = default(float?), float? endAzimuthDegrees = default(float?), float? startElevationDegrees = default(float?), float? endElevationDegrees = default(float?)) { throw null; }
+        public static Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult OrbitalAvailableContactsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact> values = null) { throw null; }
+        public static Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration OrbitalContactAntennaConfiguration(System.Net.IPAddress destinationIP = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> sourceIPs = null) { throw null; }
+        public static Azure.ResourceManager.Orbital.OrbitalContactData OrbitalContactData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState? provisioningState = default(Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState?), Azure.ResourceManager.Orbital.Models.OrbitalContactStatus? status = default(Azure.ResourceManager.Orbital.Models.OrbitalContactStatus?), System.DateTimeOffset? reservationStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? reservationEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? rxStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? rxEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? txStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? txEndOn = default(System.DateTimeOffset?), string errorMessage = null, float? maximumElevationDegrees = default(float?), float? startAzimuthDegrees = default(float?), float? endAzimuthDegrees = default(float?), string groundStationName = null, float? startElevationDegrees = default(float?), float? endElevationDegrees = default(float?), Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration antennaConfiguration = null, Azure.Core.ResourceIdentifier contactProfileId = null) { throw null; }
+        public static Azure.ResourceManager.Orbital.OrbitalContactProfileData OrbitalContactProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState? provisioningState = default(Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState?), System.TimeSpan? minimumViableContactDuration = default(System.TimeSpan?), float? minimumElevationDegrees = default(float?), Azure.ResourceManager.Orbital.Models.AutoTrackingConfiguration? autoTrackingConfiguration = default(Azure.ResourceManager.Orbital.Models.AutoTrackingConfiguration?), System.Uri eventHubUri = null, Azure.Core.ResourceIdentifier networkSubnetId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink> links = null) { throw null; }
+        public static Azure.ResourceManager.Orbital.OrbitalSpacecraftData OrbitalSpacecraftData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState? provisioningState = default(Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState?), string noradId = null, string titleLine = null, string tleLine1 = null, string tleLine2 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink> links = null) { throw null; }
+        public static Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink OrbitalSpacecraftLink(string name = null, float centerFrequencyMHz = 0f, float bandwidthMHz = 0f, Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection direction = default(Azure.ResourceManager.Orbital.Models.OrbitalLinkDirection), Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization polarization = default(Azure.ResourceManager.Orbital.Models.OrbitalLinkPolarization), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation> authorizations = null) { throw null; }
+    }
     public partial class AuthorizedGroundStation
     {
         internal AuthorizedGroundStation() { }
@@ -248,6 +262,34 @@ namespace Azure.ResourceManager.Orbital.Models
         public static implicit operator Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode left, Azure.ResourceManager.Orbital.Models.GroundStationReleaseMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class OrbitalAvailableContact
+    {
+        internal OrbitalAvailableContact() { }
+        public float? EndAzimuthDegrees { get { throw null; } }
+        public float? EndElevationDegrees { get { throw null; } }
+        public string GroundStationName { get { throw null; } }
+        public float? MaximumElevationDegrees { get { throw null; } }
+        public System.DateTimeOffset? RxEndOn { get { throw null; } }
+        public System.DateTimeOffset? RxStartOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SpacecraftId { get { throw null; } }
+        public float? StartAzimuthDegrees { get { throw null; } }
+        public float? StartElevationDegrees { get { throw null; } }
+        public System.DateTimeOffset? TxEndOn { get { throw null; } }
+        public System.DateTimeOffset? TxStartOn { get { throw null; } }
+    }
+    public partial class OrbitalAvailableContactsContent
+    {
+        public OrbitalAvailableContactsContent(Azure.ResourceManager.Resources.Models.WritableSubResource contactProfile, string groundStationName, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
+        public Azure.Core.ResourceIdentifier ContactProfileId { get { throw null; } }
+        public System.DateTimeOffset EndOn { get { throw null; } }
+        public string GroundStationName { get { throw null; } }
+        public System.DateTimeOffset StartOn { get { throw null; } }
+    }
+    public partial class OrbitalAvailableContactsResult
+    {
+        internal OrbitalAvailableContactsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact> Values { get { throw null; } }
     }
     public partial class OrbitalContactAntennaConfiguration
     {

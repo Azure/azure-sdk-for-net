@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchNodeDeallocationOption ToBatchNodeDeallocationOption(this string value)
         {
-            if (string.Equals(value, "Requeue", StringComparison.InvariantCultureIgnoreCase)) return BatchNodeDeallocationOption.Requeue;
-            if (string.Equals(value, "Terminate", StringComparison.InvariantCultureIgnoreCase)) return BatchNodeDeallocationOption.Terminate;
-            if (string.Equals(value, "TaskCompletion", StringComparison.InvariantCultureIgnoreCase)) return BatchNodeDeallocationOption.TaskCompletion;
-            if (string.Equals(value, "RetainedData", StringComparison.InvariantCultureIgnoreCase)) return BatchNodeDeallocationOption.RetainedData;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Requeue")) return BatchNodeDeallocationOption.Requeue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Terminate")) return BatchNodeDeallocationOption.Terminate;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskCompletion")) return BatchNodeDeallocationOption.TaskCompletion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RetainedData")) return BatchNodeDeallocationOption.RetainedData;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodeDeallocationOption value.");
         }
     }

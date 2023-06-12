@@ -24,10 +24,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal HealthcareEntity(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Links = new ChangeTrackingList<HealthcareEntityLink>();
         }

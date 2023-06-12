@@ -27,6 +27,6 @@ if (responseInvitation == null)
     return;
 }
 
-var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
+using var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
 var targetEmail = responseInvitationDocument.RootElement.GetProperty("name");
 ```

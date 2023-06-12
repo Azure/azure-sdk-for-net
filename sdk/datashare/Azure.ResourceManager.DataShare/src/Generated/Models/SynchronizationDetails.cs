@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
         /// <param name="dataSetId"> Id of data set. </param>
         /// <param name="dataSetType"> Type of the data set. </param>
-        /// <param name="durationMs"> Duration of data set level copy. </param>
+        /// <param name="durationInMilliSeconds"> Duration of data set level copy. </param>
         /// <param name="endOn"> End time of data set level copy. </param>
         /// <param name="filesRead"> The number of files read from the source data set. </param>
         /// <param name="filesWritten"> The number of files written into the sink data set. </param>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="startOn"> Start time of data set level copy. </param>
         /// <param name="status"> Raw Status. </param>
         /// <param name="vCore"> The vCore units consumed for the data set synchronization. </param>
-        internal SynchronizationDetails(string dataSetId, DataSetType? dataSetType, int? durationMs, DateTimeOffset? endOn, long? filesRead, long? filesWritten, string message, string name, long? rowsCopied, long? rowsRead, long? sizeRead, long? sizeWritten, DateTimeOffset? startOn, string status, long? vCore)
+        internal SynchronizationDetails(Guid? dataSetId, ShareDataSetType? dataSetType, int? durationInMilliSeconds, DateTimeOffset? endOn, long? filesRead, long? filesWritten, string message, string name, long? rowsCopied, long? rowsRead, long? sizeRead, long? sizeWritten, DateTimeOffset? startOn, string status, long? vCore)
         {
             DataSetId = dataSetId;
             DataSetType = dataSetType;
-            DurationMs = durationMs;
+            DurationInMilliSeconds = durationInMilliSeconds;
             EndOn = endOn;
             FilesRead = filesRead;
             FilesWritten = filesWritten;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Id of data set. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> Type of the data set. </summary>
-        public DataSetType? DataSetType { get; }
+        public ShareDataSetType? DataSetType { get; }
         /// <summary> Duration of data set level copy. </summary>
-        public int? DurationMs { get; }
+        public int? DurationInMilliSeconds { get; }
         /// <summary> End time of data set level copy. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> The number of files read from the source data set. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         public static MySqlFlexibleServerDataEncryptionType ToMySqlFlexibleServerDataEncryptionType(this string value)
         {
-            if (string.Equals(value, "AzureKeyVault", StringComparison.InvariantCultureIgnoreCase)) return MySqlFlexibleServerDataEncryptionType.AzureKeyVault;
-            if (string.Equals(value, "SystemManaged", StringComparison.InvariantCultureIgnoreCase)) return MySqlFlexibleServerDataEncryptionType.SystemManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureKeyVault")) return MySqlFlexibleServerDataEncryptionType.AzureKeyVault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemManaged")) return MySqlFlexibleServerDataEncryptionType.SystemManaged;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlFlexibleServerDataEncryptionType value.");
         }
     }

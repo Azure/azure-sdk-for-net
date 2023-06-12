@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AllocationMethod))
             {
-                writer.WritePropertyName("allocationMethod");
+                writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
+                writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             if (Optional.IsCollectionDefined(Gateway))
             {
-                writer.WritePropertyName("gateway");
+                writer.WritePropertyName("gateway"u8);
                 writer.WriteStartArray();
                 foreach (var item in Gateway)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             if (Optional.IsDefined(IPAddress))
             {
-                writer.WritePropertyName("ipAddress");
+                writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(SubnetMask))
             {
-                writer.WritePropertyName("subnetMask");
+                writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
             writer.WriteEndObject();
@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static NicIPSettings DeserializeNicIPSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddressAllocationMethod> allocationMethod = default;
             Optional<IList<string>> dnsServers = default;
             Optional<IList<string>> gateway = default;
@@ -66,21 +70,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<IReadOnlyList<NicIPAddressSettings>> ipAddressInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allocationMethod"))
+                if (property.NameEquals("allocationMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationMethod = new IPAddressAllocationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -91,11 +93,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("gateway"))
+                if (property.NameEquals("gateway"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -106,31 +107,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     gateway = array;
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetMask"))
+                if (property.NameEquals("subnetMask"u8))
                 {
                     subnetMask = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryWinsServer"))
+                if (property.NameEquals("primaryWinsServer"u8))
                 {
                     primaryWinsServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryWinsServer"))
+                if (property.NameEquals("secondaryWinsServer"u8))
                 {
                     secondaryWinsServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddressInfo"))
+                if (property.NameEquals("ipAddressInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NicIPAddressSettings> array = new List<NicIPAddressSettings>();

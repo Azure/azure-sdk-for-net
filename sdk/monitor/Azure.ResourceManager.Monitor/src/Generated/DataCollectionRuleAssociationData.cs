@@ -12,7 +12,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the DataCollectionRuleAssociation data model. </summary>
+    /// <summary>
+    /// A class representing the DataCollectionRuleAssociation data model.
+    /// Definition of generic ARM proxy resource.
+    /// </summary>
     public partial class DataCollectionRuleAssociationData : ResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationData. </summary>
@@ -52,11 +55,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The resource provisioning state. </summary>
         public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
         /// <summary> Metadata about the resource. </summary>
-        internal DataCollectionRuleAssociationMetadata Metadata { get; }
-        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
-        public string MetadataProvisionedBy
-        {
-            get => Metadata?.ProvisionedBy;
-        }
+        public DataCollectionRuleAssociationMetadata Metadata { get; }
     }
 }

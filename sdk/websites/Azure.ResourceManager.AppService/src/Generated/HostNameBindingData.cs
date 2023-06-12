@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the HostNameBinding data model. </summary>
+    /// <summary>
+    /// A class representing the HostNameBinding data model.
+    /// A hostname binding object.
+    /// </summary>
     public partial class HostNameBindingData : ResourceData
     {
         /// <summary> Initializes a new instance of HostNameBindingData. </summary>
@@ -31,10 +34,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="customHostNameDnsRecordType"> Custom DNS record type. </param>
         /// <param name="hostNameType"> Hostname type. </param>
         /// <param name="sslState"> SSL type. </param>
-        /// <param name="thumbprint"> SSL certificate thumbprint. </param>
+        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP, string kind) : base(id, name, resourceType, systemData)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind) : base(id, name, resourceType, systemData)
         {
             SiteName = siteName;
             DomainId = domainId;
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.AppService
             CustomHostNameDnsRecordType = customHostNameDnsRecordType;
             HostNameType = hostNameType;
             SslState = sslState;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             VirtualIP = virtualIP;
             Kind = kind;
         }
@@ -55,15 +58,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Azure resource name. </summary>
         public string AzureResourceName { get; set; }
         /// <summary> Azure resource type. </summary>
-        public AzureResourceType? AzureResourceType { get; set; }
+        public AppServiceResourceType? AzureResourceType { get; set; }
         /// <summary> Custom DNS record type. </summary>
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
         /// <summary> Hostname type. </summary>
-        public HostNameType? HostNameType { get; set; }
+        public AppServiceHostNameType? HostNameType { get; set; }
         /// <summary> SSL type. </summary>
-        public SslState? SslState { get; set; }
+        public HostNameBindingSslState? SslState { get; set; }
         /// <summary> SSL certificate thumbprint. </summary>
-        public string Thumbprint { get; set; }
+        public string ThumbprintString { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; }
         /// <summary> Kind of resource. </summary>

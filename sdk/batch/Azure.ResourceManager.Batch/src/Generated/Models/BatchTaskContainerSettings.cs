@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public BatchTaskContainerSettings(string imageName)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
+            Argument.AssertNotNull(imageName, nameof(imageName));
 
             ImageName = imageName;
         }

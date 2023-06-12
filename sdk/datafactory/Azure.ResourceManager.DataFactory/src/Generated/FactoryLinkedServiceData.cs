@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryLinkedService data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryLinkedService data model.
+    /// Linked service resource type.
+    /// </summary>
     public partial class FactoryLinkedServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryLinkedServiceData. </summary>
@@ -25,10 +28,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public FactoryLinkedServiceData(FactoryLinkedServiceDefinition properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

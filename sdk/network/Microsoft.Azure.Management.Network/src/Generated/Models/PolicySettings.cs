@@ -40,13 +40,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Kb for WAF.</param>
         /// <param name="fileUploadLimitInMb">Maximum file upload size in Mb
         /// for WAF.</param>
-        public PolicySettings(string state = default(string), string mode = default(string), bool? requestBodyCheck = default(bool?), int? maxRequestBodySizeInKb = default(int?), int? fileUploadLimitInMb = default(int?))
+        /// <param name="customBlockResponseStatusCode">If the action type is
+        /// block, customer can override the response status code.</param>
+        /// <param name="customBlockResponseBody">If the action type is block,
+        /// customer can override the response body. The body must be specified
+        /// in base64 encoding.</param>
+        public PolicySettings(string state = default(string), string mode = default(string), bool? requestBodyCheck = default(bool?), int? maxRequestBodySizeInKb = default(int?), int? fileUploadLimitInMb = default(int?), int? customBlockResponseStatusCode = default(int?), string customBlockResponseBody = default(string))
         {
             State = state;
             Mode = mode;
             RequestBodyCheck = requestBodyCheck;
             MaxRequestBodySizeInKb = maxRequestBodySizeInKb;
             FileUploadLimitInMb = fileUploadLimitInMb;
+            CustomBlockResponseStatusCode = customBlockResponseStatusCode;
+            CustomBlockResponseBody = customBlockResponseBody;
             CustomInit();
         }
 
@@ -88,6 +95,20 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? FileUploadLimitInMb { get; set; }
 
         /// <summary>
+        /// Gets or sets if the action type is block, customer can override the
+        /// response status code.
+        /// </summary>
+        [JsonProperty(PropertyName = "customBlockResponseStatusCode")]
+        public int? CustomBlockResponseStatusCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the action type is block, customer can override the
+        /// response body. The body must be specified in base64 encoding.
+        /// </summary>
+        [JsonProperty(PropertyName = "customBlockResponseBody")]
+        public string CustomBlockResponseBody { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -102,6 +123,21 @@ namespace Microsoft.Azure.Management.Network.Models
             if (FileUploadLimitInMb < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "FileUploadLimitInMb", 0);
+            }
+            if (CustomBlockResponseStatusCode < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "CustomBlockResponseStatusCode", 0);
+            }
+            if (CustomBlockResponseBody != null)
+            {
+                if (CustomBlockResponseBody.Length > 32768)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CustomBlockResponseBody", 32768);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(CustomBlockResponseBody, "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "CustomBlockResponseBody", "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$");
+                }
             }
         }
     }

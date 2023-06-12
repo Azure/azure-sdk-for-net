@@ -30,6 +30,10 @@ namespace Azure.Communication.JobRouter.Models
         private const string CancelledValue = "cancelled";
         private const string ClassificationFailedValue = "classificationFailed";
         private const string CreatedValue = "created";
+        private const string PendingScheduleValue = "pendingSchedule";
+        private const string ScheduledValue = "scheduled";
+        private const string ScheduleFailedValue = "scheduleFailed";
+        private const string WaitingForActivationValue = "waitingForActivation";
 
         /// <summary> pendingClassification. </summary>
         public static RouterJobStatus PendingClassification { get; } = new RouterJobStatus(PendingClassificationValue);
@@ -47,6 +51,14 @@ namespace Azure.Communication.JobRouter.Models
         public static RouterJobStatus ClassificationFailed { get; } = new RouterJobStatus(ClassificationFailedValue);
         /// <summary> created. </summary>
         public static RouterJobStatus Created { get; } = new RouterJobStatus(CreatedValue);
+        /// <summary> pendingSchedule. </summary>
+        public static RouterJobStatus PendingSchedule { get; } = new RouterJobStatus(PendingScheduleValue);
+        /// <summary> scheduled. </summary>
+        public static RouterJobStatus Scheduled { get; } = new RouterJobStatus(ScheduledValue);
+        /// <summary> scheduleFailed. </summary>
+        public static RouterJobStatus ScheduleFailed { get; } = new RouterJobStatus(ScheduleFailedValue);
+        /// <summary> waitingForActivation. </summary>
+        public static RouterJobStatus WaitingForActivation { get; } = new RouterJobStatus(WaitingForActivationValue);
         /// <summary> Determines if two <see cref="RouterJobStatus"/> values are the same. </summary>
         public static bool operator ==(RouterJobStatus left, RouterJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouterJobStatus"/> values are not the same. </summary>

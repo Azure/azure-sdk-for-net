@@ -1,18 +1,15 @@
 # Contributing
 
-| Component            | Build Status                                                                                                                                                                                                          |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=main)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=main)   |
-
-# Prerequisites:
+## Prerequisites:
 
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
-- Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 6.0.100 SDK** for your specific platform. (or a higher version within the 6.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/6.0)
+- Install the **.NET cross-platform development** workloads in VisualStudio
+- Install **.NET 7.0.100 SDK** for your specific platform. (or a higher version within the 7.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/7.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done on a [topic branch](https://docs.github.com/get-started/quickstart/github-flow#create-a-branch) in your fork and a [pull request opened](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) against the `main` branch of the Azure SDK for .NET repository when ready for review.
 
 ## GENERAL THINGS TO KNOW:
 
@@ -25,6 +22,8 @@
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
+
+**GitHub Actions :** Forks of the repository will inherit the automations performed in the Azure SDK for .NET repository as GitHub Actions.  It is reccommended that you explicitly [disable](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository) these Actions to prevent errors and unwanted automation.
 
 ----
 
@@ -73,22 +72,6 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 - `dotnet msbuild eng\mgmt.proj /t:RunTests /p:scope=Compute`
 - `dotnet msbuild eng\mgmt.proj /t:CreateNugetPackage /p:scope=Compute`
 - `dotnet msbuild build.proj /t:Util /p:UtilityName=InstallPsModules`
-
-### Code Coverage
-
-If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
-
-```dotnetcli
-dotnet tool restore
-dotnet test /p:CollectCoverage=true
-```
-
-On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
-Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
-All covered projects should have 70% or better test coverage.
-
-By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
-To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ### Update build tools
 
@@ -178,11 +161,27 @@ information or instructions.
 ### Testing Against Latest Versions of Client Libraries
 In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
 
+### Code Coverage
+
+If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
+
+```dotnetcli
+dotnet tool restore
+dotnet test /p:CollectCoverage=true
+```
+
+On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
+Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
+All covered projects should have 70% or better test coverage.
+
+By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
+To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
+
 ## Public API additions
 
 If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in `sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs`.
 
-Running the script for a project in `sdk\tables` would look like this: 
+Running the script for a project in `sdk\tables` would look like this:
 ```
 eng\scripts\Export-API.ps1 tables
 ```
@@ -191,7 +190,7 @@ eng\scripts\Export-API.ps1 tables
 If the specific client library has sample snippets in markdown format, they were most likely created with help of the `eng\scripts\Update-Snippets.ps1` script.
 Any changes made to the snippet markdown should be done via updating the corresponding C# snippet code and subsequently running the script.
 
-Running the script for a project, for example in `sdk\keyvault`, would look like this: 
+Running the script for a project, for example in `sdk\keyvault`, would look like this:
 ```
 eng\scripts\Update-Snippets.ps1 keyvault
 ```
@@ -211,13 +210,13 @@ string ignored = "this code will not appear in the snippet markdown";
 
 #endregion
 ```
- will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match: 
+ will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match:
 
 **\`\`\`C# Snippet:\<snippetName>**
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md).
 Note that snippet names need to be globally unique under a given service directory.
 
 Snippets also can be integrated into XML doc comments. For example:
@@ -238,7 +237,7 @@ For general information about samples, see the [Samples Guidelines](https://azur
 
 ## Updating Source on Build
 You can run `eng\scripts\Export-API.ps1` and `eng\scripts\Update-Snippets.ps1` simultaneously as part of the build by setting as true either:
-1. The property `UpdateSourceOnBuild` 
+1. The property `UpdateSourceOnBuild`
 2. The Environment variable `AZURE_DEV_UPDATESOURCESONBUILD=true`
 
 e.g.
@@ -329,7 +328,7 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
 
 ## Preparing a new library release
 
-To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release. This script will correctly update the package version and changelog in the repo as well as update the DevOps release work items for that release. 
+To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release. This script will correctly update the package version and changelog in the repo as well as update the DevOps release work items for that release.
 
 ```
 .\eng\common\scripts\Prepare-Release.ps1 <PackageName> [<ServiceDirectory>] [<ReleaseDate>] [-ReleaseTrackingOnly]
@@ -363,17 +362,16 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 
 #### Standard Process
 
-1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
-4. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-5. Create a branch in your fork of the Azure SDK for .NET.
-6. Generate the code. See [Generating Client Code](#generating-client-code) below.
-7. **MANDATORY**: Add or update tests for the newly generated code.
-8. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-9. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
-10. A Pull request of your Azure SDK for .NET changes against **main** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-11. The pull requests will be reviewed and merged by the Azure SDK team
+1. Fork the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs) repository
+2. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
+3. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+4. **MANDATORY**: Create a topic branch in your fork of the Azure SDK for .NET; this is where your changes will be made.
+5. Generate the code. See [Generating Client Code](#generating-client-code) below.
+6. **MANDATORY**: Add or update tests for the newly generated code.
+7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+9. Opan a pull request with your changes against the `main` branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+10. The pull requests will be reviewed and merged by the Azure SDK team
 
 #### Generating Client Code
 
@@ -419,7 +417,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
        {
            private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
            internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
-   
+
            public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
            {
                VersionString = serviceVersion switch
@@ -428,9 +426,9 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
                    _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
                };
            }
-   
+
            internal string VersionString { get; }
-   
+
            public enum ServiceVersion
            {
    #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -449,7 +447,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
            public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
            {
            }
-   
+
            public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
                this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
            {
@@ -520,8 +518,8 @@ Once all of the above steps are met, the following process will be followed:
 
 |                          | Linux (Ubuntu 20.04) | MacOS 10.15 | Windows Server 2019 |
 | ------------------------ | :------------------: | :---------: | :-----------------: |
-| **.NET 6**               | x                    | x           | x                   |
-| **.NET Core 3.1**        | x                    | x           | x                   |
+| **.NET 7.0**             | x                    | x           | x                   |
+| **.NET 6.0**             | x                    | x           | x                   |
 | **.NET Framework 4.6.1** |                      |             | x                   |
 
 ### Issues with Generated Code
@@ -543,3 +541,23 @@ For information about breaking changes see [Breaking Change Rules](https://githu
 ## Debugging
 
 The libraries shipped out of this repo have [source link](https://docs.microsoft.com/dotnet/standard/library-guidance/sourcelink#using-source-link) enabled. Source link allows for symbols to be dynamically loaded while debugging, which allows you to step into the Azure SDK source code. This is often helpful when trying to step into Azure.Core code, as it is a package reference for most libraries. To enable using source link with the Azure SDK libraries in Visual Studio, you will need to check off Microsoft Symbol Servers as one of your Symbol file locations. Additionally, make sure that "Just My Code" is **_NOT_** enabled.
+
+## Samples
+
+### Third-party dependencies
+
+Third party libraries should only be included in samples when necessary to demonstrate usage of an Azure SDK package; they should not be suggested or endorsed as alternatives to the Azure SDK.
+
+When code samples take dependencies, readers should be able to use the material without significant license burden or research on terms. This goal requires restricting dependencies to certain types of open source or commercial licenses.
+
+Samples may take the following categories of dependencies:
+
+- **Open-source** : Open source offerings that use an [Open Source Initiative (OSI) approved license](https://opensource.org/licenses). Any component whose license isn't OSI-approved is considered a commercial offering. Prefer OSS projects that are members of any of the [OSS foundations that Microsoft is part of](https://opensource.microsoft.com/ecosystem/). Prefer permissive licenses for libraries, like [MIT](https://opensource.org/licenses/MIT) and [Apache 2](https://opensource.org/licenses/Apache-2.0). Copy-left licenses like [GPL](https://opensource.org/licenses/gpl-license) are acceptable for tools, and OSs. [Kubernetes](https://github.com/kubernetes/kubernetes), [Linux](https://github.com/torvalds/linux), and [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) are examples of this license type. Links to open source components should be to where the source is hosted, including any applicable license, such as a GitHub repository (or similar).
+
+- **Commercial**: Commercial offerings that enable readers to learn from our content without unnecessary extra costs. Typically, the offering has some form of a community edition, or a free trial sufficient for its use in content. A commercial license may be a form of dual-license, or tiered license. Links to commercial components should be to the commercial site for the software, even if the source software is hosted publicly on GitHub (or similar).
+
+- **Dual licensed**: Commercial offerings that enable readers to choose either license based on their needs. For example, if the offering has an OSS and commercial license, readers can  choose between them. [MySql](https://github.com/mysql/mysql-server) is an example of this license type.
+
+- **Tiered licensed**: Offerings that enable readers to use the license tier that corresponds to their characteristics. For example, tiers may be available for students, hobbyists, or companies with defined revenue  thresholds. For offerings with tiered licenses, strive to limit our use in tutorials to the features available in the lowest tier. This policy enables the widest audience for the article. [Docker](https://www.docker.com/), [IdentityServer](https://duendesoftware.com/products/identityserver), [ImageSharp](https://sixlabors.com/products/imagesharp/), and [Visual Studio](https://visualstudio.com) are examples of this license type.
+
+In general, we prefer taking dependencies on licensed components in the order of the listed categories. In cases where the category may not be well known, we'll document the category so that readers understand the choice that they're making by using that dependency.

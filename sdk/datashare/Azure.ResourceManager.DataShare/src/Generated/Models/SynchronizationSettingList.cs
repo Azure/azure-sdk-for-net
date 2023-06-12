@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -18,16 +19,13 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of SynchronizationSettingList. </summary>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
-        /// Please note <see cref="SynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataShareSynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ScheduledSynchronizationSetting"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SynchronizationSettingList(IEnumerable<SynchronizationSettingData> value)
+        internal SynchronizationSettingList(IEnumerable<DataShareSynchronizationSettingData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -36,10 +34,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
-        /// Please note <see cref="SynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataShareSynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ScheduledSynchronizationSetting"/>.
         /// </param>
-        internal SynchronizationSettingList(string nextLink, IReadOnlyList<SynchronizationSettingData> value)
+        internal SynchronizationSettingList(string nextLink, IReadOnlyList<DataShareSynchronizationSettingData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -49,9 +47,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public string NextLink { get; }
         /// <summary>
         /// Collection of items of type DataTransferObjects.
-        /// Please note <see cref="SynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataShareSynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ScheduledSynchronizationSetting"/>.
         /// </summary>
-        public IReadOnlyList<SynchronizationSettingData> Value { get; }
+        public IReadOnlyList<DataShareSynchronizationSettingData> Value { get; }
     }
 }

@@ -9,7 +9,6 @@ csharp: true
 library-name: Logic
 namespace: Azure.ResourceManager.Logic
 require: https://github.com/Azure/azure-rest-api-specs/blob/353d84dac009c19ae776c25eb361f07e85f26c8d/specification/logic/resource-manager/readme.md
-tag: package-2019-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -160,7 +159,7 @@ rename-mapping:
   X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
-  
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -214,6 +213,7 @@ rename-rules:
   B2B: B2B|b2b
 
 directive:
+  - remove-operation: Workflows_Update
   - from: logic.json
     where: $.definitions
     transform: >

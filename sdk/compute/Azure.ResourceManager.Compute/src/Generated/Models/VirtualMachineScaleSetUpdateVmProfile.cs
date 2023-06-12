@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SecurityProfile SecurityProfile { get; set; }
         /// <summary> The virtual machine scale set diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
-        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. **NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
         {
             get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetExtensionProfile ExtensionProfile { get; set; }
         /// <summary> The license type, which is for bring your own license scenario. </summary>
         public string LicenseType { get; set; }
-        /// <summary> Specifies the billing related details of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
+        /// <summary> Specifies the billing related details of a Azure Spot VMSS. Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
         /// <summary> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
         public double? BillingMaxPrice
@@ -56,20 +56,21 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        internal ScheduledEventsProfile ScheduledEventsProfile { get; set; }
-        /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
-        public TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile
-        {
-            get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
-            set
-            {
-                if (ScheduledEventsProfile is null)
-                    ScheduledEventsProfile = new ScheduledEventsProfile();
-                ScheduledEventsProfile.TerminateNotificationProfile = value;
-            }
-        }
-
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
+        /// <summary> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </summary>
+        internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
+        public VirtualMachineSizeProperties HardwareVmSizeProperties
+        {
+            get => HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
+            set
+            {
+                if (HardwareProfile is null)
+                    HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
+                HardwareProfile.VmSizeProperties = value;
+            }
+        }
     }
 }

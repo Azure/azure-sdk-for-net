@@ -16,20 +16,23 @@ namespace Azure.ResourceManager.Support.Models
     {
         internal static ServicesListResult DeserializeServicesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SupportAzureServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceData> array = new List<ServiceData>();
+                    List<SupportAzureServiceData> array = new List<SupportAzureServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceData.DeserializeServiceData(item));
+                        array.Add(SupportAzureServiceData.DeserializeSupportAzureServiceData(item));
                     }
                     value = array;
                     continue;

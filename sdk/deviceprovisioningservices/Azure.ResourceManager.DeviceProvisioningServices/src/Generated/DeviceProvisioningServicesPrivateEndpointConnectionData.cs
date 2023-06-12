@@ -12,18 +12,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    /// <summary> A class representing the DeviceProvisioningServicesPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceProvisioningServicesPrivateEndpointConnection data model.
+    /// The private endpoint connection of a provisioning service
+    /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeviceProvisioningServicesPrivateEndpointConnectionData(PrivateEndpointConnectionProperties properties)
+        public DeviceProvisioningServicesPrivateEndpointConnectionData(DeviceProvisioningServicesPrivateEndpointConnectionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
-        internal DeviceProvisioningServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal DeviceProvisioningServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesPrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> The properties of a private endpoint connection. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        public DeviceProvisioningServicesPrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

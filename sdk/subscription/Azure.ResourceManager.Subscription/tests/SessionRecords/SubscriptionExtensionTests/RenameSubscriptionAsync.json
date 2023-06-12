@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77663f82-ea96-4220-89fe-bb31ef6cdae6?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b63c90e67bf87544afb92f24880da3b1-a834d75b70b59d49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "763ebd892664004271db76e2dc632adb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 15 Sep 2022 09:38:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ee000204-ed17-47e4-a447-97f8c9ba1036",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "ee000204-ed17-47e4-a447-97f8c9ba1036",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220915T093826Z:ee000204-ed17-47e4-a447-97f8c9ba1036"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77663f82-ea96-4220-89fe-bb31ef6cdae6",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "77663f82-ea96-4220-89fe-bb31ef6cdae6",
+        "tenantId": "e938ffaa-4e25-43e4-9666-50056f5a90da",
+        "displayName": "Azure Pass - Sponsorship",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "AzurePass_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77663f82-ea96-4220-89fe-bb31ef6cdae6/providers/Microsoft.Subscription/rename?api-version=2021-10-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "45",
+        "Content-Type": "application/json",
+        "traceparent": "00-7041617683c63a45916edfa5063e9b44-28deb15d24f3b24b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Subscription/1.0.0-alpha.20220915.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "502609b0e9b5438503f29c1b4ce1301d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "subscriptionName": "azSubscriptionTestName"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "57",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 15 Sep 2022 09:38:29 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "111a3c94-5086-4b8f-8267-1f55434f20f7",
+        "MS-CV": "/f9jH0\u002B2gEaGRngIahkPPw.0",
+        "Pragma": "no-cache",
+        "Request-Id": "b4d353a8-432a-49e7-b9ff-4fa82dbb1fc3",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-gsm": "1.0.0.0",
+        "x-ms-correlation-request-id": "b4d353a8-432a-49e7-b9ff-4fa82dbb1fc3",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "b4d353a8-432a-49e7-b9ff-4fa82dbb1fc3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220915T093830Z:b4d353a8-432a-49e7-b9ff-4fa82dbb1fc3",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "subscriptionId": "77663f82-ea96-4220-89fe-bb31ef6cdae6"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "853285850",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "77663f82-ea96-4220-89fe-bb31ef6cdae6"
+  }
+}

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    /// <summary> A class representing the PolicyMetadata data model. </summary>
+    /// <summary>
+    /// A class representing the PolicyMetadata data model.
+    /// Policy metadata resource definition.
+    /// </summary>
     public partial class PolicyMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyMetadataData. </summary>

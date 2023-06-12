@@ -15,28 +15,32 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static WorkerAssignment DeserializeWorkerAssignment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string jobId = default;
             int capacityCost = default;
             DateTimeOffset assignTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityCost"))
+                if (property.NameEquals("capacityCost"u8))
                 {
                     capacityCost = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("assignTime"))
+                if (property.NameEquals("assignTime"u8))
                 {
                     assignTime = property.Value.GetDateTimeOffset("O");
                     continue;

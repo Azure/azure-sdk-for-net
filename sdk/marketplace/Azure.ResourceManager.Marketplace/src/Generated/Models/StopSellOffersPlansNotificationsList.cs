@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
         internal StopSellOffersPlansNotificationsList()
         {
-            StopSellNotifications = new ChangeTrackingList<StopSellOffersPlansNotificationsListProperties>();
+            StopSellNotifications = new ChangeTrackingList<StopSellOffersPlansNotificationsResult>();
         }
 
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
         /// <param name="stopSellNotifications"></param>
-        internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsListProperties> stopSellNotifications)
+        internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications)
         {
             StopSellNotifications = stopSellNotifications;
         }
 
         /// <summary> Gets the stop sell notifications. </summary>
-        public IReadOnlyList<StopSellOffersPlansNotificationsListProperties> StopSellNotifications { get; }
+        public IReadOnlyList<StopSellOffersPlansNotificationsResult> StopSellNotifications { get; }
     }
 }

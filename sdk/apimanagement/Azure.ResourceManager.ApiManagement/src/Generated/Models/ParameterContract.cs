@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameterContractType"/> is null. </exception>
         public ParameterContract(string name, string parameterContractType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameterContractType == null)
-            {
-                throw new ArgumentNullException(nameof(parameterContractType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(parameterContractType, nameof(parameterContractType));
 
             Name = name;
             ParameterContractType = parameterContractType;

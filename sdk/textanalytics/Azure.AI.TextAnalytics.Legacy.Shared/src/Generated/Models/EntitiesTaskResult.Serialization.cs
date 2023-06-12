@@ -14,14 +14,17 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntitiesResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = EntitiesResult.DeserializeEntitiesResult(property.Value);

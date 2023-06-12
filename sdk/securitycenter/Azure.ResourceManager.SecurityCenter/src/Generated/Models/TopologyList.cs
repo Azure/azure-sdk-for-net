@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of TopologyList. </summary>
         internal TopologyList()
         {
-            Value = new ChangeTrackingList<TopologyResourceData>();
+            Value = new ChangeTrackingList<SecurityTopologyResource>();
         }
 
         /// <summary> Initializes a new instance of TopologyList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal TopologyList(IReadOnlyList<TopologyResourceData> value, string nextLink)
+        internal TopologyList(IReadOnlyList<SecurityTopologyResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<TopologyResourceData> Value { get; }
+        public IReadOnlyList<SecurityTopologyResource> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

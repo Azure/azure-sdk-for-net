@@ -13,13 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CloudService data model. </summary>
+    /// <summary>
+    /// A class representing the CloudService data model.
+    /// Describes the cloud service.
+    /// </summary>
     public partial class CloudServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CloudServiceData. </summary>
         /// <param name="location"> The location. </param>
         public CloudServiceData(AzureLocation location) : base(location)
         {
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceData. </summary>
@@ -29,6 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="zones"> List of logical availability zone of the resource. List should contain only 1 zone where cloud service should be provisioned. This field is optional. </param>
         /// <param name="packageUri">
         /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
         /// This is a write-only property and is not returned in GET calls.
@@ -57,8 +62,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionProfile"> Describes a cloud service extension profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
-        internal CloudServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri packageUri, string configuration, Uri configurationUri, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId) : base(id, name, resourceType, systemData, tags, location)
+        internal CloudServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, Uri packageUri, string configuration, Uri configurationUri, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId) : base(id, name, resourceType, systemData, tags, location)
         {
+            Zones = zones;
             PackageUri = packageUri;
             Configuration = configuration;
             ConfigurationUri = configurationUri;
@@ -73,6 +79,8 @@ namespace Azure.ResourceManager.Compute
             UniqueId = uniqueId;
         }
 
+        /// <summary> List of logical availability zone of the resource. List should contain only 1 zone where cloud service should be provisioned. This field is optional. </summary>
+        public IList<string> Zones { get; }
         /// <summary>
         /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
         /// This is a write-only property and is not returned in GET calls.

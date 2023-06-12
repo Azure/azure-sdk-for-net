@@ -11,7 +11,6 @@ trigger:
     - sdk/containerregistry/ci.yml
     - sdk/containerregistry/service.projects
     - sdk/containerregistry/Azure.Containers.ContainerRegistry
-    - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
 
 pr:
   branches:
@@ -25,14 +24,12 @@ pr:
     - sdk/containerregistry/ci.yml
     - sdk/containerregistry/service.projects
     - sdk/containerregistry/Azure.Containers.ContainerRegistry
-    - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SDKType: client
     ServiceDirectory: containerregistry
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Containers.ContainerRegistry

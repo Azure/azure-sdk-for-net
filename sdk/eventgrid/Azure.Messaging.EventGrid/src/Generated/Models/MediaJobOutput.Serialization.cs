@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -21,45 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
                 }
             }
-            string odataType = default;
-            Optional<MediaJobError> error = default;
-            Optional<string> label = default;
-            long progress = default;
-            MediaJobState state = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("error"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("label"))
-                {
-                    label = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("progress"))
-                {
-                    progress = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("state"))
-                {
-                    state = property.Value.GetString().ToMediaJobState();
-                    continue;
-                }
-            }
-            return new MediaJobOutput(odataType, error.Value, label.Value, progress, state);
+            return UnknownMediaJobOutput.DeserializeUnknownMediaJobOutput(element);
         }
     }
 }

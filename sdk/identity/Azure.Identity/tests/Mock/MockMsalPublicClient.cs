@@ -41,6 +41,17 @@ namespace Azure.Identity.Tests.Mock
 
         public MockMsalPublicClient() { }
 
+        public MockMsalPublicClient(AuthenticationResult result)
+        {
+            AuthFactory = (_,_) => result;
+            UserPassAuthFactory = (_,_) => result;
+            InteractiveAuthFactory = (_,_,_,_,_,_,_) => result;
+            SilentAuthFactory = (_,_) => result;
+            ExtendedSilentAuthFactory = (_,_,_,_,_,_) => result;
+            DeviceCodeAuthFactory = (_,_) => result;
+            RefreshTokenFactory = (_,_,_,_,_,_,_) => result;
+        }
+
         public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 

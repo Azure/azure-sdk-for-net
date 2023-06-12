@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapAvailabilityZonePair DeserializeSapAvailabilityZonePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> zoneA = default;
             Optional<long> zoneB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zoneA"))
+                if (property.NameEquals("zoneA"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneA = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("zoneB"))
+                if (property.NameEquals("zoneB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneB = property.Value.GetInt64();

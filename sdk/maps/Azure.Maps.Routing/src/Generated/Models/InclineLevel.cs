@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The InclineLevel. </summary>
     public readonly partial struct InclineLevel : IEquatable<InclineLevel>

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataAccountType");
+            writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(SharePassword))
             {
-                writer.WritePropertyName("sharePassword");
+                writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
             }
             writer.WriteEndObject();
@@ -27,16 +27,20 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownDataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountType dataAccountType = default;
             Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("sharePassword"))
+                if (property.NameEquals("sharePassword"u8))
                 {
                     sharePassword = property.Value.GetString();
                     continue;

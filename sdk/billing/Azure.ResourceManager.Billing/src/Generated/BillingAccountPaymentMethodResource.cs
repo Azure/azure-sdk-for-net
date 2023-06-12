@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing
 
         private readonly ClientDiagnostics _billingAccountPaymentMethodPaymentMethodsClientDiagnostics;
         private readonly PaymentMethodsRestOperations _billingAccountPaymentMethodPaymentMethodsRestClient;
-        private readonly PaymentMethodData _data;
+        private readonly BillingPaymentMethodData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BillingAccountPaymentMethodResource"/> class for mocking. </summary>
         protected BillingAccountPaymentMethodResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of the <see cref = "BillingAccountPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingAccountPaymentMethodResource(ArmClient client, PaymentMethodData data) : this(client, data.Id)
+        internal BillingAccountPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PaymentMethodData Data
+        public virtual BillingPaymentMethodData Data
         {
             get
             {
@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
-        /// Operation Id: PaymentMethods_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingAccountPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
-        /// Operation Id: PaymentMethods_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingAccountPaymentMethodResource> Get(CancellationToken cancellationToken = default)

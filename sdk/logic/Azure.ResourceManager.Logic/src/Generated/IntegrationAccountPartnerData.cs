@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the IntegrationAccountPartner data model. </summary>
+    /// <summary>
+    /// A class representing the IntegrationAccountPartner data model.
+    /// The integration account partner.
+    /// </summary>
     public partial class IntegrationAccountPartnerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public IntegrationAccountPartnerData(AzureLocation location, IntegrationAccountPartnerType partnerType, IntegrationAccountPartnerContent content) : base(location)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             PartnerType = partnerType;
             Content = content;

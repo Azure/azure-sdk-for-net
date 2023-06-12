@@ -32,4 +32,4 @@ Use the following library to work with the Azure Event Grid resource provider:
 
 | Nuget Package | Reference |
 |--------------------------------------|---------------------------------------------------------------|
-| [Microsoft.Azure.Management.EventGrid](https://www.nuget.org/packages/Microsoft.Azure.Management.EventGrid)  | [API Reference for Microsoft.Azure.Management.EventGrid](https://docs.microsoft.com/dotnet/api/overview/azure/eventgrid/management?view=azure-dotnet)  |
+| [Microsoft.Azure.Management.EventGrid](https://www.nuget.org/packages/Microsoft.Azure.Management.EventGrid)  | [API Reference for Microsoft.Azure.Management.EventGrid](https://learn.microsoft.com/dotnet/api/overview/azure/eventgrid/management/management-eventgrid?view=azure-dotnet)  |

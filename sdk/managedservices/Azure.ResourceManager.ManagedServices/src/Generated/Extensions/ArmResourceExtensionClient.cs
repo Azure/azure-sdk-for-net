@@ -31,25 +31,25 @@ namespace Azure.ResourceManager.ManagedServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RegistrationDefinitionResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of RegistrationDefinitionResources and their operations over a RegistrationDefinitionResource. </returns>
-        public virtual RegistrationDefinitionCollection GetRegistrationDefinitions()
+        /// <summary> Gets a collection of ManagedServicesRegistrationResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
+        public virtual ManagedServicesRegistrationCollection GetManagedServicesRegistrations()
         {
-            return GetCachedClient(Client => new RegistrationDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedServicesRegistrationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RegistrationAssignmentResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of RegistrationAssignmentResources and their operations over a RegistrationAssignmentResource. </returns>
-        public virtual RegistrationAssignmentCollection GetRegistrationAssignments()
+        /// <summary> Gets a collection of ManagedServicesRegistrationAssignmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
+        public virtual ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments()
         {
-            return GetCachedClient(Client => new RegistrationAssignmentCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedServicesRegistrationAssignmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of MarketplaceRegistrationDefinitionResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of MarketplaceRegistrationDefinitionResources and their operations over a MarketplaceRegistrationDefinitionResource. </returns>
-        public virtual MarketplaceRegistrationDefinitionCollection GetMarketplaceRegistrationDefinitions()
+        /// <summary> Gets a collection of ManagedServicesMarketplaceRegistrationResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
+        public virtual ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations()
         {
-            return GetCachedClient(Client => new MarketplaceRegistrationDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedServicesMarketplaceRegistrationCollection(Client, Id));
         }
     }
 }

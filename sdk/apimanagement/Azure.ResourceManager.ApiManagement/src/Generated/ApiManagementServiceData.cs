@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementService data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementService data model.
+    /// A single API Management service resource in List or Get response.
+    /// </summary>
     public partial class ApiManagementServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>
@@ -26,18 +29,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="publisherEmail"/> or <paramref name="publisherName"/> is null. </exception>
         public ApiManagementServiceData(AzureLocation location, ApiManagementServiceSkuProperties sku, string publisherEmail, string publisherName) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (publisherEmail == null)
-            {
-                throw new ArgumentNullException(nameof(publisherEmail));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(publisherEmail, nameof(publisherEmail));
+            Argument.AssertNotNull(publisherName, nameof(publisherName));
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();

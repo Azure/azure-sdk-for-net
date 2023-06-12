@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="message"/> or <paramref name="errorCode"/> is null. </exception>
         public FailActivity(string name, BinaryData message, BinaryData errorCode) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-            if (errorCode == null)
-            {
-                throw new ArgumentNullException(nameof(errorCode));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(errorCode, nameof(errorCode));
 
             Message = message;
             ErrorCode = errorCode;

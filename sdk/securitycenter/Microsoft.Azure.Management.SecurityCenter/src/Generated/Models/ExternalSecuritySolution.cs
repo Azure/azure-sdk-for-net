@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a security solution external to Azure Security Center which
-    /// sends information to an OMS workspace and whose data is displayed by
-    /// Azure Security Center.
+    /// Represents a security solution external to Microsoft Defender for Cloud
+    /// which sends information to an OMS workspace and whose data is displayed
+    /// by Microsoft Defender for Cloud.
     /// </summary>
     public partial class ExternalSecuritySolution
     {

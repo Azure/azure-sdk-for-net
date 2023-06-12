@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static OnlineEndpointTrackedResourceArmPaginatedResult DeserializeOnlineEndpointTrackedResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<OnlineEndpointData>> value = default;
+            Optional<IReadOnlyList<MachineLearningOnlineEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OnlineEndpointData> array = new List<OnlineEndpointData>();
+                    List<MachineLearningOnlineEndpointData> array = new List<MachineLearningOnlineEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OnlineEndpointData.DeserializeOnlineEndpointData(item));
+                        array.Add(MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(item));
                     }
                     value = array;
                     continue;

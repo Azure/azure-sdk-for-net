@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ExtractsStackTraceWithInvariantCultureMatchesErrorsReportedByOSsWithDifferentLanguages()
         {
-            CultureInfo stackTraceCulture = null;
+            CultureInfo? stackTraceCulture = null;
             var exception = new StubException();
             exception.OnToString = () =>
             {

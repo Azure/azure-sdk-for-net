@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAccountPoolAllocationState ToBatchAccountPoolAllocationState(this string value)
         {
-            if (string.Equals(value, "Steady", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountPoolAllocationState.Steady;
-            if (string.Equals(value, "Resizing", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountPoolAllocationState.Resizing;
-            if (string.Equals(value, "Stopping", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountPoolAllocationState.Stopping;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Steady")) return BatchAccountPoolAllocationState.Steady;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resizing")) return BatchAccountPoolAllocationState.Resizing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopping")) return BatchAccountPoolAllocationState.Stopping;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountPoolAllocationState value.");
         }
     }

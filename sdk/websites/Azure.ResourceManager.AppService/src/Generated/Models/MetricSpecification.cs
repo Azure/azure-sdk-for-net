@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of MetricSpecification. </summary>
         internal MetricSpecification()
         {
-            Dimensions = new ChangeTrackingList<Dimension>();
+            Dimensions = new ChangeTrackingList<MetricDimension>();
             Availabilities = new ChangeTrackingList<MetricAvailability>();
             SupportedTimeGrainTypes = new ChangeTrackingList<string>();
             SupportedAggregationTypes = new ChangeTrackingList<string>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="availabilities"></param>
         /// <param name="supportedTimeGrainTypes"></param>
         /// <param name="supportedAggregationTypes"></param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<Dimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes)
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<MetricDimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes)
         {
             Name = name;
             DisplayName = displayName;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the is internal. </summary>
         public bool? IsInternal { get; }
         /// <summary> Gets the dimensions. </summary>
-        public IReadOnlyList<Dimension> Dimensions { get; }
+        public IReadOnlyList<MetricDimension> Dimensions { get; }
         /// <summary> Gets the category. </summary>
         public string Category { get; }
         /// <summary> Gets the availabilities. </summary>

@@ -18,11 +18,12 @@ namespace Azure.Messaging.WebPubSub.Tests
 
         private static readonly JwtSecurityTokenHandler s_jwtTokenHandler = new();
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        [TestCase(4)]
-        public void AccessKeyExpiresAfterTests(int minutesToExpire)
+        [TestCase(0, 60)]
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(3, 3)]
+        [TestCase(4, 4)]
+        public void AccessKeyExpiresAfterTests(int minutesToExpire, int expectedMinutesAfter)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var utcnow = DateTimeOffset.UtcNow;
@@ -33,9 +34,9 @@ namespace Azure.Messaging.WebPubSub.Tests
             Assert.NotNull(token);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
 
-            var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.IsTrue(long.TryParse(exp, out var expTimestamp));
-            Assert.AreEqual(utcnow.Add(expiresAfter).ToUnixTimeSeconds(), expTimestamp);
+            var expireTime = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
+            Assert.IsTrue(long.TryParse(expireTime, out var expireTimestamp));
+            Assert.AreEqual(utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds(), expireTimestamp);
         }
 
         [TestCase(1)]
@@ -93,7 +94,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var source = new CancellationTokenSource();
             RequestContext context = new() { CancellationToken = source.Token };
             var expectRoles = new[] { "a", "b" };
-            var request = client.CreateGenerateClientTokenImplRequest("foo", new[] {"a", "b"}, 1, context);
+            var request = client.CreateGenerateClientTokenImplRequest("foo", new[] {"a", "b"}, 1, null, context);
 
             var url = request.Request.Uri.ToString();
             var queryString = url.Substring(url.IndexOf('?'));

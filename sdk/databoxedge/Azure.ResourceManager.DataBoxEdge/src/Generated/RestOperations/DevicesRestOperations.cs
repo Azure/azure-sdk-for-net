@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GenerateCertResponse>> GenerateCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<GenerateCertResult>> GenerateCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -626,9 +626,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        GenerateCertResponse value = default;
+                        GenerateCertResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GenerateCertResponse.DeserializeGenerateCertResponse(document.RootElement);
+                        value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GenerateCertResponse> GenerateCertificate(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<GenerateCertResult> GenerateCertificate(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -655,9 +655,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        GenerateCertResponse value = default;
+                        GenerateCertResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GenerateCertResponse.DeserializeGenerateCertResponse(document.RootElement);
+                        value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSettingData>> GetNetworkSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeDeviceNetworkSettings>> GetNetworkSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -855,13 +855,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        NetworkSettingData value = default;
+                        DataBoxEdgeDeviceNetworkSettings value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSettingData.DeserializeNetworkSettingData(document.RootElement);
+                        value = DataBoxEdgeDeviceNetworkSettings.DeserializeDataBoxEdgeDeviceNetworkSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -874,7 +872,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSettingData> GetNetworkSettings(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeDeviceNetworkSettings> GetNetworkSettings(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -886,13 +884,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        NetworkSettingData value = default;
+                        DataBoxEdgeDeviceNetworkSettings value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkSettingData.DeserializeNetworkSettingData(document.RootElement);
+                        value = DataBoxEdgeDeviceNetworkSettings.DeserializeDataBoxEdgeDeviceNetworkSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -969,7 +965,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, SecuritySettings securitySettings)
+        internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1002,7 +998,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="securitySettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, SecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1029,7 +1025,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="securitySettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, SecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1163,7 +1159,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateSummaryData>> GetUpdateSummaryAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1175,13 +1171,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        UpdateSummaryData value = default;
+                        DataBoxEdgeDeviceUpdateSummary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateSummaryData.DeserializeUpdateSummaryData(document.RootElement);
+                        value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((UpdateSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1194,7 +1188,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateSummaryData> GetUpdateSummary(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1206,13 +1200,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        UpdateSummaryData value = default;
+                        DataBoxEdgeDeviceUpdateSummary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateSummaryData.DeserializeUpdateSummaryData(document.RootElement);
+                        value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((UpdateSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

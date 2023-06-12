@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -121,7 +122,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthenticationEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
             eventResponseHandler.Request.StatusMessage = ex.Message;
-            eventResponseHandler.Request.RequestStatus = ex is UnauthorizedAccessException ? RequestStatusType.TokenInvalid : RequestStatusType.Failed;
+
+            eventResponseHandler.Request.RequestStatus = ex switch
+            {
+                UnauthorizedAccessException => RequestStatusType.TokenInvalid,
+                ValidationException => RequestStatusType.ValidationError,
+                _ => RequestStatusType.Failed,
+            };
+
             if (eventResponseHandler.Response != null)
             {
                 if (ex is UnauthorizedAccessException)

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
         internal ListResourceSkusResult()
         {
-            Value = new ChangeTrackingList<AzureResourceSku>();
+            Value = new ChangeTrackingList<KustoAvailableSkuDetails>();
         }
 
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
         /// <param name="value"> The collection of available SKUs for an existing resource. </param>
-        internal ListResourceSkusResult(IReadOnlyList<AzureResourceSku> value)
+        internal ListResourceSkusResult(IReadOnlyList<KustoAvailableSkuDetails> value)
         {
             Value = value;
         }
 
         /// <summary> The collection of available SKUs for an existing resource. </summary>
-        public IReadOnlyList<AzureResourceSku> Value { get; }
+        public IReadOnlyList<KustoAvailableSkuDetails> Value { get; }
     }
 }

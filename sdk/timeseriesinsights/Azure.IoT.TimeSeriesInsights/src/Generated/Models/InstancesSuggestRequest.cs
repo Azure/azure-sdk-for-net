@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -17,10 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="searchString"/> is null. </exception>
         public InstancesSuggestRequest(string searchString)
         {
-            if (searchString == null)
-            {
-                throw new ArgumentNullException(nameof(searchString));
-            }
+            Argument.AssertNotNull(searchString, nameof(searchString));
 
             SearchString = searchString;
         }

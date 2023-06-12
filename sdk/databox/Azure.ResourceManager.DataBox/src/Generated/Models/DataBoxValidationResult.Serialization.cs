@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxValidationResult DeserializeDataBoxValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OverallValidationStatus> status = default;
             Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,21 +32,19 @@ namespace Azure.ResourceManager.DataBox.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = property0.Value.GetString().ToOverallValidationStatus();
                             continue;
                         }
-                        if (property0.NameEquals("individualResponseDetails"))
+                        if (property0.NameEquals("individualResponseDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxValidationInputResult> array = new List<DataBoxValidationInputResult>();

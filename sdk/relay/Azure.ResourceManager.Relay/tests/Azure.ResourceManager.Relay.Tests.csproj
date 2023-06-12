@@ -2,4 +2,11 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Relay.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
+  </ItemGroup>
 </Project>

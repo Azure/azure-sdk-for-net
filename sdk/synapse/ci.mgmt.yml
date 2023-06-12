@@ -1,0 +1,25 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/synapse/ci.mgmt.yml
+    - sdk/synapse/Azure.ResourceManager.Synapse/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: mgmtclient
+    ServiceDirectory: synapse
+    BuildSnippets: false
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Synapse
+      safeName: AzureResourceManagerSynapse

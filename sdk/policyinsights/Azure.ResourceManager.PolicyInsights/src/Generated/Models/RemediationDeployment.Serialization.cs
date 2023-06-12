@@ -16,67 +16,80 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element)
         {
-            Optional<string> remediatedResourceId = default;
-            Optional<string> deploymentId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> remediatedResourceId = default;
+            Optional<ResourceIdentifier> deploymentId = default;
             Optional<string> status = default;
-            Optional<string> resourceLocation = default;
+            Optional<AzureLocation> resourceLocation = default;
             Optional<ResponseError> error = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("remediatedResourceId"))
+                if (property.NameEquals("remediatedResourceId"u8))
                 {
-                    remediatedResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remediatedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deploymentId"))
+                if (property.NameEquals("deploymentId"u8))
                 {
-                    deploymentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deploymentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
-                {
-                    resourceLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("createdOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedOn"))
+                if (property.NameEquals("lastUpdatedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, resourceLocation.Value, error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn));
+            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn));
         }
     }
 }

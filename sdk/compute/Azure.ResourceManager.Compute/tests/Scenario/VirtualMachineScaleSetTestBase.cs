@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
@@ -14,6 +15,11 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         public VirtualMachineScaleSetTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
+
+        protected VirtualMachineScaleSetTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
         {
         }
 

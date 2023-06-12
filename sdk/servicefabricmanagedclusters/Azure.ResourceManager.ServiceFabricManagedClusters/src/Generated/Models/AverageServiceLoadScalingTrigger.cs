@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. </summary>
-    public partial class AverageServiceLoadScalingTrigger : ScalingTrigger
+    public partial class AverageServiceLoadScalingTrigger : ManagedServiceScalingTrigger
     {
         /// <summary> Initializes a new instance of AverageServiceLoadScalingTrigger. </summary>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="scaleInterval"/> is null. </exception>
         public AverageServiceLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval, bool useOnlyPrimaryLoad)
         {
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
-            if (scaleInterval == null)
-            {
-                throw new ArgumentNullException(nameof(scaleInterval));
-            }
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(scaleInterval, nameof(scaleInterval));
 
             MetricName = metricName;
             LowerLoadThreshold = lowerLoadThreshold;

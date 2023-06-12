@@ -15,18 +15,22 @@ namespace Azure.Search.Documents.Models
     {
         internal static CaptionResult DeserializeCaptionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<string> highlights = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highlights"))
+                if (property.NameEquals("highlights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

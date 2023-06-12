@@ -1,6 +1,6 @@
 # Sending and receiving session messages
 
-This sample demonstrates how to send and receive session messages from a session-enabled Service Bus queue.
+This sample demonstrates how to send and receive session messages from a session-enabled Service Bus queues. For concepts related to sessions, please refer to the [Service Bus sessions documentation](https://docs.microsoft.com/azure/service-bus-messaging/message-sessions).
 
 ## Receiving from next available session
 
@@ -68,9 +68,3 @@ await Task.Delay(TimeSpan.FromSeconds(10));
 // complete the message, thereby deleting it from the service
 await receiver.CompleteMessageAsync(receivedMessage);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample03_SendReceiveSessions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample03_SendReceiveSessions.cs)

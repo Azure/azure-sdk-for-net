@@ -1646,6 +1646,212 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public async Task CreateSnapshot()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(testSetting);
+
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                // Automatic polling using WaitUntil.Completed
+
+                var snapshotName = "snapshot_wait_until_completed";
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                ValidateCompletedOperation(snapshotOperation);
+                ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
+                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                // Automatic polling using WaitForCompletion
+
+                snapshotName = "snapshot_wait_for_completion";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                snapshotOperation.WaitForCompletion();
+                ValidateCompletedOperation(snapshotOperation);
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                // Automatic polling using WaitForCompletionAsync
+
+                snapshotName = "snapshot_wait_for_completion_async";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                await snapshotOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                ValidateCompletedOperation(snapshotOperation);
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                // Manual polling using UpdateStatus
+
+                snapshotName = "snapshot_update_status";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                while (true)
+                {
+                    snapshotOperation.UpdateStatus();
+                    if (snapshotOperation.HasCompleted)
+                    {
+                        ValidateCompletedOperation(snapshotOperation);
+                        break;
+                    }
+                    await Task.Delay(1000);
+                }
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                // Manual polling using UpdateStatusAsync
+
+                snapshotName = "snapshot_update_status_async";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                while (true)
+                {
+                    await snapshotOperation.UpdateStatusAsync();
+                    if (snapshotOperation.HasCompleted)
+                    {
+                        ValidateCompletedOperation(snapshotOperation);
+                        break;
+                    }
+                    await Task.Delay(1000);
+                }
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        private void ValidateCreatedSnapshot(ConfigurationSettingsSnapshot createdSnapshot, ConfigurationSettingsSnapshot retrievedSnapshot, string expectedName)
+        {
+            Assert.NotNull(createdSnapshot);
+            Assert.AreEqual(expectedName, createdSnapshot.Name);
+
+            Assert.NotNull(retrievedSnapshot);
+            Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+        }
+
+        private static void ValidateCompletedOperation(CreateSnapshotOperation operation)
+        {
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.NotNull(operation.Id);
+        }
+
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public async Task UpdateSnapshotStatus()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(testSetting);
+
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "some_snapshot", settingsSnapshot);
+                ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
+                Assert.NotNull(createdSnapshot);
+                Assert.AreEqual("some_snapshot", createdSnapshot.Name);
+
+                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync("some_snapshot");
+                Assert.NotNull(retrievedSnapshot);
+                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+
+                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync("some_snapshot");
+                Assert.NotNull(archivedSnapshot);
+                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+
+                ConfigurationSettingsSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync("some_snapshot");
+                Assert.NotNull(recoveredSnapshot);
+                Assert.AreEqual(SnapshotStatus.Ready, archivedSnapshot.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public async Task GetSnapshots()
+        {
+            ConfigurationClient service = GetClient();
+            var firstSetting = new ConfigurationSetting("first_key", "first_value");
+            var secondSetting = new ConfigurationSetting("second_key", "second_value");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(firstSetting);
+                await service.SetConfigurationSettingAsync(secondSetting);
+
+                List<SnapshotSettingFilter> firstSnapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
+
+                CreateSnapshotOperation firstSnapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "first_snapshot", new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+                ConfigurationSettingsSnapshot createdfirstSnapshot = firstSnapshotOperation.Value;
+
+                Assert.NotNull(createdfirstSnapshot);
+                Assert.AreEqual("first_snapshot", createdfirstSnapshot.Name);
+
+                List<SnapshotSettingFilter> secondSnapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
+                CreateSnapshotOperation secondSnapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "second_snapshot", new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                ConfigurationSettingsSnapshot createdsecondSnapshot = secondSnapshotOperation.Value;
+
+                Assert.NotNull(createdsecondSnapshot);
+                Assert.AreEqual("second_snapshot", createdsecondSnapshot.Name);
+
+                AsyncPageable<ConfigurationSettingsSnapshot> snapshots = service.GetSnapshotsAsync(cancellationToken: CancellationToken.None);
+                var resultsReturned = (await snapshots.ToEnumerableAsync()).Count;
+                Assert.GreaterOrEqual(resultsReturned, 1);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+            }
+        }
+
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public async Task GetConfigurationSettingsForSnapshot()
+        {
+            ConfigurationClient service = GetClient();
+            var setting = new ConfigurationSetting("Test_Key", "Test_Value");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(setting);
+
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                string snapshotName = "Test_Snapshot";
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
+
+                Assert.NotNull(createdSnapshot);
+                Assert.AreEqual(snapshotName, createdSnapshot.Name);
+
+                AsyncPageable<ConfigurationSetting> settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
+                var settingscount = (await settingsForSnapshot.ToEnumerableAsync()).Count;
+                Assert.GreaterOrEqual(settingscount, 1);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key));
+            }
+        }
+
         private static void AssertStatus200(Response response) => Assert.AreEqual(200, response.Status);
     }
 }

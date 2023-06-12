@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="status"> The rule result status. </param>
         /// <param name="resultsNotInBaseline"> Results the are not in baseline. </param>
         /// <param name="resultsOnlyInBaseline"> Results the are in baseline. </param>
-        internal BaselineAdjustedResult(Baseline baseline, RuleStatus? status, IList<IList<string>> resultsNotInBaseline, IList<IList<string>> resultsOnlyInBaseline)
+        internal BaselineAdjustedResult(SqlVulnerabilityAssessmentBaseline baseline, SqlVulnerabilityAssessmentScanResultRuleStatus? status, IList<IList<string>> resultsNotInBaseline, IList<IList<string>> resultsOnlyInBaseline)
         {
             Baseline = baseline;
             Status = status;
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Baseline details. </summary>
-        public Baseline Baseline { get; set; }
+        public SqlVulnerabilityAssessmentBaseline Baseline { get; set; }
         /// <summary> The rule result status. </summary>
-        public RuleStatus? Status { get; set; }
+        public SqlVulnerabilityAssessmentScanResultRuleStatus? Status { get; set; }
         /// <summary> Results the are not in baseline. </summary>
         public IList<IList<string>> ResultsNotInBaseline { get; }
         /// <summary> Results the are in baseline. </summary>

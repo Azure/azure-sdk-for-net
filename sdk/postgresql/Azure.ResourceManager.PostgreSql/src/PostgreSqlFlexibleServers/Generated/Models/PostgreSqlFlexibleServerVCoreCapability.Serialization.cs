@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerVCoreCapability DeserializePostgreSqlFlexibleServerVCoreCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> vCores = default;
             Optional<long> supportedIops = default;
@@ -21,42 +25,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCores"))
+                if (property.NameEquals("vCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCores = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedIops"))
+                if (property.NameEquals("supportedIops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedMemoryPerVcoreMB"))
+                if (property.NameEquals("supportedMemoryPerVcoreMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedMemoryPerVcoreMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

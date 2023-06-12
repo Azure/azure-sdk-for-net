@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -21,14 +22,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentLanguage(string locale, IEnumerable<DocumentSpan> spans, float confidence)
         {
-            if (locale == null)
-            {
-                throw new ArgumentNullException(nameof(locale));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(locale, nameof(locale));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             Locale = locale;
             Spans = spans.ToList();

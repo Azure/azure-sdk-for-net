@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of DeploymentResourceList. </summary>
         internal DeploymentResourceList()
         {
-            Value = new ChangeTrackingList<AppDeploymentResourceData>();
+            Value = new ChangeTrackingList<AppPlatformDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of DeploymentResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal DeploymentResourceList(IReadOnlyList<AppDeploymentResourceData> value, string nextLink)
+        internal DeploymentResourceList(IReadOnlyList<AppPlatformDeploymentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Deployment resources. </summary>
-        public IReadOnlyList<AppDeploymentResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformDeploymentData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

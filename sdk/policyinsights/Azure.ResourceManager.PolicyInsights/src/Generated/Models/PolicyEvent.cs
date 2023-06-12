@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="effectiveParameters"> Effective parameters for the policy assignment. </param>
         /// <param name="isCompliant"> Flag which states whether the resource is compliant against the policy assignment it was evaluated against. </param>
         /// <param name="subscriptionId"> Subscription ID. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceTypeString"> Resource type. </param>
         /// <param name="resourceLocation"> Resource location. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="resourceTags"> List of resource tags. </param>
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="principalOid"> Principal object ID for the user who initiated the resource operation that triggered the policy event. </param>
         /// <param name="components"> Components events records populated only when URL contains $expand=components clause. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PolicyEvent(string odataId, string odataContext, DateTimeOffset? timestamp, ResourceIdentifier resourceId, ResourceIdentifier policyAssignmentId, ResourceIdentifier policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceType, AzureLocation? resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, ResourceIdentifier policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, Guid? tenantId, string principalOid, IReadOnlyList<ComponentEventDetails> components, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal PolicyEvent(string odataId, string odataContext, DateTimeOffset? timestamp, ResourceIdentifier resourceId, ResourceIdentifier policyAssignmentId, ResourceIdentifier policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceTypeString, AzureLocation? resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, ResourceIdentifier policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, Guid? tenantId, string principalOid, IReadOnlyList<ComponentEventDetails> components, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            OdataId = odataId;
-            OdataContext = odataContext;
+            ODataId = odataId;
+            ODataContext = odataContext;
             Timestamp = timestamp;
             ResourceId = resourceId;
             PolicyAssignmentId = policyAssignmentId;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             EffectiveParameters = effectiveParameters;
             IsCompliant = isCompliant;
             SubscriptionId = subscriptionId;
-            ResourceType = resourceType;
+            ResourceTypeString = resourceTypeString;
             ResourceLocation = resourceLocation;
             ResourceGroup = resourceGroup;
             ResourceTags = resourceTags;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> OData entity ID; always set to null since policy event records do not have an entity ID. </summary>
-        public string OdataId { get; }
+        public string ODataId { get; }
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string OdataContext { get; }
+        public string ODataContext { get; }
         /// <summary> Timestamp for the policy event record. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Resource ID. </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Subscription ID. </summary>
         public string SubscriptionId { get; }
         /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public string ResourceTypeString { get; }
         /// <summary> Resource location. </summary>
         public AzureLocation? ResourceLocation { get; }
         /// <summary> Resource group name. </summary>
@@ -152,7 +152,36 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string PrincipalOid { get; }
         /// <summary> Components events records populated only when URL contains $expand=components clause. </summary>
         public IReadOnlyList<ComponentEventDetails> Components { get; }
-        /// <summary> Additional Properties. </summary>
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Tests.Models
   ""customTestProperty"": ""custom""
 }";
 
-            JsonDocument doc = JsonDocument.Parse(json);
+            using JsonDocument doc = JsonDocument.Parse(json);
             IndexingParametersConfiguration configuration = IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(doc.RootElement);
 
             Assert.AreEqual(BlobIndexerParsingMode.Json, configuration.ParsingMode);

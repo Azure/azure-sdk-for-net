@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobUriBuilderTests : BlobTestBase
     {
         public BlobUriBuilderTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Combinatorial]
         public void BlobUriBuilder_OuterSlashes_ConstructorTest(
-            [Values(true, false)] bool preservesSlash,
+            [Values(true, false)] bool trimsSlash,
             [Values("foo/bar", "/foo/bar/", "/////foo/bar", "foo/bar/////")] string blobName
         )
         {
@@ -122,7 +122,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash);
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, trimBlobNameSlashes: trimsSlash);
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
@@ -131,32 +131,32 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("account", blobUriBuilder.AccountName);
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             // blob name was trimmed when set via constructor uri
-            if (preservesSlash)
+            if (trimsSlash)
             {
-                Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+                Assert.AreEqual(trimmedName, blobUriBuilder.BlobName);
             }
             else
             {
-                Assert.AreEqual(trimmedName, blobUriBuilder.BlobName);
+                Assert.AreEqual(blobName, blobUriBuilder.BlobName);
             }
             Assert.AreEqual("", blobUriBuilder.Snapshot);
             Assert.IsNull(blobUriBuilder.Sas);
             Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);
-            if (preservesSlash)
+            if (trimsSlash)
             {
-                Assert.AreEqual(originalUri, newUri);
+                Assert.AreEqual(noSlashUri, newUri);
             }
             else
             {
-                Assert.AreEqual(noSlashUri, newUri);
+                Assert.AreEqual(originalUri, newUri);
             }
         }
 
         [RecordedTest]
         [Combinatorial]
         public void BlobUriBuilder_OuterSlashes_PropertyTest(
-            [Values(true, false)] bool preservesSlash,
+            [Values(true, false)] bool trimsSlash,
             [Values("foo/bar", "/foo/bar/", "/////foo/bar", "foo/bar/////")] string blobName
         )
         {
@@ -167,7 +167,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash)
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, trimBlobNameSlashes: trimsSlash)
             {
                 BlobName = blobName
             };
@@ -184,19 +184,19 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNull(blobUriBuilder.Sas);
             Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);
-            if (preservesSlash)
+            if (trimsSlash)
             {
-                Assert.AreEqual(originalUri, newUri);
+                Assert.AreEqual(noSlashUri, newUri);
             }
             else
             {
-                Assert.AreEqual(noSlashUri, newUri);
+                Assert.AreEqual(originalUri, newUri);
             }
         }
 
         [RecordedTest]
         public void BlobUriBuilder_MiddleRepeatedSlashes_ConstructorTest(
-            [Values(true, false)] bool preservesSlash // middle slashes were always preserved regardless of flag
+            [Values(true, false)] bool trimsSlash // middle slashes were always preserved regardless of flag
         )
         {
             // Arrange
@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash);
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, trimBlobNameSlashes: trimsSlash);
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
@@ -225,7 +225,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         public void BlobUriBuilder_MiddleRepeatedSlashes_PropertyTest(
-            [Values(true, false)] bool preservesSlash // middle slashes were always preserved regardless of flag
+            [Values(true, false)] bool trimsSlash // middle slashes were always preserved regardless of flag
         )
         {
             // Arrange
@@ -236,7 +236,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash)
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, trimBlobNameSlashes: trimsSlash)
             {
                 BlobName = blobName
             };
@@ -271,7 +271,7 @@ namespace Azure.Storage.Blobs.Test
                 Does.Match(@"\/\/\/\w+\/\/\/\w+\/\/\/"))); // matches "///<alphanum>///<alphanum>///"
 
             BlobClientOptions options = GetOptions();
-            options.PreserveBlobNameSlashes = true;
+            options.TrimBlobNameSlashes = false;
             options.AddPolicy(
                 assertPolicy,
                 Core.HttpPipelinePosition.BeforeTransport);
@@ -973,6 +973,31 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
             }
+        }
+
+        [RecordedTest]
+        public void BlobBaseClient_SetNameFields_TrimBlobNameSlashes([Values("blobname", "/blobname", "//blobname", "vdir//blobname", "/vdir//blobname")] string blobName, [Values(true, false)] bool trimBlobNameSlashes)
+        {
+            // arrange
+            var accountName = "account";
+            var containerName = "container";
+            var uriPrefix = $"https://{accountName}.blob.core.windows.net/{containerName}/";
+            var options = new BlobClientOptions() { TrimBlobNameSlashes = trimBlobNameSlashes };
+
+            // act
+            var blobBase = new BlobBaseClient(new Uri(string.Concat(uriPrefix, blobName)), options);
+
+            // verify
+            if (trimBlobNameSlashes)
+            {
+                Assert.AreEqual(blobName.Trim('/'), blobBase.Name);
+            }
+            else
+            {
+                Assert.AreEqual(blobName, blobBase.Name);
+            }
+            Assert.AreEqual(containerName, blobBase.BlobContainerName);
+            Assert.AreEqual(accountName, blobBase.AccountName);
         }
     }
 }

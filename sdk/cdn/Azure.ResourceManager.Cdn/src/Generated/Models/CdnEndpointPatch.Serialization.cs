@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OriginPath))
             {
-                writer.WritePropertyName("originPath");
+                writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
             if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
-                writer.WritePropertyName("contentTypesToCompress");
+                writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentTypesToCompress)
                 {
@@ -45,34 +45,34 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(OriginHostHeader))
             {
-                writer.WritePropertyName("originHostHeader");
+                writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
             if (Optional.IsDefined(IsCompressionEnabled))
             {
-                writer.WritePropertyName("isCompressionEnabled");
+                writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
             if (Optional.IsDefined(IsHttpAllowed))
             {
-                writer.WritePropertyName("isHttpAllowed");
+                writer.WritePropertyName("isHttpAllowed"u8);
                 writer.WriteBooleanValue(IsHttpAllowed.Value);
             }
             if (Optional.IsDefined(IsHttpsAllowed))
             {
-                writer.WritePropertyName("isHttpsAllowed");
+                writer.WritePropertyName("isHttpsAllowed"u8);
                 writer.WriteBooleanValue(IsHttpsAllowed.Value);
             }
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
-                writer.WritePropertyName("queryStringCachingBehavior");
+                writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(OptimizationType))
             {
                 if (OptimizationType != null)
                 {
-                    writer.WritePropertyName("optimizationType");
+                    writer.WritePropertyName("optimizationType"u8);
                     writer.WriteStringValue(OptimizationType.Value.ToString());
                 }
                 else
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(ProbePath))
             {
-                writer.WritePropertyName("probePath");
+                writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
             if (Optional.IsCollectionDefined(GeoFilters))
             {
-                writer.WritePropertyName("geoFilters");
+                writer.WritePropertyName("geoFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (DefaultOriginGroup != null)
                 {
-                    writer.WritePropertyName("defaultOriginGroup");
+                    writer.WritePropertyName("defaultOriginGroup"u8);
                     writer.WriteObjectValue(DefaultOriginGroup);
                 }
                 else
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (UriSigningKeys != null)
                 {
-                    writer.WritePropertyName("urlSigningKeys");
+                    writer.WritePropertyName("urlSigningKeys"u8);
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (DeliveryPolicy != null)
                 {
-                    writer.WritePropertyName("deliveryPolicy");
+                    writer.WritePropertyName("deliveryPolicy"u8);
                     writer.WriteObjectValue(DeliveryPolicy);
                 }
                 else
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (WebApplicationFirewallPolicyLink != null)
                 {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                     writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
                 }
                 else

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Task properties of the software update configuration. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="status"> The status of the task. </param>
         /// <param name="source"> The name of the source of the task. </param>
         /// <param name="jobId"> The job id of the task. </param>
-        internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, string jobId)
+        internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, Guid? jobId)
         {
             Status = status;
             Source = source;
@@ -31,6 +33,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> The name of the source of the task. </summary>
         public string Source { get; }
         /// <summary> The job id of the task. </summary>
-        public string JobId { get; }
+        public Guid? JobId { get; }
     }
 }

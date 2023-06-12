@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS?api-version=2021-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDIxLTA3LTAx",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/settings/MCAS?api-version=2022-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2V0dGluZ3MvTUNBUz9hcGktdmVyc2lvbj0yMDIyLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1be71ce9-07ea-4bc3-8f40-8a6ef5df80aa"
+          "830532e5-9342-48e4-9179-92cb3f200b87"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.47601",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,22 +36,22 @@
           "1.0"
         ],
         "x-ms-request-id": [
-          "a622c3a9-1b78-4c32-b30b-806025312fd8"
+          "11914369-c7bd-4210-9cf4-47b646388d4b"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "81e628da-b590-4325-9100-17f332c3ec5d"
+          "415b7e40-6f50-4e7a-9526-2ed34aa0c95f"
         ],
         "x-ms-routing-request-id": [
-          "UAECENTRAL:20210803T094837Z:81e628da-b590-4325-9100-17f332c3ec5d"
+          "GERMANYWESTCENTRAL:20221027T065540Z:415b7e40-6f50-4e7a-9526-2ed34aa0c95f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 03 Aug 2021 09:48:37 GMT"
+          "Thu, 27 Oct 2022 06:55:39 GMT"
         ],
         "Content-Length": [
           "212"

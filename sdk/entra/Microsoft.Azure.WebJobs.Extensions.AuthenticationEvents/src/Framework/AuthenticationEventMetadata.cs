@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             AuthenticationEventRequestBase eventRequest = (AuthenticationEventRequestBase)Activator.CreateInstance(RequestType, new object[] { request });
             PropertyInfo responseInfo = eventRequest.GetType().GetProperty("Response");
-            PropertyInfo dataInfo = eventRequest.GetType().GetProperty("Payload");
+            PropertyInfo dataInfo = eventRequest.GetType().GetProperty("Data");
 
             AuthenticationEventResponse eventResponse = AuthenticationEventResponse.CreateInstance(
                 responseInfo.PropertyType,

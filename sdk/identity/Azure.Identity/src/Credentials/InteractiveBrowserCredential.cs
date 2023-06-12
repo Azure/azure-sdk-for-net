@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -17,13 +17,15 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         internal string ClientId { get; }
         internal string LoginHint { get; }
         internal MsalPublicClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
+        internal string DefaultScope { get; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -65,22 +67,27 @@ namespace Azure.Identity
         [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
             : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull: true), clientId, options, null, null)
-        { }
+        {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+        }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline)
             : this(tenantId, clientId, options, pipeline, null)
-        { }
+        {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+        }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
-
             ClientId = clientId;
-            _tenantId = tenantId;
+            TenantId = tenantId;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
+            DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
         }
 
         /// <summary>
@@ -90,10 +97,12 @@ namespace Azure.Identity
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
-            // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
-
-            return Authenticate(new TokenRequestContext(new[] { defaultScope }), cancellationToken);
+            // throw if no default scope exists
+            if (DefaultScope == null)
+            {
+                throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            }
+            return Authenticate(new TokenRequestContext(new[] { DefaultScope }), cancellationToken);
         }
 
         /// <summary>
@@ -103,10 +112,12 @@ namespace Azure.Identity
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
-            // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
-
-            return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
+            // throw if no default scope exists
+            if (DefaultScope == null)
+            {
+                throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            }
+            return await AuthenticateAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -181,11 +192,12 @@ namespace Azure.Identity
             {
                 Exception inner = null;
 
+                var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, requestContext, AdditionallyAllowedTenantIds);
+
                 if (Record != null)
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
@@ -219,7 +231,7 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
-            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context);
+            var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, context, AdditionallyAllowedTenantIds);
             AuthenticationResult result = await Client
                 .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);

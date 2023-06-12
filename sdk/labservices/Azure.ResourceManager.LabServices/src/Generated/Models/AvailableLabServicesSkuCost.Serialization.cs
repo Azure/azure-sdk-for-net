@@ -14,27 +14,30 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSkuCost DeserializeAvailableLabServicesSkuCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterId = default;
             Optional<float> quantity = default;
             Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterId"))
+                if (property.NameEquals("meterId"u8))
                 {
                     meterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quantity = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("extendedUnit"))
+                if (property.NameEquals("extendedUnit"u8))
                 {
                     extendedUnit = property.Value.GetString();
                     continue;

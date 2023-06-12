@@ -38,10 +38,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
-        /// <param name="diskSizeGB">Specifies the size of the operating system
-        /// disk in gigabytes. This element can be used to overwrite the size
-        /// of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This
-        /// value cannot be larger than 1023 GB</param>
+        /// <param name="diskSizeGB">Specifies the size of an empty data disk
+        /// in gigabytes. This element can be used to overwrite the size of the
+        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is
+        /// the number of bytes x 1024^3 for the disk and the value cannot be
+        /// larger than 1023</param>
         /// <param name="image">The Source User Image VirtualHardDisk. This
         /// VirtualHardDisk will be copied before using it to attach to the
         /// Virtual Machine. If SourceImage is provided, the destination
@@ -92,11 +93,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the size of the operating system disk in
-        /// gigabytes. This element can be used to overwrite the size of the
-        /// disk in a virtual machine image.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This value cannot be larger
-        /// than 1023 GB
+        /// Gets or sets specifies the size of an empty data disk in gigabytes.
+        /// This element can be used to overwrite the size of the disk in a
+        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// diskSizeGB is the number of bytes x 1024^3 for the disk and the
+        /// value cannot be larger than 1023
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

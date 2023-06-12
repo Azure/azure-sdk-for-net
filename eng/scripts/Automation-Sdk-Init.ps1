@@ -39,8 +39,21 @@ $dotnetSdkVersion = $GlobalJson.sdk.version
 $installScript = GetDotNetInstallScript
     
 $dotnet = Join-Path $RepoRoot "../.dotnet"
+bash $installScript --install-dir $dotnet
+bash $installScript --install-dir $dotnet -c 3.1
 & bash $installScript --install-dir $dotnet --version $dotnetSdkVersion
 
 if (Test-Path $installScript) {
     Remove-Item $installScript
 }
+
+$dotnetRoot = Resolve-Path ($dotnet)
+
+$outputJson = [PSCustomObject]@{
+    envs = [PSCustomObject]@{
+        PATH = "${dotnetRoot}:${env:PATH}"
+        DOTNET_ROOT = "$dotnetRoot"
+    }
+}
+
+$outputJson | ConvertTo-Json -depth 100 | Out-File $args[1]

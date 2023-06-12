@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DependencyName))
             {
-                writer.WritePropertyName("dependencyName");
+                writer.WritePropertyName("dependencyName"u8);
                 writer.WriteStringValue(DependencyName);
             }
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(MinVersion))
             {
-                writer.WritePropertyName("minVersion");
+                writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static MsixPackageDependencies DeserializeMsixPackageDependencies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dependencyName = default;
             Optional<string> publisher = default;
             Optional<string> minVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dependencyName"))
+                if (property.NameEquals("dependencyName"u8))
                 {
                     dependencyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minVersion"))
+                if (property.NameEquals("minVersion"u8))
                 {
                     minVersion = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Requires interactive login")]
         public void PublishEventsToTopic()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Requires interactive login")]
         public void PublishEventsToDomain()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

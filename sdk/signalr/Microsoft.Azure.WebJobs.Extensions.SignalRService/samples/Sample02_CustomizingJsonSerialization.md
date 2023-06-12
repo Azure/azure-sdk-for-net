@@ -5,8 +5,8 @@ The messages sent to SignalR clients are serialized into JSON. By default, the J
 ## Use `System.Text.Json` library
 
 The following sample specifies `System.Text.Json` library as the JSON serialization library and also uses CamelCase as the property naming policy.
-```cs
-public class Startup : FunctionsStartup
+```C# Snippet:SystemTextJsonCustomization
+public class SystemTextJsonStartup : FunctionsStartup
 {
     public override void Configure(IFunctionsHostBuilder builder)
     {
@@ -22,8 +22,8 @@ public class Startup : FunctionsStartup
 ## Use `Newtonsoft.Json` library
 
 The following sample specifies `Newtonsoft.Json` library as the JSON serialization library and also uses CamelCase as the property naming policy.
-```cs
-public class Startup : FunctionsStartup
+```C# Snippet:NewtonsoftJsonCustomization
+public class NewtonsoftJsonStartup : FunctionsStartup
 {
     public override void Configure(IFunctionsHostBuilder builder)
     {
@@ -31,7 +31,8 @@ public class Startup : FunctionsStartup
             new JsonSerializerSettings()
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
-            }));
+            }
+        ));
     }
 }
 ```

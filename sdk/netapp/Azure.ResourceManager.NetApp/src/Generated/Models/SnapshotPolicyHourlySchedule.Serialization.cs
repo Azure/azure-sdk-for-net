@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SnapshotsToKeep))
             {
-                writer.WritePropertyName("snapshotsToKeep");
+                writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
             if (Optional.IsDefined(Minute))
             {
-                writer.WritePropertyName("minute");
+                writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
             if (Optional.IsDefined(UsedBytes))
             {
-                writer.WritePropertyName("usedBytes");
+                writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static SnapshotPolicyHourlySchedule DeserializeSnapshotPolicyHourlySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> snapshotsToKeep = default;
             Optional<int> minute = default;
             Optional<long> usedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("snapshotsToKeep"))
+                if (property.NameEquals("snapshotsToKeep"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshotsToKeep = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minute"))
+                if (property.NameEquals("minute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minute = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("usedBytes"))
+                if (property.NameEquals("usedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usedBytes = property.Value.GetInt64();

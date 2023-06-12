@@ -14,7 +14,10 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly LinkedEntityCollection _linkedEntities;
 
-        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, LinkedEntityCollection linkedEntities)
+        internal RecognizeLinkedEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            LinkedEntityCollection linkedEntities)
             : base(id, statistics)
         {
             _linkedEntities = linkedEntities;

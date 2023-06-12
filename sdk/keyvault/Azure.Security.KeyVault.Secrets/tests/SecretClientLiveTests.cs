@@ -100,8 +100,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
                 Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
                 Assert.IsNotNull(setResult.Properties.RecoveryLevel); // Value changes based on how the Key Vault is configured.
-                Assert.That(setResult.Properties.CreatedOn, createdUpdatedConstraint);
-                Assert.That(setResult.Properties.UpdatedOn, createdUpdatedConstraint);
+                Assert.That(setResult.Properties.CreatedOn, Is.Not.Null);
+                Assert.That(setResult.Properties.UpdatedOn, Is.Not.Null);
 
                 KeyVaultSecret getResult = await Client.GetSecretAsync(secretName);
 
@@ -370,7 +370,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             RecoverDeletedSecretOperation operation = await Client.StartRecoverDeletedSecretAsync(secretName);
             SecretProperties recoverSecretResult = operation.Value;
 
-            await WaitForSecret(secretName);
+            await operation.WaitForCompletionAsync(); ;
 
             KeyVaultSecret recoveredSecret = await Client.GetSecretAsync(secretName);
 

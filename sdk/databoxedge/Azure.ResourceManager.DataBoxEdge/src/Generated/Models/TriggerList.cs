@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of TriggerList. </summary>
         internal TriggerList()
         {
-            Value = new ChangeTrackingList<TriggerData>();
+            Value = new ChangeTrackingList<DataBoxEdgeTriggerData>();
         }
 
         /// <summary> Initializes a new instance of TriggerList. </summary>
         /// <param name="value">
         /// The list of triggers.
-        /// Please note <see cref="TriggerData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileEventTrigger"/> and <see cref="PeriodicTimerEventTrigger"/>.
+        /// Please note <see cref="DataBoxEdgeTriggerData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EdgeFileEventTrigger"/> and <see cref="PeriodicTimerEventTrigger"/>.
         /// </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal TriggerList(IReadOnlyList<TriggerData> value, string nextLink)
+        internal TriggerList(IReadOnlyList<DataBoxEdgeTriggerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary>
         /// The list of triggers.
-        /// Please note <see cref="TriggerData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileEventTrigger"/> and <see cref="PeriodicTimerEventTrigger"/>.
+        /// Please note <see cref="DataBoxEdgeTriggerData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EdgeFileEventTrigger"/> and <see cref="PeriodicTimerEventTrigger"/>.
         /// </summary>
-        public IReadOnlyList<TriggerData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeTriggerData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

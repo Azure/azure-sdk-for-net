@@ -36,6 +36,10 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkManagerName'>
         /// The name of the network manager.
         /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -51,6 +55,6 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NetworkManagerDeploymentStatusListResult>> ListWithHttpMessagesAsync(NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkManagerDeploymentStatusListResult>> ListWithHttpMessagesAsync(NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

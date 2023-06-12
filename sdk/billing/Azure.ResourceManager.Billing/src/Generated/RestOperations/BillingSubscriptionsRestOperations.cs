@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal HttpMessage CreateMoveRequest(string billingAccountName, string billingSubscriptionName, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest)
+        internal HttpMessage CreateMoveRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveBillingSubscriptionRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -344,17 +344,17 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the move subscription operation. </param>
+        /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MoveAsync(string billingAccountName, string billingSubscriptionName, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> MoveAsync(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMoveRequest(billingAccountName, billingSubscriptionName, moveBillingSubscriptionRequest);
+            using var message = CreateMoveRequest(billingAccountName, billingSubscriptionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -369,17 +369,17 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the move subscription operation. </param>
+        /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Move(string billingAccountName, string billingSubscriptionName, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        public Response Move(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMoveRequest(billingAccountName, billingSubscriptionName, moveBillingSubscriptionRequest);
+            using var message = CreateMoveRequest(billingAccountName, billingSubscriptionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal HttpMessage CreateValidateMoveEligibilityRequest(string billingAccountName, string billingSubscriptionName, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest)
+        internal HttpMessage CreateValidateMoveEligibilityRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveBillingSubscriptionRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -417,25 +417,25 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the validate move eligibility operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidateMoveBillingSubscriptionEligibilityResult>> ValidateMoveEligibilityAsync(string billingAccountName, string billingSubscriptionName, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingSubscriptionValidateMoveEligibilityResult>> ValidateMoveEligibilityAsync(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, billingSubscriptionName, moveBillingSubscriptionRequest);
+            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, billingSubscriptionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ValidateMoveBillingSubscriptionEligibilityResult value = default;
+                        BillingSubscriptionValidateMoveEligibilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ValidateMoveBillingSubscriptionEligibilityResult.DeserializeValidateMoveBillingSubscriptionEligibilityResult(document.RootElement);
+                        value = BillingSubscriptionValidateMoveEligibilityResult.DeserializeBillingSubscriptionValidateMoveEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -446,25 +446,25 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the validate move eligibility operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidateMoveBillingSubscriptionEligibilityResult> ValidateMoveEligibility(string billingAccountName, string billingSubscriptionName, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        public Response<BillingSubscriptionValidateMoveEligibilityResult> ValidateMoveEligibility(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, billingSubscriptionName, moveBillingSubscriptionRequest);
+            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, billingSubscriptionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ValidateMoveBillingSubscriptionEligibilityResult value = default;
+                        BillingSubscriptionValidateMoveEligibilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ValidateMoveBillingSubscriptionEligibilityResult.DeserializeValidateMoveBillingSubscriptionEligibilityResult(document.RootElement);
+                        value = BillingSubscriptionValidateMoveEligibilityResult.DeserializeBillingSubscriptionValidateMoveEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

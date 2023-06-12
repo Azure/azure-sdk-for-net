@@ -17,17 +17,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             if (Optional.IsDefined(CurrentConnection))
             {
-                writer.WritePropertyName("currentConnection");
+                writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
             }
             writer.WriteEndObject();
@@ -35,31 +35,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static KqlScriptContent DeserializeKqlScriptContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             Optional<KqlScriptContentMetadata> metadata = default;
             Optional<KqlScriptContentCurrentConnection> currentConnection = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = KqlScriptContentMetadata.DeserializeKqlScriptContentMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("currentConnection"))
+                if (property.NameEquals("currentConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentConnection = KqlScriptContentCurrentConnection.DeserializeKqlScriptContentCurrentConnection(property.Value);

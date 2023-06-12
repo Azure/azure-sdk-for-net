@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, LoginNonce nonce)
+        internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce)
         {
             Routes = routes;
             PreserveUrlFragmentsForLogins = preserveUrlFragmentsForLogins;
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         public IList<string> AllowedExternalRedirectUrls { get; }
         /// <summary> The configuration settings of the session cookie&apos;s expiration. </summary>
-        public CookieExpiration CookieExpiration { get; set; }
+        public ContainerAppCookieExpiration CookieExpiration { get; set; }
         /// <summary> The configuration settings of the nonce used in the login flow. </summary>
-        public LoginNonce Nonce { get; set; }
+        public ContainerAppLoginNonce Nonce { get; set; }
     }
 }

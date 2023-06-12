@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WsdlServiceName))
             {
-                writer.WritePropertyName("wsdlServiceName");
+                writer.WritePropertyName("wsdlServiceName"u8);
                 writer.WriteStringValue(WsdlServiceName);
             }
             if (Optional.IsDefined(WsdlEndpointName))
             {
-                writer.WritePropertyName("wsdlEndpointName");
+                writer.WritePropertyName("wsdlEndpointName"u8);
                 writer.WriteStringValue(WsdlEndpointName);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiCreateOrUpdatePropertiesWsdlSelector DeserializeApiCreateOrUpdatePropertiesWsdlSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> wsdlServiceName = default;
             Optional<string> wsdlEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("wsdlServiceName"))
+                if (property.NameEquals("wsdlServiceName"u8))
                 {
                     wsdlServiceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("wsdlEndpointName"))
+                if (property.NameEquals("wsdlEndpointName"u8))
                 {
                     wsdlEndpointName = property.Value.GetString();
                     continue;

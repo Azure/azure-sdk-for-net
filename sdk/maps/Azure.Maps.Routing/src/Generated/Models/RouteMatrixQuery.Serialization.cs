@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     public partial class RouteMatrixQuery : IUtf8JsonSerializable
     {
@@ -17,12 +17,12 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GeoJsonMultiPointOrigins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointOrigins);
             }
             if (Optional.IsDefined(GeoJsonMultiPointDestinations))
             {
-                writer.WritePropertyName("destinations");
+                writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointDestinations);
             }
             writer.WriteEndObject();

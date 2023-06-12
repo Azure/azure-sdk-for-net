@@ -15,37 +15,39 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ArcPasswordCredential DeserializeArcPasswordCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretText = default;
             Optional<string> keyId = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretText"))
+                if (property.NameEquals("secretText"u8))
                 {
                     secretText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyId"))
+                if (property.NameEquals("keyId"u8))
                 {
                     keyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startDateTime"))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDateTime"))
+                if (property.NameEquals("endDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endDateTime = property.Value.GetDateTimeOffset("O");

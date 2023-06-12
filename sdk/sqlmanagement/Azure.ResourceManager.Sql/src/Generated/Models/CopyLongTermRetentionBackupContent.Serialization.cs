@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetSubscriptionId))
             {
-                writer.WritePropertyName("targetSubscriptionId");
+                writer.WritePropertyName("targetSubscriptionId"u8);
                 writer.WriteStringValue(TargetSubscriptionId);
             }
             if (Optional.IsDefined(TargetResourceGroup))
             {
-                writer.WritePropertyName("targetResourceGroup");
+                writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
             if (Optional.IsDefined(TargetServerResourceId))
             {
-                writer.WritePropertyName("targetServerResourceId");
+                writer.WritePropertyName("targetServerResourceId"u8);
                 writer.WriteStringValue(TargetServerResourceId);
             }
             if (Optional.IsDefined(TargetServerFullyQualifiedDomainName))
             {
-                writer.WritePropertyName("targetServerFullyQualifiedDomainName");
+                writer.WritePropertyName("targetServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetServerFullyQualifiedDomainName);
             }
             if (Optional.IsDefined(TargetDatabaseName))
             {
-                writer.WritePropertyName("targetDatabaseName");
+                writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
             if (Optional.IsDefined(TargetBackupStorageRedundancy))
             {
-                writer.WritePropertyName("targetBackupStorageRedundancy");
+                writer.WritePropertyName("targetBackupStorageRedundancy"u8);
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
             }
             writer.WriteEndObject();

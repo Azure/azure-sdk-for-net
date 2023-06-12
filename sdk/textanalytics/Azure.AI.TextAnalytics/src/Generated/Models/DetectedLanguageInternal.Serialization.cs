@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Name != null)
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             else
@@ -26,14 +26,14 @@ namespace Azure.AI.TextAnalytics.Models
             }
             if (Iso6391Name != null)
             {
-                writer.WritePropertyName("iso6391Name");
+                writer.WritePropertyName("iso6391Name"u8);
                 writer.WriteStringValue(Iso6391Name);
             }
             else
             {
                 writer.WriteNull("iso6391Name");
             }
-            writer.WritePropertyName("confidenceScore");
+            writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
             writer.WriteEndObject();
         }
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iso6391Name"))
+                if (property.NameEquals("iso6391Name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Models
                     iso6391Name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;

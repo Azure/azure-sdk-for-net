@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is the implementation of the DataFactoryExpressions</Description>
+    <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
+    <Version>1.0.0-beta.3</Version>
+    <PackageTags>azure;datafactory</PackageTags>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <!--
+      netcoreapp2.1 is out of support but we'll keep is as a target for a bit
+      to give customers time to migrate without losing perf optimizations
+     -->
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AutoRestSharedCodeDirectory)IUtf8JsonSerializable.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)Utf8JsonWriterExtensions.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)TypeFormatters.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)JsonElementExtensions.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+
+</Project>

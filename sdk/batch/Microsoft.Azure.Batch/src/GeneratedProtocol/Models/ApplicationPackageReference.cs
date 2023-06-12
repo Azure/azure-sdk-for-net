@@ -50,6 +50,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the ID of the application to deploy.
         /// </summary>
+        /// <remarks>
+        /// When creating a pool, the package's application ID must be fully
+        /// qualified
+        /// (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}).
+        /// </remarks>
         [JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
 

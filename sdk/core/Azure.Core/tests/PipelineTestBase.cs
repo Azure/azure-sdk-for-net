@@ -16,6 +16,19 @@ namespace Azure.Core.Tests
             _isAsync = isAsync;
         }
 
+        protected async Task ProcessAsync(HttpMessage message, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
+        {
+            message.CancellationToken = cancellationToken;
+            if (_isAsync)
+            {
+                await transport.ProcessAsync(message);
+            }
+            else
+            {
+                transport.Process(message);
+            }
+        }
+
         protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
             var message = new HttpMessage(request, ResponseClassifier.Shared);

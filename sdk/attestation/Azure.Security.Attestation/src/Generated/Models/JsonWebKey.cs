@@ -25,10 +25,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
         public JsonWebKey(string kty)
         {
-            if (kty == null)
-            {
-                throw new ArgumentNullException(nameof(kty));
-            }
+            Argument.AssertNotNull(kty, nameof(kty));
 
             Kty = kty;
             X5C = new ChangeTrackingList<string>();

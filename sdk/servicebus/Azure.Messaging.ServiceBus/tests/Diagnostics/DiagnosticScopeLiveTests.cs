@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
@@ -24,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [SetUp]
         public void Setup()
         {
-            _listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            _listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
         }
 
         [TearDown]
@@ -149,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var msg in msgs)
                 {
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
-                    Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
+                    Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
 
                     var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
                     AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
@@ -187,15 +186,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
-                EntityScopeFactory.DiagnosticNamespace,
+                DiagnosticProperty.DiagnosticNamespace,
                 scopeStartCallback: scope =>
                 {
                     if (scope.Name == DiagnosticProperty.ProcessMessageActivityName)
                     {
                         Assert.IsNotNull(messageActivities);
                         Assert.AreEqual(
-                            messageActivities[messageProcessedCt],
-                            scope.Links.Single());
+                            messageActivities[messageProcessedCt].Traceparent,
+                            scope.Activity.ParentId);
                         callbackExecuted = true;
                     }
                 });
@@ -232,6 +231,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
+                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
@@ -245,15 +245,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
-                EntityScopeFactory.DiagnosticNamespace,
+                DiagnosticProperty.DiagnosticNamespace,
                 scopeStartCallback: scope =>
                 {
                     if (scope.Name == DiagnosticProperty.ProcessSessionMessageActivityName)
                     {
                         Assert.IsNotNull(messageActivities);
                         Assert.AreEqual(
-                            messageActivities[messageProcessedCt],
-                            scope.Links.Single());
+                            messageActivities[messageProcessedCt].Traceparent,
+                            scope.Activity.ParentId);
                         callbackExecuted = true;
                     }
                 });
@@ -291,6 +291,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
+                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
@@ -335,7 +336,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             IList<Activity> messageActivities = new List<Activity>();
             foreach (var msg in msgs)
             {
-                Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
+                Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
                 var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
                 messageActivities.Add(messageScope.Activity);
                 AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
@@ -355,9 +356,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         private void AssertCommonTags(Activity activity, string entityName, string fullyQualifiedNamespace)
         {
             var tags = activity.Tags;
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, entityName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, entityName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, fullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
         }
     }
 }

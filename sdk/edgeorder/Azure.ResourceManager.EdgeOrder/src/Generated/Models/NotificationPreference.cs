@@ -12,16 +12,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         /// <summary> Initializes a new instance of NotificationPreference. </summary>
         /// <param name="stageName"> Name of the stage. </param>
-        /// <param name="sendNotification"> Notification is required or not. </param>
-        public NotificationPreference(NotificationStageName stageName, bool sendNotification)
+        /// <param name="isNotificationRequired"> Notification is required or not. </param>
+        public NotificationPreference(NotificationStageName stageName, bool isNotificationRequired)
         {
             StageName = stageName;
-            SendNotification = sendNotification;
+            IsNotificationRequired = isNotificationRequired;
         }
 
         /// <summary> Name of the stage. </summary>
         public NotificationStageName StageName { get; set; }
         /// <summary> Notification is required or not. </summary>
-        public bool SendNotification { get; set; }
+        public bool IsNotificationRequired { get; set; }
     }
 }

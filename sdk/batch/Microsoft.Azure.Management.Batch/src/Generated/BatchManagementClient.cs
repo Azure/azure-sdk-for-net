@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Management.Batch
             PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             Pool = new PoolOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-06-01";
+            ApiVersion = "2022-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

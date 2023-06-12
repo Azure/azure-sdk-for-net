@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A class representing the CognitiveServicesPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the CognitiveServicesPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class CognitiveServicesPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>

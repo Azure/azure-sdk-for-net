@@ -195,6 +195,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorStoppingCancellationWarningEvent = 113;
 
         internal const int RunOperationExceptionVerboseEvent = 114;
+        internal const int ReceiveMessageCanceledEvent = 115;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -294,6 +295,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ReceiveMessageExceptionEvent, clientId, exception);
+            }
+        }
+
+        [Event(ReceiveMessageCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled. (Identifier '{0}'). Error Message: '{1}'")]
+        public void ReceiveMessageCanceled(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiveMessageCanceledEvent, identifier, exception);
             }
         }
 
@@ -1254,7 +1264,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CreateSendLinkExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating send link for Identifier: {0}. Error Message: '{1}'")]
+        [Event(CreateSendLinkExceptionEvent, Level = EventLevel.Verbose, Message = "An exception occurred while creating send link for Identifier: {0}. Error Message: '{1}'")]
         public virtual void CreateSendLinkException(
             string identifier,
             string exception)
@@ -1312,7 +1322,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CreateReceiveLinkExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating receive link for Identifier: {0}. Error Message: '{1}'")]
+        [Event(CreateReceiveLinkExceptionEvent, Level = EventLevel.Verbose, Message = "An exception occurred while creating receive link for Identifier: {0}. Error Message: '{1}'")]
         public virtual void CreateReceiveLinkException(string identifier, string exception)
         {
             if (IsEnabled())
@@ -1339,7 +1349,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CreateManagementLinkExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating management link for Identifier: {0}. Error Message: '{1}'")]
+        [Event(CreateManagementLinkExceptionEvent, Level = EventLevel.Verbose, Message = "An exception occurred while creating management link for Identifier: {0}. Error Message: '{1}'")]
         public virtual void CreateManagementLinkException(string identifier, string exception)
         {
             if (IsEnabled())

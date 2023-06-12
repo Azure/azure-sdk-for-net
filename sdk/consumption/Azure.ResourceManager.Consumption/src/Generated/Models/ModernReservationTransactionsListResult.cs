@@ -10,27 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing reservation recommendations. </summary>
+    /// <summary>
+    /// Result of listing reservation recommendations.
+    /// Serialized Name: ModernReservationTransactionsListResult
+    /// </summary>
     internal partial class ModernReservationTransactionsListResult
     {
         /// <summary> Initializes a new instance of ModernReservationTransactionsListResult. </summary>
         internal ModernReservationTransactionsListResult()
         {
-            Value = new ChangeTrackingList<ModernReservationTransaction>();
+            Value = new ChangeTrackingList<ConsumptionModernReservationTransaction>();
         }
 
         /// <summary> Initializes a new instance of ModernReservationTransactionsListResult. </summary>
-        /// <param name="value"> The list of reservation recommendations. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ModernReservationTransactionsListResult(IReadOnlyList<ModernReservationTransaction> value, string nextLink)
+        /// <param name="value">
+        /// The list of reservation recommendations.
+        /// Serialized Name: ModernReservationTransactionsListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ModernReservationTransactionsListResult.nextLink
+        /// </param>
+        internal ModernReservationTransactionsListResult(IReadOnlyList<ConsumptionModernReservationTransaction> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of reservation recommendations. </summary>
-        public IReadOnlyList<ModernReservationTransaction> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The list of reservation recommendations.
+        /// Serialized Name: ModernReservationTransactionsListResult.value
+        /// </summary>
+        public IReadOnlyList<ConsumptionModernReservationTransaction> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ModernReservationTransactionsListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

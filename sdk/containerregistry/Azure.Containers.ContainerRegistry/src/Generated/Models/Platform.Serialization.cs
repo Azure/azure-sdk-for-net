@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static Platform DeserializePlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> architecture = default;
             Optional<string> os = default;
             Optional<string> osVersion = default;
@@ -23,26 +27,25 @@ namespace Azure.Containers.ContainerRegistry
             Optional<IReadOnlyList<string>> features = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     architecture = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     os = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os.version"))
+                if (property.NameEquals("os.version"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("os.features"))
+                if (property.NameEquals("os.features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -53,16 +56,15 @@ namespace Azure.Containers.ContainerRegistry
                     osFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("variant"))
+                if (property.NameEquals("variant"u8))
                 {
                     variant = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("features"))
+                if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

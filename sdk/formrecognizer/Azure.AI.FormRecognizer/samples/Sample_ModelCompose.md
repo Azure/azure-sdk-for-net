@@ -74,8 +74,5 @@ if (string.IsNullOrEmpty(purchaseOrderModel.Description))
 Console.WriteLine($"  Created on: {purchaseOrderModel.CreatedOn}");
 ```
 
-To see the full example source files, see:
-* [Compose a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ComposeModelAsync.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool

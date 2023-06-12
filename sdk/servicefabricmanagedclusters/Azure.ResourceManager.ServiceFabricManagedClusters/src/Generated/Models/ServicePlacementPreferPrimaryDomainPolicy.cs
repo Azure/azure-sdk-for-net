@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -20,29 +21,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// may not end up located in this domain due to failures, capacity limits, or other constraints.
     /// 
     /// </summary>
-    public partial class ServicePlacementPreferPrimaryDomainPolicy : ServicePlacementPolicy
+    public partial class ServicePlacementPreferPrimaryDomainPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementPreferPrimaryDomainPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public ServicePlacementPreferPrimaryDomainPolicy(string domainName)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            PolicyType = ServicePlacementPolicyType.PreferredPrimaryDomain;
+            ServicePlacementPolicyType = ServicePlacementPolicyType.PreferredPrimaryDomain;
         }
 
         /// <summary> Initializes a new instance of ServicePlacementPreferPrimaryDomainPolicy. </summary>
-        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType policyType, string domainName) : base(policyType)
+        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)
         {
             DomainName = domainName;
-            PolicyType = policyType;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>

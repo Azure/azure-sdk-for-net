@@ -6,89 +6,41 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaServicesTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceIdentifier _storageAccountIdentifier;
-        private ResourceGroupResource _resourceGroup;
+        private MediaServicesAccountCollection mediaServiceCollection => ResourceGroup.GetMediaServicesAccounts();
 
-        private MediaServicesAccountCollection mediaServiceCollection => _resourceGroup.GetMediaServicesAccounts();
-
-        public MediaServicesTests(bool isAsync) : base(isAsync)
+        public MediaServicesTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            _resourceGroupIdentifier = rgLro.Value.Data.Id;
-            _storageAccountIdentifier = storage.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task SetUp()
-        {
-            _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task MediaServicesBasicTests()
         {
-            string mediaServiceName = SessionRecording.GenerateAssetName("mediaservice");
-            var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
+            // Create
+            string mediaServiceName = Recording.GenerateAssetName("mediabasictest");
+            var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
             Assert.IsNotNull(mediaService);
             Assert.AreEqual(mediaServiceName, mediaService.Data.Name);
-            Assert.AreEqual(_storageAccountIdentifier, mediaService.Data.StorageAccounts.FirstOrDefault().Id);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string mediaServiceName = SessionRecording.GenerateAssetName("mediaservice");
-            var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
+            Assert.AreEqual(GetStorageAccountId(), mediaService.Data.StorageAccounts.FirstOrDefault().Id);
+            // Check exists
             bool flag = await mediaServiceCollection.ExistsAsync(mediaServiceName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            string mediaServiceName = SessionRecording.GenerateAssetName("mediaservice");
-            var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
-            Assert.IsNotNull(mediaService);
-            Assert.AreEqual(mediaServiceName, mediaService.Data.Name);
-            Assert.AreEqual(_storageAccountIdentifier, mediaService.Data.StorageAccounts.FirstOrDefault().Id);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string mediaServiceName = SessionRecording.GenerateAssetName("mediaservice");
-            var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
+            // Get
+            var result = await mediaServiceCollection.GetAsync(mediaServiceName);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(mediaServiceName, result.Value.Data.Name);
+            // Get all
             var list = await mediaServiceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            string mediaServiceName = SessionRecording.GenerateAssetName("mediaservice");
-            var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
-            bool flag = await mediaServiceCollection.ExistsAsync(mediaServiceName);
-            Assert.IsTrue(flag);
-
+            // Delete
             await mediaService.DeleteAsync(WaitUntil.Completed);
             flag = await mediaServiceCollection.ExistsAsync(mediaServiceName);
             Assert.IsFalse(flag);

@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskName");
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -793,7 +793,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 disk.Validate();
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1021,7 +1021,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "disk");
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1239,7 +1239,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskName");
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1428,7 +1428,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 grantAccessData.Validate();
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1628,7 +1628,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskName");
             }
-            string apiVersion = "2022-03-02";
+            string apiVersion = "2022-07-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

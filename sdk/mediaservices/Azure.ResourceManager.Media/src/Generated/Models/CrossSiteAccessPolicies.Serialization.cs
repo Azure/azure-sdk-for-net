@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientAccessPolicy))
             {
-                writer.WritePropertyName("clientAccessPolicy");
+                writer.WritePropertyName("clientAccessPolicy"u8);
                 writer.WriteStringValue(ClientAccessPolicy);
             }
             if (Optional.IsDefined(CrossDomainPolicy))
             {
-                writer.WritePropertyName("crossDomainPolicy");
+                writer.WritePropertyName("crossDomainPolicy"u8);
                 writer.WriteStringValue(CrossDomainPolicy);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CrossSiteAccessPolicies DeserializeCrossSiteAccessPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientAccessPolicy = default;
             Optional<string> crossDomainPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientAccessPolicy"))
+                if (property.NameEquals("clientAccessPolicy"u8))
                 {
                     clientAccessPolicy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("crossDomainPolicy"))
+                if (property.NameEquals("crossDomainPolicy"u8))
                 {
                     crossDomainPolicy = property.Value.GetString();
                     continue;

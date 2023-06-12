@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -31,16 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element);
                 }
             }
-            TargetServiceType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new TargetServiceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTargetServiceBaseInfo(type);
+            return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support
     /// A Class representing a ProblemClassification along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProblemClassificationResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetProblemClassificationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetProblemClassification method.
+    /// Otherwise you can get one from its parent resource <see cref="SupportAzureServiceResource" /> using the GetProblemClassification method.
     /// </summary>
     public partial class ProblemClassificationResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ProblemClassificationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ProblemClassificationResource> Get(CancellationToken cancellationToken = default)

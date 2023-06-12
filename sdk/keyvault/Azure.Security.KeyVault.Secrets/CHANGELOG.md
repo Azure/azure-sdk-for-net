@@ -1,6 +1,6 @@
 # Release History
 
-## 4.4.0-beta.1 (Unreleased)
+## 4.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,37 @@
 
 ### Bugs Fixed
 
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+
 ### Other Changes
+
+## 4.5.0 (2023-03-14)
+
+### Breaking Changes
+
+- Service version "7.4-preview.1" is not supported.
+
+### Other Changes
+
+- The default service version is now "7.4".
+
+## 4.5.0-beta.1 (2022-11-09)
+
+### Bugs Fixed
+
+- Fixed possible "ObjectIsBeingRecovered" error immediately after restoring certificates, keys, or secrets. ([#31581](https://github.com/Azure/azure-sdk-for-net/issues/31581))
+
+### Other Changes
+
+- The default service version is now "7.4-preview.1".
+
+## 4.4.0 (2022-09-20)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `SecretClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.3.0 (2022-03-24)
 

@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the ComplianceResult data model. </summary>
+    /// <summary>
+    /// A class representing the ComplianceResult data model.
+    /// a compliance result
+    /// </summary>
     public partial class ComplianceResultData : ResourceData
     {
         /// <summary> Initializes a new instance of ComplianceResultData. </summary>
@@ -25,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceStatus"> The status of the resource regarding a single assessment. </param>
-        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceStatus? resourceStatus) : base(id, name, resourceType, systemData)
+        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentResourceStatus? resourceStatus) : base(id, name, resourceType, systemData)
         {
             ResourceStatus = resourceStatus;
         }
 
         /// <summary> The status of the resource regarding a single assessment. </summary>
-        public ResourceStatus? ResourceStatus { get; }
+        public SecurityAssessmentResourceStatus? ResourceStatus { get; }
     }
 }

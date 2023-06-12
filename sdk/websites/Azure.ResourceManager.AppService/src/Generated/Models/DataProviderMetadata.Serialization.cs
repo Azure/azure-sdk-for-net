@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderName))
             {
-                writer.WritePropertyName("providerName");
+                writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
             writer.WriteEndObject();
@@ -26,26 +26,29 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DataProviderMetadata DeserializeDataProviderMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> providerName = default;
-            Optional<IReadOnlyList<KeyValuePairStringObject>> propertyBag = default;
+            Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerName"))
+                if (property.NameEquals("providerName"u8))
                 {
                     providerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyValuePairStringObject> array = new List<KeyValuePairStringObject>();
+                    List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyValuePairStringObject.DeserializeKeyValuePairStringObject(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
                     }
                     propertyBag = array;
                     continue;

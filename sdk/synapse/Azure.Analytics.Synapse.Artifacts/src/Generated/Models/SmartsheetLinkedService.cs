@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -14,14 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class SmartsheetLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of SmartsheetLinkedService. </summary>
-        /// <param name="apiToken"> The api token for the Smartsheet source. </param>
+        /// <param name="apiToken">
+        /// The api token for the Smartsheet source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         public SmartsheetLinkedService(SecretBase apiToken)
         {
-            if (apiToken == null)
-            {
-                throw new ArgumentNullException(nameof(apiToken));
-            }
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
 
             ApiToken = apiToken;
             Type = "Smartsheet";
@@ -34,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="apiToken"> The api token for the Smartsheet source. </param>
+        /// <param name="apiToken">
+        /// The api token for the Smartsheet source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal SmartsheetLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, SecretBase apiToken, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -43,7 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Smartsheet";
         }
 
-        /// <summary> The api token for the Smartsheet source. </summary>
+        /// <summary>
+        /// The api token for the Smartsheet source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

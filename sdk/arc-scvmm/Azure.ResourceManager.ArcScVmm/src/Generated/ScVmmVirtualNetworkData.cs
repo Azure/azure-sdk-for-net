@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmVirtualNetwork data model.
+    /// The VirtualNetworks resource definition.
+    /// </summary>
     public partial class ScVmmVirtualNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public ScVmmVirtualNetworkData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
         }

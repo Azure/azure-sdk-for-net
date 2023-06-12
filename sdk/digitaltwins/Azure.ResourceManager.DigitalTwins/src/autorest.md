@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DigitalTwins
 namespace: Azure.ResourceManager.DigitalTwins
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/digitaltwins/resource-manager/readme.md
-tag: package-2022-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/71e8a754d34d1af32bf81f23445f286422ca4c40/specification/digitaltwins/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -39,6 +38,8 @@ rename-mapping:
   EventHub: DigitalTwinsEventHubProperties
   ServiceBus: DigitalTwinsServiceBusProperties
   ResourceType: DigitalTwinsResourceType
+  ManagedIdentityReference: DigitalTwinsManagedIdentityReference
+  IdentityType: DigitalTwinsManagedIdentityType
 
 override-operation-name:
   PrivateLinkResources_Get: GetPrivateLinkResourceGroupIdInformation

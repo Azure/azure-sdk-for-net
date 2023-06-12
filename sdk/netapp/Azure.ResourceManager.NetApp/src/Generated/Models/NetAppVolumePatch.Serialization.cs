@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,55 +26,55 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceLevel))
             {
-                writer.WritePropertyName("serviceLevel");
+                writer.WritePropertyName("serviceLevel"u8);
                 writer.WriteStringValue(ServiceLevel.Value.ToString());
             }
             if (Optional.IsDefined(UsageThreshold))
             {
-                writer.WritePropertyName("usageThreshold");
+                writer.WritePropertyName("usageThreshold"u8);
                 writer.WriteNumberValue(UsageThreshold.Value);
             }
             if (Optional.IsDefined(ExportPolicy))
             {
-                writer.WritePropertyName("exportPolicy");
+                writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {
-                writer.WritePropertyName("throughputMibps");
+                writer.WritePropertyName("throughputMibps"u8);
                 writer.WriteNumberValue(ThroughputMibps.Value);
             }
             if (Optional.IsDefined(DataProtection))
             {
-                writer.WritePropertyName("dataProtection");
+                writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
-                writer.WritePropertyName("isDefaultQuotaEnabled");
+                writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
             if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
-                writer.WritePropertyName("defaultUserQuotaInKiBs");
+                writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
             }
             if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
             {
-                writer.WritePropertyName("defaultGroupQuotaInKiBs");
+                writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
             if (Optional.IsDefined(UnixPermissions))
             {
                 if (UnixPermissions != null)
                 {
-                    writer.WritePropertyName("unixPermissions");
+                    writer.WritePropertyName("unixPermissions"u8);
                     writer.WriteStringValue(UnixPermissions);
                 }
                 else
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
-                writer.WritePropertyName("coolAccess");
+                writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(CoolnessPeriod))
             {
-                writer.WritePropertyName("coolnessPeriod");
+                writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
             writer.WriteEndObject();

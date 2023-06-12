@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the PlacementPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the PlacementPolicy data model.
+    /// A vSphere Distributed Resource Scheduler (DRS) placement policy
+    /// </summary>
     public partial class PlacementPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of PlacementPolicyData. </summary>

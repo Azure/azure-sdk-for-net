@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="value"/> or <paramref name="endpointNames"/> is null. </exception>
         public IotHubEnrichmentProperties(string key, string value, IEnumerable<string> endpointNames)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-            if (endpointNames == null)
-            {
-                throw new ArgumentNullException(nameof(endpointNames));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(endpointNames, nameof(endpointNames));
 
             Key = key;
             Value = value;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the IntegrationServiceEnvironmentManagedApi data model. </summary>
+    /// <summary>
+    /// A class representing the IntegrationServiceEnvironmentManagedApi data model.
+    /// The integration service environment managed api.
+    /// </summary>
     public partial class IntegrationServiceEnvironmentManagedApiData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>
@@ -66,7 +69,36 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary> The name. </summary>
         public string NamePropertiesName { get; }
-        /// <summary> The connection parameters. </summary>
+        /// <summary>
+        /// The connection parameters.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> ConnectionParameters { get; }
         /// <summary> The metadata. </summary>
         public LogicApiResourceMetadata Metadata { get; }

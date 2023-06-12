@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="schemaVersion"/> or <paramref name="schemaName"/> is null. </exception>
         public X12SchemaReference(string messageId, string schemaVersion, string schemaName)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (schemaVersion == null)
-            {
-                throw new ArgumentNullException(nameof(schemaVersion));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(schemaVersion, nameof(schemaVersion));
+            Argument.AssertNotNull(schemaName, nameof(schemaName));
 
             MessageId = messageId;
             SchemaVersion = schemaVersion;

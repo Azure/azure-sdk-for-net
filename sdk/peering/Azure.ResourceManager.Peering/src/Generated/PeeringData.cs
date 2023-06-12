@@ -13,7 +13,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the Peering data model. </summary>
+    /// <summary>
+    /// A class representing the Peering data model.
+    /// Peering is a logical representation of a set of connections to the Microsoft Cloud Edge at a location.
+    /// </summary>
     public partial class PeeringData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PeeringData. </summary>
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public PeeringData(AzureLocation location, PeeringSku sku, PeeringKind kind) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             Kind = kind;

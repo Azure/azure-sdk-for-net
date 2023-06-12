@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="prioritizedFields"/> is null. </exception>
         public SemanticConfiguration(string name, PrioritizedFields prioritizedFields)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (prioritizedFields == null)
-            {
-                throw new ArgumentNullException(nameof(prioritizedFields));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(prioritizedFields, nameof(prioritizedFields));
 
             Name = name;
             PrioritizedFields = prioritizedFields;

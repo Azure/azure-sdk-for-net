@@ -37,12 +37,12 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenWriteAsync(
             BlobClient client,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             int internalBufferSize)
         {
             return await client.OpenWriteAsync(true, new BlobOpenWriteOptions
             {
-                TransferValidationOptions = validationOptions,
+                TransferValidation = transferValidation,
                 BufferSize = internalBufferSize
             });
         }
@@ -50,18 +50,18 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task ParallelUploadAsync(
             BlobClient client,
             Stream source,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions)
             => await client.UploadAsync(source, new BlobUploadOptions
             {
-                TransferValidationOptions = validationOptions,
+                TransferValidation = transferValidation,
                 TransferOptions = transferOptions
             });
 
         protected override Task<Response> UploadPartitionAsync(
             BlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions)
+            UploadTransferValidationOptions transferValidation)
         {
             TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "BlobClient contains no definition for a 1:1 upload.");
             return Task.FromResult<Response>(null);

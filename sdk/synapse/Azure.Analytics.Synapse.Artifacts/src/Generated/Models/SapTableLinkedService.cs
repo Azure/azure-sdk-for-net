@@ -31,7 +31,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="language"> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </param>
         /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP server where the table is located. </param>
+        /// <param name="password">
+        /// Password to access the SAP server where the table is located.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="sncMode"> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </param>
@@ -74,7 +78,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object SystemId { get; set; }
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> Password to access the SAP server where the table is located. </summary>
+        /// <summary>
+        /// Password to access the SAP server where the table is located.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
         public object MessageServer { get; set; }

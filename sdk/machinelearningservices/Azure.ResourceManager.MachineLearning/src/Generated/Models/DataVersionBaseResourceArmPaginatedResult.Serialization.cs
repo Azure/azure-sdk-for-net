@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static DataVersionBaseResourceArmPaginatedResult DeserializeDataVersionBaseResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataVersionData>> value = default;
+            Optional<IReadOnlyList<MachineLearningDataVersionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataVersionData> array = new List<DataVersionData>();
+                    List<MachineLearningDataVersionData> array = new List<MachineLearningDataVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataVersionData.DeserializeDataVersionData(item));
+                        array.Add(MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(item));
                     }
                     value = array;
                     continue;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the HealthcareApisIotFhirDestination data model. </summary>
+    /// <summary>
+    /// A class representing the HealthcareApisIotFhirDestination data model.
+    /// IoT Connector FHIR destination definition.
+    /// </summary>
     public partial class HealthcareApisIotFhirDestinationData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>
@@ -23,14 +26,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceResourceId"/> or <paramref name="fhirMapping"/> is null. </exception>
         public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping)
         {
-            if (fhirServiceResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceResourceId));
-            }
-            if (fhirMapping == null)
-            {
-                throw new ArgumentNullException(nameof(fhirMapping));
-            }
+            Argument.AssertNotNull(fhirServiceResourceId, nameof(fhirServiceResourceId));
+            Argument.AssertNotNull(fhirMapping, nameof(fhirMapping));
 
             ResourceIdentityResolutionType = resourceIdentityResolutionType;
             FhirServiceResourceId = fhirServiceResourceId;

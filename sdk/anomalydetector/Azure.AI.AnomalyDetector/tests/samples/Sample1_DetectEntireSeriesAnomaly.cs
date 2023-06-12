@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,8 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using Azure.AI.AnomalyDetector.Models;
+using System.Text.Json;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -17,16 +16,16 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
     public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
-        public async Task DetectEntireSeriesAnomaly()
+        public void DetectEntireSeriesAnomaly()
         {
-            #region Snippet:CreateAnomalyDetectorClient
+            #region Snippet:CreateAnomalyDetectorClientEntire
 
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var endpointUri = new Uri(endpoint);
-            var credential = new AzureKeyCredential(apiKey);
+            Uri endpointUri = new Uri(endpoint);
+            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
@@ -45,7 +44,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
             //create request
-            DetectRequest request = new DetectRequest(list)
+            UnivariateDetectionOptions request = new UnivariateDetectionOptions(list)
             {
                 Granularity = TimeGranularity.Daily
             };
@@ -59,14 +58,15 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             try
             {
-                EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+                Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+                JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
                 bool hasAnomaly = false;
                 for (int i = 0; i < request.Series.Count; ++i)
                 {
-                    if (result.IsAnomaly[i])
+                    if (result.GetProperty("isAnomaly")[i].GetBoolean())
                     {
-                        Console.WriteLine("An anomaly was detected at index: {0}.", i);
+                        Console.WriteLine($"An anomaly was detected at index: {i}.");
                         hasAnomaly = true;
                     }
                 }
@@ -77,12 +77,12 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+                Console.WriteLine($"Entire detection failed: {ex.Message}");
                 throw;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+                Console.WriteLine($"Detection error. {ex.Message}");
                 throw;
             }
             #endregion

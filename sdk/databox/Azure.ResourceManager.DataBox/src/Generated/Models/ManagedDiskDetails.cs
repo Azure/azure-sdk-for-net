@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupId"/> or <paramref name="stagingStorageAccountId"/> is null. </exception>
         public ManagedDiskDetails(ResourceIdentifier resourceGroupId, ResourceIdentifier stagingStorageAccountId)
         {
-            if (resourceGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupId));
-            }
-            if (stagingStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(stagingStorageAccountId));
-            }
+            Argument.AssertNotNull(resourceGroupId, nameof(resourceGroupId));
+            Argument.AssertNotNull(stagingStorageAccountId, nameof(stagingStorageAccountId));
 
             ResourceGroupId = resourceGroupId;
             StagingStorageAccountId = stagingStorageAccountId;

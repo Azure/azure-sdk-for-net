@@ -9,6 +9,8 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
 using System;
+using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Monitor.Tests
 {
@@ -154,9 +156,9 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 TimeZone = "UTC"
             };
-            var Schedule = new RecurrentSchedule("UTC-11", new[] { "Monday" }, new[] { 0 }, new[] { 10 });
+            var Schedule = new RecurrentSchedule("UTC-11", new MonitorDayOfWeek[] { "Monday" }, new[] { 0 }, new[] { 10 });
             var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
-            var scaleCapacity = new MonitorScaleCapacity("1", "1", "1");
+            var scaleCapacity = new MonitorScaleCapacity(1, 1, 1);
             var metricTrigger = new MetricTrigger("AbandonMessage", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), MetricTriggerTimeAggregationType.Average, MetricTriggerComparisonOperation.GreaterThan, 70)
             {
                 MetricNamespace = "microsoft.servicebus/namespaces",
@@ -288,11 +290,11 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.AreEqual(data1.Description, data2.Description);
         }
 
-        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, ActionGroupResource actionGroup)
+        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, ActionGroupResource actionGroup, string storageAccountId)
         {
             IEnumerable<string> scopes = new List<string>()
             {
-                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01",
+                storageAccountId,
                 // "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM02"
             };
             var metricAlertAction = new MetricAlertAction()
@@ -300,7 +302,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 ActionGroupId = actionGroup.Id,
                 WebHookProperties = { new KeyValuePair<string, string>("key1", "value1") }
             };
-            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.50) { };
+            var metricCriteria = new MetricCriteria("High_CPU_80", "Transactions", MetricCriteriaTimeAggregationType.Total, MetricCriteriaOperator.GreaterThan, 80.50) { };
             return new MetricAlertData(
                 location,
                 3,
@@ -310,6 +312,24 @@ namespace Azure.ResourceManager.Monitor.Tests
                 new TimeSpan(0, 5, 0),
                 new MetricAlertSingleResourceMultipleMetricCriteria() { AllOf = { metricCriteria } })
             { Actions = { metricAlertAction } };
+        }
+        #endregion
+
+        #region storage account
+        public static StorageAccountData GetStorageAccountData()
+        {
+            var data = new StorageAccountData(AzureLocation.EastUS)
+            {
+            };
+            return data;
+        }
+        public static StorageAccountCreateOrUpdateContent GetContent()
+        {
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, AzureLocation.EastUS)
+            {
+                AccessTier = StorageAccountAccessTier.Hot
+            };
+            return content;
         }
         #endregion
     }

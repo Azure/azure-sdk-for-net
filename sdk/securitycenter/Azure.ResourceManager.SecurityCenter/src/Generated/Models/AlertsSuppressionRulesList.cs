@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AlertsSuppressionRulesList. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AlertsSuppressionRulesList(IEnumerable<AlertsSuppressionRuleData> value)
+        internal AlertsSuppressionRulesList(IEnumerable<SecurityAlertsSuppressionRuleData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AlertsSuppressionRulesList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URI to fetch the next page. </param>
-        internal AlertsSuppressionRulesList(IReadOnlyList<AlertsSuppressionRuleData> value, string nextLink)
+        internal AlertsSuppressionRulesList(IReadOnlyList<SecurityAlertsSuppressionRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AlertsSuppressionRuleData> Value { get; }
+        public IReadOnlyList<SecurityAlertsSuppressionRuleData> Value { get; }
         /// <summary> URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

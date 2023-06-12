@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string SucceededValue = "Succeeded";
+        private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
         /// <summary> Creating. </summary>
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionRuleProvisioningState Deleting { get; } = new DataCollectionRuleProvisioningState(DeletingValue);
         /// <summary> Succeeded. </summary>
         public static DataCollectionRuleProvisioningState Succeeded { get; } = new DataCollectionRuleProvisioningState(SucceededValue);
+        /// <summary> Canceled. </summary>
+        public static DataCollectionRuleProvisioningState Canceled { get; } = new DataCollectionRuleProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static DataCollectionRuleProvisioningState Failed { get; } = new DataCollectionRuleProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionRuleProvisioningState"/> values are the same. </summary>

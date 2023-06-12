@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         public HeatMapModelTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         { }
 
-        private HeatMapModelResource DefaultHeatmapModelResource =>
-            new HeatMapModelResource(
+        private TrafficManagerHeatMapResource DefaultHeatmapModelResource =>
+            new TrafficManagerHeatMapResource(
                 Client,
-                HeatMapModelResource.CreateResourceIdentifier(
+                TrafficManagerHeatMapResource.CreateResourceIdentifier(
                     _subscription.Data.SubscriptionId,
                     ProfileWithHeatmapResoruceGroupName,
                     ProfileWithHeatmapName,
-                    Models.HeatMapType.Default));
+                    Models.TrafficManagerHeatMapType.Default));
 
-        private HeatMapModelCollection DefaultHealmapModelCollection =>
-            new HeatMapModelCollection(
+        private TrafficManagerHeatMapCollection DefaultHealmapModelCollection =>
+            new TrafficManagerHeatMapCollection(
                 Client,
-                ProfileResource.CreateResourceIdentifier(
+                TrafficManagerProfileResource.CreateResourceIdentifier(
                     _subscription.Data.SubscriptionId,
                     ProfileWithHeatmapResoruceGroupName,
                     ProfileWithHeatmapName));
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task GetTest()
         {
-            HeatMapModelResource heatMapModelResource = await DefaultHeatmapModelResource.GetAsync();
+            TrafficManagerHeatMapResource heatMapModelResource = await DefaultHeatmapModelResource.GetAsync();
 
             Assert.IsNotNull(heatMapModelResource);
             Assert.IsTrue(heatMapModelResource.HasData);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         public async Task GetWithCoordinatesConstraintTest()
         {
             // Rio de Janeiro and San Paulo area
-            HeatMapModelResource heatMapModelResource =
+            TrafficManagerHeatMapResource heatMapModelResource =
                 await DefaultHeatmapModelResource.GetAsync(
                     topLeft: new List<double> { -18.910742, -47.858517 },
                     botRight: new List<double> { -24.341378, -37.964283 });
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task GetFromCollectionTest()
         {
-            HeatMapModelResource heatMapModelResource =
-                await DefaultHealmapModelCollection.GetAsync(Models.HeatMapType.Default);
+            TrafficManagerHeatMapResource heatMapModelResource =
+                await DefaultHealmapModelCollection.GetAsync(Models.TrafficManagerHeatMapType.Default);
 
             Assert.IsNotNull(heatMapModelResource);
             Assert.IsTrue(heatMapModelResource.HasData);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task ExistsTest()
         {
-            Assert.IsTrue(await DefaultHealmapModelCollection.ExistsAsync(Models.HeatMapType.Default));
+            Assert.IsTrue(await DefaultHealmapModelCollection.ExistsAsync(Models.TrafficManagerHeatMapType.Default));
         }
     }
 }

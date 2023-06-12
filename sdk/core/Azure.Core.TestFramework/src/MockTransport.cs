@@ -77,6 +77,8 @@ namespace Azure.Core.TestFramework
             if (!(message.Request is MockRequest request))
                 throw new InvalidOperationException("the request is not compatible with the transport");
 
+            message.Response = null;
+
             lock (_syncObj)
             {
                 Requests.Add(request);

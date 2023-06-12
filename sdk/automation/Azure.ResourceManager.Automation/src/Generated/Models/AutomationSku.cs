@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Initializes a new instance of AutomationSku. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
-        public AutomationSku(SkuNameEnum name)
+        public AutomationSku(AutomationSkuName name)
         {
             Name = name;
         }
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         /// <param name="family"> Gets or sets the SKU family. </param>
         /// <param name="capacity"> Gets or sets the SKU capacity. </param>
-        internal AutomationSku(SkuNameEnum name, string family, int? capacity)
+        internal AutomationSku(AutomationSkuName name, string family, int? capacity)
         {
             Name = name;
             Family = family;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets the SKU name of the account. </summary>
-        public SkuNameEnum Name { get; set; }
+        public AutomationSkuName Name { get; set; }
         /// <summary> Gets or sets the SKU family. </summary>
         public string Family { get; set; }
         /// <summary> Gets or sets the SKU capacity. </summary>

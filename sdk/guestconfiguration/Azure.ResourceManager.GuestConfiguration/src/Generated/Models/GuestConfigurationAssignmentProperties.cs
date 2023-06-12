@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
         /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
-        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, AssignmentReport latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList)
+        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList)
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> parameter hash for the guest configuration assignment. </summary>
         public string ParameterHash { get; }
         /// <summary> Last reported guest configuration assignment report. </summary>
-        public AssignmentReport LatestAssignmentReport { get; set; }
+        public GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get; set; }
         /// <summary> The source which initiated the guest configuration assignment. Ex: Azure Policy. </summary>
         public string Context { get; set; }
         /// <summary> Combined hash of the configuration package and parameters. </summary>

@@ -1,0 +1,1055 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourcegroups/sdk-test-rg-delete?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c19d8bdb3a3e4a1dded4d11b308d18f1-e4438e4a0e78b929-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "fcc3b2acd561c5d396b68b1fb3730d7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "237",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "14ab9a2b-dd98-4378-9f80-d732f99a6344",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "14ab9a2b-dd98-4378-9f80-d732f99a6344",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205911Z:14ab9a2b-dd98-4378-9f80-d732f99a6344"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete",
+        "name": "sdk-test-rg-delete",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westeurope",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "35",
+        "Content-Type": "application/json",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-44f82a7ce1147a67-00",
+        "User-Agent": "azsdk-net-ResourceManager.ConfidentialLedger/1.0.0-alpha.20220910.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6d3d62c2f026ee26c5bdb95ea8be25fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westeurope"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+        "Cache-Control": "no-cache",
+        "Content-Length": "938",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:19 GMT",
+        "ETag": "\u0022960a9f8c-0000-0d00-0000-631cfaa70000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-async-operation-timeout": "PT10M",
+        "x-ms-client-request-id": "6d3d62c2f026ee26c5bdb95ea8be25fe",
+        "x-ms-correlation-request-id": "3582336f-a462-494b-8909-84a64b66cb51",
+        "x-ms-image-digest": "sha256:07f4244bdd4fa89539813bd1c743e57090add13dcd42a51e9d87dd441e56a734",
+        "x-ms-image-tag": "1.0.02049.29-cb8535e39ba27833da973165c9003a442deb7d8d",
+        "x-ms-machineName": "controlplane-5cdd86b86f-rdp4b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "7f1315a9-a367-4964-bd48-631c86271ecd",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205919Z:3582336f-a462-494b-8909-84a64b66cb51"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "name": "dotnet-sdk-test-ledger-delete",
+        "type": "microsoft.confidentialledger/ledgers",
+        "location": "westeurope",
+        "tags": {},
+        "systemData": {
+          "createdBy": "64c98884-3d2a-4203-adbe-cd393d69e0b9",
+          "createdByType": "Application",
+          "createdAt": "2022-09-10T20:59:11.4194383Z",
+          "lastModifiedBy": "64c98884-3d2a-4203-adbe-cd393d69e0b9",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-09-10T20:59:11.4194383Z"
+        },
+        "properties": {
+          "ledgerName": "dotnet-sdk-test-ledger-delete",
+          "ledgerType": "Unknown",
+          "aadBasedSecurityPrincipals": [
+            {
+              "principalId": "9a4ca6fb-4dbe-41e6-b960-f496ec641737",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "ledgerRoleName": "Administrator"
+            }
+          ],
+          "ledgerInternalNamespace": "857b41ad-6970-4e29-acb9-b72fda55ff8f",
+          "ledgerSku": "Unknown",
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-222ae287b4a1c4c9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "44058ba6e989bc3d8cd537a31b751cd7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:19 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "44058ba6e989bc3d8cd537a31b751cd7",
+        "x-ms-correlation-request-id": "c5c48592-676a-4b73-8397-15a485959730",
+        "x-ms-ratelimit-remaining-tenant-reads": "11989",
+        "x-ms-request-id": "1019f3e4-a629-4876-be03-e70b8a96ac90",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205919Z:c5c48592-676a-4b73-8397-15a485959730"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-f7b5e5ec0fa20f15-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6d8f8c90deee920d6b3878ce9e92b014",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:20 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6d8f8c90deee920d6b3878ce9e92b014",
+        "x-ms-correlation-request-id": "b480583c-21b3-43ee-8ad2-3dbfc8974dac",
+        "x-ms-ratelimit-remaining-tenant-reads": "11988",
+        "x-ms-request-id": "91ee947f-e603-49e9-832a-8a34fde333ce",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205920Z:b480583c-21b3-43ee-8ad2-3dbfc8974dac"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-2fc131e8f2a11b7a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1cb8c301e1b8a67508c8a299f852e97f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:21 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1cb8c301e1b8a67508c8a299f852e97f",
+        "x-ms-correlation-request-id": "581900a8-aa98-414a-96b4-1b39257c6113",
+        "x-ms-ratelimit-remaining-tenant-reads": "11987",
+        "x-ms-request-id": "3135fa89-3335-42ea-8434-98ed3f5f4bdc",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205921Z:581900a8-aa98-414a-96b4-1b39257c6113"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-ce215b57791543bd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b0037a3b4d21c7087e72d851706e1df9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:22 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b0037a3b4d21c7087e72d851706e1df9",
+        "x-ms-correlation-request-id": "c707827f-bd48-4e34-98d3-87e45f20c437",
+        "x-ms-ratelimit-remaining-tenant-reads": "11986",
+        "x-ms-request-id": "8a6994cf-56fd-4030-820c-2cc323bc595e",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205923Z:c707827f-bd48-4e34-98d3-87e45f20c437"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-17b6189763cd0b0e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "58a22224ffbdaf1f17e864253c739a19",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:24 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "58a22224ffbdaf1f17e864253c739a19",
+        "x-ms-correlation-request-id": "eac3bbe7-fcce-41da-bf64-bfc4b438ddf2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11985",
+        "x-ms-request-id": "0aa877f8-abce-4b7f-ba67-98577ea0fc3e",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205925Z:eac3bbe7-fcce-41da-bf64-bfc4b438ddf2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-8a80a6a8f759a3b1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2392f94e008fb3f3baf19e460823359a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:28 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2392f94e008fb3f3baf19e460823359a",
+        "x-ms-correlation-request-id": "93fdcb54-acbf-4815-af8f-b3a5919bc021",
+        "x-ms-ratelimit-remaining-tenant-reads": "11984",
+        "x-ms-request-id": "99017a49-6ebe-4fb9-9492-f045006eb1bf",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205929Z:93fdcb54-acbf-4815-af8f-b3a5919bc021"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-196b2f26e67ee063-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d575a8ab90b03bc25b549838e9e38a0b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:36 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d575a8ab90b03bc25b549838e9e38a0b",
+        "x-ms-correlation-request-id": "cc391060-f6d4-4044-a5e5-fb689fe7f903",
+        "x-ms-ratelimit-remaining-tenant-reads": "11983",
+        "x-ms-request-id": "ee5d6a59-fb37-49fd-91f2-5824046ef7d4",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205937Z:cc391060-f6d4-4044-a5e5-fb689fe7f903"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-4e41a7fa41c3c124-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7703bfd8f9dc246a2fee9ecb61d8a6f4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:59:52 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7703bfd8f9dc246a2fee9ecb61d8a6f4",
+        "x-ms-correlation-request-id": "bc49c596-15cc-4bd6-96f2-04064b611dad",
+        "x-ms-ratelimit-remaining-tenant-reads": "11982",
+        "x-ms-request-id": "fe3b6f47-8ad4-4cea-877d-820f7702886b",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205953Z:bc49c596-15cc-4bd6-96f2-04064b611dad"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-0082162e0beba4e0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "947acab3c4febd683657c83b67bacad7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:24 GMT",
+        "ETag": "\u0022ee020a01-0000-0d00-0000-631cfaa10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "947acab3c4febd683657c83b67bacad7",
+        "x-ms-correlation-request-id": "9cf22a56-eee0-481c-b00c-0fb844f29d7f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11981",
+        "x-ms-request-id": "d3136b7c-913b-40a4-bcca-90579995db23",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210025Z:9cf22a56-eee0-481c-b00c-0fb844f29d7f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Accepted",
+        "startTime": "2022-09-10T20:59:13.5965117Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-8826061a7bf6cc6d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "496e9267bd20b1bd3d50a5c2f2f6d982",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1184",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:56 GMT",
+        "ETag": "\u0022ee021301-0000-0d00-0000-631cfaef0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "496e9267bd20b1bd3d50a5c2f2f6d982",
+        "x-ms-correlation-request-id": "d724d350-bbe8-48a0-a7ce-979364dc0730",
+        "x-ms-ratelimit-remaining-tenant-reads": "11980",
+        "x-ms-request-id": "d1d4333d-0d12-4e8e-8a12-dfc70e1ce060",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210057Z:d724d350-bbe8-48a0-a7ce-979364dc0730"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "7f1315a9-a367-4964-bd48-631c86271ecd*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Succeeded",
+        "startTime": "2022-09-10T20:59:13.5965117Z",
+        "endTime": "2022-09-10T21:00:31.8797Z",
+        "properties": {
+          "LedgerName": "dotnet-sdk-test-ledger-delete",
+          "LedgerUri": "https://dotnet-sdk-test-ledger-delete.confidential-ledger.azure.com",
+          "IdentityServiceUri": "https://identity.confidential-ledger.core.azure.com/ledgerIdentity/dotnet-sdk-test-ledger-delete",
+          "LedgerStorageAccount": null,
+          "LedgerType": "Unknown",
+          "AadBasedSecurityPrincipals": [
+            {
+              "PrincipalId": "9a4ca6fb-4dbe-41e6-b960-f496ec641737",
+              "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "LedgerRoleName": "Administrator"
+            }
+          ],
+          "CertBasedSecurityPrincipals": null,
+          "LedgerInternalNamespace": "857b41ad-6970-4e29-acb9-b72fda55ff8f",
+          "LedgerSku": "Unknown"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fa1082d10f9ae17c099db97c27490f4-7b75132ffd370245-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1e85a4adf568130d56454185312fbc75",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "809",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:56 GMT",
+        "ETag": "\u0022960a6794-0000-0d00-0000-631cfaef0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1e85a4adf568130d56454185312fbc75",
+        "x-ms-correlation-request-id": "84d0dda1-39a1-47e8-ab7a-dd4f8bff92f3",
+        "x-ms-image-digest": "sha256:07f4244bdd4fa89539813bd1c743e57090add13dcd42a51e9d87dd441e56a734",
+        "x-ms-image-tag": "1.0.02049.29-cb8535e39ba27833da973165c9003a442deb7d8d",
+        "x-ms-machineName": "controlplane-5cdd86b86f-gjr9r",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "a336d98b-424a-46ac-ab04-e012a20cd353",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210057Z:84d0dda1-39a1-47e8-ab7a-dd4f8bff92f3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/Ledgers/dotnet-sdk-test-ledger-delete",
+        "name": "dotnet-sdk-test-ledger-delete",
+        "type": "Microsoft.ConfidentialLedger/Ledgers",
+        "location": "westeurope",
+        "tags": {},
+        "properties": {
+          "ledgerName": "dotnet-sdk-test-ledger-delete",
+          "ledgerUri": "https://dotnet-sdk-test-ledger-delete.confidential-ledger.azure.com",
+          "identityServiceUri": "https://identity.confidential-ledger.core.azure.com/ledgerIdentity/dotnet-sdk-test-ledger-delete",
+          "ledgerType": "Unknown",
+          "aadBasedSecurityPrincipals": [
+            {
+              "principalId": "9a4ca6fb-4dbe-41e6-b960-f496ec641737",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "ledgerRoleName": "Administrator"
+            }
+          ],
+          "ledgerInternalNamespace": "857b41ad-6970-4e29-acb9-b72fda55ff8f"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fae23f1e985efb1c4609cc2d89c9fd21-d9bd92cf9619d965-00",
+        "User-Agent": "azsdk-net-ResourceManager.ConfidentialLedger/1.0.0-alpha.20220910.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ce64c6235c6af5d40cc857ad1fa6ca3f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "809",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:56 GMT",
+        "ETag": "\u0022960a6794-0000-0d00-0000-631cfaef0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ce64c6235c6af5d40cc857ad1fa6ca3f",
+        "x-ms-correlation-request-id": "20016fdc-a92a-4ffc-ba04-b20e092c048e",
+        "x-ms-image-digest": "sha256:07f4244bdd4fa89539813bd1c743e57090add13dcd42a51e9d87dd441e56a734",
+        "x-ms-image-tag": "1.0.02049.29-cb8535e39ba27833da973165c9003a442deb7d8d",
+        "x-ms-machineName": "controlplane-5cdd86b86f-gjr9r",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "022f17dd-51e6-4c3e-b690-a639aacbbcb2",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210057Z:20016fdc-a92a-4ffc-ba04-b20e092c048e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/Ledgers/dotnet-sdk-test-ledger-delete",
+        "name": "dotnet-sdk-test-ledger-delete",
+        "type": "Microsoft.ConfidentialLedger/Ledgers",
+        "location": "westeurope",
+        "tags": {},
+        "properties": {
+          "ledgerName": "dotnet-sdk-test-ledger-delete",
+          "ledgerUri": "https://dotnet-sdk-test-ledger-delete.confidential-ledger.azure.com",
+          "identityServiceUri": "https://identity.confidential-ledger.core.azure.com/ledgerIdentity/dotnet-sdk-test-ledger-delete",
+          "ledgerType": "Unknown",
+          "aadBasedSecurityPrincipals": [
+            {
+              "principalId": "9a4ca6fb-4dbe-41e6-b960-f496ec641737",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "ledgerRoleName": "Administrator"
+            }
+          ],
+          "ledgerInternalNamespace": "857b41ad-6970-4e29-acb9-b72fda55ff8f"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-bcad9d20ae144bb0-00",
+        "User-Agent": "azsdk-net-ResourceManager.ConfidentialLedger/1.0.0-alpha.20220910.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c38d457dab35716e855af2da7c38800e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:56 GMT",
+        "ETag": "\u0022960aea96-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-async-operation-timeout": "PT5M",
+        "x-ms-client-request-id": "c38d457dab35716e855af2da7c38800e",
+        "x-ms-correlation-request-id": "8295843e-3f0a-4260-b149-3b7f19918681",
+        "x-ms-image-digest": "sha256:07f4244bdd4fa89539813bd1c743e57090add13dcd42a51e9d87dd441e56a734",
+        "x-ms-image-tag": "1.0.02049.29-cb8535e39ba27833da973165c9003a442deb7d8d",
+        "x-ms-machineName": "controlplane-5cdd86b86f-gjr9r",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "4f53998b-0b45-4878-bd93-2ece5f201831",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210057Z:8295843e-3f0a-4260-b149-3b7f19918681"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-96c115cc7aeb2034-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "eb07017bf9a1784057f3490f69f978d3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:56 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "eb07017bf9a1784057f3490f69f978d3",
+        "x-ms-correlation-request-id": "74d5d459-9e70-49f0-9791-360be38b901f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11979",
+        "x-ms-request-id": "2688eadb-b652-4da5-8b6a-e774f4d488df",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210057Z:74d5d459-9e70-49f0-9791-360be38b901f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-be522c0e3854c59b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ee1948489e0872ae2c3cf3a599ced325",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:58 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ee1948489e0872ae2c3cf3a599ced325",
+        "x-ms-correlation-request-id": "7015641c-2fc2-4376-98f7-6efc768b8049",
+        "x-ms-ratelimit-remaining-tenant-reads": "11978",
+        "x-ms-request-id": "7a3147ca-9c8f-41f0-b809-668a0eeb4259",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210058Z:7015641c-2fc2-4376-98f7-6efc768b8049"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-c698f4040ecdb29e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7b5f426694319a6cf026d49ec109e7d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:00:59 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7b5f426694319a6cf026d49ec109e7d6",
+        "x-ms-correlation-request-id": "fccf65bd-6b21-4b0b-bdda-5a2cd446f68e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11977",
+        "x-ms-request-id": "69f6720b-f4fc-4fc4-b1af-50a7c40443a7",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210059Z:fccf65bd-6b21-4b0b-bdda-5a2cd446f68e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-6eb251760c5095ea-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "55563e170646dca85395be65069bde88",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:01:00 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "55563e170646dca85395be65069bde88",
+        "x-ms-correlation-request-id": "0f6e2f9b-1d28-4755-99ce-f1fbb306cb8d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11976",
+        "x-ms-request-id": "09819271-7d5b-495a-b081-5214d7eb6a3c",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210101Z:0f6e2f9b-1d28-4755-99ce-f1fbb306cb8d"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-c46e997acc6295e5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "27a9241ffd9ab4a2dc7efde1c90fb023",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:01:02 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "27a9241ffd9ab4a2dc7efde1c90fb023",
+        "x-ms-correlation-request-id": "abc37760-15e5-496f-90d0-f91efce66c68",
+        "x-ms-ratelimit-remaining-tenant-reads": "11975",
+        "x-ms-request-id": "52e246a9-da7d-44d1-a3bc-19421cb1aa2a",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210103Z:abc37760-15e5-496f-90d0-f91efce66c68"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-4cf4b2f3962d4706-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5b8d1c557e7760de9a82289bd5079455",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:01:06 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5b8d1c557e7760de9a82289bd5079455",
+        "x-ms-correlation-request-id": "c619677f-e3a5-41f5-8cc7-2a508638a19c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11974",
+        "x-ms-request-id": "36fc718a-d4f1-4dbf-afc8-d25b8bfd7442",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210107Z:c619677f-e3a5-41f5-8cc7-2a508638a19c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-c51e7cdbad8635b7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9d7e4b47bf601a3c9ba278c808c61243",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:01:14 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9d7e4b47bf601a3c9ba278c808c61243",
+        "x-ms-correlation-request-id": "19b02e2f-5b71-4fb3-8534-acce17d0da61",
+        "x-ms-ratelimit-remaining-tenant-reads": "11973",
+        "x-ms-request-id": "31e1e6e3-3259-425a-8322-18efe9883c99",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210115Z:19b02e2f-5b71-4fb3-8534-acce17d0da61"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-8af0a96c2fe99ae3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e9109be4820da11145488d17d507dfd5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:01:31 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e9109be4820da11145488d17d507dfd5",
+        "x-ms-correlation-request-id": "0089b569-803b-4225-b428-2210ff089d9b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11972",
+        "x-ms-request-id": "a637eac2-db1e-4a78-a9e8-ebb72c854351",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210131Z:0089b569-803b-4225-b428-2210ff089d9b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-a8b6244a02100cc0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7e9aa8ea139095c3df73c0d5051658d3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:02:02 GMT",
+        "ETag": "\u0022ee021b01-0000-0d00-0000-631cfb090000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7e9aa8ea139095c3df73c0d5051658d3",
+        "x-ms-correlation-request-id": "97c2dfdd-9e95-41d8-9d1d-48183ac03914",
+        "x-ms-ratelimit-remaining-tenant-reads": "11971",
+        "x-ms-request-id": "d3eb2eff-4913-44b3-8cd1-eda1644a4d36",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210203Z:97c2dfdd-9e95-41d8-9d1d-48183ac03914"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Deleting",
+        "startTime": "2022-09-10T21:00:57.7767751Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a2324c93841ac7ac87a3d42db13774d-4fc3b2f9eff86d84-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "39b7e470aaf7c5483add571732254594",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1187",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:02:34 GMT",
+        "ETag": "\u0022ee022701-0000-0d00-0000-631cfb540000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "39b7e470aaf7c5483add571732254594",
+        "x-ms-correlation-request-id": "98974ca9-41f1-4949-b2e5-7d9b86e2096e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11970",
+        "x-ms-request-id": "0daec15d-7138-41ba-a831-41a017cfa565",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210235Z:98974ca9-41f1-4949-b2e5-7d9b86e2096e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "name": "4f53998b-0b45-4878-bd93-2ece5f201831*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B",
+        "resourceId": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete",
+        "status": "Succeeded",
+        "startTime": "2022-09-10T21:00:57.7767751Z",
+        "endTime": "2022-09-10T21:02:12.6415184Z",
+        "properties": {
+          "LedgerName": "dotnet-sdk-test-ledger-delete",
+          "LedgerUri": "https://dotnet-sdk-test-ledger-delete.confidential-ledger.azure.com",
+          "IdentityServiceUri": "https://identity.confidential-ledger.core.azure.com/ledgerIdentity/dotnet-sdk-test-ledger-delete",
+          "LedgerStorageAccount": null,
+          "LedgerType": "Unknown",
+          "AadBasedSecurityPrincipals": [
+            {
+              "PrincipalId": "9a4ca6fb-4dbe-41e6-b960-f496ec641737",
+              "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "LedgerRoleName": "Administrator"
+            }
+          ],
+          "CertBasedSecurityPrincipals": null,
+          "LedgerInternalNamespace": "857b41ad-6970-4e29-acb9-b72fda55ff8f",
+          "LedgerSku": "Unknown"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-253252fbadbd0ce918c4380ebce731ea-d0bba8cf77009b68-00",
+        "User-Agent": "azsdk-net-ResourceManager.ConfidentialLedger/1.0.0-alpha.20220910.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5fdda3c2942cd0b3d77a099ac13b9b2f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "256",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 21:02:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "28f293cd-5c0c-4922-8e90-3d27c4c6a676",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "28f293cd-5c0c-4922-8e90-3d27c4c6a676",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T210235Z:28f293cd-5c0c-4922-8e90-3d27c4c6a676"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.ConfidentialLedger/Ledgers/dotnet-sdk-test-ledger-delete\u0027 under resource group \u0027sdk-test-rg-delete\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1123291292",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "027da7f8-2fc6-46d4-9be9-560706b60fec",
+    "TEST-LEDGER-NAME-PREFIX": "dotnet-sdk-test-ledger-"
+  }
+}

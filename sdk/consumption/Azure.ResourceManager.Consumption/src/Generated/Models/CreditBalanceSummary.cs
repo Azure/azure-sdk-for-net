@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Summary of credit balances. </summary>
+    /// <summary>
+    /// Summary of credit balances.
+    /// Serialized Name: CreditBalanceSummary
+    /// </summary>
     public partial class CreditBalanceSummary
     {
         /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
@@ -16,21 +19,39 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
-        /// <param name="estimatedBalance"> Estimated balance. </param>
-        /// <param name="currentBalance"> Current balance. </param>
-        /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
-        internal CreditBalanceSummary(Amount estimatedBalance, Amount currentBalance, AmountWithExchangeRate estimatedBalanceInBillingCurrency)
+        /// <param name="estimatedBalance">
+        /// Estimated balance.
+        /// Serialized Name: CreditBalanceSummary.estimatedBalance
+        /// </param>
+        /// <param name="currentBalance">
+        /// Current balance.
+        /// Serialized Name: CreditBalanceSummary.currentBalance
+        /// </param>
+        /// <param name="estimatedBalanceInBillingCurrency">
+        /// Estimated balance in billing currency.
+        /// Serialized Name: CreditBalanceSummary.estimatedBalanceInBillingCurrency
+        /// </param>
+        internal CreditBalanceSummary(ConsumptionAmount estimatedBalance, ConsumptionAmount currentBalance, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency)
         {
             EstimatedBalance = estimatedBalance;
             CurrentBalance = currentBalance;
             EstimatedBalanceInBillingCurrency = estimatedBalanceInBillingCurrency;
         }
 
-        /// <summary> Estimated balance. </summary>
-        public Amount EstimatedBalance { get; }
-        /// <summary> Current balance. </summary>
-        public Amount CurrentBalance { get; }
-        /// <summary> Estimated balance in billing currency. </summary>
-        public AmountWithExchangeRate EstimatedBalanceInBillingCurrency { get; }
+        /// <summary>
+        /// Estimated balance.
+        /// Serialized Name: CreditBalanceSummary.estimatedBalance
+        /// </summary>
+        public ConsumptionAmount EstimatedBalance { get; }
+        /// <summary>
+        /// Current balance.
+        /// Serialized Name: CreditBalanceSummary.currentBalance
+        /// </summary>
+        public ConsumptionAmount CurrentBalance { get; }
+        /// <summary>
+        /// Estimated balance in billing currency.
+        /// Serialized Name: CreditBalanceSummary.estimatedBalanceInBillingCurrency
+        /// </summary>
+        public ConsumptionAmountWithExchangeRate EstimatedBalanceInBillingCurrency { get; }
     }
 }

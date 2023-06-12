@@ -19,17 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="severity"> The severity level of the assessment. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
-        public SecurityAssessmentMetadataProperties(string displayName, Severity severity, AssessmentType assessmentType)
+        public SecurityAssessmentMetadataProperties(string displayName, SecurityAssessmentSeverity severity, SecurityAssessmentType assessmentType)
         {
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
             DisplayName = displayName;
-            Categories = new ChangeTrackingList<Category>();
+            Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
             Severity = severity;
-            Threats = new ChangeTrackingList<Threat>();
+            Threats = new ChangeTrackingList<SecurityThreat>();
             AssessmentType = assessmentType;
         }
 
@@ -43,10 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"></param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
-        internal SecurityAssessmentMetadataProperties(string displayName, string policyDefinitionId, string description, string remediationDescription, IList<Category> categories, Severity severity, UserImpact? userImpact, ImplementationEffort? implementationEffort, IList<Threat> threats, bool? preview, AssessmentType assessmentType, SecurityAssessmentMetadataPartnerData partnerData)
+        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -57,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             UserImpact = userImpact;
             ImplementationEffort = implementationEffort;
             Threats = threats;
-            Preview = preview;
+            IsPreview = isPreview;
             AssessmentType = assessmentType;
             PartnerData = partnerData;
         }
@@ -65,26 +62,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; set; }
         /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary> Human readable description of the assessment. </summary>
         public string Description { get; set; }
         /// <summary> Human readable description of what you should do to mitigate this security issue. </summary>
         public string RemediationDescription { get; set; }
         /// <summary> Gets the categories. </summary>
-        public IList<Category> Categories { get; }
+        public IList<SecurityAssessmentResourceCategory> Categories { get; }
         /// <summary> The severity level of the assessment. </summary>
-        public Severity Severity { get; set; }
+        public SecurityAssessmentSeverity Severity { get; set; }
         /// <summary> The user impact of the assessment. </summary>
-        public UserImpact? UserImpact { get; set; }
+        public SecurityAssessmentUserImpact? UserImpact { get; set; }
         /// <summary> The implementation effort required to remediate this assessment. </summary>
         public ImplementationEffort? ImplementationEffort { get; set; }
         /// <summary> Gets the threats. </summary>
-        public IList<Threat> Threats { get; }
+        public IList<SecurityThreat> Threats { get; }
         /// <summary> True if this assessment is in preview release status. </summary>
-        public bool? Preview { get; set; }
+        public bool? IsPreview { get; set; }
         /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
-        public AssessmentType AssessmentType { get; set; }
+        public SecurityAssessmentType AssessmentType { get; set; }
         /// <summary> Describes the partner that created the assessment. </summary>
-        public SecurityAssessmentMetadataPartnerData PartnerData { get; set; }
+        public SecurityAssessmentMetadataPartner PartnerData { get; set; }
     }
 }

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Azure resource identifier. </summary>
-    public partial class AzureResourceIdentifier : AlertResourceIdentifier
+    public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
         internal AzureResourceIdentifier()
@@ -19,13 +21,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
         /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
-        internal AzureResourceIdentifier(ResourceIdentifierType resourceIdentifierType, string azureResourceId) : base(resourceIdentifierType)
+        internal AzureResourceIdentifier(ResourceIdentifierType resourceIdentifierType, ResourceIdentifier azureResourceId) : base(resourceIdentifierType)
         {
             AzureResourceId = azureResourceId;
             ResourceIdentifierType = resourceIdentifierType;
         }
 
         /// <summary> ARM resource identifier for the cloud resource being alerted on. </summary>
-        public string AzureResourceId { get; }
+        public ResourceIdentifier AzureResourceId { get; }
     }
 }

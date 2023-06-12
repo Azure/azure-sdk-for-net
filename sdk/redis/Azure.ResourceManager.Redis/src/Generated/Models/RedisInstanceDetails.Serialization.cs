@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisInstanceDetails DeserializeRedisInstanceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sslPort = default;
             Optional<int> nonSslPort = default;
             Optional<string> zone = default;
@@ -22,56 +26,51 @@ namespace Azure.ResourceManager.Redis.Models
             Optional<bool> isPrimary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sslPort"))
+                if (property.NameEquals("sslPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sslPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nonSslPort"))
+                if (property.NameEquals("nonSslPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nonSslPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     zone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shardId"))
+                if (property.NameEquals("shardId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shardId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isMaster"))
+                if (property.NameEquals("isMaster"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMaster = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPrimary"))
+                if (property.NameEquals("isPrimary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPrimary = property.Value.GetBoolean();

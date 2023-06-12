@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("secretType");
+            writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("secretType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -31,16 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
                 }
             }
-            LinkerSecretType secretType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("secretType"))
-                {
-                    secretType = new LinkerSecretType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecretBaseInfo(secretType);
+            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element);
         }
     }
 }

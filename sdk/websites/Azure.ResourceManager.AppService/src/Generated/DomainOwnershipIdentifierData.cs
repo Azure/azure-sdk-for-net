@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DomainOwnershipIdentifier data model. </summary>
+    /// <summary>
+    /// A class representing the DomainOwnershipIdentifier data model.
+    /// Domain ownership Identifier.
+    /// </summary>
     public partial class DomainOwnershipIdentifierData : ResourceData
     {
         /// <summary> Initializes a new instance of DomainOwnershipIdentifierData. </summary>

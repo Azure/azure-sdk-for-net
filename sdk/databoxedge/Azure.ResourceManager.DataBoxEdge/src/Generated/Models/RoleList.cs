@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of RoleList. </summary>
         internal RoleList()
         {
-            Value = new ChangeTrackingList<RoleData>();
+            Value = new ChangeTrackingList<DataBoxEdgeRoleData>();
         }
 
         /// <summary> Initializes a new instance of RoleList. </summary>
         /// <param name="value">
         /// The Value.
-        /// Please note <see cref="RoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="IoTRole"/>, <see cref="KubernetesRole"/> and <see cref="MECRole"/>.
+        /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
         /// </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal RoleList(IReadOnlyList<RoleData> value, string nextLink)
+        internal RoleList(IReadOnlyList<DataBoxEdgeRoleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary>
         /// The Value.
-        /// Please note <see cref="RoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="IoTRole"/>, <see cref="KubernetesRole"/> and <see cref="MECRole"/>.
+        /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
         /// </summary>
-        public IReadOnlyList<RoleData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeRoleData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -39,6 +39,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
@@ -80,7 +81,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -113,7 +114,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -158,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -187,7 +188,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -203,7 +204,6 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
             return message;
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders>> DeleteBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders>> DeleteBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -229,12 +229,9 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -243,7 +240,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> DeleteBlob(string name, string digest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders> DeleteBlob(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -260,12 +257,9 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -315,7 +309,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -348,7 +342,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -385,7 +379,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -408,11 +402,11 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUploadChunkRequest(string nextLink, Stream value)
+        internal HttpMessage CreateUploadChunkRequest(string nextLink, Stream value, string contentRange, string contentLength)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -423,6 +417,14 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (contentRange != null)
+            {
+                request.Headers.Add("Content-Range", contentRange);
+            }
+            if (contentLength != null)
+            {
+                request.Headers.Add("Content-Length", contentLength);
+            }
             request.Headers.Add("Content-Type", "application/octet-stream");
             request.Content = RequestContent.Create(value);
             return message;
@@ -431,9 +433,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
+        /// <param name="contentRange"> Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header. </param>
+        /// <param name="contentLength"> Length of the chunk being uploaded, corresponding the length of the request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string nextLink, Stream value, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string nextLink, Stream value, string contentRange = null, string contentLength = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -444,7 +448,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadChunkRequest(nextLink, value);
+            using var message = CreateUploadChunkRequest(nextLink, value, contentRange, contentLength);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
@@ -452,16 +456,18 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
+        /// <param name="contentRange"> Range of bytes identifying the desired block of content represented by the body. Start must the end offset retrieved via status check plus one. Note that this is a non-standard use of the Content-Range header. </param>
+        /// <param name="contentLength"> Length of the chunk being uploaded, corresponding the length of the request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string nextLink, Stream value, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string nextLink, Stream value, string contentRange = null, string contentLength = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -472,7 +478,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadChunkRequest(nextLink, value);
+            using var message = CreateUploadChunkRequest(nextLink, value, contentRange, contentLength);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
@@ -480,7 +486,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -529,7 +535,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -558,7 +564,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -594,7 +600,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -616,7 +622,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -654,7 +660,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -677,7 +683,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -685,6 +691,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
@@ -730,7 +737,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -766,7 +773,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -816,7 +823,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -849,7 +856,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

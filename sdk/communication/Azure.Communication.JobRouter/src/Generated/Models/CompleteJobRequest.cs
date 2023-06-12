@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -17,17 +18,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         public CompleteJobRequest(string assignmentId)
         {
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
+            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
 
             AssignmentId = assignmentId;
         }
 
         /// <summary> The assignment within the job to complete. </summary>
         public string AssignmentId { get; }
-        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </summary>
         public string Note { get; set; }
     }
 }

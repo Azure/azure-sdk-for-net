@@ -5952,7 +5952,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/csmrg1380?api-version=2017-05-10",
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/csmrg1380?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",

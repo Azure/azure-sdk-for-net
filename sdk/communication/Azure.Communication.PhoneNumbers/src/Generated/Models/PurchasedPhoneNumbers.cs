@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -19,10 +20,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
         internal PurchasedPhoneNumbers(IEnumerable<PurchasedPhoneNumber> phoneNumbers)
         {
-            if (phoneNumbers == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumbers));
-            }
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
 
             PhoneNumbers = phoneNumbers.ToList();
         }

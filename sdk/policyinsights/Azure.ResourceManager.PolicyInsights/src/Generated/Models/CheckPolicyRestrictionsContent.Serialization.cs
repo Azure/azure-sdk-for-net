@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceDetails");
+            writer.WritePropertyName("resourceDetails"u8);
             writer.WriteObjectValue(ResourceDetails);
             if (Optional.IsCollectionDefined(PendingFields))
             {
-                writer.WritePropertyName("pendingFields");
+                writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {

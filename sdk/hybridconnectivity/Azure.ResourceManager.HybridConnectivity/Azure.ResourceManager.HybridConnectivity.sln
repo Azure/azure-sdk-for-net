@@ -7,6 +7,8 @@ Project("{F30FA6CB-9503-46F3-907B-1F7B07F86EE3}") = "Azure.ResourceManager.Hybri
 EndProject
 Project("{F30FA6CB-9503-46F3-907B-1F7B07F86EE3}") = "Azure.ResourceManager.HybridConnectivity.Tests", "tests\Azure.ResourceManager.HybridConnectivity.Tests.csproj", "{2AFB4C5B-6F23-4AE5-9270-301E1C1A23FE}"
 EndProject
+Project("{F30FA6CB-9503-46F3-907B-1F7B07F86EE3}") = "Azure.ResourceManager.HybridConnectivity.Samples", "samples\Azure.ResourceManager.HybridConnectivity.Samples.csproj", "{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

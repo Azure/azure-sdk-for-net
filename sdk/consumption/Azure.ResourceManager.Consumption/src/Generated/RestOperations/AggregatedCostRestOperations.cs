@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagementGroupAggregatedCostResult>> GetByManagementGroupAsync(string managementGroupId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionAggregatedCostResult>> GetByManagementGroupAsync(string managementGroupId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        ManagementGroupAggregatedCostResult value = default;
+                        ConsumptionAggregatedCostResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagementGroupAggregatedCostResult.DeserializeManagementGroupAggregatedCostResult(document.RootElement);
+                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagementGroupAggregatedCostResult> GetByManagementGroup(string managementGroupId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ConsumptionAggregatedCostResult> GetByManagementGroup(string managementGroupId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        ManagementGroupAggregatedCostResult value = default;
+                        ConsumptionAggregatedCostResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagementGroupAggregatedCostResult.DeserializeManagementGroupAggregatedCostResult(document.RootElement);
+                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagementGroupAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        ManagementGroupAggregatedCostResult value = default;
+                        ConsumptionAggregatedCostResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagementGroupAggregatedCostResult.DeserializeManagementGroupAggregatedCostResult(document.RootElement);
+                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagementGroupAggregatedCostResult> GetForBillingPeriodByManagementGroup(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public Response<ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        ManagementGroupAggregatedCostResult value = default;
+                        ConsumptionAggregatedCostResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagementGroupAggregatedCostResult.DeserializeManagementGroupAggregatedCostResult(document.RootElement);
+                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

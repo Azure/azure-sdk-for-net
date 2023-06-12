@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the RedisFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the RedisFirewallRule data model.
+    /// A firewall rule on a redis cache has a name, and describes a contiguous range of IP addresses permitted to connect
+    /// </summary>
     public partial class RedisFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>
@@ -21,14 +24,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
         public RedisFirewallRuleData(IPAddress startIP, IPAddress endIP)
         {
-            if (startIP == null)
-            {
-                throw new ArgumentNullException(nameof(startIP));
-            }
-            if (endIP == null)
-            {
-                throw new ArgumentNullException(nameof(endIP));
-            }
+            Argument.AssertNotNull(startIP, nameof(startIP));
+            Argument.AssertNotNull(endIP, nameof(endIP));
 
             StartIP = startIP;
             EndIP = endIP;

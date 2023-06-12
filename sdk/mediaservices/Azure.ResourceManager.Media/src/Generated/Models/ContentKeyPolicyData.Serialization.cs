@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.Media
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Preferences))
+            if (Optional.IsCollectionDefined(Options))
             {
-                writer.WritePropertyName("options");
+                writer.WritePropertyName("options"u8);
                 writer.WriteStartArray();
-                foreach (var item in Preferences)
+                foreach (var item in Options)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Media
 
         internal static ContentKeyPolicyData DeserializeContentKeyPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -50,35 +54,34 @@ namespace Azure.ResourceManager.Media
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> description = default;
-            Optional<IList<ContentKeyPolicyPreference>> options = default;
+            Optional<IList<ContentKeyPolicyOption>> options = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,52 +90,48 @@ namespace Azure.ResourceManager.Media
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("policyId"))
+                        if (property0.NameEquals("policyId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policyId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModified"))
+                        if (property0.NameEquals("lastModified"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("options"))
+                        if (property0.NameEquals("options"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContentKeyPolicyPreference> array = new List<ContentKeyPolicyPreference>();
+                            List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContentKeyPolicyPreference.DeserializeContentKeyPolicyPreference(item));
+                                array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
                             }
                             options = array;
                             continue;

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The TopologySingleResourceParent. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of TopologySingleResourceParent. </summary>
         /// <param name="resourceId"> Azure resource id which serves as parent resource in topology view. </param>
-        internal TopologySingleResourceParent(string resourceId)
+        internal TopologySingleResourceParent(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
         }
 
         /// <summary> Azure resource id which serves as parent resource in topology view. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

@@ -2,32 +2,34 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
+using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
 {
-    public partial class IngestionSamples: SamplesBase<MonitorIngestionTestEnvironment>
+    public partial class IngestionSamples : SamplesBase<MonitorIngestionTestEnvironment>
     {
         public async Task LogDataAsync()
         {
             #region Snippet:UploadCustomLogsAsync
-            var dataCollectionEndpoint = new Uri("...");
-            var dataCollectionRuleImmutableId = "...";
-            var streamName = "...";
+            var endpoint = new Uri("<data_collection_endpoint>");
+            var ruleId = "<data_collection_rule_id>";
+            var streamName = "<stream_name>";
 
-            TokenCredential credential = new DefaultAzureCredential();
 #if SNIPPET
+            var credential = new DefaultAzureCredential();
 #else
-            dataCollectionEndpoint = new Uri(TestEnvironment.DCREndpoint);
-            credential = TestEnvironment.Credential;
+            endpoint = new Uri(TestEnvironment.DCREndpoint);
+            TokenCredential credential = TestEnvironment.Credential;
 #endif
-            LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-
+            LogsIngestionClient client = new(endpoint, credential);
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
             // Use BinaryData to serialize instances of an anonymous type into JSON
@@ -62,33 +64,123 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 });
 
             // Upload our logs
-            Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
+            Response response = await client.UploadAsync(
+                ruleId,
+                streamName,
+                RequestContent.Create(data)).ConfigureAwait(false);
             #endregion
         }
 
         public async Task QueryDataAsync()
         {
             #region Snippet:VerifyLogsAsync
-            var workspaceId = "...";
-            var tableName = "...";
+            var workspaceId = "<log_analytics_workspace_id>";
+            var tableName = "<table_name>";
 
-            TokenCredential credential = new DefaultAzureCredential();
 #if SNIPPET
+            var credential = new DefaultAzureCredential();
 #else
-            credential = TestEnvironment.Credential;
+            TokenCredential credential = TestEnvironment.Credential;
 #endif
-
             LogsQueryClient logsQueryClient = new(credential);
+
             LogsBatchQuery batch = new();
-            string query = tableName + " | count;";
+            string query = tableName + " | Count;";
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 query,
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            Response<LogsBatchQueryResultCollection> queryResponse = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
+            Response<LogsBatchQueryResultCollection> queryResponse =
+                await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
-            Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
+            Console.WriteLine("Table entry count: " +
+                queryResponse.Value.GetResult<int>(countQueryId).Single());
+            #endregion
+        }
+
+        public async Task LogDataIEnumerableEventHandlerAsync()
+        {
+            #region Snippet:LogDataIEnumerableEventHandlerAsync
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var ruleId = "<data_collection_rule_id>";
+            var streamName = "<stream_name>";
+
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+#else
+            TokenCredential credential = new DefaultAzureCredential();
+            endpoint = new Uri(TestEnvironment.DCREndpoint);
+            credential = TestEnvironment.Credential;
+#endif
+            LogsIngestionClient client = new(endpoint, credential);
+
+            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+            var entries = new List<Object>();
+            for (int i = 0; i < 100; i++)
+            {
+                entries.Add(
+                    new {
+                        Time = currentTime,
+                        Computer = "Computer" + i.ToString(),
+                        AdditionalContext = i
+                    }
+                );
+            }
+            // Set concurrency and EventHandler in LogsUploadOptions
+            LogsUploadOptions options = new LogsUploadOptions();
+            options.MaxConcurrency = 10;
+            options.UploadFailed += Options_UploadFailed;
+
+            // Upload our logs
+            Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
+
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
+            {
+                // Throw exception from EventHandler to stop Upload if there is a failure
+                IReadOnlyList<object> failedLogs = e.FailedLogs;
+                // 413 status is RequestTooLarge - don't throw here because other batches can successfully upload
+                if ((e.Exception is RequestFailedException) && (((RequestFailedException)e.Exception).Status != 413))
+                    throw e.Exception;
+                else
+                    return Task.CompletedTask;
+            }
+            #endregion
+        }
+
+        public async Task LogDataIEnumerableAsync()
+        {
+            #region Snippet:UploadLogDataIEnumerableAsync
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var ruleId = "<data_collection_rule_id>";
+            var streamName = "<stream_name>";
+
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+#else
+            TokenCredential credential = new DefaultAzureCredential();
+            endpoint = new Uri(TestEnvironment.DCREndpoint);
+            credential = TestEnvironment.Credential;
+#endif
+            LogsIngestionClient client = new(endpoint, credential);
+
+            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+            var entries = new List<Object>();
+            for (int i = 0; i < 100; i++)
+            {
+                entries.Add(
+                    new {
+                        Time = currentTime,
+                        Computer = "Computer" + i.ToString(),
+                        AdditionalContext = i
+                    }
+                );
+            }
+
+            // Upload our logs
+            Response response = await client.UploadAsync(ruleId, streamName, entries).ConfigureAwait(false);
             #endregion
         }
     }

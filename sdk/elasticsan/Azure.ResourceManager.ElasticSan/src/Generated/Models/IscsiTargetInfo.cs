@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="targetPortalPort"> iSCSI Target Portal Port. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="status"> Operational status of the iSCSI Target. </param>
-        internal IscsiTargetInfo(string targetIqn, string targetPortalHostname, int? targetPortalPort, ProvisioningState? provisioningState, OperationalStatus? status)
+        internal IscsiTargetInfo(string targetIqn, string targetPortalHostname, int? targetPortalPort, ElasticSanProvisioningState? provisioningState, ResourceOperationalStatus? status)
         {
             TargetIqn = targetIqn;
             TargetPortalHostname = targetPortalHostname;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> iSCSI Target Portal Port. </summary>
         public int? TargetPortalPort { get; }
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ElasticSanProvisioningState? ProvisioningState { get; }
         /// <summary> Operational status of the iSCSI Target. </summary>
-        public OperationalStatus? Status { get; }
+        public ResourceOperationalStatus? Status { get; }
     }
 }

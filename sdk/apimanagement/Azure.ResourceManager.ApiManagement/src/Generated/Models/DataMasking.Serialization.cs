@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(QueryParams))
             {
-                writer.WritePropertyName("queryParams");
+                writer.WritePropertyName("queryParams"u8);
                 writer.WriteStartArray();
                 foreach (var item in QueryParams)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
@@ -41,15 +41,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static DataMasking DeserializeDataMasking(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataMaskingEntity>> queryParams = default;
             Optional<IList<DataMaskingEntity>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryParams"))
+                if (property.NameEquals("queryParams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
@@ -60,11 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     queryParams = array;
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();

@@ -16,6 +16,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataFeedId = default;
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;
@@ -26,47 +30,45 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalyProperty property = default;
             foreach (var property0 in element.EnumerateObject())
             {
-                if (property0.NameEquals("dataFeedId"))
+                if (property0.NameEquals("dataFeedId"u8))
                 {
                     dataFeedId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("metricId"))
+                if (property0.NameEquals("metricId"u8))
                 {
                     metricId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("anomalyDetectionConfigurationId"))
+                if (property0.NameEquals("anomalyDetectionConfigurationId"u8))
                 {
                     anomalyDetectionConfigurationId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("timestamp"))
+                if (property0.NameEquals("timestamp"u8))
                 {
                     timestamp = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property0.NameEquals("createdTime"))
+                if (property0.NameEquals("createdTime"u8))
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property0.NameEquals("modifiedTime"))
+                if (property0.NameEquals("modifiedTime"u8))
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedTime = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property0.NameEquals("dimension"))
+                if (property0.NameEquals("dimension"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property1 in property0.Value.EnumerateObject())
@@ -76,7 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimension = dictionary;
                     continue;
                 }
-                if (property0.NameEquals("property"))
+                if (property0.NameEquals("property"u8))
                 {
                     property = AnomalyProperty.DeserializeAnomalyProperty(property0.Value);
                     continue;

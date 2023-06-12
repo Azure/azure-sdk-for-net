@@ -10,9 +10,9 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests.Scenario
+namespace Azure.ResourceManager.Sql.Tests
 {
-    public class InstanceFailoverGroupTests : SqlManagementClientBase
+    public class InstanceFailoverGroupTests : SqlManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
@@ -45,16 +45,12 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string partnerManagedInstanceName = Recording.GenerateAssetName("managed-instance-partner-");
             string managedInstanceName1 = Recording.GenerateAssetName("managed-instance-");
             string managedInstanceName2 = Recording.GenerateAssetName("managed-instance-");
-            string networkSecurityGroupName1 = Recording.GenerateAssetName("network-security-group-");
-            string networkSecurityGroupName2 = Recording.GenerateAssetName("network-security-group-");
-            string routeTableName1 = Recording.GenerateAssetName("route-table-");
-            string routeTableName2 = Recording.GenerateAssetName("route-table-");
             string vnetName1 = Recording.GenerateAssetName("vnet-");
             string vnetName2 = Recording.GenerateAssetName("vnet-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, AzureLocation.WestUS2, _resourceGroup),
-                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName1, vnetName1, AzureLocation.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
             ResourceIdentifier primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id;

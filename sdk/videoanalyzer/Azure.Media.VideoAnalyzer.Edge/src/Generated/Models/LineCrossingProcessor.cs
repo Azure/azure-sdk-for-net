@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -17,22 +18,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of LineCrossingProcessor. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="lines"> An array of lines used to compute line crossing events. </param>
+        /// <param name="lines">
+        /// An array of lines used to compute line crossing events.
+        /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedLineString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/> or <paramref name="lines"/> is null. </exception>
         public LineCrossingProcessor(string name, IEnumerable<NodeInput> inputs, IEnumerable<NamedLineBase> lines) : base(name, inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (lines == null)
-            {
-                throw new ArgumentNullException(nameof(lines));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(lines, nameof(lines));
 
             Lines = lines.ToList();
             Type = "#Microsoft.VideoAnalyzer.LineCrossingProcessor";
@@ -42,14 +38,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="lines"> An array of lines used to compute line crossing events. </param>
+        /// <param name="lines">
+        /// An array of lines used to compute line crossing events.
+        /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedLineString"/>.
+        /// </param>
         internal LineCrossingProcessor(string type, string name, IList<NodeInput> inputs, IList<NamedLineBase> lines) : base(type, name, inputs)
         {
             Lines = lines;
             Type = type ?? "#Microsoft.VideoAnalyzer.LineCrossingProcessor";
         }
 
-        /// <summary> An array of lines used to compute line crossing events. </summary>
+        /// <summary>
+        /// An array of lines used to compute line crossing events.
+        /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedLineString"/>.
+        /// </summary>
         public IList<NamedLineBase> Lines { get; }
     }
 }

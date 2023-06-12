@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         internal DatabaseListResult()
         {
-            Value = new ChangeTrackingList<DatabaseData>();
+            Value = new ChangeTrackingList<KustoDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         /// <param name="value">
         /// The list of Kusto databases.
-        /// Please note <see cref="DatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+        /// Please note <see cref="KustoDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KustoReadOnlyFollowingDatabase"/> and <see cref="KustoReadWriteDatabase"/>.
         /// </param>
-        internal DatabaseListResult(IReadOnlyList<DatabaseData> value)
+        internal DatabaseListResult(IReadOnlyList<KustoDatabaseData> value)
         {
             Value = value;
         }
 
         /// <summary>
         /// The list of Kusto databases.
-        /// Please note <see cref="DatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+        /// Please note <see cref="KustoDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KustoReadOnlyFollowingDatabase"/> and <see cref="KustoReadWriteDatabase"/>.
         /// </summary>
-        public IReadOnlyList<DatabaseData> Value { get; }
+        public IReadOnlyList<KustoDatabaseData> Value { get; }
     }
 }

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of PlanRequesterDetails. </summary>
         internal PlanRequesterDetails()
         {
-            Requesters = new ChangeTrackingList<UserRequestDetails>();
+            Requesters = new ChangeTrackingList<PlanRequesterInfo>();
         }
 
         /// <summary> Initializes a new instance of PlanRequesterDetails. </summary>
         /// <param name="planId"> Gets the plan id. </param>
         /// <param name="planDisplayName"> Gets the plan display name. </param>
         /// <param name="requesters"> Gets requesters details list. </param>
-        internal PlanRequesterDetails(string planId, string planDisplayName, IReadOnlyList<UserRequestDetails> requesters)
+        internal PlanRequesterDetails(string planId, string planDisplayName, IReadOnlyList<PlanRequesterInfo> requesters)
         {
             PlanId = planId;
             PlanDisplayName = planDisplayName;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Gets the plan display name. </summary>
         public string PlanDisplayName { get; }
         /// <summary> Gets requesters details list. </summary>
-        public IReadOnlyList<UserRequestDetails> Requesters { get; }
+        public IReadOnlyList<PlanRequesterInfo> Requesters { get; }
     }
 }

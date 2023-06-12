@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
@@ -36,7 +37,7 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             TransferValidation = clientOptions.TransferValidation;

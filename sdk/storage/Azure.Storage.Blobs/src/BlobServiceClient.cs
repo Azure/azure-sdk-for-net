@@ -152,12 +152,12 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(_authenticationPolicy),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _serviceRestClient = BuildServiceRestClient(_uri);
@@ -280,12 +280,12 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sharedKeyCredential: storageSharedKeyCredential,
-                      clientDiagnostics: new StorageClientDiagnostics(options),
+                      clientDiagnostics: new ClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,
                       transferValidation: options.TransferValidation,
                       encryptionScope: options?.EncryptionScope,
-                      preserveBlobNameOuterSlashes: options?.PreserveBlobNameSlashes ?? false),
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
@@ -360,12 +360,12 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new StorageClientDiagnostics(options),
+                    clientDiagnostics: new ClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
                     transferValidation: options.TransferValidation,
                     encryptionScope: null,
-                    preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes),
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
         }
@@ -2029,8 +2029,8 @@ namespace Azure.Storage.Blobs
         #region FilterBlobs
         /// <summary>
         /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
-        /// match a given search expression. Filter blobs searches across all containers within a
-        /// storage account but can be scoped within the expression to a single container.
+        /// match a given search expression and only the tags appearing in the expression will be returned.
+        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         public static IotHubScaleType ToIotHubScaleType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return IotHubScaleType.None;
-            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return IotHubScaleType.Automatic;
-            if (string.Equals(value, "Manual", StringComparison.InvariantCultureIgnoreCase)) return IotHubScaleType.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return IotHubScaleType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return IotHubScaleType.Automatic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return IotHubScaleType.Manual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubScaleType value.");
         }
     }

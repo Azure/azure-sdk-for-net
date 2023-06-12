@@ -15,28 +15,35 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyDefinitionSummary DeserializePolicyDefinitionSummary(JsonElement element)
         {
-            Optional<string> policyDefinitionId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
             Optional<string> effect = default;
             Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
-                    policyDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"))
+                if (property.NameEquals("policyDefinitionReferenceId"u8))
                 {
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionGroupNames"))
+                if (property.NameEquals("policyDefinitionGroupNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -47,16 +54,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDefinitionGroupNames = array;
                     continue;
                 }
-                if (property.NameEquals("effect"))
+                if (property.NameEquals("effect"u8))
                 {
                     effect = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);

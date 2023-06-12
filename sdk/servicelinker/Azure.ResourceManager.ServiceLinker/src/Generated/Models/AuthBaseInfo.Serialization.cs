@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authType");
+            writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -33,16 +37,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element);
                 }
             }
-            LinkerAuthType authType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authType"))
-                {
-                    authType = new LinkerAuthType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAuthBaseInfo(authType);
+            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
         }
     }
 }

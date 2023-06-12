@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeAnalyticsAccount class.
         /// </summary>
-        /// <param name="id">The resource identifer.</param>
+        /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
         /// <param name="location">The resource location.</param>

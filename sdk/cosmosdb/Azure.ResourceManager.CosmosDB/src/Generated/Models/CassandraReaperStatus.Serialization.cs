@@ -15,26 +15,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraReaperStatus DeserializeCassandraReaperStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> healthy = default;
             Optional<IReadOnlyDictionary<string, string>> repairRunIds = default;
             Optional<IReadOnlyDictionary<string, string>> repairSchedules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthy"))
+                if (property.NameEquals("healthy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("repairRunIds"))
+                if (property.NameEquals("repairRunIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -45,11 +47,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     repairRunIds = dictionary;
                     continue;
                 }
-                if (property.NameEquals("repairSchedules"))
+                if (property.NameEquals("repairSchedules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

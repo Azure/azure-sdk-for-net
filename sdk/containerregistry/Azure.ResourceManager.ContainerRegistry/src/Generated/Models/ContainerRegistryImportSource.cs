@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceImage"/> is null. </exception>
         public ContainerRegistryImportSource(string sourceImage)
         {
-            if (sourceImage == null)
-            {
-                throw new ArgumentNullException(nameof(sourceImage));
-            }
+            Argument.AssertNotNull(sourceImage, nameof(sourceImage));
 
             SourceImage = sourceImage;
         }
@@ -34,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The resource identifier of the source Azure Container Registry. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The address of the source registry (e.g. &apos;mcr.microsoft.com&apos;). </summary>
-        public Uri RegistryUri { get; set; }
+        public string RegistryAddress { get; set; }
         /// <summary> Credentials used when importing from a registry uri. </summary>
         public ContainerRegistryImportSourceCredentials Credentials { get; set; }
         /// <summary>

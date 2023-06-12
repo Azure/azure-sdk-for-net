@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operatorType");
+            writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();
@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static AdvancedFilter DeserializeAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("operatorType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -52,22 +56,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "StringNotIn": return StringNotInAdvancedFilter.DeserializeStringNotInAdvancedFilter(element);
                 }
             }
-            AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("operatorType"))
-                {
-                    operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("key"))
-                {
-                    key = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAdvancedFilter(operatorType, key.Value);
+            return UnknownAdvancedFilter.DeserializeUnknownAdvancedFilter(element);
         }
     }
 }

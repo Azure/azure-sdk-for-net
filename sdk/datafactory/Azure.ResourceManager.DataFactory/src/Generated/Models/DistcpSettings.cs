@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceManagerEndpoint"/> or <paramref name="tempScriptPath"/> is null. </exception>
         public DistcpSettings(BinaryData resourceManagerEndpoint, BinaryData tempScriptPath)
         {
-            if (resourceManagerEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(resourceManagerEndpoint));
-            }
-            if (tempScriptPath == null)
-            {
-                throw new ArgumentNullException(nameof(tempScriptPath));
-            }
+            Argument.AssertNotNull(resourceManagerEndpoint, nameof(resourceManagerEndpoint));
+            Argument.AssertNotNull(tempScriptPath, nameof(tempScriptPath));
 
             ResourceManagerEndpoint = resourceManagerEndpoint;
             TempScriptPath = tempScriptPath;

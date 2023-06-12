@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="container"/> is null. </exception>
         public ExportRdbContent(string prefix, string container)
         {
-            if (prefix == null)
-            {
-                throw new ArgumentNullException(nameof(prefix));
-            }
-            if (container == null)
-            {
-                throw new ArgumentNullException(nameof(container));
-            }
+            Argument.AssertNotNull(prefix, nameof(prefix));
+            Argument.AssertNotNull(container, nameof(container));
 
             Prefix = prefix;
             Container = container;
@@ -37,5 +32,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string Prefix { get; }
         /// <summary> Container name to export to. </summary>
         public string Container { get; }
+        /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        public string PreferredDataArchiveAuthMethod { get; set; }
     }
 }

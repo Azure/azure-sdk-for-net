@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
         public SsisChildPackage(BinaryData packagePath, BinaryData packageContent)
         {
-            if (packagePath == null)
-            {
-                throw new ArgumentNullException(nameof(packagePath));
-            }
-            if (packageContent == null)
-            {
-                throw new ArgumentNullException(nameof(packageContent));
-            }
+            Argument.AssertNotNull(packagePath, nameof(packagePath));
+            Argument.AssertNotNull(packageContent, nameof(packageContent));
 
             PackagePath = packagePath;
             PackageContent = packageContent;

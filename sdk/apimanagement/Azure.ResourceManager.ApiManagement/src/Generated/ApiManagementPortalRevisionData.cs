@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPortalRevision data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementPortalRevision data model.
+    /// Portal Revision&apos;s contract details.
+    /// </summary>
     public partial class ApiManagementPortalRevisionData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>

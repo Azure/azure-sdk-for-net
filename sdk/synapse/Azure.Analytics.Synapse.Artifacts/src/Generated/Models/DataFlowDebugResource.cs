@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -13,27 +14,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DataFlowDebugResource : SubResourceDebugResource
     {
         /// <summary> Initializes a new instance of DataFlowDebugResource. </summary>
-        /// <param name="properties"> Data flow properties. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFlowDebugResource(DataFlow properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugResource. </summary>
         /// <param name="name"> The resource name. </param>
-        /// <param name="properties"> Data flow properties. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </param>
         internal DataFlowDebugResource(string name, DataFlow properties) : base(name)
         {
             Properties = properties;
         }
 
-        /// <summary> Data flow properties. </summary>
+        /// <summary>
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </summary>
         public DataFlow Properties { get; set; }
     }
 }

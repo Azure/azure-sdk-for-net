@@ -3,10 +3,8 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,6 +18,13 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
+
+[assembly: InternalsVisibleTo("Azure.Storage.DataMovement.Blobs, PublicKey=" +
+    "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
+    "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
+    "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
+    "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
+    "aa7b11b4")]
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -210,12 +215,12 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(_uri);
@@ -240,7 +245,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, BlobClientOptions options = default)
-            : this(blobUri, (HttpPipelinePolicy)null, options, null)
+            : this(blobUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -263,7 +268,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options, credential)
+            : this(blobUri, credential.AsPolicy(), options, storageSharedKeyCredential: credential)
         {
         }
 
@@ -290,7 +295,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, null)
+            : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, storageSharedKeyCredential: null)
         {
         }
 
@@ -313,9 +318,69 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(options), options, null)
+            : this(blobUri, credential.AsPolicy(options), options, credential)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        internal BlobBaseClient(
+            Uri blobUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options,
+            TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(blobUri, nameof(blobUri));
+            options ??= new BlobClientOptions();
+            _uri = blobUri;
+            if (!string.IsNullOrEmpty(blobUri.Query))
+            {
+                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
+                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
+                {
+                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
+                }
+                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
+                {
+                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
+                }
+            }
+
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _blobRestClient = BuildBlobRestClient(blobUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -364,12 +429,12 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
@@ -567,12 +632,48 @@ namespace Azure.Storage.Blobs.Specialized
         {
             if (_name == null || _containerName == null || _accountName == null)
             {
-                var builder = new BlobUriBuilder(Uri);
+                var builder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes);
                 _name = builder.BlobName;
                 _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
         }
+
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// for passing the authorization when performing service to service copy
+        /// where OAuth is necessary to authenticate the source.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        internal static TokenCredential GetTokenCredential(BlobBaseClient client) =>
+            client.ClientConfiguration.OAuthTokenCredential;
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        internal static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
+            new BlobClientOptions(client.ClientConfiguration.Version)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        internal static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
+        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a clone of this instance that references a version ID rather than the base blob.
@@ -1306,7 +1407,7 @@ namespace Azure.Storage.Blobs.Specialized
             return DownloadStreamingDirect(
                 options?.Range ?? default,
                 options?.Conditions,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
@@ -1353,7 +1454,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await DownloadStreamingDirect(
                 options?.Range ?? default,
                 options?.Conditions,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
@@ -1373,7 +1474,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
+        private async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1385,7 +1486,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange requestedRange = range;
             if (UsingClientSideEncryption)
             {
-                if ((await GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                if ((await GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                 {
                     range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
                 }
@@ -1436,7 +1537,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Cancellation token.
         /// </param>
         /// <returns></returns>
-        internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1522,7 +1623,13 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, response.GetRawResponse());
+                        await ContentHasher.AssertResponseHashMatchInternal(
+                            readDestStream,
+                            validationOptions.ChecksumAlgorithm,
+                            response.GetRawResponse(),
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        ;
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
@@ -1581,7 +1688,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
+        private async ValueTask<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
@@ -2105,7 +2212,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2156,7 +2263,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2413,7 +2520,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2452,7 +2559,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2490,7 +2597,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2529,7 +2636,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2749,7 +2856,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Override for client options on transfer validation.
         /// </param>
         /// <param name="async">
@@ -2771,11 +2878,11 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
-            DownloadTransferValidationOptions validationOptionsOverride = default,
+            DownloadTransferValidationOptions transferValidationOverride = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Download;
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
 
@@ -2783,14 +2890,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            if (async)
-            {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
-            }
+            return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
 
@@ -2820,7 +2920,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                validationOptionsOverride: options?.TransferValidationOptions,
+                transferValidationOverride: options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2849,7 +2949,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                validationOptionsOverride: options?.TransferValidationOptions,
+                transferValidationOverride: options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2890,7 +2990,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                validationOptionsOverride: default,
+                transferValidationOverride: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2968,7 +3068,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                validationOptionsOverride: default,
+                transferValidationOverride: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -3029,7 +3129,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="allowModifications">
         /// Whether to allow modifications during the read.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Optional override for settings in the client options.
         /// </param>
         /// <param name="async">
@@ -3050,13 +3150,13 @@ namespace Azure.Storage.Blobs.Specialized
             int? bufferSize,
             BlobRequestConditions conditions,
             bool allowModifications,
-            DownloadTransferValidationOptions validationOptionsOverride,
+            DownloadTransferValidationOptions transferValidationOverride,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? _clientConfiguration.TransferValidation.Download;
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? _clientConfiguration.TransferValidation.Download;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -3074,7 +3174,10 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
 
                     // This also makes sure that we fail fast if file doesn't exist.
-                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(
+                        conditions: conditions,
+                        async,
+                        new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
 
                     ETag etag = blobProperties.Value.ETag;
                     var readConditions = conditions;
@@ -3133,7 +3236,10 @@ namespace Azure.Storage.Blobs.Specialized
                                 response.GetRawResponse());
                         },
                         async (bool async, CancellationToken cancellationToken)
-                            => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                            => await GetPropertiesInternal(
+                                conditions: default,
+                                async,
+                                new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false),
                         validationOptions,
                         allowModifications,
                         blobContentLength,
@@ -3834,11 +3940,11 @@ namespace Azure.Storage.Blobs.Specialized
         #region CopyFromUri
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -3849,7 +3955,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -3888,11 +3994,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -3903,7 +4009,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -3942,11 +4048,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -3957,7 +4063,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="metadata">
@@ -4565,27 +4671,29 @@ namespace Azure.Storage.Blobs.Specialized
 
                 string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
 
+                // 404 isn't an error for checking if the resource exists, it's false
+                RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
+                context.AddClassifier(new BlobBaseClientExistsClassifier());
+
                 try
                 {
                     Response<BlobProperties> response = await GetPropertiesInternal(
                         conditions: default,
                         async: async,
-                        cancellationToken: cancellationToken,
+                        context: context,
                         operationName)
                         .ConfigureAwait(false);
 
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(false, default);
+                    }
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(true, default);
+                    }
+
                     return Response.FromValue(true, response.GetRawResponse());
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
-                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-                {
-                    return Response.FromValue(false, default);
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
-                {
-                    return Response.FromValue(true, default);
                 }
                 catch (Exception ex)
                 {
@@ -4755,7 +4863,7 @@ namespace Azure.Storage.Blobs.Specialized
             GetPropertiesInternal(
                 conditions,
                 async: false,
-                cancellationToken)
+                new RequestContext() { CancellationToken = cancellationToken })
                 .EnsureCompleted();
 
         /// <summary>
@@ -4790,7 +4898,7 @@ namespace Azure.Storage.Blobs.Specialized
             await GetPropertiesInternal(
                 conditions,
                 async: true,
-                cancellationToken)
+                new RequestContext() { CancellationToken = cancellationToken})
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -4810,9 +4918,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <param name="operationName">
         /// The name of the calling operation.
@@ -4828,9 +4935,10 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken,
+            RequestContext context,
             string operationName = default)
         {
+            context ??= new RequestContext();
             operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -4852,37 +4960,34 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobGetPropertiesHeaders> response;
+                    Response rawResponse;
 
                     if (async)
                     {
-                        response = await BlobRestClient.GetPropertiesAsync(
+                        rawResponse = await BlobRestClient.GetPropertiesAsync(
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken)
+                            context: context)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = BlobRestClient.GetProperties(
+                        rawResponse = BlobRestClient.GetProperties(
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken);
+                            context: context);
                     }
+
+                    ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
+                        new BlobGetPropertiesHeaders(rawResponse), rawResponse);
 
                     return Response.FromValue(
                         response.ToBlobProperties(),
@@ -6559,7 +6664,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(builder.BlobVersionId),
                     nameof(BlobSasBuilder));
             }
-            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };

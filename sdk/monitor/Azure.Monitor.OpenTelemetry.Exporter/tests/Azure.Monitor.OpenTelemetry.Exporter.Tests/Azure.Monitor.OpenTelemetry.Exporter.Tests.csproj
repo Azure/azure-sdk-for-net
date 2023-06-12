@@ -9,6 +9,7 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="OpenTelemetry.Extensions.AzureMonitor" />
   </ItemGroup>
 
   <ItemGroup>

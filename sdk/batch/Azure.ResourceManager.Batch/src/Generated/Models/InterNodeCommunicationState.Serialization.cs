@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static InterNodeCommunicationState ToInterNodeCommunicationState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return InterNodeCommunicationState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return InterNodeCommunicationState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return InterNodeCommunicationState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return InterNodeCommunicationState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InterNodeCommunicationState value.");
         }
     }

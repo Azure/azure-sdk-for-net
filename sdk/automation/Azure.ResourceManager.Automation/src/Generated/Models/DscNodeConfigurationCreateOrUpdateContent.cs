@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the source. </summary>
-        public ContentSource Source { get; set; }
+        public AutomationContentSource Source { get; set; }
         /// <summary> Gets or sets the configuration of the node. </summary>
         internal DscConfigurationAssociationProperty Configuration { get; set; }
         /// <summary> Gets or sets the name of the Dsc configuration. </summary>
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }

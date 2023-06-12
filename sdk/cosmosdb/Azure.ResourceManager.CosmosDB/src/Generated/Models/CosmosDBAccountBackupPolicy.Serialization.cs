@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
             {
-                writer.WritePropertyName("migrationState");
+                writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
             }
             writer.WriteEndObject();
@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBAccountBackupPolicy DeserializeCosmosDBAccountBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -35,27 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "Periodic": return PeriodicModeBackupPolicy.DeserializePeriodicModeBackupPolicy(element);
                 }
             }
-            BackupPolicyType type = default;
-            Optional<BackupPolicyMigrationState> migrationState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new BackupPolicyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("migrationState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownCosmosDBAccountBackupPolicy(type, migrationState.Value);
+            return UnknownBackupPolicy.DeserializeUnknownBackupPolicy(element);
         }
     }
 }

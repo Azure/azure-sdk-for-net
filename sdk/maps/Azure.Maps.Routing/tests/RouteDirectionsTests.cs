@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
-using Azure.Maps.Routing.Models;
 using NUnit.Framework;
 
 namespace Azure.Maps.Routing.Tests
@@ -35,7 +34,7 @@ namespace Azure.Maps.Routing.Tests
         }
 
         [RecordedTest]
-        public async Task CanSyncRequestRouteDirectionsBatch()
+        public async Task CanGetDirectionsImmediateBatch()
         {
             var client = CreateClient();
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
@@ -49,7 +48,7 @@ namespace Azure.Maps.Routing.Tests
                 })
             );
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
-            var result = await client.SyncRequestRouteDirectionsBatchAsync(queries);
+            var result = await client.GetDirectionsImmediateBatchAsync(queries);
 
             Assert.AreEqual(2, result.Value.Results.Count);
             Assert.AreEqual(1, result.Value.Results[0].Routes.Count);
@@ -60,12 +59,12 @@ namespace Azure.Maps.Routing.Tests
         }
 
         [RecordedTest]
-        public void SyncRequestRouteDirectionsBatchError()
+        public void GetDirectionsImmediateBatchError()
         {
             var client = CreateClient();
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.SyncRequestRouteDirectionsBatchAsync(queries));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDirectionsImmediateBatchAsync(queries));
             Assert.AreEqual(400, ex.Status);
         }
 
@@ -85,9 +84,7 @@ namespace Azure.Maps.Routing.Tests
             );
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
-            var operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Completed, queries);
-            // Sleep 400ms to wait for operation ready
-            Thread.Sleep(400);
+            var operation = await client.GetDirectionsBatchAsync(WaitUntil.Completed, queries);
             var result = operation.WaitForCompletion();
 
             Assert.AreEqual(2, result.Value.Results.Count);

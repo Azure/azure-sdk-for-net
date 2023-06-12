@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
         public WebPubSubNameAvailabilityContent(string resourceType, string name)
         {
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(name, nameof(name));
 
             ResourceType = resourceType;
             Name = name;

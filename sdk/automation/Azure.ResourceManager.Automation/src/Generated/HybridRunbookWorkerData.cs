@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the HybridRunbookWorker data model. </summary>
+    /// <summary>
+    /// A class representing the HybridRunbookWorker data model.
+    /// Definition of hybrid runbook worker.
+    /// </summary>
     public partial class HybridRunbookWorkerData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
         /// <param name="workerType"> Type of the HybridWorker. </param>
         /// <param name="workerName"> Name of the HybridWorker. </param>
-        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, string vmResourceId, WorkerType? workerType, string workerName) : base(id, name, resourceType, systemData)
+        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName) : base(id, name, resourceType, systemData)
         {
             IP = ip;
             RegisteredOn = registeredOn;
@@ -48,9 +51,9 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Last Heartbeat from the Worker. </summary>
         public DateTimeOffset? LastSeenOn { get; set; }
         /// <summary> Azure Resource Manager Id for a virtual machine. </summary>
-        public string VmResourceId { get; set; }
+        public ResourceIdentifier VmResourceId { get; set; }
         /// <summary> Type of the HybridWorker. </summary>
-        public WorkerType? WorkerType { get; set; }
+        public HybridWorkerType? WorkerType { get; set; }
         /// <summary> Name of the HybridWorker. </summary>
         public string WorkerName { get; set; }
     }

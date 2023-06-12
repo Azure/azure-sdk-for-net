@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,22 +24,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="exposedHeaders"/> or <paramref name="allowedHeaders"/> is null. </exception>
         public StorageCorsRule(IEnumerable<string> allowedOrigins, IEnumerable<CorsRuleAllowedMethod> allowedMethods, int maxAgeInSeconds, IEnumerable<string> exposedHeaders, IEnumerable<string> allowedHeaders)
         {
-            if (allowedOrigins == null)
-            {
-                throw new ArgumentNullException(nameof(allowedOrigins));
-            }
-            if (allowedMethods == null)
-            {
-                throw new ArgumentNullException(nameof(allowedMethods));
-            }
-            if (exposedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(exposedHeaders));
-            }
-            if (allowedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(allowedHeaders));
-            }
+            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+            Argument.AssertNotNull(allowedMethods, nameof(allowedMethods));
+            Argument.AssertNotNull(exposedHeaders, nameof(exposedHeaders));
+            Argument.AssertNotNull(allowedHeaders, nameof(allowedHeaders));
 
             AllowedOrigins = allowedOrigins.ToList();
             AllowedMethods = allowedMethods.ToList();

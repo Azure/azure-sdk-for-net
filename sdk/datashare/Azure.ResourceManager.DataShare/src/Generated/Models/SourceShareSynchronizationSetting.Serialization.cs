@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static SourceShareSynchronizationSetting DeserializeSourceShareSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -21,16 +24,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     case "ScheduleBased": return ScheduledSourceSynchronizationSetting.DeserializeScheduledSourceSynchronizationSetting(element);
                 }
             }
-            SourceShareSynchronizationSettingKind kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new SourceShareSynchronizationSettingKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSourceShareSynchronizationSetting(kind);
+            return UnknownSourceShareSynchronizationSetting.DeserializeUnknownSourceShareSynchronizationSetting(element);
         }
     }
 }

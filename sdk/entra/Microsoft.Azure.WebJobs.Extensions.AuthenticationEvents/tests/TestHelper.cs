@@ -94,20 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
         /// </summary>
         /// <param name="action">Action to emulate the external function call.</param>
-        /// <param name="testTypes">Defines the type of test</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthenticationEventResponseHandler> action, TestTypes testTypes)
-        {
-            return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action, testTypes);
-        }
-
-        /// <summary>
-        /// Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
-        /// </summary>
-        /// <param name="action">Action to emulate the external function call.</param>
-        /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        [Obsolete]
         public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthenticationEventResponseHandler> action)
         {
             return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action);
@@ -119,20 +106,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="httpMethods">Type of methods. i.e. Post/Get</param>
         /// <param name="url">The URL to use to create an inactive mock end point</param>
         /// <param name="action">Action to emulate the external function call.</param>
-        /// <param name="testTypes">defines the type of test</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        ///
-        [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthenticationEventResponseHandler> action, TestTypes testTypes)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthenticationEventResponseHandler> action)
         {
             return await (BaseTest(httpMethods, url, t =>
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
-                    AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
+
+                    AuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
+
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
-                        Response = testTypes == TestTypes.ValidCloudEvent ? CreateTokenIssuanceStartResponse() : CreateIssuanceStartLegacyResponse(),
+
+                        Response = CreateTokenIssuanceStartResponse(),
                         RequestStatus = RequestStatusType.Successful
                     };
 
@@ -141,31 +128,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             }));
         }
 
-        /// <summary>
-        /// Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
-        /// </summary>
-        /// <param name="httpMethods">Type of methods. i.e. Post/Get</param>
-        /// <param name="url">The URL to use to create an inactive mock end point</param>
-        /// <param name="action">Action to emulate the external function call.</param>
-        /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthenticationEventResponseHandler> action)
+        internal static AuthenticationEventResponseHandler GetAuthenticationEventResponseHandler(HttpRequestMessage mockedRequest)
         {
-            return await (BaseTest(httpMethods, url, t =>
-            {
-                if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
-                {
-                    AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
-                    eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
-                    {
+            AuthenticationEventResponseHandler eventsResponseHandler = null;
+#if NETFRAMEWORK
+            eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
+#else
+            HttpRequestOptionsKey<AuthenticationEventResponseHandler> optionsKey = new(AuthenticationEventResponseHandler.EventResponseProperty);
 
-                        Response = CreateIssuanceStartLegacyResponse(),
-                        RequestStatus = RequestStatusType.Successful
-                    };
+            mockedRequest.Options.TryGetValue(
+                optionsKey,
+                out eventsResponseHandler);
+#endif
 
-                    action(eventsResponseHandler);
-                }
-            }));
+            return eventsResponseHandler;
         }
 
 
@@ -285,21 +261,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 .GetCustomAttributes(false)
                 .OfType<TAttribute>()
                 .SingleOrDefault();
-        }
-
-        /// <summary>Creates the issuance start Legacy response.</summary>
-        /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
-        public static TokenIssuanceStartResponse CreateIssuanceStartLegacyResponse()
-        {
-            JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "ActionableTemplate.json")));
-            (jBody["type"] as JValue).Value = "onTokenIssuanceStartCustomExtension";
-            (jBody["apiSchemaVersion"] as JValue).Value = "10-01-2021-preview";
-
-
-            return new TokenIssuanceStartResponse()
-            {
-                Body = jBody.ToString()
-            };
         }
 
         /// <summary>Creates the issuance start Legacy response.</summary>

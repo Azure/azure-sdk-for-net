@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         private const string UnknownValue = "Unknown";
-        private const string FourCharacterCodeValue = "FourCC";
+        private const string FourCCValue = "FourCC";
 
         /// <summary> Unknown track property. </summary>
         public static TrackPropertyType Unknown { get; } = new TrackPropertyType(UnknownValue);
         /// <summary> Track FourCC. </summary>
-        public static TrackPropertyType FourCharacterCode { get; } = new TrackPropertyType(FourCharacterCodeValue);
+        public static TrackPropertyType FourCC { get; } = new TrackPropertyType(FourCCValue);
         /// <summary> Determines if two <see cref="TrackPropertyType"/> values are the same. </summary>
         public static bool operator ==(TrackPropertyType left, TrackPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrackPropertyType"/> values are not the same. </summary>

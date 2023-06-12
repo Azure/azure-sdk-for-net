@@ -15,7 +15,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductDescription DeserializeProductDescription(JsonElement element)
         {
-            Optional<DescriptionType> descriptionType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ProductDescriptionType> descriptionType = default;
             Optional<string> shortDescription = default;
             Optional<string> longDescription = default;
             Optional<IReadOnlyList<string>> keywords = default;
@@ -23,31 +27,29 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<IReadOnlyList<ProductLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("descriptionType"))
+                if (property.NameEquals("descriptionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    descriptionType = new DescriptionType(property.Value.GetString());
+                    descriptionType = new ProductDescriptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shortDescription"))
+                if (property.NameEquals("shortDescription"u8))
                 {
                     shortDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("longDescription"))
+                if (property.NameEquals("longDescription"u8))
                 {
                     longDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keywords"))
+                if (property.NameEquals("keywords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -58,11 +60,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     keywords = array;
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,11 +74,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     attributes = array;
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProductLink> array = new List<ProductLink>();

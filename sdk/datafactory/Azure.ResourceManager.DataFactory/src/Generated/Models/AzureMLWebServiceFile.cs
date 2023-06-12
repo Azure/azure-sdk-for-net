@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureMLWebServiceFile(BinaryData filePath, FactoryLinkedServiceReference linkedServiceName)
         {
-            if (filePath == null)
-            {
-                throw new ArgumentNullException(nameof(filePath));
-            }
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(filePath, nameof(filePath));
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             FilePath = filePath;
             LinkedServiceName = linkedServiceName;

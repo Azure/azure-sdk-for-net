@@ -46,14 +46,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="licenseType">The license type, which is for bring your
         /// own license scenario.</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2019-03-01.</param>
+        /// of a Azure Spot VMSS. Minimum api-version: 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
         /// <param name="userData">UserData for the VM, which must be base-64
         /// encoded. Customer should not pass any secrets in here.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01</param>
-        public VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default(VirtualMachineScaleSetUpdateOSProfile), VirtualMachineScaleSetUpdateStorageProfile storageProfile = default(VirtualMachineScaleSetUpdateStorageProfile), VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default(VirtualMachineScaleSetUpdateNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string))
+        /// <param name="hardwareProfile">Specifies the hardware profile
+        /// related details of a scale set. Minimum api-version:
+        /// 2021-11-01.</param>
+        public VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default(VirtualMachineScaleSetUpdateOSProfile), VirtualMachineScaleSetUpdateStorageProfile storageProfile = default(VirtualMachineScaleSetUpdateStorageProfile), VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default(VirtualMachineScaleSetUpdateNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), VirtualMachineScaleSetHardwareProfile hardwareProfile = default(VirtualMachineScaleSetHardwareProfile))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             BillingProfile = billingProfile;
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
+            HardwareProfile = hardwareProfile;
             CustomInit();
         }
 
@@ -118,8 +121,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the billing related details of a Azure Spot
-        /// VMSS. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01.
+        /// VMSS. Minimum api-version: 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "billingProfile")]
         public BillingProfile BillingProfile { get; set; }
@@ -137,6 +139,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the hardware profile related details of a
+        /// scale set. Minimum api-version: 2021-11-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "hardwareProfile")]
+        public VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
 
     }
 }

@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets account SKU. </summary>
         public AutomationSku Sku { get; set; }
         /// <summary> Set the encryption properties for the automation account. </summary>
-        public EncryptionProperties Encryption { get; set; }
+        public AutomationEncryptionProperties Encryption { get; set; }
         /// <summary> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </summary>
-        public bool? PublicNetworkAccess { get; set; }
+        public bool? IsPublicNetworkAccessAllowed { get; set; }
         /// <summary> Indicates whether requests using non-AAD authentication are blocked. </summary>
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsLocalAuthDisabled { get; set; }
     }
 }

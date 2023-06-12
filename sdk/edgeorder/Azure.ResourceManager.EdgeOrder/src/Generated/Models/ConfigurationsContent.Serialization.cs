@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("configurationFilters");
+            writer.WritePropertyName("configurationFilters"u8);
             writer.WriteStartArray();
             foreach (var item in ConfigurationFilters)
             {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
-                writer.WritePropertyName("customerSubscriptionDetails");
+                writer.WritePropertyName("customerSubscriptionDetails"u8);
                 writer.WriteObjectValue(CustomerSubscriptionDetails);
             }
             writer.WriteEndObject();

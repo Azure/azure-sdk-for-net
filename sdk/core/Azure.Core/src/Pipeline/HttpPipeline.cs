@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Pipeline
 {
@@ -55,7 +56,8 @@ namespace Azure.Core.Pipeline
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
-                ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
+                ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()),
+                new ProtocolMethodOptions());
             policies.CopyTo(all, 0);
 
             _pipeline = all;
@@ -133,6 +135,7 @@ namespace Azure.Core.Pipeline
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -166,6 +169,7 @@ namespace Azure.Core.Pipeline
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of IncidentCommentList. </summary>
         /// <param name="value"> Array of comments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal IncidentCommentList(IEnumerable<IncidentCommentData> value)
+        internal IncidentCommentList(IEnumerable<SecurityInsightsIncidentCommentData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of IncidentCommentList. </summary>
         /// <param name="nextLink"> URL to fetch the next set of comments. </param>
         /// <param name="value"> Array of comments. </param>
-        internal IncidentCommentList(string nextLink, IReadOnlyList<IncidentCommentData> value)
+        internal IncidentCommentList(string nextLink, IReadOnlyList<SecurityInsightsIncidentCommentData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +38,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> URL to fetch the next set of comments. </summary>
         public string NextLink { get; }
         /// <summary> Array of comments. </summary>
-        public IReadOnlyList<IncidentCommentData> Value { get; }
+        public IReadOnlyList<SecurityInsightsIncidentCommentData> Value { get; }
     }
 }

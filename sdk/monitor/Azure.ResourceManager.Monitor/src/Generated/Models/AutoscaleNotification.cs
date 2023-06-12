@@ -30,9 +30,6 @@ namespace Azure.ResourceManager.Monitor.Models
             Email = email;
             Webhooks = webhooks;
         }
-
-        /// <summary> the operation associated with the notification and its value must be &quot;scale&quot;. </summary>
-        public MonitorOperationType Operation { get; set; }
         /// <summary> the email notification. </summary>
         public EmailNotification Email { get; set; }
         /// <summary> the collection of webhook notifications. </summary>

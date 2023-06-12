@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
@@ -16,13 +16,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceCredentialType");
+            writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
-            writer.WritePropertyName("dataSourceCredentialName");
+            writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("dataSourceCredentialDescription");
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();

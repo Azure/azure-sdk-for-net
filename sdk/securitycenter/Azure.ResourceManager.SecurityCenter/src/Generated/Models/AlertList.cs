@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AlertList. </summary>
         internal AlertList()
         {
-            Value = new ChangeTrackingList<AlertData>();
+            Value = new ChangeTrackingList<SecurityAlertData>();
         }
 
         /// <summary> Initializes a new instance of AlertList. </summary>
         /// <param name="value"> describes security alert properties. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AlertList(IReadOnlyList<AlertData> value, string nextLink)
+        internal AlertList(IReadOnlyList<SecurityAlertData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> describes security alert properties. </summary>
-        public IReadOnlyList<AlertData> Value { get; }
+        public IReadOnlyList<SecurityAlertData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

@@ -9,7 +9,6 @@ csharp: true
 library-name: HealthcareApis
 namespace: Azure.ResourceManager.HealthcareApis
 require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/healthcareapis/resource-manager/readme.md
-tag: package-2022-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

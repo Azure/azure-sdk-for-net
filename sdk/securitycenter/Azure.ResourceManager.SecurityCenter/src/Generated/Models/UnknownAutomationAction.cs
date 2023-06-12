@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownAutomationAction. </summary>
-    internal partial class UnknownAutomationAction : AutomationAction
+    internal partial class UnknownAutomationAction : SecurityAutomationAction
     {
         /// <summary> Initializes a new instance of UnknownAutomationAction. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>

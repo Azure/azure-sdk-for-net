@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The UnknownAutomationRuleAction. </summary>
-    internal partial class UnknownAutomationRuleAction : AutomationRuleAction
+    internal partial class UnknownAutomationRuleAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of UnknownAutomationRuleAction. </summary>
         /// <param name="order"></param>

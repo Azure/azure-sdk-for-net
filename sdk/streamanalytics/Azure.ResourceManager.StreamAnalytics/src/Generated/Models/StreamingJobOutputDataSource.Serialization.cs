@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WriteEndObject();
         }
 
         internal static StreamingJobOutputDataSource DeserializeStreamingJobOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -43,16 +47,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     case "Raw": return RawOutputDatasource.DeserializeRawOutputDatasource(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownStreamingJobOutputDataSource(type);
+            return UnknownOutputDataSource.DeserializeUnknownOutputDataSource(element);
         }
     }
 }

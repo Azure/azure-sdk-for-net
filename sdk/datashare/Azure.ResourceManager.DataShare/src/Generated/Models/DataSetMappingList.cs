@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -18,16 +19,13 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of DataSetMappingList. </summary>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
-        /// Please note <see cref="DataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ShareDataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AdlsGen2FileDataSetMapping"/>, <see cref="AdlsGen2FileSystemDataSetMapping"/>, <see cref="AdlsGen2FolderDataSetMapping"/>, <see cref="BlobDataSetMapping"/>, <see cref="BlobFolderDataSetMapping"/>, <see cref="BlobContainerDataSetMapping"/>, <see cref="KustoClusterDataSetMapping"/>, <see cref="KustoDatabaseDataSetMapping"/>, <see cref="KustoTableDataSetMapping"/>, <see cref="SqlDBTableDataSetMapping"/>, <see cref="SqlDWTableDataSetMapping"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSetMapping"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DataSetMappingList(IEnumerable<DataSetMappingData> value)
+        internal DataSetMappingList(IEnumerable<ShareDataSetMappingData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -36,10 +34,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
-        /// Please note <see cref="DataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ShareDataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AdlsGen2FileDataSetMapping"/>, <see cref="AdlsGen2FileSystemDataSetMapping"/>, <see cref="AdlsGen2FolderDataSetMapping"/>, <see cref="BlobDataSetMapping"/>, <see cref="BlobFolderDataSetMapping"/>, <see cref="BlobContainerDataSetMapping"/>, <see cref="KustoClusterDataSetMapping"/>, <see cref="KustoDatabaseDataSetMapping"/>, <see cref="KustoTableDataSetMapping"/>, <see cref="SqlDBTableDataSetMapping"/>, <see cref="SqlDWTableDataSetMapping"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSetMapping"/>.
         /// </param>
-        internal DataSetMappingList(string nextLink, IReadOnlyList<DataSetMappingData> value)
+        internal DataSetMappingList(string nextLink, IReadOnlyList<ShareDataSetMappingData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -49,9 +47,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public string NextLink { get; }
         /// <summary>
         /// Collection of items of type DataTransferObjects.
-        /// Please note <see cref="DataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ShareDataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AdlsGen2FileDataSetMapping"/>, <see cref="AdlsGen2FileSystemDataSetMapping"/>, <see cref="AdlsGen2FolderDataSetMapping"/>, <see cref="BlobDataSetMapping"/>, <see cref="BlobFolderDataSetMapping"/>, <see cref="BlobContainerDataSetMapping"/>, <see cref="KustoClusterDataSetMapping"/>, <see cref="KustoDatabaseDataSetMapping"/>, <see cref="KustoTableDataSetMapping"/>, <see cref="SqlDBTableDataSetMapping"/>, <see cref="SqlDWTableDataSetMapping"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSetMapping"/>.
         /// </summary>
-        public IReadOnlyList<DataSetMappingData> Value { get; }
+        public IReadOnlyList<ShareDataSetMappingData> Value { get; }
     }
 }

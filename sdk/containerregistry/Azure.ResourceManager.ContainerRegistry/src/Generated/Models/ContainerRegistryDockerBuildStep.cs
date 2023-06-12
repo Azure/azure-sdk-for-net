@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dockerFilePath"/> is null. </exception>
         public ContainerRegistryDockerBuildStep(string dockerFilePath)
         {
-            if (dockerFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(dockerFilePath));
-            }
+            Argument.AssertNotNull(dockerFilePath, nameof(dockerFilePath));
 
             ImageNames = new ChangeTrackingList<string>();
             DockerFilePath = dockerFilePath;

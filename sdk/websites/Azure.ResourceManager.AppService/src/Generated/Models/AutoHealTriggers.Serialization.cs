@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Requests))
             {
-                writer.WritePropertyName("requests");
+                writer.WritePropertyName("requests"u8);
                 writer.WriteObjectValue(Requests);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
-                writer.WritePropertyName("privateBytesInKB");
+                writer.WritePropertyName("privateBytesInKB"u8);
                 writer.WriteNumberValue(PrivateBytesInKB.Value);
             }
             if (Optional.IsCollectionDefined(StatusCodes))
             {
-                writer.WritePropertyName("statusCodes");
+                writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(SlowRequests))
             {
-                writer.WritePropertyName("slowRequests");
+                writer.WritePropertyName("slowRequests"u8);
                 writer.WriteObjectValue(SlowRequests);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
-                writer.WritePropertyName("slowRequestsWithPath");
+                writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(StatusCodesRange))
             {
-                writer.WritePropertyName("statusCodesRange");
+                writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RequestsBasedTrigger> requests = default;
             Optional<int> privateBytesInKB = default;
             Optional<IList<StatusCodesBasedTrigger>> statusCodes = default;
@@ -74,31 +78,28 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<StatusCodesRangeBasedTrigger>> statusCodesRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requests"))
+                if (property.NameEquals("requests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value);
                     continue;
                 }
-                if (property.NameEquals("privateBytesInKB"))
+                if (property.NameEquals("privateBytesInKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateBytesInKB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("statusCodes"))
+                if (property.NameEquals("statusCodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StatusCodesBasedTrigger> array = new List<StatusCodesBasedTrigger>();
@@ -109,21 +110,19 @@ namespace Azure.ResourceManager.AppService.Models
                     statusCodes = array;
                     continue;
                 }
-                if (property.NameEquals("slowRequests"))
+                if (property.NameEquals("slowRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value);
                     continue;
                 }
-                if (property.NameEquals("slowRequestsWithPath"))
+                if (property.NameEquals("slowRequestsWithPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SlowRequestsBasedTrigger> array = new List<SlowRequestsBasedTrigger>();
@@ -134,11 +133,10 @@ namespace Azure.ResourceManager.AppService.Models
                     slowRequestsWithPath = array;
                     continue;
                 }
-                if (property.NameEquals("statusCodesRange"))
+                if (property.NameEquals("statusCodesRange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StatusCodesRangeBasedTrigger> array = new List<StatusCodesRangeBasedTrigger>();

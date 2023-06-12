@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/>, <paramref name="country"/> or <paramref name="postalCode"/> is null. </exception>
         public DataBoxShippingAddress(string streetAddress1, string country, string postalCode)
         {
-            if (streetAddress1 == null)
-            {
-                throw new ArgumentNullException(nameof(streetAddress1));
-            }
-            if (country == null)
-            {
-                throw new ArgumentNullException(nameof(country));
-            }
-            if (postalCode == null)
-            {
-                throw new ArgumentNullException(nameof(postalCode));
-            }
+            Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
+            Argument.AssertNotNull(country, nameof(country));
+            Argument.AssertNotNull(postalCode, nameof(postalCode));
 
             StreetAddress1 = streetAddress1;
             Country = country;
@@ -48,7 +40,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="zipExtendedCode"> Extended Zip Code. </param>
         /// <param name="companyName"> Name of the company. </param>
         /// <param name="addressType"> Type of address. </param>
-        internal DataBoxShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, DataBoxShippingAddressType? addressType)
+        /// <param name="skipAddressValidation"> Flag to indicate if customer has chosen to skip default address validation. </param>
+        /// <param name="taxIdentificationNumber"> Tax Identification Number. </param>
+        internal DataBoxShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, DataBoxShippingAddressType? addressType, bool? skipAddressValidation, string taxIdentificationNumber)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -60,6 +54,8 @@ namespace Azure.ResourceManager.DataBox.Models
             ZipExtendedCode = zipExtendedCode;
             CompanyName = companyName;
             AddressType = addressType;
+            SkipAddressValidation = skipAddressValidation;
+            TaxIdentificationNumber = taxIdentificationNumber;
         }
 
         /// <summary> Street Address line 1. </summary>
@@ -82,5 +78,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public string CompanyName { get; set; }
         /// <summary> Type of address. </summary>
         public DataBoxShippingAddressType? AddressType { get; set; }
+        /// <summary> Flag to indicate if customer has chosen to skip default address validation. </summary>
+        public bool? SkipAddressValidation { get; set; }
+        /// <summary> Tax Identification Number. </summary>
+        public string TaxIdentificationNumber { get; set; }
     }
 }

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static ThresholdRuleConditionTimeAggregationType ToThresholdRuleConditionTimeAggregationType(this string value)
         {
-            if (string.Equals(value, "Average", StringComparison.InvariantCultureIgnoreCase)) return ThresholdRuleConditionTimeAggregationType.Average;
-            if (string.Equals(value, "Minimum", StringComparison.InvariantCultureIgnoreCase)) return ThresholdRuleConditionTimeAggregationType.Minimum;
-            if (string.Equals(value, "Maximum", StringComparison.InvariantCultureIgnoreCase)) return ThresholdRuleConditionTimeAggregationType.Maximum;
-            if (string.Equals(value, "Total", StringComparison.InvariantCultureIgnoreCase)) return ThresholdRuleConditionTimeAggregationType.Total;
-            if (string.Equals(value, "Last", StringComparison.InvariantCultureIgnoreCase)) return ThresholdRuleConditionTimeAggregationType.Last;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average")) return ThresholdRuleConditionTimeAggregationType.Average;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Minimum")) return ThresholdRuleConditionTimeAggregationType.Minimum;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Maximum")) return ThresholdRuleConditionTimeAggregationType.Maximum;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Total")) return ThresholdRuleConditionTimeAggregationType.Total;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last")) return ThresholdRuleConditionTimeAggregationType.Last;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ThresholdRuleConditionTimeAggregationType value.");
         }
     }

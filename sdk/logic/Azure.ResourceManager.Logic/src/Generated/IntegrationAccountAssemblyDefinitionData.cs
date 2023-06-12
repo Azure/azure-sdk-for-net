@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the IntegrationAccountAssemblyDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the IntegrationAccountAssemblyDefinition data model.
+    /// The assembly definition.
+    /// </summary>
     public partial class IntegrationAccountAssemblyDefinitionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyDefinitionData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IntegrationAccountAssemblyDefinitionData(AzureLocation location, IntegrationAccountAssemblyProperties properties) : base(location)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

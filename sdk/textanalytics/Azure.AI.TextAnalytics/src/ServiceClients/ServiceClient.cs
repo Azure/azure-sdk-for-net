@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using static Azure.AI.TextAnalytics.TextAnalyticsClientOptions;
 
 namespace Azure.AI.TextAnalytics.ServiceClients
 {
@@ -20,7 +19,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal abstract class ServiceClient
     {
+        public ServiceClient(TextAnalyticsClientOptions options)
+        {
+            Options = options;
+        }
+
         public abstract ClientDiagnostics Diagnostics { get; }
+
+        protected TextAnalyticsClientOptions Options { get; }
+
+        protected ServiceVersion ServiceVersion => Options.Version;
 
         #region Detect Language
 
@@ -142,6 +150,38 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public abstract ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
         public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
         public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+
+        #endregion
+
+        #region Extractive Summarize
+
+        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        public virtual Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        public virtual Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        #endregion
+
+        #region Abstractive Summarize
+
+        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
+
+        public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         #endregion
 

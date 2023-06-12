@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -18,16 +19,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> or <paramref name="errors"/> is null. </exception>
-        internal FacetError(string expression, IEnumerable<ErrorDetails> errors) : base(expression)
+        internal FacetError(string expression, IEnumerable<FacetErrorDetails> errors) : base(expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
+            Argument.AssertNotNull(errors, nameof(errors));
 
             Errors = errors.ToList();
             ResultType = "FacetError";
@@ -37,13 +32,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
-        internal FacetError(string expression, string resultType, IReadOnlyList<ErrorDetails> errors) : base(expression, resultType)
+        internal FacetError(string expression, string resultType, IReadOnlyList<FacetErrorDetails> errors) : base(expression, resultType)
         {
             Errors = errors;
             ResultType = resultType ?? "FacetError";
         }
 
         /// <summary> An array containing detected facet errors with details. </summary>
-        public IReadOnlyList<ErrorDetails> Errors { get; }
+        public IReadOnlyList<FacetErrorDetails> Errors { get; }
     }
 }

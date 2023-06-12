@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Please note <see cref="ContainerRegistryTaskStepUpdateContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/> and <see cref="ContainerRegistryFileTaskStepUpdateContent"/>.
     /// </summary>
-    public partial class ContainerRegistryTaskStepUpdateContent
+    public abstract partial class ContainerRegistryTaskStepUpdateContent
     {
         /// <summary> Initializes a new instance of ContainerRegistryTaskStepUpdateContent. </summary>
-        public ContainerRegistryTaskStepUpdateContent()
+        protected ContainerRegistryTaskStepUpdateContent()
         {
         }
 

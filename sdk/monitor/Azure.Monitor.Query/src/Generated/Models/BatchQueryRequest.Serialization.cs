@@ -15,11 +15,11 @@ namespace Azure.Monitor.Query.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Headers)
                 {
@@ -28,19 +28,13 @@ namespace Azure.Monitor.Query.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("body");
+            writer.WritePropertyName("body"u8);
             writer.WriteObjectValue(Body);
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path");
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsDefined(Method))
-            {
-                writer.WritePropertyName("method");
-                writer.WriteStringValue(Method);
-            }
-            writer.WritePropertyName("workspace");
+            writer.WritePropertyName("path"u8);
+            writer.WriteStringValue(Path);
+            writer.WritePropertyName("method"u8);
+            writer.WriteStringValue(Method);
+            writer.WritePropertyName("workspace"u8);
             writer.WriteStringValue(Workspace);
             writer.WriteEndObject();
         }

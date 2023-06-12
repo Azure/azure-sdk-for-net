@@ -17,10 +17,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static SubscriptionDeletedEventData DeserializeSubscriptionDeletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventSubscriptionId"))
+                if (property.NameEquals("eventSubscriptionId"u8))
                 {
                     eventSubscriptionId = property.Value.GetString();
                     continue;

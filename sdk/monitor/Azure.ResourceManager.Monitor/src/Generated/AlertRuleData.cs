@@ -13,7 +13,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the AlertRule data model. </summary>
+    /// <summary>
+    /// A class representing the AlertRule data model.
+    /// The alert rule resource.
+    /// </summary>
     public partial class AlertRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AlertRuleData. </summary>
@@ -28,14 +31,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> or <paramref name="condition"/> is null. </exception>
         public AlertRuleData(AzureLocation location, string alertRuleName, bool isEnabled, AlertRuleCondition condition) : base(location)
         {
-            if (alertRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertRuleName));
-            }
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
+            Argument.AssertNotNull(alertRuleName, nameof(alertRuleName));
+            Argument.AssertNotNull(condition, nameof(condition));
 
             AlertRuleName = alertRuleName;
             IsEnabled = isEnabled;

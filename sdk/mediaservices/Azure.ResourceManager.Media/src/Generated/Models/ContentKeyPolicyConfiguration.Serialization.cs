@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static ContentKeyPolicyConfiguration DeserializeContentKeyPolicyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -33,16 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownContentKeyPolicyConfiguration(odataType);
+            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element);
         }
     }
 }

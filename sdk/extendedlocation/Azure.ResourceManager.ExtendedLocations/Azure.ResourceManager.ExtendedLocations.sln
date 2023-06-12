@@ -7,6 +7,8 @@ Project("{98E2A7CD-3812-4FD4-A7E7-9CFDC880F9ED}") = "Azure.ResourceManager.Exten
 EndProject
 Project("{98E2A7CD-3812-4FD4-A7E7-9CFDC880F9ED}") = "Azure.ResourceManager.ExtendedLocations.Tests", "tests\Azure.ResourceManager.ExtendedLocations.Tests.csproj", "{2C0ADF65-B48E-419C-8D9A-6A2BCEEB4E6C}"
 EndProject
+Project("{98E2A7CD-3812-4FD4-A7E7-9CFDC880F9ED}") = "Azure.ResourceManager.ExtendedLocations.Samples", "samples\Azure.ResourceManager.ExtendedLocations.Samples.csproj", "{483B7174-2DD3-44DB-B25A-6BA1AAD338CF}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

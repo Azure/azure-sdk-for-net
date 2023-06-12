@@ -8,13 +8,15 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/batch/resource-manager/readme.md
-tag: package-2022-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/8c9845c7190792cb95c0deda1cb787512c4c7ca1/specification/batch/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug: 
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,7 +26,6 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'ifMatch': 'etag'
   'locationName': 'azure-location'
-  'thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -155,6 +156,7 @@ rename-mapping:
   CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
   NameAvailabilityReason: BatchNameUnavailableReason
   CifsMountConfiguration: BatchCifsMountConfiguration
+  CifsMountConfiguration.userName: username
   NFSMountConfiguration: BatchNFSMountConfiguration
   ContainerWorkingDirectory: BatchContainerWorkingDirectory
   DiffDiskPlacement: BatchDiffDiskPlacement
@@ -164,12 +166,14 @@ rename-mapping:
   IPAddressProvisioningType: BatchIPAddressProvisioningType
   IPRuleAction: BatchIPRuleAction
   NetworkConfiguration: BatchNetworkConfiguration
+  NetworkConfiguration.dynamicVnetAssignmentScope: dynamicVNetAssignmentScope
   NetworkConfiguration.subnetId: -|arm-id
   NetworkSecurityGroupRule: BatchNetworkSecurityGroupRule
   NetworkSecurityGroupRuleAccess: BatchNetworkSecurityGroupRuleAccess
   NodePlacementPolicyType: BatchNodePlacementPolicyType
   PackageState: BatchApplicationPackageState
   PrivateLinkServiceConnectionStatus: BatchPrivateLinkServiceConnectionStatus
+  PrivateLinkServiceConnectionState.actionsRequired: actionRequired
   PublicIPAddressConfiguration: BatchPublicIPAddressConfiguration
   SkuCapability: BatchSkuCapability
   UserIdentity: BatchUserIdentity
@@ -184,6 +188,8 @@ rename-mapping:
   ResourceFile.autoStorageContainerName: AutoBlobContainerName
   AccountKeyType: BatchAccountKeyType
   BatchAccountRegenerateKeyParameters.keyName: KeyType
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString 
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
@@ -242,4 +248,7 @@ directive:
           "type": "string",
           "description": "The error target."
         };
+  - from: swagger-document
+    where: $.definitions.CheckNameAvailabilityParameters.properties.type
+    transform: $["x-ms-constant"] = true;
 ```

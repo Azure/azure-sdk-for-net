@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Uploaded Jar binary for a deployment. </summary>
-    public partial class JarUploadedUserSourceInfo : UploadedUserSourceInfo
+    public partial class JarUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
         /// <summary> Initializes a new instance of JarUploadedUserSourceInfo. </summary>
         public JarUploadedUserSourceInfo()

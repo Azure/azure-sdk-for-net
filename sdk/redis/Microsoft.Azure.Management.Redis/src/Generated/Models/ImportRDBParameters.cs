@@ -34,10 +34,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         /// <param name="files">files to import.</param>
         /// <param name="format">File format.</param>
-        public ImportRDBParameters(IList<string> files, string format = default(string))
+        /// <param name="preferredDataArchiveAuthMethod">Preferred auth method
+        /// to communicate to storage account used for data archive, specify
+        /// SAS or ManagedIdentity, default value is SAS</param>
+        public ImportRDBParameters(IList<string> files, string format = default(string), string preferredDataArchiveAuthMethod = default(string))
         {
             Format = format;
             Files = files;
+            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
             CustomInit();
         }
 
@@ -57,6 +61,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<string> Files { get; set; }
+
+        /// <summary>
+        /// Gets or sets preferred auth method to communicate to storage
+        /// account used for data archive, specify SAS or ManagedIdentity,
+        /// default value is SAS
+        /// </summary>
+        [JsonProperty(PropertyName = "preferred-data-archive-auth-method")]
+        public string PreferredDataArchiveAuthMethod { get; set; }
 
         /// <summary>
         /// Validate the object.

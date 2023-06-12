@@ -2,7 +2,7 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 jobs:
-  - template: /eng/pipelines/templates/jobs/new.smoke.tests.yml
+  - template: /eng/pipelines/templates/jobs/smoke.tests.yml
     parameters:
       Daily: true
       TimeoutInMinutes: 90

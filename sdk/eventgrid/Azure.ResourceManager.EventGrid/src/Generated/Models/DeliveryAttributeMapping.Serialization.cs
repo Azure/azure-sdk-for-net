@@ -17,16 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MappingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DeliveryAttributeMapping DeserializeDeliveryAttributeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -35,22 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "Static": return StaticDeliveryAttributeMapping.DeserializeStaticDeliveryAttributeMapping(element);
                 }
             }
-            Optional<string> name = default;
-            DeliveryAttributeMappingType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new DeliveryAttributeMappingType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDeliveryAttributeMapping(name.Value, type);
+            return UnknownDeliveryAttributeMapping.DeserializeUnknownDeliveryAttributeMapping(element);
         }
     }
 }

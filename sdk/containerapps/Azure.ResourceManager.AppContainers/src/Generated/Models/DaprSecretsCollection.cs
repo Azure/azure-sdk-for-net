@@ -8,33 +8,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Dapr component Secrets Collection ARM resource. </summary>
+    /// <summary> Dapr component Secrets Collection for ListSecrets Action. </summary>
     internal partial class DaprSecretsCollection
     {
         /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DaprSecretsCollection(IEnumerable<AppSecret> value)
+        internal DaprSecretsCollection(IEnumerable<ContainerAppDaprSecret> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
-        internal DaprSecretsCollection(IReadOnlyList<AppSecret> value)
+        internal DaprSecretsCollection(IReadOnlyList<ContainerAppDaprSecret> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of secrets used by a Dapr component. </summary>
-        public IReadOnlyList<AppSecret> Value { get; }
+        public IReadOnlyList<ContainerAppDaprSecret> Value { get; }
     }
 }

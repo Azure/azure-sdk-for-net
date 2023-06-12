@@ -13,7 +13,10 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlServer data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlServer data model.
+    /// Represents a server.
+    /// </summary>
     public partial class MySqlServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MySqlServerData. </summary>

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the IotHubDescription data model. </summary>
+    /// <summary>
+    /// A class representing the IotHubDescription data model.
+    /// The description of the IoT hub.
+    /// </summary>
     public partial class IotHubDescriptionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public IotHubDescriptionData(AzureLocation location, IotHubSkuInfo sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
         }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkSecurityRulesEvaluationResult DeserializeNetworkSecurityRulesEvaluationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> protocolMatched = default;
             Optional<bool> sourceMatched = default;
@@ -22,56 +26,51 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> destinationPortMatched = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocolMatched"))
+                if (property.NameEquals("protocolMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocolMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourceMatched"))
+                if (property.NameEquals("sourceMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourcePortMatched"))
+                if (property.NameEquals("sourcePortMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourcePortMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("destinationMatched"))
+                if (property.NameEquals("destinationMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("destinationPortMatched"))
+                if (property.NameEquals("destinationPortMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationPortMatched = property.Value.GetBoolean();

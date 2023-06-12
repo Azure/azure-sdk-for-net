@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxContactDetails ContactDetails { get; set; }
         /// <summary> Shipping address of the customer. </summary>
         public DataBoxShippingAddress ShippingAddress { get; set; }
+        /// <summary> Reverse Shipping Address and contact details for a job. </summary>
+        public ReverseShippingDetails ReverseShippingDetails { get; set; }
+        /// <summary> Preferences related to the order. </summary>
+        public DataBoxOrderPreferences Preferences { get; set; }
         /// <summary> Key encryption key for the job. </summary>
         public DataBoxKeyEncryptionKey KeyEncryptionKey { get; set; }
         /// <summary> Return package details of job. </summary>

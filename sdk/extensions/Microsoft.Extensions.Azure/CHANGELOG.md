@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.3 (2023-03-10)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.6.2 (2023-03-07)
+
+### Bugs Fixed
+
+- Added support for clients to be disposed via `IDisposable` or `IAsyncDisposable` when the service factory is disposed.
+- Changed tracking for client initialization to ensure that behavior is correct for value types registered as clients.
+
+## 1.6.0 (2022-10-12)
+
+### Features Added
+
+- Support passing a semi-colon delimited list of additional tenants via the `additionallyAllowedTenants` config. See the [Azure.Identity Breaking Changes log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170) for more information about this setting.
+
+### Bugs Fixed
+
+- The `tenantId`, `clientId`, `managedIdentityResourceId`, and the newly added `additionallyAllowedTenants` will be passed onto the created `DefaultAzureCredential` if no `clientSecret` or `clientCertificate` is provided. Previously, these values would be ignored when falling back to the `DefaultAzureCredential` or the user-provided credential specified via  `AzureClientFactoryBuilder.UseCredential`.
 
 ## 1.5.0 (2022-08-24)
 
@@ -20,7 +43,7 @@
 
 ### Features Added
 
-- Added the `AddAzureClientsCore` method overload that has a parameter to allow enabling log 
+- Added the `AddAzureClientsCore` method overload that has a parameter to allow enabling log
   forwarding to `ILogger`.
 
 ## 1.3.0 (2022-07-12)
@@ -72,19 +95,19 @@
 - The `AzureEventSourceLogForwarder` class that allows manual control over the log forwarding.
 - The `AddAzureClientsCore` extension method.
 
-## 1.0.0 
+## 1.0.0
 
 - Updated Azure.Identity dependency version
 
-## 1.0.0-preview.3 
+## 1.0.0-preview.3
 
 - Updated Azure.Identity dependency version
 
-## 1.0.0-preview.2 
+## 1.0.0-preview.2
 
 - Minor bug fixes and code improvements.
 
-## 1.0.0-preview.1 
+## 1.0.0-preview.1
 
 - Added TokenCredential support.
 - Added client version support.

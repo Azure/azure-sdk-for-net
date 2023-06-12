@@ -47,7 +47,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             Response getResponse = await client.GetSentShareAsync("sentShare1", new());
 
             Assert.AreEqual(200, getResponse.Status);
-            JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getBodyJson = jsonDocumentGet.RootElement;
             Assert.AreEqual("/sentShares/sentShare1", getBodyJson.GetProperty("id").GetString());
 
             //List sent shares
@@ -55,7 +56,8 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             Assert.IsTrue(listSentSharesResponse.Count > 0);
             Assert.IsTrue(listSentSharesResponse[0] != null);
-            JsonElement listSentSharesResponseJson = JsonDocument.Parse(listSentSharesResponse[0]).RootElement;
+            using var jsonDocumentListSentShares = JsonDocument.Parse(listSentSharesResponse[0]);
+            JsonElement listSentSharesResponseJson = jsonDocumentListSentShares.RootElement;
             Assert.IsTrue(listSentSharesResponseJson.GetProperty("id").GetString() != null);
 
             //Delete sent share
@@ -90,13 +92,15 @@ namespace Azure.Analytics.Purview.Share.Tests
             Response getAssetResponse = await assetsClient.GetAssetAsync("sentShare1", "asset1");
 
             Assert.AreEqual(200, getAssetResponse.Status);
-            JsonElement getAssetResponseJson = JsonDocument.Parse(GetContentFromResponse(getAssetResponse)).RootElement;
+            using var jsonDocumentGetAsset = JsonDocument.Parse(GetContentFromResponse(getAssetResponse));
+            JsonElement getAssetResponseJson = jsonDocumentGetAsset.RootElement;
             Assert.AreEqual("/sentShares/sentShare1/assets/asset1", getAssetResponseJson.GetProperty("id").GetString());
 
             //List all assets
             List<BinaryData> listAssetsResponse = await assetsClient.GetAssetsAsync("sentShare1").ToEnumerableAsync();
 
-            JsonElement listAssetsResponseJson = JsonDocument.Parse(listAssetsResponse[0]).RootElement;
+            using var jsonDocumentListAssets = JsonDocument.Parse(listAssetsResponse[0]);
+            JsonElement listAssetsResponseJson = jsonDocumentListAssets.RootElement;
             Assert.AreEqual("/sentShares/sentShare1/assets/asset1", listAssetsResponseJson.GetProperty("id").GetString());
         }
 
@@ -133,7 +137,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             Response sentShareInvitationResponse = await sentShareInvitationsClient.CreateOrUpdateAsync("sentShare1", "invitation1", RequestContent.Create(sentShareInvitationData));
 
             Assert.AreEqual(201, sentShareInvitationResponse.Status);
-            JsonElement sentShareInvitationResponseJson = JsonDocument.Parse(GetContentFromResponse(sentShareInvitationResponse)).RootElement;
+            using var jsonDocumentSenetShareInvitation = JsonDocument.Parse(GetContentFromResponse(sentShareInvitationResponse));
+            JsonElement sentShareInvitationResponseJson = jsonDocumentSenetShareInvitation.RootElement;
             Assert.IsTrue(sentShareInvitationResponseJson.GetProperty("id").GetString().Contains("/sentShares/sentShare1/sentShareInvitations/"));
             Assert.AreEqual(sentShareInvitationData.properties.targetEmail, sentShareInvitationResponseJson.GetProperty("properties").GetProperty("targetEmail").GetString());
 
@@ -143,14 +148,16 @@ namespace Azure.Analytics.Purview.Share.Tests
             Response getSentShareInvitationResponse = await sentShareInvitationsClient.GetSentShareInvitationAsync("sentShare1", invitationName);
 
             Assert.AreEqual(200, getSentShareInvitationResponse.Status);
-            JsonElement getSentShareInvitationResponseJson = JsonDocument.Parse(GetContentFromResponse(getSentShareInvitationResponse)).RootElement;
+            using var jsonDocumentGetSentShareInvitation = JsonDocument.Parse(GetContentFromResponse(getSentShareInvitationResponse));
+            JsonElement getSentShareInvitationResponseJson = jsonDocumentGetSentShareInvitation.RootElement;
             Assert.AreEqual(invitationName, getSentShareInvitationResponseJson.GetProperty("name").GetString());
 
             //List sent share invitations
             List<BinaryData> listSentShareInvitationResponse = await sentShareInvitationsClient.GetSentShareInvitationsAsync("sentShare1").ToEnumerableAsync();
 
             Assert.AreEqual(1, listSentShareInvitationResponse.Count);
-            JsonElement listSentShareInvitationResponseJson = JsonDocument.Parse(listSentShareInvitationResponse[0]).RootElement;
+            using var jsonDocumentListSentShareInvitation = JsonDocument.Parse(listSentShareInvitationResponse[0]);
+            JsonElement listSentShareInvitationResponseJson = jsonDocumentListSentShareInvitation.RootElement;
             Assert.AreEqual(invitationName, listSentShareInvitationResponseJson.GetProperty("name").GetString());
 
             //Delete sent share invitation
@@ -190,7 +197,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             Response getReceivedShareResponse = await receivedSharesClient.GetReceivedShareAsync("receivedShare1");
 
             Assert.AreEqual(200, getReceivedShareResponse.Status);
-            JsonElement getReceivedShareBodyJson = JsonDocument.Parse(GetContentFromResponse(getReceivedShareResponse)).RootElement;
+            using var jsonDocumentGetReceivedShare = JsonDocument.Parse(GetContentFromResponse(getReceivedShareResponse));
+            JsonElement getReceivedShareBodyJson = jsonDocumentGetReceivedShare.RootElement;
             Assert.AreEqual("/receivedShares/receivedShare1", getReceivedShareBodyJson.GetProperty("id").GetString());
 
             //List received shares
@@ -198,7 +206,8 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             Assert.IsTrue(listReceivedSharesResponse.Count > 0);
             Assert.IsTrue(listReceivedSharesResponse[0] != null);
-            JsonElement listReceivedSharesResponseJson = JsonDocument.Parse(listReceivedSharesResponse[0]).RootElement;
+            using var jsonDocumentListReceivedShares = JsonDocument.Parse(listReceivedSharesResponse[0]);
+            JsonElement listReceivedSharesResponseJson = jsonDocumentListReceivedShares.RootElement;
             Assert.IsTrue(listReceivedSharesResponseJson.GetProperty("id").GetString() != null);
 
             //Delete received share
@@ -217,7 +226,8 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             Assert.IsTrue(receivedAssets.Count == 1);
             Assert.IsTrue(receivedAssets[0] != null);
-            JsonElement listReceivedAssetsResponseJson = JsonDocument.Parse(receivedAssets[0]).RootElement;
+            using var jsonDocumentListReceivedAssets = JsonDocument.Parse(receivedAssets[0]);
+            JsonElement listReceivedAssetsResponseJson = jsonDocumentListReceivedAssets.RootElement;
             Assert.IsTrue(listReceivedAssetsResponseJson.GetProperty("id").GetString() != null);
         }
 
@@ -246,7 +256,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             //Get Accepted Sent Share
             Response getResponse = await acceptedSentSharesClient.GetAcceptedSentShareAsync(sentShareName, acceptedSentShareName);
 
-            JsonElement getResponseJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getResponseJson = jsonDocument.RootElement;
 
             Assert.AreEqual(revokedStatus, getResponseJson.GetProperty("properties").GetProperty("receivedShareStatus").GetString());
         }
@@ -276,7 +287,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             //Get Accepted Sent Share
             Response getResponse = await acceptedSentSharesClient.GetAcceptedSentShareAsync(sentShareName, acceptedSentShareName);
 
-            JsonElement getResponseJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getResponseJson = jsonDocument.RootElement;
 
             //Assert date before == date after
             Assert.AreEqual(data.properties.expirationDate, getResponseJson.GetProperty("properties").GetProperty("expirationDate").GetDateTime().ToString("MM/dd/yyyy HH:mm:ss tt"));
@@ -290,7 +302,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             List<BinaryData> acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync("ft-testShare-3").ToEnumerableAsync();
 
             Assert.IsTrue(acceptedSentShares.Count == 1);
-            JsonElement listSentSharesResponseJson = JsonDocument.Parse(acceptedSentShares[0]).RootElement;
+            using var jsonDocument = JsonDocument.Parse(acceptedSentShares[0]);
+            JsonElement listSentSharesResponseJson = jsonDocument.RootElement;
             Assert.AreEqual("/sentShares/ft-testShare-3/acceptedSentShares/d5d52fdb-6aef-45a2-9271-3aa1becfceb3", listSentSharesResponseJson.GetProperty("id").GetString());
         }
 
@@ -301,7 +314,8 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             Response acceptedSentShare = await acceptedSentSharesClient.GetAcceptedSentShareAsync("ft-testShare-3", "d5d52fdb-6aef-45a2-9271-3aa1becfceb3");
 
-            JsonElement acceptedSentShareJson = JsonDocument.Parse(GetContentFromResponse(acceptedSentShare)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(acceptedSentShare));
+            JsonElement acceptedSentShareJson = jsonDocument.RootElement;
 
             Assert.AreEqual(200, acceptedSentShare.Status);
             Assert.AreEqual("/sentShares/ft-testShare-3/acceptedSentShares/d5d52fdb-6aef-45a2-9271-3aa1becfceb3", acceptedSentShareJson.GetProperty("id").GetString());
@@ -327,7 +341,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             //Get Accepted Sent Share
             Response getResponse = await acceptedSentSharesClient.GetAcceptedSentShareAsync(sentShareName, acceptedSentShareName);
 
-            JsonElement getResponseJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getResponseJson = jsonDocument.RootElement;
 
             Assert.AreEqual(reinstatedStatus, getResponseJson.GetProperty("properties").GetProperty("receivedShareStatus").GetString());
         }
@@ -360,7 +375,8 @@ namespace Azure.Analytics.Purview.Share.Tests
             Operation<BinaryData> createResponse = await assetMappingsClient.CreateAsync(WaitUntil.Completed, receivedShareName, assetMappingName, RequestContent.Create(data));
 
             //Assert MappingStatus and ProvisioningState
-            JsonElement properties = JsonDocument.Parse(createResponse.Value).RootElement.GetProperty("properties");
+            using var jsonDocument = JsonDocument.Parse(createResponse.Value);
+            JsonElement properties = jsonDocument.RootElement.GetProperty("properties");
 
             Assert.AreEqual(assetMappingStatus, properties.GetProperty("assetMappingStatus").ToString());
             Assert.AreEqual(provisioningState, properties.GetProperty("provisioningState").ToString());

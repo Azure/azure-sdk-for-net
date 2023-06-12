@@ -2,19 +2,25 @@ parameters:
 - name: JobName
   type: string
   default: 'Perf'
+- name: TimeoutInMinutes
+  type: number
+  default: '360'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool-mms-ubuntu-2004-perf'
+  default: 'azsdk-pool-mms-ubuntu-2204-perf'
 - name: LinuxVmImage
   type: string
-  default: 'MMSUbuntu20.04'
+  default: 'ubuntu-22.04'
 - name: WindowsPool
   type: string
-  default: 'azsdk-pool-mms-win-2019-perf'
+  default: 'azsdk-pool-mms-win-2022-perf'
 - name: WindowsVmImage
   type: string
-  default: 'MMS2019'
+  default: 'windows-2022'
 - name: Language
+  type: string
+  default: ''
+- name: LanguageVersion
   type: string
   default: ''
 - name: LanguageRepoName
@@ -38,9 +44,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: ''
-- name: Services
-  type: string
-  default: ''
 - name: PackageVersions
   type: string
   default: '.*'
@@ -53,6 +56,9 @@ parameters:
 - name: Iterations
   type: number
   default: '5'
+- name: Profile
+  type: boolean
+  default: false
 - name: AdditionalArguments
   type: string
   default: ''
@@ -62,7 +68,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.JobName }}
-  timeoutInMinutes: 360
+  timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
   strategy:
     matrix:
       ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
@@ -77,6 +83,11 @@ jobs:
           MatrixName: 'Windows'
   variables:
   - ${{ parameters.Variables }}
+  - name: Profile
+    ${{ if parameters.Profile }}:
+      value: '--profile'
+    ${{ else }}:
+      value: ''
   pool:
     name: $(Pool)
     vmImage: $(OSVmImage)
@@ -101,7 +112,7 @@ jobs:
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
     parameters:
       AgentImage: $(OSVmImage)
-
+      
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml
@@ -110,21 +121,17 @@ jobs:
       Location: westus
       ResourceType: perf
 
-  - pwsh: |
-      set-content -path config.yml -value "WorkingDirectories:"
-      add-content -path config.yml -value "  ${{ parameters.Language }}: $(Agent.BuildDirectory)/s"
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-    displayName: Create config.yml
-
   - script: >-
       dotnet run -- run
-      --no-sync
-      --languages ${{ parameters.Language }}
-      --services "${{ parameters.Services }}"
+      --language ${{ parameters.Language }}
+      --language-version ${{ parameters.LanguageVersion }}
+      --repo-root $(System.DefaultWorkingDirectory)
+      --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
       --package-versions "${{ parameters.PackageVersions }}"
       --tests "${{ parameters.Tests }}"
       --arguments "${{ parameters.Arguments }}"
       --iterations ${{ parameters.Iterations }}
+      $(Profile)
       ${{ parameters.AdditionalArguments }}
     workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
     env:
@@ -161,6 +168,12 @@ jobs:
       targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
       artifactName: results-${{ parameters.Language }}-$(MatrixName)
     condition: always()
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: $(System.DefaultWorkingDirectory)/${{ parameters.Language }}-profile.zip
+      artifactName: ${{ parameters.Language }}-profile.zip
+    condition: ${{ parameters.Profile }}
 
   - template: /eng/common/TestResources/remove-test-resources.yml
     parameters:

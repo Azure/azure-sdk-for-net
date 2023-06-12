@@ -15,26 +15,29 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkBatchJobCollection DeserializeSparkBatchJobCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int @from = default;
             int total = default;
             Optional<IReadOnlyList<SparkBatchJob>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     @from = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     total = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sessions"))
+                if (property.NameEquals("sessions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SparkBatchJob> array = new List<SparkBatchJob>();

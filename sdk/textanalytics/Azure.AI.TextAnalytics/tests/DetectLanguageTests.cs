@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -54,6 +55,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task DetectLanguageWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -271,6 +273,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
             Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
             Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
+            Assert.LessOrEqual(language.ConfidenceScore, 1.0);
             Assert.IsNotNull(language.Warnings);
         }
 

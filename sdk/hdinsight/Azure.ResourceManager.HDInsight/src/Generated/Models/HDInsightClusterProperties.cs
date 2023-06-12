@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterDefinition"/> is null. </exception>
         public HDInsightClusterProperties(HDInsightClusterDefinition clusterDefinition)
         {
-            if (clusterDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(clusterDefinition));
-            }
+            Argument.AssertNotNull(clusterDefinition, nameof(clusterDefinition));
 
             ClusterDefinition = clusterDefinition;
             Errors = new ChangeTrackingList<ResponseError>();
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="securityProfile"> The security profile. </param>
         /// <param name="computeProfile"> The compute profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="createdDate"> The date on which the cluster was created. </param>
+        /// <param name="createdOn"> The date on which the cluster was created. </param>
         /// <param name="clusterState"> The state of the cluster. </param>
         /// <param name="quotaInfo"> The quota information. </param>
         /// <param name="errors"> The list of errors. </param>
@@ -58,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="computeIsolationProperties"> The compute isolation properties. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
-        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, string createdDate, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections)
+        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, DateTimeOffset? createdOn, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections)
         {
             ClusterVersion = clusterVersion;
             ClusterHdpVersion = clusterHdpVersion;
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             SecurityProfile = securityProfile;
             ComputeProfile = computeProfile;
             ProvisioningState = provisioningState;
-            CreatedDate = createdDate;
+            CreatedOn = createdOn;
             ClusterState = clusterState;
             QuotaInfo = quotaInfo;
             Errors = errors;
@@ -118,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public HDInsightClusterProvisioningState? ProvisioningState { get; set; }
         /// <summary> The date on which the cluster was created. </summary>
-        public string CreatedDate { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> The state of the cluster. </summary>
         public string ClusterState { get; set; }
         /// <summary> The quota information. </summary>

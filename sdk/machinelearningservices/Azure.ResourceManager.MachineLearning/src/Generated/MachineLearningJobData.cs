@@ -12,22 +12,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningJob data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningJob data model.
+    /// Azure Resource Manager resource envelope.
+    /// </summary>
     public partial class MachineLearningJobData : ResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningJobData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
+        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningJobData(MachineLearningJobProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
+        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
         /// </param>
         internal MachineLearningJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningJobProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary>
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
+        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
         /// </summary>
         public MachineLearningJobProperties Properties { get; set; }
     }

@@ -7,13 +7,12 @@ To use these samples, you'll first need to set up resources. See [getting starte
 You can create a client and call the client's `UploadAsync` method. Take note of the data ingestion [limits](https://docs.microsoft.com/azure/azure-monitor/service-limits#custom-logs).
 
 ```C# Snippet:UploadCustomLogsAsync
-var dataCollectionEndpoint = new Uri("...");
-var dataCollectionRuleImmutableId = "...";
-var streamName = "...";
+var endpoint = new Uri("<data_collection_endpoint>");
+var ruleId = "<data_collection_rule_id>";
+var streamName = "<stream_name>";
 
-TokenCredential credential = new DefaultAzureCredential();
-LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-
+var credential = new DefaultAzureCredential();
+LogsIngestionClient client = new(endpoint, credential);
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
 // Use BinaryData to serialize instances of an anonymous type into JSON
@@ -48,7 +47,8 @@ BinaryData data = BinaryData.FromObjectAsJson(
     });
 
 // Upload our logs
-Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
+Response response = await client.UploadAsync(
+    ruleId,
+    streamName,
+    RequestContent.Create(data)).ConfigureAwait(false);
 ```
-
-To see the full example source files, see [LogDataAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).

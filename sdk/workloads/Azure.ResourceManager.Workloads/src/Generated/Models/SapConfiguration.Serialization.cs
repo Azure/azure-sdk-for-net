@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("configurationType");
+            writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SapConfiguration DeserializeSapConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("configurationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -31,16 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element);
                 }
             }
-            SapConfigurationType configurationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("configurationType"))
-                {
-                    configurationType = new SapConfigurationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSapConfiguration(configurationType);
+            return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element);
         }
     }
 }

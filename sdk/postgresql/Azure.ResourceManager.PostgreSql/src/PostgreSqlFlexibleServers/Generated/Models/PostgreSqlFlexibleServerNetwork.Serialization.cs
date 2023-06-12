@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
-                writer.WritePropertyName("delegatedSubnetResourceId");
+                writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
             if (Optional.IsDefined(PrivateDnsZoneArmResourceId))
             {
-                writer.WritePropertyName("privateDnsZoneArmResourceId");
+                writer.WritePropertyName("privateDnsZoneArmResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneArmResourceId);
             }
             writer.WriteEndObject();
@@ -30,36 +30,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerNetwork DeserializePostgreSqlFlexibleServerNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
             Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
             Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new PostgreSqlFlexibleServerPublicNetworkAccessState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("delegatedSubnetResourceId"))
+                if (property.NameEquals("delegatedSubnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateDnsZoneArmResourceId"))
+                if (property.NameEquals("privateDnsZoneArmResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateDnsZoneArmResourceId = new ResourceIdentifier(property.Value.GetString());

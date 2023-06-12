@@ -7,6 +7,8 @@ Project("{85FA8590-3324-4532-BE25-88460DFFDFB8}") = "Azure.ResourceManager.Fluid
 EndProject
 Project("{85FA8590-3324-4532-BE25-88460DFFDFB8}") = "Azure.ResourceManager.FluidRelay.Tests", "tests\Azure.ResourceManager.FluidRelay.Tests.csproj", "{6306EC66-056A-4E4D-AE8A-1AE66C6B456B}"
 EndProject
+Project("{85FA8590-3324-4532-BE25-88460DFFDFB8}") = "Azure.ResourceManager.FluidRelay.Samples", "samples\Azure.ResourceManager.FluidRelay.Samples.csproj", "{835B8B91-897B-4045-8561-48A732584A30}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

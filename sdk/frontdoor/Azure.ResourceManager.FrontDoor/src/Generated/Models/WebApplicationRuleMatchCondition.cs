@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
         public WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable matchVariable, WebApplicationRuleMatchOperator @operator, IEnumerable<string> matchValue)
         {
-            if (matchValue == null)
-            {
-                throw new ArgumentNullException(nameof(matchValue));
-            }
+            Argument.AssertNotNull(matchValue, nameof(matchValue));
 
             MatchVariable = matchVariable;
             Operator = @operator;

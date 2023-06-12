@@ -12,13 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DiagnosticRemoteSupportSetting data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticRemoteSupportSetting data model.
+    /// The remote support settings of a device.
+    /// </summary>
     public partial class DiagnosticRemoteSupportSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
         public DiagnosticRemoteSupportSettingData()
         {
-            RemoteSupportSettingsList = new ChangeTrackingList<RemoteSupportSettings>();
+            RemoteSupportSettingsList = new ChangeTrackingList<EdgeRemoteSupportSettings>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
@@ -27,12 +30,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="remoteSupportSettingsList"> Remote support settings list according to the RemoteApplicationType. </param>
-        internal DiagnosticRemoteSupportSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RemoteSupportSettings> remoteSupportSettingsList) : base(id, name, resourceType, systemData)
+        internal DiagnosticRemoteSupportSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EdgeRemoteSupportSettings> remoteSupportSettingsList) : base(id, name, resourceType, systemData)
         {
             RemoteSupportSettingsList = remoteSupportSettingsList;
         }
 
         /// <summary> Remote support settings list according to the RemoteApplicationType. </summary>
-        public IList<RemoteSupportSettings> RemoteSupportSettingsList { get; }
+        public IList<EdgeRemoteSupportSettings> RemoteSupportSettingsList { get; }
     }
 }

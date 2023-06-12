@@ -229,11 +229,6 @@ for (int i = 0; i < result.Documents.Count; i++)
 }
 ```
 
-To see the full example source files, see:
-
-* [Analyze with prebuilt model from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeWithPrebuiltModelFromUriAsync.cs)
-* [Analyze with prebuilt model from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeWithPrebuiltModelFromFileAsync.cs)
-
 [invoice_fields]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [formreco_models]: https://aka.ms/azsdk/formrecognizer/models
 

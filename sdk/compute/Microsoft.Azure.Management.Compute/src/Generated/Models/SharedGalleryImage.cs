@@ -57,7 +57,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="features">A list of gallery image features.</param>
         /// <param name="architecture">Possible values include: 'x64',
         /// 'Arm64'</param>
-        public SharedGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string))
+        /// <param name="privacyStatementUri">Privacy statement uri for the
+        /// current community gallery image.</param>
+        /// <param name="eula">End-user license agreement for the current
+        /// community gallery image.</param>
+        public SharedGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string), string privacyStatementUri = default(string), string eula = default(string))
             : base(name, location, uniqueId)
         {
             OsType = osType;
@@ -70,6 +74,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             Features = features;
             PurchasePlan = purchasePlan;
             Architecture = architecture;
+            PrivacyStatementUri = privacyStatementUri;
+            Eula = eula;
             CustomInit();
         }
 
@@ -144,6 +150,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.architecture")]
         public string Architecture { get; set; }
+
+        /// <summary>
+        /// Gets or sets privacy statement uri for the current community
+        /// gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privacyStatementUri")]
+        public string PrivacyStatementUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets end-user license agreement for the current community
+        /// gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eula")]
+        public string Eula { get; set; }
 
         /// <summary>
         /// Validate the object.

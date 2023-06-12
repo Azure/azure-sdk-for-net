@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the InstancePool data model. </summary>
+    /// <summary>
+    /// A class representing the InstancePool data model.
+    /// An Azure SQL instance pool.
+    /// </summary>
     public partial class InstancePoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of InstancePoolData. </summary>

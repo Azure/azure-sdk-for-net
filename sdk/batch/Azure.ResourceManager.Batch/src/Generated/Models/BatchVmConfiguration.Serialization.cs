@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("imageReference");
+            writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference);
-            writer.WritePropertyName("nodeAgentSkuId");
+            writer.WritePropertyName("nodeAgentSkuId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             if (Optional.IsDefined(WindowsConfiguration))
             {
-                writer.WritePropertyName("windowsConfiguration");
+                writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
-                writer.WritePropertyName("dataDisks");
+                writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
-                writer.WritePropertyName("containerConfiguration");
+                writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
             if (Optional.IsDefined(DiskEncryptionConfiguration))
             {
-                writer.WritePropertyName("diskEncryptionConfiguration");
+                writer.WritePropertyName("diskEncryptionConfiguration"u8);
                 writer.WriteObjectValue(DiskEncryptionConfiguration);
             }
             if (Optional.IsDefined(NodePlacementConfiguration))
             {
-                writer.WritePropertyName("nodePlacementConfiguration");
+                writer.WritePropertyName("nodePlacementConfiguration"u8);
                 writer.WriteObjectValue(NodePlacementConfiguration);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsDefined(OSDisk))
             {
-                writer.WritePropertyName("osDisk");
+                writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
             writer.WriteEndObject();
@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmConfiguration DeserializeBatchVmConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
@@ -87,31 +91,29 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<OSDisk> osDisk = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageReference"))
+                if (property.NameEquals("imageReference"u8))
                 {
                     imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodeAgentSkuId"))
+                if (property.NameEquals("nodeAgentSkuId"u8))
                 {
                     nodeAgentSkuId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsConfiguration"))
+                if (property.NameEquals("windowsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDisks"))
+                if (property.NameEquals("dataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchVmDataDisk> array = new List<BatchVmDataDisk>();
@@ -122,46 +124,42 @@ namespace Azure.ResourceManager.Batch.Models
                     dataDisks = array;
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     licenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerConfiguration"))
+                if (property.NameEquals("containerConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionConfiguration"))
+                if (property.NameEquals("diskEncryptionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodePlacementConfiguration"))
+                if (property.NameEquals("nodePlacementConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchVmExtension> array = new List<BatchVmExtension>();
@@ -172,11 +170,10 @@ namespace Azure.ResourceManager.Batch.Models
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("osDisk"))
+                if (property.NameEquals("osDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDisk = OSDisk.DeserializeOSDisk(property.Value);

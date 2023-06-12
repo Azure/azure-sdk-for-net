@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static AmlComputeNodesInformation DeserializeAmlComputeNodesInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AmlComputeNodeInformation>> nodes = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodes"))
+                if (property.NameEquals("nodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AmlComputeNodeInformation> array = new List<AmlComputeNodeInformation>();
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nodes = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

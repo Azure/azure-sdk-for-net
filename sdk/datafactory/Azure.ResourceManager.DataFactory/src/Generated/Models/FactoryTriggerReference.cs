@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public FactoryTriggerReference(FactoryTriggerReferenceType referenceType, string referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;

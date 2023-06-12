@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A class representing the CognitiveServicesAccount data model. </summary>
+    /// <summary>
+    /// A class representing the CognitiveServicesAccount data model.
+    /// Cognitive Services account is an Azure resource representing the provisioned account, it&apos;s type, location and SKU.
+    /// </summary>
     public partial class CognitiveServicesAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CognitiveServicesAccountData. </summary>

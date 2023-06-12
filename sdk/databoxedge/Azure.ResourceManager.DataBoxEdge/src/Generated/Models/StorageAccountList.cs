@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of StorageAccountList. </summary>
         internal StorageAccountList()
         {
-            Value = new ChangeTrackingList<StorageAccountData>();
+            Value = new ChangeTrackingList<DataBoxEdgeStorageAccountData>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountList. </summary>
         /// <param name="value"> The list of storageAccounts. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal StorageAccountList(IReadOnlyList<StorageAccountData> value, string nextLink)
+        internal StorageAccountList(IReadOnlyList<DataBoxEdgeStorageAccountData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of storageAccounts. </summary>
-        public IReadOnlyList<StorageAccountData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeStorageAccountData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

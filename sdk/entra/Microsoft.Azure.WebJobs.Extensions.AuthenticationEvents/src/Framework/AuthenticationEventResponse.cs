@@ -103,9 +103,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             Helpers.ValidateGraph(this);
         }
 
-        internal void MarkAsFailed(Exception ex)
+        internal void MarkAsFailed(Exception ex, bool internalError)
         {
-            StatusCode = System.Net.HttpStatusCode.BadRequest;
+            StatusCode = internalError ? System.Net.HttpStatusCode.InternalServerError : System.Net.HttpStatusCode.BadRequest;
             ReasonPhrase = String.Empty;
             Body = Helpers.GetFailedRequestPayload(ex);
         }

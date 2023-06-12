@@ -179,7 +179,7 @@ if (responseInvitation == null)
     return;
 }
 
-var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
+using var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
 var targetEmail = responseInvitationDocument.RootElement.GetProperty("name");
 ```
 
@@ -212,7 +212,8 @@ if (receivedInvitation == null)
     return;
 }
 
-var receivedInvitationDocument = JsonDocument.Parse(receivedInvitation).RootElement;
+using var jsonDocument = JsonDocument.Parse(receivedInvitation);
+var receivedInvitationDocument = jsonDocument.RootElement;
 var receivedInvitationId = receivedInvitationDocument.GetProperty("name");
 
 var receivedShareData = new
@@ -253,8 +254,8 @@ if (acceptedSentShare == null)
     //No accepted sent shares
     return;
 }
-
-var receiverEmail = JsonDocument.Parse(acceptedSentShare).RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
+using var jsonDocument = JsonDocument.Parse(acceptedSentShare);
+var receiverEmail = jsonDocument.RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
 ```
 
 ### Get received assets
@@ -267,7 +268,8 @@ var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
 
 // Get received assets
 var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
-var receivedAssetName = JsonDocument.Parse(receivedAssets.First()).RootElement.GetProperty("name").GetString();
+using var jsonDocument = JsonDocument.Parse(receivedAssets.First());
+var receivedAssetName = jsonDocument.RootElement.GetProperty("name").GetString();
 
 string assetMappingName = "receiver-asset-mapping";
 string receiverContainerName = "receivedcontainer";

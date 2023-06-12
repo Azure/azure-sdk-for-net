@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetPropertiesAsync(RequestContext)">
+<example>
+This sample shows how to call GetPropertiesAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+Response response = await client.GetPropertiesAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetProperties(RequestContext)">
+<example>
+This sample shows how to call GetProperties and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+Response response = client.GetProperties(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+var data = new {
+    kind = "System",
+};
+
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+var data = new {
+    properties = new {
+        description = "<description>",
+        classificationName = "<classificationName>",
+        ruleStatus = "Enabled",
+    },
+    kind = "System",
+};
+
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdate(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+var data = new {
+    kind = "System",
+};
+
+Response response = client.CreateOrUpdate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+var data = new {
+    properties = new {
+        description = "<description>",
+        classificationName = "<classificationName>",
+        ruleStatus = "Enabled",
+    },
+    kind = "System",
+};
+
+Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteAsync(RequestContext)">
+<example>
+This sample shows how to call DeleteAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+Response response = await client.DeleteAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Delete(RequestContext)">
+<example>
+This sample shows how to call Delete and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+Response response = client.Delete(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="TagVersionAsync(int,string,RequestContext)">
+<example>
+This sample shows how to call TagVersionAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+Response response = await client.TagVersionAsync(1234, "<action>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scanResultId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="TagVersion(int,string,RequestContext)">
+<example>
+This sample shows how to call TagVersion with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+Response response = client.TagVersion(1234, "<action>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scanResultId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetVersionsAsync(RequestContext)">
+<example>
+This sample shows how to call GetVersionsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+await foreach (var item in client.GetVersionsAsync(new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetVersions(RequestContext)">
+<example>
+This sample shows how to call GetVersions and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+
+foreach (var item in client.GetVersions(new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

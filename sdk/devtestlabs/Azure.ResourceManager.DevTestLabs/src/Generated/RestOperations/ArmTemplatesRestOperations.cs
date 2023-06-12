@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ArmTemplateData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabArmTemplateData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ArmTemplateData value = default;
+                        DevTestLabArmTemplateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ArmTemplateData.DeserializeArmTemplateData(document.RootElement);
+                        value = DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArmTemplateData)null, message.Response);
+                    return Response.FromValue((DevTestLabArmTemplateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ArmTemplateData> Get(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<DevTestLabArmTemplateData> Get(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -234,13 +234,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ArmTemplateData value = default;
+                        DevTestLabArmTemplateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ArmTemplateData.DeserializeArmTemplateData(document.RootElement);
+                        value = DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArmTemplateData)null, message.Response);
+                    return Response.FromValue((DevTestLabArmTemplateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

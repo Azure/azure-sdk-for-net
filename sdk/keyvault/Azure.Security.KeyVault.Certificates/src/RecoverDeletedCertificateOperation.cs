@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(RecoverDeletedCertificateOperation), new[]
+            _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(RecoverDeletedCertificateOperation), new[]
             {
                 new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                 new KeyValuePair<string, string>("certificate", _value.Name),
@@ -88,8 +88,8 @@ namespace Azure.Security.KeyVault.Certificates
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name, "/", _value.Properties.Version).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name, "/", _value.Properties.Version);
+                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name).ConfigureAwait(false)
+                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name);
 
             switch (response.Status)
             {
@@ -101,11 +101,7 @@ namespace Azure.Security.KeyVault.Certificates
                     return OperationState.Pending(response);
 
                 default:
-                    RequestFailedException ex = async
-                        ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : _pipeline.Diagnostics.CreateRequestFailedException(response);
-
-                    return OperationState.Failure(response, ex);
+                    return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
     }

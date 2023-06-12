@@ -94,15 +94,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets the metrics associated with this <see cref="ServiceBusClient"/> instance. The metrics returned represent a snapshot and will not be updated.
-        /// To get updated metrics, this method should be called again.
-        /// In order to use this property, <see cref="ServiceBusClientOptions.EnableTransportMetrics"/> must be set to <value>true</value>.
-        /// </summary>
-        internal virtual ServiceBusTransportMetrics GetTransportMetrics()
-            => Connection.InnerClient.TransportMetrics?.Clone() ??
-               throw new InvalidOperationException("Transport metrics are not enabled. To enable transport metrics, set the EnableTransportMetrics property on the ServiceBusClientOptions.");
-
-        /// <summary>
         /// The connection that is used for the client.
         /// </summary>
         internal ServiceBusConnection Connection { get; }
@@ -384,8 +375,11 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
-        /// and settling messages from a specific session-enabled queue. It uses <see cref="ServiceBusReceiveMode"/> to specify
-        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// and settling messages from a session-enabled queue by accepting the next unlocked session that contains Active messages. If there
+        /// are no unlocked sessions with Active messages, then the call will timeout after the configured <see cref="ServiceBusRetryOptions.TryTimeout"/> value and throw
+        /// a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> set to <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// The <see cref="ServiceBusReceiveMode"/> can be specified in the <see cref="ServiceBusReceiverOptions"/> to configure how messages are received.
+        /// The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </summary>
         ///
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
@@ -399,7 +393,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
         /// <exception cref="ServiceBusException">
-        ///   There are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
+        ///   There are no unlocked sessions in the entity. This can occur if the entity has no Active messages, or if all of the messages
         ///   belong to sessions that are locked by other receivers.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
         /// </exception>
@@ -420,8 +414,11 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
-        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ServiceBusReceiveMode"/> to specify
-        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// and settling messages from a session-enabled subscription by accepting the next unlocked session that contains Active messages. If there
+        /// are no unlocked sessions with Active messages, then the call will timeout after the configured <see cref="ServiceBusRetryOptions.TryTimeout"/> value and throw
+        /// a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> set to <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// The <see cref="ServiceBusReceiveMode"/> can be specified in the <see cref="ServiceBusReceiverOptions"/> to configure how messages are received.
+        /// The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </summary>
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
@@ -458,8 +455,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
-        /// and settling messages from a specific session-enabled queue. It uses <see cref="ServiceBusReceiveMode"/> to specify
-        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// and settling messages from a session-enabled queue by accepting a specific session. The <see cref="ServiceBusReceiveMode"/> can be specified in
+        /// the <see cref="ServiceBusReceiverOptions"/> to configure how messages are received.
+        /// The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </summary>
         ///
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
@@ -497,8 +495,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
-        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ServiceBusReceiveMode"/> to specify
-        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// and settling messages from a session-enabled subscription by accepting a specific session. The <see cref="ServiceBusReceiveMode"/> can be specified in
+        /// the <see cref="ServiceBusReceiverOptions"/> to configure how messages are received.
+        /// The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </summary>
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>

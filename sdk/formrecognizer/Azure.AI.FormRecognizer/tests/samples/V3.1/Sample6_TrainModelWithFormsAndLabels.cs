@@ -3,13 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         [RecordedTest]
         public async Task TrainModelWithFormsAndLabels()
@@ -32,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Samples
 #if SNIPPET
             Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             string modelName = "My Model with labels";
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

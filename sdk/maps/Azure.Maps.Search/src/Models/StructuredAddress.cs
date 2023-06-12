@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> structured address. </summary>
     public class StructuredAddress

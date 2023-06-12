@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("metricTrigger");
+            writer.WritePropertyName("metricTrigger"u8);
             writer.WriteObjectValue(MetricTrigger);
-            writer.WritePropertyName("scaleAction");
+            writer.WritePropertyName("scaleAction"u8);
             writer.WriteObjectValue(ScaleAction);
             writer.WriteEndObject();
         }
 
         internal static AutoscaleRule DeserializeAutoscaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MetricTrigger metricTrigger = default;
             MonitorScaleAction scaleAction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricTrigger"))
+                if (property.NameEquals("metricTrigger"u8))
                 {
                     metricTrigger = MetricTrigger.DeserializeMetricTrigger(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaleAction"))
+                if (property.NameEquals("scaleAction"u8))
                 {
                     scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value);
                     continue;

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachine created from the image</param>
         /// <param name="architecture">Possible values include: 'x64',
         /// 'Arm64'</param>
-        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration), IList<VirtualMachineImageFeature> features = default(IList<VirtualMachineImageFeature>), string architecture = default(string))
+        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration), IList<VirtualMachineImageFeature> features = default(IList<VirtualMachineImageFeature>), string architecture = default(string), ImageDeprecationStatus imageDeprecationStatus = default(ImageDeprecationStatus))
             : base(name, location, id, tags, extendedLocation)
         {
             Plan = plan;
@@ -61,6 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Disallowed = disallowed;
             Features = features;
             Architecture = architecture;
+            ImageDeprecationStatus = imageDeprecationStatus;
             CustomInit();
         }
 
@@ -112,6 +113,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.architecture")]
         public string Architecture { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.imageDeprecationStatus")]
+        public ImageDeprecationStatus ImageDeprecationStatus { get; set; }
 
         /// <summary>
         /// Validate the object.

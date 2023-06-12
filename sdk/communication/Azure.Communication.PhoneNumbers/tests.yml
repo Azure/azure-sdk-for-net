@@ -23,6 +23,8 @@ extends:
         MatrixReplace: 
           - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
     Clouds: Public,Int
+    TestResourceDirectories:
+      - communication/test-resources/
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE

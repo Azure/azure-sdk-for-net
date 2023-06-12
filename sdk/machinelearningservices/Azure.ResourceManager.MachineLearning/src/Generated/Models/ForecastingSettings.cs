@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="seasonality">
         /// Set time series seasonality as an integer multiple of the series frequency.
         /// If seasonality is set to &apos;auto&apos;, it will be inferred.
-        /// Please note <see cref="Seasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
         /// </param>
         /// <param name="shortSeriesHandlingConfig"> The parameter defining how if AutoML should handle short time series. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If grain is not defined, the data set is assumed to be one time-series. This parameter is used with task type forecasting.
         /// </param>
         /// <param name="useStl"> Configure STL Decomposition of the time-series target column. </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, FeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, Seasonality seasonality, ShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, UseStl? useStl)
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public int? CvStepSize { get; set; }
         /// <summary> Flag for generating lags for the numeric features with &apos;auto&apos; or null. </summary>
-        public FeatureLag? FeatureLags { get; set; }
+        public MachineLearningFeatureLag? FeatureLags { get; set; }
         /// <summary>
         /// The desired maximum forecast horizon in units of time-series frequency.
         /// Please note <see cref="ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Set time series seasonality as an integer multiple of the series frequency.
         /// If seasonality is set to &apos;auto&apos;, it will be inferred.
-        /// Please note <see cref="Seasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
         /// </summary>
-        public Seasonality Seasonality { get; set; }
+        public ForecastingSeasonality Seasonality { get; set; }
         /// <summary> The parameter defining how if AutoML should handle short time series. </summary>
-        public ShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get; set; }
+        public MachineLearningShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get; set; }
         /// <summary>
         /// The function to be used to aggregate the time series target column to conform to a user specified frequency.
         /// If the TargetAggregateFunction is set i.e. not &apos;None&apos;, but the freq parameter is not set, the error is raised. The possible target aggregation functions are: &quot;sum&quot;, &quot;max&quot;, &quot;min&quot; and &quot;mean&quot;.
@@ -135,6 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public IList<string> TimeSeriesIdColumnNames { get; set; }
         /// <summary> Configure STL Decomposition of the time-series target column. </summary>
-        public UseStl? UseStl { get; set; }
+        public MachineLearningUseStl? UseStl { get; set; }
     }
 }

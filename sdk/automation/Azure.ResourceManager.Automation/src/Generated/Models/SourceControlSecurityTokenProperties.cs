@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> The refresh token. </summary>
         public string RefreshToken { get; set; }
         /// <summary> The token type. Must be either PersonalAccessToken or Oauth. </summary>
-        public TokenType? TokenType { get; set; }
+        public SourceControlTokenType? TokenType { get; set; }
     }
 }

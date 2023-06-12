@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the NetworkFeature data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkFeature data model.
+    /// Full view of network features for an app (presently VNET integration and Hybrid Connections).
+    /// </summary>
     public partial class NetworkFeatureData : ResourceData
     {
         /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind) : base(id, name, resourceType, systemData)
+        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind) : base(id, name, resourceType, systemData)
         {
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The Virtual Network name. </summary>
         public string VirtualNetworkName { get; }
         /// <summary> The Virtual Network summary view. </summary>
-        public VnetInfo VirtualNetworkConnection { get; }
+        public AppServiceVirtualNetworkProperties VirtualNetworkConnection { get; }
         /// <summary> The Hybrid Connections summary view. </summary>
         public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
         /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>

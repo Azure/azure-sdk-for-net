@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static ManualResolutionProperties DeserializeManualResolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> targetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetId"))
+                if (property.NameEquals("targetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetId = new ResourceIdentifier(property.Value.GetString());

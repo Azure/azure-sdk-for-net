@@ -15,24 +15,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableProbe))
+            if (Optional.IsDefined(IsProbeDisabled))
             {
-                writer.WritePropertyName("disableProbe");
-                writer.WriteBooleanValue(DisableProbe.Value);
+                writer.WritePropertyName("disableProbe"u8);
+                writer.WriteBooleanValue(IsProbeDisabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ContainerProbeSettings DeserializeContainerProbeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disableProbe = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disableProbe"))
+                if (property.NameEquals("disableProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableProbe = property.Value.GetBoolean();

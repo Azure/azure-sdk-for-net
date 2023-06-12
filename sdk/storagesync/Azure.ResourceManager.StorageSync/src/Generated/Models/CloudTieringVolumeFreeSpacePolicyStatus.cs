@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of CloudTieringVolumeFreeSpacePolicyStatus. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="effectiveVolumeFreeSpacePolicy"> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </param>
         /// <param name="currentVolumeFreeSpacePercent"> Current volume free space percentage. </param>
-        internal CloudTieringVolumeFreeSpacePolicyStatus(DateTimeOffset? lastUpdatedTimestamp, int? effectiveVolumeFreeSpacePolicy, int? currentVolumeFreeSpacePercent)
+        internal CloudTieringVolumeFreeSpacePolicyStatus(DateTimeOffset? lastUpdatedOn, int? effectiveVolumeFreeSpacePolicy, int? currentVolumeFreeSpacePercent)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             EffectiveVolumeFreeSpacePolicy = effectiveVolumeFreeSpacePolicy;
             CurrentVolumeFreeSpacePercent = currentVolumeFreeSpacePercent;
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </summary>
         public int? EffectiveVolumeFreeSpacePolicy { get; }
         /// <summary> Current volume free space percentage. </summary>

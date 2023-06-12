@@ -143,5 +143,12 @@ namespace Azure.Core.TestFramework
                    name.StartsWith("Task", StringComparison.Ordinal) ||
                    name.StartsWith("AsyncStateMachineBox", StringComparison.Ordinal); //in .net 5 the type is not task here
         }
+
+        public static object GetValueFromTask(Type taskResultType, object instrumentedResult)
+        {
+            var method = typeof(Task).GetMethod("FromResult", BindingFlags.Public | BindingFlags.Static);
+            var genericMethod = method.MakeGenericMethod(taskResultType);
+            return genericMethod.Invoke(null, new object[] { instrumentedResult });
+        }
     }
 }

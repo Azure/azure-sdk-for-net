@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing the KeyVault data model. </summary>
+    /// <summary>
+    /// A class representing the KeyVault data model.
+    /// Resource information with extended details.
+    /// </summary>
     public partial class KeyVaultData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of KeyVaultData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultData(AzureLocation location, Models.KeyVaultProperties properties) : base(location)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownCloudOffering. </summary>
-    internal partial class UnknownCloudOffering : CloudOffering
+    internal partial class UnknownCloudOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of UnknownCloudOffering. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>

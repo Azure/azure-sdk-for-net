@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorSecurityPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorSecurityPolicy data model.
+    /// SecurityPolicy association for AzureFrontDoor profile
+    /// </summary>
     public partial class FrontDoorSecurityPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorSecurityPolicyData. </summary>

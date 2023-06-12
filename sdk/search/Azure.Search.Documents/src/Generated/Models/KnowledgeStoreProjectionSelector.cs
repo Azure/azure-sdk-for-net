@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
-    public partial class KnowledgeStoreProjectionSelector
+    public abstract partial class KnowledgeStoreProjectionSelector
     {
         /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
         public KnowledgeStoreProjectionSelector()

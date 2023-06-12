@@ -69,7 +69,5 @@ namespace Azure.Data.Tables
                 LoggedQueryParameters = { "api-version", "$format", "$filter", "$top", "$select" },
             }
         };
-
-        internal TablesRequestFailedDetailsParser RequestFailedDetailsParser = new TablesRequestFailedDetailsParser();
     }
 }

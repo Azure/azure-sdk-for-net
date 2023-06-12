@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Search.Tests
     {
         protected ArmClient Client { get; private set; }
 
+        public AzureLocation DefaultLocation => AzureLocation.EastUS;
+
+        public SubscriptionResource DefaultLSubscription { get; set; }
+
         protected SearchManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -25,16 +29,17 @@ namespace Azure.ResourceManager.Search.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultLSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            string rgName = Recording.GenerateAssetName("sdk-test");
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultLSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
     }

@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ShareData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataShareData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -294,13 +294,13 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        ShareData value = default;
+                        DataShareData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ShareData.DeserializeShareData(document.RootElement);
+                        value = DataShareData.DeserializeDataShareData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ShareData)null, message.Response);
+                    return Response.FromValue((DataShareData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ShareData> Get(string subscriptionId, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
+        public Response<DataShareData> Get(string subscriptionId, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -327,19 +327,19 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        ShareData value = default;
+                        DataShareData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ShareData.DeserializeShareData(document.RootElement);
+                        value = DataShareData.DeserializeDataShareData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ShareData)null, message.Response);
+                    return Response.FromValue((DataShareData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, DataShareData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ShareData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DataShareData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string shareName, DataShareData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                 case 201:
                     {
-                        ShareData value = default;
+                        DataShareData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ShareData.DeserializeShareData(document.RootElement);
+                        value = DataShareData.DeserializeDataShareData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ShareData> Create(string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareData data, CancellationToken cancellationToken = default)
+        public Response<DataShareData> Create(string subscriptionId, string resourceGroupName, string accountName, string shareName, DataShareData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                 case 201:
                     {
-                        ShareData value = default;
+                        DataShareData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ShareData.DeserializeShareData(document.RootElement);
+                        value = DataShareData.DeserializeDataShareData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

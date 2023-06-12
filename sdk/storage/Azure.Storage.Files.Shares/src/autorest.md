@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e515b6251fdc21015282d2e84b85beec7c091763/specification/storage/data-plane/Microsoft.FileStorage/preview/2021-06-08/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ccae65b66ac23a9fd891ba86f45abc4372a9c688/specification/storage/data-plane/Microsoft.FileStorage/preview/2023-01-03/file.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
@@ -44,11 +44,7 @@ directive:
     $.Metrics.type = "object";
 ```
 
-<<<<<<< HEAD
 ### Times aren't required 
-=======
-### Formats aren't required
->>>>>>> feature/storage/stg82base
 ``` yaml
 directive:
 - from: swagger-document

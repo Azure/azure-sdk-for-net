@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Billing.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Family))
             {
-                writer.WritePropertyName("family");
+                writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Logos))
             {
-                writer.WritePropertyName("logos");
+                writer.WritePropertyName("logos"u8);
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
@@ -41,7 +41,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element)
         {
-            Optional<string> id = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> id = default;
             Optional<PaymentMethodFamily> family = default;
             Optional<string> type = default;
             Optional<string> accountHolderName = default;
@@ -52,51 +56,53 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<PaymentMethodStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("family"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     family = new PaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountHolderName"))
+                if (property.NameEquals("accountHolderName"u8))
                 {
                     accountHolderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiration"))
+                if (property.NameEquals("expiration"u8))
                 {
                     expiration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastFourDigits"))
+                if (property.NameEquals("lastFourDigits"u8))
                 {
                     lastFourDigits = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logos"))
+                if (property.NameEquals("logos"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
@@ -107,11 +113,10 @@ namespace Azure.ResourceManager.Billing.Models
                     logos = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new PaymentMethodStatus(property.Value.GetString());

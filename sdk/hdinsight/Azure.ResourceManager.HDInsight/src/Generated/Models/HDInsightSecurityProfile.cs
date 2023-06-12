@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
         public HDInsightSecurityProfile()
         {
-            LdapsUrls = new ChangeTrackingList<string>();
+            LdapUris = new ChangeTrackingList<Uri>();
             ClusterUsersGroupDNs = new ChangeTrackingList<string>();
         }
 
@@ -24,18 +25,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="directoryType"> The directory type. </param>
         /// <param name="domain"> The organization&apos;s active directory domain. </param>
         /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
-        /// <param name="ldapsUrls"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
+        /// <param name="ldapUris"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
         /// <param name="domainUsername"> The domain user account that will have admin privileges on the cluster. </param>
         /// <param name="domainUserPassword"> The domain admin password. </param>
         /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
         /// <param name="aaddsResourceId"> The resource ID of the user&apos;s Azure Active Directory Domain Service. </param>
         /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </param>
-        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<string> ldapsUrls, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId)
+        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId)
         {
             DirectoryType = directoryType;
             Domain = domain;
             OrganizationalUnitDN = organizationalUnitDN;
-            LdapsUrls = ldapsUrls;
+            LdapUris = ldapUris;
             DomainUsername = domainUsername;
             DomainUserPassword = domainUserPassword;
             ClusterUsersGroupDNs = clusterUsersGroupDNs;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The organizational unit within the Active Directory to place the cluster and service accounts. </summary>
         public string OrganizationalUnitDN { get; set; }
         /// <summary> The LDAPS protocol URLs to communicate with the Active Directory. </summary>
-        public IList<string> LdapsUrls { get; }
+        public IList<Uri> LdapUris { get; }
         /// <summary> The domain user account that will have admin privileges on the cluster. </summary>
         public string DomainUsername { get; set; }
         /// <summary> The domain admin password. </summary>

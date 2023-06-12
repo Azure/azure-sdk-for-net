@@ -1,6 +1,6 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,97 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.9.2 (2023-06-06)
+
+### Other Changes
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.2.  This resolves a potential issue opening TLS connections on .NET 6+.
+
+- It is now possible to create an `EventData` instance from an `AmqpAnnotatedMessage`.
+
+## 5.9.1 (2023-05-09)
+
+### Bugs Fixed
+
+- Removed the 30 second cap applied when opening AMQP links; this allows developers to fully control the timeout for service operations by tuning the `TryTimeout` as appropriate for the application.
+
+## 5.9.0 (2023-04-11)
+
+### Breaking Changes
+
+- If diagnostic tracing is enabled, diagnostic tracing information is retained on `EventData` instances when they are added to an `EventDataBatch`. This matches the existing behavior when sending events using the `SendEventsAsync` method that takes an `IEnumerable<EventData>`.
+
+### Bugs Fixed
+
+- Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
+
+### Other Changes
+
+- Enhanced the log emitted when an event processor begins reading from a partition to report whether the offset chosen was based on a checkpoint or default value.
+
+## 5.8.1 (2023-03-09)
+
+### Other Changes
+
+- Upgrading dependency on `Azure.Core` library.
+
+## 5.8.0 (2023-03-07)
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the messaging attribute specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml#L98).
+
+### Bugs Fixed
+
+- Corrected log message issue causing formatting to fail when developer code for processing events leaks an exception.  This obscured the warning that was intended to be emitted to the error handler.
+
+### Other Changes
+
+- Calling `ToString` on an `EventHubsException` now includes details of any inner exception.
+
+## 5.7.5 (2022-11-22)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Jason Gilbertson _([GitHub](https://github.com/jagilber))_
+
+### Bugs Fixed
+
+- Corrected an indexing issue with the log event source, causing an exception to surface when the buffered producer completed its idle state.
+
+## 5.7.4 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when the event processor is configured to use a `eventBatchMaximumCount` of 1.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.5.12.  This resolves a rare race condition encountered when creating an AMQP link that could cause the link to hang.
+
+### Other Changes
+
+- Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+- Added timing information to logs for AMQP publish and read operations.
+
+## 5.7.3 (2022-10-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Anshul Mathur _([GitHub](https://github.com/anshmathur))_
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessor<T>` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
+
+- Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.
+
+- Miscellaneous performance improvements by reducing memory allocations. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 5.7.2 (2022-08-09)
 

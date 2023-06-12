@@ -16,20 +16,23 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static ManagedPrivateEndpointListResult DeserializeManagedPrivateEndpointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedPrivateEndpointData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<KustoManagedPrivateEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedPrivateEndpointData> array = new List<ManagedPrivateEndpointData>();
+                    List<KustoManagedPrivateEndpointData> array = new List<KustoManagedPrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointData.DeserializeManagedPrivateEndpointData(item));
+                        array.Add(KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(item));
                     }
                     value = array;
                     continue;

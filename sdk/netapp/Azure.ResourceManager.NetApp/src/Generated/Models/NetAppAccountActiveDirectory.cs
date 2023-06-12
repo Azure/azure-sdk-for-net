@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of NetAppAccountActiveDirectory. </summary>
         /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
-        /// <param name="username"> Username of Active Directory domain administrator. </param>
+        /// <param name="username"> A domain user account with permission to create machine accounts. </param>
         /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="dns"> Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain. </param>
@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </param>
         /// <param name="encryptDCConnections"> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </param>
         /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
-        internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? isAesEncryptionEnabled, bool? isLdapSigningEnabled, IList<string> securityOperators, bool? isLdapOverTlsEnabled, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope)
+        /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
+        internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? isAesEncryptionEnabled, bool? isLdapSigningEnabled, IList<string> securityOperators, bool? isLdapOverTlsEnabled, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient)
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -69,11 +70,12 @@ namespace Azure.ResourceManager.NetApp.Models
             AllowLocalNfsUsersWithLdap = allowLocalNfsUsersWithLdap;
             EncryptDCConnections = encryptDCConnections;
             LdapSearchScope = ldapSearchScope;
+            PreferredServersForLdapClient = preferredServersForLdapClient;
         }
 
         /// <summary> Id of the Active Directory. </summary>
         public string ActiveDirectoryId { get; set; }
-        /// <summary> Username of Active Directory domain administrator. </summary>
+        /// <summary> A domain user account with permission to create machine accounts. </summary>
         public string Username { get; set; }
         /// <summary> Plain text password of Active Directory domain administrator, value is masked in the response. </summary>
         public string Password { get; set; }
@@ -115,5 +117,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? EncryptDCConnections { get; set; }
         /// <summary> LDAP Search scope options. </summary>
         public NetAppLdapSearchScopeConfiguration LdapSearchScope { get; set; }
+        /// <summary> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </summary>
+        public string PreferredServersForLdapClient { get; set; }
     }
 }

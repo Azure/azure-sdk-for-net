@@ -23,13 +23,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
-        /// <param name="outputs"> Gets the Job outputs. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </param>
         internal MediaJobFinishedEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IReadOnlyList<MediaJobOutput> outputs) : base(previousState, state, correlationData)
         {
             Outputs = outputs;
         }
 
-        /// <summary> Gets the Job outputs. </summary>
+        /// <summary>
+        /// Gets the Job outputs.
+        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// </summary>
         public IReadOnlyList<MediaJobOutput> Outputs { get; }
     }
 }

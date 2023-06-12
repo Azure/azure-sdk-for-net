@@ -15,41 +15,45 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("documentsCount");
+            writer.WritePropertyName("documentsCount"u8);
             writer.WriteNumberValue(DocumentCount);
-            writer.WritePropertyName("validDocumentsCount");
+            writer.WritePropertyName("validDocumentsCount"u8);
             writer.WriteNumberValue(ValidDocumentCount);
-            writer.WritePropertyName("erroneousDocumentsCount");
+            writer.WritePropertyName("erroneousDocumentsCount"u8);
             writer.WriteNumberValue(InvalidDocumentCount);
-            writer.WritePropertyName("transactionsCount");
+            writer.WritePropertyName("transactionsCount"u8);
             writer.WriteNumberValue(TransactionCount);
             writer.WriteEndObject();
         }
 
         internal static TextDocumentBatchStatistics DeserializeTextDocumentBatchStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int documentsCount = default;
             int validDocumentsCount = default;
             int erroneousDocumentsCount = default;
             long transactionsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documentsCount"))
+                if (property.NameEquals("documentsCount"u8))
                 {
                     documentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("validDocumentsCount"))
+                if (property.NameEquals("validDocumentsCount"u8))
                 {
                     validDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("erroneousDocumentsCount"))
+                if (property.NameEquals("erroneousDocumentsCount"u8))
                 {
                     erroneousDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionsCount"))
+                if (property.NameEquals("transactionsCount"u8))
                 {
                     transactionsCount = property.Value.GetInt64();
                     continue;

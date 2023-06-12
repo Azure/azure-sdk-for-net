@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Reservations
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get Available Scopes for `Reservation`.
+        /// Check whether the scopes from request is valid for `Reservation`.
         /// 
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopesContent to use. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="content"> Scopes to be checked for eligibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> AvailableScopesAsync(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get Available Scopes for `Reservation`.
+        /// Check whether the scopes from request is valid for `Reservation`.
         /// 
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopesContent to use. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="content"> Scopes to be checked for eligibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response AvailableScopes(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Reservations
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
-                uri.AppendQuery("expand", expand, true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> Get specific `Reservation` details. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ReservationDetailData>> GetAsync(Guid reservationOrderId, Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> Get specific `Reservation` details. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ReservationDetailData> Get(Guid reservationOrderId, Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> Updates the applied scopes of the `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> Updates the applied scopes of the `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -425,6 +425,118 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                 case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateArchiveRequest(Guid reservationOrderId, Guid reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/archive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> ArchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Archive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUnarchiveRequest(Guid reservationOrderId, Guid reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/unarchive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary>
+        /// Restores a `Reservation` to the state it was before archiving.
+        /// 
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> UnarchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Restores a `Reservation` to the state it was before archiving.
+        /// 
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Unarchive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -452,7 +564,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> List of all the revisions for the `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ReservationList>> ListRevisionsAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
@@ -474,7 +586,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> List of all the revisions for the `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ReservationList> ListRevisions(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
@@ -534,7 +646,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
         /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
@@ -560,7 +672,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
         /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
@@ -666,7 +778,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> List of all the revisions for the `Reservation`. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ReservationList>> ListRevisionsNextPageAsync(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
@@ -692,7 +804,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> List of all the revisions for the `Reservation`. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ReservationList> ListRevisionsNextPage(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
@@ -731,7 +843,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
         /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
@@ -761,7 +873,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
         /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>

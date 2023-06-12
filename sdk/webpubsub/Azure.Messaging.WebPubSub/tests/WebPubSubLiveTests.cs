@@ -61,6 +61,42 @@ namespace Azure.Rest.WebPubSub.Tests
 
         [Ignore("Ignore until live test is supported")]
         [Test]
+        public async Task WebSocketClientWithIntialGroupCanConnectAndReceiveGroupMessages()
+        {
+            WebPubSubServiceClientOptions options = InstrumentClientOptions(new WebPubSubServiceClientOptions());
+
+            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, nameof(WebSocketClientWithIntialGroupCanConnectAndReceiveGroupMessages), options);
+
+            var group = "GroupA";
+            var url = await serviceClient.GetClientAccessUriAsync(groups: new string[] { group });
+            // start the connection
+            using var client = new WebSocketClient(url, IsSimpleClientEndSignal);
+
+            // connected
+            await client.WaitForConnected.OrTimeout();
+
+            // broadcast messages
+
+            var textContent = "Hello";
+            await serviceClient.SendToGroupAsync(group, textContent, ContentType.TextPlain);
+            var jsonContent = BinaryData.FromObjectAsJson(new { hello = "world" });
+            await serviceClient.SendToGroupAsync(group, RequestContent.Create(jsonContent), ContentType.ApplicationJson);
+            var binaryContent = BinaryData.FromString("Hello");
+            await serviceClient.SendToGroupAsync(group, RequestContent.Create(binaryContent), ContentType.ApplicationOctetStream);
+
+            await serviceClient.SendToGroupAsync(group, RequestContent.Create(GetEndSignalBytes()), ContentType.ApplicationOctetStream);
+
+            await client.LifetimeTask.OrTimeout();
+            var frames = client.ReceivedFrames;
+
+            Assert.AreEqual(3, frames.Count);
+            Assert.AreEqual(textContent, frames[0].MessageAsString);
+            Assert.AreEqual(jsonContent.ToString(), frames[1].MessageAsString);
+            CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
+        }
+
+        [Ignore("Ignore until live test is supported")]
+        [Test]
         public async Task SubprotocolWebSocketClientCanConnectAndReceiveMessage()
         {
             WebPubSubServiceClientOptions options = InstrumentClientOptions(new WebPubSubServiceClientOptions());

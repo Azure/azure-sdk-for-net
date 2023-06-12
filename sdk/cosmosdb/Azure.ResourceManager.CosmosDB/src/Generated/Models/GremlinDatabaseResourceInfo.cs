@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -17,15 +18,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public GremlinDatabaseResourceInfo(string databaseName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             DatabaseName = databaseName;
         }
 
+        /// <summary> Initializes a new instance of GremlinDatabaseResourceInfo. </summary>
+        /// <param name="databaseName"> Name of the Cosmos DB Gremlin database. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        internal GremlinDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
+        {
+            DatabaseName = databaseName;
+            RestoreParameters = restoreParameters;
+            CreateMode = createMode;
+        }
+
         /// <summary> Name of the Cosmos DB Gremlin database. </summary>
         public string DatabaseName { get; set; }
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+        /// <summary> Enum to indicate the mode of resource creation. </summary>
+        public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

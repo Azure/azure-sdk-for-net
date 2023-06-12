@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
         internal CommunicationsListResult()
         {
-            Value = new ChangeTrackingList<CommunicationDetailData>();
+            Value = new ChangeTrackingList<SupportTicketCommunicationData>();
         }
 
         /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
         /// <param name="value"> List of Communication resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Communication resources. </param>
-        internal CommunicationsListResult(IReadOnlyList<CommunicationDetailData> value, string nextLink)
+        internal CommunicationsListResult(IReadOnlyList<SupportTicketCommunicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Communication resources. </summary>
-        public IReadOnlyList<CommunicationDetailData> Value { get; }
+        public IReadOnlyList<SupportTicketCommunicationData> Value { get; }
         /// <summary> The URI to fetch the next page of Communication resources. </summary>
         public string NextLink { get; }
     }

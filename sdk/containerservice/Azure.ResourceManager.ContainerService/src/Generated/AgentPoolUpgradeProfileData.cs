@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the AgentPoolUpgradeProfile data model. </summary>
+    /// <summary>
+    /// A class representing the AgentPoolUpgradeProfile data model.
+    /// The list of available upgrades for an agent pool.
+    /// </summary>
     public partial class AgentPoolUpgradeProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>
@@ -22,10 +25,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
         {
-            if (kubernetesVersion == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesVersion));
-            }
+            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryDataset data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryDataset data model.
+    /// Dataset resource type.
+    /// </summary>
     public partial class FactoryDatasetData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryDatasetData. </summary>
@@ -25,10 +28,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public FactoryDatasetData(FactoryDatasetDefinition properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

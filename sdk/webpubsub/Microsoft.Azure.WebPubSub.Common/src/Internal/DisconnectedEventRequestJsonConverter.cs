@@ -11,7 +11,8 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         public override DisconnectedEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var element = JsonDocument.ParseValue(ref reader).RootElement;
+            using var jsonDocument = JsonDocument.ParseValue(ref reader);
+            var element = jsonDocument.RootElement;
 
             // tricky part to temp set null to context
             return new DisconnectedEventRequest(null, element.ReadString(DisconnectedEventRequest.ReasonProperty));

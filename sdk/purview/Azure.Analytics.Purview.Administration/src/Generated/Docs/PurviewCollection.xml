@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetCollectionAsync(RequestContext)">
+<example>
+This sample shows how to call GetCollectionAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+Response response = await client.GetCollectionAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("friendlyName").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetCollection(RequestContext)">
+<example>
+This sample shows how to call GetCollection and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+Response response = client.GetCollection(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("friendlyName").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateCollectionAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateCollectionAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+var data = new {};
+
+Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateCollectionAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+var data = new {
+    description = "<description>",
+    friendlyName = "<friendlyName>",
+    parentCollection = new {
+        referenceName = "<referenceName>",
+    },
+};
+
+Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("friendlyName").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateCollection(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateCollection and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+var data = new {};
+
+Response response = client.CreateOrUpdateCollection(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateCollection with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+var data = new {
+    description = "<description>",
+    friendlyName = "<friendlyName>",
+    parentCollection = new {
+        referenceName = "<referenceName>",
+    },
+};
+
+Response response = client.CreateOrUpdateCollection(RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("friendlyName").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
+Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteCollectionAsync(RequestContext)">
+<example>
+This sample shows how to call DeleteCollectionAsync.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+Response response = await client.DeleteCollectionAsync(new RequestContext());
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteCollection(RequestContext)">
+<example>
+This sample shows how to call DeleteCollection.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+Response response = client.DeleteCollection(new RequestContext());
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetCollectionPathAsync(RequestContext)">
+<example>
+This sample shows how to call GetCollectionPathAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+Response response = await client.GetCollectionPathAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
+Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetCollectionPath(RequestContext)">
+<example>
+This sample shows how to call GetCollectionPath and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+Response response = client.GetCollectionPath(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
+Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetChildCollectionNamesAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetChildCollectionNamesAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+await foreach (var item in client.GetChildCollectionNamesAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+await foreach (var item in client.GetChildCollectionNamesAsync("<skipToken>", new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("friendlyName").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetChildCollectionNames(string,RequestContext)">
+<example>
+This sample shows how to call GetChildCollectionNames and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+foreach (var item in client.GetChildCollectionNames())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+
+foreach (var item in client.GetChildCollectionNames("<skipToken>", new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("friendlyName").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

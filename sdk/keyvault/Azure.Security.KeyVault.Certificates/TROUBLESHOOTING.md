@@ -9,7 +9,7 @@ to troubleshoot issues common to the Azure Key Vault SDKs for .NET.
 
 ## Table of Contents
 
-* [Troubleshooting Azure.Security.KeyVault.Certificates Issues](#troubleshooting-azure.security.keyvault.certificates-issues)
+* [Troubleshooting Azure.Security.KeyVault.Certificates Issues](#troubleshooting-azuresecuritykeyvaultcertificates-issues)
   * [No Certificate with Private Key Found](#no-certificate-with-private-key-found)
 
 ## Troubleshooting Azure.Security.KeyVault.Certificates Issues
@@ -35,5 +35,5 @@ private key. Instead use `X509Certificate2.Export(X509CertificateType.Pkcs12)` m
 to export a PKCS12 (PFX)-encoded buffer. If you want to import a PEM file, read the file into a `byte[]` buffer and call
 `CertificateClient.ImportCertificate` or `CertificateClient.ImportCertificateAsync` with the buffer directly.
 
-See [`X509Certificate2` documentation](https://docs.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509certificate2)
+See [`X509Certificate2` documentation](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509certificate2)
 for more information.

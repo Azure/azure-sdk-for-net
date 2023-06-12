@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
         internal AvailableLabServicesSku()
         {
-            Capabilities = new ChangeTrackingList<AvailableLabServicesSkuCapabilities>();
-            Locations = new ChangeTrackingList<string>();
+            Capabilities = new ChangeTrackingList<AvailableLabServicesSkuCapability>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             Costs = new ChangeTrackingList<AvailableLabServicesSkuCost>();
             Restrictions = new ChangeTrackingList<AvailableLabServicesSkuRestrictions>();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="locations"> List of locations that are available for a size. </param>
         /// <param name="costs"> Metadata for retrieving price info of a lab services SKUs. </param>
         /// <param name="restrictions"> Restrictions of a lab services SKUs. </param>
-        internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapabilities> capabilities, IReadOnlyList<string> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions)
+        internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapability> capabilities, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> The scale out/in options of the SKU. </summary>
         public AvailableLabServicesSkuCapacity Capacity { get; }
         /// <summary> The capabilities of the SKU. </summary>
-        public IReadOnlyList<AvailableLabServicesSkuCapabilities> Capabilities { get; }
+        public IReadOnlyList<AvailableLabServicesSkuCapability> Capabilities { get; }
         /// <summary> List of locations that are available for a size. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Metadata for retrieving price info of a lab services SKUs. </summary>
         public IReadOnlyList<AvailableLabServicesSkuCost> Costs { get; }
         /// <summary> Restrictions of a lab services SKUs. </summary>

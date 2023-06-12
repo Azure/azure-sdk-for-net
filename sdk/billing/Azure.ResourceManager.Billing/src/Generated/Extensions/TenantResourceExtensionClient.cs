@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Billing
             return new BillingSubscriptionAliasCollection(Client, Id, billingAccountName);
         }
 
-        /// <summary> Gets a collection of PaymentMethodResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of PaymentMethodResources and their operations over a PaymentMethodResource. </returns>
-        public virtual PaymentMethodCollection GetPaymentMethods()
+        /// <summary> Gets a collection of BillingPaymentMethodResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of BillingPaymentMethodResources and their operations over a BillingPaymentMethodResource. </returns>
+        public virtual BillingPaymentMethodCollection GetBillingPaymentMethods()
         {
-            return GetCachedClient(Client => new PaymentMethodCollection(Client, Id));
+            return GetCachedClient(Client => new BillingPaymentMethodCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BillingAccountPaymentMethodResources in the TenantResource. </summary>
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.Billing
             return new BillingAccountPaymentMethodCollection(Client, Id, billingAccountName);
         }
 
-        /// <summary> Gets a collection of PaymentMethodLinkResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingPaymentMethodLinkResources in the TenantResource. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <returns> An object representing collection of PaymentMethodLinkResources and their operations over a PaymentMethodLinkResource. </returns>
-        public virtual PaymentMethodLinkCollection GetPaymentMethodLinks(string billingAccountName, string billingProfileName)
+        /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
+        public virtual BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(string billingAccountName, string billingProfileName)
         {
-            return new PaymentMethodLinkCollection(Client, Id, billingAccountName, billingProfileName);
+            return new BillingPaymentMethodLinkCollection(Client, Id, billingAccountName, billingProfileName);
         }
     }
 }

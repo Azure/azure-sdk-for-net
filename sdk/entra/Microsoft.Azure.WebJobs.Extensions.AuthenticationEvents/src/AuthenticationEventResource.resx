@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ex_Action_Invalid" xml:space="preserve">
-    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
-  </data>
   <data name="Ex_Comparable_Not_Found" xml:space="preserve">
     <value>Comparable '{0}' cannot be match.</value>
   </data>
@@ -127,13 +124,16 @@
     <value>ListenerFactoryContext is null</value>
   </data>
   <data name="Ex_Event_Missing" xml:space="preserve">
-    <value>Cannot determine event from payload. (Error: {0})</value>
+    <value>Cannot determine the event from payload, please check that the incoming payload is a valid JSON string and contains the event type.</value>
   </data>
   <data name="Ex_File_Exists" xml:space="preserve">
     <value>File '{0}' could not be written. Already exists.</value>
   </data>
   <data name="Ex_Gen_Failure" xml:space="preserve">
     <value>Failed</value>
+  </data>
+  <data name="Ex_Invalid_Action" xml:space="preserve">
+    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
   </data>
   <data name="Ex_Invalid_Event" xml:space="preserve">
     <value>Invalid event type.</value>

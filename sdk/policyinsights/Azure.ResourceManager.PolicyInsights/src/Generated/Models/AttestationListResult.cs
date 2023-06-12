@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of AttestationListResult. </summary>
         internal AttestationListResult()
         {
-            Value = new ChangeTrackingList<AttestationData>();
+            Value = new ChangeTrackingList<PolicyAttestationData>();
         }
 
         /// <summary> Initializes a new instance of AttestationListResult. </summary>
         /// <param name="value"> Array of attestation definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AttestationListResult(IReadOnlyList<AttestationData> value, string nextLink)
+        internal AttestationListResult(IReadOnlyList<PolicyAttestationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of attestation definitions. </summary>
-        public IReadOnlyList<AttestationData> Value { get; }
+        public IReadOnlyList<PolicyAttestationData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

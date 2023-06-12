@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightVersionsCapability DeserializeHDInsightVersionsCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HDInsightVersionSpec>> available = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("available"))
+                if (property.NameEquals("available"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightVersionSpec> array = new List<HDInsightVersionSpec>();

@@ -28,19 +28,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string TitleValue = "title";
         private const string SectionHeadingValue = "sectionHeading";
         private const string FootnoteValue = "footnote";
+        private const string FormulaBlockValue = "formulaBlock";
 
-        /// <summary> pageHeader. </summary>
+        /// <summary> Text near the top edge of the page. </summary>
         public static ParagraphRole PageHeader { get; } = new ParagraphRole(PageHeaderValue);
-        /// <summary> pageFooter. </summary>
+        /// <summary> Text near the bottom edge of the page. </summary>
         public static ParagraphRole PageFooter { get; } = new ParagraphRole(PageFooterValue);
-        /// <summary> pageNumber. </summary>
+        /// <summary> Page number. </summary>
         public static ParagraphRole PageNumber { get; } = new ParagraphRole(PageNumberValue);
-        /// <summary> title. </summary>
+        /// <summary> Top-level title describing the entire document. </summary>
         public static ParagraphRole Title { get; } = new ParagraphRole(TitleValue);
-        /// <summary> sectionHeading. </summary>
+        /// <summary> Sub heading describing a section of the document. </summary>
         public static ParagraphRole SectionHeading { get; } = new ParagraphRole(SectionHeadingValue);
-        /// <summary> footnote. </summary>
+        /// <summary> A note usually placed after the main content on a page. </summary>
         public static ParagraphRole Footnote { get; } = new ParagraphRole(FootnoteValue);
+        /// <summary> A block of formulas, often with shared alignment. </summary>
+        public static ParagraphRole FormulaBlock { get; } = new ParagraphRole(FormulaBlockValue);
         /// <summary> Determines if two <see cref="ParagraphRole"/> values are the same. </summary>
         public static bool operator ==(ParagraphRole left, ParagraphRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParagraphRole"/> values are not the same. </summary>

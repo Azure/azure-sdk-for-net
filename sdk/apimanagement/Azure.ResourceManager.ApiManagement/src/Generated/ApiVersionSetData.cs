@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiVersionSet data model. </summary>
+    /// <summary>
+    /// A class representing the ApiVersionSet data model.
+    /// API Version Set Contract details.
+    /// </summary>
     public partial class ApiVersionSetData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiVersionSetData. </summary>

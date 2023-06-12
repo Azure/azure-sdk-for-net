@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePattern"/> or <paramref name="destination"/> is null. </exception>
         public UriRewriteActionProperties(UriRewriteActionType actionType, string sourcePattern, string destination)
         {
-            if (sourcePattern == null)
-            {
-                throw new ArgumentNullException(nameof(sourcePattern));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
+            Argument.AssertNotNull(sourcePattern, nameof(sourcePattern));
+            Argument.AssertNotNull(destination, nameof(destination));
 
             ActionType = actionType;
             SourcePattern = sourcePattern;

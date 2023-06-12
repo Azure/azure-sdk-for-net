@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.Azure
     {
         private const string ServiceVersionParameterTypeName = "ServiceVersion";
         private const string ConnectionStringParameterName = "connectionString";
+        private const char TenantDelimiter = ';';
 
         public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {
@@ -83,7 +84,7 @@ namespace Microsoft.Extensions.Azure
             throw new InvalidOperationException(BuildErrorMessage(configuration, clientType, optionsType));
         }
 
-        internal static TokenCredential CreateCredential(IConfiguration configuration, TokenCredentialOptions identityClientOptions = null)
+        internal static TokenCredential CreateCredential(IConfiguration configuration)
         {
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
@@ -93,6 +94,15 @@ namespace Microsoft.Extensions.Azure
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
+            var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
+            IEnumerable<string> additionallyAllowedTenantsList = null;
+            if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
+            {
+                // not relying on StringSplitOptions.RemoveEmptyEntries as we want to remove leading/trailing whitespace between entries
+                additionallyAllowedTenantsList = additionallyAllowedTenants.Split(TenantDelimiter)
+                    .Select(t => t.Trim())
+                    .Where(t => t.Length > 0);
+            }
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
@@ -113,7 +123,15 @@ namespace Microsoft.Extensions.Azure
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
             {
-                return new ClientSecretCredential(tenantId, clientId, clientSecret, identityClientOptions);
+                var options = new ClientSecretCredentialOptions();
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+                return new ClientSecretCredential(tenantId, clientId, clientSecret, options);
             }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
@@ -141,13 +159,56 @@ namespace Microsoft.Extensions.Azure
                     throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
                 }
 
-                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], identityClientOptions);
+                var options = new ClientCertificateCredentialOptions();
+
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], options);
+
                 store.Close();
 
                 return credential;
             }
 
             // TODO: More logging
+
+            if (additionallyAllowedTenantsList != null
+                || !string.IsNullOrWhiteSpace(tenantId)
+                || !string.IsNullOrWhiteSpace(clientId)
+                || !string.IsNullOrWhiteSpace(resourceId))
+            {
+                var options = new DefaultAzureCredentialOptions();
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(tenantId))
+                {
+                    options.TenantId = tenantId;
+                }
+
+                if (!string.IsNullOrWhiteSpace(clientId))
+                {
+                    options.ManagedIdentityClientId = clientId;
+                }
+
+                // validation that both clientId and ResourceId are not set happens in Azure.Identity
+                if (!string.IsNullOrWhiteSpace(resourceId))
+                {
+                    options.ManagedIdentityResourceId = new ResourceIdentifier(resourceId);
+                }
+
+                return new DefaultAzureCredential(options);
+            }
             return null;
         }
 

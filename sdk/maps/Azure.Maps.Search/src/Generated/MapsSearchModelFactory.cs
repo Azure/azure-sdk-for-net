@@ -8,10 +8,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.GeoJson;
+using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class MapsSearchModelFactory
     {
         /// <summary> Initializes a new instance of PolygonResult. </summary>

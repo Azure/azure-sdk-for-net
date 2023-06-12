@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchIPRule(string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Action = BatchIPRuleAction.Allow;
             Value = value;
@@ -34,9 +32,6 @@ namespace Azure.ResourceManager.Batch.Models
             Action = action;
             Value = value;
         }
-
-        /// <summary> Action when client IP address is matched. </summary>
-        public BatchIPRuleAction Action { get; set; }
         /// <summary> IPv4 address, or IPv4 address range in CIDR format. </summary>
         public string Value { get; set; }
     }

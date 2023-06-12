@@ -29,9 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the related EventData model.</summary>
         /// <value>The Json payload.</value>
         ///
-        [JsonPropertyName("payload")]
+        [JsonPropertyName("data")]
         [Required]
-        public TData Payload { get; set; }
+        public TData Data { get; set; }
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
@@ -41,28 +41,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 if (RequestStatus == RequestStatusType.Failed)
                 {
-                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage));
+                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), true);
                 }
-
-                if (RequestStatus == RequestStatusType.TokenInvalid)
+                else if (RequestStatus == RequestStatusType.ValidationError)
+                {
+                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), false);
+                }
+                else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
                     Response.MarkAsUnauthorized();
                 }
             }
             catch (Exception ex)
             {
-                return await Failed(ex).ConfigureAwait(false);
+                return await Failed(ex, true).ConfigureAwait(false);
             }
 
             return Response;
         }
 
-        /// <summary>Set the response to Failed mode.</summary>
-        /// <param name="exception">The exception to return in the response.</param>
-        /// <returns>The Underlying AuthEventResponse.</returns>
-        public override Task<AuthenticationEventResponse> Failed(Exception exception)
+        internal override Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError)
         {
-            Response.MarkAsFailed(exception);
+            Response.MarkAsFailed(exception, internalError);
             return Task.FromResult<AuthenticationEventResponse>((TResponse)Response);
         }
     }

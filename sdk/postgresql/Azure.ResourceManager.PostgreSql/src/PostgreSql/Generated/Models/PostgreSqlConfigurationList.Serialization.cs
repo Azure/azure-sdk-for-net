@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
@@ -32,14 +32,17 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlConfigurationList DeserializePostgreSqlConfigurationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PostgreSqlConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlConfigurationData> array = new List<PostgreSqlConfigurationData>();

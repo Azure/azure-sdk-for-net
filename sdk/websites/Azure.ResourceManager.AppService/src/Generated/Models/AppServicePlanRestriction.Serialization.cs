@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServicePlanRestriction ToAppServicePlanRestriction(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanRestriction.None;
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanRestriction.Free;
-            if (string.Equals(value, "Shared", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanRestriction.Shared;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanRestriction.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanRestriction.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanRestriction.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return AppServicePlanRestriction.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return AppServicePlanRestriction.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Shared")) return AppServicePlanRestriction.Shared;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return AppServicePlanRestriction.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return AppServicePlanRestriction.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return AppServicePlanRestriction.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServicePlanRestriction value.");
         }
     }

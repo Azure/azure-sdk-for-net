@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary> A class representing the PurviewPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the PurviewPrivateEndpointConnection data model.
+    /// A private endpoint connection class.
+    /// </summary>
     public partial class PurviewPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionData. </summary>

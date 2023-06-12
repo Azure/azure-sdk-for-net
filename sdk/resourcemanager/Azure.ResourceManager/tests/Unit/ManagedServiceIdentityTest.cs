@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Tests
         public JsonProperty DeserializerHelper(string filename)
         {
             var json = File.ReadAllText(Path.Combine(TestAssetPath, filename));
-            JsonDocument document = JsonDocument.Parse(json);
-            JsonElement rootElement = document.RootElement;
+            using JsonDocument document = JsonDocument.Parse(json);
+            JsonElement rootElement = document.RootElement.Clone();
             return rootElement.EnumerateObject().First();
         }
 
@@ -46,6 +46,18 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
             Assert.AreEqual("9a2eaa6a-b49c-4a63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-4f7b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
+        }
+
+        [TestCase]
+        public void TestDeserializerNoneWithEmptyStringIds()
+        {
+            var identityJsonProperty = DeserializerHelper("NoneEmptyStringIds.json");
+#if DEBUG
+            Assert.Throws<JsonException>(delegate { ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value); });
+#else
+            ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);
+            Assert.AreEqual(ManagedServiceIdentityType.None, back.ManagedServiceIdentityType);
+#endif
         }
 
         [TestCase]
@@ -78,7 +90,7 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializerValidOuterExtraField()
         {
             var json = File.ReadAllText(Path.Combine(TestAssetPath, "SystemAndUserAssignedOuterExtraField.json"));
-            JsonDocument document = JsonDocument.Parse(json);
+            using JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);

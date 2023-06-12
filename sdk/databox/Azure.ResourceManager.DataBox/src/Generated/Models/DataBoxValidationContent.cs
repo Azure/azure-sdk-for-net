@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -27,10 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
         protected DataBoxValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails)
         {
-            if (individualRequestDetails == null)
-            {
-                throw new ArgumentNullException(nameof(individualRequestDetails));
-            }
+            Argument.AssertNotNull(individualRequestDetails, nameof(individualRequestDetails));
 
             IndividualRequestDetails = individualRequestDetails.ToList();
         }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(ConflictResolutionPath))
             {
-                writer.WritePropertyName("conflictResolutionPath");
+                writer.WritePropertyName("conflictResolutionPath"u8);
                 writer.WriteStringValue(ConflictResolutionPath);
             }
             if (Optional.IsDefined(ConflictResolutionProcedure))
             {
-                writer.WritePropertyName("conflictResolutionProcedure");
+                writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);
             }
             writer.WriteEndObject();
@@ -35,27 +35,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ConflictResolutionPolicy DeserializeConflictResolutionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConflictResolutionMode> mode = default;
             Optional<string> conflictResolutionPath = default;
             Optional<string> conflictResolutionProcedure = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new ConflictResolutionMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("conflictResolutionPath"))
+                if (property.NameEquals("conflictResolutionPath"u8))
                 {
                     conflictResolutionPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("conflictResolutionProcedure"))
+                if (property.NameEquals("conflictResolutionProcedure"u8))
                 {
                     conflictResolutionProcedure = property.Value.GetString();
                     continue;

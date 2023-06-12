@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryIntegrationRuntime data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryIntegrationRuntime data model.
+    /// Integration runtime resource type.
+    /// </summary>
     public partial class FactoryIntegrationRuntimeData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryIntegrationRuntimeData. </summary>
@@ -25,10 +28,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public FactoryIntegrationRuntimeData(IntegrationRuntimeDefinition properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

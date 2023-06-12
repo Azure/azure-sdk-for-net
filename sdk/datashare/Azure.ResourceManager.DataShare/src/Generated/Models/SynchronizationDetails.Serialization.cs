@@ -15,8 +15,12 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static SynchronizationDetails DeserializeSynchronizationDetails(JsonElement element)
         {
-            Optional<string> dataSetId = default;
-            Optional<DataSetType> dataSetType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> dataSetId = default;
+            Optional<ShareDataSetType> dataSetType = default;
             Optional<int> durationMs = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<long> filesRead = default;
@@ -32,138 +36,131 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<long> vCore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSetId"))
-                {
-                    dataSetId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSetType"))
+                if (property.NameEquals("dataSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataSetType = new DataSetType(property.Value.GetString());
+                    dataSetId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("durationMs"))
+                if (property.NameEquals("dataSetType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataSetType = new ShareDataSetType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("durationMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     durationMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("filesRead"))
+                if (property.NameEquals("filesRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesWritten"))
+                if (property.NameEquals("filesWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rowsCopied"))
+                if (property.NameEquals("rowsCopied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowsCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rowsRead"))
+                if (property.NameEquals("rowsRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowsRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sizeRead"))
+                if (property.NameEquals("sizeRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sizeWritten"))
+                if (property.NameEquals("sizeWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCore"))
+                if (property.NameEquals("vCore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCore = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SynchronizationDetails(dataSetId.Value, Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore));
+            return new SynchronizationDetails(Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore));
         }
     }
 }

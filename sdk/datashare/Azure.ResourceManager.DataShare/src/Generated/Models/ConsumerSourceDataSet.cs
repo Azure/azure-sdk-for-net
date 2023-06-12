@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="dataSetName"> DataSet name. </param>
         /// <param name="dataSetPath"> DataSet path. </param>
         /// <param name="dataSetType"> Type of data set. </param>
-        internal ConsumerSourceDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string dataSetId, string dataSetLocation, string dataSetName, string dataSetPath, DataSetType? dataSetType) : base(id, name, resourceType, systemData)
+        internal ConsumerSourceDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataSetId, AzureLocation? dataSetLocation, string dataSetName, string dataSetPath, ShareDataSetType? dataSetType) : base(id, name, resourceType, systemData)
         {
             DataSetId = dataSetId;
             DataSetLocation = dataSetLocation;
@@ -38,14 +39,14 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> DataSet Id. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> Location of the data set. </summary>
-        public string DataSetLocation { get; }
+        public AzureLocation? DataSetLocation { get; }
         /// <summary> DataSet name. </summary>
         public string DataSetName { get; }
         /// <summary> DataSet path. </summary>
         public string DataSetPath { get; }
         /// <summary> Type of data set. </summary>
-        public DataSetType? DataSetType { get; }
+        public ShareDataSetType? DataSetType { get; }
     }
 }

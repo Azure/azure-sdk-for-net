@@ -16,23 +16,32 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Resolution))
             {
-                writer.WritePropertyName("resolution");
+                writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
+            }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode"u8);
+                writer.WriteStringValue(ScalingMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static MediaCompositionLayout DeserializeMediaCompositionLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -44,33 +53,7 @@ namespace Azure.Communication.MediaComposition.Models
                     case "presenter": return PresenterLayout.DeserializePresenterLayout(element);
                 }
             }
-            LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new LayoutType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resolution"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("placeholderImageUri"))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MediaCompositionLayout(kind, resolution.Value, placeholderImageUri.Value);
+            return UnknownLayout.DeserializeUnknownLayout(element);
         }
     }
 }

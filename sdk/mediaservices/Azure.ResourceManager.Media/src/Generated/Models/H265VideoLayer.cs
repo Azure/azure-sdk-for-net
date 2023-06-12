@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the settings to be used when encoding the input video into a desired output bitrate layer. </summary>
-    public partial class H265VideoLayer : VideoOrImageLayerProperties
+    public partial class H265VideoLayer : MediaLayerBase
     {
         /// <summary> Initializes a new instance of H265VideoLayer. </summary>
         /// <param name="bitrate"> The average bitrate in bits per second at which to encode the input video when generating this layer. For example: a target bitrate of 3000Kbps or 3Mbps means this value should be 3000000 This is a required field. </param>

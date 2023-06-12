@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="actionsRequired"> The required actions. </param>
         /// <param name="description"> The description. </param>
         /// <param name="status"> The status. </param>
-        internal PurviewPrivateLinkServiceConnectionState(string actionsRequired, string description, Status? status)
+        internal PurviewPrivateLinkServiceConnectionState(string actionsRequired, string description, PurviewPrivateLinkServiceStatus? status)
         {
             ActionsRequired = actionsRequired;
             Description = description;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> The description. </summary>
         public string Description { get; set; }
         /// <summary> The status. </summary>
-        public Status? Status { get; set; }
+        public PurviewPrivateLinkServiceStatus? Status { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the IPv6FirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the IPv6FirewallRule data model.
+    /// An IPv6 server firewall rule.
+    /// </summary>
     public partial class IPv6FirewallRuleData : ProxyResourceWithWritableName
     {
         /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>

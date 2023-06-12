@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
         private const string TypeValue = "Type";
         private const string NameValue = "Name";
         private const string LanguageValue = "Language";
-        private const string FourCharacterCodeValue = "FourCC";
+        private const string FourCCValue = "FourCC";
         private const string BitrateValue = "Bitrate";
 
         /// <summary> The unknown track property type. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The language. </summary>
         public static FilterTrackPropertyType Language { get; } = new FilterTrackPropertyType(LanguageValue);
         /// <summary> The fourCC. </summary>
-        public static FilterTrackPropertyType FourCharacterCode { get; } = new FilterTrackPropertyType(FourCharacterCodeValue);
+        public static FilterTrackPropertyType FourCC { get; } = new FilterTrackPropertyType(FourCCValue);
         /// <summary> The bitrate. </summary>
         public static FilterTrackPropertyType Bitrate { get; } = new FilterTrackPropertyType(BitrateValue);
         /// <summary> Determines if two <see cref="FilterTrackPropertyType"/> values are the same. </summary>

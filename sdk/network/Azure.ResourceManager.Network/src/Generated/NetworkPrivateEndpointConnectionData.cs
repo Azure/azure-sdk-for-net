@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkPrivateEndpointConnection data model.
+    /// PrivateEndpointConnection resource.
+    /// </summary>
     public partial class NetworkPrivateEndpointConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionData. </summary>

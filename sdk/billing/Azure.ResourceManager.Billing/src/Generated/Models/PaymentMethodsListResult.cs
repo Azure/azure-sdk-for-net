@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of PaymentMethodsListResult. </summary>
         internal PaymentMethodsListResult()
         {
-            Value = new ChangeTrackingList<PaymentMethodData>();
+            Value = new ChangeTrackingList<BillingPaymentMethodData>();
         }
 
         /// <summary> Initializes a new instance of PaymentMethodsListResult. </summary>
         /// <param name="value"> The list of payment methods. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal PaymentMethodsListResult(IReadOnlyList<PaymentMethodData> value, string nextLink)
+        internal PaymentMethodsListResult(IReadOnlyList<BillingPaymentMethodData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of payment methods. </summary>
-        public IReadOnlyList<PaymentMethodData> Value { get; }
+        public IReadOnlyList<BillingPaymentMethodData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

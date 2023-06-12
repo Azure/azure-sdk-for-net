@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +15,17 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static JobExceptionTrigger DeserializeJobExceptionTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -31,7 +34,7 @@ namespace Azure.Communication.JobRouter
                     case "wait-time": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.JobExceptionTrigger' not supported.");
+            return UnknownJobExceptionTrigger.DeserializeUnknownJobExceptionTrigger(element);
         }
     }
 }

@@ -18,6 +18,9 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 {
     internal class MoverResourceSetTests : ResourceMoverManagementTestBase
     {
+        protected internal const string ExpectedKey = "tagKey";
+        protected internal const string ExpectedValue = "tagValue";
+
         public MoverResourceSetTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -111,9 +114,12 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
-            VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
-            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
+            string targetVnetName = Recording.GenerateAssetName("targetVnet-");
+            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
+            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
+            VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
+            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
 
             // Validate that the Vnet has an dependency.
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
@@ -132,9 +138,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.AreEqual(unresolvedDependencyId, rg.Id);
 
             // Add the source resource group to the moverResourceSet and verify there are no missed dependencies.
-            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
             ResourceGroupResource targetRg = await CreateResourceGroup(subscription, targetRgName, AzureLocation.EastUS2);
-            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResourceData input = new MoverResourceData
             {
                 Properties = new MoverResourceProperties(unresolvedDependencyId)
@@ -201,6 +205,72 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             };
             lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, bulkRemoveContent);
             Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddTagTest(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+
+            var moverResourceSet = await AddTag();
+
+            Assert.IsTrue(moverResourceSet.Data.Tags.TryGetValue(ExpectedKey, out string value));
+            Assert.AreEqual(ExpectedValue, value);
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SetTagsTest(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+
+            var moverResourceSet = await AddTag();
+
+            IDictionary<string, string> expectedTags = new Dictionary<string, string>
+            {
+                { "tagKey1", "tagKey1" },
+                { "tagKey2", "tagKey2" },
+                { "tagKey3", "tagKey3" }
+            };
+
+            moverResourceSet = await moverResourceSet.SetTagsAsync(expectedTags);
+
+            Assert.AreEqual(expectedTags.Count, moverResourceSet.Data.Tags.Count);
+
+            foreach (var item in expectedTags)
+            {
+                Assert.IsTrue(moverResourceSet.Data.Tags.TryGetValue(item.Key, out string value));
+                Assert.AreEqual(item.Value, value);
+            }
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RemoveTagTest(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+
+            var moverResourceSet = await AddTag();
+
+            moverResourceSet = await moverResourceSet.RemoveTagAsync(ExpectedKey);
+
+            Assert.AreEqual(0, moverResourceSet.Data.Tags.Count);
+        }
+
+        private async Task<MoverResourceSetResource> AddTag()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.WestUS);
+            string moverResourceSetName = Recording.GenerateAssetName("MoverResourceSet-");
+            MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
+
+            moverResourceSet = await moverResourceSet.AddTagAsync(ExpectedKey, ExpectedValue);
+            return moverResourceSet;
         }
 
         private void AssertValidMoverResourceSet(MoverResourceSetResource model, MoverResourceSetResource getResult)

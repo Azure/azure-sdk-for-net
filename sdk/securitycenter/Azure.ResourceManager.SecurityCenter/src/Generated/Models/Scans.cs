@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of Scans. </summary>
         internal Scans()
         {
-            Value = new ChangeTrackingList<ScanData>();
+            Value = new ChangeTrackingList<SqlVulnerabilityAssessmentScanData>();
         }
 
         /// <summary> Initializes a new instance of Scans. </summary>
         /// <param name="value"> List of vulnerability assessment scan records. </param>
-        internal Scans(IReadOnlyList<ScanData> value)
+        internal Scans(IReadOnlyList<SqlVulnerabilityAssessmentScanData> value)
         {
             Value = value;
         }
 
         /// <summary> List of vulnerability assessment scan records. </summary>
-        public IReadOnlyList<ScanData> Value { get; }
+        public IReadOnlyList<SqlVulnerabilityAssessmentScanData> Value { get; }
     }
 }

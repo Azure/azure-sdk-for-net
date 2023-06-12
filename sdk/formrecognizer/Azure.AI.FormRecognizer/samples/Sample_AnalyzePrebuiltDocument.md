@@ -194,9 +194,4 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-To see the full example source files, see:
-
-* [Analyze with prebuilt general document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromUriAsync.cs)
-* [Analyze with prebuilt general document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromFileAsync.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

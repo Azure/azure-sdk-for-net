@@ -14,38 +14,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static NodeTypeAvailableSku DeserializeNodeTypeAvailableSku(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceType> resourceType = default;
             Optional<NodeTypeSupportedSku> sku = default;
             Optional<NodeTypeSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     sku = NodeTypeSupportedSku.DeserializeNodeTypeSupportedSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value);
                     continue;
                 }
             }
-            return new NodeTypeAvailableSku(resourceType.Value, sku.Value, capacity.Value);
+            return new NodeTypeAvailableSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

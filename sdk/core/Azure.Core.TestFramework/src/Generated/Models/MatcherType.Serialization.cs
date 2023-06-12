@@ -20,8 +20,8 @@ namespace Azure.Core.TestFramework.Models
 
         public static MatcherType ToMatcherType(this string value)
         {
-            if (string.Equals(value, "BodilessMatcher", StringComparison.InvariantCultureIgnoreCase)) return MatcherType.BodilessMatcher;
-            if (string.Equals(value, "CustomDefaultMatcher", StringComparison.InvariantCultureIgnoreCase)) return MatcherType.CustomDefaultMatcher;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodilessMatcher")) return MatcherType.BodilessMatcher;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomDefaultMatcher")) return MatcherType.CustomDefaultMatcher;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MatcherType value.");
         }
     }

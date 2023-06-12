@@ -32,11 +32,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VnetRoute class.
         /// </summary>
+        /// <param name="staticRoutesConfig">Configuration for static routes on
+        /// this HubVnetConnection.</param>
         /// <param name="staticRoutes">List of all Static Routes.</param>
         /// <param name="bgpConnections">The list of references to
         /// HubBgpConnection objects.</param>
-        public VnetRoute(IList<StaticRoute> staticRoutes = default(IList<StaticRoute>), IList<SubResource> bgpConnections = default(IList<SubResource>))
+        public VnetRoute(StaticRoutesConfig staticRoutesConfig = default(StaticRoutesConfig), IList<StaticRoute> staticRoutes = default(IList<StaticRoute>), IList<SubResource> bgpConnections = default(IList<SubResource>))
         {
+            StaticRoutesConfig = staticRoutesConfig;
             StaticRoutes = staticRoutes;
             BgpConnections = bgpConnections;
             CustomInit();
@@ -46,6 +49,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets configuration for static routes on this
+        /// HubVnetConnection.
+        /// </summary>
+        [JsonProperty(PropertyName = "staticRoutesConfig")]
+        public StaticRoutesConfig StaticRoutesConfig { get; set; }
 
         /// <summary>
         /// Gets or sets list of all Static Routes.

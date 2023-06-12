@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ExternalSecuritySolutionList. </summary>
         internal ExternalSecuritySolutionList()
         {
-            Value = new ChangeTrackingList<ExternalSecuritySolutionData>();
+            Value = new ChangeTrackingList<ExternalSecuritySolution>();
         }
 
         /// <summary> Initializes a new instance of ExternalSecuritySolutionList. </summary>
-        /// <param name="value"></param>
+        /// <param name="value">
+        /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
+        /// </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ExternalSecuritySolutionList(IReadOnlyList<ExternalSecuritySolutionData> value, string nextLink)
+        internal ExternalSecuritySolutionList(IReadOnlyList<ExternalSecuritySolution> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ExternalSecuritySolutionData> Value { get; }
+        /// <summary>
+        /// Gets the value
+        /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
+        /// </summary>
+        public IReadOnlyList<ExternalSecuritySolution> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

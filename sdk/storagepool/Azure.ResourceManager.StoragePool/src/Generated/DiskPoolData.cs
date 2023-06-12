@@ -15,7 +15,10 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPool data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPool data model.
+    /// Response for Disk Pool request.
+    /// </summary>
     public partial class DiskPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolData. </summary>
@@ -27,14 +30,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityZones"/> or <paramref name="subnetId"/> is null. </exception>
         public DiskPoolData(AzureLocation location, DiskPoolIscsiTargetProvisioningState provisioningState, IEnumerable<string> availabilityZones, StoragePoolOperationalStatus status, ResourceIdentifier subnetId) : base(location)
         {
-            if (availabilityZones == null)
-            {
-                throw new ArgumentNullException(nameof(availabilityZones));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(availabilityZones, nameof(availabilityZones));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             ManagedByExtended = new ChangeTrackingList<string>();
             ProvisioningState = provisioningState;

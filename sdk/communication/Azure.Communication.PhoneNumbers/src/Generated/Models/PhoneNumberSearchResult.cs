@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -25,22 +26,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="phoneNumbers"/>, <paramref name="capabilities"/> or <paramref name="cost"/> is null. </exception>
         internal PhoneNumberSearchResult(string searchId, IEnumerable<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn)
         {
-            if (searchId == null)
-            {
-                throw new ArgumentNullException(nameof(searchId));
-            }
-            if (phoneNumbers == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumbers));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
-            if (cost == null)
-            {
-                throw new ArgumentNullException(nameof(cost));
-            }
+            Argument.AssertNotNull(searchId, nameof(searchId));
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
+            Argument.AssertNotNull(cost, nameof(cost));
 
             SearchId = searchId;
             PhoneNumbers = phoneNumbers.ToList();
@@ -59,7 +48,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
-        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn)
+        /// <param name="errorCode"> The error code of the search. </param>
+        /// <param name="error"> Mapping Error Messages to Codes. </param>
+        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn, int? errorCode, PhoneNumberSearchResultError? error)
         {
             SearchId = searchId;
             PhoneNumbers = phoneNumbers;
@@ -68,6 +59,8 @@ namespace Azure.Communication.PhoneNumbers
             Capabilities = capabilities;
             Cost = cost;
             SearchExpiresOn = searchExpiresOn;
+            ErrorCode = errorCode;
+            Error = error;
         }
 
         /// <summary> The search id. </summary>
@@ -82,5 +75,9 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumberCapabilities Capabilities { get; }
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
+        /// <summary> The error code of the search. </summary>
+        public int? ErrorCode { get; }
+        /// <summary> Mapping Error Messages to Codes. </summary>
+        public PhoneNumberSearchResultError? Error { get; }
     }
 }
