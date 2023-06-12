@@ -27,7 +27,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetConstitution();
+            Response response = client.GetConstitution(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("digest").ToString());
@@ -57,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetConstitutionAsync();
+            Response response = await client.GetConstitutionAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("digest").ToString());
@@ -87,7 +87,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetEnclaveQuotes();
+            Response response = client.GetEnclaveQuotes(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("currentNodeId").ToString());
@@ -122,7 +122,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetEnclaveQuotesAsync();
+            Response response = await client.GetEnclaveQuotesAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("currentNodeId").ToString());
@@ -233,7 +233,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetLedgerEntry("<transactionId>");
+            Response response = client.GetLedgerEntry("<transactionId>", "<collectionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -264,7 +264,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetLedgerEntryAsync("<transactionId>");
+            Response response = await client.GetLedgerEntryAsync("<transactionId>", "<collectionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -295,7 +295,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetReceipt("<transactionId>");
+            Response response = client.GetReceipt("<transactionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -336,7 +336,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetReceiptAsync("<transactionId>");
+            Response response = await client.GetReceiptAsync("<transactionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -377,7 +377,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetTransactionStatus("<transactionId>");
+            Response response = client.GetTransactionStatus("<transactionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -407,7 +407,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetTransactionStatusAsync("<transactionId>");
+            Response response = await client.GetTransactionStatusAsync("<transactionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -437,7 +437,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetCurrentLedgerEntry();
+            Response response = client.GetCurrentLedgerEntry("<collectionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("contents").ToString());
@@ -467,7 +467,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetCurrentLedgerEntryAsync();
+            Response response = await client.GetCurrentLedgerEntryAsync("<collectionId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("contents").ToString());
@@ -545,7 +545,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetUser("<userId>");
+            Response response = client.GetUser("<userId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -574,7 +574,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetUserAsync("<userId>");
+            Response response = await client.GetUserAsync("<userId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -681,7 +681,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (var item in client.GetConsortiumMembers())
+            foreach (var item in client.GetConsortiumMembers(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("certificate").ToString());
@@ -713,7 +713,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            await foreach (var item in client.GetConsortiumMembersAsync())
+            await foreach (var item in client.GetConsortiumMembersAsync(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("certificate").ToString());
@@ -745,7 +745,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (var item in client.GetCollections())
+            foreach (var item in client.GetCollections(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -775,7 +775,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            await foreach (var item in client.GetCollectionsAsync())
+            await foreach (var item in client.GetCollectionsAsync(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -805,7 +805,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (var item in client.GetLedgerEntries())
+            foreach (var item in client.GetLedgerEntries("<collectionId>", "<fromTransactionId>", "<toTransactionId>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("contents").ToString());
@@ -837,7 +837,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            await foreach (var item in client.GetLedgerEntriesAsync())
+            await foreach (var item in client.GetLedgerEntriesAsync("<collectionId>", "<fromTransactionId>", "<toTransactionId>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("contents").ToString());
