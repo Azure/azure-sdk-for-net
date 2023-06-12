@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
                         storeKind = "AdlsGen2Account",
                         storeReference = new
                         {
-                            referenceName = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkconsumeradls",
+                            referenceName = "/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/consumeraccount",
                             type = "ArmResourceReference"
                         },
                         properties = new
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkconsumeradls").ToEnumerableAsync();
+            List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/consumeraccount").ToEnumerableAsync();
 
             Assert.Greater(attachedReceivedShares.Count, 0);
 

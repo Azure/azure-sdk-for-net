@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
                         storeKind = "AdlsGen2Account",
                         storeReference = new
                         {
-                            referenceName = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls",
+                            referenceName = "/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount",
                             type = "ArmResourceReference"
                         },
                         properties = new
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             var expectedDisplayName = "testDisplayName1";
             Assert.AreEqual(expectedDisplayName, actualDisplayName);
 
-            List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls").ToEnumerableAsync();
+            List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount").ToEnumerableAsync();
 
             Assert.Greater(listResponse.Count, 0);
         }
@@ -112,8 +112,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests
                 invitationKind = "Service",
                 properties = new
                 {
-                    TargetActiveDirectoryId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                    TargetObjectId = "67bb1d64-b708-496a-ba33-48c242cbb6c8",
+                    TargetActiveDirectoryId = "165944e1-1963-4e83-920f-4d0e9c44599c",
+                    TargetObjectId = "5fc438a9-bdb9-46d4-89d7-43fdccc0f23e",
                 }
             };
 
