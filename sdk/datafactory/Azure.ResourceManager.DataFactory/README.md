@@ -47,6 +47,53 @@ Documentation is available to help you learn how to use this package:
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
+### Examples using `DataFactoryElement`
+Assign `DataFactoryElement` with different leteral types:
+- int
+ ```C# Snippet:Readme_DataFactoryElementInt
+var policy = new ActivityPolicy
+{
+    Retry = DataFactoryElement<int>.FromLiteral(1),
+};
+```
+
+- bool
+```C# Snippet:Readme_DataFactoryElementBoolean
+var service = new AmazonS3CompatibleLinkedService
+{
+    ForcePathStyle = DataFactoryElement<bool>.FromLiteral(true),
+};
+```
+
+- list
+```C# Snippet:Readme_DataFactoryElementList
+var source = new Office365Source()
+{
+    AllowedGroups = DataFactoryElement<IList<string>>.FromLiteral(new List<string> { "a", "b" }),
+};
+```
+
+- Dictionary
+```C# Snippet:Readme_DataFactoryElementDictionary
+Dictionary<string, string> DictionaryValue = new()
+{
+    { "key1", "value1" },
+    { "key2", "value2" }
+};
+var activity = new AzureMLExecutePipelineActivity("name")
+{
+    MlPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
+};
+```
+
+- BinaryData
+```C# Snippet:Readme_DataFactoryElementBinaryData
+var varActivity = new SetVariableActivity("name")
+{
+    Value = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("a")),
+};
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
