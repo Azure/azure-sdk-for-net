@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Runtime.CompilerServices;
+
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 
@@ -176,14 +176,18 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
             this AppendBlobStorageResourceOptions options,
-            HttpRange range)
+            HttpRange range,
+            ETag? etag)
         {
-            return new BlobDownloadOptions()
+            var result = new BlobDownloadOptions()
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions, true),
                 TransferValidation = options?.DownloadTransferValidationOptions,
             };
+
+            result.Conditions.IfMatch ??= etag;
+            return result;
         }
 
         internal static AppendBlobCreateOptions ToCreateOptions(
@@ -281,14 +285,19 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlockBlobStorageResourceOptions(options?.ResourceOptions);
         }
 
-        internal static BlobDownloadOptions ToBlobDownloadOptions(this BlockBlobStorageResourceOptions options, HttpRange range)
+        internal static BlobDownloadOptions ToBlobDownloadOptions(
+            this BlockBlobStorageResourceOptions options,
+            HttpRange range,
+            ETag? etag)
         {
-            return new BlobDownloadOptions()
+            var result = new BlobDownloadOptions()
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions),
                 TransferValidation = options?.DownloadTransferValidationOptions,
             };
+            result.Conditions.IfMatch ??= etag;
+            return result;
         }
 
         internal static BlobUploadOptions ToBlobUploadOptions(this BlockBlobStorageResourceOptions options, bool overwrite, long initialSize)
@@ -432,14 +441,17 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
             this PageBlobStorageResourceOptions options,
-            HttpRange range)
+            HttpRange range,
+            ETag? etag)
         {
-            return new BlobDownloadOptions()
+            var result = new BlobDownloadOptions()
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions, true),
                 TransferValidation = options?.DownloadTransferValidationOptions,
             };
+            result.Conditions.IfMatch ??= etag;
+            return result;
         }
 
         internal static PageBlobCreateOptions ToCreateOptions(
