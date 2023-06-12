@@ -113,9 +113,16 @@ if ($inputFileToGen) {
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
         $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
-        & ../common/scripts/Typespec-Project-Process.ps1 $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
-
-        GeneratePackage `
+        $processScript = Join-Path "../common/scripts" "TypeSpec-Project-Process.ps1"
+        $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
+        if ($LASTEXITCODE) {
+          # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
+          $generatedSDKPackages = @{
+            result = "failed";
+            path=@( esolve-Path $sdkProjectFolder -Relative);
+          }
+        } else {
+            GeneratePackage `
             -projectFolder $projectFolder `
             -sdkRootPath $sdkPath `
             -path $relativeSdkPath `
@@ -123,6 +130,7 @@ if ($relatedTypeSpecProjectFolder) {
             -serviceType "data-plane" `
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
+        }
     }
 }
 $outputJson = [PSCustomObject]@{

@@ -741,7 +741,7 @@ function GeneratePackage()
     Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
-        if($specRepoRoot == "") {
+        if($specRepoRoot -eq "") {
             dotnet build /t:GenerateCode $srcPath
         } else {
             dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
