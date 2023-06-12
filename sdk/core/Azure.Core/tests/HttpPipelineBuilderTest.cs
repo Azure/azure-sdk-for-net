@@ -280,7 +280,6 @@ namespace Azure.Core.Tests
 
         [Test]
         public async Task TransportOptionsIsClientRedirectEnabledIsOverriddenByClientOptions(
-            [Values(true, false, null)] bool? clientOptionsIsClientRedirectEnabled,
             [Values(true, false, null)] bool? transportOptionsIsClientRedirectEnabled)
         {
             using var testListener = new TestEventListener();
@@ -290,12 +289,10 @@ namespace Azure.Core.Tests
                 new MockResponse(300).AddHeader("Location", "https://new.host/"),
                 new MockResponse(200));
 
-            var options = new TestOptions();
-            if (clientOptionsIsClientRedirectEnabled.HasValue)
+            var options = new TestOptions
             {
-                options.ClientRedirects = new() { IsClientRedirectEnabled = clientOptionsIsClientRedirectEnabled.Value };
-            }
-            options.Transport = transport;
+                Transport = transport
+            };
 
             var pipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options)
             {
@@ -310,7 +307,7 @@ namespace Azure.Core.Tests
                 request.Uri.Reset(new Uri("http://example.com"));
                 var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-                if ((clientOptionsIsClientRedirectEnabled.HasValue && clientOptionsIsClientRedirectEnabled.Value) || (transportOptionsIsClientRedirectEnabled ?? false))
+                if (transportOptionsIsClientRedirectEnabled ?? false)
                 {
                     Assert.AreEqual(200, response.Status);
                     Assert.AreEqual(2, transport.Requests.Count);

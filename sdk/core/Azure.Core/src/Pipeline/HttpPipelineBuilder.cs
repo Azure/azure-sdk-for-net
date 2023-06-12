@@ -161,12 +161,10 @@ namespace Azure.Core.Pipeline
                         DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
                         DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay)));
 
-            var redirectPolicy = buildOptions.ClientOptions.ClientRedirects?.IsClientRedirectEnabled switch
+            var redirectPolicy = defaultTransportOptions?.IsClientRedirectEnabled switch
             {
                 true => new RedirectPolicy(true),
-                _ when defaultTransportOptions is null => RedirectPolicy.Shared,
-                _ when defaultTransportOptions.IsClientRedirectEnabled => new RedirectPolicy(true),
-                _ => RedirectPolicy.Shared
+                _ => RedirectPolicy.Shared,
             };
             policies.Add(redirectPolicy);
 

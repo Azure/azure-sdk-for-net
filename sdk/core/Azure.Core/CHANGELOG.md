@@ -12,7 +12,7 @@
 
 ### Other Changes
 
-- Client redirects are now disabled by default and can be enabled by setting `ClientOptions.ClientRedirects.IsClientRedirectEnabled` to `true`. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
+- Client redirects are now disabled by default and can be enabled by setting providing a custom transport in `ClientOptions'. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
 
 ## 1.32.0 (2023-05-09)
 

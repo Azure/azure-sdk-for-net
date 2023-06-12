@@ -56,7 +56,6 @@ namespace Azure.Core
                 {
                     Policies = new(clientOptions.Policies);
                 }
-                ClientRedirects = clientOptions.ClientRedirects ?? new ClientRedirectsOptions();
             }
             else
             {
@@ -66,7 +65,6 @@ namespace Azure.Core
                 _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
-                ClientRedirects = new ClientRedirectsOptions();
             }
         }
 
@@ -82,11 +80,6 @@ namespace Azure.Core
                 IsCustomTransportSet = true;
             }
         }
-
-        /// <summary>
-        /// Gets or sets the transport options. This should only be set if a custom <see cref="Transport"/> is not set.
-        /// </summary>
-        public ClientRedirectsOptions ClientRedirects { get; set; }
 
         /// <summary>
         /// Gets the client diagnostic options.
