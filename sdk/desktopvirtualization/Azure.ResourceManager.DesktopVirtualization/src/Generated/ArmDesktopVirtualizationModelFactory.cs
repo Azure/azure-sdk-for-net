@@ -338,8 +338,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sessions"> Number of sessions on SessionHost. </param>
         /// <param name="agentVersion"> Version of agent on SessionHost. </param>
         /// <param name="allowNewSession"> Allow a new session. </param>
-        /// <param name="vmId"> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </param>
-        /// <param name="resourceId"> Resource Id of SessionHost&apos;s underlying virtual machine. </param>
+        /// <param name="vmId"> Virtual Machine Id of SessionHost's underlying virtual machine. </param>
+        /// <param name="resourceId"> Resource Id of SessionHost's underlying virtual machine. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="friendlyName"> Friendly name of SessionHost. </param>
         /// <param name="status"> Status for a SessionHost. </param>
