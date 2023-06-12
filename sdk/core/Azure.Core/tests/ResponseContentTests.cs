@@ -21,19 +21,19 @@ namespace Azure.Core.Tests
             ResponseContent content = response.Content as ResponseContent;
 
             Assert.IsNotNull(content);
-            Assert.AreEqual(content.ProtocolOptions.ResponseContentPropertyNameFormat, PropertyNamingConvention.None);
+            Assert.AreEqual(content.ProtocolOptions.ResponseContentPropertyNameFormat, PropertyNameFormat.Unspecified);
         }
 
         [Test]
         public async Task ProtocolOptionsSetDynamicOptionsNaming()
         {
             MockClientOptions options = new MockClientOptions();
-            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();
             ResponseContent content = response.Content as ResponseContent;
             DynamicDataOptions dynamicOptions = content.ProtocolOptions.GetDynamicOptions();
-            Assert.AreEqual(PropertyNamingConvention.CamelCase, dynamicOptions.PropertyNamingConvention);
+            Assert.AreEqual(PropertyNameFormat.CamelCase, dynamicOptions.PropertyNamingConvention);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         public async Task UseCamelCaseOptionEnablesPropertyNameConversion()
         {
             MockClientOptions options = new MockClientOptions();
-            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
 
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();

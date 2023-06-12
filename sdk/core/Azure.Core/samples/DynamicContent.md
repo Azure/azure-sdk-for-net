@@ -32,7 +32,7 @@ set `options.ProtocolMethods.ResponseContentPropertyNameFormat` to `PropertyNami
 
 ```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
 WidgetsClientOptions options = new WidgetsClientOptions();
-options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase;
+options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
 
 WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
 
@@ -156,7 +156,7 @@ If `ClientOptions.ProtocolMethods.ResponseContentConvention` is set to a value o
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.None);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.Unspecified);
 
 widget.details.IPAddress = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -166,7 +166,7 @@ Similarly, if a dynamic content instance has a naming convention set, you can by
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.CamelCase);
 
 widget.details["IPAddress"] = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`

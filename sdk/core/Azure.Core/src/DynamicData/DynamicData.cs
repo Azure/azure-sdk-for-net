@@ -67,7 +67,7 @@ namespace Azure.Core.Dynamic
             }
 
             // If the dynamic content uses a naming convention, do a second look-up.
-            if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
+            if (_options.PropertyNamingConvention != PropertyNameFormat.Unspecified)
             {
                 if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
                 {
@@ -88,8 +88,8 @@ namespace Azure.Core.Dynamic
         {
             return _options.PropertyNamingConvention switch
             {
-                PropertyNamingConvention.None => value,
-                PropertyNamingConvention.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                PropertyNameFormat.Unspecified => value,
+                PropertyNameFormat.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
                 _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNamingConvention}'."),
             };
         }
@@ -144,7 +144,7 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.PropertyNamingConvention == PropertyNamingConvention.None ||
+            if (_options.PropertyNamingConvention == PropertyNameFormat.Unspecified ||
                 _element.TryGetProperty(name, out MutableJsonElement _))
             {
                 _element = _element.SetProperty(name, value);

@@ -44,7 +44,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             WidgetsClientOptions options = new WidgetsClientOptions();
-            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
 
             WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
 #if !SNIPPET
@@ -216,7 +216,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.None);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.Unspecified);
 
             widget.details.IPAddress = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -232,7 +232,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.CamelCase);
 
             widget.details["IPAddress"] = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -332,7 +332,7 @@ namespace Azure.Core.Samples
                     new MockResponse(200).SetContent(initial),
                     new MockResponse(200).SetContent(updated))
             };
-            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
             return new WidgetsClient(new Uri("https://example.azure.com"), new MockCredential(), options);
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// The format used for property names by the service.
         /// </summary>
-        public PropertyNamingConvention ResponseContentPropertyNameFormat { get; set; }
+        public PropertyNameFormat ResponseContentPropertyNameFormat { get; set; }
 
         /// <summary>
         /// The format used for DateTime values by the service.

@@ -27,7 +27,7 @@ namespace Azure.Core.Dynamic
             DateTimeFormat = options.DateTimeFormat;
         }
 
-        public PropertyNamingConvention PropertyNamingConvention { get; set; }
+        public PropertyNameFormat PropertyNamingConvention { get; set; }
 
         public string DateTimeFormat { get; set; }
 
@@ -45,10 +45,10 @@ namespace Azure.Core.Dynamic
 
             switch (options.PropertyNamingConvention)
             {
-                case PropertyNamingConvention.CamelCase:
+                case PropertyNameFormat.CamelCase:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case PropertyNamingConvention.None:
+                case PropertyNameFormat.Unspecified:
                 default:
                     break;
             }
@@ -69,7 +69,7 @@ namespace Azure.Core.Dynamic
 
             if (options.PropertyNamingPolicy == JsonNamingPolicy.CamelCase)
             {
-                value.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+                value.PropertyNamingConvention = PropertyNameFormat.CamelCase;
             }
 
             return value;

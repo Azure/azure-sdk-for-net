@@ -74,15 +74,16 @@ namespace Azure
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
-        /// <paramref name="propertyNamingConvention">The naming convention to use for property names in the JSON content.</paramref>
+        /// <paramref name="propertyNameFormat">The format of property names in the JSON content.</paramref>
+        /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNamingConvention propertyNamingConvention, string dateTimeFormat = "o")
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat propertyNameFormat, string dateTimeFormat = "o")
         {
             DynamicDataOptions options = utf8Json is ResponseContent content ?
                 new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
                 new DynamicDataOptions();
 
-            options.PropertyNamingConvention = propertyNamingConvention;
+            options.PropertyNamingConvention = propertyNameFormat;
 			options.DateTimeFormat = dateTimeFormat;
 
             return utf8Json.ToDynamicFromJson(options);
