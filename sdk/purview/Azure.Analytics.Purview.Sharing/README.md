@@ -177,7 +177,7 @@ var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
 ```
 
-### Create a received share
+### Attach a received share
 
 ```C# Snippet:ReceivedSharesClientSample_CreateReceivedShare
 var credential = new DefaultAzureCredential();
