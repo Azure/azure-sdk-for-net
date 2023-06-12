@@ -1,30 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetShareResourcesAsync(string,string,RequestContext)">
-      <example>
-        This sample shows how to call GetShareResourcesAsync and parse the result.
-        <code>
-          <![CDATA[
+    <member name="GetAllShareResourcesAsync(string,string,RequestContext)">
+<example>
+This sample shows how to call GetAllShareResourcesAsync and parse the result.
+<code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ShareResourcesClient(endpoint, credential);
 
-await foreach (var item in client.GetShareResourcesAsync())
+await foreach (var item in client.GetAllShareResourcesAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
-]]>
-        </code>
-        This sample shows how to call GetShareResourcesAsync with all parameters, and how to parse the result.
-        <code>
-          <![CDATA[
+]]></code>
+This sample shows how to call GetAllShareResourcesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ShareResourcesClient(endpoint, credential);
 
-await foreach (var item in client.GetShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
+await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
@@ -35,34 +32,30 @@ await foreach (var item in client.GetShareResourcesAsync("<filter>", "<orderby>"
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
 }
-]]>
-        </code>
-      </example>
+]]></code>
+</example>
     </member>
-    <member name="GetShareResources(string,string,RequestContext)">
-      <example>
-        This sample shows how to call GetShareResources and parse the result.
-        <code>
-          <![CDATA[
+    <member name="GetAllShareResources(string,string,RequestContext)">
+<example>
+This sample shows how to call GetAllShareResources and parse the result.
+<code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ShareResourcesClient(endpoint, credential);
 
-foreach (var item in client.GetShareResources())
+foreach (var item in client.GetAllShareResources())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
-]]>
-        </code>
-        This sample shows how to call GetShareResources with all parameters, and how to parse the result.
-        <code>
-          <![CDATA[
+]]></code>
+This sample shows how to call GetAllShareResources with all parameters, and how to parse the result.
+<code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ShareResourcesClient(endpoint, credential);
 
-foreach (var item in client.GetShareResources("<filter>", "<orderby>", new RequestContext()))
+foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
@@ -73,9 +66,8 @@ foreach (var item in client.GetShareResources("<filter>", "<orderby>", new Reque
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
 }
-]]>
-        </code>
-      </example>
+]]></code>
+</example>
     </member>
   </members>
 </doc>

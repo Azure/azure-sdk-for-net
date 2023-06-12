@@ -57,6 +57,6 @@ directive:
     from: ReceivedShares_ListDetached
     to: ReceivedShares_GetAllDetachedReceivedShares
 - rename-operation:
-    from: ShareResources_
-    to: ShareResources_GetAll
+    from: ShareResources_List
+    to: ShareResources_GetAllShareResources
 ```
