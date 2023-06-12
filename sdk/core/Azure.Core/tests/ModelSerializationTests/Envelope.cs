@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
@@ -48,7 +49,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WritePropertyName("modelA"u8);
             ((IUtf8JsonSerializable)ModelA).Write(writer, options);
             writer.WritePropertyName("modelC"u8);
-            SerializeModelC(writer, options);
+            SerializeT(writer, options);
 
             if (!options.IgnoreAdditionalProperties)
             {
@@ -100,42 +101,32 @@ namespace Azure.Core.Tests.ModelSerializationTests
             return new Envelope<T>(readonlyProperty, modelA, modelC, rawData);
         }
 
-        private void SerializeModelC(Utf8JsonWriter writer, SerializableOptions options = default)
+        private void SerializeT(Utf8JsonWriter writer, SerializableOptions options)
         {
-            // if options.Serializers is set and the model is in the dictionary, use the serializer
-            if (options != null)
+            ObjectSerializer serializer = GetObjectSerializer(options);
+            BinaryData data = serializer.Serialize(ModelC);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+        }
+
+        private static ObjectSerializer GetObjectSerializer(SerializableOptions options)
+        {
+            ObjectSerializer serializer;
+            if (options.Serializers.TryGetValue(typeof(T), out serializer))
             {
-                if (options.Serializers.TryGetValue(typeof(T), out ObjectSerializer serializer))
-                {
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(serializer.Serialize(ModelC));
-#else
-                    JsonSerializer.Serialize(writer, serializer.Serialize(ModelC));
-#endif
-                    return;
-                }
+                // serializer is from the dictionary
+                return serializer;
             }
-            // else use default STJ serializer
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(JsonObjectSerializer.Default.Serialize(ModelC));
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ModelC.ToString()).RootElement);
-#endif
+            // default
+            return JsonObjectSerializer.Default;
         }
 
         private static T DeserializeT(JsonElement element, SerializableOptions options)
         {
-            ObjectSerializer serializer = JsonObjectSerializer.Default;
-
-            // if options.Serializers is set and the model is in the dictionary, use the serializer
-            if (options.Serializers != null)
-            {
-                if (options.Serializers.TryGetValue(typeof(T), out ObjectSerializer s))
-                {
-                    serializer = s;
-                }
-            }
-            // else use default STJ serializer
+            ObjectSerializer serializer = GetObjectSerializer(options);
             MemoryStream m = new MemoryStream();
             Utf8JsonWriter w = new Utf8JsonWriter(m);
             element.WriteTo(w);
@@ -143,7 +134,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             m.Position = 0;
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
-        #endregion
+#endregion
 
         #region InterfaceImplementation
         public bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
