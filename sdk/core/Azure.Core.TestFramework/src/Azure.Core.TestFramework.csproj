@@ -28,6 +28,8 @@
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)SerializableOptions.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)IModelSerializable.cs" LinkBase="Shared\Core" />
   </ItemGroup>
     
   <ItemGroup>
