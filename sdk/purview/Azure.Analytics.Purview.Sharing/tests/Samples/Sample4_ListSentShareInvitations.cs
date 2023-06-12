@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("9393cfc1-7300-4159-aeff-277b2026846a").ToEnumerableAsync();
+            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("fe11781e-9a7d-488d-bd22-cc2c95536e96").ToEnumerableAsync();
 #endif
 
             #endregion

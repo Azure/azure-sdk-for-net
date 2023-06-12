@@ -1,47 +1,48 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/9393cfc1-7300-4159-aeff-277b2026846a/sentShareInvitations/0423c905-402c-423c-af12-9a5faad51349?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/0e5153ac-f311-42c7-9082-736dc0024aa7/sentShareInvitations/89a11270-46f0-405a-a7b8-aa93255f11c7?api-version=2023-05-30-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "164",
         "Content-Type": "application/json",
-        "traceparent": "00-fa52afb24c301a647b57bc428b80185b-7b1a7d7c7d5178ff-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "788f441afdef53e024caf2c9c161ae0f",
+        "traceparent": "00-5abb090dc7c606429e0b8817f81e450f-b2ae9c48438bd948-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.0-alpha.20230601.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f6688acea99883c1177af7b427ba8a4a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "invitationKind": "Service",
         "properties": {
           "TargetActiveDirectoryId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-          "TargetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4"
+          "TargetObjectId": "67bb1d64-b708-496a-ba33-48c242cbb6c8"
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "385",
+        "Content-Length": "396",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 24 Feb 2023 07:03:35 GMT",
-        "Location": "/sentShares/9393cfc1-7300-4159-aeff-277b2026846a/sentShareInvitations/0423c905-402c-423c-af12-9a5faad51349/0423c905-402c-423c-af12-9a5faad51349",
+        "Date": "Tue, 06 Jun 2023 21:37:32 GMT",
+        "Location": "/sentShares/0e5153ac-f311-42c7-9082-736dc0024aa7/sentShareInvitations/89a11270-46f0-405a-a7b8-aa93255f11c7/89a11270-46f0-405a-a7b8-aa93255f11c7",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "2c2f5655-576c-4904-936e-5c077436a93e"
+        "x-ms-correlation-request-id": "ff1ee80e-d849-44a0-8c5a-bb42d7d6a587"
       },
       "ResponseBody": {
         "properties": {
           "targetActiveDirectoryId": "9299795a-3979-4c95-a2fa-2431ea9171f2",
-          "targetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4",
+          "targetObjectId": "67bb1d64-b708-496a-ba33-48c242cbb6c8",
           "shareStatus": "Detached",
-          "sentAt": "2023-02-24T07:03:35.4815159Z",
-          "senderName": "SyMS",
+          "sentAt": "2023-06-06T21:37:31.7658403Z",
+          "senderName": "sdk-05-30-share",
           "senderTenantName": "Microsoft",
           "state": "Succeeded"
         },
         "invitationKind": "Service",
-        "id": "0423c905-402c-423c-af12-9a5faad51349",
+        "id": "89a11270-46f0-405a-a7b8-aa93255f11c7",
         "type": "sentShares/sentShareInvitations"
       }
     }
@@ -49,6 +50,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
-    "RandomSeed": "363332399"
+    "RandomSeed": "881708250"
   }
 }

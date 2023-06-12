@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #if SNIPPET
             Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
 #else
-            Response operation = await receivedSharesClient.GetReceivedShareAsync("bb00baac-b768-4004-a712-c5b942dc9e83");
+            Response operation = await receivedSharesClient.GetReceivedShareAsync("11726395-c265-4d91-acc8-7bb2cc650f5c");
 #endif
 
 #endregion

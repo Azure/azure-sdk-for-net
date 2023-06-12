@@ -17,7 +17,7 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
     }
 
     [RecordedTest]
-    public async Task GetReceivedShareTest()
+    public async Task ListShareResourcesTest()
     {
         #region Snippet:ShareResourcesClientExample_ListShareResources
 

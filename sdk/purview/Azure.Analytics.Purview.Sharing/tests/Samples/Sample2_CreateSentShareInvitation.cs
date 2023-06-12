@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                     TargetObjectId = "targetObjectId",
 #else
                     TargetActiveDirectoryId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                    TargetObjectId = "fc010728-94f6-4e9c-be3c-c08687414bd4",
+                    TargetObjectId = "67bb1d64-b708-496a-ba33-48c242cbb6c8",
 #endif
                 }
             };
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #if SNIPPET
             Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
 #else
-            Response response = await sentShareClient.CreateSentShareInvitationAsync("9393cfc1-7300-4159-aeff-277b2026846a", "0423c905-402c-423c-af12-9a5faad51349", RequestContent.Create(data));
+            Response response = await sentShareClient.CreateSentShareInvitationAsync("016eb068-ddaa-41be-8804-8bef566663a5", "4ae8a8dc-0662-4027-960e-92b4778fc5ff", RequestContent.Create(data));
 #endif
 
 #endregion

@@ -1,25 +1,26 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/9393cfc1-7300-4159-aeff-277b2026846a?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/0e5153ac-f311-42c7-9082-736dc0024aa7?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a427203da00f7533b522b7d0586abbfb-8dfcc60112e84c14-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "61ceab334c4ebc39bb4702fb06c36094",
+        "Connection": "keep-alive",
+        "traceparent": "00-281c3f94d1cb8b458aa4ee120ff21486-3f273a210b86ff4c-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.0-alpha.20230607.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "7bac3d4e3098f91d752a743f8a738852",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "706",
+        "Content-Length": "714",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 24 Feb 2023 07:00:42 GMT",
+        "Date": "Wed, 07 Jun 2023 20:32:44 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "5d4c1857-8493-44e4-8e9a-2eb65fbb4dc3"
+        "x-ms-correlation-request-id": "30b4928b-e3a6-49a6-9ad5-085a701a6a4f"
       },
       "ResponseBody": {
         "properties": {
@@ -34,7 +35,7 @@
                   "receiverPath": "testfolder1"
                 }
               ],
-              "location": "southafricanorth"
+              "location": "australiaeast"
             },
             "storeKind": "AdlsGen2Account",
             "storeReference": {
@@ -43,36 +44,36 @@
             }
           },
           "state": "Succeeded",
-          "createdAt": "2023-02-24T00:48:36.9459707Z",
+          "createdAt": "2023-06-05T22:23:18.3060147Z",
           "dependsOn": [],
-          "senderName": "SyMS",
+          "senderName": "sdk-05-30-share",
           "senderTenantName": "Microsoft"
         },
         "shareKind": "InPlace",
-        "id": "9393cfc1-7300-4159-aeff-277b2026846a",
+        "id": "0e5153ac-f311-42c7-9082-736dc0024aa7",
         "type": "SentShare"
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftsharersan\u0026api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2Fresourcegroups%2Fads-dev-shared%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Frlandaetasdkprovideradls\u0026api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-45d2474c0f0cc7525b25bf240725503e-638b36160d2648d2-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a7184a8ac67552fdcd0a8d8ffe63e24a",
+        "traceparent": "00-6f82384b327eda4f8476b5f967e29356-3b7dcf5831227340-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.0-alpha.20230607.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bc40b1976693d6ba8a0bdec3b6c2a4df",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2092",
+        "Content-Length": "1436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 24 Feb 2023 07:00:42 GMT",
+        "Date": "Wed, 07 Jun 2023 20:32:45 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "86e7fd70-23d3-44dd-b96b-8324f2fca05c"
+        "x-ms-correlation-request-id": "502515ba-c405-451e-add7-71bd77414d58"
       },
       "ResponseBody": {
         "value": [
@@ -89,7 +90,7 @@
                       "receiverPath": "testfolder1"
                     }
                   ],
-                  "location": "southafricanorth"
+                  "location": "australiaeast"
                 },
                 "storeKind": "AdlsGen2Account",
                 "storeReference": {
@@ -98,13 +99,13 @@
                 }
               },
               "state": "Succeeded",
-              "createdAt": "2023-02-17T04:23:07.5576491Z",
+              "createdAt": "2023-06-05T22:23:18.3060147Z",
               "dependsOn": [],
-              "senderName": "SyMS",
+              "senderName": "sdk-05-30-share",
               "senderTenantName": "Microsoft"
             },
             "shareKind": "InPlace",
-            "id": "040fbaf2-98c2-4819-970a-78641d63a39e",
+            "id": "0e5153ac-f311-42c7-9082-736dc0024aa7",
             "type": "SentShare"
           },
           {
@@ -120,53 +121,22 @@
                       "receiverPath": "testfolder1"
                     }
                   ],
-                  "location": "southafricanorth"
+                  "location": "australiaeast"
                 },
                 "storeKind": "AdlsGen2Account",
                 "storeReference": {
-                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls",
                   "type": "ArmResourceReference"
                 }
               },
               "state": "Succeeded",
-              "createdAt": "2023-02-23T04:41:30.8583365Z",
+              "createdAt": "2023-06-07T20:32:05.7129648Z",
               "dependsOn": [],
-              "senderName": "SyMS",
+              "senderName": "sdk-05-30-share",
               "senderTenantName": "Microsoft"
             },
             "shareKind": "InPlace",
-            "id": "7911b09b-9cb3-416a-a3f0-e242c0bfd574",
-            "type": "SentShare"
-          },
-          {
-            "properties": {
-              "displayName": "testDisplayName1",
-              "description": "updatedDescription",
-              "artifact": {
-                "properties": {
-                  "paths": [
-                    {
-                      "containerName": "container1",
-                      "senderPath": "testfolder1",
-                      "receiverPath": "testfolder1"
-                    }
-                  ],
-                  "location": "southafricanorth"
-                },
-                "storeKind": "AdlsGen2Account",
-                "storeReference": {
-                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
-                  "type": "ArmResourceReference"
-                }
-              },
-              "state": "Succeeded",
-              "createdAt": "2023-02-24T00:48:36.9459707Z",
-              "dependsOn": [],
-              "senderName": "SyMS",
-              "senderTenantName": "Microsoft"
-            },
-            "shareKind": "InPlace",
-            "id": "9393cfc1-7300-4159-aeff-277b2026846a",
+            "id": "fe11781e-9a7d-488d-bd22-cc2c95536e96",
             "type": "SentShare"
           }
         ]
@@ -176,6 +146,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
-    "RandomSeed": "666105597"
+    "RandomSeed": "1778581189"
   }
 }

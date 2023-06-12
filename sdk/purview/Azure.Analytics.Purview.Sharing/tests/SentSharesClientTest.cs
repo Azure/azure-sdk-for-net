@@ -15,9 +15,9 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 {
     public class SentSharesClientTest : SentSharesClientTestBase
     {
-        private string sentShareId => "9393cfc1-7300-4159-aeff-277b2026846a";
+        private string sentShareId => "3fa235b9-4368-4827-8100-745042c14771";
 
-        private string sentShareInvitationId => "0423c905-402c-423c-af12-9a5faad51349";
+        private string sentShareInvitationId => "e0162694-c77e-4f47-94f9-d876a1252021";
 
         public SentSharesClientTest(bool isAsync) : base(isAsync)
         {
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
                         storeKind = "AdlsGen2Account",
                         storeReference = new
                         {
-                            referenceName = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+                            referenceName = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls",
                             type = "ArmResourceReference"
                         },
                         properties = new
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             var expectedDisplayName = "testDisplayName1";
             Assert.AreEqual(expectedDisplayName, actualDisplayName);
 
-            List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan").ToEnumerableAsync();
+            List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls").ToEnumerableAsync();
 
             Assert.Greater(listResponse.Count, 0);
         }
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
                 properties = new
                 {
                     TargetActiveDirectoryId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                    TargetObjectId = "fc010728-94f6-4e9c-be3c-c08687414bd4",
+                    TargetObjectId = "67bb1d64-b708-496a-ba33-48c242cbb6c8",
                 }
             };
 
