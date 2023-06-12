@@ -48,7 +48,7 @@ Code samples for using the management library for .NET can be found in the follo
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ### Examples using `DataFactoryElement`
-#### Assign `DataFactoryElement` with different leteral types
+#### Assign `DataFactoryElement` with different literal types
 - int
  ```C# Snippet:Readme_DataFactoryElementInt
 var policy = new ActivityPolicy
