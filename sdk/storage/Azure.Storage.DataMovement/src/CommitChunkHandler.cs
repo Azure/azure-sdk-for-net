@@ -135,10 +135,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Log an unexpected error since it came back unsuccessful
-                    throw Errors.FailedChunkTransfer(
-                        offset: args.Offset,
-                        bytesTransferred: args.BytesTransferred,
-                        transferId: args.TransferId);
+                    throw args.Exception;
                 }
             }
             catch (Exception ex)
@@ -215,10 +212,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Log an unexpected error since it came back unsuccessful
-                    throw Errors.FailedChunkTransfer(
-                        offset: args.Offset,
-                        bytesTransferred: args.BytesTransferred,
-                        transferId: args.TransferId);
+                    throw args.Exception;
                 }
             }
             catch (Exception ex)

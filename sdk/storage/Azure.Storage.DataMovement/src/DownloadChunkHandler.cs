@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Report back failed event.
-                    await InvokeFailedEvent(args.Exception).ConfigureAwait(false);
+                    throw args.Exception;
                 }
             }
             catch (Exception ex)

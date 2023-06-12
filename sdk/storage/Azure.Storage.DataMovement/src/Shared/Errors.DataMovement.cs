@@ -115,8 +115,9 @@ namespace Azure.Storage
                 $"Expected Bytes Transferred Length: {expectedLength}\n" +
                 $"Actual Bytes Transferred Length: {actualLength}.");
 
-        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred, string transferId)
+        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred)
             => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
-                    $"Range: {offset} - {bytesTransferred} with Transfer ID: {transferId}");
+                    $"Offset: \"{offset}\"\n" +
+                    $"Length: \"{bytesTransferred}\"");
     }
 }
