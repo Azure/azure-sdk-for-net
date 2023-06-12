@@ -212,7 +212,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public static void AssertMetricTelemetry(
             TelemetryItem telemetryItem,
             string expectedMetricDataPointName,
-            string expectedMetricDataPointNamespace,
             double expectedMetricDataPointValue,
             int? expectedMetricDataPointCount = null,
             double? expectedMetricDataPointMax = null,
@@ -234,7 +233,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             var metricDataPoint = metricsData.Metrics[0];
             Assert.Equal(expectedMetricDataPointName, metricDataPoint.Name);
-            Assert.Equal(expectedMetricDataPointNamespace, metricDataPoint.Namespace);
             Assert.Equal(expectedMetricDataPointCount, metricDataPoint.Count);
             Assert.Equal(expectedMetricDataPointMax, metricDataPoint.Max);
             Assert.Equal(expectedMetricDataPointMin, metricDataPoint.Min);

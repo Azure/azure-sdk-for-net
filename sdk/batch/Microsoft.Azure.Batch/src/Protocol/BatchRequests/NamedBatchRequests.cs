@@ -802,25 +802,6 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     #region Job
 
     /// <summary>
-    /// An <see cref="IBatchRequest"/> for the JobGetAllJobsLifetimeStatistics operation.
-    /// </summary>
-    public class JobGetAllJobsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
-        JobGetAllLifetimeStatisticsOptions,
-        AzureOperationResponse<JobStatistics, JobGetAllLifetimeStatisticsHeaders>>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobGetAllJobsLifetimeStatisticsBatchRequest" /> class.
-        /// </summary>
-        /// <param name="serviceClient">The service client to use.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public JobGetAllJobsLifetimeStatisticsBatchRequest(
-            BatchServiceClient serviceClient,
-            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
-        {
-        }
-    }
-
-    /// <summary>
     /// An <see cref="IBatchRequest"/> for the JobDelete operation.
     /// </summary>
     public class JobDeleteBatchRequest : Protocol.BatchRequest<
@@ -1359,25 +1340,6 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
         /// <param name="serviceClient">The service client to use.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public PoolListPoolUsageMetricsBatchRequest(
-            BatchServiceClient serviceClient,
-            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
-        {
-        }
-    }
-
-    /// <summary>
-    /// An <see cref="IBatchRequest"/> for the PoolGetAllPoolsLifetimeStatistics operation.
-    /// </summary>
-    public class PoolGetAllPoolsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
-        PoolGetAllLifetimeStatisticsOptions,
-        AzureOperationResponse<PoolStatistics, PoolGetAllLifetimeStatisticsHeaders>>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PoolGetAllPoolsLifetimeStatisticsBatchRequest" /> class.
-        /// </summary>
-        /// <param name="serviceClient">The service client to use.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public PoolGetAllPoolsLifetimeStatisticsBatchRequest(
             BatchServiceClient serviceClient,
             CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {

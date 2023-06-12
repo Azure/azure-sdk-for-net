@@ -49,6 +49,17 @@
         "UnboundAccess": "read,write"
       },
       "Value": null
-    }
+    },  
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "EnableAcceleratedNetworking",
+        "SummaryComment": "Whether this pool should enable accelerated networking.",
+        "RemarksComment": "This property can only be specified for pools created with a <see cref=\"CloudPool.VirtualMachineConfiguration\"/>.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    } 
   ]
 }

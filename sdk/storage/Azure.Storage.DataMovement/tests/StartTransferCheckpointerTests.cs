@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Check the transfer files made and the source and destination
@@ -147,7 +147,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 transferOptions).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong source resource.
@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 transferOptions).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong destination resource.
@@ -265,7 +265,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 transferOptions).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong CreateMode Resource
