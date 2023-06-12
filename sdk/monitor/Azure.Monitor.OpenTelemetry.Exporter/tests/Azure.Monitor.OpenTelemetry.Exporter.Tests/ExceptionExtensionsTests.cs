@@ -46,12 +46,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotSame(test, aggregateException);
 
 #if NETFRAMEWORK
-            Assert.Equal("One or more errors occurred.", test.Message);
-            Assert.Equal("System.AggregateException: One or more errors occurred. ---> System.Exception: hello world 1\r\n   --- End of inner exception stack trace ---\r\n---> (Inner Exception #0) System.Exception: hello world 1<---\r\n\r\n---> (Inner Exception #1) System.Exception: hello world 2)<---\r\n", test.ToString());
+            string expectedMessage = "One or more errors occurred.";
+            string expectedToString = "System.AggregateException: One or more errors occurred. ---> System.Exception: hello world 1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + "---> (Inner Exception #0) System.Exception: hello world 1<---"
+                + Environment.NewLine
+                + Environment.NewLine + "---> (Inner Exception #1) System.Exception: hello world 2)<---"
+                + Environment.NewLine;
 #else
-            Assert.Equal("One or more errors occurred. (hello world 1) (hello world 2))", test.Message);
-            Assert.Equal("System.AggregateException: One or more errors occurred. (hello world 1) (hello world 2))\r\n ---> System.Exception: hello world 1\r\n   --- End of inner exception stack trace ---\r\n ---> (Inner Exception #1) System.Exception: hello world 2)<---\r\n", test.ToString());
+            string expectedMessage = "One or more errors occurred. (hello world 1) (hello world 2))";
+            string expectedToString = "System.AggregateException: One or more errors occurred. (hello world 1) (hello world 2))"
+                + Environment.NewLine + " ---> System.Exception: hello world 1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + " ---> (Inner Exception #1) System.Exception: hello world 2)<---"
+                + Environment.NewLine;
 #endif
+
+            Assert.Equal(expectedMessage, test.Message);
+            Assert.Equal(expectedToString, test.ToString());
         }
 
         [Fact]
@@ -64,12 +76,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotSame(test, aggregateException);
 
 #if NETFRAMEWORK
-            Assert.Equal("One or more errors occurred.", test.Message);
-            Assert.Equal("System.AggregateException: One or more errors occurred. ---> System.Exception: hello world 1\r\n   --- End of inner exception stack trace ---\r\n---> (Inner Exception #0) System.Exception: hello world 1<---\r\n\r\n---> (Inner Exception #1) System.Exception: hello world 2<---\r\n\r\n---> (Inner Exception #2) System.Exception: hello world 3<---\r\n", test.ToString());
+            string expectedMessage = "One or more errors occurred.";
+            string expectedToString = "System.AggregateException: One or more errors occurred. ---> System.Exception: hello world 1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + "---> (Inner Exception #0) System.Exception: hello world 1<---"
+                + Environment.NewLine
+                + Environment.NewLine + "---> (Inner Exception #1) System.Exception: hello world 2<---"
+                + Environment.NewLine
+                + Environment.NewLine + "---> (Inner Exception #2) System.Exception: hello world 3<---"
+                + Environment.NewLine;
 #else
-            Assert.Equal("One or more errors occurred. (hello world 1) (hello world 2) (hello world 3)", test.Message);
-            Assert.Equal("System.AggregateException: One or more errors occurred. (hello world 1) (hello world 2) (hello world 3)\r\n ---> System.Exception: hello world 1\r\n   --- End of inner exception stack trace ---\r\n ---> (Inner Exception #1) System.Exception: hello world 2<---\r\n\r\n ---> (Inner Exception #2) System.Exception: hello world 3<---\r\n", test.ToString());
+            string expectedMessage = "One or more errors occurred. (hello world 1) (hello world 2) (hello world 3)";
+            string expectedToString = "System.AggregateException: One or more errors occurred. (hello world 1) (hello world 2) (hello world 3)"
+                + Environment.NewLine + " ---> System.Exception: hello world 1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + " ---> (Inner Exception #1) System.Exception: hello world 2<---"
+                + Environment.NewLine
+                + Environment.NewLine + " ---> (Inner Exception #2) System.Exception: hello world 3<---"
+                + Environment.NewLine;
 #endif
+
+            Assert.Equal(expectedMessage, test.Message);
+            Assert.Equal(expectedToString, test.ToString());
         }
 
         [Fact]
