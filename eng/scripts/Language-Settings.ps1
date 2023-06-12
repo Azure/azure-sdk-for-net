@@ -436,7 +436,6 @@ function EnsureCustomSource($package) {
 }
 
 $PackageExclusions = @{
-  'Azure.Messaging.EventGrid' = 'Fails docs CI: https://github.com/Azure/azure-sdk-for-net/issues/36474'
 }
 
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {

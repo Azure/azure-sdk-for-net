@@ -68,8 +68,11 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainer(container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy,
                     DirectoryPrefix = destinationBlobPrefix,
+                    ResourceOptions = new BlobStorageResourceOptions()
+                    {
+                        CopyMethod = TransferCopyMethod.AsyncCopy
+                    },
                 });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -470,7 +473,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destination.Container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                    ResourceOptions = new BlobStorageResourceOptions()
+                    {
+                        CopyMethod = TransferCopyMethod.AsyncCopy
+                    },
                 });
 
             // Act
@@ -532,8 +538,11 @@ namespace Azure.Storage.DataMovement.Tests
                 containerClient,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy,
                     DirectoryPrefix = destBlobPrefix,
+                    ResourceOptions = new BlobStorageResourceOptions()
+                    {
+                        CopyMethod = TransferCopyMethod.AsyncCopy
+                    },
                 });
 
             // If we want a failure condition to happen

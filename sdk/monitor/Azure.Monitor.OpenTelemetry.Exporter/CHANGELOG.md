@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.12 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.12 (2023-06-06)
+
+### Features Added
+
+* Add support for Authenticated User Id.
+  ([#36509](https://github.com/Azure/azure-sdk-for-net/pull/36509))
+* Add `db.name` to custom properties.
+  ([#36389](https://github.com/Azure/azure-sdk-for-net/pull/36389))
+ 
+### Bugs Fixed
+
+* Fixed an issue which resulted in standard metrics getting exported to backends other than Azure Monitor, when Azure Monitor metric exporter was used with other exporters such as otlp side by side.
+  ([#36369](https://github.com/Azure/azure-sdk-for-net/pull/36369))
+
+### Other Changes
+
+* Removed `_OTELRESOURCE_` export from Logs and Metrics.
+  ([#36430](https://github.com/Azure/azure-sdk-for-net/pull/36430))
 
 ## 1.0.0-beta.11 (2023-05-09)
 

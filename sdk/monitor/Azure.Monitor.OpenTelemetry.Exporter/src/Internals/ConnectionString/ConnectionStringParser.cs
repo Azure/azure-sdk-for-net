@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
 using AzureCoreConnectionString = Azure.Core.ConnectionString;

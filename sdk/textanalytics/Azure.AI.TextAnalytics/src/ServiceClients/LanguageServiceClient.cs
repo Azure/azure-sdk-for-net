@@ -1362,8 +1362,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     ModelVersion = options.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = options.DisableServiceLogs,
-                    FhirVersion = options.FhirVersion,
-                    DocumentType = options.DocumentType,
                 }
             };
         }
@@ -1861,11 +1859,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             // Validate supported version.
             if (actions.ExtractiveSummarizeActions != null && actions.ExtractiveSummarizeActions.Count > 0)
             {
-                Validation.SupportsOperation(nameof(ExtractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+                Validation.SupportsOperation(nameof(ExtractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2023_04_01, ServiceVersion);
             }
             if (actions.AbstractiveSummarizeActions != null && actions.AbstractiveSummarizeActions.Count > 0)
             {
-                Validation.SupportsOperation(nameof(AbstractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+                Validation.SupportsOperation(nameof(AbstractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2023_04_01, ServiceVersion);
             }
 
             return analyzeTasks;

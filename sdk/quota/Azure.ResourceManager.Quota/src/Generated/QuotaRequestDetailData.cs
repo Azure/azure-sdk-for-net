@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
         internal QuotaRequestDetailData()
         {
-            Value = new ChangeTrackingList<SubRequest>();
+            Value = new ChangeTrackingList<QuotaSubRequestDetail>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="error"> Error details of the quota request. </param>
         /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
-        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubRequest> value) : base(id, name, resourceType, systemData)
+        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IReadOnlyList<QuotaSubRequestDetail> value) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Quota
         /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
         public DateTimeOffset? RequestSubmitOn { get; }
         /// <summary> Quota request details. </summary>
-        public IReadOnlyList<SubRequest> Value { get; }
+        public IReadOnlyList<QuotaSubRequestDetail> Value { get; }
     }
 }

@@ -65,19 +65,24 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                content.ProtocolOptions.GetDynamicOptions() :
+                DynamicDataOptions.Default;
+
+            return utf8Json.ToDynamicFromJson(options);
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
+        /// <paramref name="propertyNamingConvention">The naming convention to use for property names in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicCaseMapping caseMapping, DynamicDateTimeHandling dateTimeHandling = DynamicDateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNamingConvention propertyNamingConvention)
         {
-            DynamicDataOptions options = new()
-            {
-                CaseMapping = caseMapping,
-                DateTimeHandling = dateTimeHandling
-            };
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
+                new DynamicDataOptions(DynamicDataOptions.Default);
+
+            options.PropertyNamingConvention = propertyNamingConvention;
 
             return utf8Json.ToDynamicFromJson(options);
         }
@@ -85,7 +90,7 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
+        internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.GetSerializerOptions(options));
             return new DynamicData(mdoc.RootElement, options);
