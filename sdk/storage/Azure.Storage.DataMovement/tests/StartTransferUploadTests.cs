@@ -1579,6 +1579,8 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion();
 
             Assert.IsEmpty(events.FailedEvents);
+            Assert.IsTrue(transfer.HasCompleted);
+            events.AssertSingleCompletedCheck();
         }
     }
 }
