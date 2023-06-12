@@ -77,5 +77,38 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
             };
             #endregion Snippet:Readme_DataFactoryElementBinaryData
         }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void DataFactoryFromExpression()
+        {
+            #region Snippet:Readme_DataFactoryElementFromExpression
+            var service = new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}"));
+            #endregion Snippet:Readme_DataFactoryElementFromExpression
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void DataFactoryFromMaskedString()
+        {
+            #region Snippet:Readme_DataFactoryElementFromMaskedString
+            var service = new AmazonS3CompatibleLinkedService()
+            {
+                ServiceUri = DataFactoryElement<string>.FromMaskedString("some/secret/path"),
+            };
+            #endregion Snippet:Readme_DataFactoryElementFromMaskedString
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void DataFactoryFromKeyVaultSecretReference()
+        {
+            #region Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+            var service = new AmazonS3CompatibleLinkedService()
+            {
+                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"),
+            };
+            #endregion Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+        }
     }
 }

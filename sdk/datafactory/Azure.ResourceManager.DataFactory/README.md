@@ -48,7 +48,7 @@ Code samples for using the management library for .NET can be found in the follo
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ### Examples using `DataFactoryElement`
-Assign `DataFactoryElement` with different leteral types:
+#### Assign `DataFactoryElement` with different leteral types
 - int
  ```C# Snippet:Readme_DataFactoryElementInt
 var policy = new ActivityPolicy
@@ -91,6 +91,27 @@ var activity = new AzureMLExecutePipelineActivity("name")
 var varActivity = new SetVariableActivity("name")
 {
     Value = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("a")),
+};
+```
+
+#### Assign `DataFactoryElement` from expression
+```C# Snippet:Readme_DataFactoryElementFromExpression
+var service = new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}"));
+```
+
+#### Assign `DataFactoryElement` from masked string
+```C# Snippet:Readme_DataFactoryElementFromMaskedString
+var service = new AmazonS3CompatibleLinkedService()
+{
+    ServiceUri = DataFactoryElement<string>.FromMaskedString("some/secret/path"),
+};
+```
+
+#### Assign `DataFactoryElement` from KeyVault secret reference
+```C# Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+var service = new AmazonS3CompatibleLinkedService()
+{
+    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"),
 };
 ```
 
