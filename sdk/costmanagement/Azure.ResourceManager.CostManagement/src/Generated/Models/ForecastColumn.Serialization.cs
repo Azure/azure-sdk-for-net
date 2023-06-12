@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ForecastColumn
     {
-        internal static ForecastColumn DeserializeForecastColumn(JsonElement element)
+        internal static ForecastColumn DeserializeForecastColumn(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

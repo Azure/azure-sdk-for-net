@@ -8,14 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class AuthorizationPolicyResourceFormatData : IUtf8JsonSerializable
+    public partial class AuthorizationPolicyResourceFormatData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.CustomerInsights
             writer.WriteEndObject();
         }
 
-        internal static AuthorizationPolicyResourceFormatData DeserializeAuthorizationPolicyResourceFormatData(JsonElement element)
+        internal static AuthorizationPolicyResourceFormatData DeserializeAuthorizationPolicyResourceFormatData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

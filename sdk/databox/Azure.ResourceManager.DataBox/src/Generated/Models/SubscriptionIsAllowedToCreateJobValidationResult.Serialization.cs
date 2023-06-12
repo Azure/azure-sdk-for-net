@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class SubscriptionIsAllowedToCreateJobValidationResult
     {
-        internal static SubscriptionIsAllowedToCreateJobValidationResult DeserializeSubscriptionIsAllowedToCreateJobValidationResult(JsonElement element)
+        internal static SubscriptionIsAllowedToCreateJobValidationResult DeserializeSubscriptionIsAllowedToCreateJobValidationResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

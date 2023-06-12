@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class AllSavingsList
     {
-        internal static AllSavingsList DeserializeAllSavingsList(JsonElement element)
+        internal static AllSavingsList DeserializeAllSavingsList(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

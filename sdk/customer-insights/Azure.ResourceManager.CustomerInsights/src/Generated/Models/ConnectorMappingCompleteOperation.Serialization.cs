@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingCompleteOperation : IUtf8JsonSerializable
+    public partial class ConnectorMappingCompleteOperation : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CompletionOperationType))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static ConnectorMappingCompleteOperation DeserializeConnectorMappingCompleteOperation(JsonElement element)
+        internal static ConnectorMappingCompleteOperation DeserializeConnectorMappingCompleteOperation(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

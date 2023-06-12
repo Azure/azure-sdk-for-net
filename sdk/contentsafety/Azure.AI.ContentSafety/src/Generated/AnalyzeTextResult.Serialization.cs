@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
     public partial class AnalyzeTextResult
     {
-        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element)
+        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

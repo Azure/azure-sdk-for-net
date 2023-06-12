@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
     public partial class TextBlockItem
     {
-        internal static TextBlockItem DeserializeTextBlockItem(JsonElement element)
+        internal static TextBlockItem DeserializeTextBlockItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

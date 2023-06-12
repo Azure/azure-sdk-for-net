@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

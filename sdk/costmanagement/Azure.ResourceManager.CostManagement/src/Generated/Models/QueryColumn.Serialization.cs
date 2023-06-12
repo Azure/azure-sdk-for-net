@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class QueryColumn
     {
-        internal static QueryColumn DeserializeQueryColumn(JsonElement element)
+        internal static QueryColumn DeserializeQueryColumn(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

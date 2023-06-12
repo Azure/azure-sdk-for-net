@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateListSqlDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateListSqlDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

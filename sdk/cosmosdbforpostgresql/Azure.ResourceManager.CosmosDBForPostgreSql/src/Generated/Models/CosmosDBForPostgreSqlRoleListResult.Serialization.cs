@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     internal partial class CosmosDBForPostgreSqlRoleListResult
     {
-        internal static CosmosDBForPostgreSqlRoleListResult DeserializeCosmosDBForPostgreSqlRoleListResult(JsonElement element)
+        internal static CosmosDBForPostgreSqlRoleListResult DeserializeCosmosDBForPostgreSqlRoleListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryLinkedServiceLinkedServicesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryLinkedServiceLinkedServicesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryLinkedServiceResource(Client, FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(e)), _factoryLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "FactoryLinkedServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FactoryLinkedServiceResource(Client, FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(e)), _factoryLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "FactoryLinkedServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryLinkedServiceLinkedServicesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryLinkedServiceLinkedServicesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryLinkedServiceResource(Client, FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(e)), _factoryLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "FactoryLinkedServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FactoryLinkedServiceResource(Client, FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(e)), _factoryLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "FactoryLinkedServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

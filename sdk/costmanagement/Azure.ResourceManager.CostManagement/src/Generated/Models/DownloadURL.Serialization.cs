@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class DownloadURL
     {
-        internal static DownloadURL DeserializeDownloadURL(JsonElement element)
+        internal static DownloadURL DeserializeDownloadURL(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

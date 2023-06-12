@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownLayout : IUtf8JsonSerializable
+    internal partial class UnknownLayout : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,7 +39,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndObject();
         }
 
-        internal static UnknownLayout DeserializeUnknownLayout(JsonElement element)
+        internal static UnknownLayout DeserializeUnknownLayout(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     internal partial class ScheduledActionListResult
     {
-        internal static ScheduledActionListResult DeserializeScheduledActionListResult(JsonElement element)
+        internal static ScheduledActionListResult DeserializeScheduledActionListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

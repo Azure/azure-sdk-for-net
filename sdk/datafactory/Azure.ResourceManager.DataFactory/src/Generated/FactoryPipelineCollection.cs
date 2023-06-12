@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryPipelinePipelinesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryPipelinePipelinesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryPipelineResource(Client, FactoryPipelineData.DeserializeFactoryPipelineData(e)), _factoryPipelinePipelinesClientDiagnostics, Pipeline, "FactoryPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FactoryPipelineResource(Client, FactoryPipelineData.DeserializeFactoryPipelineData(e)), _factoryPipelinePipelinesClientDiagnostics, Pipeline, "FactoryPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryPipelinePipelinesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryPipelinePipelinesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryPipelineResource(Client, FactoryPipelineData.DeserializeFactoryPipelineData(e)), _factoryPipelinePipelinesClientDiagnostics, Pipeline, "FactoryPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FactoryPipelineResource(Client, FactoryPipelineData.DeserializeFactoryPipelineData(e)), _factoryPipelinePipelinesClientDiagnostics, Pipeline, "FactoryPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

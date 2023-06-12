@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     internal partial class BenefitUtilizationSummariesListResult
     {
-        internal static BenefitUtilizationSummariesListResult DeserializeBenefitUtilizationSummariesListResult(JsonElement element)
+        internal static BenefitUtilizationSummariesListResult DeserializeBenefitUtilizationSummariesListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

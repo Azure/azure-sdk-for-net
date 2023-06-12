@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     internal partial class CosmosDBForPostgreSqlFirewallRuleListResult
     {
-        internal static CosmosDBForPostgreSqlFirewallRuleListResult DeserializeCosmosDBForPostgreSqlFirewallRuleListResult(JsonElement element)
+        internal static CosmosDBForPostgreSqlFirewallRuleListResult DeserializeCosmosDBForPostgreSqlFirewallRuleListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     internal partial class CostManagementDimensionsListResult
     {
-        internal static CostManagementDimensionsListResult DeserializeCostManagementDimensionsListResult(JsonElement element)
+        internal static CostManagementDimensionsListResult DeserializeCostManagementDimensionsListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

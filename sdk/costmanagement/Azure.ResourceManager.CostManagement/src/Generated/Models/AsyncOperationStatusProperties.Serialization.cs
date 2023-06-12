@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class AsyncOperationStatusProperties
     {
-        internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element)
+        internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

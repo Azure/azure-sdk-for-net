@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsSasTokenInformation
     {
-        internal static DataLakeAnalyticsSasTokenInformation DeserializeDataLakeAnalyticsSasTokenInformation(JsonElement element)
+        internal static DataLakeAnalyticsSasTokenInformation DeserializeDataLakeAnalyticsSasTokenInformation(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class QueueLengthExceptionTrigger : IUtf8JsonSerializable
+    public partial class QueueLengthExceptionTrigger : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("threshold"u8);
@@ -22,7 +25,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteEndObject();
         }
 
-        internal static QueueLengthExceptionTrigger DeserializeQueueLengthExceptionTrigger(JsonElement element)
+        internal static QueueLengthExceptionTrigger DeserializeQueueLengthExceptionTrigger(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

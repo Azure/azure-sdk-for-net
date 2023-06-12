@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
     public partial class ImageAnalyzeSeverityResult
     {
-        internal static ImageAnalyzeSeverityResult DeserializeImageAnalyzeSeverityResult(JsonElement element)
+        internal static ImageAnalyzeSeverityResult DeserializeImageAnalyzeSeverityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTaskResource(Client, ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(e)), _containerRegistryTaskTasksClientDiagnostics, Pipeline, "ContainerRegistryTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerRegistryTaskResource(Client, ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(e)), _containerRegistryTaskTasksClientDiagnostics, Pipeline, "ContainerRegistryTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTaskResource(Client, ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(e)), _containerRegistryTaskTasksClientDiagnostics, Pipeline, "ContainerRegistryTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerRegistryTaskResource(Client, ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(e)), _containerRegistryTaskTasksClientDiagnostics, Pipeline, "ContainerRegistryTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
