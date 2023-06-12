@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RoleInstanceView. </summary>
         /// <param name="platformUpdateDomain"> The Update Domain. </param>
         /// <param name="platformFaultDomain"> The Fault Domain. </param>
-        /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </param>
+        /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
         /// <param name="statuses"></param>
         internal RoleInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string privateId, IReadOnlyList<ResourceInstanceViewStatus> statuses)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformUpdateDomain { get; }
         /// <summary> The Fault Domain. </summary>
         public int? PlatformFaultDomain { get; }
-        /// <summary> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </summary>
+        /// <summary> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </summary>
         public string PrivateId { get; }
         /// <summary> Gets the statuses. </summary>
         public IReadOnlyList<ResourceInstanceViewStatus> Statuses { get; }
