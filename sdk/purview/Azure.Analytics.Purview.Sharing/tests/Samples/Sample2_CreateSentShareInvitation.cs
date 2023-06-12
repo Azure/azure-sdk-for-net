@@ -36,8 +36,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                     TargetActiveDirectoryId = "targetActiveDirectoryId",
                     TargetObjectId = "targetObjectId",
 #else
-                    TargetActiveDirectoryId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                    TargetObjectId = "67bb1d64-b708-496a-ba33-48c242cbb6c8",
+                    TargetActiveDirectoryId = "165944e1-1963-4e83-920f-4d0e9c44599c",
+                    TargetObjectId = "5fc438a9-bdb9-46d4-89d7-43fdccc0f23e",
 #endif
                 }
             };

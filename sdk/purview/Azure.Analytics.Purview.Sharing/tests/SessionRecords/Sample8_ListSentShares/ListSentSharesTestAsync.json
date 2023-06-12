@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Fads-dev-shared%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Frlandaetasdkprovideradls\u0026api-version=2023-05-30-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2Fd941aad1-e4af-44a5-a70e-0381a9f702f1%2Fresourcegroups%2Fdev-rg%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fprovideraccount&api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
