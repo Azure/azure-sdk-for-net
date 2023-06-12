@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
         /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
-        /// The default value is 1.0F, indicating that by default, all telemetry items are sampled.
+        /// The default value is 1.0F, indicating that all telemetry items are sampled.
         /// </summary>
         public float SamplingRatio { get; set; } = 1.0F;
 
