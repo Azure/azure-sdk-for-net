@@ -3,6 +3,7 @@
 ## 12.17.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for `Metadata` in `BlobSyncUploadFromUriOptions`.
 
 ### Breaking Changes
 

@@ -403,7 +403,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 completeLength: blockLength);
 
             // Commit the block
-            await destinationResource.CompleteTransferAsync();
+            await destinationResource.CompleteTransferAsync(false);
 
             // Assert
             BlobDownloadStreamingResult result = await destinationClient.DownloadStreamingAsync();
@@ -450,7 +450,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
                 options: options);
-            await destinationResource.CompleteTransferAsync();
+            await destinationResource.CompleteTransferAsync(false);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -548,7 +548,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Act
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
 
             // Assert
             Assert.IsTrue(await blobClient.ExistsAsync());

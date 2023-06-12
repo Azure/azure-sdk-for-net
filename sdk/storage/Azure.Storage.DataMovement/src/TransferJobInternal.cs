@@ -327,6 +327,7 @@ namespace Azure.Storage.DataMovement
                 jobStatus != StorageTransferStatus.Completed)
             {
                 await TriggerJobCancellationAsync().ConfigureAwait(false);
+                jobStatus = _dataTransfer._state.GetTransferStatus();
             }
 
             if ((jobPartStatus == StorageTransferStatus.Paused ||
