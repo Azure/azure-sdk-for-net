@@ -32,7 +32,7 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
 #if SNIPPET
             Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
 #else
-        List<BinaryData> shareResources = await shareResourcesClient.GetShareResourcesAsync().ToEnumerableAsync();
+        List<BinaryData> shareResources = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 #endif
 
         #endregion
