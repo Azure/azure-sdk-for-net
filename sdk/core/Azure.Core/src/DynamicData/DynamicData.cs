@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -50,12 +51,12 @@ namespace Azure.Core.Dynamic
                 }
             };
 
-            switch (options.CaseMapping)
+            switch (options.PropertyNamingConvention)
             {
-                case DynamicCaseMapping.PascalToCamel:
+                case PropertyNamingConvention.CamelCase:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case DynamicCaseMapping.None:
+                case PropertyNamingConvention.None:
                 default:
                     break;
             }
@@ -101,11 +102,10 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If we're using the PascalToCamel mapping and the strict name lookup
-            // failed, do a second lookup with a camelCase name as well.
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            // If the dynamic content uses a naming convention, do a second look-up.
+            if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
             {
-                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
+                if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,15 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
+        private string ApplyNamingConvention(string value)
+        {
+            return _options.PropertyNamingConvention switch
+            {
+                PropertyNamingConvention.None => value,
+                PropertyNamingConvention.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNamingConvention}'."),
+            };
+        }
 
         private object? GetViaIndexer(object index)
         {
@@ -172,12 +180,15 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
+            if (_options.PropertyNamingConvention == PropertyNamingConvention.None ||
+                _element.TryGetProperty(name, out MutableJsonElement _))
             {
-                name = ConvertToCamelCase(name);
+                _element = _element.SetProperty(name, value);
+                return null;
             }
 
-            _element = _element.SetProperty(name, value);
+            // The dynamic content uses a naming convention.  Set with that name.
+            _element = _element.SetProperty(ApplyNamingConvention(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;

@@ -10,6 +10,28 @@
 
 ### Other Changes
 
+## 15.5.0 (2023-05-01)
+
+### Features Added
+
+- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`. 
+    -  This property determines whether this pool should enable accelerated networking, with default value as False. 
+    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)). 
+- Added boolean property `enableAutomaticUpgrade` to `VMExtension`. 
+    - This property determines whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+- Added new property `Type` to `ContainerConfiguration`, which now supports two values: `DockerCompatible` and `CriCompatible`
+
+### Breaking Changes
+
+- Removed lifetime statistics operations. The lifetime statistics APIs are no longer supported.
+    - Removed GetAllLifetimeStatistics in JobOperation
+    - Removed GetAllLifetimeStatistics in PoolOperation
+
+### Other Changes
+
+- Added deprecation warning to certificate operations.
+  - Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+
 ## 15.4.0 (2022-10-01)
 
 ### Features Added

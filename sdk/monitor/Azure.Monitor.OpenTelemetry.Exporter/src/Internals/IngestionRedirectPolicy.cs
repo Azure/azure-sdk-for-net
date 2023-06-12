@@ -7,6 +7,7 @@ using System;
 using Azure.Core.Pipeline;
 using System.Net.Http.Headers;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {

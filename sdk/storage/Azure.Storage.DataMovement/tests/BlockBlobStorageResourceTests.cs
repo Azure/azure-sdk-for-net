@@ -209,7 +209,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     overwrite: false,
                     position: position);
             }
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync();
             // Assert
@@ -377,7 +377,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 range: new HttpRange(0, blockLength));
 
             // Commit the block
-            await destinationResource.CompleteTransferAsync();
+            await destinationResource.CompleteTransferAsync(false);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -420,7 +420,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
                 options: options);
-            await destinationResource.CompleteTransferAsync();
+            await destinationResource.CompleteTransferAsync(false);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -514,7 +514,43 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Act
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
+
+            // Assert
+            Assert.IsTrue(await blobClient.ExistsAsync());
+        }
+
+        [RecordedTest]
+        public async Task CompleteTransferAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            BlockBlobClient blobClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+
+            // Create block blob to overwrite
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blobClient.UploadAsync(stream);
+            }
+
+            BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
+
+            bool overwrite = true;
+            var newData = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(newData))
+            {
+                await storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: overwrite,
+                    position: 0);
+            }
+
+            // Act
+            await storageResource.CompleteTransferAsync(overwrite);
 
             // Assert
             Assert.IsTrue(await blobClient.ExistsAsync());

@@ -1563,5 +1563,24 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
         }
         #endregion
+
+        [Test]
+        public async Task SupportsLongFiles()
+        {
+            long fileSize = 5L * Constants.GB;
+
+            StorageResource srcResource = MockStorageResource.MakeSourceResource(fileSize, ProduceUriType.NoUri, maxChunkSize: Constants.GB);
+            StorageResource dstResource = MockStorageResource.MakeDestinationResource(ProduceUriType.ProducesUri, maxChunkSize: Constants.GB);
+            TransferManager transferManager = new TransferManager();
+
+            TransferOptions options = new();
+            TestEventsRaised events = new(options);
+            DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+            await transfer.AwaitCompletion();
+
+            Assert.IsEmpty(events.FailedEvents);
+            Assert.IsTrue(transfer.HasCompleted);
+            events.AssertSingleCompletedCheck();
+        }
     }
 }

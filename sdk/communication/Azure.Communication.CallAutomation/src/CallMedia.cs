@@ -455,6 +455,11 @@ namespace Azure.Communication.CallAutomation
                     SpeechOptions = speechConfigurations
                 };
 
+                if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
@@ -484,6 +489,11 @@ namespace Azure.Communication.CallAutomation
                     SpeechOptions = speechConfigurations,
                     DtmfOptions = dtmfConfigurations,
                 };
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
+                }
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
 

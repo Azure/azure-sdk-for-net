@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.GetSentShare("<sentShareId>", new RequestContext());
+            Response response = client.GetSentShare("<sentShareId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.GetSentShareAsync("<sentShareId>", new RequestContext());
+            Response response = await client.GetSentShareAsync("<sentShareId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 invitationKind = "Service",
             };
 
-            Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 invitationKind = "Service",
             };
 
-            Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
+            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -303,7 +303,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
+            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -518,7 +518,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data), new RequestContext());
+            var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -602,7 +602,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data), new RequestContext());
+            var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -634,7 +634,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", new RequestContext());
+            var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -670,7 +670,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", new RequestContext());
+            var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -706,7 +706,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -742,7 +742,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
