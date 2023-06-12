@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class MonitorServiceDetails
     {
-        internal static MonitorServiceDetails DeserializeMonitorServiceDetails(JsonElement element)
+        internal static MonitorServiceDetails DeserializeMonitorServiceDetails(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

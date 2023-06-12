@@ -8,13 +8,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class PolicyAssignmentArtifact : IUtf8JsonSerializable
+    public partial class PolicyAssignmentArtifact : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteEndObject();
         }
 
-        internal static PolicyAssignmentArtifact DeserializePolicyAssignmentArtifact(JsonElement element)
+        internal static PolicyAssignmentArtifact DeserializePolicyAssignmentArtifact(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountPoolResource(Client, BatchAccountPoolData.DeserializeBatchAccountPoolData(e)), _batchAccountPoolPoolClientDiagnostics, Pipeline, "BatchAccountPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchAccountPoolResource(Client, BatchAccountPoolData.DeserializeBatchAccountPoolData(e)), _batchAccountPoolPoolClientDiagnostics, Pipeline, "BatchAccountPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountPoolPoolRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountPoolResource(Client, BatchAccountPoolData.DeserializeBatchAccountPoolData(e)), _batchAccountPoolPoolClientDiagnostics, Pipeline, "BatchAccountPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchAccountPoolResource(Client, BatchAccountPoolData.DeserializeBatchAccountPoolData(e)), _batchAccountPoolPoolClientDiagnostics, Pipeline, "BatchAccountPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

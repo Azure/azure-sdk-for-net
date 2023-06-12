@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class ShortDescription : IUtf8JsonSerializable
+    public partial class ShortDescription : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Problem))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteEndObject();
         }
 
-        internal static ShortDescription DeserializeShortDescription(JsonElement element)
+        internal static ShortDescription DeserializeShortDescription(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

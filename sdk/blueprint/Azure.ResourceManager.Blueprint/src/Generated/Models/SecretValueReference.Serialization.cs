@@ -7,13 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class SecretValueReference : IUtf8JsonSerializable
+    public partial class SecretValueReference : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteEndObject();
         }
 
-        internal static SecretValueReference DeserializeSecretValueReference(JsonElement element)
+        internal static SecretValueReference DeserializeSecretValueReference(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

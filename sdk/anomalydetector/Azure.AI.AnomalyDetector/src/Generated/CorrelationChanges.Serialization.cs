@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.AnomalyDetector
 {
     public partial class CorrelationChanges
     {
-        internal static CorrelationChanges DeserializeCorrelationChanges(JsonElement element)
+        internal static CorrelationChanges DeserializeCorrelationChanges(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

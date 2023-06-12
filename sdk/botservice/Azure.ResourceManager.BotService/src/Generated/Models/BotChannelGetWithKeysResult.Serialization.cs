@@ -9,13 +9,16 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelGetWithKeysResult : IUtf8JsonSerializable
+    public partial class BotChannelGetWithKeysResult : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
@@ -86,7 +89,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteEndObject();
         }
 
-        internal static BotChannelGetWithKeysResult DeserializeBotChannelGetWithKeysResult(JsonElement element)
+        internal static BotChannelGetWithKeysResult DeserializeBotChannelGetWithKeysResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

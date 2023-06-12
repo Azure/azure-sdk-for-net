@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     public partial class RemoveParticipantsResult
     {
-        internal static RemoveParticipantsResult DeserializeRemoveParticipantsResult(JsonElement element)
+        internal static RemoveParticipantsResult DeserializeRemoveParticipantsResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

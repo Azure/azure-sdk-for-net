@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationVariableListResult
     {
-        internal static AutomationVariableListResult DeserializeAutomationVariableListResult(JsonElement element)
+        internal static AutomationVariableListResult DeserializeAutomationVariableListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

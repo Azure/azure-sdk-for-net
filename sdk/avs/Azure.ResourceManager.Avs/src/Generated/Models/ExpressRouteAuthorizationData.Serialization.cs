@@ -7,14 +7,17 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ExpressRouteAuthorizationData : IUtf8JsonSerializable
+    public partial class ExpressRouteAuthorizationData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Avs
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteAuthorizationData DeserializeExpressRouteAuthorizationData(JsonElement element)
+        internal static ExpressRouteAuthorizationData DeserializeExpressRouteAuthorizationData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

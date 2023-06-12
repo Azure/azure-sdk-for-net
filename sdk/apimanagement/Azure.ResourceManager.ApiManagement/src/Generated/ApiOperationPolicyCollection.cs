@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiOperationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiOperationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

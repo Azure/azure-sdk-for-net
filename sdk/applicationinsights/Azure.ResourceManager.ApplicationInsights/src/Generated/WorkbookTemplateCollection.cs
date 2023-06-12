@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<WorkbookTemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookTemplateRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new WorkbookTemplateResource(Client, WorkbookTemplateData.DeserializeWorkbookTemplateData(e)), _workbookTemplateClientDiagnostics, Pipeline, "WorkbookTemplateCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new WorkbookTemplateResource(Client, WorkbookTemplateData.DeserializeWorkbookTemplateData(e)), _workbookTemplateClientDiagnostics, Pipeline, "WorkbookTemplateCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<WorkbookTemplateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookTemplateRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new WorkbookTemplateResource(Client, WorkbookTemplateData.DeserializeWorkbookTemplateData(e)), _workbookTemplateClientDiagnostics, Pipeline, "WorkbookTemplateCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new WorkbookTemplateResource(Client, WorkbookTemplateData.DeserializeWorkbookTemplateData(e)), _workbookTemplateClientDiagnostics, Pipeline, "WorkbookTemplateCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

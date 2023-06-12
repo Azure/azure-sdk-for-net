@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

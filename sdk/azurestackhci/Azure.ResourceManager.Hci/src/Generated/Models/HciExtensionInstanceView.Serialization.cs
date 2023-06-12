@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciExtensionInstanceView
     {
-        internal static HciExtensionInstanceView DeserializeHciExtensionInstanceView(JsonElement element)
+        internal static HciExtensionInstanceView DeserializeHciExtensionInstanceView(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

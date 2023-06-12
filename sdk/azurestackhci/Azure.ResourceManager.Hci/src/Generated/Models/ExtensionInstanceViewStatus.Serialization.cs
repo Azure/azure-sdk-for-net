@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     public partial class ExtensionInstanceViewStatus
     {
-        internal static ExtensionInstanceViewStatus DeserializeExtensionInstanceViewStatus(JsonElement element)
+        internal static ExtensionInstanceViewStatus DeserializeExtensionInstanceViewStatus(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

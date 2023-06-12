@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountPython2PackageResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationAccountPython2PackageResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountPython2PackageResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationAccountPython2PackageResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

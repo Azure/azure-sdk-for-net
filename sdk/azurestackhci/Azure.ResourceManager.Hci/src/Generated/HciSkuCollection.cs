@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

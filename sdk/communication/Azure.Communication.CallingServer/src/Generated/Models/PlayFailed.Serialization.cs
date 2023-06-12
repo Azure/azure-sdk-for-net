@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     public partial class PlayFailed
     {
-        internal static PlayFailed DeserializePlayFailed(JsonElement element)
+        internal static PlayFailed DeserializePlayFailed(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

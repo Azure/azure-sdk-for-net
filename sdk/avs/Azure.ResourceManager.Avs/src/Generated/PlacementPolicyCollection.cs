@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _placementPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _placementPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlacementPolicyResource(Client, PlacementPolicyData.DeserializePlacementPolicyData(e)), _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PlacementPolicyResource(Client, PlacementPolicyData.DeserializePlacementPolicyData(e)), _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _placementPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _placementPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlacementPolicyResource(Client, PlacementPolicyData.DeserializePlacementPolicyData(e)), _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PlacementPolicyResource(Client, PlacementPolicyData.DeserializePlacementPolicyData(e)), _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

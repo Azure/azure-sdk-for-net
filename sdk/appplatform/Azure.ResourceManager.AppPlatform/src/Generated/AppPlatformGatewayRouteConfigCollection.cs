@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformGatewayRouteConfigResource(Client, AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(e)), _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics, Pipeline, "AppPlatformGatewayRouteConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformGatewayRouteConfigResource(Client, AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(e)), _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics, Pipeline, "AppPlatformGatewayRouteConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformGatewayRouteConfigResource(Client, AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(e)), _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics, Pipeline, "AppPlatformGatewayRouteConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformGatewayRouteConfigResource(Client, AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(e)), _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics, Pipeline, "AppPlatformGatewayRouteConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

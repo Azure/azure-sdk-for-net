@@ -9,14 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    public partial class BotData : IUtf8JsonSerializable
+    public partial class BotData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.BotService
             writer.WriteEndObject();
         }
 
-        internal static BotData DeserializeBotData(JsonElement element)
+        internal static BotData DeserializeBotData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
