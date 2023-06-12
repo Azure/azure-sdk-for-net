@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.Json
 {
@@ -13,6 +14,7 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON element.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [JsonConverter(typeof(MutableJsonElementConverter))]
     internal readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
@@ -1033,17 +1035,6 @@ namespace Azure.Core.Json
 
         private object GetSerializedValue(object value)
         {
-            if (value is MutableJsonDocument mjd)
-            {
-                return mjd.RootElement;
-            }
-
-            if (value is MutableJsonElement mje)
-            {
-                mje.EnsureValid();
-                return mje;
-            }
-
             if (value is JsonDocument doc)
             {
                 return doc.RootElement;
@@ -1150,5 +1141,19 @@ namespace Azure.Core.Json
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
+
+        private class MutableJsonElementConverter : JsonConverter<MutableJsonElement>
+        {
+            public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return new MutableJsonDocument(document, options).RootElement;
+            }
+
+            public override void Write(Utf8JsonWriter writer, MutableJsonElement value, JsonSerializerOptions options)
+            {
+                value.WriteTo(writer);
+            }
+        }
     }
 }

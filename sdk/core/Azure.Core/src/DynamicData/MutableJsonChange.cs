@@ -55,15 +55,6 @@ namespace Azure.Core.Json
                 return _serializedValue.Value;
             }
 
-            if (Value is MutableJsonElement mje)
-            {
-                // Keep reference semantics for MutableJsonElements
-                return mje.GetJsonElement();
-            }
-
-            // TODO: If it is a MutableJsonDocument, we need to account for changes
-            // TODO: What if it is an object that changes after assignment?
-
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
             _serializedValue = JsonDocument.Parse(bytes).RootElement;
             return _serializedValue.Value;

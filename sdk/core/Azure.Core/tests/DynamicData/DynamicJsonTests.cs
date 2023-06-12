@@ -1104,9 +1104,6 @@ namespace Azure.Core.Tests
             validate(roundTrip);
         }
 
-        // TODO: Do we want reference semantics for DynamicData instances?
-        // If so, add tests for this.
-
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
