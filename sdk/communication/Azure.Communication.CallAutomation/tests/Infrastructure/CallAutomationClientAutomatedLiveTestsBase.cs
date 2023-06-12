@@ -279,10 +279,17 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 case CommunicationUserIdentifier:
                     return RemoveAllNonChar(((CommunicationUserIdentifier)inputIdentifier).RawId);
                 case PhoneNumberIdentifier:
-                    /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
-                     * It's required because the dispacther app receives the incoming call context for pstn call
-                     * with the + as unicode in it and builds the topic id with it to send the event.*/
-                    return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
+                    if (Mode == RecordedTestMode.Playback)
+                    {
+                        return "Sanitized";
+                    }
+                    else
+                    {
+                        /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
+                         * It's required because the dispacther app receives the incoming call context for pstn call
+                         * with the + as unicode in it and builds the topic id with it to send the event.*/
+                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
+                    }
                 case MicrosoftTeamsUserIdentifier:
                     return RemoveAllNonChar(((MicrosoftTeamsUserIdentifier)inputIdentifier).RawId);
                 default:

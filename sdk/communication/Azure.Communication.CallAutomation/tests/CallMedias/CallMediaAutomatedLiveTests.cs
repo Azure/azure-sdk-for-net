@@ -118,24 +118,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationIdentifier sourcePhone = CommunicationIdentifier.FromRawId("4:+18447649276");
             CommunicationIdentifier target = CommunicationIdentifier.FromRawId("4:+18662315126");
 
+            // when in playback, use Sanatized values
+            if (Mode == RecordedTestMode.Playback)
+            {
+                sourcePhone = new PhoneNumberIdentifier("Sanitized");
+                target = new PhoneNumberIdentifier("Sanitized");
+            }
+
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
             var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
-            //CallInvite invite = new CallInvite(target);
-            //CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
-            CreateGroupCallOptions options = new CreateGroupCallOptions(new CommunicationIdentifier[] { target}, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-            options.SourceCallerIdNumber = (PhoneNumberIdentifier)sourcePhone;
-
-            CreateCallResult response = await client.CreateGroupCallAsync(options).ConfigureAwait(false);
+            CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
+            CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
 
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
             Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
             // wait for incomingcall context
-            string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(40));
+            string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(incomingCallContext);
 
             // answer the call
