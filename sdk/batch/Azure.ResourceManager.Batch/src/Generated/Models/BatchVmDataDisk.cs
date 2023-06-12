@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// </param>
         /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
         /// <param name="storageAccountType">
-        /// If omitted, the default is &quot;Standard_LRS&quot;. Values are:
+        /// If omitted, the default is "Standard_LRS". Values are:
         /// 
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The initial disk size in GB when creating new data disk. </summary>
         public int DiskSizeInGB { get; set; }
         /// <summary>
-        /// If omitted, the default is &quot;Standard_LRS&quot;. Values are:
+        /// If omitted, the default is "Standard_LRS". Values are:
         /// 
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.

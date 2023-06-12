@@ -1155,7 +1155,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1185,7 +1185,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1265,7 +1265,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1290,7 +1290,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1315,7 +1315,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
+        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1338,7 +1338,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
+        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1361,7 +1361,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1386,7 +1386,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1474,7 +1474,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Triggers a job to export a project&apos;s data.
+        /// [Protocol Method] Triggers a job to export a project's data.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1485,9 +1485,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -1515,7 +1515,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Triggers a job to export a project&apos;s data.
+        /// [Protocol Method] Triggers a job to export a project's data.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1526,9 +1526,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -1568,7 +1568,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1607,7 +1607,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>

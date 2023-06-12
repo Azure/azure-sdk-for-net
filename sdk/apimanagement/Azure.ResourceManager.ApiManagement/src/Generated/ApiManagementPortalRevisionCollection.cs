@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal&apos;s revision by running the portal&apos;s publishing. The `isCurrent` property indicates if the revision is publicly accessible.
+        /// Creates a new developer portal's revision by running the portal's publishing. The `isCurrent` property indicates if the revision is publicly accessible.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal&apos;s revision by running the portal&apos;s publishing. The `isCurrent` property indicates if the revision is publicly accessible.
+        /// Creates a new developer portal's revision by running the portal's publishing. The `isCurrent` property indicates if the revision is publicly accessible.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists developer portal&apos;s revisions.
+        /// Lists developer portal's revisions.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists developer portal&apos;s revisions.
+        /// Lists developer portal's revisions.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

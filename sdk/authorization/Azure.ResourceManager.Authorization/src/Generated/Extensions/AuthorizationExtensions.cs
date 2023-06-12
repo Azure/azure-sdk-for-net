@@ -1586,7 +1586,7 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+&apos;Subscription&apos; to filter on only resource of type = &apos;Subscription&apos;. Use $filter=resourceType+eq+&apos;subscription&apos;+or+resourceType+eq+&apos;resourcegroup&apos; to filter on resource of type = &apos;Subscription&apos; or &apos;ResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+&apos;Subscription&apos; to filter on only resource of type = &apos;Subscription&apos;. Use $filter=resourceType+eq+&apos;subscription&apos;+or+resourceType+eq+&apos;resourcegroup&apos; to filter on resource of type = &apos;Subscription&apos; or &apos;ResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<EligibleChildResource> GetEligibleChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
