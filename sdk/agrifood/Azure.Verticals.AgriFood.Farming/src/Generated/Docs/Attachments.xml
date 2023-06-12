@@ -8,7 +8,7 @@ This sample shows how to call GetAttachmentAsync with required parameters and pa
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", new RequestContext());
+Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -35,7 +35,7 @@ This sample shows how to call GetAttachment with required parameters and parse t
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = client.GetAttachment("<partyId>", "<attachmentId>", new RequestContext());
+Response response = client.GetAttachment("<partyId>", "<attachmentId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -64,7 +64,7 @@ var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-pr
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -93,7 +93,7 @@ var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-pr
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -120,7 +120,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<attachmentId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -132,7 +132,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<attachmentId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<attachmentId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -144,7 +144,7 @@ This sample shows how to call DownloadAsync with required parameters and parse t
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", new RequestContext());
+Response response = await client.DownloadAsync("<partyId>", "<attachmentId>");
 if (response.ContentStream != null)
 {
     using(Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -162,7 +162,7 @@ This sample shows how to call Download with required parameters and parse the re
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = client.Download("<partyId>", "<attachmentId>", new RequestContext());
+Response response = client.Download("<partyId>", "<attachmentId>");
 if (response.ContentStream != null)
 {
     using(Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -191,7 +191,7 @@ This sample shows how to call GetAttachmentsByPartyIdAsync with all parameters, 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -230,7 +230,7 @@ This sample shows how to call GetAttachmentsByPartyId with all parameters, and h
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-foreach (var item in client.GetAttachmentsByPartyId("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetAttachmentsByPartyId("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("resourceId").ToString());
