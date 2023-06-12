@@ -179,10 +179,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
             }
-            BlobRequestConditions stageBlockConditions = new BlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-            };
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
@@ -297,7 +293,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override async Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override async Task CompleteTransferAsync(
+            bool overwrite,
+            CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_blocks != null && !_blocks.IsEmpty)
@@ -305,7 +303,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await _blobClient.CommitBlockListAsync(
                     blockIds,
-                    _options.ToCommitBlockOptions(),
+                    _options.ToCommitBlockOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }

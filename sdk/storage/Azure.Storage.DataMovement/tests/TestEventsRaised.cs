@@ -203,7 +203,16 @@ namespace Azure.Storage.DataMovement.Tests
         /// </param>
         public async Task AssertContainerCompletedWithFailedCheck(int expectedFailureCount)
         {
-            Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+            if (expectedFailureCount != FailedEvents.Count)
+            {
+                // We want to call this to print out to see
+                // what failures we received since it was the incorrect amount.
+                Assert.Multiple(() =>
+                {
+                    AssertUnexpectedFailureCheck();
+                    Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+                });
+            }
             Assert.IsEmpty(SkippedEvents);
 
             await WaitForStatusEventsAsync().ConfigureAwait(false);
@@ -225,7 +234,16 @@ namespace Azure.Storage.DataMovement.Tests
         /// </param>
         public async Task AssertContainerCompletedWithFailedCheckContinue(int expectedFailureCount)
         {
-            Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+            if (expectedFailureCount != FailedEvents.Count)
+            {
+                // We want to call this to print out to see
+                // what failures we received since it was the incorrect amount.
+                Assert.Multiple(() =>
+                {
+                    AssertUnexpectedFailureCheck();
+                    Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+                });
+            }
             Assert.IsEmpty(SkippedEvents);
 
             await WaitForStatusEventsAsync().ConfigureAwait(false);
