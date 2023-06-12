@@ -8,14 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanVolumeGroupData : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeGroupData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteEndObject();
         }
 
-        internal static ElasticSanVolumeGroupData DeserializeElasticSanVolumeGroupData(JsonElement element)
+        internal static ElasticSanVolumeGroupData DeserializeElasticSanVolumeGroupData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

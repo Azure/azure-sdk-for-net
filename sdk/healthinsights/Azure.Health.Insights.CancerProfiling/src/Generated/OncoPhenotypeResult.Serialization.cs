@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
     public partial class OncoPhenotypeResult
     {
-        internal static OncoPhenotypeResult DeserializeOncoPhenotypeResult(JsonElement element)
+        internal static OncoPhenotypeResult DeserializeOncoPhenotypeResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

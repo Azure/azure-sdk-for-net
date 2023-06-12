@@ -7,14 +7,17 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.GuestConfiguration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    public partial class GuestConfigurationAssignmentData : IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             writer.WriteEndObject();
         }
 
-        internal static GuestConfigurationAssignmentData DeserializeGuestConfigurationAssignmentData(JsonElement element)
+        internal static GuestConfigurationAssignmentData DeserializeGuestConfigurationAssignmentData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

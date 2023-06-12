@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceNodePoolRollingStartedEventDataConverter))]
     public partial class ContainerServiceNodePoolRollingStartedEventData
     {
-        internal static ContainerServiceNodePoolRollingStartedEventData DeserializeContainerServiceNodePoolRollingStartedEventData(JsonElement element)
+        internal static ContainerServiceNodePoolRollingStartedEventData DeserializeContainerServiceNodePoolRollingStartedEventData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

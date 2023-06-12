@@ -9,13 +9,16 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.Models
 {
     [JsonConverter(typeof(EventGridEventInternalConverter))]
-    internal partial class EventGridEventInternal : IUtf8JsonSerializable
+    internal partial class EventGridEventInternal : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
@@ -38,7 +41,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteEndObject();
         }
 
-        internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element)
+        internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

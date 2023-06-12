@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(IotHubDeviceDisconnectedEventDataConverter))]
     public partial class IotHubDeviceDisconnectedEventData
     {
-        internal static IotHubDeviceDisconnectedEventData DeserializeIotHubDeviceDisconnectedEventData(JsonElement element)
+        internal static IotHubDeviceDisconnectedEventData DeserializeIotHubDeviceDisconnectedEventData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

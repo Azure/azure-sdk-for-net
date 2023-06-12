@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainPrivateEndpointConnectionResource(Client, EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(e)), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventGridDomainPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridDomainPrivateEndpointConnectionResource(Client, EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(e)), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventGridDomainPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainPrivateEndpointConnectionResource(Client, EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(e)), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventGridDomainPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventGridDomainPrivateEndpointConnectionResource(Client, EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(e)), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventGridDomainPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

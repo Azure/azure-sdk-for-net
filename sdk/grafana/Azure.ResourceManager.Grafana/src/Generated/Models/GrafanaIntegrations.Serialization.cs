@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class GrafanaIntegrations : IUtf8JsonSerializable
+    internal partial class GrafanaIntegrations : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Grafana.Models
             writer.WriteEndObject();
         }
 
-        internal static GrafanaIntegrations DeserializeGrafanaIntegrations(JsonElement element)
+        internal static GrafanaIntegrations DeserializeGrafanaIntegrations(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

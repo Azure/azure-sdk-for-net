@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterHealthCheck
     {
-        internal static DevCenterHealthCheck DeserializeDevCenterHealthCheck(JsonElement element)
+        internal static DevCenterHealthCheck DeserializeDevCenterHealthCheck(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

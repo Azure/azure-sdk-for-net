@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial class DocumentLine
     {
-        internal static DocumentLine DeserializeDocumentLine(JsonElement element)
+        internal static DocumentLine DeserializeDocumentLine(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

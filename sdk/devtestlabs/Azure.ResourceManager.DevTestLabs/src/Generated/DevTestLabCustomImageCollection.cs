@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabCustomImageCustomImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabCustomImageCustomImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabCustomImageCustomImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabCustomImageCustomImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

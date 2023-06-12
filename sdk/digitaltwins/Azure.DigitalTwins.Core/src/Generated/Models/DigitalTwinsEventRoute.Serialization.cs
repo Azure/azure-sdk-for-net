@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class DigitalTwinsEventRoute : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventRoute : IUtf8JsonSerializable, Azure.Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Azure.Core.IModelSerializable)this).Serialize(writer, new Azure.Core.Serialization.SerializableOptions());
+
+        void Azure.Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Azure.Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointName"u8);
@@ -22,7 +25,7 @@ namespace Azure.DigitalTwins.Core
             writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsEventRoute DeserializeDigitalTwinsEventRoute(JsonElement element)
+        internal static DigitalTwinsEventRoute DeserializeDigitalTwinsEventRoute(JsonElement element, Azure.Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

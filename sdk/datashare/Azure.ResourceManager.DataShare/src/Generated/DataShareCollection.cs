@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

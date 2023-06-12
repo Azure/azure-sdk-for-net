@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class QuerySpecification : IUtf8JsonSerializable
+    internal partial class QuerySpecification : IUtf8JsonSerializable, Azure.Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Azure.Core.IModelSerializable)this).Serialize(writer, new Azure.Core.Serialization.SerializableOptions());
+
+        void Azure.Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Azure.Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ServiceSku : IUtf8JsonSerializable
+    public partial class ServiceSku : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceSku DeserializeServiceSku(JsonElement element)
+        internal static ServiceSku DeserializeServiceSku(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

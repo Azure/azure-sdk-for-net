@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class DiagnosticStorageProperties : IUtf8JsonSerializable
+    public partial class DiagnosticStorageProperties : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticStorageProperties DeserializeDiagnosticStorageProperties(JsonElement element)
+        internal static DiagnosticStorageProperties DeserializeDiagnosticStorageProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

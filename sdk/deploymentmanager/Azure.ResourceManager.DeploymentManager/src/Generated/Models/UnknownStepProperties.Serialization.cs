@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    internal partial class UnknownStepProperties : IUtf8JsonSerializable
+    internal partial class UnknownStepProperties : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("stepType"u8);
@@ -20,7 +23,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownStepProperties DeserializeUnknownStepProperties(JsonElement element)
+        internal static UnknownStepProperties DeserializeUnknownStepProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

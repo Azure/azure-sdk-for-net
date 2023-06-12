@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterNameAvailabilityResult
     {
-        internal static DevCenterNameAvailabilityResult DeserializeDevCenterNameAvailabilityResult(JsonElement element)
+        internal static DevCenterNameAvailabilityResult DeserializeDevCenterNameAvailabilityResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

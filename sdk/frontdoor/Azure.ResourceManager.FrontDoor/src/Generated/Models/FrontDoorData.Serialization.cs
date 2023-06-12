@@ -8,14 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorData : IUtf8JsonSerializable
+    public partial class FrontDoorData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorData DeserializeFrontDoorData(JsonElement element)
+        internal static FrontDoorData DeserializeFrontDoorData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

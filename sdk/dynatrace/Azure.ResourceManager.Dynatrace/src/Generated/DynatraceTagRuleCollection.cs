@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

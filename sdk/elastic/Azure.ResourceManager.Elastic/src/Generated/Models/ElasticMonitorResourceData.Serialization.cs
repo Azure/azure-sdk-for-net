@@ -8,14 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Elastic
 {
-    public partial class ElasticMonitorResourceData : IUtf8JsonSerializable
+    public partial class ElasticMonitorResourceData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Elastic
             writer.WriteEndObject();
         }
 
-        internal static ElasticMonitorResourceData DeserializeElasticMonitorResourceData(JsonElement element)
+        internal static ElasticMonitorResourceData DeserializeElasticMonitorResourceData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

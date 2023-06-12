@@ -8,14 +8,17 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    public partial class ProjectFileData : IUtf8JsonSerializable
+    public partial class ProjectFileData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration
             writer.WriteEndObject();
         }
 
-        internal static ProjectFileData DeserializeProjectFileData(JsonElement element)
+        internal static ProjectFileData DeserializeProjectFileData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

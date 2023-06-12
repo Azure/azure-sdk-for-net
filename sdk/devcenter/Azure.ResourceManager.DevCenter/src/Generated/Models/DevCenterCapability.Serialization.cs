@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterCapability
     {
-        internal static DevCenterCapability DeserializeDevCenterCapability(JsonElement element)
+        internal static DevCenterCapability DeserializeDevCenterCapability(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

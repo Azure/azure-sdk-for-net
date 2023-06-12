@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterHealthStatusDetail
     {
-        internal static DevCenterHealthStatusDetail DeserializeDevCenterHealthStatusDetail(JsonElement element)
+        internal static DevCenterHealthStatusDetail DeserializeDevCenterHealthStatusDetail(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

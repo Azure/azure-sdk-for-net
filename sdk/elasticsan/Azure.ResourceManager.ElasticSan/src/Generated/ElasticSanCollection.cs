@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

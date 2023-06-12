@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterResourceRange
     {
-        internal static DevCenterResourceRange DeserializeDevCenterResourceRange(JsonElement element)
+        internal static DevCenterResourceRange DeserializeDevCenterResourceRange(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

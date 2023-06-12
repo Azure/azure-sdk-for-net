@@ -7,14 +7,17 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontendEndpointData : IUtf8JsonSerializable
+    public partial class FrontendEndpointData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteEndObject();
         }
 
-        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element)
+        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

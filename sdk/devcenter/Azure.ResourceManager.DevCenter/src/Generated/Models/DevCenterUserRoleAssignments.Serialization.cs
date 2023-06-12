@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterUserRoleAssignments : IUtf8JsonSerializable
+    public partial class DevCenterUserRoleAssignments : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Roles))
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static DevCenterUserRoleAssignments DeserializeDevCenterUserRoleAssignments(JsonElement element)
+        internal static DevCenterUserRoleAssignments DeserializeDevCenterUserRoleAssignments(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
