@@ -17,8 +17,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of LinkConnectionCompute. </summary>
         /// <param name="coreCount"> Compute core count used by the link connection. </param>
-        /// <param name="computeType"> Link connection&apos;s compute type. </param>
-        /// <param name="dataProcessIntervalMinutes"> Link connection&apos;s data process interval in minutes. </param>
+        /// <param name="computeType"> Link connection's compute type. </param>
+        /// <param name="dataProcessIntervalMinutes"> Link connection's data process interval in minutes. </param>
         internal LinkConnectionCompute(int? coreCount, string computeType, int? dataProcessIntervalMinutes)
         {
             CoreCount = coreCount;
@@ -28,9 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Compute core count used by the link connection. </summary>
         public int? CoreCount { get; set; }
-        /// <summary> Link connection&apos;s compute type. </summary>
+        /// <summary> Link connection's compute type. </summary>
         public string ComputeType { get; set; }
-        /// <summary> Link connection&apos;s data process interval in minutes. </summary>
+        /// <summary> Link connection's data process interval in minutes. </summary>
         public int? DataProcessIntervalMinutes { get; set; }
     }
 }
