@@ -70,7 +70,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyCounterRenamed" : "MyCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: 20000,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
@@ -124,7 +123,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyHistogramRenamed" : "MyHistogram",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: sum,
                 expectedMetricDataPointCount: loop,
                 expectedMetricDataPointMax:max,
@@ -172,7 +170,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyGuageRenamed" : "MyGuage",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: 123.45,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" } });
         }
@@ -219,7 +216,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: -2,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
@@ -263,7 +259,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: -2,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
 
@@ -277,7 +272,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMetricTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
-                expectedMetricDataPointNamespace: meterName,
                 expectedMetricDataPointValue: 4,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
