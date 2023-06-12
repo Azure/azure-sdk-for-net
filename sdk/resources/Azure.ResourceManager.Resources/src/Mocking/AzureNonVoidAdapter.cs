@@ -8,7 +8,7 @@ using Moq.Language.Flow;
 
 namespace Azure.ResourceManager.Resources.Testing
 {
-    internal class AzureNonVoidAdapter<T, R> : ISetup<T, R> where T : ArmResource
+    internal class AzureNonVoidAdapter<T, R> : ISetup<T, R> where T : class
     {
         private readonly object _intermediateSetup; // runtime type: ISetup<TExtensionClient, R>
 

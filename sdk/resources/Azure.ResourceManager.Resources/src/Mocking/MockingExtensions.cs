@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Testing
             return typeOfExtension.Assembly.GetType($"{thisNamespace}.{extensionClientName}");
         }
 
-        internal static ISetup<T> RedirectMock<T>(this Mock<T> originalMock, Expression<Action<T>> expression, Type extensionClientType) where T : ArmResource
+        internal static ISetup<T> RedirectMock<T>(this Mock<T> originalMock, Expression<Action<T>> expression, Type extensionClientType) where T : class
         {
             var newDelegateType = typeof(Action<>).MakeGenericType(extensionClientType);
             var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType, newDelegateType);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Testing
             return new AzureVoidAdapter<T>(intermediateSetup);
         }
 
-        internal static ISetup<T, R> RedirectMock<T, R>(this Mock<T> originalMock, Expression<Func<T, R>> expression, Type extensionClientType) where T : ArmResource
+        internal static ISetup<T, R> RedirectMock<T, R>(this Mock<T> originalMock, Expression<Func<T, R>> expression, Type extensionClientType) where T : class
         {
             var newDelegateType = typeof(Func<,>).MakeGenericType(extensionClientType, typeof(R));
             var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType, newDelegateType);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources.Testing
             return new AzureNonVoidAdapter<T, R>(intermediateSetup);
         }
 
-        private static void MockGetCachedClient<T>(Mock<T> originalMock, Type extensionClientType, object intermediateMockObject) where T : ArmResource
+        private static void MockGetCachedClient<T>(Mock<T> originalMock, Type extensionClientType, object intermediateMockObject) where T : class
         {
             // first we need to construct the expression `It.IsAny<Func<ArmClient, TExtension>>()`
             var funcType = typeof(Func<,>).MakeGenericType(typeof(ArmClient), extensionClientType);

@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Resources.Testing;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -70,6 +71,34 @@ namespace Azure.ResourceManager.Resources.Tests
 
             var asyncResult = await tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default);
             Assert.IsNull(asyncResult);
+        }
+
+        [Test]
+        public async Task MockingArmDeploymentCollection()
+        {
+            var rgMock = new AzureMock<ResourceGroupResource>();
+            var collectionMock = new AzureMock<ArmDeploymentCollection>();
+            var lroMock = new AzureMock<ArmOperation<ArmDeploymentResource>>();
+            var resourceMock = new AzureMock<ArmDeploymentResource>();
+            resourceMock.Setup(resource => resource.GetAsync(default)).ReturnsAsync(Response.FromValue(resourceMock.Object, null));
+
+            var resourceId = ArmDeploymentResource.CreateResourceIdentifier($"/subscriptions/{Guid.NewGuid()}", "myDeployment");
+            var resourceData = ArmResourcesModelFactory.ArmDeploymentData(resourceId);
+
+            resourceMock.Setup(resource => resource.Data).Returns(resourceData);
+            lroMock.Setup(lro => lro.Value).Returns(resourceMock.Object);
+            var content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental));
+            collectionMock.Setup(deployment => deployment.CreateOrUpdateAsync(WaitUntil.Completed, It.IsAny<string>(), content, default)).ReturnsAsync(lroMock.Object);
+
+            rgMock.Setup(rg => rg.GetArmDeployments()).Returns(collectionMock.Object);
+
+            var rg = rgMock.Object;
+            var deploymentCollection = rg.GetArmDeployments();
+            var lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myDeployment", content);
+            var resource = lro.Value;
+
+            Assert.IsNotNull(resource);
+            Assert.AreEqual(resourceId, resource.Data.Id);
         }
     }
 }

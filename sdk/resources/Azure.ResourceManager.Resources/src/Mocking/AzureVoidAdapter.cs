@@ -9,7 +9,7 @@ using Moq.Language.Flow;
 
 namespace Azure.ResourceManager.Resources.Testing
 {
-    internal class AzureVoidAdapter<T> : IReturnsResult<T>, ISetup<T> where T : ArmResource
+    internal class AzureVoidAdapter<T> : IReturnsResult<T>, ISetup<T> where T : class
     {
         private readonly object _intermediateReturns; // runtime type: IReturnsResult<TExtensionClient>
 

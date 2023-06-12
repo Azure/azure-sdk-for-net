@@ -14,12 +14,13 @@ namespace Azure.ResourceManager.Resources.Testing
         internal static bool IsExtensionMethod(LambdaExpression expression, out MethodInfo methodInfo)
         {
             methodInfo = null;
-            if (expression.Body is not MethodCallExpression methodCallExpression)
+            if (expression.Body is MethodCallExpression methodCallExpression)
             {
-                throw new InvalidOperationException("We only support methodCallExpression as the body of lambda expression for now");
+                methodInfo = methodCallExpression.Method;
+                return methodCallExpression.Method.IsDefined(typeof(ExtensionAttribute), false);
             }
-            methodInfo = methodCallExpression.Method;
-            return methodCallExpression.Method.IsDefined(typeof(ExtensionAttribute), false);
+
+            return false;
         }
 
         /// <summary>
