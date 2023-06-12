@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class LicenseTypeCapability
     {
-        internal static LicenseTypeCapability DeserializeLicenseTypeCapability(JsonElement element)
+        internal static LicenseTypeCapability DeserializeLicenseTypeCapability(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

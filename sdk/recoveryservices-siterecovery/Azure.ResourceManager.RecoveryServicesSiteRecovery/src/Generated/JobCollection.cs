@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

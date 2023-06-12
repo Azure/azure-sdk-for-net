@@ -8,13 +8,16 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityCenterLocationData : IUtf8JsonSerializable
+    public partial class SecurityCenterLocationData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteEndObject();
         }
 
-        internal static SecurityCenterLocationData DeserializeSecurityCenterLocationData(JsonElement element)
+        internal static SecurityCenterLocationData DeserializeSecurityCenterLocationData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricApplicationTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeApplicationTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeResource(Client, ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(e)), _serviceFabricApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ServiceFabricApplicationTypeResource(Client, ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(e)), _serviceFabricApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricApplicationTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeApplicationTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeResource(Client, ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(e)), _serviceFabricApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ServiceFabricApplicationTypeResource(Client, ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(e)), _serviceFabricApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

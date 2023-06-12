@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUsageRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUsageRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUsageResource(Client, SubscriptionUsageData.DeserializeSubscriptionUsageData(e)), _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SubscriptionUsageResource(Client, SubscriptionUsageData.DeserializeSubscriptionUsageData(e)), _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUsageRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUsageRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUsageResource(Client, SubscriptionUsageData.DeserializeSubscriptionUsageData(e)), _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SubscriptionUsageResource(Client, SubscriptionUsageData.DeserializeSubscriptionUsageData(e)), _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

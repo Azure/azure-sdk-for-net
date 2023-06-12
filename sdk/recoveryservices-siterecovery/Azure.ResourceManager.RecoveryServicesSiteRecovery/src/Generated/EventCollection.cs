@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

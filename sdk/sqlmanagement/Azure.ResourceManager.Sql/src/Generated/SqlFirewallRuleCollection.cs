@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlFirewallRuleFirewallRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlFirewallRuleResource(Client, SqlFirewallRuleData.DeserializeSqlFirewallRuleData(e)), _sqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "SqlFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlFirewallRuleResource(Client, SqlFirewallRuleData.DeserializeSqlFirewallRuleData(e)), _sqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "SqlFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlFirewallRuleFirewallRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlFirewallRuleResource(Client, SqlFirewallRuleData.DeserializeSqlFirewallRuleData(e)), _sqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "SqlFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlFirewallRuleResource(Client, SqlFirewallRuleData.DeserializeSqlFirewallRuleData(e)), _sqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "SqlFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

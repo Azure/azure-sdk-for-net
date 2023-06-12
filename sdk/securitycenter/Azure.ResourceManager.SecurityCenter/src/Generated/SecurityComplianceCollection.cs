@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityComplianceCompliancesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityComplianceCompliancesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

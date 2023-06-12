@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

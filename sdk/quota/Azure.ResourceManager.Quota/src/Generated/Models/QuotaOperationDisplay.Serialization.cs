@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class QuotaOperationDisplay
     {
-        internal static QuotaOperationDisplay DeserializeQuotaOperationDisplay(JsonElement element)
+        internal static QuotaOperationDisplay DeserializeQuotaOperationDisplay(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

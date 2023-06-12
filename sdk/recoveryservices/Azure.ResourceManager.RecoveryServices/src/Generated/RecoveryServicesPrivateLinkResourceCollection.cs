@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,14 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    public partial class PurviewAccountData : IUtf8JsonSerializable
+    public partial class PurviewAccountData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Purview
             writer.WriteEndObject();
         }
 
-        internal static PurviewAccountData DeserializePurviewAccountData(JsonElement element)
+        internal static PurviewAccountData DeserializePurviewAccountData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

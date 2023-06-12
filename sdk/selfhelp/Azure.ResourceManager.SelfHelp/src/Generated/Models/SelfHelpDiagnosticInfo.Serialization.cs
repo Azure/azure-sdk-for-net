@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SelfHelpDiagnosticInfo
     {
-        internal static SelfHelpDiagnosticInfo DeserializeSelfHelpDiagnosticInfo(JsonElement element)
+        internal static SelfHelpDiagnosticInfo DeserializeSelfHelpDiagnosticInfo(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

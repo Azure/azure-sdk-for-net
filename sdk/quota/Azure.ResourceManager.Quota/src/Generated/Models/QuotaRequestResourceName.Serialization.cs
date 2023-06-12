@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaRequestResourceName : IUtf8JsonSerializable
+    public partial class QuotaRequestResourceName : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteEndObject();
         }
 
-        internal static QuotaRequestResourceName DeserializeQuotaRequestResourceName(JsonElement element)
+        internal static QuotaRequestResourceName DeserializeQuotaRequestResourceName(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

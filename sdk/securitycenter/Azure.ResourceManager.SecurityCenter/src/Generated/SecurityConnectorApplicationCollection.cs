@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

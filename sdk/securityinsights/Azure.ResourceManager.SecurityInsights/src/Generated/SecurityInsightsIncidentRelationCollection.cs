@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsIncidentRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsIncidentRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

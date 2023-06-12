@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable
+    public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        internal static SelfHelpDiagnosticInvocation DeserializeSelfHelpDiagnosticInvocation(JsonElement element)
+        internal static SelfHelpDiagnosticInvocation DeserializeSelfHelpDiagnosticInvocation(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

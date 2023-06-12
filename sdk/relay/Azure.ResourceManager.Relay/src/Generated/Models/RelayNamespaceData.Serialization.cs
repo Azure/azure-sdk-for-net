@@ -9,14 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class RelayNamespaceData : IUtf8JsonSerializable
+    public partial class RelayNamespaceData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Relay
             writer.WriteEndObject();
         }
 
-        internal static RelayNamespaceData DeserializeRelayNamespaceData(JsonElement element)
+        internal static RelayNamespaceData DeserializeRelayNamespaceData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

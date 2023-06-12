@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureResourceInfo : IUtf8JsonSerializable
+    public partial class AzureResourceInfo : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element)
+        internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

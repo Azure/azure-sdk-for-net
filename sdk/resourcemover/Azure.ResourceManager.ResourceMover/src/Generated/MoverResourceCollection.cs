@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceMoveResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceMoveResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

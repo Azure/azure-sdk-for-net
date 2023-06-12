@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityAlertPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityAlertPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSecurityAlertPolicyResource(Client, ManagedDatabaseSecurityAlertPolicyData.DeserializeManagedDatabaseSecurityAlertPolicyData(e)), _managedDatabaseSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSecurityAlertPolicyResource(Client, ManagedDatabaseSecurityAlertPolicyData.DeserializeManagedDatabaseSecurityAlertPolicyData(e)), _managedDatabaseSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityAlertPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityAlertPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSecurityAlertPolicyResource(Client, ManagedDatabaseSecurityAlertPolicyData.DeserializeManagedDatabaseSecurityAlertPolicyData(e)), _managedDatabaseSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedDatabaseSecurityAlertPolicyResource(Client, ManagedDatabaseSecurityAlertPolicyData.DeserializeManagedDatabaseSecurityAlertPolicyData(e)), _managedDatabaseSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

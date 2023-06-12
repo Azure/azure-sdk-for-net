@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "TenantPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TenantPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "TenantPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "TenantPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TenantPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "TenantPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

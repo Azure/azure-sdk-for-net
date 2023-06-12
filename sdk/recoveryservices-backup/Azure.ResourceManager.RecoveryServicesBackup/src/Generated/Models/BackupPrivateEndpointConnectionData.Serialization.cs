@@ -9,14 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class BackupPrivateEndpointConnectionData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             writer.WriteEndObject();
         }
 
-        internal static BackupPrivateEndpointConnectionData DeserializeBackupPrivateEndpointConnectionData(JsonElement element)
+        internal static BackupPrivateEndpointConnectionData DeserializeBackupPrivateEndpointConnectionData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

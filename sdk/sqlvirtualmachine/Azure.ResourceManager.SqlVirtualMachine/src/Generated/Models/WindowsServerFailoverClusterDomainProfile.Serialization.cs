@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class WindowsServerFailoverClusterDomainProfile : IUtf8JsonSerializable
+    public partial class WindowsServerFailoverClusterDomainProfile : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainFqdn))
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element)
+        internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

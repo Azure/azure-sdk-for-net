@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class WorkspaceSettingList
     {
-        internal static WorkspaceSettingList DeserializeWorkspaceSettingList(JsonElement element)
+        internal static WorkspaceSettingList DeserializeWorkspaceSettingList(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

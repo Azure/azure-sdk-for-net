@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectableItemResource(Client, ProtectableItemData.DeserializeProtectableItemData(e)), _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ProtectableItemResource(Client, ProtectableItemData.DeserializeProtectableItemData(e)), _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectableItemResource(Client, ProtectableItemData.DeserializeProtectableItemData(e)), _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ProtectableItemResource(Client, ProtectableItemData.DeserializeProtectableItemData(e)), _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

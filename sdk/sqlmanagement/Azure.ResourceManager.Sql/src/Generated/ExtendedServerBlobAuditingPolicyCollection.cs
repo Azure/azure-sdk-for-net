@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedServerBlobAuditingPolicyRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extendedServerBlobAuditingPolicyRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtendedServerBlobAuditingPolicyResource(Client, ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(e)), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ExtendedServerBlobAuditingPolicyResource(Client, ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(e)), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedServerBlobAuditingPolicyRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extendedServerBlobAuditingPolicyRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtendedServerBlobAuditingPolicyResource(Client, ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(e)), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ExtendedServerBlobAuditingPolicyResource(Client, ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(e)), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

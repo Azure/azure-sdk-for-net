@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class InstancePoolVcoresCapability
     {
-        internal static InstancePoolVcoresCapability DeserializeInstancePoolVcoresCapability(JsonElement element)
+        internal static InstancePoolVcoresCapability DeserializeInstancePoolVcoresCapability(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

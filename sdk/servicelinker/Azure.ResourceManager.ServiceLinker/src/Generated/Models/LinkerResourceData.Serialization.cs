@@ -7,14 +7,17 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class LinkerResourceData : IUtf8JsonSerializable
+    public partial class LinkerResourceData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker
             writer.WriteEndObject();
         }
 
-        internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element)
+        internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

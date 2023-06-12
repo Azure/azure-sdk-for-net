@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Purview
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), _purviewAccountAccountsClientDiagnostics, Pipeline, "PurviewAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), _purviewAccountAccountsClientDiagnostics, Pipeline, "PurviewAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Purview
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), _purviewAccountAccountsClientDiagnostics, Pipeline, "PurviewAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), _purviewAccountAccountsClientDiagnostics, Pipeline, "PurviewAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

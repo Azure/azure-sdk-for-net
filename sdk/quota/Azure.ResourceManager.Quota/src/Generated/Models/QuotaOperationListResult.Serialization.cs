@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     internal partial class QuotaOperationListResult
     {
-        internal static QuotaOperationListResult DeserializeQuotaOperationListResult(JsonElement element)
+        internal static QuotaOperationListResult DeserializeQuotaOperationListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

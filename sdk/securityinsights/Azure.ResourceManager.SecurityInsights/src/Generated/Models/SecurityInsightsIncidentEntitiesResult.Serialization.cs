@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIncidentEntitiesResult
     {
-        internal static SecurityInsightsIncidentEntitiesResult DeserializeSecurityInsightsIncidentEntitiesResult(JsonElement element)
+        internal static SecurityInsightsIncidentEntitiesResult DeserializeSecurityInsightsIncidentEntitiesResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupRequest(Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagementGroupPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupRequest(Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagementGroupPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

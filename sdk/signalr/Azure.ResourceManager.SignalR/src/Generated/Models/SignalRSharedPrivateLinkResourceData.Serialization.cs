@@ -7,14 +7,17 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class SignalRSharedPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class SignalRSharedPrivateLinkResourceData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.SignalR
             writer.WriteEndObject();
         }
 
-        internal static SignalRSharedPrivateLinkResourceData DeserializeSignalRSharedPrivateLinkResourceData(JsonElement element)
+        internal static SignalRSharedPrivateLinkResourceData DeserializeSignalRSharedPrivateLinkResourceData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

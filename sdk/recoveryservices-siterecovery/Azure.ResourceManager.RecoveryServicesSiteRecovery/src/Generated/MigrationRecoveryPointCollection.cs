@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

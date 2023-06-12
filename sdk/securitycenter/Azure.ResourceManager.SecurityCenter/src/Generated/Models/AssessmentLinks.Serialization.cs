@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class AssessmentLinks
     {
-        internal static AssessmentLinks DeserializeAssessmentLinks(JsonElement element)
+        internal static AssessmentLinks DeserializeAssessmentLinks(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

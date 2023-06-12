@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityMLAnalyticsSettingsDataSource : IUtf8JsonSerializable
+    public partial class SecurityMLAnalyticsSettingsDataSource : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectorId))
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element)
+        internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterNotificationTarget : IUtf8JsonSerializable
+    public partial class ClusterNotificationTarget : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("notificationChannel"u8);
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterNotificationTarget DeserializeClusterNotificationTarget(JsonElement element)
+        internal static ClusterNotificationTarget DeserializeClusterNotificationTarget(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

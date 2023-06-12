@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingRecoveryVirtualNetwork : IUtf8JsonSerializable
+    public partial class ExistingRecoveryVirtualNetwork : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryVirtualNetworkId"u8);
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteEndObject();
         }
 
-        internal static ExistingRecoveryVirtualNetwork DeserializeExistingRecoveryVirtualNetwork(JsonElement element)
+        internal static ExistingRecoveryVirtualNetwork DeserializeExistingRecoveryVirtualNetwork(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

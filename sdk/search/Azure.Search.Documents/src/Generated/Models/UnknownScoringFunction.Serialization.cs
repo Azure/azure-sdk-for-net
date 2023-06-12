@@ -7,13 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownScoringFunction : IUtf8JsonSerializable
+    internal partial class UnknownScoringFunction : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -30,7 +33,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownScoringFunction DeserializeUnknownScoringFunction(JsonElement element)
+        internal static UnknownScoringFunction DeserializeUnknownScoringFunction(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

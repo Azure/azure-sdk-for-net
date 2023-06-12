@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceAuthorizationRuleResource(Client, RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(e)), _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "RelayNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RelayNamespaceAuthorizationRuleResource(Client, RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(e)), _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "RelayNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceAuthorizationRuleResource(Client, RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(e)), _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "RelayNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RelayNamespaceAuthorizationRuleResource(Client, RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(e)), _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "RelayNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

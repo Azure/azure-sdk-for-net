@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1822,7 +1822,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1915,7 +1915,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
