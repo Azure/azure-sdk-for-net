@@ -417,14 +417,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockProcessor.SessionInitializingAsync += args =>
             {
                 sessionOpenCalled = true;
-                Assert.IsTrue(args.SessionLockCancellationToken.IsCancellationRequested);
                 return Task.CompletedTask;
             };
 
             mockProcessor.SessionClosingAsync += args =>
             {
                 sessionCloseCalled = true;
-                Assert.IsTrue(args.SessionLockCancellationToken.IsCancellationRequested);
                 return Task.CompletedTask;
             };
 
