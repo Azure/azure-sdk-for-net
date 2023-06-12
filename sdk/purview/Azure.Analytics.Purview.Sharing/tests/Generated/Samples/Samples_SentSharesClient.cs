@@ -335,7 +335,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllSentShares("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (var item in client.GetAllSentShares("<referenceName>", "<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -368,7 +368,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllSentSharesAsync("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (var item in client.GetAllSentSharesAsync("<referenceName>", "<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -401,7 +401,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllSentShareInvitations("<sentShareId>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (var item in client.GetAllSentShareInvitations("<sentShareId>", "<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -434,7 +434,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new SentSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());

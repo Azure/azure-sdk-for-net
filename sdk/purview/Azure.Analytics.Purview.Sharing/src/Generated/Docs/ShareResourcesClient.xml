@@ -21,7 +21,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ShareResourcesClient(endpoint, credential);
 
-await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
+await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
@@ -55,7 +55,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ShareResourcesClient(endpoint, credential);
 
-foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
+foreach (var item in client.GetAllShareResources("<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());

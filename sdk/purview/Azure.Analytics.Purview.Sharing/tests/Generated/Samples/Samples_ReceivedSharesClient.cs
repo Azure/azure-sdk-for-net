@@ -265,7 +265,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -298,7 +298,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -331,7 +331,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>", new RequestContext()))
+            foreach (var item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -364,7 +364,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>", new RequestContext()))
+            await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
