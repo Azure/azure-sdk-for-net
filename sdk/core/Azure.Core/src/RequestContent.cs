@@ -100,16 +100,17 @@ namespace Azure.Core
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="propertyNameFormat">The format to use for property names in the serialized content.</param>
+        /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, PropertyNameFormat propertyNameFormat)
+        public static RequestContent Create(object serializable, PropertyNameFormat propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
-            JsonSerializerOptions options = new();
-            if (propertyNameFormat == PropertyNameFormat.CamelCase)
+            DynamicDataOptions options = new()
             {
-                options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
             };
-
-            ObjectSerializer serializer = new JsonObjectSerializer(options);
+            JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
+            ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
             return Create(serializer.Serialize(serializable));
         }
 

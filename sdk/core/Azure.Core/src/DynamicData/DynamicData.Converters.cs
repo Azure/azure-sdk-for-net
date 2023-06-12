@@ -117,7 +117,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        internal class DefaultTimeSpanConverter : JsonConverter<TimeSpan>
+        internal class DynamicTimeSpanConverter : JsonConverter<TimeSpan>
         {
             public override TimeSpan Read(
                 ref Utf8JsonReader reader,

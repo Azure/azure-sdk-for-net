@@ -86,7 +86,7 @@ namespace Azure
                 new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
                 new DynamicDataOptions();
 
-            options.PropertyNamingConvention = propertyNameFormat;
+            options.PropertyNameFormat = propertyNameFormat;
             options.DateTimeFormat = dateTimeFormat;
 
             return utf8Json.ToDynamicFromJson(options);

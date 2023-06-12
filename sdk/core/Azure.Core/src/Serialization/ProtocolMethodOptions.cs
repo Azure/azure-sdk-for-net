@@ -33,7 +33,7 @@ namespace Azure.Core.Serialization
             DynamicDataOptions options = new()
             {
                 DateTimeFormat = ResponseContentDateTimeFormat,
-                PropertyNamingConvention = ResponseContentPropertyNameFormat
+                PropertyNameFormat = ResponseContentPropertyNameFormat
             };
 
             return options;

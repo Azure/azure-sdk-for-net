@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetPropertiesWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.AreEqual(1, (int)value.camel);
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.IsNull(value.pascal);
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetExistingPropertiesWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             value.camel = 2;
@@ -198,7 +198,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNewPropertiesWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
             value.camel = 1;
@@ -241,7 +241,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
             Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
@@ -284,7 +284,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumeratePropertiesPascalGettersWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                     "a": {
@@ -349,7 +349,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumerateArrayPascalGettersWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                     "array": [
@@ -380,7 +380,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanBypassNameMappingWithIndexers()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             // Set PascalCase values without converting to camelCase
@@ -400,7 +400,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CamelCaseMappingWorksForConcerningCases()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
             value.PIICategories = "categories";

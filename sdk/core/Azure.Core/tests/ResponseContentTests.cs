@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
             Response response = await client.GetValueAsync();
             ResponseContent content = response.Content as ResponseContent;
             DynamicDataOptions dynamicOptions = content.ProtocolOptions.GetDynamicOptions();
-            Assert.AreEqual(PropertyNameFormat.CamelCase, dynamicOptions.PropertyNamingConvention);
+            Assert.AreEqual(PropertyNameFormat.CamelCase, dynamicOptions.PropertyNameFormat);
         }
 
         [Test]
