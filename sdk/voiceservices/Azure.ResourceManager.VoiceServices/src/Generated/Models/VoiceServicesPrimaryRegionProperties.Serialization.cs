@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    public partial class VoiceServicesPrimaryRegionProperties : IUtf8JsonSerializable
+    public partial class VoiceServicesPrimaryRegionProperties : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operatorAddresses"u8);
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             writer.WriteEndObject();
         }
 
-        internal static VoiceServicesPrimaryRegionProperties DeserializeVoiceServicesPrimaryRegionProperties(JsonElement element)
+        internal static VoiceServicesPrimaryRegionProperties DeserializeVoiceServicesPrimaryRegionProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

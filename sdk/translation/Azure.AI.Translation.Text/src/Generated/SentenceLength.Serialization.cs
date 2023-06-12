@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class SentenceLength
     {
-        internal static SentenceLength DeserializeSentenceLength(JsonElement element)
+        internal static SentenceLength DeserializeSentenceLength(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

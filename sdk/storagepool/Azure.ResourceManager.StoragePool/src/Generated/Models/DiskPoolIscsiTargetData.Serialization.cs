@@ -8,14 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    public partial class DiskPoolIscsiTargetData : IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteEndObject();
         }
 
-        internal static DiskPoolIscsiTargetData DeserializeDiskPoolIscsiTargetData(JsonElement element)
+        internal static DiskPoolIscsiTargetData DeserializeDiskPoolIscsiTargetData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

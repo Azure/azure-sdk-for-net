@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class Mpeg4Configuration : IUtf8JsonSerializable
+    public partial class Mpeg4Configuration : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(GovLength))
@@ -28,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static Mpeg4Configuration DeserializeMpeg4Configuration(JsonElement element)
+        internal static Mpeg4Configuration DeserializeMpeg4Configuration(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

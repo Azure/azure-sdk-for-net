@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

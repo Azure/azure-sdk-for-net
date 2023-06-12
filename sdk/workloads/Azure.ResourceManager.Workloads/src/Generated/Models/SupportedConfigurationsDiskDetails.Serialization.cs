@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SupportedConfigurationsDiskDetails
     {
-        internal static SupportedConfigurationsDiskDetails DeserializeSupportedConfigurationsDiskDetails(JsonElement element)
+        internal static SupportedConfigurationsDiskDetails DeserializeSupportedConfigurationsDiskDetails(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

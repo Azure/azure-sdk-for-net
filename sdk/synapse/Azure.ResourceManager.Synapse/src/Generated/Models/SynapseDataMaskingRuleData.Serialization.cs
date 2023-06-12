@@ -7,14 +7,17 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDataMaskingRuleData : IUtf8JsonSerializable
+    public partial class SynapseDataMaskingRuleData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteEndObject();
         }
 
-        internal static SynapseDataMaskingRuleData DeserializeSynapseDataMaskingRuleData(JsonElement element)
+        internal static SynapseDataMaskingRuleData DeserializeSynapseDataMaskingRuleData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

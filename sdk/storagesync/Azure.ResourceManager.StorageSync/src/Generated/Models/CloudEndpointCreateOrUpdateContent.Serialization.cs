@@ -8,13 +8,16 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CloudEndpointCreateOrUpdateContent : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteEndObject();
         }
 
-        internal static CloudEndpointCreateOrUpdateContent DeserializeCloudEndpointCreateOrUpdateContent(JsonElement element)
+        internal static CloudEndpointCreateOrUpdateContent DeserializeCloudEndpointCreateOrUpdateContent(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

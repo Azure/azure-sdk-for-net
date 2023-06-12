@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class TldLegalAgreement
     {
-        internal static TldLegalAgreement DeserializeTldLegalAgreement(JsonElement element)
+        internal static TldLegalAgreement DeserializeTldLegalAgreement(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

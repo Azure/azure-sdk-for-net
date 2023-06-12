@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class CommonScriptModel
     {
-        internal static CommonScriptModel DeserializeCommonScriptModel(JsonElement element)
+        internal static CommonScriptModel DeserializeCommonScriptModel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

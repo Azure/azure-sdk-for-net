@@ -7,10 +7,52 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable
+    internal partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable, Core.IModelSerializable
     {
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(TimeSeriesIdsInternal))
+            {
+                writer.WritePropertyName("timeSeriesIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in TimeSeriesIdsInternal)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartArray();
+                    foreach (var item0 in item)
+                    {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue(item0);
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Names))
+            {
+                writer.WritePropertyName("names"u8);
+                writer.WriteStartArray();
+                foreach (var item in Names)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class LivePipelineSetRequestBody : IUtf8JsonSerializable
+    internal partial class LivePipelineSetRequestBody : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -35,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static LivePipelineSetRequestBody DeserializeLivePipelineSetRequestBody(JsonElement element)
+        internal static LivePipelineSetRequestBody DeserializeLivePipelineSetRequestBody(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

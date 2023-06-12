@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportQuotaChangeContent : IUtf8JsonSerializable
+    public partial class SupportQuotaChangeContent : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Region))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteEndObject();
         }
 
-        internal static SupportQuotaChangeContent DeserializeSupportQuotaChangeContent(JsonElement element)
+        internal static SupportQuotaChangeContent DeserializeSupportQuotaChangeContent(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

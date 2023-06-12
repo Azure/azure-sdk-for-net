@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class BreakSentenceItem
     {
-        internal static BreakSentenceItem DeserializeBreakSentenceItem(JsonElement element)
+        internal static BreakSentenceItem DeserializeBreakSentenceItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

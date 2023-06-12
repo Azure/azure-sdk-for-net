@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class DictionaryExampleItem
     {
-        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element)
+        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

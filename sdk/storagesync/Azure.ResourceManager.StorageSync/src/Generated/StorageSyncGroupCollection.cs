@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncGroupSyncGroupsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncGroupResource(Client, StorageSyncGroupData.DeserializeStorageSyncGroupData(e)), _storageSyncGroupSyncGroupsClientDiagnostics, Pipeline, "StorageSyncGroupCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new StorageSyncGroupResource(Client, StorageSyncGroupData.DeserializeStorageSyncGroupData(e)), _storageSyncGroupSyncGroupsClientDiagnostics, Pipeline, "StorageSyncGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncGroupSyncGroupsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncGroupResource(Client, StorageSyncGroupData.DeserializeStorageSyncGroupData(e)), _storageSyncGroupSyncGroupsClientDiagnostics, Pipeline, "StorageSyncGroupCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new StorageSyncGroupResource(Client, StorageSyncGroupData.DeserializeStorageSyncGroupData(e)), _storageSyncGroupSyncGroupsClientDiagnostics, Pipeline, "StorageSyncGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

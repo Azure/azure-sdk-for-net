@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class TransliterationLanguage
     {
-        internal static TransliterationLanguage DeserializeTransliterationLanguage(JsonElement element)
+        internal static TransliterationLanguage DeserializeTransliterationLanguage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
