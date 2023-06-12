@@ -19,8 +19,15 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(ClinicalType))
             {
-                writer.WritePropertyName("clinicalType"u8);
-                writer.WriteStringValue(ClinicalType.Value.ToString());
+                if (ClinicalType != null)
+                {
+                    writer.WritePropertyName("clinicalType"u8);
+                    writer.WriteStringValue(ClinicalType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("clinicalType");
+                }
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -31,8 +38,15 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             if (Optional.IsDefined(CreatedDateTime))
             {
-                writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                if (CreatedDateTime != null)
+                {
+                    writer.WritePropertyName("createdDateTime"u8);
+                    writer.WriteStringValue(CreatedDateTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("createdDateTime");
+                }
             }
             writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);

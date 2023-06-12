@@ -17,13 +17,27 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartObject();
             if (Optional.IsDefined(Verbose))
             {
-                writer.WritePropertyName("verbose"u8);
-                writer.WriteBooleanValue(Verbose.Value);
+                if (Verbose != null)
+                {
+                    writer.WritePropertyName("verbose"u8);
+                    writer.WriteBooleanValue(Verbose.Value);
+                }
+                else
+                {
+                    writer.WriteNull("verbose");
+                }
             }
             if (Optional.IsDefined(IncludeEvidence))
             {
-                writer.WritePropertyName("includeEvidence"u8);
-                writer.WriteBooleanValue(IncludeEvidence.Value);
+                if (IncludeEvidence != null)
+                {
+                    writer.WritePropertyName("includeEvidence"u8);
+                    writer.WriteBooleanValue(IncludeEvidence.Value);
+                }
+                else
+                {
+                    writer.WriteNull("includeEvidence");
+                }
             }
             if (Optional.IsCollectionDefined(InferenceTypes))
             {
@@ -37,8 +51,15 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             if (Optional.IsDefined(CheckForCancerCase))
             {
-                writer.WritePropertyName("checkForCancerCase"u8);
-                writer.WriteBooleanValue(CheckForCancerCase.Value);
+                if (CheckForCancerCase != null)
+                {
+                    writer.WritePropertyName("checkForCancerCase"u8);
+                    writer.WriteBooleanValue(CheckForCancerCase.Value);
+                }
+                else
+                {
+                    writer.WriteNull("checkForCancerCase");
+                }
             }
             writer.WriteEndObject();
         }

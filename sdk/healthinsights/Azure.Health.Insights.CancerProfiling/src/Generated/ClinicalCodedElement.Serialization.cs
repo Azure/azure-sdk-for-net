@@ -66,7 +66,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     continue;
                 }
             }
-            return new ClinicalCodedElement(system, code, name.Value, value.Value);
+            return new ClinicalCodedElement(system, code, name, value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

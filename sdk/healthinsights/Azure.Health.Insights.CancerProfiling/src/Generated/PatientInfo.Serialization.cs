@@ -17,13 +17,27 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartObject();
             if (Optional.IsDefined(Sex))
             {
-                writer.WritePropertyName("sex"u8);
-                writer.WriteStringValue(Sex.Value.ToString());
+                if (Sex != null)
+                {
+                    writer.WritePropertyName("sex"u8);
+                    writer.WriteStringValue(Sex.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("sex");
+                }
             }
             if (Optional.IsDefined(BirthDate))
             {
-                writer.WritePropertyName("birthDate"u8);
-                writer.WriteStringValue(BirthDate.Value, "D");
+                if (BirthDate != null)
+                {
+                    writer.WritePropertyName("birthDate"u8);
+                    writer.WriteStringValue(BirthDate.Value, "D");
+                }
+                else
+                {
+                    writer.WriteNull("birthDate");
+                }
             }
             if (Optional.IsCollectionDefined(ClinicalInfo))
             {

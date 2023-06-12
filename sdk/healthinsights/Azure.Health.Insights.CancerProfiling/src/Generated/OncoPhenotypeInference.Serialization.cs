@@ -23,7 +23,7 @@ namespace Azure.Health.Insights.CancerProfiling
             OncoPhenotypeInferenceType type = default;
             string value = default;
             Optional<string> description = default;
-            Optional<float> confidenceScore = default;
+            Optional<float?> confidenceScore = default;
             Optional<IReadOnlyList<InferenceEvidence>> evidence = default;
             Optional<string> caseId = default;
             foreach (var property in element.EnumerateObject())
@@ -47,6 +47,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        confidenceScore = null;
                         continue;
                     }
                     confidenceScore = property.Value.GetSingle();
@@ -72,7 +73,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     continue;
                 }
             }
-            return new OncoPhenotypeInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), caseId.Value);
+            return new OncoPhenotypeInference(type, value, description, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), caseId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
