@@ -17,16 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MappingType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DeliveryAttributeMapping DeserializeDeliveryAttributeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityTask data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityTask data model.
+    /// Security task that we recommend to do in order to strengthen security
+    /// </summary>
     public partial class SecurityTaskData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityTaskData. </summary>

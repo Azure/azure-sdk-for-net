@@ -14,26 +14,29 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static PredefinedTagValue DeserializePredefinedTagValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> tagValue = default;
             Optional<PredefinedTagCount> count = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tagValue"))
+                if (property.NameEquals("tagValue"u8))
                 {
                     tagValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);

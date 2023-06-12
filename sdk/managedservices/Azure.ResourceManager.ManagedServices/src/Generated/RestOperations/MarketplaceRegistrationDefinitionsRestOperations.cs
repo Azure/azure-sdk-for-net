@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="marketplaceIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MarketplaceRegistrationDefinitionData>> GetAsync(string scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedServicesMarketplaceRegistrationData>> GetAsync(string scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        MarketplaceRegistrationDefinitionData value = default;
+                        ManagedServicesMarketplaceRegistrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MarketplaceRegistrationDefinitionData.DeserializeMarketplaceRegistrationDefinitionData(document.RootElement);
+                        value = ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MarketplaceRegistrationDefinitionData)null, message.Response);
+                    return Response.FromValue((ManagedServicesMarketplaceRegistrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="marketplaceIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MarketplaceRegistrationDefinitionData> Get(string scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
+        public Response<ManagedServicesMarketplaceRegistrationData> Get(string scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        MarketplaceRegistrationDefinitionData value = default;
+                        ManagedServicesMarketplaceRegistrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MarketplaceRegistrationDefinitionData.DeserializeMarketplaceRegistrationDefinitionData(document.RootElement);
+                        value = ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MarketplaceRegistrationDefinitionData)null, message.Response);
+                    return Response.FromValue((ManagedServicesMarketplaceRegistrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

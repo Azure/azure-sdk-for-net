@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> ipAddress = default;
             Optional<string> name = default;
@@ -36,51 +40,49 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<VersionDetails> marsAgentVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionStatus"))
+                if (property.NameEquals("versionStatus"u8))
                 {
                     versionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionVolumes"))
+                if (property.NameEquals("retentionVolumes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RetentionVolume> array = new List<RetentionVolume>();
@@ -91,11 +93,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     retentionVolumes = array;
                     continue;
                 }
-                if (property.NameEquals("dataStores"))
+                if (property.NameEquals("dataStores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataStore> array = new List<DataStore>();
@@ -106,11 +107,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     dataStores = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();
@@ -121,11 +121,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();
@@ -136,61 +135,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("diskCount"))
+                if (property.NameEquals("diskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"))
+                if (property.NameEquals("agentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("marsAgentVersion"))
+                if (property.NameEquals("marsAgentVersion"u8))
                 {
                     marsAgentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsAgentExpiryDate"))
+                if (property.NameEquals("marsAgentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marsAgentExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersionDetails"))
+                if (property.NameEquals("agentVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("marsAgentVersionDetails"))
+                if (property.NameEquals("marsAgentVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marsAgentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);

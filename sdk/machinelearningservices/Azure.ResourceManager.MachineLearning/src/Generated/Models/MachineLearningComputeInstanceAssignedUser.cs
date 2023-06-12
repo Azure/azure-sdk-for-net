@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A user that can be assigned to a compute instance.
-    /// Serialized Name: AssignedUser
-    /// </summary>
+    /// <summary> A user that can be assigned to a compute instance. </summary>
     public partial class MachineLearningComputeInstanceAssignedUser
     {
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceAssignedUser. </summary>
-        /// <param name="objectId">
-        /// User’s AAD Object Id.
-        /// Serialized Name: AssignedUser.objectId
-        /// </param>
-        /// <param name="tenantId">
-        /// User’s AAD Tenant Id.
-        /// Serialized Name: AssignedUser.tenantId
-        /// </param>
+        /// <param name="objectId"> User’s AAD Object Id. </param>
+        /// <param name="tenantId"> User’s AAD Tenant Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public MachineLearningComputeInstanceAssignedUser(string objectId, Guid tenantId)
         {
@@ -34,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TenantId = tenantId;
         }
 
-        /// <summary>
-        /// User’s AAD Object Id.
-        /// Serialized Name: AssignedUser.objectId
-        /// </summary>
+        /// <summary> User’s AAD Object Id. </summary>
         public string ObjectId { get; set; }
-        /// <summary>
-        /// User’s AAD Tenant Id.
-        /// Serialized Name: AssignedUser.tenantId
-        /// </summary>
+        /// <summary> User’s AAD Tenant Id. </summary>
         public Guid TenantId { get; set; }
     }
 }

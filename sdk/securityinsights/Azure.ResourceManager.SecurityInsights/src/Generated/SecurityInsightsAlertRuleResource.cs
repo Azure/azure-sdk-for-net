@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A Class representing a SecurityInsightsAlertRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAlertRuleResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAlertRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityInsightsAlertRule method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsAlertRule method.
     /// </summary>
     public partial class SecurityInsightsAlertRuleResource : ArmResource
     {
@@ -87,47 +86,71 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ActionResponseResources in the SecurityInsightsAlertRule. </summary>
-        /// <returns> An object representing collection of ActionResponseResources and their operations over a ActionResponseResource. </returns>
-        public virtual ActionResponseCollection GetActionResponses()
+        /// <summary> Gets a collection of SecurityInsightsAlertRuleActionResources in the SecurityInsightsAlertRule. </summary>
+        /// <returns> An object representing collection of SecurityInsightsAlertRuleActionResources and their operations over a SecurityInsightsAlertRuleActionResource. </returns>
+        public virtual SecurityInsightsAlertRuleActionCollection GetSecurityInsightsAlertRuleActions()
         {
-            return GetCachedClient(Client => new ActionResponseCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityInsightsAlertRuleActionCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets the action of alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}
-        /// Operation Id: Actions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Actions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="actionId"> Action ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ActionResponseResource>> GetActionResponseAsync(string actionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsAlertRuleActionResource>> GetSecurityInsightsAlertRuleActionAsync(string actionId, CancellationToken cancellationToken = default)
         {
-            return await GetActionResponses().GetAsync(actionId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsAlertRuleActions().GetAsync(actionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the action of alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}
-        /// Operation Id: Actions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Actions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="actionId"> Action ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ActionResponseResource> GetActionResponse(string actionId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsAlertRuleActionResource> GetSecurityInsightsAlertRuleAction(string actionId, CancellationToken cancellationToken = default)
         {
-            return GetActionResponses().Get(actionId, cancellationToken);
+            return GetSecurityInsightsAlertRuleActions().Get(actionId, cancellationToken);
         }
 
         /// <summary>
         /// Gets the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsAlertRuleResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsAlertRuleResource> Get(CancellationToken cancellationToken = default)
@@ -174,8 +205,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Delete the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,8 +239,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Delete the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +273,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Creates or updates the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The alert rule. </param>
@@ -256,8 +311,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Creates or updates the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The alert rule. </param>

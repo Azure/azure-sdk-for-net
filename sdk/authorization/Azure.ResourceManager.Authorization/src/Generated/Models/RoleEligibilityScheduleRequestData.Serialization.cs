@@ -18,75 +18,75 @@ namespace Azure.ResourceManager.Authorization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleDefinitionId))
             {
-                writer.WritePropertyName("roleDefinitionId");
+                writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
             if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
+                writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
             if (Optional.IsDefined(RequestType))
             {
-                writer.WritePropertyName("requestType");
+                writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType.Value.ToString());
             }
             if (Optional.IsDefined(TargetRoleEligibilityScheduleId))
             {
-                writer.WritePropertyName("targetRoleEligibilityScheduleId");
+                writer.WritePropertyName("targetRoleEligibilityScheduleId"u8);
                 writer.WriteStringValue(TargetRoleEligibilityScheduleId);
             }
             if (Optional.IsDefined(TargetRoleEligibilityScheduleInstanceId))
             {
-                writer.WritePropertyName("targetRoleEligibilityScheduleInstanceId");
+                writer.WritePropertyName("targetRoleEligibilityScheduleInstanceId"u8);
                 writer.WriteStringValue(TargetRoleEligibilityScheduleInstanceId);
             }
             if (Optional.IsDefined(Justification))
             {
-                writer.WritePropertyName("justification");
+                writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
             if (Optional.IsDefined(TicketInfo))
             {
-                writer.WritePropertyName("ticketInfo");
+                writer.WritePropertyName("ticketInfo"u8);
                 writer.WriteObjectValue(TicketInfo);
             }
             if (Optional.IsDefined(Condition))
             {
-                writer.WritePropertyName("condition");
+                writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
             if (Optional.IsDefined(ConditionVersion))
             {
-                writer.WritePropertyName("conditionVersion");
+                writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            writer.WritePropertyName("scheduleInfo");
+            writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startDateTime");
+                writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            writer.WritePropertyName("expiration");
+            writer.WritePropertyName("expiration"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpirationType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExpirationType.Value.ToString());
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endDateTime");
+                writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
             writer.WriteEndObject();
@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.Authorization
 
         internal static RoleEligibilityScheduleRequestData DeserializeRoleEligibilityScheduleRequestData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -123,32 +127,31 @@ namespace Azure.ResourceManager.Authorization
             Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,142 +160,131 @@ namespace Azure.ResourceManager.Authorization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("scope"))
+                        if (property0.NameEquals("scope"u8))
                         {
                             scope = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("roleDefinitionId"))
+                        if (property0.NameEquals("roleDefinitionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("principalId"))
+                        if (property0.NameEquals("principalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("principalType"))
+                        if (property0.NameEquals("principalType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalType = new RoleManagementPrincipalType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("requestType"))
+                        if (property0.NameEquals("requestType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestType = new RoleManagementScheduleRequestType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new RoleManagementScheduleStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("approvalId"))
+                        if (property0.NameEquals("approvalId"u8))
                         {
                             approvalId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetRoleEligibilityScheduleId"))
+                        if (property0.NameEquals("targetRoleEligibilityScheduleId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetRoleEligibilityScheduleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetRoleEligibilityScheduleInstanceId"))
+                        if (property0.NameEquals("targetRoleEligibilityScheduleInstanceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetRoleEligibilityScheduleInstanceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("justification"))
+                        if (property0.NameEquals("justification"u8))
                         {
                             justification = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ticketInfo"))
+                        if (property0.NameEquals("ticketInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ticketInfo = RoleEligibilityScheduleRequestPropertiesTicketInfo.DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("condition"))
+                        if (property0.NameEquals("condition"u8))
                         {
                             condition = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("conditionVersion"))
+                        if (property0.NameEquals("conditionVersion"u8))
                         {
                             conditionVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdOn"))
+                        if (property0.NameEquals("createdOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdOn = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("requestorId"))
+                        if (property0.NameEquals("requestorId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestorId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("expandedProperties"))
+                        if (property0.NameEquals("expandedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("scheduleInfo"))
+                        if (property0.NameEquals("scheduleInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -301,17 +293,16 @@ namespace Azure.ResourceManager.Authorization
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("startDateTime"))
+                                if (property1.NameEquals("startDateTime"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     startDateTime = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
-                                if (property1.NameEquals("expiration"))
+                                if (property1.NameEquals("expiration"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -320,31 +311,28 @@ namespace Azure.ResourceManager.Authorization
                                     }
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        if (property2.NameEquals("type"))
+                                        if (property2.NameEquals("type"u8))
                                         {
                                             if (property2.Value.ValueKind == JsonValueKind.Null)
                                             {
-                                                property2.ThrowNonNullablePropertyIsNull();
                                                 continue;
                                             }
                                             type0 = new RoleManagementScheduleExpirationType(property2.Value.GetString());
                                             continue;
                                         }
-                                        if (property2.NameEquals("endDateTime"))
+                                        if (property2.NameEquals("endDateTime"u8))
                                         {
                                             if (property2.Value.ValueKind == JsonValueKind.Null)
                                             {
-                                                property2.ThrowNonNullablePropertyIsNull();
                                                 continue;
                                             }
                                             endDateTime = property2.Value.GetDateTimeOffset("O");
                                             continue;
                                         }
-                                        if (property2.NameEquals("duration"))
+                                        if (property2.NameEquals("duration"u8))
                                         {
                                             if (property2.Value.ValueKind == JsonValueKind.Null)
                                             {
-                                                property2.ThrowNonNullablePropertyIsNull();
                                                 continue;
                                             }
                                             duration = property2.Value.GetTimeSpan("P");

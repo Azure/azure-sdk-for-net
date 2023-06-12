@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Redis
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Redis
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -46,38 +46,38 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RedisConfiguration))
             {
-                writer.WritePropertyName("redisConfiguration");
+                writer.WritePropertyName("redisConfiguration"u8);
                 writer.WriteObjectValue(RedisConfiguration);
             }
             if (Optional.IsDefined(RedisVersion))
             {
-                writer.WritePropertyName("redisVersion");
+                writer.WritePropertyName("redisVersion"u8);
                 writer.WriteStringValue(RedisVersion);
             }
             if (Optional.IsDefined(EnableNonSslPort))
             {
-                writer.WritePropertyName("enableNonSslPort");
+                writer.WritePropertyName("enableNonSslPort"u8);
                 writer.WriteBooleanValue(EnableNonSslPort.Value);
             }
             if (Optional.IsDefined(ReplicasPerMaster))
             {
-                writer.WritePropertyName("replicasPerMaster");
+                writer.WritePropertyName("replicasPerMaster"u8);
                 writer.WriteNumberValue(ReplicasPerMaster.Value);
             }
             if (Optional.IsDefined(ReplicasPerPrimary))
             {
-                writer.WritePropertyName("replicasPerPrimary");
+                writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
             if (Optional.IsCollectionDefined(TenantSettings))
             {
-                writer.WritePropertyName("tenantSettings");
+                writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in TenantSettings)
                 {
@@ -88,29 +88,29 @@ namespace Azure.ResourceManager.Redis
             }
             if (Optional.IsDefined(ShardCount))
             {
-                writer.WritePropertyName("shardCount");
+                writer.WritePropertyName("shardCount"u8);
                 writer.WriteNumberValue(ShardCount.Value);
             }
             if (Optional.IsDefined(MinimumTlsVersion))
             {
-                writer.WritePropertyName("minimumTlsVersion");
+                writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(StaticIP))
             {
-                writer.WritePropertyName("staticIP");
+                writer.WritePropertyName("staticIP"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
             writer.WriteEndObject();
@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.Redis
 
         internal static RedisData DeserializeRedisData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -149,11 +153,10 @@ namespace Azure.ResourceManager.Redis
             Optional<IReadOnlyList<RedisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -164,21 +167,19 @@ namespace Azure.ResourceManager.Redis
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -189,37 +190,36 @@ namespace Azure.ResourceManager.Redis
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -228,56 +228,51 @@ namespace Azure.ResourceManager.Redis
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("redisConfiguration"))
+                        if (property0.NameEquals("redisConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("redisVersion"))
+                        if (property0.NameEquals("redisVersion"u8))
                         {
                             redisVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enableNonSslPort"))
+                        if (property0.NameEquals("enableNonSslPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableNonSslPort = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("replicasPerMaster"))
+                        if (property0.NameEquals("replicasPerMaster"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicasPerMaster = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("replicasPerPrimary"))
+                        if (property0.NameEquals("replicasPerPrimary"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicasPerPrimary = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("tenantSettings"))
+                        if (property0.NameEquals("tenantSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -288,97 +283,89 @@ namespace Azure.ResourceManager.Redis
                             tenantSettings = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("shardCount"))
+                        if (property0.NameEquals("shardCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shardCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("minimumTlsVersion"))
+                        if (property0.NameEquals("minimumTlsVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumTlsVersion = new RedisTlsVersion(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new RedisPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             sku = RedisSku.DeserializeRedisSku(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("subnetId"))
+                        if (property0.NameEquals("subnetId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("staticIP"))
+                        if (property0.NameEquals("staticIP"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             staticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new RedisProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sslPort"))
+                        if (property0.NameEquals("sslPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sslPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("accessKeys"))
+                        if (property0.NameEquals("accessKeys"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -388,11 +375,10 @@ namespace Azure.ResourceManager.Redis
                             accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("linkedServers"))
+                        if (property0.NameEquals("linkedServers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
@@ -403,11 +389,10 @@ namespace Azure.ResourceManager.Redis
                             linkedServers = array;
                             continue;
                         }
-                        if (property0.NameEquals("instances"))
+                        if (property0.NameEquals("instances"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RedisInstanceDetails> array = new List<RedisInstanceDetails>();
@@ -418,11 +403,10 @@ namespace Azure.ResourceManager.Redis
                             instances = array;
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();

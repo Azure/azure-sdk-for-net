@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectivityType))
             {
-                writer.WritePropertyName("connectivityType");
+                writer.WritePropertyName("connectivityType"u8);
                 writer.WriteStringValue(ConnectivityType.Value.ToString());
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(SqlAuthUpdateUserName))
             {
-                writer.WritePropertyName("sqlAuthUpdateUserName");
+                writer.WritePropertyName("sqlAuthUpdateUserName"u8);
                 writer.WriteStringValue(SqlAuthUpdateUserName);
             }
             if (Optional.IsDefined(SqlAuthUpdatePassword))
             {
-                writer.WritePropertyName("sqlAuthUpdatePassword");
+                writer.WritePropertyName("sqlAuthUpdatePassword"u8);
                 writer.WriteStringValue(SqlAuthUpdatePassword);
             }
             writer.WriteEndObject();
@@ -40,38 +40,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlConnectivityUpdateSettings DeserializeSqlConnectivityUpdateSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlServerConnectivityType> connectivityType = default;
             Optional<int> port = default;
             Optional<string> sqlAuthUpdateUserName = default;
             Optional<string> sqlAuthUpdatePassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectivityType"))
+                if (property.NameEquals("connectivityType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectivityType = new SqlServerConnectivityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sqlAuthUpdateUserName"))
+                if (property.NameEquals("sqlAuthUpdateUserName"u8))
                 {
                     sqlAuthUpdateUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlAuthUpdatePassword"))
+                if (property.NameEquals("sqlAuthUpdatePassword"u8))
                 {
                     sqlAuthUpdatePassword = property.Value.GetString();
                     continue;

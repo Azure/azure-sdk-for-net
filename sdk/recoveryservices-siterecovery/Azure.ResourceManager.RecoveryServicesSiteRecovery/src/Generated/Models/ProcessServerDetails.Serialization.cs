@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProcessServerDetails DeserializeProcessServerDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> biosId = default;
@@ -47,36 +51,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ProtectionHealth> historicHealth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("biosId"))
+                if (property.NameEquals("biosId"u8))
                 {
                     biosId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricObjectId"))
+                if (property.NameEquals("fabricObjectId"u8))
                 {
                     fabricObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -87,206 +90,186 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     ipAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeatUtc"))
+                if (property.NameEquals("lastHeartbeatUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("totalMemoryInBytes"))
+                if (property.NameEquals("totalMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInBytes"))
+                if (property.NameEquals("availableMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("usedMemoryInBytes"))
+                if (property.NameEquals("usedMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usedMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsagePercentage"))
+                if (property.NameEquals("memoryUsagePercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryUsagePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("totalSpaceInBytes"))
+                if (property.NameEquals("totalSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableSpaceInBytes"))
+                if (property.NameEquals("availableSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("usedSpaceInBytes"))
+                if (property.NameEquals("usedSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usedSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("freeSpacePercentage"))
+                if (property.NameEquals("freeSpacePercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     freeSpacePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("throughputUploadPendingDataInBytes"))
+                if (property.NameEquals("throughputUploadPendingDataInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throughputUploadPendingDataInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputInBytes"))
+                if (property.NameEquals("throughputInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throughputInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("processorUsagePercentage"))
+                if (property.NameEquals("processorUsagePercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processorUsagePercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("throughputStatus"))
+                if (property.NameEquals("throughputStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throughputStatus = new RcmComponentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemLoad"))
+                if (property.NameEquals("systemLoad"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemLoad = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("systemLoadStatus"))
+                if (property.NameEquals("systemLoadStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemLoadStatus = new RcmComponentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskUsageStatus"))
+                if (property.NameEquals("diskUsageStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskUsageStatus = new RcmComponentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("memoryUsageStatus"))
+                if (property.NameEquals("memoryUsageStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryUsageStatus = new RcmComponentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("processorUsageStatus"))
+                if (property.NameEquals("processorUsageStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processorUsageStatus = new RcmComponentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new ProtectionHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();
@@ -297,21 +280,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"))
+                if (property.NameEquals("protectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedItemCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("historicHealth"))
+                if (property.NameEquals("historicHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     historicHealth = new ProtectionHealth(property.Value.GetString());

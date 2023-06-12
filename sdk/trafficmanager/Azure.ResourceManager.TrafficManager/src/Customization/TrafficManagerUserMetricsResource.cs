@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -24,8 +24,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Get the subscription-level key used for Real User Metrics collection.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default
-        /// Operation Id: TrafficManagerUserMetricsKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficManagerUserMetricsKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <remarks>
         /// The method is added to overcome problem when the Get API returns resource id with the subscription part which
@@ -55,8 +63,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Get the subscription-level key used for Real User Metrics collection.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default
-        /// Operation Id: TrafficManagerUserMetricsKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficManagerUserMetricsKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <remarks>
         /// The method is added to overcome problem when the Get API returns resource id with the subscription part which

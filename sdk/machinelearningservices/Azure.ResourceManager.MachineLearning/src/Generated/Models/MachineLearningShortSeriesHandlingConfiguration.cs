@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The parameter defining how if AutoML should handle short time series.
-    /// Serialized Name: ShortSeriesHandlingConfiguration
-    /// </summary>
+    /// <summary> The parameter defining how if AutoML should handle short time series. </summary>
     public readonly partial struct MachineLearningShortSeriesHandlingConfiguration : IEquatable<MachineLearningShortSeriesHandlingConfiguration>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PadValue = "Pad";
         private const string DropValue = "Drop";
 
-        /// <summary>
-        /// Represents no/null value.
-        /// Serialized Name: ShortSeriesHandlingConfiguration.None
-        /// </summary>
+        /// <summary> Represents no/null value. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration None { get; } = new MachineLearningShortSeriesHandlingConfiguration(NoneValue);
-        /// <summary>
-        /// Short series will be padded if there are no long series, otherwise short series will be dropped.
-        /// Serialized Name: ShortSeriesHandlingConfiguration.Auto
-        /// </summary>
+        /// <summary> Short series will be padded if there are no long series, otherwise short series will be dropped. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Auto { get; } = new MachineLearningShortSeriesHandlingConfiguration(AutoValue);
-        /// <summary>
-        /// All the short series will be padded.
-        /// Serialized Name: ShortSeriesHandlingConfiguration.Pad
-        /// </summary>
+        /// <summary> All the short series will be padded. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Pad { get; } = new MachineLearningShortSeriesHandlingConfiguration(PadValue);
-        /// <summary>
-        /// All the short series will be dropped.
-        /// Serialized Name: ShortSeriesHandlingConfiguration.Drop
-        /// </summary>
+        /// <summary> All the short series will be dropped. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Drop { get; } = new MachineLearningShortSeriesHandlingConfiguration(DropValue);
         /// <summary> Determines if two <see cref="MachineLearningShortSeriesHandlingConfiguration"/> values are the same. </summary>
         public static bool operator ==(MachineLearningShortSeriesHandlingConfiguration left, MachineLearningShortSeriesHandlingConfiguration right) => left.Equals(right);

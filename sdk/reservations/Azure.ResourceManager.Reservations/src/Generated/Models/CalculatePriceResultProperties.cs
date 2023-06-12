@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The CalculatePriceResultProperties. </summary>
+    /// <summary> Properties for calculate price response. </summary>
     public partial class CalculatePriceResultProperties
     {
         /// <summary> Initializes a new instance of CalculatePriceResultProperties. </summary>
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="isTaxIncluded"> Whether or not tax is included in grand total. </param>
         /// <param name="isBillingPartnerManaged"> True if billing is managed by Microsoft Partner. Used only for CSP accounts. </param>
         /// <param name="reservationOrderId"> GUID that represents reservation order that can be placed after calculating price. </param>
-        /// <param name="skuTitle"> Title of SKU that is being purchased. </param>
-        /// <param name="skuDescription"> Description of SKU that is being purchased. </param>
+        /// <param name="skuTitle"> Title of sku that is being purchased. </param>
+        /// <param name="skuDescription"> Description of sku that is being purchased. </param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. </param>
         /// <param name="paymentSchedule"></param>
         internal CalculatePriceResultProperties(CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal, double? netTotal, double? taxTotal, double? grandTotal, bool? isTaxIncluded, bool? isBillingPartnerManaged, Guid? reservationOrderId, string skuTitle, string skuDescription, CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal, IReadOnlyList<PaymentDetail> paymentSchedule)
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public bool? IsBillingPartnerManaged { get; }
         /// <summary> GUID that represents reservation order that can be placed after calculating price. </summary>
         public Guid? ReservationOrderId { get; }
-        /// <summary> Title of SKU that is being purchased. </summary>
+        /// <summary> Title of sku that is being purchased. </summary>
         public string SkuTitle { get; }
-        /// <summary> Description of SKU that is being purchased. </summary>
+        /// <summary> Description of sku that is being purchased. </summary>
         public string SkuDescription { get; }
         /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. </summary>
         public CalculatePriceResultPropertiesPricingCurrencyTotal PricingCurrencyTotal { get; }

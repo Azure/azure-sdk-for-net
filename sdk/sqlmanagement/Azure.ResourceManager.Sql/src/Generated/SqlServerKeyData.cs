@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerKey data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerKey data model.
+    /// A server key.
+    /// </summary>
     public partial class SqlServerKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerKeyData. </summary>

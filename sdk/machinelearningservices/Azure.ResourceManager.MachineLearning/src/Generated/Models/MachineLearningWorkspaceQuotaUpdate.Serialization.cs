@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningWorkspaceQuotaUpdate DeserializeMachineLearningWorkspaceQuotaUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> type = default;
             Optional<long> limit = default;
@@ -21,41 +25,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningWorkspaceQuotaStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new MachineLearningQuotaUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MachineLearningWorkspaceQuotaStatus(property.Value.GetString());

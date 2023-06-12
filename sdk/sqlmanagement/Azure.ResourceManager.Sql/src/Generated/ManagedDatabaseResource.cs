@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -116,8 +115,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get managed database schema
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}
-        /// Operation Id: ManagedDatabaseSchemas_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSchemas_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +138,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get managed database schema
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}
-        /// Operation Id: ManagedDatabaseSchemas_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSchemas_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,8 +168,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the database&apos;s vulnerability assessment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
-        /// Operation Id: ManagedDatabaseVulnerabilityAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseVulnerabilityAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,8 +189,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the database&apos;s vulnerability assessment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
-        /// Operation Id: ManagedDatabaseVulnerabilityAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseVulnerabilityAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,8 +217,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s short term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,8 +238,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s short term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,8 +266,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s security alert policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: ManagedDatabaseSecurityAlertPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,8 +287,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s security alert policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: ManagedDatabaseSecurityAlertPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -252,8 +315,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s transparent data encryption.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
-        /// Operation Id: ManagedDatabaseTransparentDataEncryption_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseTransparentDataEncryption_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,8 +336,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s transparent data encryption.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
-        /// Operation Id: ManagedDatabaseTransparentDataEncryption_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseTransparentDataEncryption_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -285,8 +364,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s long term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -298,8 +385,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s long term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,8 +413,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s Advanced Threat Protection state.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedDatabaseAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -331,8 +434,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s Advanced Threat Protection state.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedDatabaseAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -351,8 +462,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets managed database restore details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
-        /// Operation Id: ManagedDatabaseRestoreDetails_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseRestoreDetails_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -364,8 +483,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets managed database restore details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
-        /// Operation Id: ManagedDatabaseRestoreDetails_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseRestoreDetails_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -375,10 +502,67 @@ namespace Azure.ResourceManager.Sql
             return GetManagedDatabaseRestoreDetails().Get(restoreDetailsName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ManagedLedgerDigestUploadResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedLedgerDigestUploadResources and their operations over a ManagedLedgerDigestUploadResource. </returns>
+        public virtual ManagedLedgerDigestUploadCollection GetManagedLedgerDigestUploads()
+        {
+            return GetCachedClient(Client => new ManagedLedgerDigestUploadCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the current ledger digest upload configuration for a database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedLedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedLedgerDigestUploadResource>> GetManagedLedgerDigestUploadAsync(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedLedgerDigestUploads().GetAsync(ledgerDigestUploads, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the current ledger digest upload configuration for a database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedLedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedLedgerDigestUploadResource> GetManagedLedgerDigestUpload(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            return GetManagedLedgerDigestUploads().Get(ledgerDigestUploads, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedDatabaseResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -401,8 +585,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedDatabaseResource> Get(CancellationToken cancellationToken = default)
@@ -425,8 +617,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Deletes a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -451,8 +651,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Deletes a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -477,8 +685,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Updates an existing database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The requested database resource state. </param>
@@ -507,8 +723,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Updates an existing database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The requested database resource state. </param>
@@ -537,8 +761,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// List managed database columns
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns
-        /// Operation Id: ManagedDatabaseColumns_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseColumns_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
         /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
@@ -549,43 +781,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List managed database columns
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns
-        /// Operation Id: ManagedDatabaseColumns_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseColumns_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
         /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
@@ -596,43 +808,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabase(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseColumnRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseColumnRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get query by query id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
-        /// Operation Id: ManagedDatabaseQueries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseQueries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -658,8 +850,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get query by query id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
-        /// Operation Id: ManagedDatabaseQueries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseQueries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -685,8 +885,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get query execution statistics by query id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics
-        /// Operation Id: ManagedDatabaseQueries_ListByQuery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseQueries_ListByQuery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="startTime"> Start time for observed period. </param>
@@ -700,43 +908,23 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
-            async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseQueriesRestClient.ListByQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<QueryStatistics>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseQueriesRestClient.ListByQueryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseQueriesRestClient.CreateListByQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseQueriesRestClient.CreateListByQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QueryStatistics.DeserializeQueryStatistics, _managedDatabaseQueriesClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetQueryStatistics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get query execution statistics by query id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics
-        /// Operation Id: ManagedDatabaseQueries_ListByQuery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseQueries_ListByQuery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="startTime"> Start time for observed period. </param>
@@ -750,43 +938,23 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
-            Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseQueriesRestClient.ListByQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<QueryStatistics> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseQueriesRestClient.ListByQueryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseQueriesRestClient.CreateListByQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseQueriesRestClient.CreateListByQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QueryStatistics.DeserializeQueryStatistics, _managedDatabaseQueriesClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetQueryStatistics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of security events.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents
-        /// Operation Id: ManagedDatabaseSecurityEvents_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSecurityEvents_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="skip"> The number of elements in the collection to skip. </param>
@@ -796,43 +964,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSecurityEventsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSecurityEventsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityEvent.DeserializeSecurityEvent, _managedDatabaseSecurityEventsClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of security events.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents
-        /// Operation Id: ManagedDatabaseSecurityEvents_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSecurityEvents_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="skip"> The number of elements in the collection to skip. </param>
@@ -842,43 +990,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSecurityEventsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityEvent> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSecurityEventsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityEvent.DeserializeSecurityEvent, _managedDatabaseSecurityEventsClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_ListCurrent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_ListCurrent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="count"> The Boolean to use. </param>
@@ -887,43 +1015,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListCurrentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListCurrentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_ListCurrent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_ListCurrent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="count"> The Boolean to use. </param>
@@ -932,43 +1040,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListCurrent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListCurrentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Update sensitivity labels of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -993,8 +1081,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Update sensitivity labels of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1019,8 +1115,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_ListRecommended
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_ListRecommended</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
@@ -1029,43 +1133,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_ListRecommended
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_ListRecommended</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
@@ -1074,43 +1158,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Update recommended sensitivity labels states of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_UpdateRecommended
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_UpdateRecommended</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1135,8 +1199,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Update recommended sensitivity labels states of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: ManagedDatabaseSensitivityLabels_UpdateRecommended
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_UpdateRecommended</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1161,8 +1233,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Cancels a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/cancelMove
-        /// Operation Id: ManagedDatabases_CancelMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/cancelMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_CancelMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="managedDatabaseMoveDefinition"> Parameters of the cancel managed database move operation. </param>
@@ -1191,8 +1271,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Cancels a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/cancelMove
-        /// Operation Id: ManagedDatabases_CancelMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/cancelMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_CancelMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="managedDatabaseMoveDefinition"> Parameters of the cancel managed database move operation. </param>
@@ -1221,8 +1309,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Completes a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeMove
-        /// Operation Id: ManagedDatabases_CompleteMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_CompleteMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="managedDatabaseMoveDefinition"> Parameters of the complete managed database move operation. </param>
@@ -1251,8 +1347,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Completes a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeMove
-        /// Operation Id: ManagedDatabases_CompleteMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_CompleteMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="managedDatabaseMoveDefinition"> Parameters of the complete managed database move operation. </param>
@@ -1281,8 +1385,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Completes the restore operation on a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore
-        /// Operation Id: ManagedDatabases_CompleteRestore
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_CompleteRestore</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
@@ -1311,8 +1423,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Completes the restore operation on a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore
-        /// Operation Id: ManagedDatabases_CompleteRestore
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_CompleteRestore</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
@@ -1341,8 +1461,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Starts a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/startMove
-        /// Operation Id: ManagedDatabases_StartMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/startMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_StartMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="managedDatabaseStartMoveDefinition"> Parameters of the start managed database move operation. </param>
@@ -1371,8 +1499,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Starts a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/startMove
-        /// Operation Id: ManagedDatabases_StartMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/startMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_StartMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="managedDatabaseStartMoveDefinition"> Parameters of the start managed database move operation. </param>
@@ -1401,8 +1537,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1447,8 +1591,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1493,8 +1645,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1534,8 +1694,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1575,8 +1743,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1619,8 +1795,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// Operation Id: ManagedDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

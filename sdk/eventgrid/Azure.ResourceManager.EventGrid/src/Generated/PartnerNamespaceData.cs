@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the PartnerNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the PartnerNamespace data model.
+    /// EventGrid Partner Namespace.
+    /// </summary>
     public partial class PartnerNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PartnerNamespaceData. </summary>

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
@@ -175,11 +176,64 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             );
         }
 
+        [TestCase]
+        [RecordedTest]
+        public async Task CosmosDbDataConnectionTests()
+        {
+            var dataConnectionCollection = Database.GetKustoDataConnections();
+
+            var cosmosDbDataConnectionName = GenerateAssetName("sdkCosmosDbDataConnection");
+
+            var cosmosDbDataConnectionDataCreate = new KustoCosmosDBDataConnection()
+            {
+                CosmosDBAccountResourceId = TE.CosmosDbAccountId,
+                CosmosDBDatabase = TE.CosmosDbDatabaseName,
+                CosmosDBContainer = TE.CosmosDbContainerName,
+                Location = Location,
+                ManagedIdentityResourceId = TE.UserAssignedIdentityId,
+                TableName = TE.TableName
+            };
+
+            var cosmosDbDataConnectionDataUpdate = new KustoCosmosDBDataConnection()
+            {
+                CosmosDBAccountResourceId = TE.CosmosDbAccountId,
+                CosmosDBDatabase = TE.CosmosDbDatabaseName,
+                CosmosDBContainer = TE.CosmosDbContainerName,
+                Location = Location,
+                ManagedIdentityResourceId = TE.UserAssignedIdentityId,
+                TableName = TE.TableName,
+                RetrievalStartOn = DateTimeOffset.MinValue
+            };
+
+            Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateCosmosDbDataConnectionAsync(
+                string cosmosDbDataConnectionName, KustoCosmosDBDataConnection cosmosDbDataConnectionData
+            ) => dataConnectionCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, cosmosDbDataConnectionName, cosmosDbDataConnectionData
+            );
+
+            await CollectionTests(
+                cosmosDbDataConnectionName,
+                GetFullDatabaseChildResourceName(cosmosDbDataConnectionName),
+                cosmosDbDataConnectionDataCreate,
+                cosmosDbDataConnectionDataUpdate,
+                CreateOrUpdateCosmosDbDataConnectionAsync,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.GetAllAsync,
+                dataConnectionCollection.ExistsAsync,
+                ValidateCosmosDbDataConnection
+            );
+
+            await DeletionTest(
+                cosmosDbDataConnectionName,
+                dataConnectionCollection.GetAsync,
+                dataConnectionCollection.ExistsAsync
+            );
+        }
+
         private static void ValidateIotHubDataConnection(
             string iotHubDataConnectionName,
             KustoIotHubDataConnection expectedIotHubDataConnectionData,
-            KustoIotHubDataConnection actualIotHubDataConnectionData
-        )
+            KustoIotHubDataConnection actualIotHubDataConnectionData)
         {
             AssertEquality(
                 expectedIotHubDataConnectionData.ConsumerGroup, actualIotHubDataConnectionData.ConsumerGroup
@@ -200,8 +254,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         private static void ValidateEventHubDataConnection(
             string eventHubDataConnectionName,
             KustoEventHubDataConnection expectedEventHubDataConnectionData,
-            KustoEventHubDataConnection actualEventHubDataConnectionData
-        )
+            KustoEventHubDataConnection actualEventHubDataConnectionData)
         {
             AssertEquality(
                 expectedEventHubDataConnectionData.ConsumerGroup, actualEventHubDataConnectionData.ConsumerGroup
@@ -227,8 +280,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         private static void ValidateEventGridDataConnection(
             string eventGridDataConnectionName,
             KustoEventGridDataConnection expectedEventGridDataConnectionData,
-            KustoEventGridDataConnection actualEventGridDataConnectionData
-        )
+            KustoEventGridDataConnection actualEventGridDataConnectionData)
         {
             AssertEquality(
                 expectedEventGridDataConnectionData.ConsumerGroup, actualEventGridDataConnectionData.ConsumerGroup
@@ -254,6 +306,20 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 actualEventGridDataConnectionData.StorageAccountResourceId
             );
             AssertEquality(expectedEventGridDataConnectionData.TableName, actualEventGridDataConnectionData.TableName);
+        }
+        private static void ValidateCosmosDbDataConnection(
+            string cosmosDbDataConnectionName,
+            KustoCosmosDBDataConnection expectedCosmosDbDataConnectionData,
+            KustoCosmosDBDataConnection actualCosmosDbDataConnectionData)
+        {
+            AssertEquality(expectedCosmosDbDataConnectionData.TableName, actualCosmosDbDataConnectionData.TableName);
+            AssertEquality(expectedCosmosDbDataConnectionData.MappingRuleName, actualCosmosDbDataConnectionData.MappingRuleName);
+            AssertEquality(expectedCosmosDbDataConnectionData.ManagedIdentityResourceId, actualCosmosDbDataConnectionData.ManagedIdentityResourceId);
+            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBAccountResourceId, actualCosmosDbDataConnectionData.CosmosDBAccountResourceId);
+            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBDatabase, actualCosmosDbDataConnectionData.CosmosDBDatabase);
+            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBContainer, actualCosmosDbDataConnectionData.CosmosDBContainer);
+            Assert.IsTrue(actualCosmosDbDataConnectionData.ManagedIdentityObjectId.HasValue);
+            Assert.NotNull(actualCosmosDbDataConnectionData.RetrievalStartOn);
         }
     }
 }

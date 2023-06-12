@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the BatchPrivateLinkResource data model.
+    /// Contains information about a private link resource.
+    /// </summary>
     public partial class BatchPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchPrivateLinkResourceData. </summary>

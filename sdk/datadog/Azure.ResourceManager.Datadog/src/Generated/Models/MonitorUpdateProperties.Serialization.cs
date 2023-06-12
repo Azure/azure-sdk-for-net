@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringStatus))
             {
-                writer.WritePropertyName("monitoringStatus");
+                writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
             writer.WriteEndObject();

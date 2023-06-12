@@ -20,10 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="primaryZone"> The primary zone. </param>
         /// <param name="recoveryZone"> The recovery zone. </param>
-        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone) : base(instanceType)
+        /// <param name="primaryExtendedLocation"> The primary extended location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
+        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation) : base(instanceType)
         {
             PrimaryZone = primaryZone;
             RecoveryZone = recoveryZone;
+            PrimaryExtendedLocation = primaryExtendedLocation;
+            RecoveryExtendedLocation = recoveryExtendedLocation;
             InstanceType = instanceType ?? "A2A";
         }
 
@@ -31,5 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string PrimaryZone { get; }
         /// <summary> The recovery zone. </summary>
         public string RecoveryZone { get; }
+        /// <summary> The primary extended location. </summary>
+        public ExtendedLocation PrimaryExtendedLocation { get; }
+        /// <summary> The recovery extended location. </summary>
+        public ExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

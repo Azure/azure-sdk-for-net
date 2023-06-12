@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The unit of time measurement for the specified VM price. Example: OneHour
-    /// Serialized Name: UnitOfMeasure
-    /// </summary>
+    /// <summary> The unit of time measurement for the specified VM price. Example: OneHour. </summary>
     public readonly partial struct MachineLearningUnitOfMeasure : IEquatable<MachineLearningUnitOfMeasure>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string OneHourValue = "OneHour";
 
-        /// <summary>
-        /// OneHour
-        /// Serialized Name: UnitOfMeasure.OneHour
-        /// </summary>
+        /// <summary> OneHour. </summary>
         public static MachineLearningUnitOfMeasure OneHour { get; } = new MachineLearningUnitOfMeasure(OneHourValue);
         /// <summary> Determines if two <see cref="MachineLearningUnitOfMeasure"/> values are the same. </summary>
         public static bool operator ==(MachineLearningUnitOfMeasure left, MachineLearningUnitOfMeasure right) => left.Equals(right);

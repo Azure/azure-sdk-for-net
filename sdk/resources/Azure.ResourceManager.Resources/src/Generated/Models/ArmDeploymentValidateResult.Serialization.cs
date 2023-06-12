@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentValidateResult DeserializeArmDeploymentValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseError> error = default;
             Optional<ArmDeploymentPropertiesExtended> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value);

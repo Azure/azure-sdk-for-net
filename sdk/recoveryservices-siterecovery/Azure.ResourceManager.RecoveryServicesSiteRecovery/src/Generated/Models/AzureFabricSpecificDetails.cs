@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             ContainerIds = new ChangeTrackingList<string>();
             Zones = new ChangeTrackingList<A2AZoneDetails>();
+            ExtendedLocations = new ChangeTrackingList<A2AExtendedLocationDetails>();
+            LocationDetails = new ChangeTrackingList<A2AFabricSpecificLocationDetails>();
             InstanceType = "Azure";
         }
 
@@ -26,11 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
         /// <param name="zones"> The zones. </param>
-        internal AzureFabricSpecificDetails(string instanceType, AzureLocation? location, IReadOnlyList<string> containerIds, IReadOnlyList<A2AZoneDetails> zones) : base(instanceType)
+        /// <param name="extendedLocations"> The ExtendedLocations. </param>
+        /// <param name="locationDetails"> The location details. </param>
+        internal AzureFabricSpecificDetails(string instanceType, AzureLocation? location, IReadOnlyList<string> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations, IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails) : base(instanceType)
         {
             Location = location;
             ContainerIds = containerIds;
             Zones = zones;
+            ExtendedLocations = extendedLocations;
+            LocationDetails = locationDetails;
             InstanceType = instanceType ?? "Azure";
         }
 
@@ -40,5 +46,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyList<string> ContainerIds { get; }
         /// <summary> The zones. </summary>
         public IReadOnlyList<A2AZoneDetails> Zones { get; }
+        /// <summary> The ExtendedLocations. </summary>
+        public IReadOnlyList<A2AExtendedLocationDetails> ExtendedLocations { get; }
+        /// <summary> The location details. </summary>
+        public IReadOnlyList<A2AFabricSpecificLocationDetails> LocationDetails { get; }
     }
 }

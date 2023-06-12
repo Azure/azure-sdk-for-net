@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static LogAnalytics DeserializeLogAnalytics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogAnalyticsOutput> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value);

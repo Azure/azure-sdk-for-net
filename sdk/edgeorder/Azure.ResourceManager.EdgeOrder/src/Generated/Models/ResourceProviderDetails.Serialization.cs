@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ResourceProviderDetails DeserializeResourceProviderDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceProviderNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceProviderNamespace"))
+                if (property.NameEquals("resourceProviderNamespace"u8))
                 {
                     resourceProviderNamespace = property.Value.GetString();
                     continue;

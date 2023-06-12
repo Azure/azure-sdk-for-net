@@ -13,7 +13,10 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPoolIscsiTarget data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPoolIscsiTarget data model.
+    /// Response for iSCSI Target requests.
+    /// </summary>
     public partial class DiskPoolIscsiTargetData : ResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetData. </summary>

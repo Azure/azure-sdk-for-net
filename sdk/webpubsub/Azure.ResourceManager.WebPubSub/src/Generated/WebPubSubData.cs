@@ -12,7 +12,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the WebPubSub data model. </summary>
+    /// <summary>
+    /// A class representing the WebPubSub data model.
+    /// A class represent a resource.
+    /// </summary>
     public partial class WebPubSubData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WebPubSubData. </summary>

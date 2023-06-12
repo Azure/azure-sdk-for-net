@@ -1,0 +1,91 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "256",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-cf552cdb988b292f8aefca6c93983c94-a6ccd1d1f9c2e1e5-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "693f3dbfdd75cfb0678b3eeafe875ff7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "This test was created through loadtesting C# SDK",
+        "displayName": "Dotnet Testing Framework Loadtest",
+        "loadTestConfig": {
+          "engineInstance": 1,
+          "splitAllCSVs": false
+        },
+        "secrets": {},
+        "enviornmentVariables": {},
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Content-Length": "436",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Jan 2023 16:22:46 GMT",
+        "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+        "mise-correlation-id": "5db60e38-1557-493b-b649-1e7be312d0dc",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "385eeb4c-388b-4d6d-9c62-71967ae4d239"
+      },
+      "ResponseBody": {
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        },
+        "loadTestConfiguration": {
+          "engineInstances": 1,
+          "splitAllCSVs": false,
+          "quickStartTest": false
+        },
+        "inputArtifacts": {
+          "additionalFileInfo": []
+        },
+        "testId": "test-from-csharp-sdk-testing-framework",
+        "description": "This test was created through loadtesting C# SDK",
+        "displayName": "Dotnet Testing Framework Loadtest",
+        "createdDateTime": "2023-01-19T16:22:46.244Z",
+        "lastModifiedDateTime": "2023-01-19T16:22:46.244Z"
+      }
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b2ddbff46141c134a9e7fa54fc423ad5-dba7c49886102ab1-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9c8a1dd4f3ae36e3ac7cf65cfccc95c7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Date": "Thu, 19 Jan 2023 16:22:46 GMT",
+        "mise-correlation-id": "1fda71a2-e080-4c60-8dbe-7aa550a45743",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "217dfed5-a8e4-473d-a323-2e9508e42a90"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "LOADTESTSERVICE_ENDPOINT": "f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com",
+    "RandomSeed": "865891237"
+  }
+}

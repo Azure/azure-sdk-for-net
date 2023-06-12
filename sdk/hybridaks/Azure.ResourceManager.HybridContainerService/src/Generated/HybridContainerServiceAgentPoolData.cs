@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the HybridContainerServiceAgentPool data model. </summary>
+    /// <summary>
+    /// A class representing the HybridContainerServiceAgentPool data model.
+    /// The agentPool resource definition
+    /// </summary>
     public partial class HybridContainerServiceAgentPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolData. </summary>

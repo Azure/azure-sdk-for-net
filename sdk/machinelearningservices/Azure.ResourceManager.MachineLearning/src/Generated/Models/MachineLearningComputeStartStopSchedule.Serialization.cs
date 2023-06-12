@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeStartStopSchedule DeserializeMachineLearningComputeStartStopSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<MachineLearningComputeProvisioningStatus> provisioningStatus = default;
             Optional<MachineLearningScheduleStatus> status = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningScheduleBase> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,71 +38,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningStatus = new MachineLearningComputeProvisioningStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MachineLearningScheduleStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new MachineLearningComputePowerAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("triggerType"))
+                if (property.NameEquals("triggerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     triggerType = new MachineLearningTriggerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recurrence"))
+                if (property.NameEquals("recurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cron"))
+                if (property.NameEquals("cron"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cron = CronTrigger.DeserializeCronTrigger(property.Value);
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schedule = MachineLearningScheduleBase.DeserializeMachineLearningScheduleBase(property.Value);

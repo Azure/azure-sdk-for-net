@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,8 +92,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,92 +129,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List secure scores for all your Microsoft Defender for Cloud initiatives within your current scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores
-        /// Operation Id: SecureScores_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecureScoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecureScoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecureScoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _secureScoreRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecureScoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecureScoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _secureScoreRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecureScoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecureScoreResource(Client, SecureScoreData.DeserializeSecureScoreData(e)), _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List secure scores for all your Microsoft Defender for Cloud initiatives within your current scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores
-        /// Operation Id: SecureScores_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecureScoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecureScoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _secureScoreRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecureScoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecureScoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _secureScoreRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecureScoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecureScoreResource(Client, SecureScoreData.DeserializeSecureScoreData(e)), _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +208,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

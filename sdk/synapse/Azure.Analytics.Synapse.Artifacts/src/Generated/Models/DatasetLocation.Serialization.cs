@@ -18,16 +18,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
                 writer.WriteObjectValue(FileName);
             }
             foreach (var item in AdditionalProperties)
@@ -40,6 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetLocation DeserializeDatasetLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

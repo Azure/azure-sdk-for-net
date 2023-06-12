@@ -7,18 +7,39 @@
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The response of last anomaly detection. </summary>
+    /// <summary> Response of the last anomaly detection. </summary>
     public partial class UnivariateLastDetectionResult
     {
         /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
-        /// <param name="period"></param>
-        /// <param name="suggestedWindow"></param>
-        /// <param name="expectedValue"></param>
-        /// <param name="upperMargin"></param>
-        /// <param name="lowerMargin"></param>
-        /// <param name="isAnomaly"></param>
-        /// <param name="isNegativeAnomaly"></param>
-        /// <param name="isPositiveAnomaly"></param>
+        /// <param name="period">
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </param>
+        /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
+        /// <param name="expectedValue"> Expected value of the latest point. </param>
+        /// <param name="upperMargin">
+        /// Upper margin of the latest point. UpperMargin is used to calculate
+        /// upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
+        /// If the value of latest point is between upperBoundary and lowerBoundary, it
+        /// should be treated as a normal value. Adjusting the marginScale value enables the anomaly
+        /// status of the latest point to be changed.
+        /// </param>
+        /// <param name="lowerMargin">
+        /// Lower margin of the latest point. LowerMargin is used to calculate
+        /// lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
+        /// </param>
+        /// <param name="isAnomaly">
+        /// Anomaly status of the latest point. True means the latest point is an anomaly,
+        /// either in the negative direction or in the positive direction.
+        /// </param>
+        /// <param name="isNegativeAnomaly">
+        /// Anomaly status of the latest point in a negative direction. True means the latest
+        /// point is an anomaly and its real value is smaller than the expected one.
+        /// </param>
+        /// <param name="isPositiveAnomaly">
+        /// Anomaly status of the latest point in a positive direction. True means the latest
+        /// point is an anomaly and its real value is larger than the expected one.
+        /// </param>
         internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly)
         {
             Period = period;
@@ -32,15 +53,39 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
-        /// <param name="period"></param>
-        /// <param name="suggestedWindow"></param>
-        /// <param name="expectedValue"></param>
-        /// <param name="upperMargin"></param>
-        /// <param name="lowerMargin"></param>
-        /// <param name="isAnomaly"></param>
-        /// <param name="isNegativeAnomaly"></param>
-        /// <param name="isPositiveAnomaly"></param>
-        /// <param name="severity"></param>
+        /// <param name="period">
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </param>
+        /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
+        /// <param name="expectedValue"> Expected value of the latest point. </param>
+        /// <param name="upperMargin">
+        /// Upper margin of the latest point. UpperMargin is used to calculate
+        /// upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
+        /// If the value of latest point is between upperBoundary and lowerBoundary, it
+        /// should be treated as a normal value. Adjusting the marginScale value enables the anomaly
+        /// status of the latest point to be changed.
+        /// </param>
+        /// <param name="lowerMargin">
+        /// Lower margin of the latest point. LowerMargin is used to calculate
+        /// lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
+        /// </param>
+        /// <param name="isAnomaly">
+        /// Anomaly status of the latest point. True means the latest point is an anomaly,
+        /// either in the negative direction or in the positive direction.
+        /// </param>
+        /// <param name="isNegativeAnomaly">
+        /// Anomaly status of the latest point in a negative direction. True means the latest
+        /// point is an anomaly and its real value is smaller than the expected one.
+        /// </param>
+        /// <param name="isPositiveAnomaly">
+        /// Anomaly status of the latest point in a positive direction. True means the latest
+        /// point is an anomaly and its real value is larger than the expected one.
+        /// </param>
+        /// <param name="severity">
+        /// Severity score for the last input point. The larger the value is, the more
+        /// severe the anomaly is. For normal points, the severity is always 0.
+        /// </param>
         internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity)
         {
             Period = period;
@@ -54,23 +99,47 @@ namespace Azure.AI.AnomalyDetector
             Severity = severity;
         }
 
-        /// <summary> Gets the period. </summary>
+        /// <summary>
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </summary>
         public int Period { get; }
-        /// <summary> Gets the suggested window. </summary>
+        /// <summary> Suggested input series points needed for detecting the latest point. </summary>
         public int SuggestedWindow { get; }
-        /// <summary> Gets the expected value. </summary>
+        /// <summary> Expected value of the latest point. </summary>
         public float ExpectedValue { get; }
-        /// <summary> Gets the upper margin. </summary>
+        /// <summary>
+        /// Upper margin of the latest point. UpperMargin is used to calculate
+        /// upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
+        /// If the value of latest point is between upperBoundary and lowerBoundary, it
+        /// should be treated as a normal value. Adjusting the marginScale value enables the anomaly
+        /// status of the latest point to be changed.
+        /// </summary>
         public float UpperMargin { get; }
-        /// <summary> Gets the lower margin. </summary>
+        /// <summary>
+        /// Lower margin of the latest point. LowerMargin is used to calculate
+        /// lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
+        /// </summary>
         public float LowerMargin { get; }
-        /// <summary> Gets the is anomaly. </summary>
+        /// <summary>
+        /// Anomaly status of the latest point. True means the latest point is an anomaly,
+        /// either in the negative direction or in the positive direction.
+        /// </summary>
         public bool IsAnomaly { get; }
-        /// <summary> Gets the is negative anomaly. </summary>
+        /// <summary>
+        /// Anomaly status of the latest point in a negative direction. True means the latest
+        /// point is an anomaly and its real value is smaller than the expected one.
+        /// </summary>
         public bool IsNegativeAnomaly { get; }
-        /// <summary> Gets the is positive anomaly. </summary>
+        /// <summary>
+        /// Anomaly status of the latest point in a positive direction. True means the latest
+        /// point is an anomaly and its real value is larger than the expected one.
+        /// </summary>
         public bool IsPositiveAnomaly { get; }
-        /// <summary> Gets the severity. </summary>
+        /// <summary>
+        /// Severity score for the last input point. The larger the value is, the more
+        /// severe the anomaly is. For normal points, the severity is always 0.
+        /// </summary>
         public float? Severity { get; }
     }
 }

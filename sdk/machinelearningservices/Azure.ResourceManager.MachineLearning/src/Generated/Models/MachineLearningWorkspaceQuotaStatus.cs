@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Status of update workspace quota.
-    /// Serialized Name: Status
-    /// </summary>
+    /// <summary> Status of update workspace quota. </summary>
     public readonly partial struct MachineLearningWorkspaceQuotaStatus : IEquatable<MachineLearningWorkspaceQuotaStatus>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string OperationNotSupportedForSkuValue = "OperationNotSupportedForSku";
         private const string OperationNotEnabledForRegionValue = "OperationNotEnabledForRegion";
 
-        /// <summary>
-        /// Undefined
-        /// Serialized Name: Status.Undefined
-        /// </summary>
+        /// <summary> Undefined. </summary>
         public static MachineLearningWorkspaceQuotaStatus Undefined { get; } = new MachineLearningWorkspaceQuotaStatus(UndefinedValue);
-        /// <summary>
-        /// Success
-        /// Serialized Name: Status.Success
-        /// </summary>
+        /// <summary> Success. </summary>
         public static MachineLearningWorkspaceQuotaStatus Success { get; } = new MachineLearningWorkspaceQuotaStatus(SuccessValue);
-        /// <summary>
-        /// Failure
-        /// Serialized Name: Status.Failure
-        /// </summary>
+        /// <summary> Failure. </summary>
         public static MachineLearningWorkspaceQuotaStatus Failure { get; } = new MachineLearningWorkspaceQuotaStatus(FailureValue);
-        /// <summary>
-        /// InvalidQuotaBelowClusterMinimum
-        /// Serialized Name: Status.InvalidQuotaBelowClusterMinimum
-        /// </summary>
+        /// <summary> InvalidQuotaBelowClusterMinimum. </summary>
         public static MachineLearningWorkspaceQuotaStatus InvalidQuotaBelowClusterMinimum { get; } = new MachineLearningWorkspaceQuotaStatus(InvalidQuotaBelowClusterMinimumValue);
-        /// <summary>
-        /// InvalidQuotaExceedsSubscriptionLimit
-        /// Serialized Name: Status.InvalidQuotaExceedsSubscriptionLimit
-        /// </summary>
+        /// <summary> InvalidQuotaExceedsSubscriptionLimit. </summary>
         public static MachineLearningWorkspaceQuotaStatus InvalidQuotaExceedsSubscriptionLimit { get; } = new MachineLearningWorkspaceQuotaStatus(InvalidQuotaExceedsSubscriptionLimitValue);
-        /// <summary>
-        /// InvalidVMFamilyName
-        /// Serialized Name: Status.InvalidVMFamilyName
-        /// </summary>
+        /// <summary> InvalidVMFamilyName. </summary>
         public static MachineLearningWorkspaceQuotaStatus InvalidVmFamilyName { get; } = new MachineLearningWorkspaceQuotaStatus(InvalidVmFamilyNameValue);
-        /// <summary>
-        /// OperationNotSupportedForSku
-        /// Serialized Name: Status.OperationNotSupportedForSku
-        /// </summary>
+        /// <summary> OperationNotSupportedForSku. </summary>
         public static MachineLearningWorkspaceQuotaStatus OperationNotSupportedForSku { get; } = new MachineLearningWorkspaceQuotaStatus(OperationNotSupportedForSkuValue);
-        /// <summary>
-        /// OperationNotEnabledForRegion
-        /// Serialized Name: Status.OperationNotEnabledForRegion
-        /// </summary>
+        /// <summary> OperationNotEnabledForRegion. </summary>
         public static MachineLearningWorkspaceQuotaStatus OperationNotEnabledForRegion { get; } = new MachineLearningWorkspaceQuotaStatus(OperationNotEnabledForRegionValue);
         /// <summary> Determines if two <see cref="MachineLearningWorkspaceQuotaStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningWorkspaceQuotaStatus left, MachineLearningWorkspaceQuotaStatus right) => left.Equals(right);

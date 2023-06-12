@@ -12,7 +12,10 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the SharedGalleryImage data model. </summary>
+    /// <summary>
+    /// A class representing the SharedGalleryImage data model.
+    /// Specifies information about the gallery image definition that you want to create or update.
+    /// </summary>
     public partial class SharedGalleryImageData : PirSharedGalleryResourceData
     {
         /// <summary> Initializes a new instance of SharedGalleryImageData. </summary>
@@ -35,7 +38,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        internal SharedGalleryImageData(string name, AzureLocation? location, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture) : base(name, location, uniqueId)
+        /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
+        /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
+        internal SharedGalleryImageData(string name, AzureLocation? location, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula) : base(name, location, uniqueId)
         {
             OSType = osType;
             OSState = osState;
@@ -47,6 +52,8 @@ namespace Azure.ResourceManager.Compute
             Features = features;
             PurchasePlan = purchasePlan;
             Architecture = architecture;
+            PrivacyStatementUri = privacyStatementUri;
+            Eula = eula;
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
@@ -75,6 +82,10 @@ namespace Azure.ResourceManager.Compute
         public ImagePurchasePlan PurchasePlan { get; }
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
         public ArchitectureType? Architecture { get; }
+        /// <summary> Privacy statement uri for the current community gallery image. </summary>
+        public Uri PrivacyStatementUri { get; }
+        /// <summary> End-user license agreement for the current community gallery image. </summary>
+        public string Eula { get; }
         /// <summary> The resource identifier. </summary>
         public ResourceIdentifier Id { get; internal set; }
     }

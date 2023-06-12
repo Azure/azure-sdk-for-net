@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationMode))
             {
-                writer.WritePropertyName("notificationMode");
+                writer.WritePropertyName("notificationMode"u8);
                 writer.WriteStringValue(NotificationMode.Value.ToString());
             }
             if (Optional.IsDefined(MessageScope))
             {
-                writer.WritePropertyName("messageScope");
+                writer.WritePropertyName("messageScope"u8);
                 writer.WriteStringValue(MessageScope.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IncludedEvents))
             {
-                writer.WritePropertyName("includedEvents");
+                writer.WritePropertyName("includedEvents"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedEvents)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(NotificationEndpoints))
             {
-                writer.WritePropertyName("notificationEndpoints");
+                writer.WritePropertyName("notificationEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotificationEndpoints)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -56,38 +56,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static NotificationRegistrationProperties DeserializeNotificationRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationMode> notificationMode = default;
             Optional<MessageScope> messageScope = default;
             Optional<IList<string>> includedEvents = default;
             Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationMode"))
+                if (property.NameEquals("notificationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notificationMode = new NotificationMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("messageScope"))
+                if (property.NameEquals("messageScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageScope = new MessageScope(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("includedEvents"))
+                if (property.NameEquals("includedEvents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -98,11 +99,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     includedEvents = array;
                     continue;
                 }
-                if (property.NameEquals("notificationEndpoints"))
+                if (property.NameEquals("notificationEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NotificationEndpoint> array = new List<NotificationEndpoint>();
@@ -113,14 +113,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     notificationEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

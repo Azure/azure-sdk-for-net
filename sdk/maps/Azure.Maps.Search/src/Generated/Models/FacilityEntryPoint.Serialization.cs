@@ -14,25 +14,27 @@ namespace Azure.Maps.Search.Models
     {
         internal static FacilityEntryPoint DeserializeFacilityEntryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntryPointType> type = default;
             Optional<LatLongPairAbbreviated> position = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new EntryPointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);

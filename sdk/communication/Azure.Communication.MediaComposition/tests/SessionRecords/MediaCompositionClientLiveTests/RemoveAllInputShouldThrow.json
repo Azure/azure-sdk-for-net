@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mediacomposition-clientsdk-int.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
+      "RequestUri": "https://test-media.dev.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "768",
         "Content-Type": "application/json",
-        "traceparent": "00-41a493620e31cd418693410540e978d4-a6482b318c198044-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221209.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "25e40d84f5fb48fb544eb23d39691d70",
+        "traceparent": "00-2a96abefaab4b8c3e619b34ba1dd86c7-6af0a7b1be8f3994-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230207.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "305ce6dded95ab962b30a85c73cf6bc0",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Dec 2022 22:15:52 GMT",
+        "x-ms-date": "Tue, 07 Feb 2023 17:08:52 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -65,10 +65,10 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Dec 2022 22:15:53 GMT",
-        "MS-CV": "q5PGXhNStkGChOTNslGyyQ.0",
+        "Date": "Tue, 07 Feb 2023 17:08:52 GMT",
+        "MS-CV": "TdldmKx7NkGEiQLhDCEUpw.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0mbOTYwAAAAA/GP1WtNpNTK9\u002B8B3gS65gWVZSMzBFREdFMDMxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0pYXiYwAAAAAW8Up7VU72RIjqoefkPnvLWVZSMzExMDAwMTE1MDUzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
@@ -128,18 +128,18 @@
       }
     },
     {
-      "RequestUri": "https://mediacomposition-clientsdk-int.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
+      "RequestUri": "https://test-media.dev.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "52",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-4dc0ebde9d62dd47b479c75620f42a24-ded4b970c1417f4a-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221209.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "80dbb810164c8b7f605af2421d7eafa5",
+        "traceparent": "00-ad8110ef06be92943db4eba79d4f03f9-e6e62be41f0dc921-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230207.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f0c20dd39953e921eaeb359fb23ea096",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Dec 2022 22:15:52 GMT",
+        "x-ms-date": "Tue, 07 Feb 2023 17:08:53 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -152,17 +152,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Dec 2022 22:15:53 GMT",
-        "MS-CV": "zczVLlkNlE\u002B4EUdjltenUg.0",
+        "Date": "Tue, 07 Feb 2023 17:08:53 GMT",
+        "MS-CV": "Z\u002BPqd08bzE6plj8xHFlT9w.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0mbOTYwAAAADIbryPfFqMRIPbHUj7FTOBWVZSMzBFREdFMDMxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0pYXiYwAAAAAptH/lh5b\u002BSaUtjS9hfHvAWVZSMzExMDAwMTE1MDUzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Must have exactly one media input of type ACS Group Call, Room or Teams Call; less than one is defined.\u0022"
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://mediacomposition-clientsdk-int.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1240321675"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1020578476"
   }
 }

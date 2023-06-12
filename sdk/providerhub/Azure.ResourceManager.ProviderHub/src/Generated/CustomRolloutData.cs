@@ -12,7 +12,10 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the CustomRollout data model. </summary>
+    /// <summary>
+    /// A class representing the CustomRollout data model.
+    /// Rollout details.
+    /// </summary>
     public partial class CustomRolloutData : ResourceData
     {
         /// <summary> Initializes a new instance of CustomRolloutData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the rollout. </param>
-        internal CustomRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, CustomRolloutProperties properties) : base(id, name, resourceType, systemData)
+        internal CustomRolloutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomRolloutProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

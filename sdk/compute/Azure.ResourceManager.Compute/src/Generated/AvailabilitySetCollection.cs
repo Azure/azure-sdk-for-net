@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Create or update an availability set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
-        /// Operation Id: AvailabilitySets_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Create or update an availability set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
-        /// Operation Id: AvailabilitySets_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Retrieves information about an availability set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
-        /// Operation Id: AvailabilitySets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Retrieves information about an availability set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
-        /// Operation Id: AvailabilitySets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Lists all availability sets in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets
-        /// Operation Id: AvailabilitySets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailabilitySetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailabilitySetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _availabilitySetRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailabilitySetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _availabilitySetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilitySetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilitySetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailabilitySetResource(Client, AvailabilitySetData.DeserializeAvailabilitySetData(e)), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all availability sets in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets
-        /// Operation Id: AvailabilitySets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailabilitySetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AvailabilitySetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _availabilitySetRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailabilitySetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _availabilitySetRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilitySetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilitySetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailabilitySetResource(Client, AvailabilitySetData.DeserializeAvailabilitySetData(e)), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
-        /// Operation Id: AvailabilitySets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
-        /// Operation Id: AvailabilitySets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiPrefix))
             {
-                writer.WritePropertyName("apiPrefix");
+                writer.WritePropertyName("apiPrefix"u8);
                 writer.WriteStringValue(ApiPrefix);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpSettingsRoutes DeserializeAppServiceHttpSettingsRoutes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiPrefix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiPrefix"))
+                if (property.NameEquals("apiPrefix"u8))
                 {
                     apiPrefix = property.Value.GetString();
                     continue;

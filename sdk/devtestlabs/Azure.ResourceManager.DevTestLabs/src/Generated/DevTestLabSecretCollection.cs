@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing secret. This operation can take a while to complete.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}
-        /// Operation Id: Secrets_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the secret. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing secret. This operation can take a while to complete.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}
-        /// Operation Id: Secrets_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the secret. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get secret.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}
-        /// Operation Id: Secrets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=value)&apos;. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get secret.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}
-        /// Operation Id: Secrets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=value)&apos;. </param>
@@ -181,8 +212,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List secrets in a given user profile.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets
-        /// Operation Id: Secrets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=value)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -192,43 +231,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabSecretResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabSecretResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabSecretResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabSecretSecretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabSecretSecretsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabSecretResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabSecretResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabSecretSecretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabSecretSecretsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabSecretResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabSecretSecretsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabSecretResource(Client, DevTestLabSecretData.DeserializeDevTestLabSecretData(e)), _devTestLabSecretSecretsClientDiagnostics, Pipeline, "DevTestLabSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List secrets in a given user profile.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets
-        /// Operation Id: Secrets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=value)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -238,43 +257,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabSecretResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabSecretResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabSecretResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabSecretSecretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabSecretSecretsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabSecretResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabSecretResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabSecretSecretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabSecretSecretsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabSecretResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabSecretSecretsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabSecretResource(Client, DevTestLabSecretData.DeserializeDevTestLabSecretData(e)), _devTestLabSecretSecretsClientDiagnostics, Pipeline, "DevTestLabSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}
-        /// Operation Id: Secrets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=value)&apos;. </param>
@@ -301,8 +300,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}
-        /// Operation Id: Secrets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=value)&apos;. </param>

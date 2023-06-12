@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerName))
             {
-                writer.WritePropertyName("containerName");
+                writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
             if (Optional.IsDefined(SourceProcessServerId))
             {
-                writer.WritePropertyName("sourceProcessServerId");
+                writer.WritePropertyName("sourceProcessServerId"u8);
                 writer.WriteStringValue(SourceProcessServerId);
             }
             if (Optional.IsDefined(TargetProcessServerId))
             {
-                writer.WritePropertyName("targetProcessServerId");
+                writer.WritePropertyName("targetProcessServerId"u8);
                 writer.WriteStringValue(TargetProcessServerId);
             }
             if (Optional.IsCollectionDefined(VmsToMigrate))
             {
-                writer.WritePropertyName("vmsToMigrate");
+                writer.WritePropertyName("vmsToMigrate"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmsToMigrate)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(UpdateType))
             {
-                writer.WritePropertyName("updateType");
+                writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
             writer.WriteEndObject();

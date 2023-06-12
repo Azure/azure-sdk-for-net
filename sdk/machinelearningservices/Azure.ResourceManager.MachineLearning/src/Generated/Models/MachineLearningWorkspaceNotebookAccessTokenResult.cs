@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningWorkspaceNotebookAccessTokenResult.
-    /// Serialized Name: NotebookAccessTokenResult
-    /// </summary>
+    /// <summary> The MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
     public partial class MachineLearningWorkspaceNotebookAccessTokenResult
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
@@ -19,14 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
-        /// <param name="notebookResourceId"> Serialized Name: NotebookAccessTokenResult.notebookResourceId. </param>
-        /// <param name="hostName"> Serialized Name: NotebookAccessTokenResult.hostName. </param>
-        /// <param name="publicDns"> Serialized Name: NotebookAccessTokenResult.publicDns. </param>
-        /// <param name="accessToken"> Serialized Name: NotebookAccessTokenResult.accessToken. </param>
-        /// <param name="tokenType"> Serialized Name: NotebookAccessTokenResult.tokenType. </param>
-        /// <param name="expiresIn"> Serialized Name: NotebookAccessTokenResult.expiresIn. </param>
-        /// <param name="refreshToken"> Serialized Name: NotebookAccessTokenResult.refreshToken. </param>
-        /// <param name="scope"> Serialized Name: NotebookAccessTokenResult.scope. </param>
+        /// <param name="notebookResourceId"></param>
+        /// <param name="hostName"></param>
+        /// <param name="publicDns"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="tokenType"></param>
+        /// <param name="expiresIn"></param>
+        /// <param name="refreshToken"></param>
+        /// <param name="scope"></param>
         internal MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId, string hostName, string publicDns, string accessToken, string tokenType, int? expiresIn, string refreshToken, string scope)
         {
             NotebookResourceId = notebookResourceId;
@@ -39,21 +36,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Scope = scope;
         }
 
-        /// <summary> Serialized Name: NotebookAccessTokenResult.notebookResourceId. </summary>
+        /// <summary> Gets the notebook resource id. </summary>
         public string NotebookResourceId { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.hostName. </summary>
+        /// <summary> Gets the host name. </summary>
         public string HostName { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.publicDns. </summary>
+        /// <summary> Gets the public dns. </summary>
         public string PublicDns { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.accessToken. </summary>
+        /// <summary> Gets the access token. </summary>
         public string AccessToken { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.tokenType. </summary>
+        /// <summary> Gets the token type. </summary>
         public string TokenType { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.expiresIn. </summary>
+        /// <summary> Gets the expires in. </summary>
         public int? ExpiresIn { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.refreshToken. </summary>
+        /// <summary> Gets the refresh token. </summary>
         public string RefreshToken { get; }
-        /// <summary> Serialized Name: NotebookAccessTokenResult.scope. </summary>
+        /// <summary> Gets the scope. </summary>
         public string Scope { get; }
     }
 }

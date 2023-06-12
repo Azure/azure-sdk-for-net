@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-tune-hyperparameters
     /// For more information on the available settings please visit the official documentation:
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-    /// Serialized Name: ImageModelDistributionSettings
     /// </summary>
     public partial class ImageModelDistributionSettings
     {
@@ -32,127 +31,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ImageModelDistributionSettings. </summary>
-        /// <param name="amsGradient">
-        /// Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.amsGradient
-        /// </param>
-        /// <param name="augmentations">
-        /// Settings for using Augmentations.
-        /// Serialized Name: ImageModelDistributionSettings.augmentations
-        /// </param>
-        /// <param name="beta1">
-        /// Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.beta1
-        /// </param>
-        /// <param name="beta2">
-        /// Value of &apos;beta2&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.beta2
-        /// </param>
-        /// <param name="distributed">
-        /// Whether to use distributer training.
-        /// Serialized Name: ImageModelDistributionSettings.distributed
-        /// </param>
-        /// <param name="earlyStopping">
-        /// Enable early stopping logic during training.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStopping
-        /// </param>
+        /// <param name="amsGradient"> Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;. </param>
+        /// <param name="augmentations"> Settings for using Augmentations. </param>
+        /// <param name="beta1"> Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="beta2"> Value of &apos;beta2&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="distributed"> Whether to use distributer training. </param>
+        /// <param name="earlyStopping"> Enable early stopping logic during training. </param>
         /// <param name="earlyStoppingDelay">
         /// Minimum number of epochs or validation evaluations to wait before primary metric improvement
         /// is tracked for early stopping. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStoppingDelay
         /// </param>
         /// <param name="earlyStoppingPatience">
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStoppingPatience
         /// </param>
-        /// <param name="enableOnnxNormalization">
-        /// Enable normalization when exporting ONNX model.
-        /// Serialized Name: ImageModelDistributionSettings.enableOnnxNormalization
-        /// </param>
-        /// <param name="evaluationFrequency">
-        /// Frequency to evaluate validation dataset to get metric scores. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.evaluationFrequency
-        /// </param>
+        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
+        /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of &quot;GradAccumulationStep&quot; steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
         /// the accumulated gradients to compute the weight updates. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.gradientAccumulationStep
         /// </param>
         /// <param name="layersToFreeze">
         /// Number of layers to freeze for the model. Must be a positive integer.
         /// For instance, passing 2 as value for &apos;seresnext&apos; means
         /// freezing layer0 and layer1. For a full list of models supported and details on layer freeze, please
         /// see: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-        /// Serialized Name: ImageModelDistributionSettings.layersToFreeze
         /// </param>
-        /// <param name="learningRate">
-        /// Initial learning rate. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.learningRate
-        /// </param>
-        /// <param name="learningRateScheduler">
-        /// Type of learning rate scheduler. Must be &apos;warmup_cosine&apos; or &apos;step&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.learningRateScheduler
-        /// </param>
+        /// <param name="learningRate"> Initial learning rate. Must be a float in the range [0, 1]. </param>
+        /// <param name="learningRateScheduler"> Type of learning rate scheduler. Must be &apos;warmup_cosine&apos; or &apos;step&apos;. </param>
         /// <param name="modelName">
         /// Name of the model to use for training.
         /// For more information on the available models please visit the official documentation:
         /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-        /// Serialized Name: ImageModelDistributionSettings.modelName
         /// </param>
-        /// <param name="momentum">
-        /// Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.momentum
-        /// </param>
-        /// <param name="nesterov">
-        /// Enable nesterov when optimizer is &apos;sgd&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.nesterov
-        /// </param>
-        /// <param name="numberOfEpochs">
-        /// Number of training epochs. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.numberOfEpochs
-        /// </param>
-        /// <param name="numberOfWorkers">
-        /// Number of data loader workers. Must be a non-negative integer.
-        /// Serialized Name: ImageModelDistributionSettings.numberOfWorkers
-        /// </param>
-        /// <param name="optimizer">
-        /// Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.optimizer
-        /// </param>
-        /// <param name="randomSeed">
-        /// Random seed to be used when using deterministic training.
-        /// Serialized Name: ImageModelDistributionSettings.randomSeed
-        /// </param>
-        /// <param name="stepLRGamma">
-        /// Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.stepLRGamma
-        /// </param>
-        /// <param name="stepLRStepSize">
-        /// Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.stepLRStepSize
-        /// </param>
-        /// <param name="trainingBatchSize">
-        /// Training batch size. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.trainingBatchSize
-        /// </param>
-        /// <param name="validationBatchSize">
-        /// Validation batch size. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.validationBatchSize
-        /// </param>
-        /// <param name="warmupCosineLRCycles">
-        /// Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.warmupCosineLRCycles
-        /// </param>
-        /// <param name="warmupCosineLRWarmupEpochs">
-        /// Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.warmupCosineLRWarmupEpochs
-        /// </param>
-        /// <param name="weightDecay">
-        /// Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.weightDecay
-        /// </param>
+        /// <param name="momentum"> Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="nesterov"> Enable nesterov when optimizer is &apos;sgd&apos;. </param>
+        /// <param name="numberOfEpochs"> Number of training epochs. Must be a positive integer. </param>
+        /// <param name="numberOfWorkers"> Number of data loader workers. Must be a non-negative integer. </param>
+        /// <param name="optimizer"> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </param>
+        /// <param name="randomSeed"> Random seed to be used when using deterministic training. </param>
+        /// <param name="stepLRGamma"> Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="stepLRStepSize"> Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer. </param>
+        /// <param name="trainingBatchSize"> Training batch size. Must be a positive integer. </param>
+        /// <param name="validationBatchSize"> Validation batch size. Must be a positive integer. </param>
+        /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer. </param>
+        /// <param name="weightDecay"> Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1]. </param>
         internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay)
         {
             AmsGradient = amsGradient;
@@ -185,63 +110,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WeightDecay = weightDecay;
         }
 
-        /// <summary>
-        /// Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.amsGradient
-        /// </summary>
+        /// <summary> Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;. </summary>
         public string AmsGradient { get; set; }
-        /// <summary>
-        /// Settings for using Augmentations.
-        /// Serialized Name: ImageModelDistributionSettings.augmentations
-        /// </summary>
+        /// <summary> Settings for using Augmentations. </summary>
         public string Augmentations { get; set; }
-        /// <summary>
-        /// Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.beta1
-        /// </summary>
+        /// <summary> Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </summary>
         public string Beta1 { get; set; }
-        /// <summary>
-        /// Value of &apos;beta2&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.beta2
-        /// </summary>
+        /// <summary> Value of &apos;beta2&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </summary>
         public string Beta2 { get; set; }
-        /// <summary>
-        /// Whether to use distributer training.
-        /// Serialized Name: ImageModelDistributionSettings.distributed
-        /// </summary>
+        /// <summary> Whether to use distributer training. </summary>
         public string Distributed { get; set; }
-        /// <summary>
-        /// Enable early stopping logic during training.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStopping
-        /// </summary>
+        /// <summary> Enable early stopping logic during training. </summary>
         public string EarlyStopping { get; set; }
         /// <summary>
         /// Minimum number of epochs or validation evaluations to wait before primary metric improvement
         /// is tracked for early stopping. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStoppingDelay
         /// </summary>
         public string EarlyStoppingDelay { get; set; }
         /// <summary>
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStoppingPatience
         /// </summary>
         public string EarlyStoppingPatience { get; set; }
-        /// <summary>
-        /// Enable normalization when exporting ONNX model.
-        /// Serialized Name: ImageModelDistributionSettings.enableOnnxNormalization
-        /// </summary>
+        /// <summary> Enable normalization when exporting ONNX model. </summary>
         public string EnableOnnxNormalization { get; set; }
-        /// <summary>
-        /// Frequency to evaluate validation dataset to get metric scores. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.evaluationFrequency
-        /// </summary>
+        /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
         public string EvaluationFrequency { get; set; }
         /// <summary>
         /// Gradient accumulation means running a configured number of &quot;GradAccumulationStep&quot; steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
         /// the accumulated gradients to compute the weight updates. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.gradientAccumulationStep
         /// </summary>
         public string GradientAccumulationStep { get; set; }
         /// <summary>
@@ -249,90 +147,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For instance, passing 2 as value for &apos;seresnext&apos; means
         /// freezing layer0 and layer1. For a full list of models supported and details on layer freeze, please
         /// see: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-        /// Serialized Name: ImageModelDistributionSettings.layersToFreeze
         /// </summary>
         public string LayersToFreeze { get; set; }
-        /// <summary>
-        /// Initial learning rate. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.learningRate
-        /// </summary>
+        /// <summary> Initial learning rate. Must be a float in the range [0, 1]. </summary>
         public string LearningRate { get; set; }
-        /// <summary>
-        /// Type of learning rate scheduler. Must be &apos;warmup_cosine&apos; or &apos;step&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.learningRateScheduler
-        /// </summary>
+        /// <summary> Type of learning rate scheduler. Must be &apos;warmup_cosine&apos; or &apos;step&apos;. </summary>
         public string LearningRateScheduler { get; set; }
         /// <summary>
         /// Name of the model to use for training.
         /// For more information on the available models please visit the official documentation:
         /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-        /// Serialized Name: ImageModelDistributionSettings.modelName
         /// </summary>
         public string ModelName { get; set; }
-        /// <summary>
-        /// Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.momentum
-        /// </summary>
+        /// <summary> Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1]. </summary>
         public string Momentum { get; set; }
-        /// <summary>
-        /// Enable nesterov when optimizer is &apos;sgd&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.nesterov
-        /// </summary>
+        /// <summary> Enable nesterov when optimizer is &apos;sgd&apos;. </summary>
         public string Nesterov { get; set; }
-        /// <summary>
-        /// Number of training epochs. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.numberOfEpochs
-        /// </summary>
+        /// <summary> Number of training epochs. Must be a positive integer. </summary>
         public string NumberOfEpochs { get; set; }
-        /// <summary>
-        /// Number of data loader workers. Must be a non-negative integer.
-        /// Serialized Name: ImageModelDistributionSettings.numberOfWorkers
-        /// </summary>
+        /// <summary> Number of data loader workers. Must be a non-negative integer. </summary>
         public string NumberOfWorkers { get; set; }
-        /// <summary>
-        /// Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.optimizer
-        /// </summary>
+        /// <summary> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </summary>
         public string Optimizer { get; set; }
-        /// <summary>
-        /// Random seed to be used when using deterministic training.
-        /// Serialized Name: ImageModelDistributionSettings.randomSeed
-        /// </summary>
+        /// <summary> Random seed to be used when using deterministic training. </summary>
         public string RandomSeed { get; set; }
-        /// <summary>
-        /// Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.stepLRGamma
-        /// </summary>
+        /// <summary> Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1]. </summary>
         public string StepLRGamma { get; set; }
-        /// <summary>
-        /// Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.stepLRStepSize
-        /// </summary>
+        /// <summary> Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer. </summary>
         public string StepLRStepSize { get; set; }
-        /// <summary>
-        /// Training batch size. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.trainingBatchSize
-        /// </summary>
+        /// <summary> Training batch size. Must be a positive integer. </summary>
         public string TrainingBatchSize { get; set; }
-        /// <summary>
-        /// Validation batch size. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.validationBatchSize
-        /// </summary>
+        /// <summary> Validation batch size. Must be a positive integer. </summary>
         public string ValidationBatchSize { get; set; }
-        /// <summary>
-        /// Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.warmupCosineLRCycles
-        /// </summary>
+        /// <summary> Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1]. </summary>
         public string WarmupCosineLRCycles { get; set; }
-        /// <summary>
-        /// Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.warmupCosineLRWarmupEpochs
-        /// </summary>
+        /// <summary> Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer. </summary>
         public string WarmupCosineLRWarmupEpochs { get; set; }
-        /// <summary>
-        /// Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.weightDecay
-        /// </summary>
+        /// <summary> Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1]. </summary>
         public string WeightDecay { get; set; }
     }
 }

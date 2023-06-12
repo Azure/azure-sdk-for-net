@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static CloneAbilityResult ToCloneAbilityResult(this string value)
         {
-            if (string.Equals(value, "Cloneable", StringComparison.InvariantCultureIgnoreCase)) return CloneAbilityResult.Cloneable;
-            if (string.Equals(value, "PartiallyCloneable", StringComparison.InvariantCultureIgnoreCase)) return CloneAbilityResult.PartiallyCloneable;
-            if (string.Equals(value, "NotCloneable", StringComparison.InvariantCultureIgnoreCase)) return CloneAbilityResult.NotCloneable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cloneable")) return CloneAbilityResult.Cloneable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallyCloneable")) return CloneAbilityResult.PartiallyCloneable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotCloneable")) return CloneAbilityResult.NotCloneable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CloneAbilityResult value.");
         }
     }

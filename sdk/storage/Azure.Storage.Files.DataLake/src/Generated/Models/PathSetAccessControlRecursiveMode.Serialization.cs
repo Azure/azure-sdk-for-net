@@ -21,9 +21,9 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static PathSetAccessControlRecursiveMode ToPathSetAccessControlRecursiveMode(this string value)
         {
-            if (string.Equals(value, "set", StringComparison.InvariantCultureIgnoreCase)) return PathSetAccessControlRecursiveMode.Set;
-            if (string.Equals(value, "modify", StringComparison.InvariantCultureIgnoreCase)) return PathSetAccessControlRecursiveMode.Modify;
-            if (string.Equals(value, "remove", StringComparison.InvariantCultureIgnoreCase)) return PathSetAccessControlRecursiveMode.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set")) return PathSetAccessControlRecursiveMode.Set;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "modify")) return PathSetAccessControlRecursiveMode.Modify;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return PathSetAccessControlRecursiveMode.Remove;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathSetAccessControlRecursiveMode value.");
         }
     }

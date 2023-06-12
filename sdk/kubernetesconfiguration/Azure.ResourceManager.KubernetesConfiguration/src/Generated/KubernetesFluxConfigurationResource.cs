@@ -91,8 +91,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary>
         /// Gets details of the Flux Configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}
-        /// Operation Id: FluxConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<KubernetesFluxConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -101,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new KubernetesFluxConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -115,8 +123,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary>
         /// Gets details of the Flux Configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}
-        /// Operation Id: FluxConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<KubernetesFluxConfigurationResource> Get(CancellationToken cancellationToken = default)
@@ -125,7 +141,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new KubernetesFluxConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -139,8 +155,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary>
         /// This will delete the YAML file used to set up the Flux Configuration, thus stopping future sync from the source repo.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}
-        /// Operation Id: FluxConfigurations_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forceDelete"> Delete the extension resource in Azure - not the normal asynchronous delete. </param>
@@ -151,8 +175,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -166,8 +190,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary>
         /// This will delete the YAML file used to set up the Flux Configuration, thus stopping future sync from the source repo.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}
-        /// Operation Id: FluxConfigurations_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forceDelete"> Delete the extension resource in Azure - not the normal asynchronous delete. </param>
@@ -178,8 +210,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -193,8 +225,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary>
         /// Update an existing Kubernetes Flux Configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}
-        /// Operation Id: FluxConfigurations_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Properties to Patch in an existing Flux Configuration. </param>
@@ -208,8 +248,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,8 +263,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary>
         /// Update an existing Kubernetes Flux Configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}
-        /// Operation Id: FluxConfigurations_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Properties to Patch in an existing Flux Configuration. </param>
@@ -238,8 +286,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

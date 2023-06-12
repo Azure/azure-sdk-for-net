@@ -14,7 +14,10 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalContactProfile data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalContactProfile data model.
+    /// Customer creates a Contact Profile Resource, which will contain all of the configurations required for scheduling a contact.
+    /// </summary>
     public partial class OrbitalContactProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>

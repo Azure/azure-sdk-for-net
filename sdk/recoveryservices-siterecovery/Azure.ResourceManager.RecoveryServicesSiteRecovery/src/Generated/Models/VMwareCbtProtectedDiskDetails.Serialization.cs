@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtProtectedDiskDetails DeserializeVMwareCbtProtectedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
             Optional<string> diskName = default;
             Optional<DiskAccountType> diskType = default;
@@ -31,92 +35,88 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskType = new DiskAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskPath"))
+                if (property.NameEquals("diskPath"u8))
                 {
                     diskPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isOSDisk"))
+                if (property.NameEquals("isOSDisk"u8))
                 {
                     isOSDisk = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityInBytes"))
+                if (property.NameEquals("capacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("logStorageAccountId"))
+                if (property.NameEquals("logStorageAccountId"u8))
                 {
                     logStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logStorageAccountSasSecretName"))
+                if (property.NameEquals("logStorageAccountSasSecretName"u8))
                 {
                     logStorageAccountSasSecretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     diskEncryptionSetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedManagedDiskId"))
+                if (property.NameEquals("seedManagedDiskId"u8))
                 {
                     seedManagedDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedBlobUri"))
+                if (property.NameEquals("seedBlobUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        seedBlobUri = null;
                         continue;
                     }
                     seedBlobUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetManagedDiskId"))
+                if (property.NameEquals("targetManagedDiskId"u8))
                 {
                     targetManagedDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetBlobUri"))
+                if (property.NameEquals("targetBlobUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetBlobUri = null;
                         continue;
                     }
                     targetBlobUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetDiskName"))
+                if (property.NameEquals("targetDiskName"u8))
                 {
                     targetDiskName = property.Value.GetString();
                     continue;

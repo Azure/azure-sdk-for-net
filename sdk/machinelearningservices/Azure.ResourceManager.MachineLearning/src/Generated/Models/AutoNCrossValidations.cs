@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// N-Cross validations determined automatically.
-    /// Serialized Name: AutoNCrossValidations
-    /// </summary>
+    /// <summary> N-Cross validations determined automatically. </summary>
     public partial class AutoNCrossValidations : NCrossValidations
     {
         /// <summary> Initializes a new instance of AutoNCrossValidations. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AutoNCrossValidations. </summary>
-        /// <param name="mode">
-        /// [Required] Mode for determining N-Cross validations.
-        /// Serialized Name: NCrossValidations.mode
-        /// </param>
+        /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
         internal AutoNCrossValidations(NCrossValidationsMode mode) : base(mode)
         {
             Mode = mode;

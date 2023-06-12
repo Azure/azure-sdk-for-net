@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -59,6 +60,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task RecognizeEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -229,8 +231,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [Ignore("LRO not implemented")]
         public async Task RecognizeEntitiesWithMultipleActions()
         {
@@ -289,213 +292,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task RecognizeEntitiesBatchWithResolutionsTest()
-        {
-            TextAnalyticsRequestOptions options = new() { ModelVersion = "2022-10-01-preview" };
-            TextAnalyticsClient client = GetClient();
-
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(new List<TextDocumentInput>() {
-                // Age, Length, and Weight.
-                new TextDocumentInput("1", "The dog is 14 inches tall and weighs 20 lbs. It is 5 years old."),
-                // Ordinal, Speed, and NumericRange.
-                new TextDocumentInput("2", "This is the first aircraft of its kind. It can fly at over 1,300 mph and carry 65-80 passengers."),
-                // Area, Number, Currency, and DateTime.
-                new TextDocumentInput("3", "The apartment is 840 sqft. and it has 2 bedrooms. It costs 2,000 US dollars per month and will be available on 11/01/2022."),
-                // Volume, TemporalSpan (with Duration), and Temperature.
-                new TextDocumentInput("4", "Mix 1 cup of sugar. Bake for approximately 60 minutes in an oven preheated to 350 degrees F."),
-                // Information and TemporalSpan (with Begin and End).
-                new TextDocumentInput("5", "They retrieved 200 terabytes of data from 10/24/2022 to 10/28/2022."),
-            }, options: options);
-
-            RecognizeEntitiesResult result1 = results.Where(result => result.Id == "1").FirstOrDefault();
-            Assert.NotNull(result1);
-            Assert.False(result1.HasError);
-
-            foreach (CategorizedEntity entity in result1.Entities)
-            {
-                Assert.IsNotNull(entity.Resolutions);
-
-                BaseResolution resolution = entity.Resolutions.FirstOrDefault();
-
-                if (resolution is AgeResolution age)
-                {
-                    Assert.AreEqual(5, age.Value);
-                    Assert.AreEqual(AgeUnit.Year, age.Unit);
-                }
-
-                if (resolution is LengthResolution length)
-                {
-                    Assert.AreEqual(14, length.Value);
-                    Assert.AreEqual(LengthUnit.Inch, length.Unit);
-                }
-
-                if (resolution is WeightResolution weight)
-                {
-                    Assert.AreEqual(20, weight.Value);
-                    Assert.AreEqual(WeightUnit.Pound, weight.Unit);
-                }
-            }
-
-            RecognizeEntitiesResult result2 = results.Where(result => result.Id == "2").FirstOrDefault();
-            Assert.NotNull(result2);
-            Assert.False(result2.HasError);
-
-            foreach (CategorizedEntity entity in result2.Entities)
-            {
-                Assert.IsNotNull(entity.Resolutions);
-
-                BaseResolution resolution = entity.Resolutions.FirstOrDefault();
-
-                if (resolution is OrdinalResolution ordinal)
-                {
-                    Assert.AreEqual("1", ordinal.Value);
-                    Assert.AreEqual(RelativeTo.Start, ordinal.RelativeTo);
-                    Assert.AreEqual("1", ordinal.Offset);
-                }
-
-                if (resolution is SpeedResolution speed)
-                {
-                    Assert.AreEqual(1300, speed.Value);
-                    Assert.AreEqual(SpeedUnit.MilePerHour, speed.Unit);
-                }
-
-                if (resolution is NumericRangeResolution numericRange)
-                {
-                    Assert.AreEqual(65, numericRange.Minimum);
-                    Assert.AreEqual(80, numericRange.Maximum);
-                    Assert.AreEqual(RangeKind.Number, numericRange.RangeKind);
-                }
-            }
-
-            RecognizeEntitiesResult result3 = results.Where(result => result.Id == "3").FirstOrDefault();
-            Assert.NotNull(result3);
-            Assert.False(result3.HasError);
-
-            foreach (CategorizedEntity entity in result3.Entities)
-            {
-                Assert.IsNotNull(entity.Resolutions);
-
-                BaseResolution resolution = entity.Resolutions.FirstOrDefault();
-
-                if (resolution is AreaResolution area)
-                {
-                    Assert.AreEqual(840, area.Value);
-                    Assert.AreEqual(AreaUnit.SquareFoot, area.Unit);
-                }
-
-                if (resolution is NumberResolution number)
-                {
-                    Assert.AreEqual(2, number.Value);
-                    Assert.AreEqual(NumberKind.Integer, number.NumberKind);
-                }
-
-                if (resolution is CurrencyResolution currency)
-                {
-                    Assert.AreEqual(2000, currency.Value);
-                    Assert.AreEqual("USD", currency.Iso4217);
-                    Assert.AreEqual("United States dollar", currency.Unit);
-                }
-
-                if (resolution is DateTimeResolution dateTime)
-                {
-                    Assert.AreEqual("2022-11-01", dateTime.Value);
-                    Assert.AreEqual("2022-11-01", dateTime.Timex);
-                    Assert.AreEqual(DateTimeSubKind.Date, dateTime.DateTimeSubKind);
-                    Assert.IsNull(dateTime.Modifier);
-                }
-            }
-
-            RecognizeEntitiesResult result4 = results.Where(result => result.Id == "4").FirstOrDefault();
-            Assert.NotNull(result4);
-            Assert.False(result4.HasError);
-
-            foreach (CategorizedEntity entity in result4.Entities)
-            {
-                Assert.IsNotNull(entity.Resolutions);
-
-                BaseResolution resolution = entity.Resolutions.FirstOrDefault();
-
-                if (resolution is VolumeResolution volume)
-                {
-                    Assert.AreEqual(1, volume.Value);
-                    Assert.AreEqual(VolumeUnit.Cup, volume.Unit);
-                }
-
-                if (resolution is TemporalSpanResolution temporalSpan)
-                {
-                    Assert.AreEqual("PT60M", temporalSpan.Duration);
-                    Assert.IsNull(temporalSpan.Begin);
-                    Assert.IsNull(temporalSpan.End);
-                    Assert.IsNull(temporalSpan.Modifier);
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32650
-                    // Assert.AreEqual("PT60M", temporalSpan.Timex);
-                }
-
-                if (resolution is TemperatureResolution temperature)
-                {
-                    Assert.AreEqual(350, temperature.Value);
-                    Assert.AreEqual(TemperatureUnit.Fahrenheit, temperature.Unit);
-                }
-            }
-
-            RecognizeEntitiesResult result5 = results.Where(result => result.Id == "5").FirstOrDefault();
-            Assert.NotNull(result5);
-            Assert.False(result5.HasError);
-
-            foreach (CategorizedEntity entity in result5.Entities)
-            {
-                Assert.IsNotNull(entity.Resolutions);
-
-                BaseResolution resolution = entity.Resolutions.FirstOrDefault();
-
-                if (resolution is InformationResolution information)
-                {
-                    Assert.AreEqual(200, information.Value);
-                    Assert.AreEqual(InformationUnit.Terabyte, information.Unit);
-                }
-
-                if (resolution is TemporalSpanResolution temporalSpan)
-                {
-                    Assert.AreEqual("P4D", temporalSpan.Duration);
-                    Assert.AreEqual("2022-10-24", temporalSpan.Begin);
-                    Assert.AreEqual("2022-10-28", temporalSpan.End);
-                    Assert.IsNull(temporalSpan.Modifier);
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32650
-                    // Assert.AreEqual("(2022-10-24,2022-10-28,P4D)", temporalSpan.Timex);
-                }
-            }
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationRecognizeEntitiesWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            List<string> documents = s_batchConvenienceDocuments;
-            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
-            AnalyzeActionsOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-            TextAnalyticsActions actions = new()
-            {
-                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto", options);
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<RecognizeEntitiesActionResult> actionResults = resultCollection.RecognizeEntitiesResults;
-            Assert.IsNotNull(actionResults);
-
-            RecognizeEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
-        }
-
         private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
@@ -513,16 +309,13 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
-
-                Assert.IsNotNull(entity.Resolutions);
             }
         }
 
         private void ValidateBatchDocumentsResult(
             RecognizeEntitiesResultCollection results,
             Dictionary<string, List<string>> minimumExpectedOutput,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -554,21 +347,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
-                }
-
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);

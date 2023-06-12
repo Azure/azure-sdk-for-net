@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(CountIPv6))
             {
-                writer.WritePropertyName("countIPv6");
+                writer.WritePropertyName("countIPv6"u8);
                 writer.WriteNumberValue(CountIPv6.Value);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterLoadBalancerProfileManagedOutboundIPs DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<int> countIPv6 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("countIPv6"))
+                if (property.NameEquals("countIPv6"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     countIPv6 = property.Value.GetInt32();

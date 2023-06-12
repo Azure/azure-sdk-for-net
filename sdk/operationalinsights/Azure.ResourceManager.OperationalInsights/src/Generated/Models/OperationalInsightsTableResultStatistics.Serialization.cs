@@ -14,36 +14,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsTableResultStatistics DeserializeOperationalInsightsTableResultStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> progress = default;
             Optional<int> ingestedRecords = default;
             Optional<float> scannedGb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     progress = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("ingestedRecords"))
+                if (property.NameEquals("ingestedRecords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingestedRecords = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scannedGb"))
+                if (property.NameEquals("scannedGb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scannedGb = property.Value.GetSingle();

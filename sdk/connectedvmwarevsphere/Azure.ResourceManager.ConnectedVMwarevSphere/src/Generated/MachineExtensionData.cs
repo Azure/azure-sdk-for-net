@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the MachineExtension data model. </summary>
+    /// <summary>
+    /// A class representing the MachineExtension data model.
+    /// Describes a Machine Extension.
+    /// </summary>
     public partial class MachineExtensionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineExtensionData. </summary>

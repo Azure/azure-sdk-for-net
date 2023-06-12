@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static Assessment DeserializeAssessment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AssessmentSeverity> severity = default;
             Optional<string> description = default;
@@ -24,51 +28,48 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<IReadOnlyList<AssessmentResource>> resourceList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new AssessmentSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remediation"))
+                if (property.NameEquals("remediation"u8))
                 {
                     remediation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPass"))
+                if (property.NameEquals("isPass"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPass = new IsPass(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceList"))
+                if (property.NameEquals("resourceList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AssessmentResource> array = new List<AssessmentResource>();

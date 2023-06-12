@@ -12,14 +12,14 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
 Install the Azure Azure Container Apps management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.AppContainers --prerelease
+dotnet add package Azure.ResourceManager.AppContainers
 ```
 
 ### Prerequisites

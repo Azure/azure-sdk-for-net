@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Image model size.
-    /// Serialized Name: ModelSize
-    /// </summary>
+    /// <summary> Image model size. </summary>
     public readonly partial struct MachineLearningModelSize : IEquatable<MachineLearningModelSize>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LargeValue = "Large";
         private const string ExtraLargeValue = "ExtraLarge";
 
-        /// <summary>
-        /// No value selected.
-        /// Serialized Name: ModelSize.None
-        /// </summary>
+        /// <summary> No value selected. </summary>
         public static MachineLearningModelSize None { get; } = new MachineLearningModelSize(NoneValue);
-        /// <summary>
-        /// Small size.
-        /// Serialized Name: ModelSize.Small
-        /// </summary>
+        /// <summary> Small size. </summary>
         public static MachineLearningModelSize Small { get; } = new MachineLearningModelSize(SmallValue);
-        /// <summary>
-        /// Medium size.
-        /// Serialized Name: ModelSize.Medium
-        /// </summary>
+        /// <summary> Medium size. </summary>
         public static MachineLearningModelSize Medium { get; } = new MachineLearningModelSize(MediumValue);
-        /// <summary>
-        /// Large size.
-        /// Serialized Name: ModelSize.Large
-        /// </summary>
+        /// <summary> Large size. </summary>
         public static MachineLearningModelSize Large { get; } = new MachineLearningModelSize(LargeValue);
-        /// <summary>
-        /// Extra large size.
-        /// Serialized Name: ModelSize.ExtraLarge
-        /// </summary>
+        /// <summary> Extra large size. </summary>
         public static MachineLearningModelSize ExtraLarge { get; } = new MachineLearningModelSize(ExtraLargeValue);
         /// <summary> Determines if two <see cref="MachineLearningModelSize"/> values are the same. </summary>
         public static bool operator ==(MachineLearningModelSize left, MachineLearningModelSize right) => left.Equals(right);

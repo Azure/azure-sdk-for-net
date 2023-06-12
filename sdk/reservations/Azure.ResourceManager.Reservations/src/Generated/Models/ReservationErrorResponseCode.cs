@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationErrorResponseCode. </summary>
+    /// <summary> Error code describing the reason that service is not able to process the incoming request. </summary>
     public readonly partial struct ReservationErrorResponseCode : IEquatable<ReservationErrorResponseCode>
     {
         private readonly string _value;

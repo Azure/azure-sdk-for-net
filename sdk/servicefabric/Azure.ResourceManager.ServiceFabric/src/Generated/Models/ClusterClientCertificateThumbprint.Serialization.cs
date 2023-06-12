@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isAdmin");
+            writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
-            writer.WritePropertyName("certificateThumbprint");
+            writer.WritePropertyName("certificateThumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CertificateThumbprint);
 #else
@@ -29,16 +29,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterClientCertificateThumbprint DeserializeClusterClientCertificateThumbprint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             BinaryData certificateThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isAdmin"))
+                if (property.NameEquals("isAdmin"u8))
                 {
                     isAdmin = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("certificateThumbprint"))
+                if (property.NameEquals("certificateThumbprint"u8))
                 {
                     certificateThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;

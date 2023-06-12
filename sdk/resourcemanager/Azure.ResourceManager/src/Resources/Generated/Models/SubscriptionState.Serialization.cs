@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static SubscriptionState ToSubscriptionState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Enabled;
-            if (string.Equals(value, "Warned", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Warned;
-            if (string.Equals(value, "PastDue", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.PastDue;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Disabled;
-            if (string.Equals(value, "Deleted", StringComparison.InvariantCultureIgnoreCase)) return SubscriptionState.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SubscriptionState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warned")) return SubscriptionState.Warned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PastDue")) return SubscriptionState.PastDue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SubscriptionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return SubscriptionState.Deleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SubscriptionState value.");
         }
     }

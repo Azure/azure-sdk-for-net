@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static AcceptedAudience DeserializeAcceptedAudience(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Learning rate scheduler enum.
-    /// Serialized Name: LearningRateScheduler
-    /// </summary>
+    /// <summary> Learning rate scheduler enum. </summary>
     public readonly partial struct LearningRateScheduler : IEquatable<LearningRateScheduler>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string WarmupCosineValue = "WarmupCosine";
         private const string StepValue = "Step";
 
-        /// <summary>
-        /// No learning rate scheduler selected.
-        /// Serialized Name: LearningRateScheduler.None
-        /// </summary>
+        /// <summary> No learning rate scheduler selected. </summary>
         public static LearningRateScheduler None { get; } = new LearningRateScheduler(NoneValue);
-        /// <summary>
-        /// Cosine Annealing With Warmup.
-        /// Serialized Name: LearningRateScheduler.WarmupCosine
-        /// </summary>
+        /// <summary> Cosine Annealing With Warmup. </summary>
         public static LearningRateScheduler WarmupCosine { get; } = new LearningRateScheduler(WarmupCosineValue);
-        /// <summary>
-        /// Step learning rate scheduler.
-        /// Serialized Name: LearningRateScheduler.Step
-        /// </summary>
+        /// <summary> Step learning rate scheduler. </summary>
         public static LearningRateScheduler Step { get; } = new LearningRateScheduler(StepValue);
         /// <summary> Determines if two <see cref="LearningRateScheduler"/> values are the same. </summary>
         public static bool operator ==(LearningRateScheduler left, LearningRateScheduler right) => left.Equals(right);

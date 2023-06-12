@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static GuestConfigurationAssignmentReportList DeserializeGuestConfigurationAssignmentReportList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GuestConfigurationAssignmentReport>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GuestConfigurationAssignmentReport> array = new List<GuestConfigurationAssignmentReport>();

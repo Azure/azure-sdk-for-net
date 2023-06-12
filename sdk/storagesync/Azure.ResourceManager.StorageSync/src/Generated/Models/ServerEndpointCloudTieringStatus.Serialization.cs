@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointCloudTieringStatus DeserializeServerEndpointCloudTieringStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<ServerEndpointHealthState> health = default;
             Optional<DateTimeOffset> healthLastUpdatedTimestamp = default;
@@ -28,111 +32,100 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<CloudTieringLowDiskMode> lowDiskMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new ServerEndpointHealthState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthLastUpdatedTimestamp"))
+                if (property.NameEquals("healthLastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthLastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastCloudTieringResult"))
+                if (property.NameEquals("lastCloudTieringResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastCloudTieringResult = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastSuccessTimestamp"))
+                if (property.NameEquals("lastSuccessTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSuccessTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("spaceSavings"))
+                if (property.NameEquals("spaceSavings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spaceSavings = CloudTieringSpaceSavings.DeserializeCloudTieringSpaceSavings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cachePerformance"))
+                if (property.NameEquals("cachePerformance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cachePerformance = CloudTieringCachePerformance.DeserializeCloudTieringCachePerformance(property.Value);
                     continue;
                 }
-                if (property.NameEquals("filesNotTiering"))
+                if (property.NameEquals("filesNotTiering"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesNotTiering = CloudTieringFilesNotTiering.DeserializeCloudTieringFilesNotTiering(property.Value);
                     continue;
                 }
-                if (property.NameEquals("volumeFreeSpacePolicyStatus"))
+                if (property.NameEquals("volumeFreeSpacePolicyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     volumeFreeSpacePolicyStatus = CloudTieringVolumeFreeSpacePolicyStatus.DeserializeCloudTieringVolumeFreeSpacePolicyStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("datePolicyStatus"))
+                if (property.NameEquals("datePolicyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     datePolicyStatus = CloudTieringDatePolicyStatus.DeserializeCloudTieringDatePolicyStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lowDiskMode"))
+                if (property.NameEquals("lowDiskMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lowDiskMode = CloudTieringLowDiskMode.DeserializeCloudTieringLowDiskMode(property.Value);

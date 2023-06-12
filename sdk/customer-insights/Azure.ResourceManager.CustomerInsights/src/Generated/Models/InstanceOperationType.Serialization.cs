@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static InstanceOperationType ToInstanceOperationType(this string value)
         {
-            if (string.Equals(value, "Upsert", StringComparison.InvariantCultureIgnoreCase)) return InstanceOperationType.Upsert;
-            if (string.Equals(value, "Delete", StringComparison.InvariantCultureIgnoreCase)) return InstanceOperationType.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Upsert")) return InstanceOperationType.Upsert;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return InstanceOperationType.Delete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InstanceOperationType value.");
         }
     }

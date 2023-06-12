@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DateTimeUtc))
             {
-                writer.WritePropertyName("dateTimeUTC");
+                writer.WritePropertyName("dateTimeUTC"u8);
                 writer.WriteStringValue(DateTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
             writer.WriteEndObject();
@@ -31,25 +31,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorTimeSeriesDataPoint DeserializeFrontDoorTimeSeriesDataPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dateTimeUtc = default;
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTimeUTC"))
+                if (property.NameEquals("dateTimeUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetSingle();

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Create setting for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Create setting for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings
-        /// Operation Id: IngestionSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IngestionSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IngestionSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IngestionSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ingestionSettingRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IngestionSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ingestionSettingRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings
-        /// Operation Id: IngestionSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IngestionSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IngestionSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IngestionSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ingestionSettingRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IngestionSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ingestionSettingRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

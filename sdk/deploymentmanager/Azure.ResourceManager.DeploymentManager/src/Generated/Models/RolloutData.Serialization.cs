@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DeploymentManager
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,28 +34,28 @@ namespace Azure.ResourceManager.DeploymentManager
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BuildVersion))
             {
-                writer.WritePropertyName("buildVersion");
+                writer.WritePropertyName("buildVersion"u8);
                 writer.WriteStringValue(BuildVersion);
             }
             if (Optional.IsDefined(ArtifactSourceId))
             {
-                writer.WritePropertyName("artifactSourceId");
+                writer.WritePropertyName("artifactSourceId"u8);
                 writer.WriteStringValue(ArtifactSourceId);
             }
             if (Optional.IsDefined(TargetServiceTopologyId))
             {
-                writer.WritePropertyName("targetServiceTopologyId");
+                writer.WritePropertyName("targetServiceTopologyId"u8);
                 writer.WriteStringValue(TargetServiceTopologyId);
             }
             if (Optional.IsCollectionDefined(StepGroups))
             {
-                writer.WritePropertyName("stepGroups");
+                writer.WritePropertyName("stepGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in StepGroups)
                 {
@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DeploymentManager
 
         internal static RolloutData DeserializeRolloutData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Identity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -86,21 +90,19 @@ namespace Azure.ResourceManager.DeploymentManager
             Optional<IReadOnlyList<Service>> services = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = Identity.DeserializeIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -111,37 +113,36 @@ namespace Azure.ResourceManager.DeploymentManager
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,26 +151,25 @@ namespace Azure.ResourceManager.DeploymentManager
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("buildVersion"))
+                        if (property0.NameEquals("buildVersion"u8))
                         {
                             buildVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("artifactSourceId"))
+                        if (property0.NameEquals("artifactSourceId"u8))
                         {
                             artifactSourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetServiceTopologyId"))
+                        if (property0.NameEquals("targetServiceTopologyId"u8))
                         {
                             targetServiceTopologyId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("stepGroups"))
+                        if (property0.NameEquals("stepGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StepGroup> array = new List<StepGroup>();
@@ -180,36 +180,33 @@ namespace Azure.ResourceManager.DeploymentManager
                             stepGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("totalRetryAttempts"))
+                        if (property0.NameEquals("totalRetryAttempts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalRetryAttempts = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("operationInfo"))
+                        if (property0.NameEquals("operationInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationInfo = RolloutOperationInfo.DeserializeRolloutOperationInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("services"))
+                        if (property0.NameEquals("services"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Service> array = new List<Service>();

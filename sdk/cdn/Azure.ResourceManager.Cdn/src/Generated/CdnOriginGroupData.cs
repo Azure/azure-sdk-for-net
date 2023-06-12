@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the CdnOriginGroup data model. </summary>
+    /// <summary>
+    /// A class representing the CdnOriginGroup data model.
+    /// Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
+    /// </summary>
     public partial class CdnOriginGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnOriginGroupData. </summary>

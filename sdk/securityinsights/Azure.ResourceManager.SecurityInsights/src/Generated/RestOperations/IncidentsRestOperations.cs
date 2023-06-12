@@ -33,103 +33,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateRunPlaybookRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentIdentifier, ManualTriggerRequestBody requestBody)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/incidents/", false);
-            uri.AppendPath(incidentIdentifier, true);
-            uri.AppendPath("/runPlaybook", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (requestBody != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(requestBody);
-                request.Content = content;
-            }
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Triggers playbook on a specific incident. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="incidentIdentifier"> The String to use. </param>
-        /// <param name="requestBody"> The ManualTriggerRequestBody to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentIdentifier"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryData>> RunPlaybookAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentIdentifier, ManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(incidentIdentifier, nameof(incidentIdentifier));
-
-            using var message = CreateRunPlaybookRequest(subscriptionId, resourceGroupName, workspaceName, incidentIdentifier, requestBody);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    {
-                        BinaryData value = default;
-                        value = await BinaryData.FromStreamAsync(message.Response.ContentStream).ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Triggers playbook on a specific incident. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="incidentIdentifier"> The String to use. </param>
-        /// <param name="requestBody"> The ManualTriggerRequestBody to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentIdentifier"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryData> RunPlaybook(string subscriptionId, string resourceGroupName, string workspaceName, string incidentIdentifier, ManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(incidentIdentifier, nameof(incidentIdentifier));
-
-            using var message = CreateRunPlaybookRequest(subscriptionId, resourceGroupName, workspaceName, incidentIdentifier, requestBody);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    {
-                        BinaryData value = default;
-                        value = BinaryData.FromStream(message.Response.ContentStream);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string filter, string orderby, int? top, string skipToken)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string filter, string orderBy, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,9 +56,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             if (top != null)
             {
@@ -171,19 +79,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IncidentList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, filter, orderby, top, skipToken);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -204,19 +112,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IncidentList> List(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<IncidentList> List(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, filter, orderby, top, skipToken);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -254,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets an incident. </summary>
+        /// <summary> Gets a given incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -262,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IncidentData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsIncidentData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -275,19 +183,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        IncidentData value = default;
+                        SecurityInsightsIncidentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IncidentData.DeserializeIncidentData(document.RootElement);
+                        value = SecurityInsightsIncidentData.DeserializeSecurityInsightsIncidentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IncidentData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsIncidentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets an incident. </summary>
+        /// <summary> Gets a given incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -295,7 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IncidentData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsIncidentData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -308,19 +216,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        IncidentData value = default;
+                        SecurityInsightsIncidentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IncidentData.DeserializeIncidentData(document.RootElement);
+                        value = SecurityInsightsIncidentData.DeserializeSecurityInsightsIncidentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IncidentData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsIncidentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, IncidentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, SecurityInsightsIncidentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -346,7 +254,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Creates or updates the incident. </summary>
+        /// <summary> Creates or updates an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -355,7 +263,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="incidentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IncidentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, IncidentData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsIncidentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, SecurityInsightsIncidentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -370,9 +278,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        IncidentData value = default;
+                        SecurityInsightsIncidentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IncidentData.DeserializeIncidentData(document.RootElement);
+                        value = SecurityInsightsIncidentData.DeserializeSecurityInsightsIncidentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -380,7 +288,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Creates or updates the incident. </summary>
+        /// <summary> Creates or updates an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -389,7 +297,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="incidentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IncidentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, IncidentData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsIncidentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, SecurityInsightsIncidentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -404,9 +312,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        IncidentData value = default;
+                        SecurityInsightsIncidentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IncidentData.DeserializeIncidentData(document.RootElement);
+                        value = SecurityInsightsIncidentData.DeserializeSecurityInsightsIncidentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,7 +344,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Delete the incident. </summary>
+        /// <summary> Deletes a given incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -463,7 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Delete the incident. </summary>
+        /// <summary> Deletes a given incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -485,99 +393,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateTeamRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, TeamProperties teamProperties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/incidents/", false);
-            uri.AppendPath(incidentId, true);
-            uri.AppendPath("/createTeam", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(teamProperties);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates a Microsoft team to investigate the incident by sharing information and insights between participants. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="incidentId"> Incident ID. </param>
-        /// <param name="teamProperties"> Team properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="incidentId"/> or <paramref name="teamProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TeamInformation>> CreateTeamAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, TeamProperties teamProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
-            Argument.AssertNotNull(teamProperties, nameof(teamProperties));
-
-            using var message = CreateCreateTeamRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, teamProperties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TeamInformation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TeamInformation.DeserializeTeamInformation(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates a Microsoft team to investigate the incident by sharing information and insights between participants. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="incidentId"> Incident ID. </param>
-        /// <param name="teamProperties"> Team properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="incidentId"/> or <paramref name="teamProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TeamInformation> CreateTeam(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, TeamProperties teamProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
-            Argument.AssertNotNull(teamProperties, nameof(teamProperties));
-
-            using var message = CreateCreateTeamRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, teamProperties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TeamInformation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TeamInformation.DeserializeTeamInformation(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -606,7 +421,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets all incident alerts. </summary>
+        /// <summary> Gets all alerts for an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -637,7 +452,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Gets all incident alerts. </summary>
+        /// <summary> Gets all alerts for an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -691,7 +506,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets all incident bookmarks. </summary>
+        /// <summary> Gets all bookmarks for an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -722,7 +537,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Gets all incident bookmarks. </summary>
+        /// <summary> Gets all bookmarks for an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -776,7 +591,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets all incident related entities. </summary>
+        /// <summary> Gets all entities for an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -784,7 +599,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IncidentEntitiesResponse>> ListEntitiesAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsIncidentEntitiesResult>> ListEntitiesAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -797,9 +612,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        IncidentEntitiesResponse value = default;
+                        SecurityInsightsIncidentEntitiesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IncidentEntitiesResponse.DeserializeIncidentEntitiesResponse(document.RootElement);
+                        value = SecurityInsightsIncidentEntitiesResult.DeserializeSecurityInsightsIncidentEntitiesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -807,7 +622,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Gets all incident related entities. </summary>
+        /// <summary> Gets all entities for an incident. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -815,7 +630,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IncidentEntitiesResponse> ListEntities(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsIncidentEntitiesResult> ListEntities(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -828,9 +643,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        IncidentEntitiesResponse value = default;
+                        SecurityInsightsIncidentEntitiesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IncidentEntitiesResponse.DeserializeIncidentEntitiesResponse(document.RootElement);
+                        value = SecurityInsightsIncidentEntitiesResult.DeserializeSecurityInsightsIncidentEntitiesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -838,7 +653,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter, string orderby, int? top, string skipToken)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter, string orderBy, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -858,20 +673,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IncidentList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, filter, orderby, top, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -893,20 +708,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IncidentList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<IncidentList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, filter, orderby, top, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -16,17 +16,20 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterCreationValidateResult DeserializeHDInsightClusterCreationValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationErrors = default;
             Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationWarnings = default;
             Optional<TimeSpan> estimatedCreationDuration = default;
             Optional<IReadOnlyList<HDInsightClusterAaddsDetail>> aaddsResourcesDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
@@ -37,11 +40,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("validationWarnings"))
+                if (property.NameEquals("validationWarnings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
@@ -52,21 +54,19 @@ namespace Azure.ResourceManager.HDInsight.Models
                     validationWarnings = array;
                     continue;
                 }
-                if (property.NameEquals("estimatedCreationDuration"))
+                if (property.NameEquals("estimatedCreationDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedCreationDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("aaddsResourcesDetails"))
+                if (property.NameEquals("aaddsResourcesDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightClusterAaddsDetail> array = new List<HDInsightClusterAaddsDetail>();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();

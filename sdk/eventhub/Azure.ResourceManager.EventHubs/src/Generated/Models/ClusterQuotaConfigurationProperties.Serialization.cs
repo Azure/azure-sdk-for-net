@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
                 foreach (var item in Settings)
                 {
@@ -32,14 +32,17 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ClusterQuotaConfigurationProperties DeserializeClusterQuotaConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

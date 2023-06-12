@@ -64,6 +64,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             Assert.AreEqual(123, options.PrefetchCount);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
+            Assert.AreEqual(20, options.MaxMessageBatchSize);
+            Assert.AreEqual(10, options.MinMessageBatchSize);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxBatchWaitTime);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
             Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);
@@ -107,6 +110,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 { $"{ExtensionPath}:MaxAutoLockRenewalDuration", "00:00:15" },
                 { $"{ExtensionPath}:MaxConcurrentSessions", "123" },
                 { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
+                { $"{ExtensionPath}:MaxMessageBatchSize", "20" },
+                { $"{ExtensionPath}:MinMessageBatchSize", "10" },
+                { $"{ExtensionPath}:MaxBatchWaitTime", "00:00:01" },
                 { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
                 { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
             };
@@ -141,7 +147,42 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         }
 
         [Test]
-        public void AddServiceBus_ThrowsArgumentNull_WhenServiceBusOptionsIsNull()
+        public void ConfigureOptionsThrowWhenMaxIsLessThanMinBatchSize()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:MaxMessageBatchSize", "100" },
+                    { $"{extensionPath}:MinMessageBatchSize", "170" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void ConfigureOptionsThrowWhenMaxWaitTimeIsTooLarge()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:MaxBatchWaitTime", "00:05:00" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void AddServiceBus_ThrowArgumentNull_WhenServiceBusOptionsIsNull()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>

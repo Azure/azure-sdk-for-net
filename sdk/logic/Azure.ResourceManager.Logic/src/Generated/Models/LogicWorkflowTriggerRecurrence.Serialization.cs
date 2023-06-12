@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Frequency))
             {
-                writer.WritePropertyName("frequency");
+                writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
+                writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
             writer.WriteEndObject();
@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerRecurrence DeserializeLogicWorkflowTriggerRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicWorkflowRecurrenceFrequency> frequency = default;
             Optional<int> interval = default;
             Optional<DateTimeOffset> startTime = default;
@@ -59,56 +63,51 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicWorkflowRecurrenceSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frequency = new LogicWorkflowRecurrenceFrequency(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schedule = LogicWorkflowRecurrenceSchedule.DeserializeLogicWorkflowRecurrenceSchedule(property.Value);

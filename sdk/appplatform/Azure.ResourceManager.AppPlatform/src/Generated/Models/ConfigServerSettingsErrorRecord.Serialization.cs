@@ -16,31 +16,33 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ConfigServerSettingsErrorRecord DeserializeConfigServerSettingsErrorRecord(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> uri = default;
             Optional<IReadOnlyList<string>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("messages"))
+                if (property.NameEquals("messages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

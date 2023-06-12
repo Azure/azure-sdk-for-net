@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary> A class representing the FrontDoor data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoor data model.
+    /// Front Door represents a collection of backend endpoints to route traffic to along with rules that specify how traffic is sent there.
+    /// </summary>
     public partial class FrontDoorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorData. </summary>

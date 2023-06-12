@@ -18,13 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
 
         internal static CustomSetupBase DeserializeCustomSetupBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
         }
 

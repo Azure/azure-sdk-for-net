@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> notStartedAt = default;
             Optional<DateTimeOffset?> startingAt = default;
             Optional<DateTimeOffset?> runningAt = default;
@@ -26,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notStartedAt"))
+                if (property.NameEquals("notStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +40,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     notStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startingAt"))
+                if (property.NameEquals("startingAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     startingAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runningAt"))
+                if (property.NameEquals("runningAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +60,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     runningAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("deadAt"))
+                if (property.NameEquals("deadAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +70,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     deadAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("successAt"))
+                if (property.NameEquals("successAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +80,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     successAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("killedAt"))
+                if (property.NameEquals("killedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +90,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     killedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveringAt"))
+                if (property.NameEquals("recoveringAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,16 +100,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     recoveringAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     currentState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobCreationRequest"))
+                if (property.NameEquals("jobCreationRequest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobCreationRequest = SparkRequest.DeserializeSparkRequest(property.Value);

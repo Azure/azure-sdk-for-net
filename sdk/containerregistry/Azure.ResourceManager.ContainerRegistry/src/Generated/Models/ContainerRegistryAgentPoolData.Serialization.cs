@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(Tier))
             {
-                writer.WritePropertyName("tier");
+                writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
             if (Optional.IsDefined(OS))
             {
-                writer.WritePropertyName("os");
+                writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS.Value.ToString());
             }
             if (Optional.IsDefined(VirtualNetworkSubnetResourceId))
             {
-                writer.WritePropertyName("virtualNetworkSubnetResourceId");
+                writer.WritePropertyName("virtualNetworkSubnetResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetResourceId);
             }
             writer.WriteEndObject();
@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryAgentPoolData DeserializeContainerRegistryAgentPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -72,11 +76,10 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -87,37 +90,36 @@ namespace Azure.ResourceManager.ContainerRegistry
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,46 +128,42 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("count"))
+                        if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             count = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("tier"))
+                        if (property0.NameEquals("tier"u8))
                         {
                             tier = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("os"))
+                        if (property0.NameEquals("os"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             os = new ContainerRegistryOS(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkSubnetResourceId"))
+                        if (property0.NameEquals("virtualNetworkSubnetResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkSubnetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());

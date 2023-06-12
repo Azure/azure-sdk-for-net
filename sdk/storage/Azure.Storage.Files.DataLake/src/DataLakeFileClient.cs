@@ -2224,10 +2224,10 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="leaseAction">
         /// Lease action.
-        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
-        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
+        /// <see cref="DataLakeLeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
+        /// <see cref="DataLakeLeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
+        /// <see cref="DataLakeLeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
+        /// <see cref="DataLakeLeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
         /// </param>
         /// <param name="leaseDuration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -2235,7 +2235,7 @@ namespace Azure.Storage.Files.DataLake
         /// A non-infinite lease can be between 15 and 60 seconds.
         /// </param>
         /// <param name="proposedLeaseId">
-        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
+        /// Proposed lease ID. Valid with <see cref="DataLakeLeaseAction.Acquire"/> and <see cref="DataLakeLeaseAction.AcquireRelease"/>.
         /// </param>
         /// <param name="progressHandler">
         /// Progress handler for append operation.
@@ -2263,7 +2263,7 @@ namespace Azure.Storage.Files.DataLake
             long? offset,
             UploadTransferValidationOptions validationOptionsOverride,
             string leaseId,
-            LeaseAction? leaseAction,
+            DataLakeLeaseAction? leaseAction,
             TimeSpan? leaseDuration,
             string proposedLeaseId,
             IProgress<long> progressHandler,
@@ -2276,7 +2276,11 @@ namespace Azure.Storage.Files.DataLake
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
+                ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                    content,
+                    validationOptions,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
 
                 content = content?.WithNoDispose().WithProgress(progressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2631,10 +2635,10 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="leaseAction">
         /// Lease action.
-        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
-        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeRequestConditions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeRequestConditions.LeaseId"/>.
+        /// <see cref="DataLakeLeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.
+        /// <see cref="DataLakeLeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
+        /// <see cref="DataLakeLeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeRequestConditions.LeaseId"/>.
+        /// <see cref="DataLakeLeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeRequestConditions.LeaseId"/>.
         /// </param>
         /// <param name="leaseDuration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -2642,7 +2646,7 @@ namespace Azure.Storage.Files.DataLake
         /// A non-infinite lease can be between 15 and 60 seconds.
         /// </param>
         /// <param name="proposedLeaseId">
-        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
+        /// Proposed lease ID. Valid with <see cref="DataLakeLeaseAction.Acquire"/> and <see cref="DataLakeLeaseAction.AcquireRelease"/>.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2665,7 +2669,7 @@ namespace Azure.Storage.Files.DataLake
             bool? close,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
-            LeaseAction? leaseAction,
+            DataLakeLeaseAction? leaseAction,
             TimeSpan? leaseDuration,
             string proposedLeaseId,
             bool async,
@@ -2795,7 +2799,7 @@ namespace Azure.Storage.Files.DataLake
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2838,7 +2842,7 @@ namespace Azure.Storage.Files.DataLake
                     = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2885,7 +2889,7 @@ namespace Azure.Storage.Files.DataLake
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2933,7 +2937,7 @@ namespace Azure.Storage.Files.DataLake
                     = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3007,7 +3011,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3082,7 +3086,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3136,7 +3140,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3191,7 +3195,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4402,7 +4406,7 @@ namespace Azure.Storage.Files.DataLake
 
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
-                validationOptions: options?.TransferValidation,
+                validationOptions: options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4655,7 +4659,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4706,7 +4710,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -5099,6 +5103,7 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -5145,6 +5150,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: default,
                             timeToExpire: default,
                             expiresOn: default,
+                            encryptionContext: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)
@@ -5167,7 +5173,7 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    validationOptions: options?.TransferValidation,
+                    validationOptions: options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -5213,10 +5219,11 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: args.EncryptionContext,
                         conditions: args.Conditions,
                         async: async,
                         cancellationToken: cancellationToken).ConfigureAwait(false),
-                SingleUpload = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                SingleUploadStreaming = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -5252,9 +5259,58 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                {
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
+                    long newPosition = content.ToMemory().Length;
+
+                    // Append data
+                    await client.AppendInternal(
+                        content.ToStream(),
+                        offset: 0,
+                        validationOptions,
+                        args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        progressHandler,
+                        flush: null,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    // Flush data
+                    return await client.FlushInternal(
+                        position: newPosition,
+                        retainUncommittedData: default,
+                        close: args.Close,
+                        args.HttpHeaders,
+                        args.Conditions,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     => await client.AppendInternal(
                         stream,
+                        offset,
+                        validationOptions,
+                        args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        progressHandler,
+                        flush: null,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                    => await client.AppendInternal(
+                        content.ToStream(),
                         offset,
                         validationOptions,
                         args?.Conditions?.LeaseId,

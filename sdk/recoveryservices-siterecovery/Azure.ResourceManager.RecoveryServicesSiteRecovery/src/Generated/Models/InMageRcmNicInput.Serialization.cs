@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nicId");
+            writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
-            writer.WritePropertyName("isPrimaryNic");
+            writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
             if (Optional.IsDefined(IsSelectedForFailover))
             {
-                writer.WritePropertyName("isSelectedForFailover");
+                writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
             if (Optional.IsDefined(TargetSubnetName))
             {
-                writer.WritePropertyName("targetSubnetName");
+                writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
             if (Optional.IsDefined(TargetStaticIPAddress))
             {
-                writer.WritePropertyName("targetStaticIPAddress");
+                writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress);
             }
             if (Optional.IsDefined(TestSubnetName))
             {
-                writer.WritePropertyName("testSubnetName");
+                writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
             if (Optional.IsDefined(TestStaticIPAddress))
             {
-                writer.WritePropertyName("testStaticIPAddress");
+                writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress);
             }
             writer.WriteEndObject();

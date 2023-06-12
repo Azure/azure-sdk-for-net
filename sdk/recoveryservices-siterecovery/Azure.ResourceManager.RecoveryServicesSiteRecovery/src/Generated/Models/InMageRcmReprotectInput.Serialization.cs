@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("reprotectAgentId");
+            writer.WritePropertyName("reprotectAgentId"u8);
             writer.WriteStringValue(ReprotectAgentId);
-            writer.WritePropertyName("datastoreName");
+            writer.WritePropertyName("datastoreName"u8);
             writer.WriteStringValue(DatastoreName);
-            writer.WritePropertyName("logStorageAccountId");
+            writer.WritePropertyName("logStorageAccountId"u8);
             writer.WriteStringValue(LogStorageAccountId);
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

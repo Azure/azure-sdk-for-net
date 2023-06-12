@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static AutomaticTuningServerReason ToAutomaticTuningServerReason(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningServerReason.Default;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningServerReason.Disabled;
-            if (string.Equals(value, "AutoConfigured", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningServerReason.AutoConfigured;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutomaticTuningServerReason.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AutomaticTuningServerReason.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoConfigured")) return AutomaticTuningServerReason.AutoConfigured;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningServerReason value.");
         }
     }

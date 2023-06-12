@@ -12,7 +12,10 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlServerKey data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlServerKey data model.
+    /// A MySQL Server key.
+    /// </summary>
     public partial class MySqlServerKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlServerKeyData. </summary>

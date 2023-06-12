@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Output data delivery mode enums.
-    /// Serialized Name: OutputDeliveryMode
-    /// </summary>
+    /// <summary> Output data delivery mode enums. </summary>
     public readonly partial struct MachineLearningOutputDeliveryMode : IEquatable<MachineLearningOutputDeliveryMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ReadWriteMountValue = "ReadWriteMount";
         private const string UploadValue = "Upload";
 
-        /// <summary>
-        /// ReadWriteMount
-        /// Serialized Name: OutputDeliveryMode.ReadWriteMount
-        /// </summary>
+        /// <summary> ReadWriteMount. </summary>
         public static MachineLearningOutputDeliveryMode ReadWriteMount { get; } = new MachineLearningOutputDeliveryMode(ReadWriteMountValue);
-        /// <summary>
-        /// Upload
-        /// Serialized Name: OutputDeliveryMode.Upload
-        /// </summary>
+        /// <summary> Upload. </summary>
         public static MachineLearningOutputDeliveryMode Upload { get; } = new MachineLearningOutputDeliveryMode(UploadValue);
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOutputDeliveryMode left, MachineLearningOutputDeliveryMode right) => left.Equals(right);

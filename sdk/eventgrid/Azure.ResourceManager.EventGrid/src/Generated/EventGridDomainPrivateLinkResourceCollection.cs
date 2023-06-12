@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of a private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,8 +92,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of a private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,8 +129,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all the private link resources under a topic, domain, or partner namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListByResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListByResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -123,43 +146,23 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridDomainPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridDomainPrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventGridDomainPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventGridDomainPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainPrivateLinkResource(Client, EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(e)), _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "EventGridDomainPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all the private link resources under a topic, domain, or partner namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListByResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListByResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -167,43 +170,23 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridDomainPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridDomainPrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<EventGridDomainPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventGridDomainPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainPrivateLinkResource(Client, EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(e)), _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "EventGridDomainPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,8 +212,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

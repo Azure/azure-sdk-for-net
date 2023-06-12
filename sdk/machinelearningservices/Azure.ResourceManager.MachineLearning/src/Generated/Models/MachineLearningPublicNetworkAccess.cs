@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Whether requests from Public Network are allowed.
-    /// Serialized Name: PublicNetworkAccess
-    /// </summary>
+    /// <summary> Whether requests from Public Network are allowed. </summary>
     public readonly partial struct MachineLearningPublicNetworkAccess : IEquatable<MachineLearningPublicNetworkAccess>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PublicNetworkAccess.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static MachineLearningPublicNetworkAccess Enabled { get; } = new MachineLearningPublicNetworkAccess(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PublicNetworkAccess.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static MachineLearningPublicNetworkAccess Disabled { get; } = new MachineLearningPublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="MachineLearningPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MachineLearningPublicNetworkAccess left, MachineLearningPublicNetworkAccess right) => left.Equals(right);

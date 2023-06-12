@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Kusto.Models
 
         public static KustoDatabaseResourceType ToKustoDatabaseResourceType(this string value)
         {
-            if (string.Equals(value, "Microsoft.Kusto/clusters/databases", StringComparison.InvariantCultureIgnoreCase)) return KustoDatabaseResourceType.MicrosoftKustoClustersDatabases;
-            if (string.Equals(value, "Microsoft.Kusto/clusters/attachedDatabaseConfigurations", StringComparison.InvariantCultureIgnoreCase)) return KustoDatabaseResourceType.MicrosoftKustoClustersAttachedDatabaseConfigurations;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Kusto/clusters/databases")) return KustoDatabaseResourceType.MicrosoftKustoClustersDatabases;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Kusto/clusters/attachedDatabaseConfigurations")) return KustoDatabaseResourceType.MicrosoftKustoClustersAttachedDatabaseConfigurations;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KustoDatabaseResourceType value.");
         }
     }

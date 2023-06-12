@@ -12,7 +12,10 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary> A class representing the ServiceFabricManagedNodeType data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricManagedNodeType data model.
+    /// Describes a node type in the cluster, each node type represents sub set of nodes in the cluster.
+    /// </summary>
     public partial class ServiceFabricManagedNodeTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeData. </summary>

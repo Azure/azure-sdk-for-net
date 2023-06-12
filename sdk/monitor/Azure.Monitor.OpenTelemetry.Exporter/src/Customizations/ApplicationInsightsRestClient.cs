@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -34,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
+                RedirectPolicy.SetAllowAutoRedirect(message, false);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -61,6 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
+                RedirectPolicy.SetAllowAutoRedirect(message, false);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

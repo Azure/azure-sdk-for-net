@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the VCenter data model. </summary>
+    /// <summary>
+    /// A class representing the VCenter data model.
+    /// vCenter definition.
+    /// </summary>
     public partial class VCenterData : ResourceData
     {
         /// <summary> Initializes a new instance of VCenterData. </summary>

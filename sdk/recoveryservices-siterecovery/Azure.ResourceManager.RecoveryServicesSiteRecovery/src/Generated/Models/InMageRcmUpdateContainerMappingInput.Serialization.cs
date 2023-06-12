@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enableAgentAutoUpgrade");
+            writer.WritePropertyName("enableAgentAutoUpgrade"u8);
             writer.WriteStringValue(EnableAgentAutoUpgrade);
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

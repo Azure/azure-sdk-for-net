@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetProtectionContainerId))
             {
-                writer.WritePropertyName("targetProtectionContainerId");
+                writer.WritePropertyName("targetProtectionContainerId"u8);
                 writer.WriteStringValue(TargetProtectionContainerId);
             }
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
             if (Optional.IsDefined(ProviderSpecificInput))
             {
-                writer.WritePropertyName("providerSpecificInput");
+                writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificInput);
             }
             writer.WriteEndObject();

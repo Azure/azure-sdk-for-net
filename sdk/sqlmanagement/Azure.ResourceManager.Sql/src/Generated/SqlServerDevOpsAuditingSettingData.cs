@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerDevOpsAuditingSetting data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerDevOpsAuditingSetting data model.
+    /// A server DevOps auditing settings.
+    /// </summary>
     public partial class SqlServerDevOpsAuditingSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerDevOpsAuditingSettingData. </summary>

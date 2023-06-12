@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("storageId");
+            writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
-            writer.WritePropertyName("storagePath");
+            writer.WritePropertyName("storagePath"u8);
             writer.WriteStringValue(StorageUri.AbsoluteUri);
             writer.WriteEndObject();
             writer.WriteEndObject();

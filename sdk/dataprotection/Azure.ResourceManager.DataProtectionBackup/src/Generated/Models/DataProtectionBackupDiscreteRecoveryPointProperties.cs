@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recoveryPointType"></param>
         /// <param name="retentionTagName"></param>
         /// <param name="retentionTagVersion"></param>
-        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion) : base(objectType)
+        /// <param name="expireOn"></param>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn) : base(objectType)
         {
             FriendlyName = friendlyName;
             RecoveryPointDataStoresDetails = recoveryPointDataStoresDetails;
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RecoveryPointType = recoveryPointType;
             RetentionTagName = retentionTagName;
             RetentionTagVersion = retentionTagVersion;
+            ExpireOn = expireOn;
             ObjectType = objectType ?? "AzureBackupDiscreteRecoveryPoint";
         }
 
@@ -66,5 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string RetentionTagName { get; set; }
         /// <summary> Gets or sets the retention tag version. </summary>
         public string RetentionTagVersion { get; set; }
+        /// <summary> Gets the expire on. </summary>
+        public DateTimeOffset? ExpireOn { get; }
     }
 }

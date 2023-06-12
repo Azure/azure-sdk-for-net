@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the Api data model. </summary>
+    /// <summary>
+    /// A class representing the Api data model.
+    /// API details.
+    /// </summary>
     public partial class ApiData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabEnvironment data model.
+    /// An environment, which is essentially an ARM template deployment.
+    /// </summary>
     public partial class DevTestLabEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabEnvironmentData. </summary>

@@ -18,75 +18,55 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsDefined(AlignMode))
             {
-                if (AlignMode != null)
-                {
-                    writer.WritePropertyName("alignMode");
-                    writer.WriteStringValue(AlignMode.Value.ToSerialString());
-                }
-                else
-                {
-                    writer.WriteNull("alignMode");
-                }
+                writer.WritePropertyName("alignMode"u8);
+                writer.WriteStringValue(AlignMode.Value.ToString());
             }
             if (Optional.IsDefined(FillNAMethod))
             {
-                if (FillNAMethod != null)
-                {
-                    writer.WritePropertyName("fillNAMethod");
-                    writer.WriteStringValue(FillNAMethod.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("fillNAMethod");
-                }
+                writer.WritePropertyName("fillNAMethod"u8);
+                writer.WriteStringValue(FillNAMethod.Value.ToString());
             }
             if (Optional.IsDefined(PaddingValue))
             {
-                if (PaddingValue != null)
-                {
-                    writer.WritePropertyName("paddingValue");
-                    writer.WriteNumberValue(PaddingValue.Value);
-                }
-                else
-                {
-                    writer.WriteNull("paddingValue");
-                }
+                writer.WritePropertyName("paddingValue"u8);
+                writer.WriteNumberValue(PaddingValue.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static AlignPolicy DeserializeAlignPolicy(JsonElement element)
         {
-            Optional<AlignMode?> alignMode = default;
-            Optional<FillNAMethod?> fillNAMethod = default;
-            Optional<float?> paddingValue = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AlignMode> alignMode = default;
+            Optional<FillNAMethod> fillNAMethod = default;
+            Optional<float> paddingValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alignMode"))
+                if (property.NameEquals("alignMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        alignMode = null;
                         continue;
                     }
-                    alignMode = property.Value.GetString().ToAlignMode();
+                    alignMode = new AlignMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fillNAMethod"))
+                if (property.NameEquals("fillNAMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fillNAMethod = null;
                         continue;
                     }
                     fillNAMethod = new FillNAMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("paddingValue"))
+                if (property.NameEquals("paddingValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        paddingValue = null;
                         continue;
                     }
                     paddingValue = property.Value.GetSingle();

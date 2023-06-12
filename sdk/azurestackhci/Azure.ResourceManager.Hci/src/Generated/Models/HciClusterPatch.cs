@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.Hci.Models
         public HciClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -30,5 +32,13 @@ namespace Azure.ResourceManager.Hci.Models
         public Guid? AadTenantId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
         public HciClusterDesiredProperties DesiredProperties { get; set; }
+        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        public Guid? PrincipalId { get; }
+        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        public Guid? TenantId { get; }
+        /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        public HciManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
+        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

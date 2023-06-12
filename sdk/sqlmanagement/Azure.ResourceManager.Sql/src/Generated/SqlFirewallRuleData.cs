@@ -10,7 +10,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the SqlFirewallRule data model.
+    /// A server firewall rule.
+    /// </summary>
     public partial class SqlFirewallRuleData : ProxyResourceWithWritableName
     {
         /// <summary> Initializes a new instance of SqlFirewallRuleData. </summary>

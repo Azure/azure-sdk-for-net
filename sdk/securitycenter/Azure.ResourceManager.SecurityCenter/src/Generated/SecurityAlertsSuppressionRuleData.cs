@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityAlertsSuppressionRule data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityAlertsSuppressionRule data model.
+    /// Describes the suppression rule
+    /// </summary>
     public partial class SecurityAlertsSuppressionRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>

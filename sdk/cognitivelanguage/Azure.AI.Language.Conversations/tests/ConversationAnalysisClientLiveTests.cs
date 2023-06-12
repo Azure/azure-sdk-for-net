@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System;
-using System.Text.Json;
+using System.Collections;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -20,152 +21,208 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            ConversationalTask conversationalTask = new(
-                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
-                new ConversationTaskParameters(TestEnvironment.ProjectName, TestEnvironment.DeploymentName));
+            var data = new
+            {
+                AnalysisInput = new
+                {
+                    ConversationItem = new
+                    {
+                        Text = "Send an email to Carol about the tomorrow's demo",
+                        Id = "1",
+                        ParticipantId = "1",
+                    }
+                },
+                Parameters = new
+                {
+                    ProjectName = TestEnvironment.ProjectName,
+                    DeploymentName = TestEnvironment.DeploymentName,
+                },
+                Kind = "Conversation",
+            };
 
-            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, PropertyNamingConvention.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);
 
             // deserialize
-            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
-            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Conversation, conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual("Conversation", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Send", conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("Send", (string)conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
+            dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
             Assert.IsNotNull(conversationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(conversationPrediction.Intents);
-            Assert.IsNotEmpty(conversationPrediction.Entities);
+            Assert.IsNotEmpty((IEnumerable)conversationPrediction.Intents);
+            Assert.IsNotEmpty((IEnumerable)conversationPrediction.Entities);
         }
 
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_Conversation()
         {
-            ConversationalTask conversationalTask = new(
-                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
-                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+            var data = new
+            {
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        text = "Send an email to Carol about the tomorrow's demo",
+                        id = "1",
+                        participantId = "1",
+                    }
+                },
+                parameters = new
+                {
+                    projectName = TestEnvironment.OrchestrationProjectName,
+                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                },
+                kind = "Conversation",
+            };
 
-            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
 
             // deserialize
-            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
-            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual("Orchestration", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("EmailIntent", conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("EmailIntent", (string)conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
             Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestrationPrediction.Intents);
+            Assert.IsNotEmpty((IEnumerable)orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as ConversationTargetIntentResult;
+            dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.Conversation, topIntent.TargetProjectKind);
+            Assert.AreEqual("Conversation", (string)topIntent.TargetProjectKind);
 
             // assert entities and intents
-            Assert.IsNotEmpty(topIntent.Result.Prediction.Entities);
-            Assert.IsNotEmpty(topIntent.Result.Prediction.Intents);
+            Assert.IsNotEmpty((IEnumerable)topIntent.Result.Prediction.Entities);
+            Assert.IsNotEmpty((IEnumerable)topIntent.Result.Prediction.Intents);
         }
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29136")]
         public async Task AnalyzeConversation_Orchestration_Luis()
         {
-            ConversationalTask conversationalTask = new(
-                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Reserve a table for 2 at the Italian restaurant")),
-                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+            var data = new
+            {
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        text = "Reserve a table for 2 at the Italian restaurant",
+                        id = "1",
+                        participantId = "1",
+                    }
+                },
+                parameters = new
+                {
+                    projectName = TestEnvironment.OrchestrationProjectName,
+                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                },
+                kind = "Conversation",
+            };
 
-            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
 
             // deserialize
-            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
-            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual("Orchestration", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("RestaurantIntent", conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("RestaurantIntent", (string)conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
             Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestrationPrediction.Intents);
+            Assert.IsNotEmpty((IEnumerable)orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as LuisTargetIntentResult;
+            dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.Luis, topIntent.TargetProjectKind);
+            Assert.AreEqual("Luis", (string)topIntent.TargetProjectKind);
         }
 
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_QuestionAnswering()
         {
-            ConversationalTask conversationalTask = new(
-                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "How are you?")),
-                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+            var data = new
+            {
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        text = "How are you?",
+                        id = "1",
+                        participantId = "1",
+                    }
+                },
+                parameters = new
+                {
+                    projectName = TestEnvironment.OrchestrationProjectName,
+                    deploymentName = TestEnvironment.OrchestrationDeploymentName,
+                },
+                kind = "Conversation",
+            };
 
-            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
 
             // deserialize
-            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
-            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual("Orchestration", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("ChitChat-QnA", conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("ChitChat-QnA", (string)conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
             Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestrationPrediction.Intents);
+            Assert.IsNotEmpty((IEnumerable)orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
+            dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetProjectKind);
+            Assert.AreEqual("QuestionAnswering", (string)topIntent.TargetProjectKind);
         }
 
         [RecordedTest]
@@ -178,203 +235,111 @@ namespace Azure.AI.Language.Conversations.Tests
                 InstrumentClientOptions(
                     new ConversationsClientOptions(ServiceVersion)));
 
-            ConversationalTask conversationalTask = new(
-                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
-                new ConversationTaskParameters(TestEnvironment.ProjectName, TestEnvironment.DeploymentName));
+            var data = new
+            {
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        text = "Send an email to Carol about the tomorrow's demo",
+                        id = "1",
+                        participantId = "1",
+                    }
+                },
+                parameters = new
+                {
+                    projectName = TestEnvironment.ProjectName,
+                    deploymentName = TestEnvironment.DeploymentName,
+                },
+                kind = "Conversation",
+            };
 
-            Response response = await client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
-            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
-            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
-            Assert.That(conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
+            Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
-            var textConversationItems = new List<TextConversationItem>()
+            var data = new
             {
-                new TextConversationItem("1", "Agent", "Hello, how can I help you?") { Role = "Agent" },
-                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day.") { Role = "Customer" },
-                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.") { Role = "Agent" },
+                analysisInput = new
+                {
+                    conversations = new[]
+                    {
+                        new
+                        {
+                            conversationItems = new[]
+                            {
+                                new
+                                {
+                                    text = "Hello, how can I help you?",
+                                    id = "1",
+                                    participantId = "Agent",
+                                    role = "Agent",
+                                },
+                                new
+                                {
+                                    text = "How to upgrade Office? I am getting error messages the whole day.",
+                                    id = "2",
+                                    participantId = "Customer",
+                                    role = "Customer",
+                                },
+                                new
+                                {
+                                    text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                                    id = "3",
+                                    participantId = "Agent",
+                                    role = "Agent",
+                                },
+                            },
+                            id = "1",
+                            language = "en",
+                            modality = "text",
+                        },
+                    },
+                },
+                tasks = new[]
+                {
+                    new
+                    {
+                        parameters = new
+                        {
+                            summaryAspects = new[]
+                            {
+                                "issue",
+                                "resolution",
+                            },
+                        },
+                        kind = "ConversationalSummarizationTask",
+                        taskName = "1",
+                    },
+                },
             };
 
-            var input = new List<TextConversation>()
-            {
-                new TextConversation("1", "en", textConversationItems)
-            };
+            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
-
-            var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
-            var tasks = new List<AnalyzeConversationLROTask>()
-            {
-                conversationSummarizationTask
-            };
-
-            var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
-            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
-
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, analyzeConversationJobsInput.AsRequestContent());
-
-            using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
-            AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
-            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
+            foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)
             {
-                var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
                 Assert.NotNull(analyzeConversationSummarization);
 
-                SummaryResult results = analyzeConversationSummarization.Results;
+                dynamic results = analyzeConversationSummarization.Results;
                 Assert.NotNull(results);
 
                 Assert.NotNull(results.Conversations);
-                foreach (SummaryResultConversationsItem conversation in results.Conversations)
+                foreach (dynamic conversation in results.Conversations)
                 {
-                    Assert.That(conversation.Summaries, Is.Not.Null.And.Not.Empty);
-                    foreach (ConversationsSummaryResultSummariesItem summary in conversation.Summaries)
+                    Assert.That((IEnumerable)conversation.Summaries, Is.Not.Null.And.Not.Empty);
+                    foreach (dynamic summary in conversation.Summaries)
                     {
                         Assert.NotNull(summary.Text);
-                        Assert.That(summary.Aspect, Is.EqualTo("issue").Or.EqualTo("resolution"));
-                    }
-                }
-            }
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
-        public async Task AnalyzeConversation_ConversationPII_TextInput()
-        {
-            var textConversationItems = new List<TextConversationItem>()
-            {
-                new TextConversationItem("1", "0", "Hi, I am John Doe.?"),
-                new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
-                new TextConversationItem("3", "0", "Pretty good."),
-            };
-
-            var input = new List<TextConversation>()
-            {
-                new TextConversation("1", "en", textConversationItems)
-            };
-
-            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
-
-            var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            var tasks = new List<AnalyzeConversationLROTask>()
-            {
-                piiTask
-            };
-
-            var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
-            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
-
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, analyzeConversationJobsInput.AsRequestContent());
-
-            using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
-            AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
-            Assert.NotNull(jobResults);
-
-            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
-            {
-                var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
-                Assert.NotNull(analyzeConversationPIIResult);
-
-                ConversationPIIResults results = analyzeConversationPIIResult.Results;
-                Assert.NotNull(results);
-
-                Assert.NotNull(results.Conversations);
-                foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
-                {
-                    Assert.NotNull(conversation.ConversationItems);
-                    foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
-                    {
-                        Assert.NotNull(conversationItem.Entities);
-                        foreach (Entity entity in conversationItem.Entities)
-                        {
-                            Assert.NotNull(entity.Text);
-                            Assert.NotNull(entity.Length);
-                            Assert.NotNull(entity.ConfidenceScore);
-                            Assert.NotNull(entity.Category);
-                            Assert.NotNull(entity.Offset);
-                        }
-                    }
-                }
-            }
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
-        public async Task AnalyzeConversation_ConversationPII_TranscriptInput()
-        {
-            var transcriptConversationItemOne = new TranscriptConversationItem("1", "speaker", "hi", "hi", "Hi", "hi");
-            transcriptConversationItemOne.WordLevelTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
-
-            var transcriptConversationItemTwo = new TranscriptConversationItem("2", "speaker", "jane doe", "jane doe", "Jane doe", "jane doe");
-            transcriptConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
-            transcriptConversationItemTwo.WordLevelTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
-
-            var transcriptConversationItemThree = new TranscriptConversationItem("3", "agent", "hi jane what's your phone number", "hi jane what's your phone number", "Hi Jane, what's your phone number?", "hi jane what's your phone number");
-            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
-            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
-            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
-            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
-            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
-            transcriptConversationItemThree.WordLevelTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
-
-            var transcriptConversationItems = new List<TranscriptConversationItem>()
-            {
-                transcriptConversationItemOne,
-                transcriptConversationItemTwo,
-                transcriptConversationItemThree,
-            };
-
-            var input = new List<TranscriptConversation>()
-            {
-                new TranscriptConversation("1", "en", transcriptConversationItems)
-            };
-
-            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
-
-            var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            var tasks = new List<AnalyzeConversationLROTask>()
-            {
-                piiTask
-            };
-
-            var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
-            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
-
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, analyzeConversationJobsInput.AsRequestContent());
-
-            using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
-            AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
-            Assert.NotNull(jobResults);
-
-            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
-            {
-                var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
-                Assert.NotNull(analyzeConversationPIIResult);
-
-                ConversationPIIResults results = analyzeConversationPIIResult.Results;
-                Assert.NotNull(results);
-
-                Assert.NotNull(results.Conversations);
-                foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
-                {
-                    Assert.NotNull(conversation.ConversationItems);
-                    foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
-                    {
-                        Assert.NotNull(conversationItem.Entities);
-                        foreach (Entity entity in conversationItem.Entities)
-                        {
-                            Assert.NotNull(entity.Text);
-                            Assert.NotNull(entity.Length);
-                            Assert.NotNull(entity.ConfidenceScore);
-                            Assert.NotNull(entity.Category);
-                            Assert.NotNull(entity.Offset);
-                        }
+                        Assert.That((string)summary.Aspect, Is.EqualTo("issue").Or.EqualTo("resolution"));
                     }
                 }
             }

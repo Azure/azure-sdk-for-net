@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.DigitalTwins.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Tests
 {
@@ -19,18 +21,49 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateDigitalTwinWithIdentity()
+        public async Task CreateDigitalTwinWithSystemAssignedIdentityAndEndpoint()
         {
-            var location = AzureLocation.WestUS2;
-            var subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "digitaltwinsrg", location).ConfigureAwait(false);
-            string digitaltwinsName = Recording.GenerateAssetName("digitalTwinsResource");
+            // Create ADT instance
+            string digitalTwinsInstanceName = Recording.GenerateAssetName("sdkTestAdt");
+            ArmOperation<DigitalTwinsDescriptionResource> createAdtInstanceResponse = await ResourceGroup.GetDigitalTwinsDescriptions().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                digitalTwinsInstanceName,
+                new DigitalTwinsDescriptionData(Location)
+                {
+                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                }).ConfigureAwait(false);
 
-            var digitalTwinsData = new DigitalTwinsDescriptionData(location);
-            digitalTwinsData.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
+            DigitalTwinsDescriptionResource digitalTwinsResource = createAdtInstanceResponse.Value;
 
-            var digitalTwinsResource = await rg.GetDigitalTwinsDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, digitaltwinsName, digitalTwinsData).ConfigureAwait(false);
-            Assert.AreEqual(digitaltwinsName, digitalTwinsResource.Value.Data.Name);
+            // Ensure names of instance are equal
+            Assert.AreEqual(digitalTwinsInstanceName, digitalTwinsResource.Data.Name);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, digitalTwinsResource.Data.Identity.ManagedServiceIdentityType);
+
+            // Create an egress endpoint
+            string endpointName = Recording.GenerateAssetName("sdkTestEndpoint");
+            Uri eventHubNamespaceUri = new Uri("sb://myeventhubnamespace.servicebus.windows.net");
+            string eventHubName = "MyEventHub";
+
+            ArmOperation<DigitalTwinsEndpointResource> createEndpointResponse = await digitalTwinsResource.GetDigitalTwinsEndpointResources().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                endpointName,
+                new DigitalTwinsEndpointResourceData(
+                    new DigitalTwinsEventHubProperties
+                    {
+                        AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
+                        EndpointUri = eventHubNamespaceUri,
+                        EntityPath = eventHubName,
+                    }));
+
+            DigitalTwinsEndpointResource endpointResource = createEndpointResponse.Value;
+
+            // Ensure endpoint configuration was stored correctly
+            Assert.AreEqual(endpointName, endpointResource.Data.Name);
+            Assert.AreEqual(DigitalTwinsAuthenticationType.IdentityBased, endpointResource.Data.Properties.AuthenticationType);
+            Assert.IsAssignableFrom<DigitalTwinsEventHubProperties>(endpointResource.Data.Properties);
+            DigitalTwinsEventHubProperties eventHubEndpointProperties = (DigitalTwinsEventHubProperties)endpointResource.Data.Properties;
+            Assert.AreEqual(eventHubNamespaceUri, eventHubEndpointProperties.EndpointUri);
+            Assert.AreEqual(eventHubName, eventHubEndpointProperties.EntityPath);
         }
     }
 }

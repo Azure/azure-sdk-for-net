@@ -2,13 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -72,12 +74,44 @@ namespace Azure.Core
         public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
+        public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, ObjectSerializer? serializer = null) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+        public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <param name="propertyNamingConvention">The naming convention to use for property names in the serialized content.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable, PropertyNamingConvention propertyNamingConvention)
+        {
+            JsonSerializerOptions options = new();
+            if (propertyNamingConvention == PropertyNamingConvention.CamelCase)
+            {
+                options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            };
+
+            ObjectSerializer serializer = new JsonObjectSerializer(options);
+            return Create(serializer.Serialize(serializable));
+        }
 
         /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
@@ -90,6 +124,12 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         public static implicit operator RequestContent(BinaryData content) => Create(content);
+
+        /// <summary>
+        /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        public static implicit operator RequestContent(DynamicData content) => Create(content);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -144,7 +184,8 @@ namespace Azure.Core
                     {
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }
@@ -266,6 +307,35 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            }
+        }
+
+        private sealed class DynamicDataContent : RequestContent
+        {
+            private readonly DynamicData _data;
+
+            public DynamicDataContent(DynamicData data) => _data = data;
+
+            public override void Dispose()
+            {
+                _data.Dispose();
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _data.WriteTo(stream);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = default;
+                return false;
+            }
+
+            public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                _data.WriteTo(stream);
+                return Task.CompletedTask;
             }
         }
     }

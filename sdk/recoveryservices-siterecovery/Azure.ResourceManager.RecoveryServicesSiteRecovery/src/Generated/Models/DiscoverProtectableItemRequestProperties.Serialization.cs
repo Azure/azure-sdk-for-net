@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(IPAddress))
             {
-                writer.WritePropertyName("ipAddress");
+                writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
             writer.WriteEndObject();

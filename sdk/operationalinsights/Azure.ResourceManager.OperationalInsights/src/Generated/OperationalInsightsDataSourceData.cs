@@ -14,7 +14,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsDataSource data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsDataSource data model.
+    /// Datasources under OMS Workspace.
+    /// </summary>
     public partial class OperationalInsightsDataSourceData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsDataSourceData. </summary>

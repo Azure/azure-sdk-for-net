@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary> A class representing the StorageTarget data model. </summary>
+    /// <summary>
+    /// A class representing the StorageTarget data model.
+    /// Type of the Storage Target.
+    /// </summary>
     public partial class StorageTargetData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageTargetData. </summary>

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static LogAnalyticsIdentifier DeserializeLogAnalyticsIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> workspaceId = default;
             Optional<string> workspaceSubscriptionId = default;
             Optional<string> workspaceResourceGroup = default;
@@ -22,37 +26,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("workspaceSubscriptionId"))
+                if (property.NameEquals("workspaceSubscriptionId"u8))
                 {
                     workspaceSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceResourceGroup"))
+                if (property.NameEquals("workspaceResourceGroup"u8))
                 {
                     workspaceResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentId"))
+                if (property.NameEquals("agentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceIdentifierType(property.Value.GetString());
                     continue;

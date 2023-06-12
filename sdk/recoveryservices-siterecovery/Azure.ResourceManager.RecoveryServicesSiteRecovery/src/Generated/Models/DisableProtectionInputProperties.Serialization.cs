@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableProtectionReason))
             {
-                writer.WritePropertyName("disableProtectionReason");
+                writer.WritePropertyName("disableProtectionReason"u8);
                 writer.WriteStringValue(DisableProtectionReason.Value.ToString());
             }
             if (Optional.IsDefined(ReplicationProviderInput))
             {
-                writer.WritePropertyName("replicationProviderInput");
+                writer.WritePropertyName("replicationProviderInput"u8);
                 writer.WriteObjectValue(ReplicationProviderInput);
             }
             writer.WriteEndObject();

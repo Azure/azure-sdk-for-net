@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static RedundancyMode ToRedundancyMode(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return RedundancyMode.None;
-            if (string.Equals(value, "Manual", StringComparison.InvariantCultureIgnoreCase)) return RedundancyMode.Manual;
-            if (string.Equals(value, "Failover", StringComparison.InvariantCultureIgnoreCase)) return RedundancyMode.Failover;
-            if (string.Equals(value, "ActiveActive", StringComparison.InvariantCultureIgnoreCase)) return RedundancyMode.ActiveActive;
-            if (string.Equals(value, "GeoRedundant", StringComparison.InvariantCultureIgnoreCase)) return RedundancyMode.GeoRedundant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return RedundancyMode.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return RedundancyMode.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failover")) return RedundancyMode.Failover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActiveActive")) return RedundancyMode.ActiveActive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeoRedundant")) return RedundancyMode.GeoRedundant;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedundancyMode value.");
         }
     }

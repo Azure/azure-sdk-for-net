@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// User identity configuration.
-    /// Serialized Name: UserIdentity
-    /// </summary>
+    /// <summary> User identity configuration. </summary>
     public partial class MachineLearningUserIdentity : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of MachineLearningUserIdentity. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningUserIdentity. </summary>
-        /// <param name="identityType">
-        /// [Required] Specifies the type of identity framework.
-        /// Serialized Name: IdentityConfiguration.identityType
-        /// </param>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal MachineLearningUserIdentity(IdentityConfigurationType identityType) : base(identityType)
         {
             IdentityType = identityType;

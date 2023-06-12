@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
-        protected const string VaultName = "ps-testing-keyvault";
+        protected const string VaultName = "PS-Test-kv1";
         protected const string Key1 = "key1";
         protected const string Key2 = "key2";
-        protected const string Key3 = "key3";
 
         public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
+            IgnoreKeyVaultDependencyVersions();
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
             JsonPathSanitizers.Add("$..keyName");

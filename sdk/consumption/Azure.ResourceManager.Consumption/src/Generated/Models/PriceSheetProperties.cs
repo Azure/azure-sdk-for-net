@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The properties of the price sheet. </summary>
+    /// <summary>
+    /// The properties of the price sheet.
+    /// Serialized Name: PriceSheetProperties
+    /// </summary>
     public partial class PriceSheetProperties
     {
         /// <summary> Initializes a new instance of PriceSheetProperties. </summary>
@@ -19,15 +22,42 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of PriceSheetProperties. </summary>
-        /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
-        /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it&apos;s specified in $expand. </param>
-        /// <param name="unitOfMeasure"> Unit of measure. </param>
-        /// <param name="includedQuantity"> Included quality for an offer. </param>
-        /// <param name="partNumber"> Part Number. </param>
-        /// <param name="unitPrice"> Unit Price. </param>
-        /// <param name="currencyCode"> Currency Code. </param>
-        /// <param name="offerId"> Offer Id. </param>
+        /// <param name="billingPeriodId">
+        /// The id of the billing period resource that the usage belongs to.
+        /// Serialized Name: PriceSheetProperties.billingPeriodId
+        /// </param>
+        /// <param name="meterId">
+        /// The meter id (GUID)
+        /// Serialized Name: PriceSheetProperties.meterId
+        /// </param>
+        /// <param name="meterDetails">
+        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// Serialized Name: PriceSheetProperties.meterDetails
+        /// </param>
+        /// <param name="unitOfMeasure">
+        /// Unit of measure
+        /// Serialized Name: PriceSheetProperties.unitOfMeasure
+        /// </param>
+        /// <param name="includedQuantity">
+        /// Included quality for an offer
+        /// Serialized Name: PriceSheetProperties.includedQuantity
+        /// </param>
+        /// <param name="partNumber">
+        /// Part Number
+        /// Serialized Name: PriceSheetProperties.partNumber
+        /// </param>
+        /// <param name="unitPrice">
+        /// Unit Price
+        /// Serialized Name: PriceSheetProperties.unitPrice
+        /// </param>
+        /// <param name="currencyCode">
+        /// Currency Code
+        /// Serialized Name: PriceSheetProperties.currencyCode
+        /// </param>
+        /// <param name="offerId">
+        /// Offer Id
+        /// Serialized Name: PriceSheetProperties.offerId
+        /// </param>
         internal PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId)
         {
             BillingPeriodId = billingPeriodId;
@@ -41,23 +71,50 @@ namespace Azure.ResourceManager.Consumption.Models
             OfferId = offerId;
         }
 
-        /// <summary> The id of the billing period resource that the usage belongs to. </summary>
+        /// <summary>
+        /// The id of the billing period resource that the usage belongs to.
+        /// Serialized Name: PriceSheetProperties.billingPeriodId
+        /// </summary>
         public ResourceIdentifier BillingPeriodId { get; }
-        /// <summary> The meter id (GUID). </summary>
+        /// <summary>
+        /// The meter id (GUID)
+        /// Serialized Name: PriceSheetProperties.meterId
+        /// </summary>
         public Guid? MeterId { get; }
-        /// <summary> The details about the meter. By default this is not populated, unless it&apos;s specified in $expand. </summary>
+        /// <summary>
+        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// Serialized Name: PriceSheetProperties.meterDetails
+        /// </summary>
         public ConsumptionMeterDetails MeterDetails { get; }
-        /// <summary> Unit of measure. </summary>
+        /// <summary>
+        /// Unit of measure
+        /// Serialized Name: PriceSheetProperties.unitOfMeasure
+        /// </summary>
         public string UnitOfMeasure { get; }
-        /// <summary> Included quality for an offer. </summary>
+        /// <summary>
+        /// Included quality for an offer
+        /// Serialized Name: PriceSheetProperties.includedQuantity
+        /// </summary>
         public decimal? IncludedQuantity { get; }
-        /// <summary> Part Number. </summary>
+        /// <summary>
+        /// Part Number
+        /// Serialized Name: PriceSheetProperties.partNumber
+        /// </summary>
         public string PartNumber { get; }
-        /// <summary> Unit Price. </summary>
+        /// <summary>
+        /// Unit Price
+        /// Serialized Name: PriceSheetProperties.unitPrice
+        /// </summary>
         public decimal? UnitPrice { get; }
-        /// <summary> Currency Code. </summary>
+        /// <summary>
+        /// Currency Code
+        /// Serialized Name: PriceSheetProperties.currencyCode
+        /// </summary>
         public string CurrencyCode { get; }
-        /// <summary> Offer Id. </summary>
+        /// <summary>
+        /// Offer Id
+        /// Serialized Name: PriceSheetProperties.offerId
+        /// </summary>
         public string OfferId { get; }
     }
 }

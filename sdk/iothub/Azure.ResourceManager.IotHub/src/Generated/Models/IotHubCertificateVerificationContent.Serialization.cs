@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Certificate))
             {
-                writer.WritePropertyName("certificate");
+                writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Certificate);
 #else

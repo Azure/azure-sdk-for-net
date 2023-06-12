@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static CopyProgressDetails DeserializeCopyProgressDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<string> status = default;
             Optional<string> parallelCopyType = default;
@@ -28,96 +32,88 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> copyDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parallelCopyType"))
+                if (property.NameEquals("parallelCopyType"u8))
                 {
                     parallelCopyType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usedParallelCopies"))
+                if (property.NameEquals("usedParallelCopies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usedParallelCopies = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataRead"))
+                if (property.NameEquals("dataRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataWritten"))
+                if (property.NameEquals("dataWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rowsRead"))
+                if (property.NameEquals("rowsRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowsRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rowsCopied"))
+                if (property.NameEquals("rowsCopied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowsCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("copyStart"))
+                if (property.NameEquals("copyStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("copyThroughput"))
+                if (property.NameEquals("copyThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyThroughput = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("copyDuration"))
+                if (property.NameEquals("copyDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyDuration = property.Value.GetInt32();

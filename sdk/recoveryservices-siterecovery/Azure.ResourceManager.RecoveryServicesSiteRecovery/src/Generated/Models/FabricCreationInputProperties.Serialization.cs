@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomDetails))
             {
-                writer.WritePropertyName("customDetails");
+                writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
             }
             writer.WriteEndObject();

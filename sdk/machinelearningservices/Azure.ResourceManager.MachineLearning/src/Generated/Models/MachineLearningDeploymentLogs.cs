@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningDeploymentLogs.
-    /// Serialized Name: DeploymentLogs
-    /// </summary>
+    /// <summary> The MachineLearningDeploymentLogs. </summary>
     public partial class MachineLearningDeploymentLogs
     {
         /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
-        /// <param name="content">
-        /// The retrieved online deployment logs.
-        /// Serialized Name: DeploymentLogs.content
-        /// </param>
+        /// <param name="content"> The retrieved online deployment logs. </param>
         internal MachineLearningDeploymentLogs(string content)
         {
             Content = content;
         }
 
-        /// <summary>
-        /// The retrieved online deployment logs.
-        /// Serialized Name: DeploymentLogs.content
-        /// </summary>
+        /// <summary> The retrieved online deployment logs. </summary>
         public string Content { get; }
     }
 }

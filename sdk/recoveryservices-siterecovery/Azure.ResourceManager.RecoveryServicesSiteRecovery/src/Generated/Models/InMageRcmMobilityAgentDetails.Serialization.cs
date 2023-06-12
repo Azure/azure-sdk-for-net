@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmMobilityAgentDetails DeserializeInMageRcmMobilityAgentDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> version = default;
             Optional<string> latestVersion = default;
             Optional<string> latestAgentReleaseDate = default;
@@ -28,66 +32,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> isUpgradeable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestVersion"))
+                if (property.NameEquals("latestVersion"u8))
                 {
                     latestVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestAgentReleaseDate"))
+                if (property.NameEquals("latestAgentReleaseDate"u8))
                 {
                     latestAgentReleaseDate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driverVersion"))
+                if (property.NameEquals("driverVersion"u8))
                 {
                     driverVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestUpgradableVersionWithoutReboot"))
+                if (property.NameEquals("latestUpgradableVersionWithoutReboot"u8))
                 {
                     latestUpgradableVersionWithoutReboot = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersionExpiryDate"))
+                if (property.NameEquals("agentVersionExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentVersionExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("driverVersionExpiryDate"))
+                if (property.NameEquals("driverVersionExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     driverVersionExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeatUtc"))
+                if (property.NameEquals("lastHeartbeatUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("reasonsBlockingUpgrade"))
+                if (property.NameEquals("reasonsBlockingUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AgentUpgradeBlockedReason> array = new List<AgentUpgradeBlockedReason>();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     reasonsBlockingUpgrade = array;
                     continue;
                 }
-                if (property.NameEquals("isUpgradeable"))
+                if (property.NameEquals("isUpgradeable"u8))
                 {
                     isUpgradeable = property.Value.GetString();
                     continue;

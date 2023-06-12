@@ -19,7 +19,6 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -38,13 +37,18 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
-
-        /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+
+        /// <summary>
+        /// The identifier of the call automation entity which answers the call.
+        /// </summary>
+        public CommunicationUserIdentifier AnsweredByIdentifier { get; set; }
+
+        /// <summary>
+        /// The operation context.
+        /// </summary>
+        public string OperationContext { get; set; }
     }
 }

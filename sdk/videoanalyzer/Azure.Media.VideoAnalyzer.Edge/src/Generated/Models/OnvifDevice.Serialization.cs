@@ -18,22 +18,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteObjectValue(Hostname);
             }
             if (Optional.IsDefined(SystemDateTime))
             {
-                writer.WritePropertyName("systemDateTime");
+                writer.WritePropertyName("systemDateTime"u8);
                 writer.WriteObjectValue(SystemDateTime);
             }
             if (Optional.IsDefined(Dns))
             {
-                writer.WritePropertyName("dns");
+                writer.WritePropertyName("dns"u8);
                 writer.WriteObjectValue(Dns);
             }
             if (Optional.IsCollectionDefined(MediaProfiles))
             {
-                writer.WritePropertyName("mediaProfiles");
+                writer.WritePropertyName("mediaProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in MediaProfiles)
                 {
@@ -46,47 +46,47 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDevice DeserializeOnvifDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OnvifHostName> hostname = default;
             Optional<OnvifSystemDateTime> systemDateTime = default;
             Optional<OnvifDns> dns = default;
             Optional<IList<MediaProfile>> mediaProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostname = OnvifHostName.DeserializeOnvifHostName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemDateTime"))
+                if (property.NameEquals("systemDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemDateTime = OnvifSystemDateTime.DeserializeOnvifSystemDateTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dns"))
+                if (property.NameEquals("dns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dns = OnvifDns.DeserializeOnvifDns(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mediaProfiles"))
+                if (property.NameEquals("mediaProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaProfile> array = new List<MediaProfile>();

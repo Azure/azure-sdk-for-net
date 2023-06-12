@@ -17,23 +17,23 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator");
-            writer.WriteStringValue(LabelOperator.ToSerialString());
+            writer.WritePropertyName("labelOperator"u8);
+            writer.WriteStringValue(LabelOperator.ToString());
             if (Optional.IsDefined(_value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value);
             }
             if (Optional.IsDefined(_ttlSeconds))
             {
-                writer.WritePropertyName("ttlSeconds");
+                writer.WritePropertyName("ttlSeconds"u8);
                 writer.WriteNumberValue(_ttlSeconds.Value);
             }
             if (Optional.IsDefined(Expedite))
             {
-                writer.WritePropertyName("expedite");
+                writer.WritePropertyName("expedite"u8);
                 writer.WriteBooleanValue(Expedite.Value);
             }
             writer.WriteEndObject();
@@ -41,6 +41,10 @@ namespace Azure.Communication.JobRouter
 
         internal static WorkerSelector DeserializeWorkerSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             Optional<object> value = default;
@@ -50,61 +54,56 @@ namespace Azure.Communication.JobRouter
             Optional<DateTimeOffset> expireTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelOperator"))
+                if (property.NameEquals("labelOperator"u8))
                 {
-                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    labelOperator = new LabelOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("ttlSeconds"))
+                if (property.NameEquals("ttlSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttlSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("expedite"))
+                if (property.NameEquals("expedite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expedite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new WorkerSelectorState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expireTime"))
+                if (property.NameEquals("expireTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expireTime = property.Value.GetDateTimeOffset("O");

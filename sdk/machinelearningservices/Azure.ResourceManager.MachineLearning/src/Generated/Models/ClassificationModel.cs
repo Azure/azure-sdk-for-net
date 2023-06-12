@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum for all classification models supported by AutoML.
-    /// Serialized Name: ClassificationModels
-    /// </summary>
+    /// <summary> Enum for all classification models supported by AutoML. </summary>
     public readonly partial struct ClassificationModel : IEquatable<ClassificationModel>
     {
         private readonly string _value;
@@ -44,77 +41,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// It belongs to the group of linear classifiers and is somewhat similar to polynomial and linear regression.
         /// Logistic regression is fast and relatively uncomplicated, and it&apos;s convenient for you to interpret the results.
         /// Although it&apos;s essentially a method for binary classification, it can also be applied to multiclass problems.
-        /// Serialized Name: ClassificationModels.LogisticRegression
         /// </summary>
         public static ClassificationModel LogisticRegression { get; } = new ClassificationModel(LogisticRegressionValue);
         /// <summary>
         /// SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
         /// to find the model parameters that correspond to the best fit between predicted and actual outputs.
-        /// Serialized Name: ClassificationModels.SGD
         /// </summary>
         public static ClassificationModel SGD { get; } = new ClassificationModel(SGDValue);
         /// <summary>
         /// The multinomial Naive Bayes classifier is suitable for classification with discrete features (e.g., word counts for text classification).
         /// The multinomial distribution normally requires integer feature counts. However, in practice, fractional counts such as tf-idf may also work.
-        /// Serialized Name: ClassificationModels.MultinomialNaiveBayes
         /// </summary>
         public static ClassificationModel MultinomialNaiveBayes { get; } = new ClassificationModel(MultinomialNaiveBayesValue);
-        /// <summary>
-        /// Naive Bayes classifier for multivariate Bernoulli models.
-        /// Serialized Name: ClassificationModels.BernoulliNaiveBayes
-        /// </summary>
+        /// <summary> Naive Bayes classifier for multivariate Bernoulli models. </summary>
         public static ClassificationModel BernoulliNaiveBayes { get; } = new ClassificationModel(BernoulliNaiveBayesValue);
         /// <summary>
         /// A support vector machine (SVM) is a supervised machine learning model that uses classification algorithms for two-group classification problems.
         /// After giving an SVM model sets of labeled training data for each category, they&apos;re able to categorize new text.
-        /// Serialized Name: ClassificationModels.SVM
         /// </summary>
         public static ClassificationModel SVM { get; } = new ClassificationModel(SVMValue);
         /// <summary>
         /// A support vector machine (SVM) is a supervised machine learning model that uses classification algorithms for two-group classification problems.
         /// After giving an SVM model sets of labeled training data for each category, they&apos;re able to categorize new text.
         /// Linear SVM performs best when input data is linear, i.e., data can be easily classified by drawing the straight line between classified values on a plotted graph.
-        /// Serialized Name: ClassificationModels.LinearSVM
         /// </summary>
         public static ClassificationModel LinearSVM { get; } = new ClassificationModel(LinearSVMValue);
         /// <summary>
         /// K-nearest neighbors (KNN) algorithm uses &apos;feature similarity&apos; to predict the values of new datapoints
         /// which further means that the new data point will be assigned a value based on how closely it matches the points in the training set.
-        /// Serialized Name: ClassificationModels.KNN
         /// </summary>
         public static ClassificationModel KNN { get; } = new ClassificationModel(KNNValue);
         /// <summary>
         /// Decision Trees are a non-parametric supervised learning method used for both classification and regression tasks.
         /// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features.
-        /// Serialized Name: ClassificationModels.DecisionTree
         /// </summary>
         public static ClassificationModel DecisionTree { get; } = new ClassificationModel(DecisionTreeValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
         /// The &quot;forest&quot; it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
-        /// Serialized Name: ClassificationModels.RandomForest
         /// </summary>
         public static ClassificationModel RandomForest { get; } = new ClassificationModel(RandomForestValue);
-        /// <summary>
-        /// Extreme Trees is an ensemble machine learning algorithm that combines the predictions from many decision trees. It is related to the widely used random forest algorithm.
-        /// Serialized Name: ClassificationModels.ExtremeRandomTrees
-        /// </summary>
+        /// <summary> Extreme Trees is an ensemble machine learning algorithm that combines the predictions from many decision trees. It is related to the widely used random forest algorithm. </summary>
         public static ClassificationModel ExtremeRandomTrees { get; } = new ClassificationModel(ExtremeRandomTreesValue);
-        /// <summary>
-        /// LightGBM is a gradient boosting framework that uses tree based learning algorithms.
-        /// Serialized Name: ClassificationModels.LightGBM
-        /// </summary>
+        /// <summary> LightGBM is a gradient boosting framework that uses tree based learning algorithms. </summary>
         public static ClassificationModel LightGBM { get; } = new ClassificationModel(LightGBMValue);
-        /// <summary>
-        /// The technique of transiting week learners into a strong learner is called Boosting. The gradient boosting algorithm process works on this theory of execution.
-        /// Serialized Name: ClassificationModels.GradientBoosting
-        /// </summary>
+        /// <summary> The technique of transiting week learners into a strong learner is called Boosting. The gradient boosting algorithm process works on this theory of execution. </summary>
         public static ClassificationModel GradientBoosting { get; } = new ClassificationModel(GradientBoostingValue);
-        /// <summary>
-        /// XGBoost: Extreme Gradient Boosting Algorithm. This algorithm is used for structured data where target column values can be divided into distinct class values.
-        /// Serialized Name: ClassificationModels.XGBoostClassifier
-        /// </summary>
+        /// <summary> XGBoost: Extreme Gradient Boosting Algorithm. This algorithm is used for structured data where target column values can be divided into distinct class values. </summary>
         public static ClassificationModel XGBoostClassifier { get; } = new ClassificationModel(XGBoostClassifierValue);
         /// <summary> Determines if two <see cref="ClassificationModel"/> values are the same. </summary>
         public static bool operator ==(ClassificationModel left, ClassificationModel right) => left.Equals(right);

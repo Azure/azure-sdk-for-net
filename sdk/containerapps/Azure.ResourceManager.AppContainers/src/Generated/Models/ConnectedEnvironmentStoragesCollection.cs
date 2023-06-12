@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ConnectedEnvironmentStoragesCollection(IEnumerable<ConnectedEnvironmentStorageData> value)
+        internal ConnectedEnvironmentStoragesCollection(IEnumerable<ContainerAppConnectedEnvironmentStorageData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
         /// <param name="value"> Collection of storage resources. </param>
-        internal ConnectedEnvironmentStoragesCollection(IReadOnlyList<ConnectedEnvironmentStorageData> value)
+        internal ConnectedEnvironmentStoragesCollection(IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of storage resources. </summary>
-        public IReadOnlyList<ConnectedEnvironmentStorageData> Value { get; }
+        public IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> Value { get; }
     }
 }

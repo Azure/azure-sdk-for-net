@@ -12,7 +12,10 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the WcfRelay data model. </summary>
+    /// <summary>
+    /// A class representing the WcfRelay data model.
+    /// Description of the WCF relay resource.
+    /// </summary>
     public partial class WcfRelayData : ResourceData
     {
         /// <summary> Initializes a new instance of WcfRelayData. </summary>

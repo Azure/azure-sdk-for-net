@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Route))
             {
-                writer.WritePropertyName("route");
+                writer.WritePropertyName("route"u8);
                 writer.WriteObjectValue(Route);
             }
             writer.WriteEndObject();

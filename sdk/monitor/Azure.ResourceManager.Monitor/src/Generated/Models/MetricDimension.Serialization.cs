@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator);
-            writer.WritePropertyName("values");
+            writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)
             {
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricDimension DeserializeMetricDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string @operator = default;
             IList<string> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

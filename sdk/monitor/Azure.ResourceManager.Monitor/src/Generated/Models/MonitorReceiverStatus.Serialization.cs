@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static MonitorReceiverStatus ToMonitorReceiverStatus(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return MonitorReceiverStatus.NotSpecified;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return MonitorReceiverStatus.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return MonitorReceiverStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return MonitorReceiverStatus.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return MonitorReceiverStatus.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return MonitorReceiverStatus.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorReceiverStatus value.");
         }
     }

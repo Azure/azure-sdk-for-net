@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Core.Shared;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -399,6 +400,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToMessageArray>();
         }
 
+        private static int MinBatchSize = 5;
+        private static int MaxBatchSize = 10;
+
+        [Test]
+        public async Task TestBatch_MinBatchSize()
+        {
+            await TestMultiple_MinBatch<TestBatchMinBatchSize>();
+        }
+
+        [Test]
+        public async Task TestBatch_MinBatchSize_WithPartialBatch()
+        {
+            await TestMultiple_MinBatch_PartialBatch<TestBatchMinBatchSize_PartialBatch>();
+        }
+
         [Test]
         public async Task TestBatch_JsonPoco()
         {
@@ -445,7 +461,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false, int? maxMessages = default)
+        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false, int? maxMessages = default, int? minMessages = default, TimeSpan? maxWaitTime = default)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
@@ -459,6 +475,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         if (maxMessages != null)
                         {
                             sbOptions.MaxMessageBatchSize = maxMessages.Value;
+                        }
+                        if (minMessages != null)
+                        {
+                            sbOptions.MinMessageBatchSize = minMessages.Value;
+                        }
+                        if (maxWaitTime != null)
+                        {
+                            sbOptions.MaxBatchWaitTime = maxWaitTime.Value;
                         }
                     }))
                 .ConfigureServices(services =>
@@ -627,13 +651,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestBatch_ProcessMessagesSpan()
         {
-            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessSessionMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
             Assert.AreEqual(2, scope.LinkedActivities.Count);
             Assert.IsTrue(scope.IsCompleted);
         }
@@ -642,13 +666,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_ProcessMessagesSpan_FailedScope()
         {
             ExpectedRemainingMessages = 2;
-            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessSessionMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
             Assert.AreEqual(2, scope.LinkedActivities.Count);
             Assert.IsTrue(scope.IsFailed);
         }
@@ -670,6 +694,41 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        private async Task TestMultiple_MinBatch<T>(Action<IHostBuilder> configurationDelegate = default)
+        {
+            // pre-populate queue before starting listener to allow batch receive to get multiple messages
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test4', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test5', 'Value': 'Value'}", "sessionId");
+
+            var host = BuildSessionHost<T>(maxMessages: MaxBatchSize, minMessages: MinBatchSize, maxWaitTime: TimeSpan.FromSeconds(5));
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        private async Task TestMultiple_MinBatch_PartialBatch<T>(Action<IHostBuilder> configurationDelegate = default)
+        {
+            // pre-populate queue before starting listener to allow batch receive to get multiple messages
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
+            await WriteQueueMessage("{'Name': 'Test3', 'Value': 'Value'}", "sessionId");
+
+            var host = BuildSessionHost<T>(maxMessages: MaxBatchSize, minMessages: MinBatchSize, maxWaitTime: TimeSpan.FromSeconds(5));
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+
                 await host.StopAsync();
             }
         }
@@ -922,6 +981,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusReceivedMessage[] array,
                 ServiceBusSessionMessageActions messageSession)
             {
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class TestBatchMinBatchSize_PartialBatch
+        {
+            public static void Run(
+               [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.AreEqual(array.Length, 3);
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class TestBatchMinBatchSize
+        {
+            public static void Run(
+               [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.AreEqual(array.Length, MinBatchSize);
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }

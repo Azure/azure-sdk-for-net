@@ -152,7 +152,14 @@ namespace Azure.Core.Pipeline
                 policies.Add(CreateTelemetryPolicy(buildOptions.ClientOptions));
             }
 
-            policies.Add(buildOptions.ClientOptions.RetryPolicy ?? new DefaultRetryPolicy(buildOptions.ClientOptions.Retry));
+            var retryOptions = buildOptions.ClientOptions.Retry;
+            policies.Add(
+                buildOptions.ClientOptions.RetryPolicy ??
+                new RetryPolicy(
+                    retryOptions.MaxRetries,
+                    retryOptions.Mode == RetryMode.Exponential ?
+                        DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
+                        DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay)));
 
             policies.Add(RedirectPolicy.Shared);
 
@@ -183,11 +190,8 @@ namespace Azure.Core.Pipeline
             {
                 if (buildOptions.ClientOptions.IsCustomTransportSet)
                 {
-                    if (AzureCoreEventSource.Singleton.IsEnabled())
-                    {
-                        // Log that we were unable to override the custom transport
-                        AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(buildOptions.ClientOptions?.GetType().FullName ?? String.Empty);
-                    }
+                    // Log that we were unable to override the custom transport
+                    AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(buildOptions.ClientOptions.GetType());
                 }
                 else
                 {
@@ -196,7 +200,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.RequestFailedDetailsParser));
+            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.ClientOptions.ProtocolMethods, buildOptions.RequestFailedDetailsParser));
 
             buildOptions.ResponseClassifier ??= ResponseClassifier.Shared;
 

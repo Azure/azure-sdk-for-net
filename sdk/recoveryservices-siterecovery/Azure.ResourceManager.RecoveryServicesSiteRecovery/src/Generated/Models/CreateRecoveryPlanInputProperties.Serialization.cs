@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("primaryFabricId");
+            writer.WritePropertyName("primaryFabricId"u8);
             writer.WriteStringValue(PrimaryFabricId);
-            writer.WritePropertyName("recoveryFabricId");
+            writer.WritePropertyName("recoveryFabricId"u8);
             writer.WriteStringValue(RecoveryFabricId);
             if (Optional.IsDefined(FailoverDeploymentModel))
             {
-                writer.WritePropertyName("failoverDeploymentModel");
+                writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel.Value.ToString());
             }
-            writer.WritePropertyName("groups");
+            writer.WritePropertyName("groups"u8);
             writer.WriteStartArray();
             foreach (var item in Groups)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProviderSpecificInput))
             {
-                writer.WritePropertyName("providerSpecificInput");
+                writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificInput)
                 {

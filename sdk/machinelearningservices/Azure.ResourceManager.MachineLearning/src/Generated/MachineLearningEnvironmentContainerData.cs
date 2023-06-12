@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningEnvironmentContainer data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningEnvironmentContainer data model.
+    /// Azure Resource Manager resource envelope.
+    /// </summary>
     public partial class MachineLearningEnvironmentContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerData. </summary>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: EnvironmentContainerResource.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningEnvironmentContainerData(MachineLearningEnvironmentContainerProperties properties)
         {
@@ -33,19 +33,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: EnvironmentContainerResource.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         internal MachineLearningEnvironmentContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningEnvironmentContainerProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: EnvironmentContainerResource.properties
-        /// </summary>
+        /// <summary> [Required] Additional attributes of the entity. </summary>
         public MachineLearningEnvironmentContainerProperties Properties { get; set; }
     }
 }

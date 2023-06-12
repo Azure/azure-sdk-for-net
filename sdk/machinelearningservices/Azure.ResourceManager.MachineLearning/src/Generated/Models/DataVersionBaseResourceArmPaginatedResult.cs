@@ -11,10 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A paginated list of DataVersionBase entities.
-    /// Serialized Name: DataVersionBaseResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> A paginated list of DataVersionBase entities. </summary>
     internal partial class DataVersionBaseResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink">
-        /// The link to the next page of DataVersionBase objects. If null, there are no additional pages.
-        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// An array of objects of type DataVersionBase.
-        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.value
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of DataVersionBase objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type DataVersionBase. </param>
         internal DataVersionBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link to the next page of DataVersionBase objects. If null, there are no additional pages.
-        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of DataVersionBase objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// An array of objects of type DataVersionBase.
-        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.value
-        /// </summary>
+        /// <summary> An array of objects of type DataVersionBase. </summary>
         public IReadOnlyList<MachineLearningDataVersionData> Value { get; }
     }
 }

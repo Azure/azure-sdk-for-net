@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementCache data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementCache data model.
+    /// Cache details.
+    /// </summary>
     public partial class ApiManagementCacheData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>

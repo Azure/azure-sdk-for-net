@@ -15,27 +15,30 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SlotSwapStatus DeserializeSlotSwapStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestampUtc = default;
             Optional<string> sourceSlotName = default;
             Optional<string> destinationSlotName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestampUtc"))
+                if (property.NameEquals("timestampUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestampUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceSlotName"))
+                if (property.NameEquals("sourceSlotName"u8))
                 {
                     sourceSlotName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationSlotName"))
+                if (property.NameEquals("destinationSlotName"u8))
                 {
                     destinationSlotName = property.Value.GetString();
                     continue;

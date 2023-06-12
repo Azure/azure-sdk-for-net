@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningEnvironmentVersion data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningEnvironmentVersion data model.
+    /// Azure Resource Manager resource envelope.
+    /// </summary>
     public partial class MachineLearningEnvironmentVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionData. </summary>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: EnvironmentVersionResource.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningEnvironmentVersionData(MachineLearningEnvironmentVersionProperties properties)
         {
@@ -33,19 +33,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: EnvironmentVersionResource.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         internal MachineLearningEnvironmentVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningEnvironmentVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: EnvironmentVersionResource.properties
-        /// </summary>
+        /// <summary> [Required] Additional attributes of the entity. </summary>
         public MachineLearningEnvironmentVersionProperties Properties { get; set; }
     }
 }

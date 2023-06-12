@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
-                writer.WritePropertyName("tokenRefreshExtensionHours");
+                writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
             if (Optional.IsDefined(FileSystem))
             {
-                writer.WritePropertyName("fileSystem");
+                writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
-                writer.WritePropertyName("azureBlobStorage");
+                writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
             }
             writer.WriteEndObject();
@@ -40,47 +40,47 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceTokenStore DeserializeAppServiceTokenStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<double> tokenRefreshExtensionHours = default;
             Optional<FileSystemTokenStore> fileSystem = default;
             Optional<AppServiceBlobStorageTokenStore> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tokenRefreshExtensionHours"))
+                if (property.NameEquals("tokenRefreshExtensionHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tokenRefreshExtensionHours = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("fileSystem"))
+                if (property.NameEquals("fileSystem"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureBlobStorage"))
+                if (property.NameEquals("azureBlobStorage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value);

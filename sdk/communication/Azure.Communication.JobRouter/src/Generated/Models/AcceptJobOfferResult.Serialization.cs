@@ -14,22 +14,26 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static AcceptJobOfferResult DeserializeAcceptJobOfferResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string assignmentId = default;
             string jobId = default;
             string workerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assignmentId"))
+                if (property.NameEquals("assignmentId"u8))
                 {
                     assignmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workerId"))
+                if (property.NameEquals("workerId"u8))
                 {
                     workerId = property.Value.GetString();
                     continue;

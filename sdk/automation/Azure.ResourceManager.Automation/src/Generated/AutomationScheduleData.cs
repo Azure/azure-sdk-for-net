@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationSchedule data model.
+    /// Definition of the schedule.
+    /// </summary>
     public partial class AutomationScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationScheduleData. </summary>

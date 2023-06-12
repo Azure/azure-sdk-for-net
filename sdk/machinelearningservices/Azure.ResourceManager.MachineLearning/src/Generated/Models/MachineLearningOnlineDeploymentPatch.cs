@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Strictly used in update requests.
-    /// Serialized Name: PartialMinimalTrackedResourceWithSku
-    /// </summary>
+    /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningOnlineDeploymentPatch : MachineLearningResourcePatch
     {
         /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentPatch. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// Sku details required for ARM contract for Autoscaling.
-        /// Serialized Name: PartialMinimalTrackedResourceWithSku.sku
-        /// </summary>
+        /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public MachineLearningSkuPatch Sku { get; set; }
     }
 }

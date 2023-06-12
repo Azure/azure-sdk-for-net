@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -13,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceVirtualNetwork data model.
+    /// Virtual Network information ARM resource.
+    /// </summary>
     public partial class AppServiceVirtualNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="vnetResourceId"> The Virtual Network&apos;s resource ID. </param>
-        /// <param name="certThumbprint"> The client certificate thumbprint. </param>
+        /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
         /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
         /// Point-To-Site VPN connection.
@@ -38,10 +40,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, BinaryData certThumbprint, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprintString, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceId = vnetResourceId;
-            CertThumbprint = certThumbprint;
+            CertThumbprintString = certThumbprintString;
             CertBlob = certBlob;
             Routes = routes;
             IsResyncRequired = isResyncRequired;
@@ -52,37 +54,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The Virtual Network&apos;s resource ID. </summary>
         public ResourceIdentifier VnetResourceId { get; set; }
-        /// <summary>
-        /// The client certificate thumbprint.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData CertThumbprint { get; }
+        /// <summary> The client certificate thumbprint. </summary>
+        public string CertThumbprintString { get; }
         /// <summary>
         /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
         /// Point-To-Site VPN connection.

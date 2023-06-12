@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the ResourcePool data model. </summary>
+    /// <summary>
+    /// A class representing the ResourcePool data model.
+    /// Define the resourcePool.
+    /// </summary>
     public partial class ResourcePoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ResourcePoolData. </summary>

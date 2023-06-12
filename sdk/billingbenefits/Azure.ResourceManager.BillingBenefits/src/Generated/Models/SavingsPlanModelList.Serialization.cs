@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanModelList DeserializeSavingsPlanModelList(JsonElement element)
         {
-            Optional<IReadOnlyList<SavingsPlanModelData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<BillingBenefitsSavingsPlanData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SavingsPlanModelData> array = new List<SavingsPlanModelData>();
+                    List<BillingBenefitsSavingsPlanData> array = new List<BillingBenefitsSavingsPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanModelData.DeserializeSavingsPlanModelData(item));
+                        array.Add(BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

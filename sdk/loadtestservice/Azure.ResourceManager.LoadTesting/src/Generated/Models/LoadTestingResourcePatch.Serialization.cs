@@ -16,33 +16,42 @@ namespace Azure.ResourceManager.LoadTesting.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tags);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tags.ToString()).RootElement);
-#endif
+                if (Tags != null)
+                {
+                    writer.WritePropertyName("tags"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Encryption))
             {
                 if (Encryption != null)
                 {
-                    writer.WritePropertyName("encryption");
+                    writer.WritePropertyName("encryption"u8);
                     writer.WriteObjectValue(Encryption);
                 }
                 else

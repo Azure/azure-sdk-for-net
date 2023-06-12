@@ -15,22 +15,25 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirections DeserializeRouteDirections(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<RouteData>> routes = default;
             Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
             Optional<RouteReport> report = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteData> array = new List<RouteData>();
@@ -41,11 +44,10 @@ namespace Azure.Maps.Routing.Models
                     routes = array;
                     continue;
                 }
-                if (property.NameEquals("optimizedWaypoints"))
+                if (property.NameEquals("optimizedWaypoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteOptimizedWaypoint> array = new List<RouteOptimizedWaypoint>();
@@ -56,11 +58,10 @@ namespace Azure.Maps.Routing.Models
                     optimizedWaypoints = array;
                     continue;
                 }
-                if (property.NameEquals("report"))
+                if (property.NameEquals("report"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     report = RouteReport.DeserializeRouteReport(property.Value);

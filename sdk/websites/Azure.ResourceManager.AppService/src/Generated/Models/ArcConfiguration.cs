@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ArtifactStorageAccessMode { get; set; }
         /// <summary> Gets or sets the front end service configuration. </summary>
         internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
-        /// <summary> Gets or sets the kind. </summary>
+        /// <summary> Gets or sets the front end service kind. </summary>
         public FrontEndServiceType? FrontEndServiceKind
         {
             get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;

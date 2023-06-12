@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for datastore contents configuration.
-    /// Serialized Name: Datastore
     /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="MachineLearningAzureFileDatastore"/>.
     /// </summary>
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningDatastoreProperties. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
@@ -35,32 +33,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatastoreProperties. </summary>
-        /// <param name="description">
-        /// The asset description text.
-        /// Serialized Name: ResourceBase.description
-        /// </param>
-        /// <param name="properties">
-        /// The asset property dictionary.
-        /// Serialized Name: ResourceBase.properties
-        /// </param>
-        /// <param name="tags">
-        /// Tag dictionary. Tags can be added, removed, and updated.
-        /// Serialized Name: ResourceBase.tags
-        /// </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="datastoreType">
-        /// [Required] Storage type backing the datastore.
-        /// Serialized Name: Datastore.datastoreType
-        /// </param>
-        /// <param name="isDefault">
-        /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: Datastore.isDefault
-        /// </param>
+        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
+        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         internal MachineLearningDatastoreProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault) : base(description, properties, tags)
         {
             Credentials = credentials;
@@ -70,20 +52,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </summary>
         public MachineLearningDatastoreCredentials Credentials { get; set; }
-        /// <summary>
-        /// [Required] Storage type backing the datastore.
-        /// Serialized Name: Datastore.datastoreType
-        /// </summary>
+        /// <summary> [Required] Storage type backing the datastore. </summary>
         internal DatastoreType DatastoreType { get; set; }
-        /// <summary>
-        /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: Datastore.isDefault
-        /// </summary>
+        /// <summary> Readonly property to indicate if datastore is the workspace default datastore. </summary>
         public bool? IsDefault { get; }
     }
 }

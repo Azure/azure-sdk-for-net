@@ -21,9 +21,9 @@ namespace Azure.Containers.ContainerRegistry
 
         public static ArtifactTagOrder ToArtifactTagOrder(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return ArtifactTagOrder.None;
-            if (string.Equals(value, "timedesc", StringComparison.InvariantCultureIgnoreCase)) return ArtifactTagOrder.LastUpdatedOnDescending;
-            if (string.Equals(value, "timeasc", StringComparison.InvariantCultureIgnoreCase)) return ArtifactTagOrder.LastUpdatedOnAscending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return ArtifactTagOrder.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "timedesc")) return ArtifactTagOrder.LastUpdatedOnDescending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "timeasc")) return ArtifactTagOrder.LastUpdatedOnAscending;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArtifactTagOrder value.");
         }
     }

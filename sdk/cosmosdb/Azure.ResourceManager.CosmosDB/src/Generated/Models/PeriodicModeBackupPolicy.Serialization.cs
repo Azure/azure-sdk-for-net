@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PeriodicModeProperties))
             {
-                writer.WritePropertyName("periodicModeProperties");
+                writer.WritePropertyName("periodicModeProperties"u8);
                 writer.WriteObjectValue(PeriodicModeProperties);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
             {
-                writer.WritePropertyName("migrationState");
+                writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
             }
             writer.WriteEndObject();
@@ -32,31 +32,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeBackupPolicy DeserializePeriodicModeBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeriodicModeProperties> periodicModeProperties = default;
             BackupPolicyType type = default;
             Optional<BackupPolicyMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("periodicModeProperties"))
+                if (property.NameEquals("periodicModeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     periodicModeProperties = PeriodicModeProperties.DeserializePeriodicModeProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new BackupPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);

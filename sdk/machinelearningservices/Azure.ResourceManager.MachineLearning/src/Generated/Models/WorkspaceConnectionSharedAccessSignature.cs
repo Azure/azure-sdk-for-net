@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The WorkspaceConnectionSharedAccessSignature.
-    /// Serialized Name: WorkspaceConnectionSharedAccessSignature
-    /// </summary>
+    /// <summary> The WorkspaceConnectionSharedAccessSignature. </summary>
     internal partial class WorkspaceConnectionSharedAccessSignature
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionSharedAccessSignature. </summary>
@@ -19,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionSharedAccessSignature. </summary>
-        /// <param name="sas"> Serialized Name: WorkspaceConnectionSharedAccessSignature.sas. </param>
+        /// <param name="sas"></param>
         internal WorkspaceConnectionSharedAccessSignature(string sas)
         {
             Sas = sas;
         }
 
-        /// <summary> Serialized Name: WorkspaceConnectionSharedAccessSignature.sas. </summary>
+        /// <summary> Gets or sets the sas. </summary>
         public string Sas { get; set; }
     }
 }

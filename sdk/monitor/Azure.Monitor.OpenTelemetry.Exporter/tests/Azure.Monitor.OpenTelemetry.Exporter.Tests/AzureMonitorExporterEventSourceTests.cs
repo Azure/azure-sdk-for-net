@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Shared;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -40,6 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Fact]
         public void VerifyEventSource_Informational() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
 
         [Fact]
         public void VerifyEventSource_Verbose() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteVerbose, expectedId: 5, expectedName: "WriteVerbose");
@@ -92,7 +97,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedName, eventData.EventName);
 
             var message = EventSourceEventFormatting.Format(eventData);
-            Assert.Equal($"{name} - System.Exception: hello world_1", message);
+
+#if NETFRAMEWORK
+            var expectedMessage = $"{name} - System.AggregateException: One or more errors occurred. ---> System.Exception: hello world_1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + "---> (Inner Exception #0) System.Exception: hello world_1<---"
+                + Environment.NewLine
+                + Environment.NewLine + "---> (Inner Exception #1) System.Exception: hello world_2)<---"
+                + Environment.NewLine;
+#else
+            var expectedMessage = $"{name} - System.AggregateException: One or more errors occurred. (hello world_1) (hello world_2))"
+                + Environment.NewLine + " ---> System.Exception: hello world_1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + " ---> (Inner Exception #1) System.Exception: hello world_2)<---"
+                + Environment.NewLine;
+#endif
+
+            Assert.Equal(expectedMessage, message);
         }
 
         public class TestListener : EventListener
@@ -120,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override void OnEventSourceCreated(EventSource eventSource)
             {
-                if (eventSource?.Name == AzureMonitorExporterEventSource.EventSourceName)
+                if (eventSource.Name == AzureMonitorExporterEventSource.EventSourceName)
                 {
                     this.eventSources.Add(eventSource);
                     this.EnableEvents(eventSource, EventLevel.Verbose, EventKeywords.All);

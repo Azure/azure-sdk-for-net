@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis
 {
-    /// <summary> A class representing the AnalysisServer data model. </summary>
+    /// <summary>
+    /// A class representing the AnalysisServer data model.
+    /// Represents an instance of an Analysis Services resource.
+    /// </summary>
     public partial class AnalysisServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AnalysisServerData. </summary>

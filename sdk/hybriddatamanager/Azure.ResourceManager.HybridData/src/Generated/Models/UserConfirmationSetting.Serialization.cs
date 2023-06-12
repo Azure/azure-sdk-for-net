@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridData.Models
 
         public static UserConfirmationSetting ToUserConfirmationSetting(this string value)
         {
-            if (string.Equals(value, "NotRequired", StringComparison.InvariantCultureIgnoreCase)) return UserConfirmationSetting.NotRequired;
-            if (string.Equals(value, "Required", StringComparison.InvariantCultureIgnoreCase)) return UserConfirmationSetting.Required;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotRequired")) return UserConfirmationSetting.NotRequired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Required")) return UserConfirmationSetting.Required;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UserConfirmationSetting value.");
         }
     }

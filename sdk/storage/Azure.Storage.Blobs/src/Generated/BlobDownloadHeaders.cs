@@ -22,6 +22,8 @@ namespace Azure.Storage.Blobs
         }
         /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob&apos;s metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the date and time the blob was created. </summary>
+        public DateTimeOffset? CreationTime => _response.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? value) ? value : null;
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;
         /// <summary> Optional. Only valid when Object Replication is enabled for the storage container and on the destination blob of the replication. </summary>
         public string ObjectReplicationPolicyId => _response.Headers.TryGetValue("x-ms-or-policy-id", out string value) ? value : null;

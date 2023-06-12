@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchAccountPool data model. </summary>
+    /// <summary>
+    /// A class representing the BatchAccountPool data model.
+    /// Contains information about a pool.
+    /// </summary>
     public partial class BatchAccountPoolData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchAccountPoolData. </summary>

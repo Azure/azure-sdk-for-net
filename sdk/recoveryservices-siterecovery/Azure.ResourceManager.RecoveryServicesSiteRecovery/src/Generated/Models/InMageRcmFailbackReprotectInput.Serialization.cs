@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("processServerId");
+            writer.WritePropertyName("processServerId"u8);
             writer.WriteStringValue(ProcessServerId);
             if (Optional.IsDefined(RunAsAccountId))
             {
-                writer.WritePropertyName("runAsAccountId");
+                writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            writer.WritePropertyName("policyId");
+            writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

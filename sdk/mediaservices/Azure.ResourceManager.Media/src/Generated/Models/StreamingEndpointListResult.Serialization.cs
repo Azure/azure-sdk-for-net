@@ -16,16 +16,19 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingEndpointListResult DeserializeStreamingEndpointListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingEndpointData>> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StreamingEndpointData> array = new List<StreamingEndpointData>();
@@ -36,17 +39,16 @@ namespace Azure.ResourceManager.Media.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.count"))
+                if (property.NameEquals("@odata.count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     odataCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.nextLink"))
+                if (property.NameEquals("@odata.nextLink"u8))
                 {
                     odataNextLink = property.Value.GetString();
                     continue;

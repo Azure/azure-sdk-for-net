@@ -1,0 +1,747 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d709cbc5e91ce2458567d5f50a60c40d-33f20d6353879544-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "793847b3075ef8a9022e9b06483aa28c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 07:11:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cf3832f8-49e5-416c-a79b-55ae527cc955",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "cf3832f8-49e5-416c-a79b-55ae527cc955",
+        "x-ms-routing-request-id": "KOREASOUTH:20220729T071141Z:cf3832f8-49e5-416c-a79b-55ae527cc955"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/sdktestrg?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0bbe6c2bead5504ba3930366d58a038a-c6fb209bdb724544-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "00f5f6556330a9baa557ddba850b496d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "225",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 07:11:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f6dc2298-3098-431e-bf78-81879dad32fe",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "f6dc2298-3098-431e-bf78-81879dad32fe",
+        "x-ms-routing-request-id": "KOREASOUTH:20220729T071141Z:f6dc2298-3098-431e-bf78-81879dad32fe"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg",
+        "name": "sdktestrg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-156aa6af298d4e48b0714a1d643cbb8f-0392bcabf28fc647-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApiManagement/1.0.0-alpha.20220729.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1ae8b8ffce6ef8a8f7ee280cd5beacf8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2674",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 07:11:43 GMT",
+        "ETag": "\u0022AAAAAABr35E=\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "76d71351-3c82-4087-863f-a065e0e38cd2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "76d71351-3c82-4087-863f-a065e0e38cd2",
+        "x-ms-routing-request-id": "KOREASOUTH:20220729T071143Z:76d71351-3c82-4087-863f-a065e0e38cd2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi",
+        "name": "sdktestapi",
+        "type": "Microsoft.ApiManagement/service",
+        "tags": {
+          "testkey": "testvalue"
+        },
+        "location": "East US",
+        "etag": "AAAAAABr35E=",
+        "properties": {
+          "publisherEmail": "sample@sample.com",
+          "publisherName": "sample",
+          "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
+          "provisioningState": "Succeeded",
+          "targetProvisioningState": "Updating",
+          "createdAtUtc": "2022-07-29T01:46:08.5936782Z",
+          "gatewayUrl": "https://sdktestapi.azure-api.net",
+          "gatewayRegionalUrl": "https://sdktestapi-eastus-01.regional.azure-api.net",
+          "portalUrl": "https://sdktestapi.portal.azure-api.net",
+          "developerPortalUrl": "https://sdktestapi.developer.azure-api.net",
+          "managementApiUrl": "https://sdktestapi.management.azure-api.net",
+          "scmUrl": "https://sdktestapi.scm.azure-api.net",
+          "hostnameConfigurations": [
+            {
+              "type": "Proxy",
+              "hostName": "sdktestapi.azure-api.net",
+              "encodedCertificate": null,
+              "keyVaultId": null,
+              "certificatePassword": null,
+              "negotiateClientCertificate": false,
+              "certificate": null,
+              "defaultSslBinding": true,
+              "identityClientId": null,
+              "certificateSource": "BuiltIn",
+              "certificateStatus": null
+            }
+          ],
+          "publicIPAddresses": [
+            "20.121.88.195"
+          ],
+          "privateIPAddresses": null,
+          "additionalLocations": null,
+          "virtualNetworkConfiguration": null,
+          "customProperties": {
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30": "false"
+          },
+          "virtualNetworkType": "None",
+          "certificates": null,
+          "disableGateway": false,
+          "apiVersionConstraint": {
+            "minApiVersion": null
+          },
+          "publicIpAddressId": null,
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": null,
+          "platformVersion": "stv2"
+        },
+        "sku": {
+          "name": "Developer",
+          "capacity": 1
+        },
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "fda48897-d655-42d9-a14b-50d24f97639b",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "zones": null,
+        "systemData": {
+          "createdBy": "v-minghc@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-07-29T01:46:08.1531742Z",
+          "lastModifiedBy": "v-minghc@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-07-29T01:46:08.1531742Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/outboundNetworkDependenciesEndpoints?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f6a6accf069ce940b7e937cf7035c9e6-01b658cbfb5eb04f-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApiManagement/1.0.0-alpha.20220729.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2511efeb0679502b8c8fd40629ee73f7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5361",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 07:11:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9fda6184-1f26-486f-a113-f3d17a507160",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "9fda6184-1f26-486f-a113-f3d17a507160",
+        "x-ms-routing-request-id": "KOREASOUTH:20220729T071150Z:9fda6184-1f26-486f-a113-f3d17a507160"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "category": "Azure SMTP",
+            "endpoints": [
+              {
+                "domainName": "smtpi-co1.msn.com",
+                "endpointDetails": [
+                  {
+                    "port": 25028,
+                    "region": "East US"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Azure SQL",
+            "endpoints": [
+              {
+                "domainName": "apirpsqlfma9kycivrba2hvz.database.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 1433,
+                    "region": "East US"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Azure Storage",
+            "endpoints": [
+              {
+                "domainName": "apigblstorageprdblu.blob.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm1086924997xt.blob.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm1086924997xt.table.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm1211115652xt.blob.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm1211115652xt.table.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm614070779xt.blob.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm614070779xt.table.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm210463123xt.blob.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm210463123xt.table.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "apimstbw5yfeboiz1myhkenu.blob.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "apimstbw5yfeboiz1myhkenu.file.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 445,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "apimstbw5yfeboiz1myhkenu.queue.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "apimstbw5yfeboiz1myhkenu.table.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Azure Key Vault",
+            "endpoints": [
+              {
+                "domainName": "apikv-8rwqzx84lq9ors7mdn.vault.azure.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Azure Event Hub",
+            "endpoints": [
+              {
+                "domainName": "gsm1211115652eh.servicebus.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5671,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5672,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm614070779eh.servicebus.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5671,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5672,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm1086924997eh.servicebus.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5671,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5672,
+                    "region": "East US"
+                  }
+                ]
+              },
+              {
+                "domainName": "gsm210463123eh.servicebus.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5671,
+                    "region": "East US"
+                  },
+                  {
+                    "port": 5672,
+                    "region": "East US"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "SSL Certificate Verification",
+            "endpoints": [
+              {
+                "domainName": "ocsp.msocsp.com",
+                "endpointDetails": [
+                  {
+                    "port": 80,
+                    "region": "Global"
+                  },
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "mscrl.microsoft.com",
+                "endpointDetails": [
+                  {
+                    "port": 80,
+                    "region": "Global"
+                  },
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "crl.microsoft.com",
+                "endpointDetails": [
+                  {
+                    "port": 80,
+                    "region": "Global"
+                  },
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "crl3.digicert.com",
+                "endpointDetails": [
+                  {
+                    "port": 80,
+                    "region": "Global"
+                  },
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "ocsp.digicert.com",
+                "endpointDetails": [
+                  {
+                    "port": 80,
+                    "region": "Global"
+                  },
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "cacerts.digicert.com",
+                "endpointDetails": [
+                  {
+                    "port": 80,
+                    "region": "Global"
+                  },
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Windows Activation",
+            "endpoints": [
+              {
+                "domainName": "kms.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Azure Monitor",
+            "endpoints": [
+              {
+                "domainName": "gcs.prod.monitoring.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "global.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "prod3.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 1886,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "prod3-red.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 1886,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "prod3-black.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 1886,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "gcs.prod.warm.ingestion.monitoring.azure.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "*.prod.warm.ingest.monitor.core.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "shoebox2.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "shoebox2-red.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "shoebox2-black.prod.microsoftmetrics.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Portal Captcha",
+            "endpoints": [
+              {
+                "domainName": "partner.prod.repmap.microsoft.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Deprecated Portal Captcha",
+            "endpoints": [
+              {
+                "domainName": "client.hip.live.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "partner.hip.live.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "category": "Azure Active Directory",
+            "endpoints": [
+              {
+                "domainName": "login.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "graph.windows.net",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              },
+              {
+                "domainName": "login.microsoftonline.com",
+                "endpointDetails": [
+                  {
+                    "port": 443,
+                    "region": "Global"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "266339349",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

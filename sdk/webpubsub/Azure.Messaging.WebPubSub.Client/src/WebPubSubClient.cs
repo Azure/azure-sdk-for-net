@@ -82,7 +82,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
-        public string ConnectionId { get; }
+        public string ConnectionId => _connectionId;
 
         // Some exposed properties for testing
         internal IWebSocketClientFactory WebSocketClientFactory { get; set; }
@@ -585,7 +585,15 @@ namespace Azure.Messaging.WebPubSub.Clients
                 }
                 throw new SendMessageFailedException("Failed to send message.", id, ex);
             }
-            return await entity.Task.ConfigureAwait(false);
+
+            try
+            {
+                return await entity.Task.AwaitWithCancellation<WebPubSubResult>(token);
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new SendMessageFailedException("Cancelled by CancellationToken", id, ex);
+            }
         }
 
         private Task HandleConnectionCloseAndNoRecovery(DisconnectedMessage disconnectedMessage, CancellationToken token)
@@ -605,19 +613,22 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         internal async void HandleConnectionConnected(ConnectedMessage connectedMessage, CancellationToken token)
         {
-            foreach (var pair in _groups)
+            if (_options.AutoRejoinGroups)
             {
-                var name = pair.Key;
-                var g = pair.Value;
-                if (g.Joined)
+                foreach (var pair in _groups)
                 {
-                    try
+                    var name = pair.Key;
+                    var g = pair.Value;
+                    if (g.Joined)
                     {
-                        await JoinGroupAttemptAsync(name, cancellationToken: token).ConfigureAwait(false);
-                    }
-                    catch (Exception ex)
-                    {
-                        SafeInvokeRestoreGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                        try
+                        {
+                            await JoinGroupAttemptAsync(name, cancellationToken: token).ConfigureAwait(false);
+                        }
+                        catch (Exception ex)
+                        {
+                            SafeInvokeRejoinGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                        }
                     }
                 }
             }
@@ -693,7 +704,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvokeRestoreGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
+        private async Task SafeInvokeRejoinGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
         {
             try
             {

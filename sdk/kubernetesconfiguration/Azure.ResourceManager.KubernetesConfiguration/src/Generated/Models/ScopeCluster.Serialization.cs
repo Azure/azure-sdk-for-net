@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReleaseNamespace))
             {
-                writer.WritePropertyName("releaseNamespace");
+                writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static ScopeCluster DeserializeScopeCluster(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> releaseNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("releaseNamespace"))
+                if (property.NameEquals("releaseNamespace"u8))
                 {
                     releaseNamespace = property.Value.GetString();
                     continue;

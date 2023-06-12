@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Tests
         protected ArmClient Client { get; private set; }
 
         protected ResourceManagerTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
-            : base(isAsync, resourceType, apiVersion, mode)
+            : base(isAsync, resourceType, apiVersion, mode, ignoreArmCoreDependencyVersions: false)
         {
         }
 
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, mode, ignoreArmCoreDependencyVersions: false)
         {
         }
 
         protected ResourceManagerTestBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, ignoreArmCoreDependencyVersions: false)
         {
         }
 

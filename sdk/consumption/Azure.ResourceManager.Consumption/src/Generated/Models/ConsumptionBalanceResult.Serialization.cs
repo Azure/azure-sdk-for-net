@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionBalanceResult DeserializeConsumptionBalanceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -40,21 +44,19 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -65,32 +67,31 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,136 +100,123 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("currency"))
+                        if (property0.NameEquals("currency"u8))
                         {
                             currency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("beginningBalance"))
+                        if (property0.NameEquals("beginningBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             beginningBalance = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("endingBalance"))
+                        if (property0.NameEquals("endingBalance"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endingBalance = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("newPurchases"))
+                        if (property0.NameEquals("newPurchases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             newPurchases = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("adjustments"))
+                        if (property0.NameEquals("adjustments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adjustments = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("utilized"))
+                        if (property0.NameEquals("utilized"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             utilized = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("serviceOverage"))
+                        if (property0.NameEquals("serviceOverage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceOverage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("chargesBilledSeparately"))
+                        if (property0.NameEquals("chargesBilledSeparately"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             chargesBilledSeparately = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("totalOverage"))
+                        if (property0.NameEquals("totalOverage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalOverage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("totalUsage"))
+                        if (property0.NameEquals("totalUsage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalUsage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("azureMarketplaceServiceCharges"))
+                        if (property0.NameEquals("azureMarketplaceServiceCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureMarketplaceServiceCharges = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("billingFrequency"))
+                        if (property0.NameEquals("billingFrequency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingFrequency = new ConsumptionBillingFrequency(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("priceHidden"))
+                        if (property0.NameEquals("priceHidden"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             priceHidden = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("newPurchasesDetails"))
+                        if (property0.NameEquals("newPurchasesDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConsumptionBalanceNewPurchasesDetail> array = new List<ConsumptionBalanceNewPurchasesDetail>();
@@ -239,11 +227,10 @@ namespace Azure.ResourceManager.Consumption.Models
                             newPurchasesDetails = array;
                             continue;
                         }
-                        if (property0.NameEquals("adjustmentDetails"))
+                        if (property0.NameEquals("adjustmentDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConsumptionBalanceAdjustmentDetail> array = new List<ConsumptionBalanceAdjustmentDetail>();

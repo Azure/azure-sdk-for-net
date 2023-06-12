@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Min))
             {
-                writer.WritePropertyName("min");
+                writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
             if (Optional.IsDefined(Max))
             {
-                writer.WritePropertyName("max");
+                writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ResourceRange DeserializeResourceRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> min = default;
             Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("min"))
+                if (property.NameEquals("min"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     min = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("max"))
+                if (property.NameEquals("max"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     max = property.Value.GetInt32();

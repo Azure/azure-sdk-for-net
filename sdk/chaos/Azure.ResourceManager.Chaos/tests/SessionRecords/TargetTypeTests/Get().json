@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourcegroups/rg-chaos-sdk-test-recording?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourcegroups/rg-chaos-sdk-test-recording?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

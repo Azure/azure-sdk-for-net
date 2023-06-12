@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Chaos.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FilterType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownFilter DeserializeUnknownFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FilterType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new FilterType(property.Value.GetString());
                     continue;

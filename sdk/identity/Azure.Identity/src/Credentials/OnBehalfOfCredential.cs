@@ -16,13 +16,13 @@ namespace Azure.Identity
     /// </summary>
     public class OnBehalfOfCredential : TokenCredential
     {
-        internal readonly MsalConfidentialClient _client;
+        internal MsalConfidentialClient Client { get; }
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
-        private readonly string[] _additionallyAllowedTenantIds;
+        internal readonly string[] AdditionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -118,7 +118,7 @@ namespace Azure.Identity
             options ??= new OnBehalfOfCredentialOptions();
             _userAssertion = new UserAssertion(userAssertion);
 
-            _client = client ??
+            Client = client ??
                       new MsalConfidentialClient(
                           _pipeline,
                           tenantId,
@@ -127,7 +127,7 @@ namespace Azure.Identity
                           options.SendCertificateChain,
                           options);
 
-            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         internal OnBehalfOfCredential(
@@ -148,9 +148,9 @@ namespace Azure.Identity
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
-            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+            Client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
 
-            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -183,9 +183,9 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                AuthenticationResult result = await _client
+                AuthenticationResult result = await Client
                     .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 

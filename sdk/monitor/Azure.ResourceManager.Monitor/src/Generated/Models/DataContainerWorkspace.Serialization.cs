@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataContainerWorkspace DeserializeDataContainerWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             AzureLocation location = default;
             string customerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("customerId"))
+                        if (property0.NameEquals("customerId"u8))
                         {
                             customerId = property0.Value.GetString();
                             continue;

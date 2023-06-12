@@ -1,4 +1,4 @@
-﻿Installing AutoRest version: v2
+﻿﻿Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
@@ -9,7 +9,7 @@ Autorest CSharp Version: 2.3.82
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      967fe62dd0051ef9fd0af3fdba52fbcabd33c46c
+Commit:      b06a6f45e472dd07c2e0dab06b1e52dfe2684c88
 AutoRest information
 Requested version: v2
 Bootstrapper version:    autorest@2.0.4413

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Connections))
             {
-                writer.WritePropertyName("connections");
+                writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
             if (Optional.IsDefined(PeerAsn))
             {
-                writer.WritePropertyName("peerAsn");
+                writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {
-                writer.WritePropertyName("directPeeringType");
+                writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -42,17 +42,20 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static DirectPeeringProperties DeserializeDirectPeeringProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PeeringDirectConnection>> connections = default;
             Optional<bool> useForPeeringService = default;
             Optional<WritableSubResource> peerAsn = default;
             Optional<DirectPeeringType> directPeeringType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connections"))
+                if (property.NameEquals("connections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeeringDirectConnection> array = new List<PeeringDirectConnection>();
@@ -63,31 +66,28 @@ namespace Azure.ResourceManager.Peering.Models
                     connections = array;
                     continue;
                 }
-                if (property.NameEquals("useForPeeringService"))
+                if (property.NameEquals("useForPeeringService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useForPeeringService = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("peerAsn"))
+                if (property.NameEquals("peerAsn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("directPeeringType"))
+                if (property.NameEquals("directPeeringType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directPeeringType = new DirectPeeringType(property.Value.GetString());

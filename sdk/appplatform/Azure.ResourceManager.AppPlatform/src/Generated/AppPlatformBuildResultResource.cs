@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack build result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}
-        /// Operation Id: BuildService_GetBuildResult
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildResult</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppPlatformBuildResultResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack build result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}
-        /// Operation Id: BuildService_GetBuildResult
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildResult</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppPlatformBuildResultResource> Get(CancellationToken cancellationToken = default)
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack build result log download URL.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}/getLogFileUrl
-        /// Operation Id: BuildService_GetBuildResultLog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}/getLogFileUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildResultLog</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppPlatformBuildResultLog>> GetBuildResultLogAsync(CancellationToken cancellationToken = default)
@@ -159,8 +183,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack build result log download URL.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}/getLogFileUrl
-        /// Operation Id: BuildService_GetBuildResultLog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}/getLogFileUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildResultLog</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppPlatformBuildResultLog> GetBuildResultLog(CancellationToken cancellationToken = default)

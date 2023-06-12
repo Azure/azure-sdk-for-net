@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("dataStoreType");
+            writer.WritePropertyName("dataStoreType"u8);
             writer.WriteStringValue(DataStoreType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DataStoreSettings DeserializeDataStoreSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("objectType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

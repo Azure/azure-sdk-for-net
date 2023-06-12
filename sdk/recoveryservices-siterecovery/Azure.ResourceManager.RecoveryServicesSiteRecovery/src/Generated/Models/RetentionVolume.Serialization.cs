@@ -14,42 +14,43 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RetentionVolume DeserializeRetentionVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<long> capacityInBytes = default;
             Optional<long> freeSpaceInBytes = default;
             Optional<int> thresholdPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("volumeName"))
+                if (property.NameEquals("volumeName"u8))
                 {
                     volumeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityInBytes"))
+                if (property.NameEquals("capacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("freeSpaceInBytes"))
+                if (property.NameEquals("freeSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     freeSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("thresholdPercentage"))
+                if (property.NameEquals("thresholdPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thresholdPercentage = property.Value.GetInt32();

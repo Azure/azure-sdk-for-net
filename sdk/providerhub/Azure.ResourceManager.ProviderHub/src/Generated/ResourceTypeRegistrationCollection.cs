@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Creates or updates a resource type.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Creates or updates a resource type.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets a resource type details in the given subscription and provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets a resource type details in the given subscription and provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the list of the resource types for the given provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations
-        /// Operation Id: ResourceTypeRegistrations_ListByProviderRegistration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_ListByProviderRegistration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceTypeRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceTypeRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceTypeRegistrationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceTypeRegistrationRestClient.ListByProviderRegistrationAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceTypeRegistrationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceTypeRegistrationRestClient.ListByProviderRegistrationNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeRegistrationResource(Client, ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(e)), _resourceTypeRegistrationClientDiagnostics, Pipeline, "ResourceTypeRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of the resource types for the given provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations
-        /// Operation Id: ResourceTypeRegistrations_ListByProviderRegistration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_ListByProviderRegistration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceTypeRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceTypeRegistrationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ResourceTypeRegistrationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceTypeRegistrationRestClient.ListByProviderRegistration(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceTypeRegistrationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceTypeRegistrationRestClient.ListByProviderRegistrationNextPage(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeRegistrationResource(Client, ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(e)), _resourceTypeRegistrationClientDiagnostics, Pipeline, "ResourceTypeRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}
-        /// Operation Id: ResourceTypeRegistrations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

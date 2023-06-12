@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CustomDomains))
             {
-                writer.WritePropertyName("customDomains");
+                writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(OriginGroup))
             {
-                writer.WritePropertyName("originGroup");
+                writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
             if (Optional.IsDefined(OriginPath))
             {
-                writer.WritePropertyName("originPath");
+                writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
             if (Optional.IsCollectionDefined(RuleSets))
             {
-                writer.WritePropertyName("ruleSets");
+                writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(SupportedProtocols))
             {
-                writer.WritePropertyName("supportedProtocols");
+                writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedProtocols)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(PatternsToMatch))
             {
-                writer.WritePropertyName("patternsToMatch");
+                writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PatternsToMatch)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (CacheConfiguration != null)
                 {
-                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WritePropertyName("cacheConfiguration"u8);
                     writer.WriteObjectValue(CacheConfiguration);
                 }
                 else
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
-                writer.WritePropertyName("forwardingProtocol");
+                writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
             if (Optional.IsDefined(LinkToDefaultDomain))
             {
-                writer.WritePropertyName("linkToDefaultDomain");
+                writer.WritePropertyName("linkToDefaultDomain"u8);
                 writer.WriteStringValue(LinkToDefaultDomain.Value.ToString());
             }
             if (Optional.IsDefined(HttpsRedirect))
             {
-                writer.WritePropertyName("httpsRedirect");
+                writer.WritePropertyName("httpsRedirect"u8);
                 writer.WriteStringValue(HttpsRedirect.Value.ToString());
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorRouteData DeserializeFrontDoorRouteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -129,32 +133,31 @@ namespace Azure.ResourceManager.Cdn
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,16 +166,15 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpointName"))
+                        if (property0.NameEquals("endpointName"u8))
                         {
                             endpointName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customDomains"))
+                        if (property0.NameEquals("customDomains"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
@@ -183,26 +185,24 @@ namespace Azure.ResourceManager.Cdn
                             customDomains = array;
                             continue;
                         }
-                        if (property0.NameEquals("originGroup"))
+                        if (property0.NameEquals("originGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             originGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("originPath"))
+                        if (property0.NameEquals("originPath"u8))
                         {
                             originPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ruleSets"))
+                        if (property0.NameEquals("ruleSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -213,11 +213,10 @@ namespace Azure.ResourceManager.Cdn
                             ruleSets = array;
                             continue;
                         }
-                        if (property0.NameEquals("supportedProtocols"))
+                        if (property0.NameEquals("supportedProtocols"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorEndpointProtocol> array = new List<FrontDoorEndpointProtocol>();
@@ -228,11 +227,10 @@ namespace Azure.ResourceManager.Cdn
                             supportedProtocols = array;
                             continue;
                         }
-                        if (property0.NameEquals("patternsToMatch"))
+                        if (property0.NameEquals("patternsToMatch"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -243,7 +241,7 @@ namespace Azure.ResourceManager.Cdn
                             patternsToMatch = array;
                             continue;
                         }
-                        if (property0.NameEquals("cacheConfiguration"))
+                        if (property0.NameEquals("cacheConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,61 +251,55 @@ namespace Azure.ResourceManager.Cdn
                             cacheConfiguration = FrontDoorRouteCacheConfiguration.DeserializeFrontDoorRouteCacheConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("forwardingProtocol"))
+                        if (property0.NameEquals("forwardingProtocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             forwardingProtocol = new ForwardingProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("linkToDefaultDomain"))
+                        if (property0.NameEquals("linkToDefaultDomain"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linkToDefaultDomain = new LinkToDefaultDomain(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("httpsRedirect"))
+                        if (property0.NameEquals("httpsRedirect"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             httpsRedirect = new HttpsRedirect(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledState = new EnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new FrontDoorProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deploymentStatus"))
+                        if (property0.NameEquals("deploymentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deploymentStatus = new FrontDoorDeploymentStatus(property0.Value.GetString());

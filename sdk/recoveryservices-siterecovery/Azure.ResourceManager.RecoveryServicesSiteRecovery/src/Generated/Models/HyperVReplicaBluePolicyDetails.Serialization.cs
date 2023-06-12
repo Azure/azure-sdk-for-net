@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaBluePolicyDetails DeserializeHyperVReplicaBluePolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> replicationFrequencyInSeconds = default;
             Optional<int> recoveryPoints = default;
             Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
@@ -28,87 +32,82 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("replicationFrequencyInSeconds"))
+                if (property.NameEquals("replicationFrequencyInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationFrequencyInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryPoints"))
+                if (property.NameEquals("recoveryPoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPoints = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"))
+                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("compression"))
+                if (property.NameEquals("compression"u8))
                 {
                     compression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialReplicationMethod"))
+                if (property.NameEquals("initialReplicationMethod"u8))
                 {
                     initialReplicationMethod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("onlineReplicationStartTime"))
+                if (property.NameEquals("onlineReplicationStartTime"u8))
                 {
                     onlineReplicationStartTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offlineReplicationImportPath"))
+                if (property.NameEquals("offlineReplicationImportPath"u8))
                 {
                     offlineReplicationImportPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offlineReplicationExportPath"))
+                if (property.NameEquals("offlineReplicationExportPath"u8))
                 {
                     offlineReplicationExportPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationPort"))
+                if (property.NameEquals("replicationPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowedAuthenticationType"))
+                if (property.NameEquals("allowedAuthenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowedAuthenticationType = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("replicaDeletionOption"))
+                if (property.NameEquals("replicaDeletionOption"u8))
                 {
                     replicaDeletionOption = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

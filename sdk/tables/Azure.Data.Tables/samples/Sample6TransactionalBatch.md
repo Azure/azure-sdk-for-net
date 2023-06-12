@@ -13,14 +13,13 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-string tableName = "OfficeSupplies1p2";
-var tableClient = serviceClient.GetTableClient(tableName);
+var tableClient2 = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-var tableClient = new TableClient(
+var tableClient3 = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -34,28 +33,28 @@ A common use case for batch operations is to add many entities to a table in bul
 
 ```C# Snippet:BatchAdd
 // Create a list of 5 entities with the same partition key.
-string partitionKey = "BatchInsertSample";
+string batchPartitionKey = "BatchInsertSample";
 List<TableEntity> entityList = new List<TableEntity>
 {
-    new TableEntity(partitionKey, "01")
+    new TableEntity(batchPartitionKey, "01")
     {
         { "Product", "Marker" },
         { "Price", 5.00 },
         { "Brand", "Premium" }
     },
-    new TableEntity(partitionKey, "02")
+    new TableEntity(batchPartitionKey, "02")
     {
         { "Product", "Pen" },
         { "Price", 3.00 },
         { "Brand", "Premium" }
     },
-    new TableEntity(partitionKey, "03")
+    new TableEntity(batchPartitionKey, "03")
     {
         { "Product", "Paper" },
         { "Price", 0.10 },
         { "Brand", "Premium" }
     },
-    new TableEntity(partitionKey, "04")
+    new TableEntity(batchPartitionKey, "04")
     {
         { "Product", "Glue" },
         { "Price", 1.00 },

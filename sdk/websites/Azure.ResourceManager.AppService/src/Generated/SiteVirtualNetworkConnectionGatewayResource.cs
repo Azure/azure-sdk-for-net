@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets an app&apos;s Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnectionGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets an app&apos;s Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnectionGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
@@ -136,8 +152,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: WebApps_UpdateVnetConnectionGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateVnetConnectionGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,8 +186,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: WebApps_UpdateVnetConnectionGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateVnetConnectionGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

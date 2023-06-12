@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a recommendation rule for an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
-        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a recommendation rule for an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
-        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
@@ -140,8 +156,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Disables the specific rule for a web site permanently.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}/disable
-        /// Operation Id: Recommendations_DisableRecommendationForSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_DisableRecommendationForSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DisableAsync(CancellationToken cancellationToken = default)
@@ -162,8 +186,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Disables the specific rule for a web site permanently.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}/disable
-        /// Operation Id: Recommendations_DisableRecommendationForSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_DisableRecommendationForSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Disable(CancellationToken cancellationToken = default)

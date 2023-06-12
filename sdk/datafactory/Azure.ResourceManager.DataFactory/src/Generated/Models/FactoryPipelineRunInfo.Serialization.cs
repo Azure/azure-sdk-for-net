@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineRunInfo DeserializeFactoryPipelineRunInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> runId = default;
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;
@@ -33,41 +37,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("runGroupId"))
+                if (property.NameEquals("runGroupId"u8))
                 {
                     runGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isLatest"))
+                if (property.NameEquals("isLatest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isLatest = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pipelineName"))
+                if (property.NameEquals("pipelineName"u8))
                 {
                     pipelineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -78,11 +79,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("runDimensions"))
+                if (property.NameEquals("runDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -93,62 +93,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                     runDimensions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("invokedBy"))
+                if (property.NameEquals("invokedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     invokedBy = FactoryPipelineRunInvokedByInfo.DeserializeFactoryPipelineRunInvokedByInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runStart"))
+                if (property.NameEquals("runStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runEnd"))
+                if (property.NameEquals("runEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("durationInMs"))
+                if (property.NameEquals("durationInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

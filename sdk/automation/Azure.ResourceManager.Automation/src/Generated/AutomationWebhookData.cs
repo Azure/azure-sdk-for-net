@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationWebhook data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationWebhook data model.
+    /// Definition of the webhook type.
+    /// </summary>
     public partial class AutomationWebhookData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationWebhookData. </summary>

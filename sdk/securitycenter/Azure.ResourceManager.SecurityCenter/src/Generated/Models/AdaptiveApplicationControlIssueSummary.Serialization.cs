@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AdaptiveApplicationControlIssueSummary DeserializeAdaptiveApplicationControlIssueSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AdaptiveApplicationControlIssue> issue = default;
             Optional<float> numberOfVms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("issue"))
+                if (property.NameEquals("issue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     issue = new AdaptiveApplicationControlIssue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("numberOfVms"))
+                if (property.NameEquals("numberOfVms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfVms = property.Value.GetSingle();

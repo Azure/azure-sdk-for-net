@@ -14,20 +14,23 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DetectorSupportTopic DeserializeDetectorSupportTopic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ResourceIdentifier> pesId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pesId"))
+                if (property.NameEquals("pesId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pesId = new ResourceIdentifier(property.Value.GetString());

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,31 +31,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(Destination))
             {
-                writer.WritePropertyName("destination");
+                writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
             if (Optional.IsDefined(AutoStart))
             {
-                writer.WritePropertyName("autoStart");
+                writer.WritePropertyName("autoStart"u8);
                 writer.WriteBooleanValue(AutoStart.Value);
             }
             if (Optional.IsDefined(MonitoringIntervalInSeconds))
             {
-                writer.WritePropertyName("monitoringIntervalInSeconds");
+                writer.WritePropertyName("monitoringIntervalInSeconds"u8);
                 writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints");
+                writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(TestConfigurations))
             {
-                writer.WritePropertyName("testConfigurations");
+                writer.WritePropertyName("testConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in TestConfigurations)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(TestGroups))
             {
-                writer.WritePropertyName("testGroups");
+                writer.WritePropertyName("testGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in TestGroups)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(Notes))
             {
-                writer.WritePropertyName("notes");
+                writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
             writer.WriteEndObject();

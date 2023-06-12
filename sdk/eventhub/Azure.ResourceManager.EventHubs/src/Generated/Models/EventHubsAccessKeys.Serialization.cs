@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsAccessKeys DeserializeEventHubsAccessKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryConnectionString = default;
             Optional<string> secondaryConnectionString = default;
             Optional<string> aliasPrimaryConnectionString = default;
@@ -23,37 +27,37 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> keyName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryConnectionString"))
+                if (property.NameEquals("primaryConnectionString"u8))
                 {
                     primaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryConnectionString"))
+                if (property.NameEquals("secondaryConnectionString"u8))
                 {
                     secondaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aliasPrimaryConnectionString"))
+                if (property.NameEquals("aliasPrimaryConnectionString"u8))
                 {
                     aliasPrimaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aliasSecondaryConnectionString"))
+                if (property.NameEquals("aliasSecondaryConnectionString"u8))
                 {
                     aliasSecondaryConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;

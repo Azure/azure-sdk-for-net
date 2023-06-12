@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DelayInMinutes))
             {
-                writer.WritePropertyName("delayInMinutes");
+                writer.WritePropertyName("delayInMinutes"u8);
                 writer.WriteNumberValue(DelayInMinutes.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAutoPauseProperties DeserializeMachineLearningAutoPauseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> delayInMinutes = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delayInMinutes"))
+                if (property.NameEquals("delayInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delayInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

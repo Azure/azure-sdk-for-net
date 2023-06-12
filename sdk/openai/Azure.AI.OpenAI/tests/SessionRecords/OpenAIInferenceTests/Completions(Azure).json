@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-9ecfbad6b43c9c0956214c8329786986-3cfed326a919cff2-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "3aefcb26bcb8b34e3213b034b2621dc8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "84c7bc8f-06b9-41c9-98fe-8fec72f11168",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:43:18 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "2292.1683",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3aefcb26bcb8b34e3213b034b2621dc8",
+        "x-ms-region": "East US",
+        "X-Request-ID": "a33ab0fb-6569-48c3-85be-50722dd1044d"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKNpWoumhW2GZblu8XcHUFAGIFcX",
+        "object": "text_completion",
+        "created": 1679359397,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": " 127!\n",
+            "index": 0,
+            "finish_reason": "stop",
+            "logprobs": null
+          },
+          {
+            "text": " and turning a deaf ear to requests to wind things up. It seemed unbelievable to",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 19,
+          "prompt_tokens": 8,
+          "total_tokens": 27
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1208064994"
+  }
+}

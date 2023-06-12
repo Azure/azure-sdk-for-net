@@ -25,7 +25,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: metricsadvisor
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.MetricsAdvisor

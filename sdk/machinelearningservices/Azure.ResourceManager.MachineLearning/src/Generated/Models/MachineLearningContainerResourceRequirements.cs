@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Resource requirements for each container instance within an online deployment.
-    /// Serialized Name: ContainerResourceRequirements
-    /// </summary>
+    /// <summary> Resource requirements for each container instance within an online deployment. </summary>
     public partial class MachineLearningContainerResourceRequirements
     {
         /// <summary> Initializes a new instance of MachineLearningContainerResourceRequirements. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningContainerResourceRequirements. </summary>
-        /// <param name="containerResourceLimits">
-        /// Container resource limit info:
-        /// Serialized Name: ContainerResourceRequirements.containerResourceLimits
-        /// </param>
-        /// <param name="containerResourceRequests">
-        /// Container resource request info:
-        /// Serialized Name: ContainerResourceRequirements.containerResourceRequests
-        /// </param>
+        /// <param name="containerResourceLimits"> Container resource limit info:. </param>
+        /// <param name="containerResourceRequests"> Container resource request info:. </param>
         internal MachineLearningContainerResourceRequirements(MachineLearningContainerResourceSettings containerResourceLimits, MachineLearningContainerResourceSettings containerResourceRequests)
         {
             ContainerResourceLimits = containerResourceLimits;
             ContainerResourceRequests = containerResourceRequests;
         }
 
-        /// <summary>
-        /// Container resource limit info:
-        /// Serialized Name: ContainerResourceRequirements.containerResourceLimits
-        /// </summary>
+        /// <summary> Container resource limit info:. </summary>
         public MachineLearningContainerResourceSettings ContainerResourceLimits { get; set; }
-        /// <summary>
-        /// Container resource request info:
-        /// Serialized Name: ContainerResourceRequirements.containerResourceRequests
-        /// </summary>
+        /// <summary> Container resource request info:. </summary>
         public MachineLearningContainerResourceSettings ContainerResourceRequests { get; set; }
     }
 }

@@ -17,14 +17,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static ErrorContract DeserializeErrorContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);

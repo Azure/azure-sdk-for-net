@@ -7,6 +7,8 @@ Project("{F1183898-4592-42CE-97A0-80F56969220A}") = "Azure.ResourceManager.DataB
 EndProject
 Project("{F1183898-4592-42CE-97A0-80F56969220A}") = "Azure.ResourceManager.DataBoxEdge.Tests", "tests\Azure.ResourceManager.DataBoxEdge.Tests.csproj", "{0418C4D9-4F17-40B7-B0C8-DD060BF8333D}"
 EndProject
+Project("{F1183898-4592-42CE-97A0-80F56969220A}") = "Azure.ResourceManager.DataBoxEdge.Samples", "samples\Azure.ResourceManager.DataBoxEdge.Samples.csproj", "{7E7FC47D-3BBE-42D2-9DAD-6EF8193E030C}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

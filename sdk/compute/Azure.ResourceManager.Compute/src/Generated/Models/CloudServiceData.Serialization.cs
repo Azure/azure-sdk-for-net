@@ -19,9 +19,19 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,58 +40,58 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageUri))
             {
-                writer.WritePropertyName("packageUrl");
+                writer.WritePropertyName("packageUrl"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Configuration))
             {
-                writer.WritePropertyName("configuration");
+                writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
             if (Optional.IsDefined(ConfigurationUri))
             {
-                writer.WritePropertyName("configurationUrl");
+                writer.WritePropertyName("configurationUrl"u8);
                 writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
             }
             if (Optional.IsDefined(StartCloudService))
             {
-                writer.WritePropertyName("startCloudService");
+                writer.WritePropertyName("startCloudService"u8);
                 writer.WriteBooleanValue(StartCloudService.Value);
             }
             if (Optional.IsDefined(AllowModelOverride))
             {
-                writer.WritePropertyName("allowModelOverride");
+                writer.WritePropertyName("allowModelOverride"u8);
                 writer.WriteBooleanValue(AllowModelOverride.Value);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
-                writer.WritePropertyName("upgradeMode");
+                writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(RoleProfile))
             {
-                writer.WritePropertyName("roleProfile");
+                writer.WritePropertyName("roleProfile"u8);
                 writer.WriteObjectValue(RoleProfile);
             }
             if (Optional.IsDefined(OSProfile))
             {
-                writer.WritePropertyName("osProfile");
+                writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("networkProfile");
+                writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
-                writer.WritePropertyName("extensionProfile");
+                writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile);
             }
             writer.WriteEndObject();
@@ -90,6 +100,11 @@ namespace Azure.ResourceManager.Compute
 
         internal static CloudServiceData DeserializeCloudServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -110,11 +125,24 @@ namespace Azure.ResourceManager.Compute
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -125,37 +153,36 @@ namespace Azure.ResourceManager.Compute
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,107 +191,98 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("packageUrl"))
+                        if (property0.NameEquals("packageUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                packageUrl = null;
                                 continue;
                             }
                             packageUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("configuration"))
+                        if (property0.NameEquals("configuration"u8))
                         {
                             configuration = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("configurationUrl"))
+                        if (property0.NameEquals("configurationUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                configurationUrl = null;
                                 continue;
                             }
                             configurationUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startCloudService"))
+                        if (property0.NameEquals("startCloudService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startCloudService = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowModelOverride"))
+                        if (property0.NameEquals("allowModelOverride"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowModelOverride = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("upgradeMode"))
+                        if (property0.NameEquals("upgradeMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeMode = new CloudServiceUpgradeMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("roleProfile"))
+                        if (property0.NameEquals("roleProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleProfile = CloudServiceRoleProfile.DeserializeCloudServiceRoleProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("osProfile"))
+                        if (property0.NameEquals("osProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osProfile = CloudServiceOSProfile.DeserializeCloudServiceOSProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkProfile"))
+                        if (property0.NameEquals("networkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = CloudServiceNetworkProfile.DeserializeCloudServiceNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("extensionProfile"))
+                        if (property0.NameEquals("extensionProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             extensionProfile = CloudServiceExtensionProfile.DeserializeCloudServiceExtensionProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uniqueId"))
+                        if (property0.NameEquals("uniqueId"u8))
                         {
                             uniqueId = property0.Value.GetString();
                             continue;
@@ -273,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, packageUrl.Value, configuration.Value, configurationUrl.Value, Optional.ToNullable(startCloudService), Optional.ToNullable(allowModelOverride), Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value);
+            return new CloudServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), packageUrl.Value, configuration.Value, configurationUrl.Value, Optional.ToNullable(startCloudService), Optional.ToNullable(allowModelOverride), Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value);
         }
     }
 }

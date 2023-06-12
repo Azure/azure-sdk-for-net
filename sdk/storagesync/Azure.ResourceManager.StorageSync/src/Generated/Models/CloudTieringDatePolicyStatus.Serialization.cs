@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudTieringDatePolicyStatus DeserializeCloudTieringDatePolicyStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<DateTimeOffset> tieredFilesMostRecentAccessTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("tieredFilesMostRecentAccessTimestamp"))
+                if (property.NameEquals("tieredFilesMostRecentAccessTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tieredFilesMostRecentAccessTimestamp = property.Value.GetDateTimeOffset("O");

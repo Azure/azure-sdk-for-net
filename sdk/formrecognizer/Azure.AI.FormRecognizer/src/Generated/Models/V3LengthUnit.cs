@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string PixelValue = "pixel";
         private const string InchValue = "inch";
 
-        /// <summary> pixel. </summary>
+        /// <summary> Length unit for image files. </summary>
         public static V3LengthUnit Pixel { get; } = new V3LengthUnit(PixelValue);
-        /// <summary> inch. </summary>
+        /// <summary> Length unit for PDF files. </summary>
         public static V3LengthUnit Inch { get; } = new V3LengthUnit(InchValue);
         /// <summary> Determines if two <see cref="V3LengthUnit"/> values are the same. </summary>
         public static bool operator ==(V3LengthUnit left, V3LengthUnit right) => left.Equals(right);

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Defines an Aml Instance application and its connectivity endpoint URI.
-    /// Serialized Name: ComputeInstanceApplication
-    /// </summary>
+    /// <summary> Defines an Aml Instance application and its connectivity endpoint URI. </summary>
     public partial class MachineLearningComputeInstanceApplication
     {
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
-        /// <param name="displayName">
-        /// Name of the ComputeInstance application.
-        /// Serialized Name: ComputeInstanceApplication.displayName
-        /// </param>
-        /// <param name="endpointUri">
-        /// Application&apos; endpoint URI.
-        /// Serialized Name: ComputeInstanceApplication.endpointUri
-        /// </param>
+        /// <param name="displayName"> Name of the ComputeInstance application. </param>
+        /// <param name="endpointUri"> Application&apos; endpoint URI. </param>
         internal MachineLearningComputeInstanceApplication(string displayName, Uri endpointUri)
         {
             DisplayName = displayName;
             EndpointUri = endpointUri;
         }
 
-        /// <summary>
-        /// Name of the ComputeInstance application.
-        /// Serialized Name: ComputeInstanceApplication.displayName
-        /// </summary>
+        /// <summary> Name of the ComputeInstance application. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Application&apos; endpoint URI.
-        /// Serialized Name: ComputeInstanceApplication.endpointUri
-        /// </summary>
+        /// <summary> Application&apos; endpoint URI. </summary>
         public Uri EndpointUri { get; }
     }
 }

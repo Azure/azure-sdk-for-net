@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Resou
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Resources.Tests", "tests\Azure.ResourceManager.Resources.Tests.csproj", "{9D842058-41AB-42DD-82C8-F3DF49E25297}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Resources.Samples", "samples\Azure.ResourceManager.Resources.Samples.csproj", "{B2F70B5C-00C0-42AF-AFB5-386C048AD6DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

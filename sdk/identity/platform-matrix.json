@@ -8,7 +8,7 @@
           "Container": "ubuntu_netcore_keyring"
         }
       },
-      "TestTargetFramework": "netcoreapp3.1",
+      "TestTargetFramework": "net6.0",
       "SupportedClouds": "Public,Preview,Canary"
     }
   ]

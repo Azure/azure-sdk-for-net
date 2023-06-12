@@ -27,8 +27,9 @@ namespace Azure.Identity
         private readonly string _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
-        private readonly string[] _additionallyAllowedTenantIds;
+        internal string[] AdditionallyAllowedTenantIds { get; }
         internal MsalPublicClient Client { get; }
+        internal string DefaultScope { get; }
 
         /// <summary>
         /// Protected constructor for mocking
@@ -92,9 +93,10 @@ namespace Azure.Identity
             _password = password;
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
 
-            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -104,10 +106,13 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
-            // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            // throw if no default scope exists
+            if (DefaultScope == null)
+            {
+                throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            }
 
-            return Authenticate(new TokenRequestContext(new string[] { defaultScope }), cancellationToken);
+            return Authenticate(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
         }
 
         /// <summary>
@@ -117,10 +122,13 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
-            // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            // throw if no default scope exists
+            if (DefaultScope == null)
+            {
+                throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            }
 
-            return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
+            return await AuthenticateAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -180,7 +188,7 @@ namespace Azure.Identity
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(UsernamePasswordCredential)}.{nameof(Authenticate)}", requestContext);
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 AuthenticationResult result = await Client
                     .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
@@ -203,7 +211,7 @@ namespace Azure.Identity
                 AuthenticationResult result;
                 if (_record != null)
                 {
-                    var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
+                    var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
                     try
                     {
                         result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, async, cancellationToken)

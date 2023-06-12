@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -63,15 +60,24 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Get AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappingAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappingAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAssetMappingAsync(string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -91,15 +97,24 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Get AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Get AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMapping(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMapping(string,string,RequestContext)']/*" />
         public virtual Response GetAssetMapping(string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -119,7 +134,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> List AssetMappings in a received share. </summary>
+        /// <summary>
+        /// [Protocol Method] List AssetMappings in a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -129,32 +153,26 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappingsAsync(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappingsAsync(string,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAssetMappingsAsync(string receivedShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetAssetMappingsImplementationAsync("AssetMappingsClient.GetAssetMappings", receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
-        private AsyncPageable<BinaryData> GetAssetMappingsImplementationAsync(string diagnosticsScopeName, string receivedShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context)
-                        : CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> List AssetMappings in a received share. </summary>
+        /// <summary>
+        /// [Protocol Method] List AssetMappings in a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -164,42 +182,36 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappings(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='GetAssetMappings(string,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAssetMappings(string receivedShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetAssetMappingsImplementation("AssetMappingsClient.GetAssetMappings", receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
-        private Pageable<BinaryData> GetAssetMappingsImplementation(string diagnosticsScopeName, string receivedShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context)
-                        : CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>
+        /// <summary>
+        /// [Protocol Method] Maps a source asset in the sent share to a destination asset in the received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/>, <paramref name="assetMappingName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateAsync(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -220,17 +232,26 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>
+        /// <summary>
+        /// [Protocol Method] Maps a source asset in the sent share to a destination asset in the received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/>, <paramref name="assetMappingName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='Create(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='Create(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> Create(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -251,7 +272,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -260,7 +290,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -280,7 +310,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete AssetMapping in a receivedShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete AssetMapping in a receivedShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -289,7 +328,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='Delete(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetMappingsClient.xml" path="doc/members/member[@name='Delete(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation Delete(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));

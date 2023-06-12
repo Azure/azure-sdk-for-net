@@ -17,13 +17,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResetAllToDefault))
+            {
+                writer.WritePropertyName("resetAllToDefault"u8);
+                writer.WriteStringValue(ResetAllToDefault.Value.ToString());
             }
             writer.WriteEndObject();
         }

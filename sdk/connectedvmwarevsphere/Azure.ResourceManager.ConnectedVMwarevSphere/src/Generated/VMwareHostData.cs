@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the VMwareHost data model. </summary>
+    /// <summary>
+    /// A class representing the VMwareHost data model.
+    /// Define the host.
+    /// </summary>
     public partial class VMwareHostData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VMwareHostData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static DataStore DeserializeDataStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> symbolicName = default;
             Optional<string> uuid = default;
             Optional<string> capacity = default;
@@ -21,27 +25,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("symbolicName"))
+                if (property.NameEquals("symbolicName"u8))
                 {
                     symbolicName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uuid"))
+                if (property.NameEquals("uuid"u8))
                 {
                     uuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     capacity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("freeSpace"))
+                if (property.NameEquals("freeSpace"u8))
                 {
                     freeSpace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

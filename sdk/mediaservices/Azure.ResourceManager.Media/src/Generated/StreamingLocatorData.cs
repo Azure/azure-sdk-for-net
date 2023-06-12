@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the StreamingLocator data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingLocator data model.
+    /// A Streaming Locator resource
+    /// </summary>
     public partial class StreamingLocatorData : ResourceData
     {
         /// <summary> Initializes a new instance of StreamingLocatorData. </summary>

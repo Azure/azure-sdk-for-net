@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProviderSpecificInput))
             {
-                writer.WritePropertyName("providerSpecificInput");
+                writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificInput)
                 {

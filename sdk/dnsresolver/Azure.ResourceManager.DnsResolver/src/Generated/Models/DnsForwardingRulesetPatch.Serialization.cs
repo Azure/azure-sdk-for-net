@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
             {
-                writer.WritePropertyName("dnsResolverOutboundEndpoints");
+                writer.WritePropertyName("dnsResolverOutboundEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsResolverOutboundEndpoints)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {

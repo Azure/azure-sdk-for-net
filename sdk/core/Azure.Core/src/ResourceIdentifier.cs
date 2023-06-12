@@ -199,18 +199,23 @@ namespace Azure.Core
         {
             if (resourceTypeName.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
+                //resourceGroups type is Microsoft.Resources/resourceGroups only when its parent is Subscription
                 specialType = SpecialType.ResourceGroup;
-                return ResourceType.ResourceGroup;
+                if (parent.ResourceType == ResourceType.Subscription)
+                {
+                    return ResourceType.ResourceGroup;
+                }
             }
-
-            //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
-            if (resourceTypeName.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && parent.ResourceType == ResourceType.Tenant)
+            else if (resourceTypeName.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && parent.ResourceType == ResourceType.Tenant)
             {
+                //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
                 specialType = SpecialType.Subscription;
                 return ResourceType.Subscription;
             }
-
-            specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
+            else
+            {
+                specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
+            }
 
             return parent.ResourceType.AppendChild(resourceTypeName.ToString());
         }
@@ -273,7 +278,7 @@ namespace Azure.Core
             return "Invalid resource id.";
         }
 
-        private static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining)
+        private static ReadOnlySpan<char> PopNextWord(scoped ref ReadOnlySpan<char> remaining)
         {
             int index = remaining.IndexOf(Separator);
             if (index < 0)
@@ -345,14 +350,13 @@ namespace Azure.Core
             StringBuilder builder = new StringBuilder(initial);
             if (!IsProviderResource)
             {
-                builder.Append($"/{ResourceType.GetLastType()}");
+                builder.Append('/').Append(ResourceType.GetLastType());
                 if (!string.IsNullOrWhiteSpace(Name))
-                    builder.Append($"/{Name}");
+                    builder.Append('/').Append(Name);
             }
             else
             {
-                builder.Append(ProviderStart)
-                    .Append($"{ResourceType}/{Name}");
+                builder.Append(ProviderStart).Append(ResourceType).Append('/').Append(Name);
             }
 
             return builder.ToString();

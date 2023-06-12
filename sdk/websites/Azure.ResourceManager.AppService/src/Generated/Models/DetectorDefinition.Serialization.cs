@@ -20,37 +20,39 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DetectorDefinition DeserializeDetectorDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<double> rank = default;
             Optional<bool> isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rank"))
+                if (property.NameEquals("rank"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rank = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEnabled = property.Value.GetBoolean();

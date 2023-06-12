@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
     {
         private readonly ILoggerFactory loggerFactory;
 
-        public LogDemo(string connectionString, TokenCredential credential = null)
+        public LogDemo(string connectionString, TokenCredential? credential = null)
         {
             this.loggerFactory = LoggerFactory.Create(builder =>
             {

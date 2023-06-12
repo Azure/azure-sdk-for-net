@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ScopeMapId))
             {
-                writer.WritePropertyName("scopeMapId");
+                writer.WritePropertyName("scopeMapId"u8);
                 writer.WriteStringValue(ScopeMapId);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WriteEndObject();

@@ -11,23 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Azure Data Lake Gen1 datastore configuration.
-    /// Serialized Name: AzureDataLakeGen1Datastore
-    /// </summary>
+    /// <summary> Azure Data Lake Gen1 datastore configuration. </summary>
     public partial class MachineLearningAzureDataLakeGen1Datastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen1Datastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="storeName">
-        /// [Required] Azure Data Lake store name.
-        /// Serialized Name: AzureDataLakeGen1Datastore.storeName
-        /// </param>
+        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
         public MachineLearningAzureDataLakeGen1Datastore(MachineLearningDatastoreCredentials credentials, string storeName) : base(credentials)
         {
@@ -39,40 +32,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen1Datastore. </summary>
-        /// <param name="description">
-        /// The asset description text.
-        /// Serialized Name: ResourceBase.description
-        /// </param>
-        /// <param name="properties">
-        /// The asset property dictionary.
-        /// Serialized Name: ResourceBase.properties
-        /// </param>
-        /// <param name="tags">
-        /// Tag dictionary. Tags can be added, removed, and updated.
-        /// Serialized Name: ResourceBase.tags
-        /// </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="datastoreType">
-        /// [Required] Storage type backing the datastore.
-        /// Serialized Name: Datastore.datastoreType
-        /// </param>
-        /// <param name="isDefault">
-        /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: Datastore.isDefault
-        /// </param>
-        /// <param name="serviceDataAccessAuthIdentity">
-        /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
-        /// Serialized Name: AzureDataLakeGen1Datastore.serviceDataAccessAuthIdentity
-        /// </param>
-        /// <param name="storeName">
-        /// [Required] Azure Data Lake store name.
-        /// Serialized Name: AzureDataLakeGen1Datastore.storeName
-        /// </param>
+        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
+        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
@@ -80,15 +51,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = datastoreType;
         }
 
-        /// <summary>
-        /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
-        /// Serialized Name: AzureDataLakeGen1Datastore.serviceDataAccessAuthIdentity
-        /// </summary>
+        /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
-        /// <summary>
-        /// [Required] Azure Data Lake store name.
-        /// Serialized Name: AzureDataLakeGen1Datastore.storeName
-        /// </summary>
+        /// <summary> [Required] Azure Data Lake store name. </summary>
         public string StoreName { get; set; }
     }
 }

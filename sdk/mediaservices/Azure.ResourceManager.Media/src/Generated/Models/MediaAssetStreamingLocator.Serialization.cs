@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaAssetStreamingLocator DeserializeMediaAssetStreamingLocator(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> assetName = default;
             Optional<DateTimeOffset> created = default;
@@ -25,62 +29,58 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> defaultContentKeyPolicyName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetName"))
+                if (property.NameEquals("assetName"u8))
                 {
                     assetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("streamingLocatorId"))
+                if (property.NameEquals("streamingLocatorId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     streamingLocatorId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("streamingPolicyName"))
+                if (property.NameEquals("streamingPolicyName"u8))
                 {
                     streamingPolicyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultContentKeyPolicyName"))
+                if (property.NameEquals("defaultContentKeyPolicyName"u8))
                 {
                     defaultContentKeyPolicyName = property.Value.GetString();
                     continue;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the DiskImage data model. </summary>
+    /// <summary>
+    /// A class representing the DiskImage data model.
+    /// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist.
+    /// </summary>
     public partial class DiskImageData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskImageData. </summary>

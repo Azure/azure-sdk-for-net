@@ -8,37 +8,33 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     public partial class EmailMessage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
-                writer.WriteStartArray();
-                foreach (var item in CustomHeaders)
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartObject();
+                foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
-            writer.WritePropertyName("sender");
-            writer.WriteStringValue(Sender);
-            writer.WritePropertyName("content");
+            writer.WritePropertyName("senderAddress"u8);
+            writer.WriteStringValue(SenderAddress);
+            writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);
-            if (Optional.IsDefined(Importance))
-            {
-                writer.WritePropertyName("importance");
-                writer.WriteStringValue(Importance.Value.ToString());
-            }
-            writer.WritePropertyName("recipients");
+            writer.WritePropertyName("recipients"u8);
             writer.WriteObjectValue(Recipients);
             if (Optional.IsCollectionDefined(Attachments))
             {
-                writer.WritePropertyName("attachments");
+                writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
@@ -48,7 +44,7 @@ namespace Azure.Communication.Email.Models
             }
             if (Optional.IsCollectionDefined(ReplyTo))
             {
-                writer.WritePropertyName("replyTo");
+                writer.WritePropertyName("replyTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
@@ -56,10 +52,10 @@ namespace Azure.Communication.Email.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableUserEngagementTracking))
+            if (Optional.IsDefined(UserEngagementTrackingDisabled))
             {
-                writer.WritePropertyName("disableUserEngagementTracking");
-                writer.WriteBooleanValue(DisableUserEngagementTracking.Value);
+                writer.WritePropertyName("userEngagementTrackingDisabled"u8);
+                writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);
             }
             writer.WriteEndObject();
         }

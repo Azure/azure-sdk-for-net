@@ -1,5 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Remove="TestCase\ActionResponseCollectionTests.cs" />
+    <Compile Remove="TestCase\ActionResponseResourceTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.SecurityInsights.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
   </ItemGroup>
 </Project>

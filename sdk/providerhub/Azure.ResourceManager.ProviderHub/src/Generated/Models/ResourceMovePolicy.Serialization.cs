@@ -15,56 +15,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationRequired))
+            if (Optional.IsDefined(IsValidationRequired))
             {
-                writer.WritePropertyName("validationRequired");
-                writer.WriteBooleanValue(ValidationRequired.Value);
+                writer.WritePropertyName("validationRequired"u8);
+                writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (Optional.IsDefined(CrossResourceGroupMoveEnabled))
+            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
             {
-                writer.WritePropertyName("crossResourceGroupMoveEnabled");
-                writer.WriteBooleanValue(CrossResourceGroupMoveEnabled.Value);
+                writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
+                writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (Optional.IsDefined(CrossSubscriptionMoveEnabled))
+            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
             {
-                writer.WritePropertyName("crossSubscriptionMoveEnabled");
-                writer.WriteBooleanValue(CrossSubscriptionMoveEnabled.Value);
+                writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
+                writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ResourceMovePolicy DeserializeResourceMovePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> validationRequired = default;
             Optional<bool> crossResourceGroupMoveEnabled = default;
             Optional<bool> crossSubscriptionMoveEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationRequired"))
+                if (property.NameEquals("validationRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("crossResourceGroupMoveEnabled"))
+                if (property.NameEquals("crossResourceGroupMoveEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossResourceGroupMoveEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("crossSubscriptionMoveEnabled"))
+                if (property.NameEquals("crossSubscriptionMoveEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossSubscriptionMoveEnabled = property.Value.GetBoolean();

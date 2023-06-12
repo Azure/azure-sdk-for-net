@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CategoryType))
             {
-                writer.WritePropertyName("categoryType");
+                writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(CategoryGroups))
             {
-                writer.WritePropertyName("categoryGroups");
+                writer.WritePropertyName("categoryGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in CategoryGroups)
                 {
@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DiagnosticSettingsCategoryData DeserializeDiagnosticSettingsCategoryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,32 +53,31 @@ namespace Azure.ResourceManager.Monitor
             Optional<IList<string>> categoryGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,21 +86,19 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("categoryType"))
+                        if (property0.NameEquals("categoryType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             categoryType = new MonitorCategoryType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("categoryGroups"))
+                        if (property0.NameEquals("categoryGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

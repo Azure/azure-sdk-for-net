@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> changeNumber = default;
             Optional<string> cloud = default;
             Optional<IReadOnlyList<ServiceTagInformation>> values = default;
@@ -26,21 +30,20 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("changeNumber"))
+                if (property.NameEquals("changeNumber"u8))
                 {
                     changeNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloud"))
+                if (property.NameEquals("cloud"u8))
                 {
                     cloud = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTagInformation> array = new List<ServiceTagInformation>();
@@ -51,31 +54,30 @@ namespace Azure.ResourceManager.Network.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

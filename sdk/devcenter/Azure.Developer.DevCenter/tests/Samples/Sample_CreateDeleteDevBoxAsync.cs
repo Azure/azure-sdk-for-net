@@ -13,12 +13,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 {
     public partial class DevCenterSamples: SamplesBase<DevCenterClientTestEnvironment>
     {
-        public async Task CreateDeleteDevBoxAsync(string tenantId, string devCenterName)
+        public async Task CreateDeleteDevBoxAsync(Uri endpoint)
         {
             // Create and delete a user devbox
             #region Snippet:Azure_DevCenter_GetProjects_Scenario
             var credential = new DefaultAzureCredential();
-            var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
+            var devCenterClient = new DevCenterClient(endpoint, credential);
             string targetProjectName = null;
             await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
             {
@@ -29,12 +29,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             if (targetProjectName is null)
             {
-                throw new InvalidOperationException($"No valid project resources found in DevCenter {devCenterName}/tenant {tenantId}.");
+                throw new InvalidOperationException($"No valid project resources found in DevCenter {endpoint}.");
             }
 
             // Grab a pool
             #region Snippet:Azure_DevCenter_GetPools_Scenario
-            var devBoxesClient = new DevBoxesClient(tenantId, devCenterName, targetProjectName, credential);
+            var devBoxesClient = new DevBoxesClient(endpoint, targetProjectName, credential);
             string targetPoolName = null;
             await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
             {
@@ -45,7 +45,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             if (targetPoolName is null)
             {
-                throw new InvalidOperationException($"No valid pool resources found in Project {targetProjectName}/DevCenter {devCenterName}/tenant {tenantId}.");
+                throw new InvalidOperationException($"No valid pool resources found in Project {targetProjectName}/DevCenter {endpoint}.");
             }
 
             // Provision your dev box in the selected pool

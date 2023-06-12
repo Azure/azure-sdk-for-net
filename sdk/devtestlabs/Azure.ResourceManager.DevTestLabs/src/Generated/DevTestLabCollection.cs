@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing lab. This operation can take a while to complete.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the lab. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing lab. This operation can take a while to complete.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the lab. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get lab.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
@@ -152,8 +175,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get lab.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
@@ -182,8 +213,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List labs in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs
-        /// Operation Id: Labs_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -193,43 +232,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabLabsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabLabsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List labs in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs
-        /// Operation Id: Labs_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -239,43 +258,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabLabsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabLabsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
@@ -302,8 +301,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>

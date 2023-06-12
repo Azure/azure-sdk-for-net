@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AadProfile))
             {
-                writer.WritePropertyName("aadProfile");
+                writer.WritePropertyName("aadProfile"u8);
                 writer.WriteObjectValue(AadProfile);
             }
             if (Optional.IsDefined(WindowsProfile))
             {
-                writer.WritePropertyName("windowsProfile");
+                writer.WritePropertyName("windowsProfile"u8);
                 writer.WriteObjectValue(WindowsProfile);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
-                writer.WritePropertyName("httpProxyConfig");
+                writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersPropertiesWithoutSecrets DeserializeProvisionedClustersPropertiesWithoutSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AADProfileResponse> aadProfile = default;
             Optional<WindowsProfileResponse> windowsProfile = default;
             Optional<HttpProxyConfigResponse> httpProxyConfig = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aadProfile"))
+                if (property.NameEquals("aadProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadProfile = AADProfileResponse.DeserializeAADProfileResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("windowsProfile"))
+                if (property.NameEquals("windowsProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsProfile = WindowsProfileResponse.DeserializeWindowsProfileResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("httpProxyConfig"))
+                if (property.NameEquals("httpProxyConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     httpProxyConfig = HttpProxyConfigResponse.DeserializeHttpProxyConfigResponse(property.Value);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string reservationOrderAliasName, ReservationOrderAliasModelCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string reservationOrderAliasName, ReservationOrderAliasModelCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
             Argument.AssertNotNull(content, nameof(content));
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string reservationOrderAliasName, ReservationOrderAliasModelCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response Create(string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
             Argument.AssertNotNull(content, nameof(content));
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationOrderAliasModelData>> GetAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingBenefitsReservationOrderAliasData>> GetAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        ReservationOrderAliasModelData value = default;
+                        BillingBenefitsReservationOrderAliasData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReservationOrderAliasModelData.DeserializeReservationOrderAliasModelData(document.RootElement);
+                        value = BillingBenefitsReservationOrderAliasData.DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationOrderAliasModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsReservationOrderAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationOrderAliasModelData> Get(string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        public Response<BillingBenefitsReservationOrderAliasData> Get(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        ReservationOrderAliasModelData value = default;
+                        BillingBenefitsReservationOrderAliasData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReservationOrderAliasModelData.DeserializeReservationOrderAliasModelData(document.RootElement);
+                        value = BillingBenefitsReservationOrderAliasData.DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationOrderAliasModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsReservationOrderAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Daily retention format for monthly retention policy. </summary>
         internal DailyRetentionFormat RetentionScheduleDaily { get; set; }
         /// <summary> List of days of the month. </summary>
-        public IList<Day> RetentionScheduleDailyDaysOfTheMonth
+        public IList<BackupDay> RetentionScheduleDailyDaysOfTheMonth
         {
             get
             {

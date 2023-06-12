@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreferredManagementResourceId))
             {
-                writer.WritePropertyName("preferredManagementResourceId");
+                writer.WritePropertyName("preferredManagementResourceId"u8);
                 writer.WriteStringValue(PreferredManagementResourceId);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ManagementResourcePreferences DeserializeManagementResourcePreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> preferredManagementResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preferredManagementResourceId"))
+                if (property.NameEquals("preferredManagementResourceId"u8))
                 {
                     preferredManagementResourceId = property.Value.GetString();
                     continue;

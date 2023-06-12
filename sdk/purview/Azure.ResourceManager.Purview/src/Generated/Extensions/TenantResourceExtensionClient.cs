@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Get the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
-        /// Operation Id: DefaultAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
@@ -70,8 +78,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Get the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
-        /// Operation Id: DefaultAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
@@ -95,8 +111,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Sets the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/setDefaultAccount
-        /// Operation Id: DefaultAccounts_Set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +142,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Sets the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/setDefaultAccount
-        /// Operation Id: DefaultAccounts_Set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +173,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Removes the default account from the scope.
-        /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
-        /// Operation Id: DefaultAccounts_Remove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
@@ -166,8 +206,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Removes the default account from the scope.
-        /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
-        /// Operation Id: DefaultAccounts_Remove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>

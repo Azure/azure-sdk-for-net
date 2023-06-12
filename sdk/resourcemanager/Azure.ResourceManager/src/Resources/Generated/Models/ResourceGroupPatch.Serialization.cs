@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {

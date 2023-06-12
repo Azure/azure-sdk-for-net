@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static MetricDefinitionListResult DeserializeMetricDefinitionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SqlMetricDefinition> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SqlMetricDefinition> array = new List<SqlMetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the IssueContract data model. </summary>
+    /// <summary>
+    /// A class representing the IssueContract data model.
+    /// Issue Contract details.
+    /// </summary>
     public partial class IssueContractData : ResourceData
     {
         /// <summary> Initializes a new instance of IssueContractData. </summary>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EventName))
             {
-                writer.WritePropertyName("eventName");
+                writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName.Value.ToString());
             }
             if (Optional.IsDefined(JsonPayload))
             {
-                writer.WritePropertyName("jsonPayload");
+                writer.WritePropertyName("jsonPayload"u8);
                 writer.WriteStringValue(JsonPayload);
             }
             writer.WriteEndObject();

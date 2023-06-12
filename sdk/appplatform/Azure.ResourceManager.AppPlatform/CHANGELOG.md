@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,65 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2023-06-07)
+
+### Bugs Fixed
+
+- Fixed failure to parse Uri for `AppPlatformAppProperties.Uri`, it does not always represent a valid Uri.
+
+## 1.1.0-beta.1 (2023-05-25)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.2 (2023-03-28)
+
+### Bugs Fixed
+
+- Fix failure to parse different format of GUID value for `AppPlatformServiceProperties.ServiceId`. Add a new string type property `AppPlatformServiceProperties.ServiceInstanceId` to replace `AppPlatformServiceProperties.ServiceId` which is now marked as obsolete.
+
+## 1.0.1 (2023-02-17)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
+## 1.0.0 (2022-12-23)
+
+This release is the first stable release of the Spring Apps Management library.
+
+### Features Added
+
+- Upgraded API version to 2022-12-01.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `AppPlatform` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters that end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.2.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.1 (2022-09-14)
 

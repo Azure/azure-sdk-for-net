@@ -17,52 +17,52 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartObject();
             if (Optional.IsDefined(QnaId))
             {
-                writer.WritePropertyName("qnaId");
+                writer.WritePropertyName("qnaId"u8);
                 writer.WriteNumberValue(QnaId.Value);
             }
             if (Optional.IsDefined(Question))
             {
-                writer.WritePropertyName("question");
+                writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("top");
+                writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
             if (Optional.IsDefined(UserId))
             {
-                writer.WritePropertyName("userId");
+                writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
             if (Optional.IsDefined(ConfidenceThreshold))
             {
-                writer.WritePropertyName("confidenceScoreThreshold");
+                writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
             if (Optional.IsDefined(AnswerContext))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(AnswerContext);
             }
             if (Optional.IsDefined(RankerKind))
             {
-                writer.WritePropertyName("rankerType");
+                writer.WritePropertyName("rankerType"u8);
                 writer.WriteStringValue(RankerKind.Value.ToString());
             }
             if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
             if (Optional.IsDefined(ShortAnswerOptions))
             {
-                writer.WritePropertyName("answerSpanRequest");
+                writer.WritePropertyName("answerSpanRequest"u8);
                 writer.WriteObjectValue(ShortAnswerOptions);
             }
             if (Optional.IsDefined(IncludeUnstructuredSources))
             {
-                writer.WritePropertyName("includeUnstructuredSources");
+                writer.WritePropertyName("includeUnstructuredSources"u8);
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);
             }
             writer.WriteEndObject();

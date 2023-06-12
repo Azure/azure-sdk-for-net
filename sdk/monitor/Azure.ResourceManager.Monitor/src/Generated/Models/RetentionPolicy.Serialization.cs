@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("days");
+            writer.WritePropertyName("days"u8);
             writer.WriteNumberValue(Days);
             writer.WriteEndObject();
         }
 
         internal static RetentionPolicy DeserializeRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             int days = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("days"))
+                if (property.NameEquals("days"u8))
                 {
                     days = property.Value.GetInt32();
                     continue;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalSpacecraft data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalSpacecraft data model.
+    /// Customer creates a spacecraft resource to schedule a contact.
+    /// </summary>
     public partial class OrbitalSpacecraftData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>

@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

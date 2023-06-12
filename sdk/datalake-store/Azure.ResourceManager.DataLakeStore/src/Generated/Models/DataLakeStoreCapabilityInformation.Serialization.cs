@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> subscriptionId = default;
             Optional<DataLakeStoreSubscriptionState> state = default;
             Optional<int> maxAccountCount = default;
@@ -22,51 +26,46 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Optional<bool> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new DataLakeStoreSubscriptionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxAccountCount"))
+                if (property.NameEquals("maxAccountCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAccountCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("accountCount"))
+                if (property.NameEquals("accountCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("migrationState"))
+                if (property.NameEquals("migrationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = property.Value.GetBoolean();

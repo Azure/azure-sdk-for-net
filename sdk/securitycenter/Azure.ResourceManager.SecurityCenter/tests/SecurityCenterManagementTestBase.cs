@@ -33,11 +33,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         protected SecurityCenterManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected SecurityCenterManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -55,28 +57,24 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             return lro.Value;
         }
 
-        protected async Task<NetworkSecurityGroupResource> CreateNetworkSecurityGroup(ResourceGroupResource resourceGroup, string nsgName)
+        protected async Task<NetworkInterfaceResource> CreateNetworkInterface(ResourceGroupResource resourceGroup, string interfaceName, string nsgName = null)
         {
+            // Create NSG
+            nsgName = nsgName == null ? Recording.GenerateAssetName("nsg") : nsgName;
             var nsgData = new NetworkSecurityGroupData() { Location = resourceGroup.Data.Location, };
             var nsg = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, nsgName, nsgData);
-            return nsg.Value;
-        }
 
-        protected async Task<VirtualNetworkResource> CreateNetwork(ResourceGroupResource resourceGroup, NetworkSecurityGroupResource nsg, string vnetName)
-        {
-            VirtualNetworkData data = new VirtualNetworkData()
+            // Create virtual network
+            string vnetName = Recording.GenerateAssetName("vnet");
+            VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = resourceGroup.Data.Location,
             };
-            data.AddressPrefixes.Add("10.10.0.0/16");
-            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Data });
-            data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
-            return vnet.Value;
-        }
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
+            vnetData.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Value.Data });
+            vnetData.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
 
-        protected async Task<NetworkInterfaceResource> CreateNetworkInterface(ResourceGroupResource resourceGroup, VirtualNetworkResource network, string nicName)
-        {
             // Create Public IP
             string publicIPName = Recording.GenerateAssetName("publicIP");
             var publicIPData = new PublicIPAddressData()
@@ -87,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var publicIP = await resourceGroup.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, publicIPName, publicIPData);
 
             // Get subnet id AsyncPageable<SubnetResource>
-            var list = await network.GetSubnets().GetAllAsync().ToEnumerableAsync();
+            var list = await vnet.Value.GetSubnets().GetAllAsync().ToEnumerableAsync();
             var subnetId = list.FirstOrDefault().Id;
 
             var data = new NetworkInterfaceData()
@@ -110,69 +108,81 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     }
                 }
             };
-            var networkInterface = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, nicName, data);
+            var networkInterface = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, interfaceName, data);
             return networkInterface.Value;
         }
 
         protected async Task<VirtualMachineResource> CreateVirtualMachine(ResourceGroupResource resourceGroup, ResourceIdentifier networkInterfaceIP, string vmName)
         {
-            string adminUsername = "adminUser";
-            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
-            VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
+            if (Mode == RecordedTestMode.Playback)
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                var vmId = VirtualMachineResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vmName);
+
+                return Client.GetVirtualMachineResource(vmId);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
                 {
-                    VmSize = VirtualMachineSizeType.StandardF2
-                },
-                OSProfile = new VirtualMachineOSProfile()
-                {
-                    AdminUsername = adminUsername,
-                    ComputerName = vmName,
-                    LinuxConfiguration = new LinuxConfiguration()
+                    string adminUsername = "adminUser";
+                    VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
+                    VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
                     {
-                        DisablePasswordAuthentication = true,
-                        SshPublicKeys = {
-                            new SshPublicKeyConfiguration()
+                        HardwareProfile = new VirtualMachineHardwareProfile()
+                        {
+                            VmSize = VirtualMachineSizeType.StandardF2
+                        },
+                        OSProfile = new VirtualMachineOSProfile()
+                        {
+                            AdminUsername = adminUsername,
+                            ComputerName = vmName,
+                            LinuxConfiguration = new LinuxConfiguration()
                             {
-                                Path = $"/home/{adminUsername}/.ssh/authorized_keys",
-                                KeyData = dummySSHKey,
+                                DisablePasswordAuthentication = true,
+                                SshPublicKeys = {
+                                    new SshPublicKeyConfiguration()
+                                    {
+                                        Path = $"/home/{adminUsername}/.ssh/authorized_keys",
+                                        KeyData = dummySSHKey,
+                                    }
+                                }
+                            }
+                        },
+                        NetworkProfile = new VirtualMachineNetworkProfile()
+                        {
+                            NetworkInterfaces =
+                            {
+                                new VirtualMachineNetworkInterfaceReference()
+                                {
+                                    Id = networkInterfaceIP,
+                                    Primary = true,
+                                }
+                            }
+                        },
+                        StorageProfile = new VirtualMachineStorageProfile()
+                        {
+                            OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                OSType = SupportedOperatingSystemType.Linux,
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs
+                                }
+                            },
+                            ImageReference = new ImageReference()
+                            {
+                                Publisher = "Canonical",
+                                Offer = "UbuntuServer",
+                                Sku = "16.04-LTS",
+                                Version = "latest",
                             }
                         }
-                    }
-                },
-                NetworkProfile = new VirtualMachineNetworkProfile()
-                {
-                    NetworkInterfaces =
-                    {
-                        new VirtualMachineNetworkInterfaceReference()
-                        {
-                            Id = networkInterfaceIP,
-                            Primary = true,
-                        }
-                    }
-                },
-                StorageProfile = new VirtualMachineStorageProfile()
-                {
-                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
-                    {
-                        OSType = SupportedOperatingSystemType.Linux,
-                        Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
-                        {
-                            StorageAccountType = StorageAccountType.StandardLrs
-                        }
-                    },
-                    ImageReference = new ImageReference()
-                    {
-                        Publisher = "Canonical",
-                        Offer = "UbuntuServer",
-                        Sku = "16.04-LTS",
-                        Version = "latest",
-                    }
+                    };
+                    ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
+                    return lro.Value;
                 }
-            };
-            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            return lro.Value;
+            }
         }
 
         protected async Task<LogicWorkflowResource> CreateLogicWorkFlow(ResourceGroupResource resourceGroup)

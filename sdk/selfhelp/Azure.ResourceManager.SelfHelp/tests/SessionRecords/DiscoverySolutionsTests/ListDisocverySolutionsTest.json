@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a278501d4ddd8ca6b281b3226a68156-861846c47b5c420a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "219df7f12b00e38a6058adef479ba456",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "417",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 May 2023 14:42:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3a552d68-2ea6-4af7-8a8f-93ecc2bbfb3d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "3a552d68-2ea6-4af7-8a8f-93ecc2bbfb3d",
+        "x-ms-routing-request-id": "EASTUS:20230530T144200Z:3a552d68-2ea6-4af7-8a8f-93ecc2bbfb3d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Azure Triage Resource Provider - Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/discoverySolutions?api-version=2023-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d8095bf595972503152c12b1a4b27845-9b59d9e66bd66a70-00",
+        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230530.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6feb98a4d692dfe5f8a29f9f5f95c12e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2088",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 May 2023 14:42:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f9e5463e-aa9f-4c36-9100-f713147936d4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "f9e5463e-aa9f-4c36-9100-f713147936d4",
+        "x-ms-routing-request-id": "EASTUS:20230530T144202Z:f9e5463e-aa9f-4c36-9100-f713147936d4",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/discoverySolutions/KeyVaultSoftDeleteNotEnabledInsight",
+            "name": "KeyVaultSoftDeleteNotEnabledInsight",
+            "type": "Microsoft.Help/discoverySolutions",
+            "properties": {
+              "solutionId": "KeyVaultSoftDeleteNotEnabledInsight",
+              "solutionType": "Diagnostics",
+              "description": "Checks a vault\u0027s soft delete enabled setting.",
+              "requiredParameterSets": [
+                [
+                  "ResourceUri"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/discoverySolutions/KeyVaultThrottlingData",
+            "name": "KeyVaultThrottlingData",
+            "type": "Microsoft.Help/discoverySolutions",
+            "properties": {
+              "solutionId": "KeyVaultThrottlingData",
+              "solutionType": "Diagnostics",
+              "description": "Checks a vault\u0027s throttling status.",
+              "requiredParameterSets": [
+                [
+                  "ResourceUri"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/discoverySolutions/KeyVaultUnauthorizedNetworkInsight",
+            "name": "KeyVaultUnauthorizedNetworkInsight",
+            "type": "Microsoft.Help/discoverySolutions",
+            "properties": {
+              "solutionId": "KeyVaultUnauthorizedNetworkInsight",
+              "solutionType": "Diagnostics",
+              "description": "Checks a vault for unauthorized network requests.",
+              "requiredParameterSets": [
+                [
+                  "ResourceUri"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/discoverySolutions/KeyVaultUnauthorizedAclInsight",
+            "name": "KeyVaultUnauthorizedAclInsight",
+            "type": "Microsoft.Help/discoverySolutions",
+            "properties": {
+              "solutionId": "KeyVaultUnauthorizedAclInsight",
+              "solutionType": "Diagnostics",
+              "description": "Checks a vault for unauthorized by ACLs requests.",
+              "requiredParameterSets": [
+                [
+                  "ResourceUri"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1707045297",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba"
+  }
+}

@@ -7,6 +7,8 @@ Project("{347E65B8-3333-4784-B984-6FD944DF92EB}") = "Azure.ResourceManager.ArcSc
 EndProject
 Project("{347E65B8-3333-4784-B984-6FD944DF92EB}") = "Azure.ResourceManager.ArcScVmm.Tests", "tests\Azure.ResourceManager.ArcScVmm.Tests.csproj", "{ED4AF246-F1C9-47E1-B883-187D791F649B}"
 EndProject
+Project("{347E65B8-3333-4784-B984-6FD944DF92EB}") = "Azure.ResourceManager.ArcScVmm.Samples", "samples\Azure.ResourceManager.ArcScVmm.Samples.csproj", "{FB238127-13FF-4870-8EB7-8025FF98F8CE}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

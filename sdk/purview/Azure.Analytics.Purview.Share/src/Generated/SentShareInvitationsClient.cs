@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -63,15 +60,24 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get Invitation for a given share. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Invitation for a given share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -91,15 +97,24 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Get Invitation for a given share. </summary>
+        /// <summary>
+        /// [Protocol Method] Get Invitation for a given share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitation(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitation(string,string,RequestContext)']/*" />
         public virtual Response GetSentShareInvitation(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -119,16 +134,25 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Create/Update a sent share invitation in the given account. </summary>
+        /// <summary>
+        /// [Protocol Method] Create/Update a sent share invitation in the given account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="sentShareInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sentShareName, string sentShareInvitationName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -149,16 +173,25 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Create/Update a sent share invitation in the given account. </summary>
+        /// <summary>
+        /// [Protocol Method] Create/Update a sent share invitation in the given account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="sentShareInvitationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sentShareName, string sentShareInvitationName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -179,7 +212,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete Invitation in a share. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete Invitation in a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -187,7 +229,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -207,7 +249,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete Invitation in a share. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete Invitation in a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -215,7 +266,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -235,7 +286,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> List all Invitations in a share. </summary>
+        /// <summary>
+        /// [Protocol Method] List all Invitations in a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -245,32 +305,26 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationsAsync(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationsAsync(string,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSentShareInvitationsAsync(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetSentShareInvitationsImplementationAsync("SentShareInvitationsClient.GetSentShareInvitations", sentShareName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
-        private AsyncPageable<BinaryData> GetSentShareInvitationsImplementationAsync(string diagnosticsScopeName, string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context)
-                        : CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> List all Invitations in a share. </summary>
+        /// <summary>
+        /// [Protocol Method] List all Invitations in a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -280,29 +334,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitations(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitations(string,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSentShareInvitations(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetSentShareInvitationsImplementation("SentShareInvitationsClient.GetSentShareInvitations", sentShareName, skipToken, filter, orderby, context);
-        }
-
-        private Pageable<BinaryData> GetSentShareInvitationsImplementation(string diagnosticsScopeName, string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context)
-                        : CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetSentShareInvitationsRequest(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)

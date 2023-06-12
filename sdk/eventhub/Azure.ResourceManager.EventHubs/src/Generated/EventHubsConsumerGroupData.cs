@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsConsumerGroup data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsConsumerGroup data model.
+    /// Single item in List or Get Consumer group operation
+    /// </summary>
     public partial class EventHubsConsumerGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>

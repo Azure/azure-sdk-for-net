@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Create a job of the runbook.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The job name. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Create a job of the runbook.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The job name. </param>
@@ -123,8 +139,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -153,8 +177,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -183,8 +215,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of jobs.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs
-        /// Operation Id: Job_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -192,43 +232,23 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationJobCollectionItemData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationJobJobRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationJobCollectionItemData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationJobJobRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of jobs.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs
-        /// Operation Id: Job_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -236,43 +256,23 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationJobCollectionItemData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationJobJobRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationJobCollectionItemData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationJobJobRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -299,8 +299,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>

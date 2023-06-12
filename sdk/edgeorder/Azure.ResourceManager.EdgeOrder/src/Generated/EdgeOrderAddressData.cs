@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing the EdgeOrderAddress data model. </summary>
+    /// <summary>
+    /// A class representing the EdgeOrderAddress data model.
+    /// Address Resource.
+    /// </summary>
     public partial class EdgeOrderAddressData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EdgeOrderAddressData. </summary>

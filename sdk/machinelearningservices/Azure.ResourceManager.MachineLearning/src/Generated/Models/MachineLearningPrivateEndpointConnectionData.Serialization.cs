@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("privateEndpoint");
+                writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
             }
             if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningPrivateEndpointConnectionData DeserializeMachineLearningPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -73,32 +77,29 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<MachineLearningPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -109,37 +110,36 @@ namespace Azure.ResourceManager.MachineLearning
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,31 +148,28 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = MachineLearningPrivateEndpoint.DeserializeMachineLearningPrivateEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new MachineLearningPrivateEndpointConnectionProvisioningState(property0.Value.GetString());

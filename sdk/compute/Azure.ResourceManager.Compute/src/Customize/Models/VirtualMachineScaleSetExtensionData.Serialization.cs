@@ -3,11 +3,8 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -17,11 +14,13 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            // this part is added in this customization
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            // end of the customization
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
@@ -87,14 +86,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("suppressFailures");
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

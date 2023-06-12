@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of ServerlessUpstreamSettings. </summary>
         public ServerlessUpstreamSettings()
         {
-            Templates = new ChangeTrackingList<UpstreamTemplate>();
+            Templates = new ChangeTrackingList<SignalRUpstreamTemplate>();
         }
 
         /// <summary> Initializes a new instance of ServerlessUpstreamSettings. </summary>
         /// <param name="templates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
-        internal ServerlessUpstreamSettings(IList<UpstreamTemplate> templates)
+        internal ServerlessUpstreamSettings(IList<SignalRUpstreamTemplate> templates)
         {
             Templates = templates;
         }
 
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
-        public IList<UpstreamTemplate> Templates { get; }
+        public IList<SignalRUpstreamTemplate> Templates { get; }
     }
 }

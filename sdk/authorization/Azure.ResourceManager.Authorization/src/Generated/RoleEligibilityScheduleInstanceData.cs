@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the RoleEligibilityScheduleInstance data model. </summary>
+    /// <summary>
+    /// A class representing the RoleEligibilityScheduleInstance data model.
+    /// Information about current or upcoming role eligibility schedule instance
+    /// </summary>
     public partial class RoleEligibilityScheduleInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceData. </summary>

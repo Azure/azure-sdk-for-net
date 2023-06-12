@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-31";
+            _apiVersion = apiVersion ?? "2023-01-31";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DigitalTwins
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, CleanupConnectionArtifact? cleanupConnectionArtifacts)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -304,6 +304,10 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath("/timeSeriesDatabaseConnections/", false);
             uri.AppendPath(timeSeriesDatabaseConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (cleanupConnectionArtifacts != null)
+            {
+                uri.AppendQuery("cleanupConnectionArtifacts", cleanupConnectionArtifacts.Value.ToString(), true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -315,17 +319,18 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupName"> The name of the resource group that contains the DigitalTwinsInstance. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="timeSeriesDatabaseConnectionName"> Name of time series database connection. </param>
+        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to &apos;true&apos; does not delete any recorded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, CleanupConnectionArtifact? cleanupConnectionArtifacts = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, timeSeriesDatabaseConnectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, timeSeriesDatabaseConnectionName, cleanupConnectionArtifacts);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -343,17 +348,18 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupName"> The name of the resource group that contains the DigitalTwinsInstance. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="timeSeriesDatabaseConnectionName"> Name of time series database connection. </param>
+        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to &apos;true&apos; does not delete any recorded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, CleanupConnectionArtifact? cleanupConnectionArtifacts = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, timeSeriesDatabaseConnectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, timeSeriesDatabaseConnectionName, cleanupConnectionArtifacts);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

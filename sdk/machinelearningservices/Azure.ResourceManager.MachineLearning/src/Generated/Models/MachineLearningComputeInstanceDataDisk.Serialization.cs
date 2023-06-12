@@ -14,47 +14,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningCachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<int> lun = default;
             Optional<MachineLearningStorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("caching"))
+                if (property.NameEquals("caching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     caching = new MachineLearningCachingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new MachineLearningStorageAccountType(property.Value.GetString());

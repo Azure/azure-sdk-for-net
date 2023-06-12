@@ -16,28 +16,32 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
             writer.WriteEndObject();
         }
 
         internal static MigrateOracleAzureDBPostgreSqlSyncTaskInput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases = default;
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             OracleConnectionInfo sourceConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> array = new List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -47,12 +51,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
                     continue;

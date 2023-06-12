@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressPrefix))
             {
-                writer.WritePropertyName("addressPrefix");
+                writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
             writer.WriteEndObject();
@@ -25,20 +25,23 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPv6CircuitConnectionConfig DeserializeIPv6CircuitConnectionConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> addressPrefix = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressPrefix"))
+                if (property.NameEquals("addressPrefix"u8))
                 {
                     addressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("circuitConnectionStatus"))
+                if (property.NameEquals("circuitConnectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     circuitConnectionStatus = new CircuitConnectionStatus(property.Value.GetString());

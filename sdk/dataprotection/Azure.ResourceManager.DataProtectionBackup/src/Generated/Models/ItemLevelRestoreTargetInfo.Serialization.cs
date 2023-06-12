@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("restoreCriteria");
+            writer.WritePropertyName("restoreCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("datasourceInfo");
+            writer.WritePropertyName("datasourceInfo"u8);
             writer.WriteObjectValue(DatasourceInfo);
             if (Optional.IsDefined(DatasourceSetInfo))
             {
-                writer.WritePropertyName("datasourceSetInfo");
+                writer.WritePropertyName("datasourceSetInfo"u8);
                 writer.WriteObjectValue(DatasourceSetInfo);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
-                writer.WritePropertyName("datasourceAuthCredentials");
+                writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DatasourceAuthCredentials);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("recoveryOption");
+            writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
             if (Optional.IsDefined(RestoreLocation))
             {
-                writer.WritePropertyName("restoreLocation");
+                writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
             }
             writer.WriteEndObject();

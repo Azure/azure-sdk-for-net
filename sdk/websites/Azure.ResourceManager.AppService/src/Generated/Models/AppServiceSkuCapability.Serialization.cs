@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Reason))
             {
-                writer.WritePropertyName("reason");
+                writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceSkuCapability DeserializeAppServiceSkuCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

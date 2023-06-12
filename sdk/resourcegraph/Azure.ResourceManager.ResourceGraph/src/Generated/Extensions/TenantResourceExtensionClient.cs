@@ -45,14 +45,22 @@ namespace Azure.ResourceManager.ResourceGraph
 
         /// <summary>
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resources
-        /// Operation Id: Resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryResponse>> ResourcesAsync(QueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceQueryResult>> GetResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.Resources");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResources");
             scope.Start();
             try
             {
@@ -68,14 +76,22 @@ namespace Azure.ResourceManager.ResourceGraph
 
         /// <summary>
         /// Queries the resources managed by Azure Resource Manager for scopes specified in the request.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resources
-        /// Operation Id: Resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryResponse> Resources(QueryContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceQueryResult> GetResources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.Resources");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResources");
             scope.Start();
             try
             {
@@ -91,14 +107,22 @@ namespace Azure.ResourceManager.ResourceGraph
 
         /// <summary>
         /// List all snapshots of a resource for a given time interval.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resourcesHistory
-        /// Operation Id: ResourcesHistory
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resourcesHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcesHistory</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryData>> ResourcesHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetResourceHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.ResourcesHistory");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceHistory");
             scope.Start();
             try
             {
@@ -114,14 +138,22 @@ namespace Azure.ResourceManager.ResourceGraph
 
         /// <summary>
         /// List all snapshots of a resource for a given time interval.
-        /// Request Path: /providers/Microsoft.ResourceGraph/resourcesHistory
-        /// Operation Id: ResourcesHistory
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceGraph/resourcesHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcesHistory</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryData> ResourcesHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetResourceHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.ResourcesHistory");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceHistory");
             scope.Start();
             try
             {

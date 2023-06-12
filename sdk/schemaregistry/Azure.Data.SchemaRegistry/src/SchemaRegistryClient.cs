@@ -3,11 +3,11 @@
 
 using System;
 using System.IO;
+using System.Security.Authentication.ExtendedProtection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -123,11 +123,11 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaRegisterHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ToContentType().ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, schemaName,format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RestClient.Register(groupName, schemaName, format.ToContentType().ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
@@ -195,11 +195,11 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaQueryIdByContentHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format.ToContentType() , new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RestClient.QueryIdByContent(groupName, schemaName, format.ToContentType(), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
@@ -277,8 +277,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetSchemaVersion(groupName, schemaName, version, cancellationToken);
                 }
 
-                SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var properties = new SchemaProperties(SchemaFormat.FromContentType(response.Headers.ContentType.Value.ToString()), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
@@ -306,8 +305,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var properties = new SchemaProperties(SchemaFormat.FromContentType(response.Headers.ContentType.Value.ToString()), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);

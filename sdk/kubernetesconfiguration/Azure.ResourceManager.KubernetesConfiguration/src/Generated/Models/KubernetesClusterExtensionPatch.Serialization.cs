@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
-                writer.WritePropertyName("autoUpgradeMinorVersion");
+                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(ReleaseTrain))
             {
-                writer.WritePropertyName("releaseTrain");
+                writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
             if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
-                    writer.WritePropertyName("version");
+                    writer.WritePropertyName("version"u8);
                     writer.WriteStringValue(Version);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ConfigurationSettings != null)
                 {
-                    writer.WritePropertyName("configurationSettings");
+                    writer.WritePropertyName("configurationSettings"u8);
                     writer.WriteStartObject();
                     foreach (var item in ConfigurationSettings)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ConfigurationProtectedSettings != null)
                 {
-                    writer.WritePropertyName("configurationProtectedSettings");
+                    writer.WritePropertyName("configurationProtectedSettings"u8);
                     writer.WriteStartObject();
                     foreach (var item in ConfigurationProtectedSettings)
                     {

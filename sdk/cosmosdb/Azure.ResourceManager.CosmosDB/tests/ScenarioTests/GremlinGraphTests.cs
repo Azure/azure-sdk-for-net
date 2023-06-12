@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
-            _gremlinDatabase.Delete(WaitUntil.Completed);
-            _databaseAccount.Delete(WaitUntil.Completed);
+            await _gremlinDatabase.DeleteAsync(WaitUntil.Completed);
+            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
 
-            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResourceInfo(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy, null)) {
+            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResourceInfo(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy, null, restoreParameters: null, createMode: null)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }

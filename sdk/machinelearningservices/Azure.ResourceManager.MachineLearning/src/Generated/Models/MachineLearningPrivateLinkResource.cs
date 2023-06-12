@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A private link resource
-    /// Serialized Name: PrivateLinkResource
-    /// </summary>
+    /// <summary> A private link resource. </summary>
     public partial class MachineLearningPrivateLinkResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
@@ -32,26 +29,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the resource.
-        /// Serialized Name: PrivateLinkResource.identity
-        /// </param>
-        /// <param name="sku">
-        /// The sku of the workspace.
-        /// Serialized Name: PrivateLinkResource.sku
-        /// </param>
-        /// <param name="groupId">
-        /// The private link resource group id.
-        /// Serialized Name: PrivateLinkResource.properties.groupId
-        /// </param>
-        /// <param name="requiredMembers">
-        /// The private link resource required member names.
-        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
-        /// </param>
-        /// <param name="requiredZoneNames">
-        /// The private link resource Private link DNS zone name.
-        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
-        /// </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         internal MachineLearningPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -61,30 +43,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary>
-        /// The identity of the resource.
-        /// Serialized Name: PrivateLinkResource.identity
-        /// </summary>
+        /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The sku of the workspace.
-        /// Serialized Name: PrivateLinkResource.sku
-        /// </summary>
+        /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary>
-        /// The private link resource group id.
-        /// Serialized Name: PrivateLinkResource.properties.groupId
-        /// </summary>
+        /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
-        /// <summary>
-        /// The private link resource required member names.
-        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
-        /// </summary>
+        /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary>
-        /// The private link resource Private link DNS zone name.
-        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
-        /// </summary>
+        /// <summary> The private link resource Private link DNS zone name. </summary>
         public IList<string> RequiredZoneNames { get; }
     }
 }

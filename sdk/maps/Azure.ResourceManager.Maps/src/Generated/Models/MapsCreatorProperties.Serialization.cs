@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.Maps.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageUnits");
+            writer.WritePropertyName("storageUnits"u8);
             writer.WriteNumberValue(StorageUnits);
             writer.WriteEndObject();
         }
 
         internal static MapsCreatorProperties DeserializeMapsCreatorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisioningState = default;
             int storageUnits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageUnits"))
+                if (property.NameEquals("storageUnits"u8))
                 {
                     storageUnits = property.Value.GetInt32();
                     continue;

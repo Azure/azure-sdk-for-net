@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Update existing rule or create new rule if it doesn&apos;t exist
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}
-        /// Operation Id: AlertsSuppressionRules_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Update existing rule or create new rule if it doesn&apos;t exist
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}
-        /// Operation Id: AlertsSuppressionRules_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}
-        /// Operation Id: AlertsSuppressionRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}
-        /// Operation Id: AlertsSuppressionRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,94 +211,62 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List of all the dismiss rules for the given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules
-        /// Operation Id: AlertsSuppressionRules_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertType"> Type of the alert to get rules for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAlertsSuppressionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAlertsSuppressionRuleResource> GetAllAsync(string alertType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityAlertsSuppressionRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.ListAsync(Id.SubscriptionId, alertType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityAlertsSuppressionRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, alertType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List of all the dismiss rules for the given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules
-        /// Operation Id: AlertsSuppressionRules_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertType"> Type of the alert to get rules for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAlertsSuppressionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAlertsSuppressionRuleResource> GetAll(string alertType = null, CancellationToken cancellationToken = default)
         {
-            Page<SecurityAlertsSuppressionRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.List(Id.SubscriptionId, alertType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityAlertsSuppressionRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, alertType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}
-        /// Operation Id: AlertsSuppressionRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,8 +292,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}
-        /// Operation Id: AlertsSuppressionRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

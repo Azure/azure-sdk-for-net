@@ -12,10 +12,9 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeHealthcareEntities_Cancellation()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
             string document =
                 "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
@@ -35,16 +34,18 @@ namespace Azure.AI.TextAnalytics.Samples
                 + " to the patient'sincreased symptoms and family history and history left main disease with total"
                 + " occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            List<string> documentBatch = new();
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new();
 
             for (int i = 0; i < 10; i++)
             {
-                documentBatch.Add(document);
+                batchedDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(documentBatch, "en");
+            AnalyzeHealthcareEntitiesOperation operation = client.StartAnalyzeHealthcareEntities(batchedDocuments, "en");
 
-            healthOperation.Cancel();
+            operation.Cancel();
         }
     }
 }

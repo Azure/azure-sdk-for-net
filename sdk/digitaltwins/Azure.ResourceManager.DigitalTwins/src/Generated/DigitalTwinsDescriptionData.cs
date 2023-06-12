@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    /// <summary> A class representing the DigitalTwinsDescription data model. </summary>
+    /// <summary>
+    /// A class representing the DigitalTwinsDescription data model.
+    /// The description of the DigitalTwins service.
+    /// </summary>
     public partial class DigitalTwinsDescriptionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>

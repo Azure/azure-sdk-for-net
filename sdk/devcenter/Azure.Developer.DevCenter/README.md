@@ -37,12 +37,8 @@ You will also need to register a new AAD application, or run locally or in an en
 If using an application, set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ```
-string tenantId = "<tenant-id>";
-string devCenterName = "<dev-center-name>";
-var client = new DevCenterClient(
-                tenantId,
-                devCenterName,
-                new DefaultAzureCredential());
+Uri endpoint = new Uri("<dev-center-uri>");
+var client = new DevCenterClient(endpoint, new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -75,7 +71,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 ### Build a client and get projects
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 var credential = new DefaultAzureCredential();
-var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
+var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
 await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
 {
@@ -86,7 +82,7 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null,
 
 ### List available Dev Box Pools
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
-var devBoxesClient = new DevBoxesClient(tenantId, devCenterName, targetProjectName, credential);
+var devBoxesClient = new DevBoxesClient(endpoint, targetProjectName, credential);
 string targetPoolName = null;
 await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
 {
@@ -125,7 +121,7 @@ Console.WriteLine($"Completed dev box deletion.");
 ### Get Catalog Items
 
 ```C# Snippet:Azure_DevCenter_GetCatalogItems_Scenario
-var environmentsClient = new EnvironmentsClient(tenantId, devCenterName, projectName, credential);
+var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
 string catalogItemName = null;
 await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
 {

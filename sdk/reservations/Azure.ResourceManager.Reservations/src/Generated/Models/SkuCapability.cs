@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The SkuCapability. </summary>
+    /// <summary> Capability of a sku. </summary>
     public partial class SkuCapability
     {
         /// <summary> Initializes a new instance of SkuCapability. </summary>

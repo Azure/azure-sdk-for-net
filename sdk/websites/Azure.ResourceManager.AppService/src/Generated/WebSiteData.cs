@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebSite data model. </summary>
+    /// <summary>
+    /// A class representing the WebSite data model.
+    /// A web app, a mobile app backend, or an API app.
+    /// </summary>
     public partial class WebSiteData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WebSiteData. </summary>

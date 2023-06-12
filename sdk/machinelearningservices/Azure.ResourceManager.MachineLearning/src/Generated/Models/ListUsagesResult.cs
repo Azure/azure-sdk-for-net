@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The List Usages operation response.
-    /// Serialized Name: ListUsagesResult
-    /// </summary>
+    /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult
     {
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
-        /// <param name="value">
-        /// The list of AML resource usages.
-        /// Serialized Name: ListUsagesResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information.
-        /// Serialized Name: ListUsagesResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of AML resource usages. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information. </param>
         internal ListUsagesResult(IReadOnlyList<MachineLearningUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of AML resource usages.
-        /// Serialized Name: ListUsagesResult.value
-        /// </summary>
+        /// <summary> The list of AML resource usages. </summary>
         public IReadOnlyList<MachineLearningUsage> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information.
-        /// Serialized Name: ListUsagesResult.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information. </summary>
         public string NextLink { get; }
     }
 }

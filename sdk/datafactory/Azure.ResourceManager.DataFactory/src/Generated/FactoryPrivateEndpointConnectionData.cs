@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryPrivateEndpointConnection data model.
+    /// Private Endpoint Connection ARM resource.
+    /// </summary>
     public partial class FactoryPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryPrivateEndpointConnectionData. </summary>

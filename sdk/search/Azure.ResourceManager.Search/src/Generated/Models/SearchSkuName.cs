@@ -10,19 +10,19 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> The SKU of the search service. Valid values include: &apos;free&apos;: Shared service. &apos;basic&apos;: Dedicated service with up to 3 replicas. &apos;standard&apos;: Dedicated service with up to 12 partitions and 12 replicas. &apos;standard2&apos;: Similar to standard, but with more capacity per search unit. &apos;standard3&apos;: The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to &apos;highDensity&apos;). &apos;storage_optimized_l1&apos;: Supports 1TB per partition, up to 12 partitions. &apos;storage_optimized_l2&apos;: Supports 2TB per partition, up to 12 partitions.&apos;. </summary>
     public enum SearchSkuName
     {
-        /// <summary> free. </summary>
+        /// <summary> Free tier, with no SLA guarantees and a subset of features offered to paid tiers. </summary>
         Free,
-        /// <summary> basic. </summary>
+        /// <summary> Paid tier dedicated service with up to 3 replicas. </summary>
         Basic,
-        /// <summary> standard. </summary>
+        /// <summary> Paid tier dedicated service with up to 12 partitions and 12 replicas. </summary>
         Standard,
-        /// <summary> standard2. </summary>
+        /// <summary> Similar to &apos;standard&apos;, but with more capacity per search unit. </summary>
         Standard2,
-        /// <summary> standard3. </summary>
+        /// <summary> The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to &apos;highDensity&apos;). </summary>
         Standard3,
-        /// <summary> storage_optimized_l1. </summary>
+        /// <summary> Paid tier dedicated service that supports 1TB per partition, up to 12 partitions. </summary>
         StorageOptimizedL1,
-        /// <summary> storage_optimized_l2. </summary>
+        /// <summary> Paid tier dedicated service that supports 2TB per partition, up to 12 partitions. </summary>
         StorageOptimizedL2
     }
 }

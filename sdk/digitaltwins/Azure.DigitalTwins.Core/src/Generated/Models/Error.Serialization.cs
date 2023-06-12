@@ -15,27 +15,30 @@ namespace Azure.DigitalTwins.Core
     {
         internal static Error DeserializeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IReadOnlyList<Error>> details = default;
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Error> array = new List<Error>();
@@ -46,11 +49,10 @@ namespace Azure.DigitalTwins.Core
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = InnerError.DeserializeInnerError(property.Value);

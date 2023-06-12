@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The last operation on ComputeInstance.
-    /// Serialized Name: ComputeInstanceLastOperation
-    /// </summary>
+    /// <summary> The last operation on ComputeInstance. </summary>
     public partial class MachineLearningComputeInstanceLastOperation
     {
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceLastOperation. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceLastOperation. </summary>
-        /// <param name="operationName">
-        /// Name of the last operation.
-        /// Serialized Name: ComputeInstanceLastOperation.operationName
-        /// </param>
-        /// <param name="operationOn">
-        /// Time of the last operation.
-        /// Serialized Name: ComputeInstanceLastOperation.operationTime
-        /// </param>
-        /// <param name="operationStatus">
-        /// Operation status.
-        /// Serialized Name: ComputeInstanceLastOperation.operationStatus
-        /// </param>
-        /// <param name="operationTrigger">
-        /// Trigger of operation.
-        /// Serialized Name: ComputeInstanceLastOperation.operationTrigger
-        /// </param>
+        /// <param name="operationName"> Name of the last operation. </param>
+        /// <param name="operationOn"> Time of the last operation. </param>
+        /// <param name="operationStatus"> Operation status. </param>
+        /// <param name="operationTrigger"> Trigger of operation. </param>
         internal MachineLearningComputeInstanceLastOperation(MachineLearningOperationName? operationName, DateTimeOffset? operationOn, MachineLearningOperationStatus? operationStatus, MachineLearningOperationTrigger? operationTrigger)
         {
             OperationName = operationName;
@@ -45,25 +30,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OperationTrigger = operationTrigger;
         }
 
-        /// <summary>
-        /// Name of the last operation.
-        /// Serialized Name: ComputeInstanceLastOperation.operationName
-        /// </summary>
+        /// <summary> Name of the last operation. </summary>
         public MachineLearningOperationName? OperationName { get; }
-        /// <summary>
-        /// Time of the last operation.
-        /// Serialized Name: ComputeInstanceLastOperation.operationTime
-        /// </summary>
+        /// <summary> Time of the last operation. </summary>
         public DateTimeOffset? OperationOn { get; }
-        /// <summary>
-        /// Operation status.
-        /// Serialized Name: ComputeInstanceLastOperation.operationStatus
-        /// </summary>
+        /// <summary> Operation status. </summary>
         public MachineLearningOperationStatus? OperationStatus { get; }
-        /// <summary>
-        /// Trigger of operation.
-        /// Serialized Name: ComputeInstanceLastOperation.operationTrigger
-        /// </summary>
+        /// <summary> Trigger of operation. </summary>
         public MachineLearningOperationTrigger? OperationTrigger { get; }
     }
 }

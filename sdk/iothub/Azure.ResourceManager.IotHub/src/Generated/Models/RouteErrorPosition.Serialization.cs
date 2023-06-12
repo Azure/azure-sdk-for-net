@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static RouteErrorPosition DeserializeRouteErrorPosition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> line = default;
             Optional<int> column = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("line"))
+                if (property.NameEquals("line"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     line = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("column"))
+                if (property.NameEquals("column"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     column = property.Value.GetInt32();

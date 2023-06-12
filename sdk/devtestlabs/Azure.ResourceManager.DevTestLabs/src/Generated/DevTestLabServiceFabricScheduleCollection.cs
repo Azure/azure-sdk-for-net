@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}
-        /// Operation Id: ServiceFabricSchedules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the schedule. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}
-        /// Operation Id: ServiceFabricSchedules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the schedule. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}
-        /// Operation Id: ServiceFabricSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}
-        /// Operation Id: ServiceFabricSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -181,8 +212,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List schedules in a given service fabric.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules
-        /// Operation Id: ServiceFabricSchedules_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -192,43 +231,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabServiceFabricScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabServiceFabricScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabServiceFabricScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabServiceFabricScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabServiceFabricScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics, Pipeline, "DevTestLabServiceFabricScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List schedules in a given service fabric.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules
-        /// Operation Id: ServiceFabricSchedules_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -238,43 +257,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabServiceFabricScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabServiceFabricScheduleResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabServiceFabricScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabServiceFabricScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabServiceFabricScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics, Pipeline, "DevTestLabServiceFabricScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}
-        /// Operation Id: ServiceFabricSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -301,8 +300,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}
-        /// Operation Id: ServiceFabricSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceFabricSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>

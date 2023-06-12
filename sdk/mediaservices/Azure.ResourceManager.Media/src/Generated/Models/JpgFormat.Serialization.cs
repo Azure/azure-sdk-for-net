@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("filenamePattern");
+            writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
             writer.WriteEndObject();
         }
 
         internal static JpgFormat DeserializeJpgFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filenamePattern"))
+                if (property.NameEquals("filenamePattern"u8))
                 {
                     filenamePattern = property.Value.GetString();
                     continue;

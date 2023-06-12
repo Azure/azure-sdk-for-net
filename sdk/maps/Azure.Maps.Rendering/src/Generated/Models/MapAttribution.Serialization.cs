@@ -15,14 +15,17 @@ namespace Azure.Maps.Rendering
     {
         internal static MapAttribution DeserializeMapAttribution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> copyrights = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("copyrights"))
+                if (property.NameEquals("copyrights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

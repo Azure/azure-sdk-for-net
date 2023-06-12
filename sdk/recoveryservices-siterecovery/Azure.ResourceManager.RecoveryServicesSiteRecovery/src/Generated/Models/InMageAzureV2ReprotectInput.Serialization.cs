@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MasterTargetId))
             {
-                writer.WritePropertyName("masterTargetId");
+                writer.WritePropertyName("masterTargetId"u8);
                 writer.WriteStringValue(MasterTargetId);
             }
             if (Optional.IsDefined(ProcessServerId))
             {
-                writer.WritePropertyName("processServerId");
+                writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(RunAsAccountId))
             {
-                writer.WritePropertyName("runAsAccountId");
+                writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
             if (Optional.IsDefined(LogStorageAccountId))
             {
-                writer.WritePropertyName("logStorageAccountId");
+                writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
             if (Optional.IsCollectionDefined(DisksToInclude))
             {
-                writer.WritePropertyName("disksToInclude");
+                writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

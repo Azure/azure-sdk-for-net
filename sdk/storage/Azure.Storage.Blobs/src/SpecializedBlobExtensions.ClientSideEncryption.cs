@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     // hold onto etag, metadata, encryptiondata
-                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false);
+                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
                     ETag etag = getPropertiesResponse.ETag;
                     IDictionary<string, string> metadata = getPropertiesResponse.Metadata;
                     EncryptionData encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata)

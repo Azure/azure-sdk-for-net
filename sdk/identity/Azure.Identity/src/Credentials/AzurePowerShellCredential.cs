@@ -22,7 +22,7 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
-        internal TimeSpan PowerShellProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
         internal bool UseLegacyPowerShell { get; set; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
@@ -65,8 +65,8 @@ namespace Azure.Identity
             TenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
-            PowerShellProcessTimeout = options?.PowerShellProcessTimeout ?? TimeSpan.FromSeconds(10);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(10);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.Identity
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(
                 _processService.Create(processStartInfo),
-                PowerShellProcessTimeout,
+                ProcessTimeout,
                 _logPII,
                 cancellationToken);
 

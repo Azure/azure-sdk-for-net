@@ -15,36 +15,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static AffectedMoverResourceInfo DeserializeAffectedMoverResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<ResourceIdentifier> sourceId = default;
             Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceId"))
+                if (property.NameEquals("sourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("moveResources"))
+                if (property.NameEquals("moveResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();

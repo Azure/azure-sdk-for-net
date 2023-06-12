@@ -17,31 +17,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleFrequencyInMins))
             {
-                writer.WritePropertyName("scheduleFrequencyInMins");
+                writer.WritePropertyName("scheduleFrequencyInMins"u8);
                 writer.WriteNumberValue(ScheduleFrequencyInMins.Value);
             }
-            writer.WritePropertyName("schedulePolicyType");
+            writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
             writer.WriteEndObject();
         }
 
         internal static LogSchedulePolicy DeserializeLogSchedulePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> scheduleFrequencyInMins = default;
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleFrequencyInMins"))
+                if (property.NameEquals("scheduleFrequencyInMins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduleFrequencyInMins = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("schedulePolicyType"))
+                if (property.NameEquals("schedulePolicyType"u8))
                 {
                     schedulePolicyType = property.Value.GetString();
                     continue;

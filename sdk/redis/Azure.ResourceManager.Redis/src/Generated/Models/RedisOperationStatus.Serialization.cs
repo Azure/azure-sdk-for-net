@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisOperationStatus DeserializeRedisOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -29,76 +33,77 @@ namespace Azure.ResourceManager.Redis.Models
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("percentComplete"))
+                if (property.NameEquals("percentComplete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentComplete = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("operations"))
+                if (property.NameEquals("operations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
@@ -109,11 +114,10 @@ namespace Azure.ResourceManager.Redis.Models
                     operations = array;
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Container identity information. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="aadTenantId"> Protection container identity - AAD Tenant. </param>
         /// <param name="servicePrincipalClientId"> Protection container identity - AAD Service Principal. </param>
         /// <param name="audience"> Protection container identity - Audience. </param>
-        internal ContainerIdentityInfo(string uniqueName, string aadTenantId, string servicePrincipalClientId, string audience)
+        internal ContainerIdentityInfo(string uniqueName, Guid? aadTenantId, string servicePrincipalClientId, string audience)
         {
             UniqueName = uniqueName;
             AadTenantId = aadTenantId;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Unique name of the container. </summary>
         public string UniqueName { get; set; }
         /// <summary> Protection container identity - AAD Tenant. </summary>
-        public string AadTenantId { get; set; }
+        public Guid? AadTenantId { get; set; }
         /// <summary> Protection container identity - AAD Service Principal. </summary>
         public string ServicePrincipalClientId { get; set; }
         /// <summary> Protection container identity - Audience. </summary>

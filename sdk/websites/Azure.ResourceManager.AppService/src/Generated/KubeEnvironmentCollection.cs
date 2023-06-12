@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates a Kubernetes Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates a Kubernetes Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get the properties of a Kubernetes Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get the properties of a Kubernetes Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all the Kubernetes Environments in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
-        /// Operation Id: KubeEnvironments_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubeEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KubeEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubeEnvironmentRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KubeEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubeEnvironmentRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubeEnvironmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubeEnvironmentRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubeEnvironmentResource(Client, KubeEnvironmentData.DeserializeKubeEnvironmentData(e)), _kubeEnvironmentClientDiagnostics, Pipeline, "KubeEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get all the Kubernetes Environments in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
-        /// Operation Id: KubeEnvironments_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubeEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KubeEnvironmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubeEnvironmentRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KubeEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubeEnvironmentRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubeEnvironmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubeEnvironmentRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubeEnvironmentResource(Client, KubeEnvironmentData.DeserializeKubeEnvironmentData(e)), _kubeEnvironmentClientDiagnostics, Pipeline, "KubeEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

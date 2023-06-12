@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
-                writer.WritePropertyName("registration");
+                writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceStaticWebAppsProvider DeserializeAppServiceStaticWebAppsProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AppServiceStaticWebAppsRegistration> registration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("registration"))
+                if (property.NameEquals("registration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registration = AppServiceStaticWebAppsRegistration.DeserializeAppServiceStaticWebAppsRegistration(property.Value);

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Assign Certificate entity to Gateway entity as Certificate Authority.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}
-        /// Operation Id: GatewayCertificateAuthority_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Assign Certificate entity to Gateway entity as Certificate Authority.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}
-        /// Operation Id: GatewayCertificateAuthority_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
@@ -123,8 +138,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Get assigned Gateway Certificate Authority details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}
-        /// Operation Id: GatewayCertificateAuthority_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,8 +175,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Get assigned Gateway Certificate Authority details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}
-        /// Operation Id: GatewayCertificateAuthority_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,8 +212,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Lists the collection of Certificate Authorities for the specified Gateway entity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities
-        /// Operation Id: GatewayCertificateAuthority_ListByService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_ListByService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | eq, ne |  |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
@@ -191,43 +230,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementGatewayCertificateAuthorityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementGatewayCertificateAuthorityResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementGatewayCertificateAuthorityResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayCertificateAuthorityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementGatewayCertificateAuthorityResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayCertificateAuthorityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayCertificateAuthorityResource(Client, ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(e)), _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics, Pipeline, "ApiManagementGatewayCertificateAuthorityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the collection of Certificate Authorities for the specified Gateway entity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities
-        /// Operation Id: GatewayCertificateAuthority_ListByService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_ListByService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | eq, ne |  |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
@@ -236,43 +255,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementGatewayCertificateAuthorityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementGatewayCertificateAuthorityResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementGatewayCertificateAuthorityResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayCertificateAuthorityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementGatewayCertificateAuthorityResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics.CreateScope("ApiManagementGatewayCertificateAuthorityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGatewayCertificateAuthorityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayCertificateAuthorityResource(Client, ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(e)), _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics, Pipeline, "ApiManagementGatewayCertificateAuthorityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}
-        /// Operation Id: GatewayCertificateAuthority_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -298,8 +297,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}
-        /// Operation Id: GatewayCertificateAuthority_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCertificateAuthority_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

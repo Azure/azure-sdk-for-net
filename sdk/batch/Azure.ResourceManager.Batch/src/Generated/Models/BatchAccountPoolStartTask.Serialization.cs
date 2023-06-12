@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CommandLine))
             {
-                writer.WritePropertyName("commandLine");
+                writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
             if (Optional.IsCollectionDefined(ResourceFiles))
             {
-                writer.WritePropertyName("resourceFiles");
+                writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(EnvironmentSettings))
             {
-                writer.WritePropertyName("environmentSettings");
+                writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsDefined(UserIdentity))
             {
-                writer.WritePropertyName("userIdentity");
+                writer.WritePropertyName("userIdentity"u8);
                 writer.WriteObjectValue(UserIdentity);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
-                writer.WritePropertyName("maxTaskRetryCount");
+                writer.WritePropertyName("maxTaskRetryCount"u8);
                 writer.WriteNumberValue(MaxTaskRetryCount.Value);
             }
             if (Optional.IsDefined(WaitForSuccess))
             {
-                writer.WritePropertyName("waitForSuccess");
+                writer.WritePropertyName("waitForSuccess"u8);
                 writer.WriteBooleanValue(WaitForSuccess.Value);
             }
             if (Optional.IsDefined(ContainerSettings))
             {
-                writer.WritePropertyName("containerSettings");
+                writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
             }
             writer.WriteEndObject();
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commandLine = default;
             Optional<IList<BatchResourceFile>> resourceFiles = default;
             Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
@@ -75,16 +79,15 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchTaskContainerSettings> containerSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commandLine"))
+                if (property.NameEquals("commandLine"u8))
                 {
                     commandLine = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceFiles"))
+                if (property.NameEquals("resourceFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
@@ -95,11 +98,10 @@ namespace Azure.ResourceManager.Batch.Models
                     resourceFiles = array;
                     continue;
                 }
-                if (property.NameEquals("environmentSettings"))
+                if (property.NameEquals("environmentSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
@@ -110,41 +112,37 @@ namespace Azure.ResourceManager.Batch.Models
                     environmentSettings = array;
                     continue;
                 }
-                if (property.NameEquals("userIdentity"))
+                if (property.NameEquals("userIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("maxTaskRetryCount"))
+                if (property.NameEquals("maxTaskRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTaskRetryCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("waitForSuccess"))
+                if (property.NameEquals("waitForSuccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitForSuccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("containerSettings"))
+                if (property.NameEquals("containerSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value);

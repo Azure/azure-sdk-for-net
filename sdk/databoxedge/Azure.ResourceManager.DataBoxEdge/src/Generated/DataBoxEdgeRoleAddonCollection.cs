@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Create or update a addon.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}
-        /// Operation Id: Addons_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="addonName"> The addon name. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Create or update a addon.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}
-        /// Operation Id: Addons_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="addonName"> The addon name. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Gets a specific addon by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}
-        /// Operation Id: Addons_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Gets a specific addon by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}
-        /// Operation Id: Addons_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Lists all the addons configured in the role.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons
-        /// Operation Id: Addons_ListByRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_ListByRole</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeRoleAddonResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeRoleAddonResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxEdgeRoleAddonResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxEdgeRoleAddonAddonsRestClient.ListByRoleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxEdgeRoleAddonResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxEdgeRoleAddonAddonsRestClient.ListByRoleNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the addons configured in the role.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons
-        /// Operation Id: Addons_ListByRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_ListByRole</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeRoleAddonResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeRoleAddonResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataBoxEdgeRoleAddonResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxEdgeRoleAddonAddonsRestClient.ListByRole(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxEdgeRoleAddonResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxEdgeRoleAddonAddonsRestClient.ListByRoleNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}
-        /// Operation Id: Addons_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}
-        /// Operation Id: Addons_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -36,14 +36,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of the resource that is unique within a policy. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
+        /// <param name="state"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Type of Actions. </param>
-        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
+        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallState? state, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
             Name = name;
             ETag = etag;
             Priority = priority;
+            State = state;
             RuleType = ruleType;
             MatchConditions = matchConditions;
             Action = action;
@@ -55,6 +57,8 @@ namespace Azure.ResourceManager.Network.Models
         public ETag? ETag { get; }
         /// <summary> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </summary>
         public int Priority { get; set; }
+        /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+        public WebApplicationFirewallState? State { get; set; }
         /// <summary> The rule type. </summary>
         public WebApplicationFirewallRuleType RuleType { get; set; }
         /// <summary> List of match conditions. </summary>

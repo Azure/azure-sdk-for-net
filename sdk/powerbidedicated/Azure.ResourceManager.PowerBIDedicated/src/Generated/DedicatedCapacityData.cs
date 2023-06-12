@@ -12,7 +12,10 @@ using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    /// <summary> A class representing the DedicatedCapacity data model. </summary>
+    /// <summary>
+    /// A class representing the DedicatedCapacity data model.
+    /// Represents an instance of a Dedicated Capacity resource.
+    /// </summary>
     public partial class DedicatedCapacityData : PowerBIDedicatedResourceData
     {
         /// <summary> Initializes a new instance of DedicatedCapacityData. </summary>

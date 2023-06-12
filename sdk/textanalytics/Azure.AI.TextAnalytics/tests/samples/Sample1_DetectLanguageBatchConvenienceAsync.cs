@@ -13,10 +13,9 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task DetectLanguageBatchConvenienceAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
@@ -43,7 +42,9 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string documentD = string.Empty;
 
-            List<string> documents = new()
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 documentA,
                 documentB,
@@ -51,29 +52,28 @@ namespace Azure.AI.TextAnalytics.Samples
                 documentD
             };
 
-            Response<DetectLanguageResultCollection> response = await client.DetectLanguageBatchAsync(documents);
+            Response<DetectLanguageResultCollection> response = await client.DetectLanguageBatchAsync(batchedDocuments);
             DetectLanguageResultCollection documentsLanguage = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+            Console.WriteLine($"Detect Language, model version: \"{documentsLanguage.ModelVersion}\"");
             Console.WriteLine();
 
-            foreach (DetectLanguageResult documentLanguage in documentsLanguage)
+            foreach (DetectLanguageResult documentResult in documentsLanguage)
             {
-                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-                Console.WriteLine();
+                Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-                if (documentLanguage.HasError)
+                if (documentResult.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
-                    Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
                     Console.WriteLine();
                     continue;
                 }
 
-                Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
-                Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
+                Console.WriteLine($"  Detected language: {documentResult.PrimaryLanguage.Name}");
+                Console.WriteLine($"  Confidence score: {documentResult.PrimaryLanguage.ConfidenceScore}");
                 Console.WriteLine();
             }
         }

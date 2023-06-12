@@ -15,31 +15,33 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryDataPlaneAccessPolicyResult DeserializeFactoryDataPlaneAccessPolicyResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryDataPlaneUserAccessPolicy> policy = default;
             Optional<string> accessToken = default;
             Optional<Uri> dataPlaneUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = FactoryDataPlaneUserAccessPolicy.DeserializeFactoryDataPlaneUserAccessPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPlaneUrl"))
+                if (property.NameEquals("dataPlaneUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataPlaneUrl = null;
                         continue;
                     }
                     dataPlaneUrl = new Uri(property.Value.GetString());

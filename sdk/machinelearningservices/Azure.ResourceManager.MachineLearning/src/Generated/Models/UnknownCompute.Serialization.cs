@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("computeType");
+            writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
             if (Optional.IsDefined(ComputeLocation))
             {
-                writer.WritePropertyName("computeLocation");
+                writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
             }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ResourceId != null)
                 {
-                    writer.WritePropertyName("resourceId");
+                    writer.WritePropertyName("resourceId"u8);
                     writer.WriteStringValue(ResourceId);
                 }
                 else
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             writer.WriteEndObject();
@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownCompute DeserializeUnknownCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeType computeType = "Unknown";
             Optional<string> computeLocation = default;
             Optional<MachineLearningProvisioningState> provisioningState = default;
@@ -70,27 +74,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("computeLocation"))
+                if (property.NameEquals("computeLocation"u8))
                 {
                     computeLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new MachineLearningProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,27 +103,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
+                if (property.NameEquals("createdOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modifiedOn"))
+                if (property.NameEquals("modifiedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningErrors"))
+                if (property.NameEquals("provisioningErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,21 +146,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningErrors = array;
                     continue;
                 }
-                if (property.NameEquals("isAttachedCompute"))
+                if (property.NameEquals("isAttachedCompute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAttachedCompute = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"))
+                if (property.NameEquals("disableLocalAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableLocalAuth = property.Value.GetBoolean();

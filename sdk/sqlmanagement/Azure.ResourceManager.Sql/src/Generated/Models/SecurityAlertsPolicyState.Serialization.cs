@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SecurityAlertsPolicyState ToSecurityAlertsPolicyState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SecurityAlertsPolicyState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SecurityAlertsPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SecurityAlertsPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SecurityAlertsPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityAlertsPolicyState value.");
         }
     }

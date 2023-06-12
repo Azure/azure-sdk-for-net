@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SecurityEvent DeserializeSecurityEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,32 +45,31 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,66 +78,62 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("eventTime"))
+                        if (property0.NameEquals("eventTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("securityEventType"))
+                        if (property0.NameEquals("securityEventType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityEventType = property0.Value.GetString().ToSecurityEventType();
                             continue;
                         }
-                        if (property0.NameEquals("subscription"))
+                        if (property0.NameEquals("subscription"u8))
                         {
                             subscription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("server"))
+                        if (property0.NameEquals("server"u8))
                         {
                             server = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("database"))
+                        if (property0.NameEquals("database"u8))
                         {
                             database = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientIp"))
+                        if (property0.NameEquals("clientIp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("applicationName"))
+                        if (property0.NameEquals("applicationName"u8))
                         {
                             applicationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("principalName"))
+                        if (property0.NameEquals("principalName"u8))
                         {
                             principalName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("securityEventSqlInjectionAdditionalProperties"))
+                        if (property0.NameEquals("securityEventSqlInjectionAdditionalProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value);

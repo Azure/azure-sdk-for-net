@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
-        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Cdn/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +80,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
-        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Cdn/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,86 +111,46 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
-        /// Request Path: /providers/Microsoft.Cdn/edgenodes
-        /// Operation Id: EdgeNodes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Cdn/edgenodes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EdgeNodes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EdgeNode>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeNodesRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EdgeNode>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeNodesRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
-        /// Request Path: /providers/Microsoft.Cdn/edgenodes
-        /// Operation Id: EdgeNodes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Cdn/edgenodes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EdgeNodes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
-            Page<EdgeNode> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = EdgeNodesRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EdgeNode> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = EdgeNodesRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
     }
 }

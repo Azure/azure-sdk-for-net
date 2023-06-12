@@ -19,54 +19,69 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(RemediationTimeframe))
             {
-                writer.WritePropertyName("remediationTimeframe");
+                writer.WritePropertyName("remediationTimeframe"u8);
                 writer.WriteStringValue(RemediationTimeframe);
             }
             if (Optional.IsDefined(IsGracePeriod))
             {
-                writer.WritePropertyName("isGracePeriod");
+                writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
             if (Optional.IsDefined(RulePriority))
             {
-                writer.WritePropertyName("rulePriority");
+                writer.WritePropertyName("rulePriority"u8);
                 writer.WriteNumberValue(RulePriority.Value);
             }
             if (Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("isDisabled");
+                writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
             if (Optional.IsDefined(RuleType))
             {
-                writer.WritePropertyName("ruleType");
+                writer.WritePropertyName("ruleType"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
             if (Optional.IsDefined(SourceResourceType))
             {
-                writer.WritePropertyName("sourceResourceType");
+                writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ExcludedScopes))
+            {
+                writer.WritePropertyName("excludedScopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExcludedScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ConditionSets))
             {
-                writer.WritePropertyName("conditionSets");
+                writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConditionSets)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -75,15 +90,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IncludeMemberScopes))
+            {
+                writer.WritePropertyName("includeMemberScopes"u8);
+                writer.WriteBooleanValue(IncludeMemberScopes.Value);
+            }
             if (Optional.IsDefined(OwnerSource))
             {
-                writer.WritePropertyName("ownerSource");
+                writer.WritePropertyName("ownerSource"u8);
                 writer.WriteObjectValue(OwnerSource);
             }
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
-                writer.WritePropertyName("governanceEmailNotification");
+                writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
+            }
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteObjectValue(Metadata);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -91,10 +116,15 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static GovernanceRuleData DeserializeGovernanceRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> remediationTimeframe = default;
@@ -103,37 +133,39 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<bool> isDisabled = default;
             Optional<GovernanceRuleType> ruleType = default;
             Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
+            Optional<IList<string>> excludedScopes = default;
             Optional<IList<BinaryData>> conditionSets = default;
+            Optional<bool> includeMemberScopes = default;
             Optional<GovernanceRuleOwnerSource> ownerSource = default;
             Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
+            Optional<GovernanceRuleMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,111 +174,151 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("tenantId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("remediationTimeframe"))
+                        if (property0.NameEquals("remediationTimeframe"u8))
                         {
                             remediationTimeframe = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isGracePeriod"))
+                        if (property0.NameEquals("isGracePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isGracePeriod = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("rulePriority"))
+                        if (property0.NameEquals("rulePriority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rulePriority = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("isDisabled"))
+                        if (property0.NameEquals("isDisabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDisabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("ruleType"))
+                        if (property0.NameEquals("ruleType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ruleType = new GovernanceRuleType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceType"))
+                        if (property0.NameEquals("sourceResourceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceResourceType = new GovernanceRuleSourceResourceType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("conditionSets"))
+                        if (property0.NameEquals("excludedScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            excludedScopes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("conditionSets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             conditionSets = array;
                             continue;
                         }
-                        if (property0.NameEquals("ownerSource"))
+                        if (property0.NameEquals("includeMemberScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            includeMemberScopes = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("ownerSource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             ownerSource = GovernanceRuleOwnerSource.DeserializeGovernanceRuleOwnerSource(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("governanceEmailNotification"))
+                        if (property0.NameEquals("governanceEmailNotification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             governanceEmailNotification = GovernanceRuleEmailNotification.DeserializeGovernanceRuleEmailNotification(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metadata = GovernanceRuleMetadata.DeserializeGovernanceRuleMetadata(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new GovernanceRuleData(id, name, type, systemData.Value, displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(conditionSets), ownerSource.Value, governanceEmailNotification.Value);
+            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value);
         }
     }
 }

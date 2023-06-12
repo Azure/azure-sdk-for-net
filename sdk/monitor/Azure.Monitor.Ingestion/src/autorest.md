@@ -7,8 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/d0188b838d6d338a688707c714803fdb3c1384ec/specification/monitor/data-plane/ingestion/preview/2021-11-01-preview/DataCollectionRules.json
-namespace: Azure.Monitor.Ingestion
+- https://github.com/Azure/azure-rest-api-specs/blob/f07297ce913bfc911470a86436e73c9aceec0587/specification/monitor/data-plane/ingestion/stable/2023-01-01/DataCollectionRules.json
 security: AADToken
 security-scopes: https://monitor.azure.com//.default
 ```
@@ -27,17 +26,10 @@ directive:
   where: $.parameters.Endpoint
   transform: $.format = "url";
 ```
-### Updates default parameter contentEncoding value from null to gzip in Upload method
+### Updates parameter description in DPG Upload/UploadAsync methods
 ``` yaml
 directive:
 - from: swagger-document
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
-  transform: $["x-ms-client-default"] = "gzip";
-```
-### Update auto-generated Upload/UploadAsync methods to internal
-``` yaml
-directive:
-- from: swagger-document
-  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
-  transform: $['x-accessibility'] = "internal";
+  transform: $["description"] = "If content is already gzipped, put \"gzip\". Default behavior is to gzip all input";
 ```

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlLocationCapabilities DeserializeSqlLocationCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<SqlServerVersionCapability>> supportedServerVersions = default;
             Optional<IReadOnlyList<ManagedInstanceVersionCapability>> supportedManagedInstanceVersions = default;
@@ -22,16 +26,15 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedServerVersions"))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlServerVersionCapability> array = new List<SqlServerVersionCapability>();
@@ -42,11 +45,10 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedServerVersions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedManagedInstanceVersions"))
+                if (property.NameEquals("supportedManagedInstanceVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedInstanceVersionCapability> array = new List<ManagedInstanceVersionCapability>();
@@ -57,17 +59,16 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedManagedInstanceVersions = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fa4fb83fa3f4ac96962ba967ee507602-332637905871b147-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.2 (.NET 6.0.6; Microsoft Windows 10.0.22622)",
-        "x-ms-client-request-id": "1248c1cb65e98023f038b72191ae5852",
+        "traceparent": "00-5b8b2d4655deaccfca47f4a395c46b7f-1e7f35b12204aa02-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "6f9e4539fcd9af5c46bd022878d78a18",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 11 Jul 2022 08:01:31 GMT",
+        "Date": "Fri, 30 Sep 2022 02:17:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2bfe07e5-8f9a-4562-a17e-9ad51a082129",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "2bfe07e5-8f9a-4562-a17e-9ad51a082129",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220711T080132Z:2bfe07e5-8f9a-4562-a17e-9ad51a082129"
+        "x-ms-correlation-request-id": "2be04cdb-18bb-40a9-bb1f-f8fd2f17aad2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "2be04cdb-18bb-40a9-bb1f-f8fd2f17aad2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021704Z:2be04cdb-18bb-40a9-bb1f-f8fd2f17aad2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -61,26 +61,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f64ba2d034818f5c8fa09382e0b4d39e-0f703bef98375512-00",
-        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20220711.1 (.NET 6.0.6; Microsoft Windows 10.0.22622)",
-        "x-ms-client-request-id": "bdd6e8365edc426009bad06b1d787114",
+        "traceparent": "00-089413ad3706187616dab16bca061700-c0936ded7ee369aa-00",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.1.0-alpha.20220930.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "2916e0a28cb9e747d9e2fc3047a895fd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "919914",
+        "Content-Length": "932391",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 11 Jul 2022 08:01:32 GMT",
+        "Date": "Fri, 30 Sep 2022 02:17:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "35ddc852-f828-44ca-b821-a9cd5fbe1208",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "35ddc852-f828-44ca-b821-a9cd5fbe1208",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220711T080133Z:35ddc852-f828-44ca-b821-a9cd5fbe1208"
+        "x-ms-correlation-request-id": "6b2d4bae-720c-4fc1-a638-7ac414521993",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "6b2d4bae-720c-4fc1-a638-7ac414521993",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021704Z:6b2d4bae-720c-4fc1-a638-7ac414521993"
       },
       "ResponseBody": {
         "value": [
@@ -4909,7 +4909,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -4934,6 +4934,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "10485760"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "1600"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "24000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5021,7 +5029,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5034,6 +5042,26 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "2000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "41943040"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "20971520"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "3200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "48000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5121,7 +5149,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5146,6 +5174,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "20971520"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "3200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "48000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5233,7 +5269,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5258,6 +5294,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "20971520"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "3200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "48000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5345,7 +5389,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5358,6 +5402,26 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "4000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "83886080"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "41943040"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "6400"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5545,7 +5609,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5570,6 +5634,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "41943040"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "6400"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5657,7 +5729,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5682,6 +5754,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "41943040"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "6400"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5769,7 +5849,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5782,6 +5862,26 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "2000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "41943040"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "20971520"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "3200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "48000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5869,7 +5969,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5882,6 +5982,26 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "4000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "83886080"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "41943040"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "6400"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -5969,7 +6089,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -5982,6 +6102,26 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "8000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "167772160"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "83886080"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "12800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "192000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -6069,7 +6209,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -6094,6 +6234,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "83886080"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "12800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "192000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -6181,7 +6329,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -6206,6 +6354,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "83886080"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "12800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "192000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -6300,8 +6456,32 @@
                 "value": "12"
               },
               {
+                "name": "vCPUsPerCore",
+                "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "6480"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "74956800"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "74956800"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "32212254720"
+              },
+              {
                 "name": "UncachedDiskIOPS",
                 "value": "4320"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "50000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -6512,24 +6692,36 @@
                 "value": "IaaS"
               },
               {
+                "name": "vCPUsAvailable",
+                "value": "1"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "1"
+              },
+              {
                 "name": "CombinedTempDiskAndCachedIOPS",
                 "value": "200"
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "10485760"
+                "value": "22528000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "10485760"
+                "value": "22528000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "32212254720"
               },
               {
                 "name": "UncachedDiskIOPS",
-                "value": "160"
+                "value": "320"
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "10485760"
+                "value": "22500000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -6637,11 +6829,15 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "10485760"
+                "value": "22528000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "10485760"
+                "value": "22528000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "32212254720"
               },
               {
                 "name": "UncachedDiskIOPS",
@@ -6649,7 +6845,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "10485760"
+                "value": "22500000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -6757,11 +6953,15 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "10485760"
+                "value": "22528000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "10485760"
+                "value": "22528000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "32212254720"
               },
               {
                 "name": "UncachedDiskIOPS",
@@ -6769,7 +6969,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "10485760"
+                "value": "22500000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -7113,11 +7313,15 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "15728640"
+                "value": "22528000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "15728640"
+                "value": "22528000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "32212254720"
               },
               {
                 "name": "UncachedDiskIOPS",
@@ -7125,7 +7329,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "15728640"
+                "value": "22500000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -9754,7 +9958,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -11690,7 +11894,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -13726,7 +13930,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -15750,7 +15954,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -17450,7 +17654,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -19590,7 +19794,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -21290,7 +21494,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -23656,7 +23860,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -24010,7 +24214,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -24276,7 +24480,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -24924,7 +25128,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -25472,7 +25676,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -26020,7 +26224,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -26668,7 +26872,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -27498,7 +27702,7 @@
               },
               {
                 "name": "EphemeralOSDiskSupported",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "EncryptionAtHostSupported",
@@ -35846,7 +36050,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -36468,7 +36672,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -36492,7 +36696,15 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "196083712"
+                "value": "196608000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "25600"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "384000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -37542,7 +37754,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -38164,7 +38376,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -38184,11 +38396,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "491782144"
+                "value": "491520000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "245366784"
+                "value": "245760000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "32000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "480000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -39478,7 +39698,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -40100,7 +40320,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -40120,11 +40340,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "48234496"
+                "value": "49152000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "24117248"
+                "value": "24576000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "3200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "48000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -43482,7 +43710,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -44108,7 +44336,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -44133,6 +44361,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "393216000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "51200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "768000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -46448,7 +46684,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -47062,7 +47298,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -47087,6 +47323,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "524288000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "76800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1152000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -48376,7 +48620,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -48998,7 +49242,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -49018,11 +49262,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "97517568"
+                "value": "98304000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "48234496"
+                "value": "49152000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "6400"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -52721,7 +52973,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -52746,6 +52998,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "524288000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "80000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1200000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -53210,7 +53470,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -53235,6 +53495,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "524288000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "80000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1200000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -56850,7 +57118,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS"
+                "value": "IaaS,PaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -57472,7 +57740,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -57492,11 +57760,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "196083712"
+                "value": "196608000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "97517568"
+                "value": "98304000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "12800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "192000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -62981,11 +63257,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "48234496"
+                "value": "49152000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "24117248"
+                "value": "24576000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "3200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "48000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -63098,6 +63382,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "393216000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "51200"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "768000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -63333,11 +63625,11 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "267386880"
+                "value": "262144000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "267386880"
+                "value": "262144000"
               },
               {
                 "name": "CachedDiskBytes",
@@ -63349,7 +63641,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "398458880"
+                "value": "384000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -63589,11 +63881,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "97517568"
+                "value": "98304000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "48234496"
+                "value": "49152000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "6400"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -63973,7 +64273,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "786432000"
+                "value": "768000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -64085,11 +64385,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "196083712"
+                "value": "196608000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "97517568"
+                "value": "98304000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "12800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "192000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -64213,7 +64521,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "1153433600"
+                "value": "1152000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -64453,11 +64761,11 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "66060288"
+                "value": "65536000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "66060288"
+                "value": "65536000"
               },
               {
                 "name": "CachedDiskBytes",
@@ -64469,7 +64777,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "49283072"
+                "value": "96000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -64597,7 +64905,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "1153433600"
+                "value": "1200000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -64725,7 +65033,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "1153433600"
+                "value": "1200000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -64841,7 +65149,15 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "196083712"
+                "value": "196608000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "25600"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "384000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -65077,11 +65393,11 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "133169152"
+                "value": "131072000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "133169152"
+                "value": "131072000"
               },
               {
                 "name": "CachedDiskBytes",
@@ -65093,7 +65409,7 @@
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "199229440"
+                "value": "192000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -65185,7 +65501,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -65205,11 +65521,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "97517568"
+                "value": "98304000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "48234496"
+                "value": "49152000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "5000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "125000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -65297,7 +65621,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -65317,11 +65641,19 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
-                "value": "196083712"
+                "value": "196608000"
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "97517568"
+                "value": "98304000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "10000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "250000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -65409,7 +65741,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -65433,7 +65765,15 @@
               },
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
-                "value": "196083712"
+                "value": "196608000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "20000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "500000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -65521,7 +65861,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -65546,6 +65886,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "393216000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "40000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1000000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -65633,7 +65981,7 @@
               },
               {
                 "name": "VMDeploymentTypes",
-                "value": "IaaS,PaaS"
+                "value": "PaaS,IaaS"
               },
               {
                 "name": "vCPUsAvailable",
@@ -65658,6 +66006,14 @@
               {
                 "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
                 "value": "786432000"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "80000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "2000000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -68384,6 +68740,30 @@
                 "value": "16"
               },
               {
+                "name": "vCPUsPerCore",
+                "value": "2"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "8000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "167772160"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "167772160"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "16000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "335544320"
+              },
+              {
                 "name": "NvmeDiskSizeInMiB",
                 "value": "3662108"
               },
@@ -68728,6 +69108,30 @@
                 "value": "32"
               },
               {
+                "name": "vCPUsPerCore",
+                "value": "2"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "16000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "335544320"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "335544320"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "32000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "671088640"
+              },
+              {
                 "name": "NvmeDiskSizeInMiB",
                 "value": "7324216"
               },
@@ -68950,6 +69354,30 @@
               {
                 "name": "vCPUsAvailable",
                 "value": "48"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "2"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "24000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "503316480"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "503316480"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "48000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1006632960"
               },
               {
                 "name": "NvmeDiskSizeInMiB",
@@ -69296,6 +69724,30 @@
                 "value": "64"
               },
               {
+                "name": "vCPUsPerCore",
+                "value": "2"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "32000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "671088640"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "671088640"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "64000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1342177280"
+              },
+              {
                 "name": "NvmeDiskSizeInMiB",
                 "value": "14648432"
               },
@@ -69518,6 +69970,30 @@
               {
                 "name": "vCPUsAvailable",
                 "value": "80"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "2"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "40000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "838860800"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "838860800"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "80000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1468006400"
               },
               {
                 "name": "NvmeDiskSizeInMiB",
@@ -69862,6 +70338,30 @@
               {
                 "name": "vCPUsAvailable",
                 "value": "8"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "2"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "4000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "83886080"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "83886080"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "8000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "167772160"
               },
               {
                 "name": "NvmeDiskSizeInMiB",
@@ -71175,6 +71675,10 @@
                 "value": "False"
               },
               {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
+              },
+              {
                 "name": "AcceleratedNetworkingEnabled",
                 "value": "True"
               },
@@ -71463,6 +71967,10 @@
               {
                 "name": "CapacityReservationSupported",
                 "value": "False"
+              },
+              {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
               },
               {
                 "name": "AcceleratedNetworkingEnabled",
@@ -72061,6 +72569,10 @@
                 "value": "False"
               },
               {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
+              },
+              {
                 "name": "AcceleratedNetworkingEnabled",
                 "value": "True"
               },
@@ -72200,6 +72712,10 @@
               {
                 "name": "CapacityReservationSupported",
                 "value": "False"
+              },
+              {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
               },
               {
                 "name": "AcceleratedNetworkingEnabled",
@@ -72343,6 +72859,10 @@
                 "value": "False"
               },
               {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
+              },
+              {
                 "name": "AcceleratedNetworkingEnabled",
                 "value": "True"
               },
@@ -72482,6 +73002,10 @@
               {
                 "name": "CapacityReservationSupported",
                 "value": "False"
+              },
+              {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
               },
               {
                 "name": "AcceleratedNetworkingEnabled",
@@ -73572,6 +74096,10 @@
               {
                 "name": "CapacityReservationSupported",
                 "value": "False"
+              },
+              {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
               },
               {
                 "name": "AcceleratedNetworkingEnabled",
@@ -75528,6 +76056,10 @@
                 "value": "False"
               },
               {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
+              },
+              {
                 "name": "AcceleratedNetworkingEnabled",
                 "value": "True"
               },
@@ -75816,6 +76348,10 @@
               {
                 "name": "CapacityReservationSupported",
                 "value": "False"
+              },
+              {
+                "name": "TrustedLaunchDisabled",
+                "value": "True"
               },
               {
                 "name": "AcceleratedNetworkingEnabled",
@@ -76463,7 +76999,7 @@
               },
               {
                 "name": "LowPriorityCapable",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "PremiumIO",
@@ -76542,6 +77078,138 @@
           },
           {
             "resourceType": "virtualMachines",
+            "name": "Standard_NC24ads_A100_v4",
+            "tier": "Standard",
+            "size": "NC24ads_A100_v4",
+            "family": "StandardNCADSA100v4Family",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "MaxResourceVolumeMB",
+                "value": "65536"
+              },
+              {
+                "name": "OSVhdSizeMB",
+                "value": "1047552"
+              },
+              {
+                "name": "vCPUs",
+                "value": "24"
+              },
+              {
+                "name": "MemoryPreservingMaintenanceSupported",
+                "value": "False"
+              },
+              {
+                "name": "HyperVGenerations",
+                "value": "V2"
+              },
+              {
+                "name": "MemoryGB",
+                "value": "220"
+              },
+              {
+                "name": "MaxDataDiskCount",
+                "value": "8"
+              },
+              {
+                "name": "CpuArchitectureType",
+                "value": "x64"
+              },
+              {
+                "name": "LowPriorityCapable",
+                "value": "True"
+              },
+              {
+                "name": "PremiumIO",
+                "value": "True"
+              },
+              {
+                "name": "VMDeploymentTypes",
+                "value": "IaaS"
+              },
+              {
+                "name": "vCPUsAvailable",
+                "value": "24"
+              },
+              {
+                "name": "GPUs",
+                "value": "1"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "75000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "1000000000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "1000000000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "274877906944"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "25600"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "384000000"
+              },
+              {
+                "name": "NvmeDiskSizeInMiB",
+                "value": "915456"
+              },
+              {
+                "name": "EphemeralOSDiskSupported",
+                "value": "True"
+              },
+              {
+                "name": "EncryptionAtHostSupported",
+                "value": "True"
+              },
+              {
+                "name": "CapacityReservationSupported",
+                "value": "False"
+              },
+              {
+                "name": "AcceleratedNetworkingEnabled",
+                "value": "True"
+              },
+              {
+                "name": "RdmaEnabled",
+                "value": "False"
+              },
+              {
+                "name": "MaxNetworkInterfaces",
+                "value": "2"
+              },
+              {
+                "name": "UltraSSDAvailable",
+                "value": "False"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "virtualMachines",
             "name": "Standard_NC24rs_v3",
             "tier": "Standard",
             "size": "NC24rs_v3",
@@ -76559,7 +77227,7 @@
             "capabilities": [
               {
                 "name": "MaxResourceVolumeMB",
-                "value": "1376256"
+                "value": "3018752"
               },
               {
                 "name": "OSVhdSizeMB",
@@ -76612,6 +77280,18 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "1"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "1374389534720"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "80000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1200000000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -76758,6 +77438,138 @@
           },
           {
             "resourceType": "virtualMachines",
+            "name": "Standard_NC48ads_A100_v4",
+            "tier": "Standard",
+            "size": "NC48ads_A100_v4",
+            "family": "StandardNCADSA100v4Family",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "MaxResourceVolumeMB",
+                "value": "131072"
+              },
+              {
+                "name": "OSVhdSizeMB",
+                "value": "1047552"
+              },
+              {
+                "name": "vCPUs",
+                "value": "48"
+              },
+              {
+                "name": "MemoryPreservingMaintenanceSupported",
+                "value": "False"
+              },
+              {
+                "name": "HyperVGenerations",
+                "value": "V2"
+              },
+              {
+                "name": "MemoryGB",
+                "value": "440"
+              },
+              {
+                "name": "MaxDataDiskCount",
+                "value": "16"
+              },
+              {
+                "name": "CpuArchitectureType",
+                "value": "x64"
+              },
+              {
+                "name": "LowPriorityCapable",
+                "value": "True"
+              },
+              {
+                "name": "PremiumIO",
+                "value": "True"
+              },
+              {
+                "name": "VMDeploymentTypes",
+                "value": "IaaS"
+              },
+              {
+                "name": "vCPUsAvailable",
+                "value": "48"
+              },
+              {
+                "name": "GPUs",
+                "value": "2"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "225000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "3000000000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "3000000000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "549755813888"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "76800"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1152000000"
+              },
+              {
+                "name": "NvmeDiskSizeInMiB",
+                "value": "1830912"
+              },
+              {
+                "name": "EphemeralOSDiskSupported",
+                "value": "True"
+              },
+              {
+                "name": "EncryptionAtHostSupported",
+                "value": "True"
+              },
+              {
+                "name": "CapacityReservationSupported",
+                "value": "False"
+              },
+              {
+                "name": "AcceleratedNetworkingEnabled",
+                "value": "True"
+              },
+              {
+                "name": "RdmaEnabled",
+                "value": "False"
+              },
+              {
+                "name": "MaxNetworkInterfaces",
+                "value": "4"
+              },
+              {
+                "name": "UltraSSDAvailable",
+                "value": "False"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "virtualMachines",
             "name": "Standard_NC4as_T4_v3",
             "tier": "Standard",
             "size": "NC4as_T4_v3",
@@ -76807,7 +77619,7 @@
               },
               {
                 "name": "LowPriorityCapable",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "PremiumIO",
@@ -76935,7 +77747,7 @@
               },
               {
                 "name": "LowPriorityCapable",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "PremiumIO",
@@ -76971,15 +77783,15 @@
               },
               {
                 "name": "CachedDiskBytes",
-                "value": "154619000000"
+                "value": "154618822656"
               },
               {
                 "name": "UncachedDiskIOPS",
-                "value": "24480"
+                "value": "48000"
               },
               {
                 "name": "UncachedDiskBytesPerSecond",
-                "value": "368640000"
+                "value": "737280000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -77171,7 +77983,7 @@
               },
               {
                 "name": "LowPriorityCapable",
-                "value": "True"
+                "value": "False"
               },
               {
                 "name": "PremiumIO",
@@ -77216,6 +78028,138 @@
               {
                 "name": "UncachedDiskBytesPerSecond",
                 "value": "368640000"
+              },
+              {
+                "name": "EphemeralOSDiskSupported",
+                "value": "True"
+              },
+              {
+                "name": "EncryptionAtHostSupported",
+                "value": "True"
+              },
+              {
+                "name": "CapacityReservationSupported",
+                "value": "False"
+              },
+              {
+                "name": "AcceleratedNetworkingEnabled",
+                "value": "True"
+              },
+              {
+                "name": "RdmaEnabled",
+                "value": "False"
+              },
+              {
+                "name": "MaxNetworkInterfaces",
+                "value": "8"
+              },
+              {
+                "name": "UltraSSDAvailable",
+                "value": "False"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "virtualMachines",
+            "name": "Standard_NC96ads_A100_v4",
+            "tier": "Standard",
+            "size": "NC96ads_A100_v4",
+            "family": "StandardNCADSA100v4Family",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "MaxResourceVolumeMB",
+                "value": "262144"
+              },
+              {
+                "name": "OSVhdSizeMB",
+                "value": "1047552"
+              },
+              {
+                "name": "vCPUs",
+                "value": "96"
+              },
+              {
+                "name": "MemoryPreservingMaintenanceSupported",
+                "value": "False"
+              },
+              {
+                "name": "HyperVGenerations",
+                "value": "V2"
+              },
+              {
+                "name": "MemoryGB",
+                "value": "880"
+              },
+              {
+                "name": "MaxDataDiskCount",
+                "value": "32"
+              },
+              {
+                "name": "CpuArchitectureType",
+                "value": "x64"
+              },
+              {
+                "name": "LowPriorityCapable",
+                "value": "True"
+              },
+              {
+                "name": "PremiumIO",
+                "value": "True"
+              },
+              {
+                "name": "VMDeploymentTypes",
+                "value": "IaaS"
+              },
+              {
+                "name": "vCPUsAvailable",
+                "value": "96"
+              },
+              {
+                "name": "GPUs",
+                "value": "4"
+              },
+              {
+                "name": "vCPUsPerCore",
+                "value": "1"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedIOPS",
+                "value": "128000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedReadBytesPerSecond",
+                "value": "1024000000"
+              },
+              {
+                "name": "CombinedTempDiskAndCachedWriteBytesPerSecond",
+                "value": "1024000000"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "1099511627776"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "120000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "4096000000"
+              },
+              {
+                "name": "NvmeDiskSizeInMiB",
+                "value": "3662108"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -77951,7 +78895,7 @@
             "capabilities": [
               {
                 "name": "MaxResourceVolumeMB",
-                "value": "1376256"
+                "value": "3018752"
               },
               {
                 "name": "OSVhdSizeMB",
@@ -78004,6 +78948,18 @@
               {
                 "name": "vCPUsPerCore",
                 "value": "2"
+              },
+              {
+                "name": "CachedDiskBytes",
+                "value": "1374389534720"
+              },
+              {
+                "name": "UncachedDiskIOPS",
+                "value": "80000"
+              },
+              {
+                "name": "UncachedDiskBytesPerSecond",
+                "value": "1200000000000"
               },
               {
                 "name": "EphemeralOSDiskSupported",
@@ -78388,7 +79344,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1034059489",
+    "RandomSeed": "1719946415",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

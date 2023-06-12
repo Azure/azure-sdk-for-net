@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing the AppConfigurationKeyValue data model. </summary>
+    /// <summary>
+    /// A class representing the AppConfigurationKeyValue data model.
+    /// The key-value resource along with all resource properties.
+    /// </summary>
     public partial class AppConfigurationKeyValueData : ResourceData
     {
         /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>

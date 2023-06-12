@@ -17,28 +17,28 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
         /// <param name="hci"> Infra network profile for HCI platform. </param>
-        /// <param name="kubevirt"> Infra network profile for KubeVirt platform. </param>
+        /// <param name="networkCloud"> Infra network profile for the NetworkCloud platform. </param>
         /// <param name="vmware"> Infra network profile for VMware platform. </param>
-        internal VirtualNetworksPropertiesInfraVnetProfile(VirtualNetworksPropertiesInfraVnetProfileHci hci, VirtualNetworksPropertiesInfraVnetProfileKubevirt kubevirt, VirtualNetworksPropertiesInfraVnetProfileVmware vmware)
+        internal VirtualNetworksPropertiesInfraVnetProfile(VirtualNetworksPropertiesInfraVnetProfileHci hci, VirtualNetworksPropertiesInfraVnetProfileNetworkCloud networkCloud, VirtualNetworksPropertiesInfraVnetProfileVmware vmware)
         {
             Hci = hci;
-            Kubevirt = kubevirt;
+            NetworkCloud = networkCloud;
             Vmware = vmware;
         }
 
         /// <summary> Infra network profile for HCI platform. </summary>
         public VirtualNetworksPropertiesInfraVnetProfileHci Hci { get; set; }
-        /// <summary> Infra network profile for KubeVirt platform. </summary>
-        internal VirtualNetworksPropertiesInfraVnetProfileKubevirt Kubevirt { get; set; }
-        /// <summary> Name of the network in KubeVirt. </summary>
-        public string KubevirtVnetName
+        /// <summary> Infra network profile for the NetworkCloud platform. </summary>
+        internal VirtualNetworksPropertiesInfraVnetProfileNetworkCloud NetworkCloud { get; set; }
+        /// <summary> The ARM ID of Network Cloud Network Resource to Associate with this VirtualNetwork. </summary>
+        public string NetworkId
         {
-            get => Kubevirt is null ? default : Kubevirt.VnetName;
+            get => NetworkCloud is null ? default : NetworkCloud.NetworkId;
             set
             {
-                if (Kubevirt is null)
-                    Kubevirt = new VirtualNetworksPropertiesInfraVnetProfileKubevirt();
-                Kubevirt.VnetName = value;
+                if (NetworkCloud is null)
+                    NetworkCloud = new VirtualNetworksPropertiesInfraVnetProfileNetworkCloud();
+                NetworkCloud.NetworkId = value;
             }
         }
 

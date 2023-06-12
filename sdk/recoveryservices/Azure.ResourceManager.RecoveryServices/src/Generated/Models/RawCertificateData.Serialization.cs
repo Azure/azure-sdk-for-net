@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthType))
             {
-                writer.WritePropertyName("authType");
+                writer.WritePropertyName("authType"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
             if (Optional.IsDefined(Certificate))
             {
-                writer.WritePropertyName("certificate");
+                writer.WritePropertyName("certificate"u8);
                 writer.WriteBase64StringValue(Certificate, "D");
             }
             writer.WriteEndObject();

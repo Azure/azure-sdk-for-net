@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static StepOperationInfo DeserializeStepOperationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deploymentName = default;
             Optional<string> correlationId = default;
             Optional<DateTimeOffset> startTime = default;
@@ -24,51 +28,47 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentName"))
+                if (property.NameEquals("deploymentName"u8))
                 {
                     deploymentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTime"))
+                if (property.NameEquals("lastUpdatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());

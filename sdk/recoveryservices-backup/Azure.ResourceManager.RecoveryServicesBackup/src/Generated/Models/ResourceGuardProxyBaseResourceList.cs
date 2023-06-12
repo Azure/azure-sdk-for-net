@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
         internal ResourceGuardProxyBaseResourceList()
         {
-            Value = new ChangeTrackingList<ResourceGuardProxyBaseResourceData>();
+            Value = new ChangeTrackingList<ResourceGuardProxyData>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal ResourceGuardProxyBaseResourceList(IReadOnlyList<ResourceGuardProxyBaseResourceData> value, string nextLink)
+        internal ResourceGuardProxyBaseResourceList(IReadOnlyList<ResourceGuardProxyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<ResourceGuardProxyBaseResourceData> Value { get; }
+        public IReadOnlyList<ResourceGuardProxyData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

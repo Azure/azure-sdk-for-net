@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets service administrator, account administrator, and co-administrators for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators
-        /// Operation Id: ClassicAdministrators_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClassicAdministrators_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationClassicAdministrator>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
-                scope.Start();
-                try
-                {
-                    var response = await ClassicAdministratorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AuthorizationClassicAdministrator>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
-                scope.Start();
-                try
-                {
-                    var response = await ClassicAdministratorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ClassicAdministratorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClassicAdministratorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClassicAdministrators", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets service administrator, account administrator, and co-administrators for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators
-        /// Operation Id: ClassicAdministrators_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClassicAdministrators_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationClassicAdministrator> GetClassicAdministrators(CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationClassicAdministrator> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
-                scope.Start();
-                try
-                {
-                    var response = ClassicAdministratorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AuthorizationClassicAdministrator> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
-                scope.Start();
-                try
-                {
-                    var response = ClassicAdministratorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ClassicAdministratorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClassicAdministratorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClassicAdministrators", "value", "nextLink", cancellationToken);
         }
     }
 }

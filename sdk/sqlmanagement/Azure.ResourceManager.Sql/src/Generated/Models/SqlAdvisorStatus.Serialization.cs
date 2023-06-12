@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SqlAdvisorStatus ToSqlAdvisorStatus(this string value)
         {
-            if (string.Equals(value, "GA", StringComparison.InvariantCultureIgnoreCase)) return SqlAdvisorStatus.GA;
-            if (string.Equals(value, "PublicPreview", StringComparison.InvariantCultureIgnoreCase)) return SqlAdvisorStatus.PublicPreview;
-            if (string.Equals(value, "LimitedPublicPreview", StringComparison.InvariantCultureIgnoreCase)) return SqlAdvisorStatus.LimitedPublicPreview;
-            if (string.Equals(value, "PrivatePreview", StringComparison.InvariantCultureIgnoreCase)) return SqlAdvisorStatus.PrivatePreview;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GA")) return SqlAdvisorStatus.GA;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PublicPreview")) return SqlAdvisorStatus.PublicPreview;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LimitedPublicPreview")) return SqlAdvisorStatus.LimitedPublicPreview;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrivatePreview")) return SqlAdvisorStatus.PrivatePreview;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlAdvisorStatus value.");
         }
     }

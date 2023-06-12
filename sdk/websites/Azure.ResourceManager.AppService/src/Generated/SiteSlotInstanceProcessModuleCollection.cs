@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}
-        /// Operation Id: WebApps_GetInstanceProcessModuleSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceProcessModuleSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}
-        /// Operation Id: WebApps_GetInstanceProcessModuleSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceProcessModuleSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List module information for a process by its ID for a specific scaled-out instance in a web site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules
-        /// Operation Id: WebApps_ListInstanceProcessModulesSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListInstanceProcessModulesSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotInstanceProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotInstanceProcessModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotInstanceProcessModuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteSlotInstanceProcessModuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceProcessModuleWebAppsRestClient.CreateListInstanceProcessModulesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceProcessModuleWebAppsRestClient.CreateListInstanceProcessModulesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotInstanceProcessModuleResource(Client, ProcessModuleInfoData.DeserializeProcessModuleInfoData(e)), _siteSlotInstanceProcessModuleWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for List module information for a process by its ID for a specific scaled-out instance in a web site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules
-        /// Operation Id: WebApps_ListInstanceProcessModulesSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListInstanceProcessModulesSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotInstanceProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotInstanceProcessModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotInstanceProcessModuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteSlotInstanceProcessModuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceProcessModuleWebAppsRestClient.CreateListInstanceProcessModulesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceProcessModuleWebAppsRestClient.CreateListInstanceProcessModulesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotInstanceProcessModuleResource(Client, ProcessModuleInfoData.DeserializeProcessModuleInfoData(e)), _siteSlotInstanceProcessModuleWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}
-        /// Operation Id: WebApps_GetInstanceProcessModuleSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceProcessModuleSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}
-        /// Operation Id: WebApps_GetInstanceProcessModuleSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceProcessModuleSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

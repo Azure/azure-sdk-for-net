@@ -16,22 +16,25 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static MultivariateBatchDetectionResultSummary DeserializeMultivariateBatchDetectionResultSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MultivariateBatchDetectionStatus status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<IReadOnlyList<VariableState>> variableStates = default;
             MultivariateBatchDetectionOptions setupInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToMultivariateBatchDetectionStatus();
+                    status = new MultivariateBatchDetectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -42,11 +45,10 @@ namespace Azure.AI.AnomalyDetector
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("variableStates"))
+                if (property.NameEquals("variableStates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();
@@ -57,7 +59,7 @@ namespace Azure.AI.AnomalyDetector
                     variableStates = array;
                     continue;
                 }
-                if (property.NameEquals("setupInfo"))
+                if (property.NameEquals("setupInfo"u8))
                 {
                     setupInfo = MultivariateBatchDetectionOptions.DeserializeMultivariateBatchDetectionOptions(property.Value);
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionKey))
             {
-                writer.WritePropertyName("functionKey");
+                writer.WritePropertyName("functionKey"u8);
                 writer.WriteStringValue(FunctionKey);
             }
             if (Optional.IsDefined(AppKey))
             {
-                writer.WritePropertyName("appKey");
+                writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             writer.WriteEndObject();
@@ -35,22 +35,26 @@ namespace Azure.Communication.JobRouter
 
         internal static FunctionRuleCredential DeserializeFunctionRuleCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> functionKey = default;
             Optional<string> appKey = default;
             Optional<string> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("functionKey"))
+                if (property.NameEquals("functionKey"u8))
                 {
                     functionKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appKey"))
+                if (property.NameEquals("appKey"u8))
                 {
                     appKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;

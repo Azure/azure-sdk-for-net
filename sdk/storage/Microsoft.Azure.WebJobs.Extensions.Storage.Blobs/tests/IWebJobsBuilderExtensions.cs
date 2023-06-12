@@ -3,6 +3,7 @@
 
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
@@ -12,6 +13,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         public static IWebJobsBuilder UseStorageServices(this IWebJobsBuilder builder, BlobServiceClient blobServiceClient, QueueServiceClient queueServiceClient)
         {
             builder.Services.AddSingleton<BlobServiceClientProvider>(new FakeBlobServiceClientProvider(blobServiceClient));
+            builder.Services.AddSingleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient));
+            return builder;
+        }
+
+        public static IWebJobsBuilder UseStorageServicesWithConfiguration(this IWebJobsBuilder builder, BlobServiceClient blobServiceClient, QueueServiceClient queueServiceClient, IConfiguration configuration)
+        {
+            builder.Services.AddSingleton<BlobServiceClientProvider>(new FakeBlobServiceClientProvider(blobServiceClient, configuration));
             builder.Services.AddSingleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient));
             return builder;
         }

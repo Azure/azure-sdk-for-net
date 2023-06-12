@@ -12,12 +12,5 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class MitigateJobContent : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("customerResolutionCode");
-            writer.WriteStringValue(CustomerResolutionCode.ToSerialString());
-            writer.WriteEndObject();
-        }
     }
 }

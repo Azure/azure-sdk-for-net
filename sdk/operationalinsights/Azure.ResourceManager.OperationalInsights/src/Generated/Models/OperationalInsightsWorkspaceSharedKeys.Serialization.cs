@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsWorkspaceSharedKeys DeserializeOperationalInsightsWorkspaceSharedKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primarySharedKey = default;
             Optional<string> secondarySharedKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primarySharedKey"))
+                if (property.NameEquals("primarySharedKey"u8))
                 {
                     primarySharedKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondarySharedKey"))
+                if (property.NameEquals("secondarySharedKey"u8))
                 {
                     secondarySharedKey = property.Value.GetString();
                     continue;

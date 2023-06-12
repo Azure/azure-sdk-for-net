@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageSkuTier ToStorageSkuTier(this string value)
         {
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return StorageSkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return StorageSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return StorageSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return StorageSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSkuTier value.");
         }
     }

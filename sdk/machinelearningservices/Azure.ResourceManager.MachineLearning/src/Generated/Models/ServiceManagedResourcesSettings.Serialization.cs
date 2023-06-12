@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CosmosDb))
             {
-                writer.WritePropertyName("cosmosDb");
+                writer.WritePropertyName("cosmosDb"u8);
                 writer.WriteObjectValue(CosmosDb);
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ServiceManagedResourcesSettings DeserializeServiceManagedResourcesSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CosmosDbSettings> cosmosDb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cosmosDb"))
+                if (property.NameEquals("cosmosDb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(property.Value);

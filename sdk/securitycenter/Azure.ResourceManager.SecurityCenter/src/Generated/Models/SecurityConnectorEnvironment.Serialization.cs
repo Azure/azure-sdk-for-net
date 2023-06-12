@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("environmentType");
+            writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
             writer.WriteEndObject();
         }
 
         internal static SecurityConnectorEnvironment DeserializeSecurityConnectorEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("environmentType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

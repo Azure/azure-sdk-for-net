@@ -15,26 +15,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ResourceHealthSummary DeserializeResourceHealthSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> resourceCount = default;
             Optional<IReadOnlyList<HealthErrorSummary>> issues = default;
             Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceCount"))
+                if (property.NameEquals("resourceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthErrorSummary> array = new List<HealthErrorSummary>();
@@ -45,11 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     issues = array;
                     continue;
                 }
-                if (property.NameEquals("categorizedResourceCounts"))
+                if (property.NameEquals("categorizedResourceCounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();

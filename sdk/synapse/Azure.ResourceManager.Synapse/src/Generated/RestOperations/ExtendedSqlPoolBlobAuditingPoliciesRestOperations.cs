@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedSqlPoolBlobAuditingPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseExtendedSqlPoolBlobAuditingPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyData value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtendedSqlPoolBlobAuditingPolicyData.DeserializeExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyData.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtendedSqlPoolBlobAuditingPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseExtendedSqlPoolBlobAuditingPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedSqlPoolBlobAuditingPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseExtendedSqlPoolBlobAuditingPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -115,19 +115,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyData value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtendedSqlPoolBlobAuditingPolicyData.DeserializeExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyData.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtendedSqlPoolBlobAuditingPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseExtendedSqlPoolBlobAuditingPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ExtendedSqlPoolBlobAuditingPolicyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseExtendedSqlPoolBlobAuditingPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedSqlPoolBlobAuditingPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ExtendedSqlPoolBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseExtendedSqlPoolBlobAuditingPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseExtendedSqlPoolBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyData value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtendedSqlPoolBlobAuditingPolicyData.DeserializeExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyData.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedSqlPoolBlobAuditingPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ExtendedSqlPoolBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
+        public Response<SynapseExtendedSqlPoolBlobAuditingPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseExtendedSqlPoolBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyData value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtendedSqlPoolBlobAuditingPolicyData.DeserializeExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyData.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedSqlPoolBlobAuditingPolicyListResult>> ListBySqlPoolAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseExtendedSqlPoolBlobAuditingPolicyListResult>> ListBySqlPoolAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyListResult value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedSqlPoolBlobAuditingPolicyListResult> ListBySqlPool(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseExtendedSqlPoolBlobAuditingPolicyListResult> ListBySqlPool(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyListResult value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedSqlPoolBlobAuditingPolicyListResult>> ListBySqlPoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseExtendedSqlPoolBlobAuditingPolicyListResult>> ListBySqlPoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyListResult value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedSqlPoolBlobAuditingPolicyListResult> ListBySqlPoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseExtendedSqlPoolBlobAuditingPolicyListResult> ListBySqlPoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ExtendedSqlPoolBlobAuditingPolicyListResult value = default;
+                        SynapseExtendedSqlPoolBlobAuditingPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
+                        value = SynapseExtendedSqlPoolBlobAuditingPolicyListResult.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

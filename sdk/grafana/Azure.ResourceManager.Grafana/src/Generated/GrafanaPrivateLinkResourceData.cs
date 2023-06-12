@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    /// <summary> A class representing the GrafanaPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the GrafanaPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class GrafanaPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceData. </summary>

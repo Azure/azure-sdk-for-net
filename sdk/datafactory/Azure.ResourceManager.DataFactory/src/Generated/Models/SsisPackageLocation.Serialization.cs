@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PackagePath))
             {
-                writer.WritePropertyName("packagePath");
+                writer.WritePropertyName("packagePath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PackagePath);
 #else
@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(LocationType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToString());
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PackagePassword))
             {
-                writer.WritePropertyName("packagePassword");
+                writer.WritePropertyName("packagePassword"u8);
                 writer.WriteObjectValue(PackagePassword);
             }
             if (Optional.IsDefined(AccessCredential))
             {
-                writer.WritePropertyName("accessCredential");
+                writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
-                writer.WritePropertyName("configurationPath");
+                writer.WritePropertyName("configurationPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ConfigurationPath);
 #else
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
-                writer.WritePropertyName("configurationAccessCredential");
+                writer.WritePropertyName("configurationAccessCredential"u8);
                 writer.WriteObjectValue(ConfigurationAccessCredential);
             }
             if (Optional.IsDefined(PackageName))
             {
-                writer.WritePropertyName("packageName");
+                writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             if (Optional.IsDefined(PackageContent))
             {
-                writer.WritePropertyName("packageContent");
+                writer.WritePropertyName("packageContent"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PackageContent);
 #else
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
-                writer.WritePropertyName("packageLastModifiedDate");
+                writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
             if (Optional.IsCollectionDefined(ChildPackages))
             {
-                writer.WritePropertyName("childPackages");
+                writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
@@ -92,6 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> packagePath = default;
             Optional<SsisPackageLocationType> type = default;
             Optional<FactorySecretBaseDefinition> packagePassword = default;
@@ -104,27 +108,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<SsisChildPackage>> childPackages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("packagePath"))
+                if (property.NameEquals("packagePath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     packagePath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new SsisPackageLocationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,71 +135,65 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("packagePassword"))
+                        if (property0.NameEquals("packagePassword"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             packagePassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("accessCredential"))
+                        if (property0.NameEquals("accessCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("configurationPath"))
+                        if (property0.NameEquals("configurationPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configurationPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("configurationAccessCredential"))
+                        if (property0.NameEquals("configurationAccessCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("packageName"))
+                        if (property0.NameEquals("packageName"u8))
                         {
                             packageName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("packageContent"))
+                        if (property0.NameEquals("packageContent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             packageContent = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("packageLastModifiedDate"))
+                        if (property0.NameEquals("packageLastModifiedDate"u8))
                         {
                             packageLastModifiedDate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("childPackages"))
+                        if (property0.NameEquals("childPackages"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SsisChildPackage> array = new List<SsisChildPackage>();

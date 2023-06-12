@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing the DeviceUpdatePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceUpdatePrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>

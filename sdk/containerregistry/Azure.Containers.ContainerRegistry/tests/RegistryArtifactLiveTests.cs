@@ -48,6 +48,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore("Known service regression with scheduled fix 01/12/2023.")]
         public async Task CanGetManifestProperties()
         {
             // Arrange
@@ -150,6 +151,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Act
                 await artifact.DeleteAsync();
+                await Delay(5000);
+
+                await Delay(5000);
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });

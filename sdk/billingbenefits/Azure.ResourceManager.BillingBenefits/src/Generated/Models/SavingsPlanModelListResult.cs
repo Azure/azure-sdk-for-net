@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
         internal SavingsPlanModelListResult()
         {
-            Value = new ChangeTrackingList<SavingsPlanModelData>();
+            Value = new ChangeTrackingList<BillingBenefitsSavingsPlanData>();
             AdditionalProperties = new ChangeTrackingList<SavingsPlanSummary>();
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="value"> The list of savings plans. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="additionalProperties"> The roll out count summary of the savings plans. </param>
-        internal SavingsPlanModelListResult(IReadOnlyList<SavingsPlanModelData> value, string nextLink, IReadOnlyList<SavingsPlanSummary> additionalProperties)
+        internal SavingsPlanModelListResult(IReadOnlyList<BillingBenefitsSavingsPlanData> value, string nextLink, IReadOnlyList<SavingsPlanSummary> additionalProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> The list of savings plans. </summary>
-        public IReadOnlyList<SavingsPlanModelData> Value { get; }
+        public IReadOnlyList<BillingBenefitsSavingsPlanData> Value { get; }
         /// <summary> Url to get the next page. </summary>
         public string NextLink { get; }
         /// <summary> The roll out count summary of the savings plans. </summary>

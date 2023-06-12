@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -73,11 +74,7 @@ namespace Azure.Identity.Tests
         private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
         {
             options = InstrumentClientOptions(options ?? new TokenCredentialOptions());
-
-            var pipeline = CredentialPipeline.GetInstance(options);
-
-            var cred = new ManagedIdentityCredential(new ManagedIdentityClient(pipeline, clientId));
-
+            var cred = new ManagedIdentityCredential(clientId, options);
             return cred;
         }
     }

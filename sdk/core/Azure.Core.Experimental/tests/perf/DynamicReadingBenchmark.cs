@@ -3,11 +3,10 @@
 
 using System;
 using System.Dynamic;
-using Azure.Core.Dynamic;
 using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json.Linq;
 
-namespace Azure.Data.AppConfiguration.Performance
+namespace Azure.Core.Experimental.Perf.Benchmarks
 {
     [MemoryDiagnoser]
     [InProcess]
@@ -17,7 +16,7 @@ namespace Azure.Data.AppConfiguration.Performance
         private static BinaryData _binaryData = new BinaryData(_json);
 
         private static dynamic _expandoObject = new ExpandoObject();
-        private static dynamic _jsonData = _binaryData.ToDynamic();
+        private static dynamic _jsonData = _binaryData.ToDynamicFromJson();
         private static dynamic _dynamicNewtonsoftJson = JObject.Parse(_json);
 
         static DynamicReadingBenchmark()

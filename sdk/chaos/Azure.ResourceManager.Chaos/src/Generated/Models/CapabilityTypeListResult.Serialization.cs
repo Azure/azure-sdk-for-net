@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static CapabilityTypeListResult DeserializeCapabilityTypeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CapabilityTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CapabilityTypeData> array = new List<CapabilityTypeData>();
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

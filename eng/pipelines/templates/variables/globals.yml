@@ -10,7 +10,6 @@ variables:
     BuildConfiguration: 'Release'
   DocFxVersion: 'v2.56.1'
   CollectCoverage: false
-  DECODE_PERCENTS: false
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages/
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_CLI_TELEMETRY_OPTOUT: 1

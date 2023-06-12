@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmFabricSpecificDetails DeserializeInMageRcmFabricSpecificDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmwareSiteId = default;
             Optional<string> physicalSiteId = default;
             Optional<string> serviceEndpoint = default;
@@ -35,66 +39,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmwareSiteId"))
+                if (property.NameEquals("vmwareSiteId"u8))
                 {
                     vmwareSiteId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("physicalSiteId"))
+                if (property.NameEquals("physicalSiteId"u8))
                 {
                     physicalSiteId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceEndpoint"))
+                if (property.NameEquals("serviceEndpoint"u8))
                 {
                     serviceEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceResourceId"))
+                if (property.NameEquals("serviceResourceId"u8))
                 {
                     serviceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceContainerId"))
+                if (property.NameEquals("serviceContainerId"u8))
                 {
                     serviceContainerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPlaneUri"))
+                if (property.NameEquals("dataPlaneUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataPlaneUri = null;
                         continue;
                     }
                     dataPlaneUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controlPlaneUri"))
+                if (property.NameEquals("controlPlaneUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        controlPlaneUri = null;
                         continue;
                     }
                     controlPlaneUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceAgentIdentityDetails"))
+                if (property.NameEquals("sourceAgentIdentityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("processServers"))
+                if (property.NameEquals("processServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProcessServerDetails> array = new List<ProcessServerDetails>();
@@ -105,11 +105,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     processServers = array;
                     continue;
                 }
-                if (property.NameEquals("rcmProxies"))
+                if (property.NameEquals("rcmProxies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RcmProxyDetails> array = new List<RcmProxyDetails>();
@@ -120,11 +119,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     rcmProxies = array;
                     continue;
                 }
-                if (property.NameEquals("pushInstallers"))
+                if (property.NameEquals("pushInstallers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PushInstallerDetails> array = new List<PushInstallerDetails>();
@@ -135,11 +133,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     pushInstallers = array;
                     continue;
                 }
-                if (property.NameEquals("replicationAgents"))
+                if (property.NameEquals("replicationAgents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReplicationAgentDetails> array = new List<ReplicationAgentDetails>();
@@ -150,11 +147,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     replicationAgents = array;
                     continue;
                 }
-                if (property.NameEquals("reprotectAgents"))
+                if (property.NameEquals("reprotectAgents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReprotectAgentDetails> array = new List<ReprotectAgentDetails>();
@@ -165,11 +161,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     reprotectAgents = array;
                     continue;
                 }
-                if (property.NameEquals("marsAgents"))
+                if (property.NameEquals("marsAgents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MarsAgentDetails> array = new List<MarsAgentDetails>();
@@ -180,11 +175,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     marsAgents = array;
                     continue;
                 }
-                if (property.NameEquals("dras"))
+                if (property.NameEquals("dras"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DraDetails> array = new List<DraDetails>();
@@ -195,11 +189,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     dras = array;
                     continue;
                 }
-                if (property.NameEquals("agentDetails"))
+                if (property.NameEquals("agentDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AgentDetails> array = new List<AgentDetails>();
@@ -210,7 +203,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     agentDetails = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

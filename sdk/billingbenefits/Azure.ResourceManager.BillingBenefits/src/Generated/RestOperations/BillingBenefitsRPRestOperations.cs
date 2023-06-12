@@ -103,5 +103,71 @@ namespace Azure.ResourceManager.BillingBenefits
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateValidatePurchaseNextPageRequest(string nextLink, SavingsPlanPurchaseValidateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Validate savings plan purchase. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="content"/> is null. </exception>
+        public async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseNextPageAsync(string nextLink, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidatePurchaseNextPageRequest(nextLink, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SavingsPlanValidateResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Validate savings plan purchase. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="content"/> is null. </exception>
+        public Response<SavingsPlanValidateResponse> ValidatePurchaseNextPage(string nextLink, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidatePurchaseNextPageRequest(nextLink, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SavingsPlanValidateResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }

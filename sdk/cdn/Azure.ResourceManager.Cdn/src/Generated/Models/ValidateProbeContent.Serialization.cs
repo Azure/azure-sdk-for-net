@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("probeURL");
+            writer.WritePropertyName("probeURL"u8);
             writer.WriteStringValue(ProbeUri.AbsoluteUri);
             writer.WriteEndObject();
         }

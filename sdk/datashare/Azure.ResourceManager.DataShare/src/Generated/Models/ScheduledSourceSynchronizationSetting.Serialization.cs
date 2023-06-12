@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static ScheduledSourceSynchronizationSetting DeserializeScheduledSourceSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceShareSynchronizationSettingKind kind = default;
             Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
             Optional<DateTimeOffset> synchronizationTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SourceShareSynchronizationSettingKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,21 +38,19 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("recurrenceInterval"))
+                        if (property0.NameEquals("recurrenceInterval"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recurrenceInterval = new DataShareSynchronizationRecurrenceInterval(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("synchronizationTime"))
+                        if (property0.NameEquals("synchronizationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             synchronizationTime = property0.Value.GetDateTimeOffset("O");

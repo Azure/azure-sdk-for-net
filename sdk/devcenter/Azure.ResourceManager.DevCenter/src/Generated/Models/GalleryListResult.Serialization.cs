@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static GalleryListResult DeserializeGalleryListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<GalleryData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DevCenterGalleryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GalleryData> array = new List<GalleryData>();
+                    List<DevCenterGalleryData> array = new List<DevCenterGalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryData.DeserializeGalleryData(item));
+                        array.Add(DevCenterGalleryData.DeserializeDevCenterGalleryData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

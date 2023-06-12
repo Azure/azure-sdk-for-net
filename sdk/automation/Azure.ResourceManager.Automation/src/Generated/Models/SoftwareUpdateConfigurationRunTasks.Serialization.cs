@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SoftwareUpdateConfigurationRunTasks DeserializeSoftwareUpdateConfigurationRunTasks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SoftwareUpdateConfigurationRunTaskProperties> preTask = default;
             Optional<SoftwareUpdateConfigurationRunTaskProperties> postTask = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preTask"))
+                if (property.NameEquals("preTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("postTask"))
+                if (property.NameEquals("postTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     postTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value);

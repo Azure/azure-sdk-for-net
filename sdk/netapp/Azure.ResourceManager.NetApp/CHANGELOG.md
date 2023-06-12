@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,40 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0 (2023-04-04)
+
+### Features Added
+- Updated to support ANF api-version 2022-09-01
+- Added `BackupRestoreFiles` to `NetAppVolumeResource` to restore the specified files from the specified backup to the active file system
+- Added `BreakFileLocks` to `NetAppVolumeResource` to allow clients to break file locks on a volume
+- Added `FileAccessLog` to `NetAppVolumeData`, a flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
+- Added propperty `PreferredServersForLdapClient` to `NetAppAccountActiveDirectory`, a comma separated list of IPv4 addresses of preferred servers for LDAP client
+- Added `VolumeRelocation` to `NetAppVolumeDataProtection`
+- Added `DataStoreResourceId` to `NetAppVolumeGroupVolume`
+- Added `Tags` property to NetAppVolumeQuotaRulePatch and `AddTag`, `RemoveTag` and `SetTags` to `NetAppVolumeQuotaResource`
+- Added `RestoreFiles` for `NetAppVolumeBackupResource`
+
+### Breaking Changes
+- `NetAppVault` is no longer needed scheduled for deprecation
+- `VaultId` is not longer needed it has been deprecated from `NetAppVolumeBackupConfiguration` in api-version 2022-09-01, but will continue to be supported in pervious api-verisons, 2022-05-01 and older
+## 1.0.1 (2023-02-15)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-28)
 

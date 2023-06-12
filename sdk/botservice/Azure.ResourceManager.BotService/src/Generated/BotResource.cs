@@ -110,65 +110,97 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns a BotService Channel registration specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
-        /// Operation Id: Channels_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Channels_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns a BotService Channel registration specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
-        /// Operation Id: Channels_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Channels_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<BotChannelResource> GetBotChannel(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             return GetBotChannels().Get(channelName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectionSettingResources in the Bot. </summary>
-        /// <returns> An object representing collection of ConnectionSettingResources and their operations over a ConnectionSettingResource. </returns>
-        public virtual ConnectionSettingCollection GetConnectionSettings()
+        /// <summary> Gets a collection of BotConnectionSettingResources in the Bot. </summary>
+        /// <returns> An object representing collection of BotConnectionSettingResources and their operations over a BotConnectionSettingResource. </returns>
+        public virtual BotConnectionSettingCollection GetBotConnectionSettings()
         {
-            return GetCachedClient(Client => new ConnectionSettingCollection(Client, Id));
+            return GetCachedClient(Client => new BotConnectionSettingCollection(Client, Id));
         }
 
         /// <summary>
         /// Get a Connection Setting registration for a Bot Service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}
-        /// Operation Id: BotConnection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotConnection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectionSettingResource>> GetConnectionSettingAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotConnectionSettingResource>> GetBotConnectionSettingAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            return await GetConnectionSettings().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetBotConnectionSettings().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Connection Setting registration for a Bot Service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}
-        /// Operation Id: BotConnection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotConnection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectionSettingResource> GetConnectionSetting(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<BotConnectionSettingResource> GetBotConnectionSetting(string connectionName, CancellationToken cancellationToken = default)
         {
-            return GetConnectionSettings().Get(connectionName, cancellationToken);
+            return GetBotConnectionSettings().Get(connectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BotServicePrivateEndpointConnectionResources in the Bot. </summary>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Gets the specified private endpoint connection associated with the Bot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +235,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Gets the specified private endpoint connection associated with the Bot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,8 +258,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns a BotService specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BotResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -234,8 +290,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns a BotService specified by the parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BotResource> Get(CancellationToken cancellationToken = default)
@@ -258,8 +322,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Deletes a Bot Service from the resource group. 
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,8 +356,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Deletes a Bot Service from the resource group. 
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -310,8 +390,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Updates a Bot Service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -336,8 +424,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Updates a Bot Service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,18 +458,26 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys
-        /// Operation Id: DirectLine_RegenerateKeys
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DirectLine_RegenerateKeys</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> RegenerateKeysDirectLineAsync(RegenerateKeysChannelName channelName, SiteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.RegenerateKeysDirectLine");
+            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
             scope.Start();
             try
             {
@@ -389,18 +493,26 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys
-        /// Operation Id: DirectLine_RegenerateKeys
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DirectLine_RegenerateKeys</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BotChannelResource> RegenerateKeysDirectLine(RegenerateKeysChannelName channelName, SiteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeys(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.RegenerateKeysDirectLine");
+            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
             scope.Start();
             try
             {
@@ -416,13 +528,21 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Creates an email channel sign in url for a Bot Service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/createEmailSignInUrl
-        /// Operation Id: Email_CreateSignInUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/createEmailSignInUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Email_CreateSignInUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateEmailSignInUrlResponse>> CreateSignInUrlEmailAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotCreateEmailSignInUriResult>> CreateEmailSignInUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateSignInUrlEmail");
+            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
             scope.Start();
             try
             {
@@ -438,13 +558,21 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Creates an email channel sign in url for a Bot Service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/createEmailSignInUrl
-        /// Operation Id: Email_CreateSignInUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/createEmailSignInUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Email_CreateSignInUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateEmailSignInUrlResponse> CreateSignInUrlEmail(CancellationToken cancellationToken = default)
+        public virtual Response<BotCreateEmailSignInUriResult> CreateEmailSignInUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateSignInUrlEmail");
+            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
             scope.Start();
             try
             {
@@ -460,62 +588,58 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Gets the private link resources that need to be created for a Bot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListByBotResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListByBotResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BotServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BotServicePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("BotResource.GetPrivateLinkResourcesByBotResource");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListByBotResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets the private link resources that need to be created for a Bot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListByBotResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListByBotResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BotServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
         {
-            Page<BotServicePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("BotResource.GetPrivateLinkResourcesByBotResource");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListByBotResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -560,8 +684,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -606,8 +738,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -647,8 +787,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -688,8 +836,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -732,8 +888,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}
-        /// Operation Id: Bots_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

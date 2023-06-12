@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmCloud data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmCloud data model.
+    /// The Clouds resource definition.
+    /// </summary>
     public partial class ScVmmCloudData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmCloudData. </summary>

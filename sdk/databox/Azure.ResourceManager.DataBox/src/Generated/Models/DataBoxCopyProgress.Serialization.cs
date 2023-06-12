@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -14,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxCopyProgress DeserializeDataBoxCopyProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageAccountName = default;
             Optional<DataBoxJobTransferType> transferType = default;
             Optional<DataAccountType> dataAccountType = default;
@@ -29,155 +35,166 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<long> directoriesErroredOut = default;
             Optional<long> invalidDirectoriesProcessed = default;
             Optional<bool> isEnumerationInProgress = default;
+            Optional<ResponseError> error = default;
+            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountName"))
+                if (property.NameEquals("storageAccountName"u8))
                 {
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transferType"))
+                if (property.NameEquals("transferType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferType = property.Value.GetString().ToDataBoxJobTransferType();
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bytesProcessed"))
+                if (property.NameEquals("bytesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bytesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalBytesToProcess"))
+                if (property.NameEquals("totalBytesToProcess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalBytesToProcess = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesProcessed"))
+                if (property.NameEquals("filesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalFilesToProcess"))
+                if (property.NameEquals("totalFilesToProcess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalFilesToProcess = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidFilesProcessed"))
+                if (property.NameEquals("invalidFilesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     invalidFilesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidFileBytesUploaded"))
+                if (property.NameEquals("invalidFileBytesUploaded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     invalidFileBytesUploaded = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("renamedContainerCount"))
+                if (property.NameEquals("renamedContainerCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     renamedContainerCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesErroredOut"))
+                if (property.NameEquals("filesErroredOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filesErroredOut = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("directoriesErroredOut"))
+                if (property.NameEquals("directoriesErroredOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directoriesErroredOut = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("invalidDirectoriesProcessed"))
+                if (property.NameEquals("invalidDirectoriesProcessed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     invalidDirectoriesProcessed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isEnumerationInProgress"))
+                if (property.NameEquals("isEnumerationInProgress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEnumerationInProgress = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("actions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CustomerResolutionCode> array = new List<CustomerResolutionCode>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCustomerResolutionCode());
+                    }
+                    actions = array;
+                    continue;
+                }
             }
-            return new DataBoxCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress));
+            return new DataBoxCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions));
         }
     }
 }

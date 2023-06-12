@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,86 +50,46 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// List all the operations.
-        /// Request Path: /providers/Microsoft.ManagementPartner/operations
-        /// Operation Id: Operation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationResponse> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationResponse>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await OperationRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationResponse>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await OperationRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all the operations.
-        /// Request Path: /providers/Microsoft.ManagementPartner/operations
-        /// Operation Id: Operation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationResponse> GetOperations(CancellationToken cancellationToken = default)
         {
-            Page<OperationResponse> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = OperationRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationResponse> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = OperationRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the PeerAsn data model. </summary>
+    /// <summary>
+    /// A class representing the PeerAsn data model.
+    /// The essential information related to the peer&apos;s ASN.
+    /// </summary>
     public partial class PeerAsnData : ResourceData
     {
         /// <summary> Initializes a new instance of PeerAsnData. </summary>

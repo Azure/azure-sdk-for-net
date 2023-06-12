@@ -1,0 +1,97 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9cff5927731b72c2ad192a58b1d5478b-cc6495065468436b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fd987e064351daddea35ec29006ad62e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Apr 2023 17:36:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "825599df-7191-45c3-ae69-8817b36dc4f2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11914",
+        "x-ms-request-id": "825599df-7191-45c3-ae69-8817b36dc4f2",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230420T173635Z:825599df-7191-45c3-ae69-8817b36dc4f2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "259fbb24-9bcd-4cfc-865c-fc33b22fe38a",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "CosmosDB-Backup-Restore",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/resourcegroups/dbaccount-2975?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-3c3ee5760852b2ac118c4ebc7d5be529-58ecb86202a5c23c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "22a7da54f19ab820847ce9c4ee6584e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "226",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Apr 2023 17:36:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cfb960ce-2ce9-4e69-9045-7255f1e4e1c7",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "cfb960ce-2ce9-4e69-9045-7255f1e4e1c7",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230420T173636Z:cfb960ce-2ce9-4e69-9045-7255f1e4e1c7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/resourceGroups/dbaccount-2975",
+        "name": "dbaccount-2975",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1646695296",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "259fbb24-9bcd-4cfc-865c-fc33b22fe38a"
+  }
+}

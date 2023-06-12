@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabVirtualNetwork data model.
+    /// A virtual network.
+    /// </summary>
     public partial class DevTestLabVirtualNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>

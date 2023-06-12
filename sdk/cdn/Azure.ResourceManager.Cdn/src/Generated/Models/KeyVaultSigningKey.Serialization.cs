@@ -15,23 +15,27 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(KeyType.ToString());
-            writer.WritePropertyName("subscriptionId");
+            writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
-            writer.WritePropertyName("resourceGroupName");
+            writer.WritePropertyName("resourceGroupName"u8);
             writer.WriteStringValue(ResourceGroupName);
-            writer.WritePropertyName("vaultName");
+            writer.WritePropertyName("vaultName"u8);
             writer.WriteStringValue(VaultName);
-            writer.WritePropertyName("secretName");
+            writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            writer.WritePropertyName("secretVersion");
+            writer.WritePropertyName("secretVersion"u8);
             writer.WriteStringValue(SecretVersion);
             writer.WriteEndObject();
         }
 
         internal static KeyVaultSigningKey DeserializeKeyVaultSigningKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyVaultSigningKeyType typeName = default;
             string subscriptionId = default;
             string resourceGroupName = default;
@@ -40,32 +44,32 @@ namespace Azure.ResourceManager.Cdn.Models
             string secretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new KeyVaultSigningKeyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"))
+                if (property.NameEquals("resourceGroupName"u8))
                 {
                     resourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vaultName"))
+                if (property.NameEquals("vaultName"u8))
                 {
                     vaultName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretName"))
+                if (property.NameEquals("secretName"u8))
                 {
                     secretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretVersion"))
+                if (property.NameEquals("secretVersion"u8))
                 {
                     secretVersion = property.Value.GetString();
                     continue;

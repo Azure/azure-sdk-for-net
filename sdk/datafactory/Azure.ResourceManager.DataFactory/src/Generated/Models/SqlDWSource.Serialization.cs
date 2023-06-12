@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlReaderQuery))
             {
-                writer.WritePropertyName("sqlReaderQuery");
+                writer.WritePropertyName("sqlReaderQuery"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SqlReaderQuery);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SqlReaderStoredProcedureName))
             {
-                writer.WritePropertyName("sqlReaderStoredProcedureName");
+                writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SqlReaderStoredProcedureName);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
-                writer.WritePropertyName("storedProcedureParameters");
+                writer.WritePropertyName("storedProcedureParameters"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StoredProcedureParameters);
 #else
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionOption))
             {
-                writer.WritePropertyName("partitionOption");
+                writer.WritePropertyName("partitionOption"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionOption);
 #else
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionSettings))
             {
-                writer.WritePropertyName("partitionSettings");
+                writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
-                writer.WritePropertyName("queryTimeout");
+                writer.WritePropertyName("queryTimeout"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(QueryTimeout);
 #else
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
-                writer.WritePropertyName("additionalColumns");
+                writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalColumns);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
-                writer.WritePropertyName("sourceRetryCount");
+                writer.WritePropertyName("sourceRetryCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceRetryCount);
 #else
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
-                writer.WritePropertyName("sourceRetryWait");
+                writer.WritePropertyName("sourceRetryWait"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceRetryWait);
 #else
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxConcurrentConnections);
 #else
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
+                writer.WritePropertyName("disableMetricsCollection"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DisableMetricsCollection);
 #else
@@ -128,6 +128,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlDWSource DeserializeSqlDWSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> sqlReaderQuery = default;
             Optional<BinaryData> sqlReaderStoredProcedureName = default;
             Optional<BinaryData> storedProcedureParameters = default;
@@ -144,116 +148,105 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlReaderQuery"))
+                if (property.NameEquals("sqlReaderQuery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlReaderQuery = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sqlReaderStoredProcedureName"))
+                if (property.NameEquals("sqlReaderStoredProcedureName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlReaderStoredProcedureName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("storedProcedureParameters"))
+                if (property.NameEquals("storedProcedureParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storedProcedureParameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionOption"))
+                if (property.NameEquals("partitionOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionOption = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionSettings"))
+                if (property.NameEquals("partitionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"))
+                if (property.NameEquals("queryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("additionalColumns"))
+                if (property.NameEquals("additionalColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryCount"))
+                if (property.NameEquals("sourceRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sourceRetryWait"))
+                if (property.NameEquals("sourceRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());

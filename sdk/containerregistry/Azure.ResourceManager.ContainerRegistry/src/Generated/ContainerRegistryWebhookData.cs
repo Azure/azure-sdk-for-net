@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryWebhook data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryWebhook data model.
+    /// An object that represents a webhook for a container registry.
+    /// </summary>
     public partial class ContainerRegistryWebhookData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryWebhookData. </summary>

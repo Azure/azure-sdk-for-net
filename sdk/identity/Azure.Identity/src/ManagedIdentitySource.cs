@@ -27,8 +27,7 @@ namespace Azure.Identity
 
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            using Request request = CreateRequest(context.Scopes);
-            using HttpMessage message = CreateHttpMessage(request);
+            using HttpMessage message = CreateHttpMessage(CreateRequest(context.Scopes));
             if (async)
             {
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -47,7 +46,6 @@ namespace Azure.Identity
             Response response,
             CancellationToken cancellationToken)
         {
-            string message;
             Exception exception = null;
             try
             {
@@ -58,8 +56,6 @@ namespace Azure.Identity
                 {
                     return GetTokenFromResponse(json.RootElement);
                 }
-
-                message = GetMessageFromResponse(json.RootElement);
             }
             catch (JsonException jex)
             {
@@ -68,13 +64,9 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 exception = e;
-                message = UnexpectedResponse;
             }
 
-            var responseError = new ResponseError(null, message);
-            throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, responseError, innerException: exception).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response, responseError, innerException: exception);
+            throw new RequestFailedException(response, exception);
         }
 
         protected abstract Request CreateRequest(string[] scopes);
@@ -84,7 +76,7 @@ namespace Azure.Identity
             return new HttpMessage(request, _responseClassifier);
         }
 
-        protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
+        internal static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
         {
             if (response?.ContentStream == null || !response.ContentStream.CanRead || response.ContentStream.Length == 0)
             {

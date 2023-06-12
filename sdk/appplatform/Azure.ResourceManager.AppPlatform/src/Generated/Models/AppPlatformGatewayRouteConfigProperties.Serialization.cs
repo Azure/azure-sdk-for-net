@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppResourceId))
             {
-                writer.WritePropertyName("appResourceId");
+                writer.WritePropertyName("appResourceId"u8);
                 writer.WriteStringValue(AppResourceId);
             }
             if (Optional.IsDefined(OpenApi))
             {
-                writer.WritePropertyName("openApi");
+                writer.WritePropertyName("openApi"u8);
                 writer.WriteObjectValue(OpenApi);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayRouteConfigProperties DeserializeAppPlatformGatewayRouteConfigProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> appResourceId = default;
             Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
@@ -53,51 +57,46 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformGatewayProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appResourceId"))
+                if (property.NameEquals("appResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("openApi"))
+                if (property.NameEquals("openApi"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new AppPlatformGatewayRouteConfigProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformGatewayApiRoute> array = new List<AppPlatformGatewayApiRoute>();

@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("TableName");
+                writer.WritePropertyName("TableName"u8);
                 writer.WriteStringValue(TableName);
             }
             writer.WriteEndObject();

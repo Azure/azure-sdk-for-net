@@ -15,15 +15,18 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("variables");
+            writer.WritePropertyName("variables"u8);
             writer.WriteStartArray();
             foreach (var item in Variables)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("topContributorCount");
-            writer.WriteNumberValue(TopContributorCount);
+            if (Optional.IsDefined(TopContributorCount))
+            {
+                writer.WritePropertyName("topContributorCount"u8);
+                writer.WriteNumberValue(TopContributorCount.Value);
+            }
             writer.WriteEndObject();
         }
 

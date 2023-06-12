@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the HybridRunbookWorkerGroup data model. </summary>
+    /// <summary>
+    /// A class representing the HybridRunbookWorkerGroup data model.
+    /// Definition of hybrid runbook worker group.
+    /// </summary>
     public partial class HybridRunbookWorkerGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridRunbookWorkerGroupData. </summary>

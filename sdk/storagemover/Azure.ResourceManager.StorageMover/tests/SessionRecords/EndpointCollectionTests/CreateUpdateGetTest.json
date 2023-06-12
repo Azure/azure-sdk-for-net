@@ -1,0 +1,2466 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3c54e6ae548243abbb54fcd8df0b32f0-4535f81b7ff76812-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "b864ec816918dddf30f53b16c2de4d7d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d15991d1-bc7c-4ab7-8fe8-643ea97cd864",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "d15991d1-bc7c-4ab7-8fe8-643ea97cd864",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013234Z:d15991d1-bc7c-4ab7-8fe8-643ea97cd864"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "45b60d85-fd72-427a-a708-f994d26e593e",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "AzureStorage_DMStaging_10041369",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourcegroups/teststomover?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a6fc9384c71f84288cb8b11b01db9d7-7a16a87c22ef8489-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "a32d8768bfd2b6e57bb1469401acabee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "226",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a0582d16-dd32-473b-9576-9223cef2d680",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "a0582d16-dd32-473b-9576-9223cef2d680",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013234Z:a0582d16-dd32-473b-9576-9223cef2d680"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover",
+        "name": "teststomover",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2euap",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-991cc78a97e5125cd6fa429e2df0cfa2-a86b02f12359b5e7-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "f8581c7854911cf4f00beecdf4592687",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "556",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:35 GMT",
+        "ETag": "\u00220000072f-0000-3400-0000-63ff0a780000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f8581c7854911cf4f00beecdf4592687",
+        "x-ms-correlation-request-id": "78e4cb0a-bc03-4ad2-92f8-8e11715c2707",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "c680de55-df62-48d8-880e-e805dff544b6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013236Z:78e4cb0a-bc03-4ad2-92f8-8e11715c2707"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1",
+        "name": "testsm1",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-01T08:19:03.3105576Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-01T08:19:03.3105576Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639?api-version=2023-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "269",
+        "Content-Type": "application/json",
+        "traceparent": "00-cb738ff42f848f2f2b31cebafd570e6b-05dd60762bda6859-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "b1cdf1c3c104ae063d67234bdb84494c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+          "blobContainerName": "testsmcontainer",
+          "endpointType": "AzureStorageBlobContainer"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "830",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:36 GMT",
+        "ETag": "\u002200003092-0000-3400-0000-64014e350000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "e6415ee4-3fd8-4c74-bc7f-e20417a43725",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b1cdf1c3c104ae063d67234bdb84494c",
+        "x-ms-correlation-request-id": "640ab33b-89ab-4815-9ff2-9186bf51dcc5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "a280e478-6793-439f-90f8-db12fd8fc1d0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013237Z:640ab33b-89ab-4815-9ff2-9186bf51dcc5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639",
+        "name": "conendpoint-8639",
+        "type": "microsoft.storagemover/storagemovers/endpoints",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-03T01:32:36.6758536Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-03T01:32:36.6758536Z"
+        },
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+          "blobContainerName": "testsmcontainer",
+          "endpointType": "AzureStorageBlobContainer",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-201?api-version=2023-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "73",
+        "Content-Type": "application/json",
+        "traceparent": "00-eee826a0f500fc5854321ac50a0b0168-62bfdbd10200201b-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "5586a59d14ec1093b3c6d018c2218abf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "host": "10.0.0.1",
+          "export": "/",
+          "endpointType": "NfsMount"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "655",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:37 GMT",
+        "ETag": "\u002200003192-0000-3400-0000-64014e350000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "0b48a7fb-0e97-443f-8d45-42081321bf96",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5586a59d14ec1093b3c6d018c2218abf",
+        "x-ms-correlation-request-id": "429271be-272c-4207-8b05-8c54eca79ead",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "8e6b26b2-c1f7-48ac-b6d1-f55d0d9b1141",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013238Z:429271be-272c-4207-8b05-8c54eca79ead"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-201",
+        "name": "nfsendpoint-201",
+        "type": "microsoft.storagemover/storagemovers/endpoints",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-03T01:32:37.4727394Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-03T01:32:37.4727394Z"
+        },
+        "properties": {
+          "host": "10.0.0.1",
+          "nfsVersion": "NFSauto",
+          "export": "/",
+          "endpointType": "NfsMount",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7d6b8d32b577d5dd62b97e16c70b2e82-2d603541bf56f4d4-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "bae8c105c7219617f1e2178df9a5306a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "830",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:38 GMT",
+        "ETag": "\u002200003092-0000-3400-0000-64014e350000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bae8c105c7219617f1e2178df9a5306a",
+        "x-ms-correlation-request-id": "82f2c2d5-2aa1-4174-9b3e-6266c50b6a42",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "952b814c-a3ff-40ac-9362-21514b51d5e4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013238Z:82f2c2d5-2aa1-4174-9b3e-6266c50b6a42"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639",
+        "name": "conendpoint-8639",
+        "type": "microsoft.storagemover/storagemovers/endpoints",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-03T01:32:36.6758536Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-03T01:32:36.6758536Z"
+        },
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+          "blobContainerName": "testsmcontainer",
+          "endpointType": "AzureStorageBlobContainer",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5c013f18027fd64e2abba7a431698631-f9adf7a1d5265b53-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "80bca7833900af535dbcfd3ef0eeec1c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "79589",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "80bca7833900af535dbcfd3ef0eeec1c",
+        "x-ms-correlation-request-id": "ac22ea72-e853-4c41-b92b-89a86132a586",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "5891cc93-3e1a-40d7-9095-5b2dcc65f586",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013239Z:ac22ea72-e853-4c41-b92b-89a86132a586"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+            "name": "testsmcontainerendpoint",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T08:56:45.7720908Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T08:56:45.7720908Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+            "name": "testnfsendpoint",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T08:59:16.1256526Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T08:59:16.1256526Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-2199",
+            "name": "conendpoint-2199",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T07:53:50.7890232Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T07:53:50.7890232Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-9644",
+            "name": "nfsendpoint-9644",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T07:53:51.929785Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T07:53:51.929785Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-4323",
+            "name": "conendpoint-4323",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:08:47.0498765Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:08:47.0498765Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1168",
+            "name": "conendpoint-1168",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:09:51.8089149Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:10:31.248574Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-9769",
+            "name": "conendpoint-9769",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:11:04.8611223Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:11:04.8611223Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6905",
+            "name": "conendpoint-6905",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:11:31.3939733Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:11:31.3939733Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-7249",
+            "name": "conendpoint-7249",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:11:54.0958909Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:11:54.0958909Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1885",
+            "name": "conendpoint-1885",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:12:13.553605Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:12:13.553605Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8381",
+            "name": "conendpoint-8381",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:12:27.6448707Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:12:27.6448707Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-2721",
+            "name": "conendpoint-2721",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:12:59.4200374Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:12:59.4200374Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6543",
+            "name": "conendpoint-6543",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:15:00.7621596Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:15:00.7621596Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1841",
+            "name": "conendpoint-1841",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:16:00.8254493Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:16:00.8254493Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-9697",
+            "name": "nfsendpoint-9697",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:16:01.6379922Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:16:01.6379922Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6209",
+            "name": "conendpoint-6209",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:17:06.667086Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:17:06.667086Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-3802",
+            "name": "nfsendpoint-3802",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:17:07.4952685Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:17:07.4952685Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-5280",
+            "name": "conendpoint-5280",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:17:52.0753588Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:17:52.0753588Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-7480",
+            "name": "nfsendpoint-7480",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:17:52.9347288Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:17:52.9347288Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-4700",
+            "name": "conendpoint-4700",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:31:04.3651755Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:31:04.3651755Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-1220",
+            "name": "nfsendpoint-1220",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:31:05.3340728Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:31:05.3340728Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/endpoint-7631",
+            "name": "endpoint-7631",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:38:57.1350824Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:38:57.1350824Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/endpoint-5096",
+            "name": "endpoint-5096",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:39:28.2483468Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:39:28.2483468Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/endpoint-8536",
+            "name": "endpoint-8536",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:40:19.0522087Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:40:19.0522087Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/endpoint-2203",
+            "name": "endpoint-2203",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:40:39.421155Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:40:39.421155Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/endpoint-9856",
+            "name": "endpoint-9856",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:41:15.2094042Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:41:15.2094042Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/endpoint-7800",
+            "name": "endpoint-7800",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T08:42:32.3832799Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T08:42:32.3832799Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1915",
+            "name": "conendpoint-1915",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:05:19.9887491Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:05:19.9887491Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-146",
+            "name": "nfsendpoint-146",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:05:20.7387811Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:05:20.7387811Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-9510",
+            "name": "conendpoint-9510",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:05:25.8640454Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:05:25.8640454Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-2334",
+            "name": "nfsendpoint-2334",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:05:26.9109737Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:05:26.9109737Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-687",
+            "name": "conendpoint-687",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:11:51.5335284Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:11:51.5335284Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-9843",
+            "name": "nfsendpoint-9843",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:11:52.3304082Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:11:52.3304082Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6772",
+            "name": "conendpoint-6772",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:11:57.6116853Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:11:57.6116853Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-7051",
+            "name": "nfsendpoint-7051",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:11:58.4554362Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:11:58.4554362Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6806",
+            "name": "conendpoint-6806",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:15:18.6188201Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:15:18.6188201Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-6942",
+            "name": "nfsendpoint-6942",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:15:19.5562969Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:15:19.5562969Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-4232",
+            "name": "conendpoint-4232",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:15:24.8531952Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:15:24.8531952Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-807",
+            "name": "nfsendpoint-807",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:15:25.7281546Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:15:25.7281546Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-924",
+            "name": "conendpoint-924",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:20:26.9219619Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:20:26.9219619Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-1149",
+            "name": "nfsendpoint-1149",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:20:28.8907242Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:20:28.8907242Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1441",
+            "name": "conendpoint-1441",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:20:33.6251044Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:20:33.6251044Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-3134",
+            "name": "nfsendpoint-3134",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:20:34.3595138Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:20:34.3595138Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8030",
+            "name": "conendpoint-8030",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:24:16.3269826Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:24:16.3269826Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-2135",
+            "name": "nfsendpoint-2135",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:24:17.6238619Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:24:17.6238619Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8257",
+            "name": "conendpoint-8257",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:24:22.920711Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:24:22.920711Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-7556",
+            "name": "nfsendpoint-7556",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:24:23.6551121Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:24:23.6551121Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-7062",
+            "name": "conendpoint-7062",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:25:56.5121805Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:25:56.5121805Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-7146",
+            "name": "nfsendpoint-7146",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:25:57.3402172Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:25:57.3402172Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-5422",
+            "name": "conendpoint-5422",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:02.4808934Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:02.4808934Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4109",
+            "name": "nfsendpoint-4109",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:03.2621498Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:03.2621498Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-4595",
+            "name": "conendpoint-4595",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:23.0239363Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:23.0239363Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-8923",
+            "name": "nfsendpoint-8923",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:23.7738749Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:23.7738749Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-5408",
+            "name": "conendpoint-5408",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:28.5706703Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:28.5706703Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4669",
+            "name": "nfsendpoint-4669",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:29.2894054Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:29.2894054Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1551",
+            "name": "conendpoint-1551",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:51.7836285Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:51.7836285Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-6970",
+            "name": "nfsendpoint-6970",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:52.5960201Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:52.5960201Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-2662",
+            "name": "conendpoint-2662",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:57.5031844Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:57.5031844Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-2331",
+            "name": "nfsendpoint-2331",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:26:58.2063657Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:26:58.2063657Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8943",
+            "name": "conendpoint-8943",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:09:54.2400387Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:09:54.2400387Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4262",
+            "name": "nfsendpoint-4262",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:09:55.3494254Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:09:55.3494254Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-2548",
+            "name": "conendpoint-2548",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:10:00.2244032Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:10:00.2244032Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-1992",
+            "name": "nfsendpoint-1992",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:10:01.3025462Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:10:01.3025462Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-343",
+            "name": "conendpoint-343",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:12:40.7204786Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:12:40.7204786Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4486",
+            "name": "nfsendpoint-4486",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:12:41.6580178Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:12:41.6580178Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-4778",
+            "name": "conendpoint-4778",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:12:46.8610873Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:12:46.8610873Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-2773",
+            "name": "nfsendpoint-2773",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:12:48.0173504Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:12:48.0173504Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-3061",
+            "name": "conendpoint-3061",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:13:45.0170046Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:13:45.0170046Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-9669",
+            "name": "nfsendpoint-9669",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:13:45.8295195Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:13:45.8295195Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-5717",
+            "name": "conendpoint-5717",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:13:52.9389557Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:13:52.9389557Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-978",
+            "name": "nfsendpoint-978",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:13:53.688953Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:13:53.688953Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-7354",
+            "name": "conendpoint-7354",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:14:24.9360182Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:14:24.9360182Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-7168",
+            "name": "nfsendpoint-7168",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:14:25.7485206Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:14:25.7485206Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-3299",
+            "name": "conendpoint-3299",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:14:31.5923127Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:14:31.5923127Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-591",
+            "name": "nfsendpoint-591",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:14:32.5141917Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:14:32.5141917Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-57",
+            "name": "conendpoint-57",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:05.2894953Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:05.2894953Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-699",
+            "name": "nfsendpoint-699",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:06.1488545Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:06.1488545Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-9451",
+            "name": "conendpoint-9451",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:12.1795915Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:12.1795915Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-5563",
+            "name": "nfsendpoint-5563",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:12.9921522Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:12.9921522Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-2906",
+            "name": "conendpoint-2906",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:41.6975899Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:41.6975899Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-6737",
+            "name": "nfsendpoint-6737",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:42.5257124Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:42.5257124Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-9398",
+            "name": "conendpoint-9398",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:48.2131806Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:48.2131806Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-6373",
+            "name": "nfsendpoint-6373",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:15:49.1663005Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:15:49.1663005Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-4052",
+            "name": "conendpoint-4052",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:09.0568167Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:09.0568167Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-3226",
+            "name": "nfsendpoint-3226",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:09.7912195Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:09.7912195Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1334",
+            "name": "conendpoint-1334",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:15.1349668Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:15.1349668Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4314",
+            "name": "nfsendpoint-4314",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:15.8693413Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:15.8693413Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6609",
+            "name": "conendpoint-6609",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:34.5504761Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:34.5504761Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-2971",
+            "name": "nfsendpoint-2971",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:35.3160645Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:35.3160645Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6101",
+            "name": "conendpoint-6101",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:40.3004045Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:40.3004045Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-9057",
+            "name": "nfsendpoint-9057",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:16:41.0191731Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:16:41.0191731Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-1479",
+            "name": "conendpoint-1479",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:17:20.4798166Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:17:20.4798166Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-5730",
+            "name": "nfsendpoint-5730",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:17:21.5735631Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:17:21.5735631Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6002",
+            "name": "conendpoint-6002",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:17:27.0588904Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:17:27.0588904Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4365",
+            "name": "nfsendpoint-4365",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:17:27.8395939Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:17:27.8395939Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8295",
+            "name": "conendpoint-8295",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:31:43.7722992Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:31:43.7722992Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-2097",
+            "name": "nfsendpoint-2097",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:31:45.1473083Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:31:45.1473083Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-2920",
+            "name": "conendpoint-2920",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:31:49.8348673Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:31:49.8348673Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-4405",
+            "name": "nfsendpoint-4405",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:31:50.7254926Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:31:50.7254926Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-6902",
+            "name": "conendpoint-6902",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:32:10.7770295Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:32:10.7770295Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-5616",
+            "name": "nfsendpoint-5616",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:32:11.5425995Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:32:11.5425995Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-3210",
+            "name": "conendpoint-3210",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:32:16.46459Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:32:16.46459Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-3443",
+            "name": "nfsendpoint-3443",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:32:17.214717Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:32:17.214717Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639",
+            "name": "conendpoint-8639",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:32:36.6758536Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:32:36.6758536Z"
+            },
+            "properties": {
+              "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+              "blobContainerName": "testsmcontainer",
+              "endpointType": "AzureStorageBlobContainer",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/nfsendpoint-201",
+            "name": "nfsendpoint-201",
+            "type": "microsoft.storagemover/storagemovers/endpoints",
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-03T01:32:37.4727394Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-03T01:32:37.4727394Z"
+            },
+            "properties": {
+              "host": "10.0.0.1",
+              "nfsVersion": "NFSauto",
+              "export": "/",
+              "endpointType": "NfsMount",
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2781d2d6ddbc07961360cf57086cc2c8-3cb1617231cfa486-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "194564dc8f9cd62b8eef6309fd05170e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "830",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Mar 2023 01:32:39 GMT",
+        "ETag": "\u002200003092-0000-3400-0000-64014e350000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "194564dc8f9cd62b8eef6309fd05170e",
+        "x-ms-correlation-request-id": "306c794d-b098-49bd-a38a-92dfc7114867",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "ee1c4dfb-1d3c-4fe5-9da2-ba8bfe067bdf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013240Z:306c794d-b098-49bd-a38a-92dfc7114867"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639",
+        "name": "conendpoint-8639",
+        "type": "microsoft.storagemover/storagemovers/endpoints",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-03T01:32:36.6758536Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-03T01:32:36.6758536Z"
+        },
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+          "blobContainerName": "testsmcontainer",
+          "endpointType": "AzureStorageBlobContainer",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639111?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-76064700dea955a3b604f099a9a61acf-036189e4e7576946-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "1b9466960a65cbbe6d385d64c9d9a502",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "159",
+        "Content-Type": "application/json",
+        "Date": "Fri, 03 Mar 2023 01:32:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1b9466960a65cbbe6d385d64c9d9a502",
+        "x-ms-correlation-request-id": "cae7980f-42d9-4c50-96ae-2cc2dacc047e",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "5b0b5b45-ceaf-4bfd-a2c7-4b61d5c04f9f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230303T013240Z:cae7980f-42d9-4c50-96ae-2cc2dacc047e"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The resource \u0027Microsoft.StorageMover/storageMovers/testsm1/endpoints/conendpoint-8639111\u0027 could not be found."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "33194376",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "45b60d85-fd72-427a-a708-f994d26e593e"
+  }
+}

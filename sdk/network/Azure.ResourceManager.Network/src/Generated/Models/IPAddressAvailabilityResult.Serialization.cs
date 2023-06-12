@@ -15,26 +15,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static IPAddressAvailabilityResult DeserializeIPAddressAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> available = default;
             Optional<IReadOnlyList<string>> availableIPAddresses = default;
             Optional<bool> isPlatformReserved = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("available"))
+                if (property.NameEquals("available"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     available = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("availableIPAddresses"))
+                if (property.NameEquals("availableIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -45,11 +47,10 @@ namespace Azure.ResourceManager.Network.Models
                     availableIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("isPlatformReserved"))
+                if (property.NameEquals("isPlatformReserved"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPlatformReserved = property.Value.GetBoolean();

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppSubvolumeInfo data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppSubvolumeInfo data model.
+    /// Subvolume Information properties
+    /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>

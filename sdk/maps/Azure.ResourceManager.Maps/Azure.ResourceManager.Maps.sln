@@ -7,6 +7,8 @@ Project("{F468144D-38B1-4FD5-95F0-0A3661988E03}") = "Azure.ResourceManager.Maps"
 EndProject
 Project("{F468144D-38B1-4FD5-95F0-0A3661988E03}") = "Azure.ResourceManager.Maps.Tests", "tests\Azure.ResourceManager.Maps.Tests.csproj", "{FFBE279B-1814-4B89-BDCB-6D41ED41D8C4}"
 EndProject
+Project("{F468144D-38B1-4FD5-95F0-0A3661988E03}") = "Azure.ResourceManager.Maps.Samples", "samples\Azure.ResourceManager.Maps.Samples.csproj", "{B981864E-6872-47B2-8014-D41382749EAF}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

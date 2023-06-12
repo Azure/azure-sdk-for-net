@@ -12,12 +12,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task DetectLanguageAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            #region Snippet:DetectLanguageAsync
+            #region Snippet:Sample1_DetectLanguageAsync
             string document =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
                 + " invocar el método de Detección de Lenguaje del servicio de Text Analytics en Microsoft Azure."
@@ -30,7 +29,8 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Response<DetectedLanguage> response = await client.DetectLanguageAsync(document);
                 DetectedLanguage language = response.Value;
-                Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
+
+                Console.WriteLine($"Detected language is {language.Name} with a confidence score of {language.ConfidenceScore}.");
             }
             catch (RequestFailedException exception)
             {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -47,21 +47,21 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("metadata");
+            writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(StrongType))
             {
-                writer.WritePropertyName("strongType");
+                writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
             }
             writer.WriteEndObject();
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ResourceGroupDefinition DeserializeResourceGroupDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<IList<string>> dependsOn = default;
@@ -79,26 +83,24 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> strongType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -109,11 +111,10 @@ namespace Azure.ResourceManager.Blueprint.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,17 +134,17 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("strongType"))
+                        if (property0.NameEquals("strongType"u8))
                         {
                             strongType = property0.Value.GetString();
                             continue;

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Creates an NetworkExperiment Profile
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}
-        /// Operation Id: NetworkExperimentProfiles_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Creates an NetworkExperiment Profile
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}
-        /// Operation Id: NetworkExperimentProfiles_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Gets an NetworkExperiment Profile by ProfileName
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}
-        /// Operation Id: NetworkExperimentProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Gets an NetworkExperiment Profile by ProfileName
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}
-        /// Operation Id: NetworkExperimentProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Gets a list of Network Experiment Profiles within a resource group under a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles
-        /// Operation Id: NetworkExperimentProfiles_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorNetworkExperimentProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorNetworkExperimentProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorNetworkExperimentProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Network Experiment Profiles within a resource group under a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles
-        /// Operation Id: NetworkExperimentProfiles_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorNetworkExperimentProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorNetworkExperimentProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorNetworkExperimentProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}
-        /// Operation Id: NetworkExperimentProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}
-        /// Operation Id: NetworkExperimentProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

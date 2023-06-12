@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("providerSpecificDetails");
+            writer.WritePropertyName("providerSpecificDetails"u8);
             writer.WriteObjectValue(ProviderSpecificDetails);
             writer.WriteEndObject();
         }

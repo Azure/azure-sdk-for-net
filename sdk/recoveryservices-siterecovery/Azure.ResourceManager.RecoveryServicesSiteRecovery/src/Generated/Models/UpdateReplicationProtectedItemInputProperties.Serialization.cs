@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryAzureVmName))
             {
-                writer.WritePropertyName("recoveryAzureVMName");
+                writer.WritePropertyName("recoveryAzureVMName"u8);
                 writer.WriteStringValue(RecoveryAzureVmName);
             }
             if (Optional.IsDefined(RecoveryAzureVmSize))
             {
-                writer.WritePropertyName("recoveryAzureVMSize");
+                writer.WritePropertyName("recoveryAzureVMSize"u8);
                 writer.WriteStringValue(RecoveryAzureVmSize);
             }
             if (Optional.IsDefined(SelectedRecoveryAzureNetworkId))
             {
-                writer.WritePropertyName("selectedRecoveryAzureNetworkId");
+                writer.WritePropertyName("selectedRecoveryAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedRecoveryAzureNetworkId);
             }
             if (Optional.IsDefined(SelectedTfoAzureNetworkId))
             {
-                writer.WritePropertyName("selectedTfoAzureNetworkId");
+                writer.WritePropertyName("selectedTfoAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedTfoAzureNetworkId);
             }
             if (Optional.IsDefined(SelectedSourceNicId))
             {
-                writer.WritePropertyName("selectedSourceNicId");
+                writer.WritePropertyName("selectedSourceNicId"u8);
                 writer.WriteStringValue(SelectedSourceNicId);
             }
             if (Optional.IsDefined(EnableRdpOnTargetOption))
             {
-                writer.WritePropertyName("enableRdpOnTargetOption");
+                writer.WritePropertyName("enableRdpOnTargetOption"u8);
                 writer.WriteStringValue(EnableRdpOnTargetOption);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
-                writer.WritePropertyName("vmNics");
+                writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
-                writer.WritePropertyName("recoveryAvailabilitySetId");
+                writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
-                writer.WritePropertyName("providerSpecificDetails");
+                writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
             writer.WriteEndObject();

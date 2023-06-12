@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static NodeMonitoringData DeserializeNodeMonitoringData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, BinaryData>> additionalProperties = default;
             Optional<string> nodeName = default;
             Optional<int> availableMemoryInMB = default;
@@ -27,91 +31,90 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<double> receivedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("additionalProperties"))
+                if (property.NameEquals("additionalProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     additionalProperties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInMB"))
+                if (property.NameEquals("availableMemoryInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableMemoryInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuUtilization"))
+                if (property.NameEquals("cpuUtilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuUtilization = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"))
+                if (property.NameEquals("concurrentJobsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     concurrentJobsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsRunning"))
+                if (property.NameEquals("concurrentJobsRunning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     concurrentJobsRunning = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"))
+                if (property.NameEquals("maxConcurrentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sentBytes"))
+                if (property.NameEquals("sentBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sentBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("receivedBytes"))
+                if (property.NameEquals("receivedBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     receivedBytes = property.Value.GetDouble();

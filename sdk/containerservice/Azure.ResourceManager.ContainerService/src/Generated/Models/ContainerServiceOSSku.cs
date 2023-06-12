@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
+    /// <summary> Specifies the OS SKU used by the agent pool. If not specified, the default is Ubuntu if OSType=Linux or Windows2019 if OSType=Windows. And the default Windows OSSKU will be changed to Windows2022 after Windows2019 is deprecated. </summary>
     public readonly partial struct ContainerServiceOSSku : IEquatable<ContainerServiceOSSku>
     {
         private readonly string _value;
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string UbuntuValue = "Ubuntu";
         private const string CblMarinerValue = "CBLMariner";
+        private const string MarinerValue = "Mariner";
         private const string Windows2019Value = "Windows2019";
         private const string Windows2022Value = "Windows2022";
 
@@ -31,6 +32,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOSSku Ubuntu { get; } = new ContainerServiceOSSku(UbuntuValue);
         /// <summary> CBLMariner. </summary>
         public static ContainerServiceOSSku CblMariner { get; } = new ContainerServiceOSSku(CblMarinerValue);
+        /// <summary> Mariner. </summary>
+        public static ContainerServiceOSSku Mariner { get; } = new ContainerServiceOSSku(MarinerValue);
         /// <summary> Windows2019. </summary>
         public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
         /// <summary> Windows2022. </summary>

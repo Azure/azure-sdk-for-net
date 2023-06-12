@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get a revision of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
-        /// Operation Id: ContainerAppsRevisions_GetRevision
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_GetRevision</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get a revision of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
-        /// Operation Id: ContainerAppsRevisions_GetRevision
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_GetRevision</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,94 +128,62 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the Revisions for a given Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions
-        /// Operation Id: ContainerAppsRevisions_ListRevisions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_ListRevisions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppRevisionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppRevisionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppRevisionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppRevisionContainerAppsRevisionsRestClient.ListRevisionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppRevisionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppRevisionContainerAppsRevisionsRestClient.ListRevisionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the Revisions for a given Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions
-        /// Operation Id: ContainerAppsRevisions_ListRevisions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_ListRevisions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppRevisionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppRevisionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppRevisionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppRevisionContainerAppsRevisionsRestClient.ListRevisions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppRevisionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppRevisionContainerAppsRevisionsRestClient.ListRevisionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
-        /// Operation Id: ContainerAppsRevisions_GetRevision
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_GetRevision</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +209,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
-        /// Operation Id: ContainerAppsRevisions_GetRevision
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_GetRevision</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

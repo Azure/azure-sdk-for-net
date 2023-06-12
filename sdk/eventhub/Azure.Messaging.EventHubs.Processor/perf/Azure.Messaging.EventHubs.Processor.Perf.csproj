@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Version>1.0.0</Version>
     <OutputType>Exe</OutputType>
-    <LangVersion>latest</LangVersion>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 

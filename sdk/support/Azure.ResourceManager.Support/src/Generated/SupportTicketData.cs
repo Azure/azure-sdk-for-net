@@ -12,7 +12,10 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    /// <summary> A class representing the SupportTicket data model. </summary>
+    /// <summary>
+    /// A class representing the SupportTicket data model.
+    /// Object that represents SupportTicketDetails resource.
+    /// </summary>
     public partial class SupportTicketData : ResourceData
     {
         /// <summary> Initializes a new instance of SupportTicketData. </summary>

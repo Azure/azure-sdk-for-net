@@ -24,7 +24,7 @@ namespace Azure.Communication.MediaComposition.Tests
         protected MediaCompositionClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new MediaCompositionClient(
-                    TestEnvironment.LiveTestDynamicConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     CreateMediaCompositionClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -40,8 +40,8 @@ namespace Azure.Communication.MediaComposition.Tests
         protected MediaCompositionClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new MediaCompositionClient(
-                    TestEnvironment.LiveTestDynamicEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
+                    TestEnvironment.LiveTestStaticEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
                     CreateMediaCompositionClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
@@ -55,7 +55,7 @@ namespace Azure.Communication.MediaComposition.Tests
         protected MediaCompositionClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new MediaCompositionClient(
-                    TestEnvironment.LiveTestDynamicEndpoint,
+                    TestEnvironment.LiveTestStaticEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateMediaCompositionClientOptionsWithCorrelationVectorLogs());
 

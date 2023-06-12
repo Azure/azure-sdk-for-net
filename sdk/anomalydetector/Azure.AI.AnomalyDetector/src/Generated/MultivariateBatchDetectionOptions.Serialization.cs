@@ -17,47 +17,58 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSource");
-            writer.WriteStringValue(DataSource);
-            writer.WritePropertyName("topContributorCount");
-            writer.WriteNumberValue(TopContributorCount);
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("dataSource"u8);
+            writer.WriteStringValue(DataSource.AbsoluteUri);
+            if (Optional.IsDefined(TopContributorCount))
+            {
+                writer.WritePropertyName("topContributorCount"u8);
+                writer.WriteNumberValue(TopContributorCount.Value);
+            }
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
             writer.WriteEndObject();
         }
 
         internal static MultivariateBatchDetectionOptions DeserializeMultivariateBatchDetectionOptions(JsonElement element)
         {
-            string dataSource = default;
-            int topContributorCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri dataSource = default;
+            Optional<int> topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
-                    dataSource = property.Value.GetString();
+                    dataSource = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("topContributorCount"))
+                if (property.NameEquals("topContributorCount"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     topContributorCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime);
+            return new MultivariateBatchDetectionOptions(dataSource, Optional.ToNullable(topContributorCount), startTime, endTime);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

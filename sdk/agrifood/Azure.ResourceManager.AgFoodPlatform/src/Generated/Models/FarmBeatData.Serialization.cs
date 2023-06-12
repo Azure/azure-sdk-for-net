@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SensorIntegration))
             {
-                writer.WritePropertyName("sensorIntegration");
+                writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static FarmBeatData DeserializeFarmBeatData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -69,21 +73,19 @@ namespace Azure.ResourceManager.AgFoodPlatform
             Optional<AgFoodPlatformPrivateEndpointConnectionData> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -94,37 +96,36 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,51 +134,46 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("instanceUri"))
+                        if (property0.NameEquals("instanceUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                instanceUri = null;
                                 continue;
                             }
                             instanceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sensorIntegration"))
+                        if (property0.NameEquals("sensorIntegration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpointConnections = AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(property0.Value);

@@ -12,24 +12,48 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Request of last detection. </summary>
+    /// <summary> Request of the last detection. </summary>
     public partial class MultivariateLastDetectionOptions
     {
         /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
-        /// <param name="variables"></param>
-        /// <param name="topContributorCount"></param>
+        /// <param name="variables">
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
+        /// values of variables.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
-        public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables, int topContributorCount)
+        public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables)
         {
             Argument.AssertNotNull(variables, nameof(variables));
 
             Variables = variables.ToList();
+        }
+
+        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <param name="variables">
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
+        /// values of variables.
+        /// </param>
+        /// <param name="topContributorCount">
+        /// Number of top contributed
+        /// variables for one anomalous time stamp in the response. The default is
+        /// 10.
+        /// </param>
+        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount)
+        {
+            Variables = variables;
             TopContributorCount = topContributorCount;
         }
 
-        /// <summary> Gets the variables. </summary>
+        /// <summary>
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
+        /// values of variables.
+        /// </summary>
         public IList<VariableValues> Variables { get; }
-        /// <summary> Gets the top contributor count. </summary>
-        public int TopContributorCount { get; }
+        /// <summary>
+        /// Number of top contributed
+        /// variables for one anomalous time stamp in the response. The default is
+        /// 10.
+        /// </summary>
+        public int? TopContributorCount { get; set; }
     }
 }

@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionReservationSummary DeserializeConsumptionReservationSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -41,21 +45,19 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<decimal> utilizedPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -66,32 +68,31 @@ namespace Azure.ResourceManager.Consumption.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,131 +101,120 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("reservationOrderId"))
+                        if (property0.NameEquals("reservationOrderId"u8))
                         {
                             reservationOrderId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservationId"))
+                        if (property0.NameEquals("reservationId"u8))
                         {
                             reservationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("skuName"))
+                        if (property0.NameEquals("skuName"u8))
                         {
                             skuName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("reservedHours"))
+                        if (property0.NameEquals("reservedHours"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservedHours = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("usageDate"))
+                        if (property0.NameEquals("usageDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usageDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("usedHours"))
+                        if (property0.NameEquals("usedHours"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usedHours = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("minUtilizationPercentage"))
+                        if (property0.NameEquals("minUtilizationPercentage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minUtilizationPercentage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("avgUtilizationPercentage"))
+                        if (property0.NameEquals("avgUtilizationPercentage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             avgUtilizationPercentage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("maxUtilizationPercentage"))
+                        if (property0.NameEquals("maxUtilizationPercentage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxUtilizationPercentage = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("kind"))
+                        if (property0.NameEquals("kind"u8))
                         {
                             kind = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purchasedQuantity"))
+                        if (property0.NameEquals("purchasedQuantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasedQuantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("remainingQuantity"))
+                        if (property0.NameEquals("remainingQuantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remainingQuantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("totalReservedQuantity"))
+                        if (property0.NameEquals("totalReservedQuantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalReservedQuantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("usedQuantity"))
+                        if (property0.NameEquals("usedQuantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usedQuantity = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("utilizedPercentage"))
+                        if (property0.NameEquals("utilizedPercentage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             utilizedPercentage = property0.Value.GetDecimal();

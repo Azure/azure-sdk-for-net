@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,63 +35,63 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ContactAdmin))
             {
-                writer.WritePropertyName("contactAdmin");
+                writer.WritePropertyName("contactAdmin"u8);
                 writer.WriteObjectValue(ContactAdmin);
             }
             if (Optional.IsDefined(ContactBilling))
             {
-                writer.WritePropertyName("contactBilling");
+                writer.WritePropertyName("contactBilling"u8);
                 writer.WriteObjectValue(ContactBilling);
             }
             if (Optional.IsDefined(ContactRegistrant))
             {
-                writer.WritePropertyName("contactRegistrant");
+                writer.WritePropertyName("contactRegistrant"u8);
                 writer.WriteObjectValue(ContactRegistrant);
             }
             if (Optional.IsDefined(ContactTech))
             {
-                writer.WritePropertyName("contactTech");
+                writer.WritePropertyName("contactTech"u8);
                 writer.WriteObjectValue(ContactTech);
             }
             if (Optional.IsDefined(IsDomainPrivacyEnabled))
             {
-                writer.WritePropertyName("privacy");
+                writer.WritePropertyName("privacy"u8);
                 writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
             if (Optional.IsDefined(IsAutoRenew))
             {
-                writer.WritePropertyName("autoRenew");
+                writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Consent))
             {
-                writer.WritePropertyName("consent");
+                writer.WritePropertyName("consent"u8);
                 writer.WriteObjectValue(Consent);
             }
             if (Optional.IsDefined(DnsType))
             {
-                writer.WritePropertyName("dnsType");
+                writer.WritePropertyName("dnsType"u8);
                 writer.WriteStringValue(DnsType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DnsZoneId))
             {
-                writer.WritePropertyName("dnsZoneId");
+                writer.WritePropertyName("dnsZoneId"u8);
                 writer.WriteStringValue(DnsZoneId);
             }
             if (Optional.IsDefined(TargetDnsType))
             {
-                writer.WritePropertyName("targetDnsType");
+                writer.WritePropertyName("targetDnsType"u8);
                 writer.WriteStringValue(TargetDnsType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AuthCode))
             {
-                writer.WritePropertyName("authCode");
+                writer.WritePropertyName("authCode"u8);
                 writer.WriteStringValue(AuthCode);
             }
             writer.WriteEndObject();
@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceDomainData DeserializeAppServiceDomainData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -129,16 +133,15 @@ namespace Azure.ResourceManager.AppService
             Optional<string> authCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -149,37 +152,36 @@ namespace Azure.ResourceManager.AppService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,71 +190,64 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("contactAdmin"))
+                        if (property0.NameEquals("contactAdmin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contactBilling"))
+                        if (property0.NameEquals("contactBilling"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contactRegistrant"))
+                        if (property0.NameEquals("contactRegistrant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contactTech"))
+                        if (property0.NameEquals("contactTech"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("registrationStatus"))
+                        if (property0.NameEquals("registrationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationStatus = property0.Value.GetString().ToAppServiceDomainStatus();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("nameServers"))
+                        if (property0.NameEquals("nameServers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -263,71 +258,64 @@ namespace Azure.ResourceManager.AppService
                             nameServers = array;
                             continue;
                         }
-                        if (property0.NameEquals("privacy"))
+                        if (property0.NameEquals("privacy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privacy = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationTime"))
+                        if (property0.NameEquals("expirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastRenewedTime"))
+                        if (property0.NameEquals("lastRenewedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastRenewedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("autoRenew"))
+                        if (property0.NameEquals("autoRenew"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoRenew = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("readyForDnsRecordManagement"))
+                        if (property0.NameEquals("readyForDnsRecordManagement"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readyForDnsRecordManagement = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("managedHostNames"))
+                        if (property0.NameEquals("managedHostNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AppServiceHostName> array = new List<AppServiceHostName>();
@@ -338,21 +326,19 @@ namespace Azure.ResourceManager.AppService
                             managedHostNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("consent"))
+                        if (property0.NameEquals("consent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("domainNotRenewableReasons"))
+                        if (property0.NameEquals("domainNotRenewableReasons"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DomainNotRenewableReason> array = new List<DomainNotRenewableReason>();
@@ -363,32 +349,30 @@ namespace Azure.ResourceManager.AppService
                             domainNotRenewableReasons = array;
                             continue;
                         }
-                        if (property0.NameEquals("dnsType"))
+                        if (property0.NameEquals("dnsType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dnsType = property0.Value.GetString().ToAppServiceDnsType();
                             continue;
                         }
-                        if (property0.NameEquals("dnsZoneId"))
+                        if (property0.NameEquals("dnsZoneId"u8))
                         {
                             dnsZoneId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetDnsType"))
+                        if (property0.NameEquals("targetDnsType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetDnsType = property0.Value.GetString().ToAppServiceDnsType();
                             continue;
                         }
-                        if (property0.NameEquals("authCode"))
+                        if (property0.NameEquals("authCode"u8))
                         {
                             authCode = property0.Value.GetString();
                             continue;

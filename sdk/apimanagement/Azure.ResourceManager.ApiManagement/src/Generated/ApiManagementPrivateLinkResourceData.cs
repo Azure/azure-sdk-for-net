@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class ApiManagementPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceData. </summary>

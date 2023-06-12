@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously creates a new event subscription or updates an existing event subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: DomainTopicEventSubscriptions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously creates a new event subscription or updates an existing event subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: DomainTopicEventSubscriptions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of a nested event subscription for a domain topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: DomainTopicEventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of a nested event subscription for a domain topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: DomainTopicEventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +210,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all event subscriptions that have been created for a specific domain topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions
-        /// Operation Id: DomainTopicEventSubscriptions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -188,43 +227,23 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="DomainTopicEventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DomainTopicEventSubscriptionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DomainTopicEventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _domainTopicEventSubscriptionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainTopicEventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DomainTopicEventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _domainTopicEventSubscriptionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainTopicEventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicEventSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainTopicEventSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DomainTopicEventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _domainTopicEventSubscriptionClientDiagnostics, Pipeline, "DomainTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all event subscriptions that have been created for a specific domain topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions
-        /// Operation Id: DomainTopicEventSubscriptions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -232,43 +251,23 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="DomainTopicEventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DomainTopicEventSubscriptionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DomainTopicEventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _domainTopicEventSubscriptionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainTopicEventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DomainTopicEventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _domainTopicEventSubscriptionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainTopicEventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicEventSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainTopicEventSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DomainTopicEventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _domainTopicEventSubscriptionClientDiagnostics, Pipeline, "DomainTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: DomainTopicEventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,8 +293,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: DomainTopicEventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

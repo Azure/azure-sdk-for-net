@@ -11,30 +11,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanValidateResponse
+    internal partial class SavingsPlanValidateResponse
     {
         internal static SavingsPlanValidateResponse DeserializeSavingsPlanValidateResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<SavingsPlanValidResponseProperty>> benefits = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("benefits"))
+                if (property.NameEquals("benefits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SavingsPlanValidResponseProperty> array = new List<SavingsPlanValidResponseProperty>();
+                    List<SavingsPlanValidateResult> array = new List<SavingsPlanValidateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanValidResponseProperty.DeserializeSavingsPlanValidResponseProperty(item));
+                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item));
                     }
                     benefits = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -96,6 +97,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
                 .AddConverter(new MessageToStringConverter())
                 .AddConverter(new MessageToByteArrayConverter())
                 .AddConverter<ServiceBusReceivedMessage, BinaryData>(message => message.Body)
+                .AddConverter<ServiceBusReceivedMessage, ParameterBindingData>(ConvertReceivedMessageToBindingData)
                 .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>), _options.JsonSerializerSettings);
 
             // register our trigger binding provider
@@ -106,6 +108,26 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             // register our binding provider
             ServiceBusAttributeBindingProvider bindingProvider = new ServiceBusAttributeBindingProvider(_nameResolver, _messagingProvider, _clientFactory);
             context.AddBindingRule<ServiceBusAttribute>().Bind(bindingProvider);
+        }
+
+        internal static ParameterBindingData ConvertReceivedMessageToBindingData(ServiceBusReceivedMessage message)
+        {
+            ReadOnlyMemory<byte> messageBytes = message.GetRawAmqpMessage().ToBytes().ToMemory();
+
+            byte[] lockTokenBytes = Guid.Parse(message.LockToken).ToByteArray();
+
+            // The lock token is a 16 byte GUID
+            const int lockTokenLength = 16;
+
+            byte[] combinedBytes = new byte[messageBytes.Length + lockTokenLength];
+
+            // The 16 lock token bytes go in the beginning
+            lockTokenBytes.CopyTo(combinedBytes.AsSpan());
+
+            // The AMQP message bytes go after the lock token bytes
+            messageBytes.CopyTo(combinedBytes.AsMemory(lockTokenLength));
+
+            return new ParameterBindingData("1.0", "AzureServiceBusReceivedMessage", BinaryData.FromBytes(combinedBytes), "application/octet-stream");
         }
 
         internal static void LogExceptionReceivedEvent(ProcessErrorEventArgs e, ILoggerFactory loggerFactory)

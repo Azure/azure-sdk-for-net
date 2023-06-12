@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static ComputeResourceSkuCapacityScaleType ToComputeResourceSkuCapacityScaleType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuCapacityScaleType.None;
-            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuCapacityScaleType.Automatic;
-            if (string.Equals(value, "Manual", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuCapacityScaleType.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ComputeResourceSkuCapacityScaleType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return ComputeResourceSkuCapacityScaleType.Automatic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return ComputeResourceSkuCapacityScaleType.Manual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuCapacityScaleType value.");
         }
     }

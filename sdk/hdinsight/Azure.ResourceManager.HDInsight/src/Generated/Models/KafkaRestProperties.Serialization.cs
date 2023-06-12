@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientGroupInfo))
             {
-                writer.WritePropertyName("clientGroupInfo");
+                writer.WritePropertyName("clientGroupInfo"u8);
                 writer.WriteObjectValue(ClientGroupInfo);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
-                writer.WritePropertyName("configurationOverride");
+                writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();
                 foreach (var item in ConfigurationOverride)
                 {
@@ -37,25 +37,27 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static KafkaRestProperties DeserializeKafkaRestProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClientGroupInfo> clientGroupInfo = default;
             Optional<IDictionary<string, string>> configurationOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientGroupInfo"))
+                if (property.NameEquals("clientGroupInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("configurationOverride"))
+                if (property.NameEquals("configurationOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

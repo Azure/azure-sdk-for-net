@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("format");
+            writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
             writer.WriteEndObject();
         }

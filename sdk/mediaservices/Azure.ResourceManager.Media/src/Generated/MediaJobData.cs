@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaJob data model. </summary>
+    /// <summary>
+    /// A class representing the MediaJob data model.
+    /// A Job resource type. The progress and state can be obtained by polling a Job or subscribing to events using EventGrid.
+    /// </summary>
     public partial class MediaJobData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaJobData. </summary>

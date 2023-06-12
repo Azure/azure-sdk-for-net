@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <Import Project="Versioning.targets" />
 
@@ -87,7 +87,7 @@
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
 
-    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
 
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
 
@@ -99,9 +99,9 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Add App.config to enable server GC in net461 perf and stress projects -->
-  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
-    <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  <!-- Add App.config to enable server GC in net462 perf and stress projects -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
+    <None Include="$(RepoRoot)/common/Perf/App.config" />
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
@@ -196,10 +196,8 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ExponentialDelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
@@ -339,6 +337,12 @@
     </PropertyGroup>
 
     <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
+  </Target>
+
+  <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
+    <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
+      <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="_SetProjectDependsOnInnerTarget">

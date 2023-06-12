@@ -17,52 +17,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetVmName))
             {
-                writer.WritePropertyName("targetVmName");
+                writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
             if (Optional.IsDefined(TargetVmSize))
             {
-                writer.WritePropertyName("targetVmSize");
+                writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
             if (Optional.IsDefined(TargetResourceGroupId))
             {
-                writer.WritePropertyName("targetResourceGroupId");
+                writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
             if (Optional.IsDefined(TargetAvailabilitySetId))
             {
-                writer.WritePropertyName("targetAvailabilitySetId");
+                writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
             if (Optional.IsDefined(TargetAvailabilityZone))
             {
-                writer.WritePropertyName("targetAvailabilityZone");
+                writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
             if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
-                writer.WritePropertyName("targetProximityPlacementGroupId");
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
-                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId");
+                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
             if (Optional.IsDefined(TargetNetworkId))
             {
-                writer.WritePropertyName("targetNetworkId");
+                writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
             if (Optional.IsDefined(TestNetworkId))
             {
-                writer.WritePropertyName("testNetworkId");
+                writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
-                writer.WritePropertyName("vmNics");
+                writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(VmDisks))
             {
-                writer.WritePropertyName("vmDisks");
+                writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(SqlServerLicenseType))
             {
-                writer.WritePropertyName("sqlServerLicenseType");
+                writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
             if (Optional.IsDefined(PerformAutoResync))
             {
-                writer.WritePropertyName("performAutoResync");
+                writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteStringValue(PerformAutoResync);
             }
             if (Optional.IsCollectionDefined(TargetVmTags))
             {
-                writer.WritePropertyName("targetVmTags");
+                writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetVmTags)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(TargetDiskTags))
             {
-                writer.WritePropertyName("targetDiskTags");
+                writer.WritePropertyName("targetDiskTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetDiskTags)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(TargetNicTags))
             {
-                writer.WritePropertyName("targetNicTags");
+                writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetNicTags)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

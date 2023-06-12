@@ -17,17 +17,17 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SymmetricKey))
             {
-                writer.WritePropertyName("symmetricKey");
+                writer.WritePropertyName("symmetricKey"u8);
                 writer.WriteObjectValue(SymmetricKey);
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
-                writer.WritePropertyName("x509Thumbprint");
+                writer.WritePropertyName("x509Thumbprint"u8);
                 writer.WriteObjectValue(X509Thumbprint);
             }
             if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static AuthenticationMechanism DeserializeAuthenticationMechanism(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SymmetricKey> symmetricKey = default;
             Optional<X509Thumbprint> x509Thumbprint = default;
             Optional<AuthenticationMechanismType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("symmetricKey"))
+                if (property.NameEquals("symmetricKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     symmetricKey = SymmetricKey.DeserializeSymmetricKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("x509Thumbprint"))
+                if (property.NameEquals("x509Thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509Thumbprint = X509Thumbprint.DeserializeX509Thumbprint(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new AuthenticationMechanismType(property.Value.GetString());

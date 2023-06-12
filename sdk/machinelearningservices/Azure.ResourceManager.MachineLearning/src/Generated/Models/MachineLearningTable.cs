@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// MLTable data definition
-    /// Serialized Name: MLTableData
-    /// </summary>
+    /// <summary> MLTable data definition. </summary>
     public partial class MachineLearningTable : MachineLearningDataVersionProperties
     {
         /// <summary> Initializes a new instance of MachineLearningTable. </summary>
-        /// <param name="dataUri">
-        /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
-        /// Serialized Name: DataVersionBase.dataUri
-        /// </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningTable(Uri dataUri) : base(dataUri)
         {
@@ -32,48 +26,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningTable. </summary>
-        /// <param name="description">
-        /// The asset description text.
-        /// Serialized Name: ResourceBase.description
-        /// </param>
-        /// <param name="properties">
-        /// The asset property dictionary.
-        /// Serialized Name: ResourceBase.properties
-        /// </param>
-        /// <param name="tags">
-        /// Tag dictionary. Tags can be added, removed, and updated.
-        /// Serialized Name: ResourceBase.tags
-        /// </param>
-        /// <param name="isAnonymous">
-        /// If the name version are system generated (anonymous registration).
-        /// Serialized Name: AssetBase.isAnonymous
-        /// </param>
-        /// <param name="isArchived">
-        /// Is the asset archived?
-        /// Serialized Name: AssetBase.isArchived
-        /// </param>
-        /// <param name="dataType">
-        /// [Required] Specifies the type of data.
-        /// Serialized Name: DataVersionBase.dataType
-        /// </param>
-        /// <param name="dataUri">
-        /// [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType
-        /// Serialized Name: DataVersionBase.dataUri
-        /// </param>
-        /// <param name="referencedUris">
-        /// Uris referenced in the MLTable definition (required for lineage)
-        /// Serialized Name: MLTableData.referencedUris
-        /// </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
+        /// <param name="referencedUris"> Uris referenced in the MLTable definition (required for lineage). </param>
         internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {
             ReferencedUris = referencedUris;
             DataType = dataType;
         }
 
-        /// <summary>
-        /// Uris referenced in the MLTable definition (required for lineage)
-        /// Serialized Name: MLTableData.referencedUris
-        /// </summary>
+        /// <summary> Uris referenced in the MLTable definition (required for lineage). </summary>
         public IList<Uri> ReferencedUris { get; set; }
     }
 }

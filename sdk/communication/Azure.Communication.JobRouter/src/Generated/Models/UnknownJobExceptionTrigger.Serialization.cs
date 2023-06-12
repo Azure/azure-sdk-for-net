@@ -15,17 +15,21 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static UnknownJobExceptionTrigger DeserializeUnknownJobExceptionTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

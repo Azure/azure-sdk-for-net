@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticCloudDeployment DeserializeElasticCloudDeployment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> deploymentId = default;
             Optional<string> azureSubscriptionId = default;
@@ -30,51 +34,48 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<Uri> kibanaSsoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentId"))
+                if (property.NameEquals("deploymentId"u8))
                 {
                     deploymentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureSubscriptionId"))
+                if (property.NameEquals("azureSubscriptionId"u8))
                 {
                     azureSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("elasticsearchRegion"))
+                if (property.NameEquals("elasticsearchRegion"u8))
                 {
                     elasticsearchRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("elasticsearchServiceUrl"))
+                if (property.NameEquals("elasticsearchServiceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        elasticsearchServiceUrl = null;
                         continue;
                     }
                     elasticsearchServiceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kibanaServiceUrl"))
+                if (property.NameEquals("kibanaServiceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kibanaServiceUrl = null;
                         continue;
                     }
                     kibanaServiceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kibanaSsoUrl"))
+                if (property.NameEquals("kibanaSsoUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kibanaSsoUrl = null;
                         continue;
                     }
                     kibanaSsoUrl = new Uri(property.Value.GetString());

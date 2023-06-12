@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal VMwareCbtProtectionContainerMappingDetails()
         {
             RoleSizeToNicCountMap = new ChangeTrackingDictionary<string, int>();
+            ExcludedSkus = new ChangeTrackingList<string>();
             InstanceType = "VMwareCbt";
         }
 
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serviceBusConnectionStringSecretName"> The secret name of the service bus connection string. </param>
         /// <param name="targetLocation"> The target location. </param>
         /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
-        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, string keyVaultId, Uri keyVaultUri, string storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap) : base(instanceType)
+        /// <param name="excludedSkus"> The SKUs to be excluded. </param>
+        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, string keyVaultId, Uri keyVaultUri, string storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IReadOnlyList<string> excludedSkus) : base(instanceType)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ServiceBusConnectionStringSecretName = serviceBusConnectionStringSecretName;
             TargetLocation = targetLocation;
             RoleSizeToNicCountMap = roleSizeToNicCountMap;
+            ExcludedSkus = excludedSkus;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
@@ -56,5 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string TargetLocation { get; }
         /// <summary> The role size to NIC count map. </summary>
         public IReadOnlyDictionary<string, int> RoleSizeToNicCountMap { get; }
+        /// <summary> The SKUs to be excluded. </summary>
+        public IReadOnlyList<string> ExcludedSkus { get; }
     }
 }

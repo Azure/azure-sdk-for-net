@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningSharedPrivateLinkResource.
-    /// Serialized Name: SharedPrivateLinkResource
-    /// </summary>
+    /// <summary> The MachineLearningSharedPrivateLinkResource. </summary>
     public partial class MachineLearningSharedPrivateLinkResource
     {
         /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
-        /// <param name="name">
-        /// Unique name of the private link.
-        /// Serialized Name: SharedPrivateLinkResource.name
-        /// </param>
-        /// <param name="privateLinkResourceId">
-        /// The resource id that private link links to.
-        /// Serialized Name: SharedPrivateLinkResource.properties.privateLinkResourceId
-        /// </param>
-        /// <param name="groupId">
-        /// The private link resource group id.
-        /// Serialized Name: SharedPrivateLinkResource.properties.groupId
-        /// </param>
-        /// <param name="requestMessage">
-        /// Request message.
-        /// Serialized Name: SharedPrivateLinkResource.properties.requestMessage
-        /// </param>
-        /// <param name="status">
-        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.
-        /// Serialized Name: SharedPrivateLinkResource.properties.status
-        /// </param>
+        /// <param name="name"> Unique name of the private link. </param>
+        /// <param name="privateLinkResourceId"> The resource id that private link links to. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requestMessage"> Request message. </param>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         internal MachineLearningSharedPrivateLinkResource(string name, ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
             Name = name;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary>
-        /// Unique name of the private link.
-        /// Serialized Name: SharedPrivateLinkResource.name
-        /// </summary>
+        /// <summary> Unique name of the private link. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The resource id that private link links to.
-        /// Serialized Name: SharedPrivateLinkResource.properties.privateLinkResourceId
-        /// </summary>
+        /// <summary> The resource id that private link links to. </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary>
-        /// The private link resource group id.
-        /// Serialized Name: SharedPrivateLinkResource.properties.groupId
-        /// </summary>
+        /// <summary> The private link resource group id. </summary>
         public string GroupId { get; set; }
-        /// <summary>
-        /// Request message.
-        /// Serialized Name: SharedPrivateLinkResource.properties.requestMessage
-        /// </summary>
+        /// <summary> Request message. </summary>
         public string RequestMessage { get; set; }
-        /// <summary>
-        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.
-        /// Serialized Name: SharedPrivateLinkResource.properties.status
-        /// </summary>
+        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
         public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

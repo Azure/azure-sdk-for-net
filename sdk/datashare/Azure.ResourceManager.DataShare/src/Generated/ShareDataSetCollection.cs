@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Create a DataSet 
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}
-        /// Operation Id: DataSets_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dataSetName"> The name of the dataSet. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Create a DataSet 
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}
-        /// Operation Id: DataSets_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dataSetName"> The name of the dataSet. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get a DataSet in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}
-        /// Operation Id: DataSets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get a DataSet in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}
-        /// Operation Id: DataSets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +210,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List DataSets in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets
-        /// Operation Id: DataSets_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> continuation token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -189,43 +228,23 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="ShareDataSetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ShareDataSetResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ShareDataSetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _shareDataSetDataSetsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ShareDataSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _shareDataSetDataSetsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetDataSetsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetDataSetsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetResource(Client, ShareDataSetData.DeserializeShareDataSetData(e)), _shareDataSetDataSetsClientDiagnostics, Pipeline, "ShareDataSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List DataSets in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets
-        /// Operation Id: DataSets_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> continuation token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -234,43 +253,23 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="ShareDataSetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ShareDataSetResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<ShareDataSetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _shareDataSetDataSetsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ShareDataSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _shareDataSetDataSetsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetDataSetsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetDataSetsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetResource(Client, ShareDataSetData.DeserializeShareDataSetData(e)), _shareDataSetDataSetsClientDiagnostics, Pipeline, "ShareDataSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}
-        /// Operation Id: DataSets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -296,8 +295,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}
-        /// Operation Id: DataSets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

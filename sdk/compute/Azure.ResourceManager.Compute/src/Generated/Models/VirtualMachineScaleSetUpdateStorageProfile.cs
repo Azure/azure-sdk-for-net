@@ -25,5 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetUpdateOSDisk OSDisk { get; set; }
         /// <summary> The data disks. </summary>
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; }
+        /// <summary> Gets or sets the disk controller type. </summary>
+        public string DiskControllerType { get; set; }
     }
 }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsUsageMetric DeserializeOperationalInsightsUsageMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OperationalInsightsMetricName> name = default;
             Optional<string> unit = default;
             Optional<double> currentValue = default;
@@ -23,52 +27,48 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<string> quotaPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("nextResetTime"))
+                if (property.NameEquals("nextResetTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nextResetTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;

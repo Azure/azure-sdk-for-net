@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (EndTime != null)
                 {
-                    writer.WritePropertyName("endTime");
+                    writer.WritePropertyName("endTime"u8);
                     writer.WriteStringValue(EndTime);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (StartTime != null)
                 {
-                    writer.WritePropertyName("startTime");
+                    writer.WritePropertyName("startTime"u8);
                     writer.WriteStringValue(StartTime);
                 }
                 else
@@ -41,23 +41,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            writer.WritePropertyName("triggerType");
+            writer.WritePropertyName("triggerType"u8);
             writer.WriteStringValue(TriggerType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownTriggerBase DeserializeUnknownTriggerBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endTime = default;
             Optional<string> startTime = default;
             Optional<string> timeZone = default;
             MachineLearningTriggerType triggerType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     endTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +81,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     startTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerType"))
+                if (property.NameEquals("triggerType"u8))
                 {
                     triggerType = new MachineLearningTriggerType(property.Value.GetString());
                     continue;

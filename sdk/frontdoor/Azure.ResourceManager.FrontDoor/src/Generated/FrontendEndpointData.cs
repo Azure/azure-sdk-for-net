@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary> A class representing the FrontendEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the FrontendEndpoint data model.
+    /// A frontend endpoint used for routing.
+    /// </summary>
     public partial class FrontendEndpointData : FrontDoorResourceData
     {
         /// <summary> Initializes a new instance of FrontendEndpointData. </summary>

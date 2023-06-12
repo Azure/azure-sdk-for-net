@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Virtual Machine priority
-    /// Serialized Name: VmPriority
-    /// </summary>
+    /// <summary> Virtual Machine priority. </summary>
     public readonly partial struct MachineLearningVmPriority : IEquatable<MachineLearningVmPriority>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DedicatedValue = "Dedicated";
         private const string LowPriorityValue = "LowPriority";
 
-        /// <summary>
-        /// Dedicated
-        /// Serialized Name: VmPriority.Dedicated
-        /// </summary>
+        /// <summary> Dedicated. </summary>
         public static MachineLearningVmPriority Dedicated { get; } = new MachineLearningVmPriority(DedicatedValue);
-        /// <summary>
-        /// LowPriority
-        /// Serialized Name: VmPriority.LowPriority
-        /// </summary>
+        /// <summary> LowPriority. </summary>
         public static MachineLearningVmPriority LowPriority { get; } = new MachineLearningVmPriority(LowPriorityValue);
         /// <summary> Determines if two <see cref="MachineLearningVmPriority"/> values are the same. </summary>
         public static bool operator ==(MachineLearningVmPriority left, MachineLearningVmPriority right) => left.Equals(right);

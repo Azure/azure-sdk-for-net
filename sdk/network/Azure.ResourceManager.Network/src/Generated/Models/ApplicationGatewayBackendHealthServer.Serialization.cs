@@ -15,38 +15,40 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealthServer DeserializeApplicationGatewayBackendHealthServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
             Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
             Optional<string> healthProbeLog = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipConfiguration"))
+                if (property.NameEquals("ipConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new ApplicationGatewayBackendHealthServerHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthProbeLog"))
+                if (property.NameEquals("healthProbeLog"u8))
                 {
                     healthProbeLog = property.Value.GetString();
                     continue;

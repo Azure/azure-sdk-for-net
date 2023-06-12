@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.MixedReality
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal MixedRealityArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal MixedRealityArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "MixedRealityArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "MixedRealityArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

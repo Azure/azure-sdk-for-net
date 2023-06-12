@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SendAadLogs))
             {
-                writer.WritePropertyName("sendAadLogs");
+                writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteStringValue(SendAadLogs.Value.ToString());
             }
             if (Optional.IsDefined(SendSubscriptionLogs))
             {
-                writer.WritePropertyName("sendSubscriptionLogs");
+                writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteStringValue(SendSubscriptionLogs.Value.ToString());
             }
             if (Optional.IsDefined(SendActivityLogs))
             {
-                writer.WritePropertyName("sendActivityLogs");
+                writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteStringValue(SendActivityLogs.Value.ToString());
             }
             if (Optional.IsCollectionDefined(FilteringTags))
             {
-                writer.WritePropertyName("filteringTags");
+                writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
@@ -46,47 +46,47 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorResourceLogRules DeserializeDynatraceMonitorResourceLogRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadLogsSendingStatus> sendAadLogs = default;
             Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
             Optional<ActivityLogsSendingStatus> sendActivityLogs = default;
             Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sendAadLogs"))
+                if (property.NameEquals("sendAadLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendAadLogs = new AadLogsSendingStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendSubscriptionLogs"))
+                if (property.NameEquals("sendSubscriptionLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendSubscriptionLogs = new SubscriptionLogsSendingStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendActivityLogs"))
+                if (property.NameEquals("sendActivityLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendActivityLogs = new ActivityLogsSendingStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filteringTags"))
+                if (property.NameEquals("filteringTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DynatraceMonitorResourceFilteringTag> array = new List<DynatraceMonitorResourceFilteringTag>();

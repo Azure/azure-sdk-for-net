@@ -18,38 +18,43 @@ namespace Azure.ResourceManager.Reservations.Models
         internal ExchangeResultProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationToPurchaseExchange>();
+            SavingsPlansToPurchase = new ChangeTrackingList<SavingsPlanToPurchaseExchange>();
             ReservationsToExchange = new ChangeTrackingList<ReservationToReturnForExchange>();
         }
 
         /// <summary> Initializes a new instance of ExchangeResultProperties. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
-        /// <param name="netPayable"></param>
-        /// <param name="refundsTotal"></param>
-        /// <param name="purchasesTotal"></param>
+        /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="purchasesTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="reservationsToPurchase"> Details of the reservations being purchased. </param>
+        /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
         /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
         /// <param name="policyResult"> Exchange policy errors. </param>
-        internal ExchangeResultProperties(Guid? sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase, IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange, ExchangePolicyErrors policyResult)
+        internal ExchangeResultProperties(Guid? sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase, IReadOnlyList<SavingsPlanToPurchaseExchange> savingsPlansToPurchase, IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange, ExchangePolicyErrors policyResult)
         {
             SessionId = sessionId;
             NetPayable = netPayable;
             RefundsTotal = refundsTotal;
             PurchasesTotal = purchasesTotal;
             ReservationsToPurchase = reservationsToPurchase;
+            SavingsPlansToPurchase = savingsPlansToPurchase;
             ReservationsToExchange = reservationsToExchange;
             PolicyResult = policyResult;
         }
 
         /// <summary> Exchange session identifier. </summary>
         public Guid? SessionId { get; }
-        /// <summary> Gets the net payable. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice NetPayable { get; }
-        /// <summary> Gets the refunds total. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice RefundsTotal { get; }
-        /// <summary> Gets the purchases total. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice PurchasesTotal { get; }
         /// <summary> Details of the reservations being purchased. </summary>
         public IReadOnlyList<ReservationToPurchaseExchange> ReservationsToPurchase { get; }
+        /// <summary> Details of the savings plans being purchased. </summary>
+        public IReadOnlyList<SavingsPlanToPurchaseExchange> SavingsPlansToPurchase { get; }
         /// <summary> Details of the reservations being returned. </summary>
         public IReadOnlyList<ReservationToReturnForExchange> ReservationsToExchange { get; }
         /// <summary> Exchange policy errors. </summary>

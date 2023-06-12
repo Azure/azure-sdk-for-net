@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EventSubscriptionResource> Get(CancellationToken cancellationToken = default)
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Delete an existing event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +187,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Delete an existing event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously updates an existing event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Updated event subscription information. </param>
@@ -219,8 +259,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously updates an existing event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Updated event subscription information. </param>
@@ -249,8 +297,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get the full endpoint URL for an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl
-        /// Operation Id: EventSubscriptions_GetFullUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_GetFullUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUriAsync(CancellationToken cancellationToken = default)
@@ -271,8 +327,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get the full endpoint URL for an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl
-        /// Operation Id: EventSubscriptions_GetFullUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_GetFullUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EventSubscriptionFullUri> GetFullUri(CancellationToken cancellationToken = default)
@@ -293,56 +357,44 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get all delivery attributes for an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
-        /// Operation Id: EventSubscriptions_GetDeliveryAttributes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_GetDeliveryAttributes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeliveryAttributeMapping>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributes");
-                scope.Start();
-                try
-                {
-                    var response = await _eventSubscriptionRestClient.GetDeliveryAttributesAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get all delivery attributes for an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
-        /// Operation Id: EventSubscriptions_GetDeliveryAttributes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_GetDeliveryAttributes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
-            Page<DeliveryAttributeMapping> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributes");
-                scope.Start();
-                try
-                {
-                    var response = _eventSubscriptionRestClient.GetDeliveryAttributes(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
     }
 }

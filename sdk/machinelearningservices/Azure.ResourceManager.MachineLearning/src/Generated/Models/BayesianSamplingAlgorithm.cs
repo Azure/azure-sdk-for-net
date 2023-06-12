@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Defines a Sampling Algorithm that generates values based on previous values
-    /// Serialized Name: BayesianSamplingAlgorithm
-    /// </summary>
+    /// <summary> Defines a Sampling Algorithm that generates values based on previous values. </summary>
     public partial class BayesianSamplingAlgorithm : SamplingAlgorithm
     {
         /// <summary> Initializes a new instance of BayesianSamplingAlgorithm. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of BayesianSamplingAlgorithm. </summary>
-        /// <param name="samplingAlgorithmType">
-        /// [Required] The algorithm used for generating hyperparameter values, along with configuration properties
-        /// Serialized Name: SamplingAlgorithm.samplingAlgorithmType
-        /// </param>
+        /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         internal BayesianSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType) : base(samplingAlgorithmType)
         {
             SamplingAlgorithmType = samplingAlgorithmType;

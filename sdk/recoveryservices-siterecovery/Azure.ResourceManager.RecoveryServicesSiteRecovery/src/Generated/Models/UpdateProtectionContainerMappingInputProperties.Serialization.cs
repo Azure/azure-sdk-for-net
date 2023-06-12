@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderSpecificInput))
             {
-                writer.WritePropertyName("providerSpecificInput");
+                writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificInput);
             }
             writer.WriteEndObject();

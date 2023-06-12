@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/detached?api-version=2023-02-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2bf09d9608c6905e8199aa404961bd7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "890",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 24 Feb 2023 07:16:51 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "7459f200-beac-4869-b628-1d54c01c5e52"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "createdAt": "2023-02-24T07:14:33.5626572Z",
+              "sharedAt": "2023-02-24T07:14:33.5626572Z",
+              "displayName": "testDisplayName1",
+              "state": "Succeeded",
+              "shareStatus": "Detached",
+              "sentShareDescription": "updatedDescription",
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft",
+              "assetLocation": "southafricanorth",
+              "assetStoreKind": "AdlsGen2Account"
+            },
+            "shareKind": "InPlace",
+            "id": "5122c139-945e-4089-a2a0-4f50208ddda2",
+            "type": "ReceivedShare"
+          },
+          {
+            "properties": {
+              "createdAt": "2023-02-17T00:08:25.3589647Z",
+              "sharedAt": "2023-02-17T00:08:25.3589647Z",
+              "displayName": "sentShare1Updated",
+              "state": "Succeeded",
+              "shareStatus": "Detached",
+              "sentShareDescription": "descriptionUpdated",
+              "senderName": "Faisal Al Tell",
+              "senderTenantName": "Microsoft",
+              "assetLocation": "southafricanorth",
+              "assetStoreKind": "AdlsGen2Account"
+            },
+            "shareKind": "InPlace",
+            "id": "536ff216-6c6d-4835-9886-4cba2d31a72e",
+            "type": "ReceivedShare"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
+    "RandomSeed": "1942000060"
+  }
+}

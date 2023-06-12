@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("start");
-            writer.WriteStringValue(Start, "O");
-            writer.WritePropertyName("end");
-            writer.WriteStringValue(End, "O");
+            writer.WritePropertyName("start"u8);
+            writer.WriteStringValue(StartOn, "O");
+            writer.WritePropertyName("end"u8);
+            writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }
     }

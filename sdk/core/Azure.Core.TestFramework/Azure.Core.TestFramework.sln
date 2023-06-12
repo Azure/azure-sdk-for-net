@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "src\Azure.Core.TestFramework.csproj", "{961FD4FB-3CA1-4B33-B6FD-8396CF9280DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework.Tests", "tests\Azure.Core.TestFramework.Tests.csproj", "{1471A3F1-2998-4812-BDCE-5179E52AC5DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,10 @@ Global
 		{961FD4FB-3CA1-4B33-B6FD-8396CF9280DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{961FD4FB-3CA1-4B33-B6FD-8396CF9280DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{961FD4FB-3CA1-4B33-B6FD-8396CF9280DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0654EC0E-12B8-44C6-9906-7CCE7A5697FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0654EC0E-12B8-44C6-9906-7CCE7A5697FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0654EC0E-12B8-44C6-9906-7CCE7A5697FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0654EC0E-12B8-44C6-9906-7CCE7A5697FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1471A3F1-2998-4812-BDCE-5179E52AC5DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1471A3F1-2998-4812-BDCE-5179E52AC5DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1471A3F1-2998-4812-BDCE-5179E52AC5DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1471A3F1-2998-4812-BDCE-5179E52AC5DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

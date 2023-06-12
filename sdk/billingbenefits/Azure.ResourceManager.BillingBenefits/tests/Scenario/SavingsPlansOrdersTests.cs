@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansOrdersTests : BillingBenefitsManagementTestBase
     {
-        private TenantResource _tenant { get; set; }
+        private TenantResource _tenant;
 
         public SavingsPlansOrdersTests(bool isAsync) : base(isAsync)
         {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestGetSavingsPlanOrder()
         {
-            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             ValidateResponseProperties(response);
 
             // Expand 'schedule'
-            var response2 = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a", "schedule");
+            var response2 = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a", "schedule");
             Assert.IsNotNull(response2.Value.Data.PlanInformation);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.NextPaymentDueOn);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.PricingCurrencyTotal);
@@ -53,29 +53,29 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestElevateSavingsPlanOrder()
         {
-            var resource = SavingsPlanOrderModelResource.CreateResourceIdentifier("36c74101-dda7-4bb9-8403-3baf1661b065");
-            var modelResource = Client.GetSavingsPlanOrderModelResource(resource);
+            var resource = BillingBenefitsSavingsPlanOrderResource.CreateResourceIdentifier("36c74101-dda7-4bb9-8403-3baf1661b065");
+            var modelResource = Client.GetBillingBenefitsSavingsPlanOrderResource(resource);
             var response = await modelResource.ElevateAsync();
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
             Assert.IsNotEmpty(response.Value.Id);
-            Assert.True(response.Value.Id.Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"));
-            Assert.True(response.Value.Id.Contains("/providers/Microsoft.Authorization/roleAssignments/"));
+            Assert.True(response.Value.Id.ToString().Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"));
+            Assert.True(response.Value.Id.ToString().Contains("/providers/Microsoft.Authorization/roleAssignments/"));
             Assert.IsNotEmpty(response.Value.Name);
             Assert.IsNotEmpty(response.Value.PrincipalId);
             Assert.IsNotEmpty(response.Value.RoleDefinitionId);
-            Assert.True(response.Value.RoleDefinitionId.Contains("/providers/Microsoft.Authorization/roleDefinitions/"));
+            Assert.True(response.Value.RoleDefinitionId.ToString().Contains("/providers/Microsoft.Authorization/roleDefinitions/"));
             Assert.IsNotEmpty(response.Value.Scope);
-            Assert.True(response.Value.Scope.Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"));
+            Assert.True(response.Value.Scope.ToString().Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task ListSavingsPlanOrders()
         {
-            var orderModelCollection = _tenant.GetSavingsPlanOrderModels();
-            List<SavingsPlanOrderModelResource> orderResources = await orderModelCollection.GetAllAsync().ToEnumerableAsync();
+            var orderModelCollection = _tenant.GetBillingBenefitsSavingsPlanOrders();
+            List<BillingBenefitsSavingsPlanOrderResource> orderResources = await orderModelCollection.GetAllAsync().ToEnumerableAsync();
 
             Assert.Greater(orderResources.Count, 0);
             orderResources.ForEach(model =>
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             });
         }
 
-        private void ValidateResponseProperties(SavingsPlanOrderModelResource model)
+        private void ValidateResponseProperties(BillingBenefitsSavingsPlanOrderResource model)
         {
             Assert.IsTrue(model.HasData);
-            Assert.AreEqual("eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId);
+            Assert.AreEqual("eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId.ToString());
             Assert.NotNull(model.Data.Id);
             Assert.IsNotEmpty(model.Data.Name);
             Assert.IsNotEmpty(model.Data.DisplayName);

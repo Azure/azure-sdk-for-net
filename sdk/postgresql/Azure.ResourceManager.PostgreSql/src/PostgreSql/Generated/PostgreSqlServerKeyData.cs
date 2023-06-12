@@ -12,7 +12,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlServerKey data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlServerKey data model.
+    /// A PostgreSQL Server key.
+    /// </summary>
     public partial class PostgreSqlServerKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlServerKeyData. </summary>

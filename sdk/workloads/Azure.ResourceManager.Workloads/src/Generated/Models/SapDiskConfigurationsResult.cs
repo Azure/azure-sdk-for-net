@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
         internal SapDiskConfigurationsResult()
         {
-            DiskConfigurations = new ChangeTrackingList<SapDiskConfiguration>();
+            VolumeConfigurations = new ChangeTrackingDictionary<string, SapDiskConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
-        /// <param name="diskConfigurations"> Gets the list of Disk Configurations. </param>
-        internal SapDiskConfigurationsResult(IReadOnlyList<SapDiskConfiguration> diskConfigurations)
+        /// <param name="volumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </param>
+        internal SapDiskConfigurationsResult(IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations)
         {
-            DiskConfigurations = diskConfigurations;
+            VolumeConfigurations = volumeConfigurations;
         }
 
-        /// <summary> Gets the list of Disk Configurations. </summary>
-        public IReadOnlyList<SapDiskConfiguration> DiskConfigurations { get; }
+        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </summary>
+        public IReadOnlyDictionary<string, SapDiskConfiguration> VolumeConfigurations { get; }
     }
 }

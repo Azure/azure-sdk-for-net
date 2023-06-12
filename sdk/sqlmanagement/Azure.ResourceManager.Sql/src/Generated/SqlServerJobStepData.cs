@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJobStep data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJobStep data model.
+    /// A job step.
+    /// </summary>
     public partial class SqlServerJobStepData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobStepData. </summary>

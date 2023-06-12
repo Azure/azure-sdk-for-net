@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+    /// <summary> Control permission to the managed HSM from public networks. </summary>
     public readonly partial struct ManagedHsmPublicNetworkAccess : IEquatable<ManagedHsmPublicNetworkAccess>
     {
         private readonly string _value;

@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FabricSpecificDetails DeserializeFabricSpecificDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

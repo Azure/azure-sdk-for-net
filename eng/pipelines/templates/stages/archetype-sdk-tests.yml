@@ -38,6 +38,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: TestResourceDirectories
+  type: object
+  default:
 - name: Project
   type: string
   default: '**'
@@ -99,15 +102,14 @@ parameters:
         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
         artifactName: SessionRecords
 
-variables:
-  - template: ../variables/globals.yml
-
 stages:
 - ${{ each cloud in parameters.CloudConfig }}:
   - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
     - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
       - stage: ${{ cloud.key }}
         dependsOn: []
+        variables:
+        - template: ../variables/globals.yml
         jobs:
         - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
@@ -129,6 +131,7 @@ stages:
               Location: ${{ parameters.Location }}
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              TestResourceDirectories: ${{ parameters.TestResourceDirectories }}
               Project: ${{ parameters.Project }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               DeployTestResources: ${{ parameters.DeployTestResources }}

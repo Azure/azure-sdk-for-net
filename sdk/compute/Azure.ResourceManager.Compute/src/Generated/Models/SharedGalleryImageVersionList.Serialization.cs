@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryImageVersionList DeserializeSharedGalleryImageVersionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SharedGalleryImageVersionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SharedGalleryImageVersionData> array = new List<SharedGalleryImageVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

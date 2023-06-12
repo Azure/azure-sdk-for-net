@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Create or update a gallery Application Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}
-        /// Operation Id: GalleryApplications_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Create or update a gallery Application Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}
-        /// Operation Id: GalleryApplications_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Retrieves information about a gallery Application Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}
-        /// Operation Id: GalleryApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Retrieves information about a gallery Application Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}
-        /// Operation Id: GalleryApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// List gallery Application Definitions in a gallery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications
-        /// Operation Id: GalleryApplications_ListByGallery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_ListByGallery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GalleryApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GalleryApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _galleryApplicationRestClient.ListByGalleryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GalleryApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _galleryApplicationRestClient.ListByGalleryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List gallery Application Definitions in a gallery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications
-        /// Operation Id: GalleryApplications_ListByGallery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_ListByGallery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GalleryApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GalleryApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _galleryApplicationRestClient.ListByGallery(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GalleryApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _galleryApplicationRestClient.ListByGalleryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}
-        /// Operation Id: GalleryApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}
-        /// Operation Id: GalleryApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("secretsType");
+            writer.WritePropertyName("secretsType"u8);
             writer.WriteStringValue(SecretsType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownDatastoreSecrets DeserializeUnknownDatastoreSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecretsType secretsType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretsType"))
+                if (property.NameEquals("secretsType"u8))
                 {
                     secretsType = new SecretsType(property.Value.GetString());
                     continue;

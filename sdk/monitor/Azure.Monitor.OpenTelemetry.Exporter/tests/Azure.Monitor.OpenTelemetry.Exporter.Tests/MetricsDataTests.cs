@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .Build();
 
             var dataPointType = DataPointType.Aggregation;
-            string name = null;
+            string? name = null;
             if (metricType == MetricType.DoubleSum)
             {
                 name = "TestDoubleCounter";
@@ -52,7 +52,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(2, metricData.Version);
             Assert.Equal(name, metricData.Metrics.First().Name);
-            Assert.Equal(nameof(ValidateZeroDimension), metricData.Metrics.First().Namespace);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
             Assert.Null(metricData.Metrics.First().DataPointType);
         }
@@ -71,12 +70,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .Build();
 
             var dataPointType = DataPointType.Aggregation;
-            string name = null;
+            string? name = null;
             if (metricType == MetricType.DoubleSum)
             {
                 name = "TestDoubleCounter";
                 var doubleCounter = meter.CreateCounter<double>(name);
-                doubleCounter.Add(123.45, new KeyValuePair<string, object>("tag", "value"));
+                doubleCounter.Add(123.45, new KeyValuePair<string, object?>("tag", "value"));
             }
             else if (metricType == MetricType.DoubleGauge)
             {
@@ -85,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     name,
                     () => new List<Measurement<double>>()
                     {
-                    new(123.45, new KeyValuePair<string, object>("tag", "value")),
+                    new(123.45, new KeyValuePair<string, object?>("tag", "value")),
                     });
             }
 
@@ -98,7 +97,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(2, metricData.Version);
             Assert.Equal(name, metricData.Metrics.First().Name);
-            Assert.Equal(nameof(ValidateOneDimension), metricData.Metrics.First().Namespace);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
             Assert.Null(metricData.Metrics.First().DataPointType);
             Assert.Equal("value", metricData.Properties["tag"]);
@@ -126,7 +124,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricPoint = enumerator.Current;
 
             var metricData = new MetricsData(Version, metrics[0], metricPoint);
-            Assert.Equal(nameof(ValidateSumDoubles), metricData.Metrics.First().Namespace);
             Assert.Equal(double.PositiveInfinity, metricData.Metrics.First().Value);
             Assert.Null(metricData.Metrics.First().DataPointType);
         }
@@ -172,15 +169,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             enumerator.MoveNext();
             metricPoint = enumerator.Current;
             metricData = new MetricsData(Version, metrics[2], metricPoint);
-            Assert.Equal(nameof(ValidateLimits), metricData.Metrics.First().Namespace);
             Assert.Equal(double.NaN, metricData.Metrics.First().Value);
         }
 
         [Fact]
         public void ThrowsIfMetricIsNull()
         {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             var metricPoint = new MetricPoint();
             Assert.Throws<ArgumentNullException>(() => new MetricsData(Version, null, metricPoint));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void InitializesResourceMetricsAndProperties()
+        {
+            var metricsData = new MetricsData(Version);
+            Assert.Single(metricsData.Metrics);
+
+            var metricDataPoint = metricsData.Metrics[0];
+            Assert.Equal("_OTELRESOURCE_", metricDataPoint.Name);
+            Assert.Equal(0, metricDataPoint.Value);
+            Assert.Empty(metricsData.Properties);
         }
     }
 }

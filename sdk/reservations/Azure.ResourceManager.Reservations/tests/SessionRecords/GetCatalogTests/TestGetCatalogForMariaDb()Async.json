@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9d2cebb0b6d5d6e1eb107fe4ea86ef9a-68dba21e1bd56c94-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "2e690a0f0eb66d83788cea4d13fc8aae",
+        "traceparent": "00-a778bec80589ab96c029015cbe1eec6d-fdffb54d724e3cd0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "642f0da88bbf7adedb51a7012a34a342",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:12 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b0aa2296-51a4-4360-8549-da0be78ec010",
-        "x-ms-ratelimit-remaining-subscription-reads": "11943",
-        "x-ms-request-id": "b0aa2296-51a4-4360-8549-da0be78ec010",
-        "x-ms-routing-request-id": "WESTUS:20220516T231013Z:b0aa2296-51a4-4360-8549-da0be78ec010"
+        "x-ms-correlation-request-id": "9b86794f-e00a-4926-8885-54498c19a50e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11907",
+        "x-ms-request-id": "9b86794f-e00a-4926-8885-54498c19a50e",
+        "x-ms-routing-request-id": "WESTUS:20230310T063225Z:9b86794f-e00a-4926-8885-54498c19a50e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,202 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=MariaDb\u0026location=eastus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=MariaDb\u0026location=eastus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c8f22f7c60df59769b3b3f28c339d1c4-5fe60864543981dd-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "ae40b75b9e0c14f42ff78f1b75f15a77",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "985bd334d3d2790cad21b47ff24f4c32",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1880",
+        "Content-Length": "1895",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:12 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f2add6b8-4b5c-4324-8178-6202bf82091c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11942",
-        "x-ms-request-id": "ae40b75b9e0c14f42ff78f1b75f15a77",
-        "x-ms-routing-request-id": "WESTUS:20220516T231013Z:f2add6b8-4b5c-4324-8178-6202bf82091c",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "b5780a8b-57bb-4c00-9c8b-f638fbe0ae57",
+        "x-ms-ratelimit-remaining-subscription-reads": "11906",
+        "x-ms-request-id": "985bd334d3d2790cad21b47ff24f4c32",
+        "x-ms-routing-request-id": "WESTUS:20230310T063225Z:b5780a8b-57bb-4c00-9c8b-f638fbe0ae57",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022MariaDb\u0022,\u0022name\u0022:\u0022azuredb_mariadb_memory_optimized_compute_gen5\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022eastus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:567.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1143.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Az DB for MariaDB SS MO - Compute Gen5\u0022},{\u0022name\u0022:\u0022DeploymentType\u0022,\u0022value\u0022:\u0022Azure Database for MariaDB\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Database for MariaDB Single Server Memory Optimized - Compute Gen5\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00226dfaddc8-dc09-41a2-9bf6-60afd0a45367\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 vCore Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022MariaDb\u0022,\u0022name\u0022:\u0022azuredb_mariadb_general_purpose_compute_gen5\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022eastus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:447.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:903.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure DB for MariaDB Sing Gen Pur-Compute Gen5\u0022},{\u0022name\u0022:\u0022DeploymentType\u0022,\u0022value\u0022:\u0022Azure Database for MariaDB\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Database for MariaDB Single Server General Purpose - Compute Gen5\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022f4c59b85-f36f-4254-89ba-d89f349b4559\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 vCore Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "MariaDb",
+            "name": "azuredb_mariadb_memory_optimized_compute_gen5",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 567.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1143.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az DB for MariaDB SS MO - Compute Gen5"
+              },
+              {
+                "name": "DeploymentType",
+                "value": "Azure Database for MariaDB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Database for MariaDB Single Server Memory Optimized - Compute Gen5"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "6dfaddc8-dc09-41a2-9bf6-60afd0a45367"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "MariaDb",
+            "name": "azuredb_mariadb_general_purpose_compute_gen5",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 447.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 903.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az DB for MariaDB SS GP-Compute Gen5"
+              },
+              {
+                "name": "DeploymentType",
+                "value": "Azure Database for MariaDB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Database for MariaDB Single Server General Purpose - Compute Gen5"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "f4c59b85-f36f-4254-89ba-d89f349b4559"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 2
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1246153912",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1483550421",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

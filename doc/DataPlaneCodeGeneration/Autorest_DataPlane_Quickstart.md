@@ -10,7 +10,7 @@ This tutorial has following sections:
 
 - [Azure SDK Code Generation Quickstart Tutorial (Data Plane)](#azure-sdk-code-generation-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
-  - [Setup your repo](#setup-your-repo)
+  - [Setup your repository](#setup-your-repository)
   - [Create starter package](#create-starter-package)
   - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
@@ -31,9 +31,9 @@ This tutorial has following sections:
 
 ## Prerequisites
 
-- Install VS 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
+- Install Visual Studio 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
-  - Install the **.NET Core cross-platform development** workloads in VisualStudio
+  - Install the **.NET Core cross-platform development** workloads in Visual Studio
 - Install **.NET 6.0 SDK** for your specific platform. (or a higher version)
 - Install the latest version of [git](https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.

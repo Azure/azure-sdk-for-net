@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 ClientDiagnosticListener listener = null;
                 if (enableTracing)
                 {
-                    listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+                    listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
                 }
                 try
                 {
@@ -54,8 +54,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                         if (batch.Count < 4500)
                         {
                             var diff = batch.MaxSizeInBytes - batch.SizeInBytes;
-                            // the difference in size from the max allowable size should be less than the size of 1 message
-                            Assert.IsTrue(diff < 220, diff.ToString());
+                            // the difference in size from the max allowable size should be less than the size of a single
+                            // instrumented message
+                            Assert.IsTrue(diff < 250, diff.ToString());
                         }
                         Assert.Greater(batch.Count, 0);
                         await sender.SendMessagesAsync(batch);

@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/261132757bc9806f4aa90bd5b176ecfa6a447726/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a2140e7ff0a6c28df501b16c51fe85b762a386fc/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -119,6 +119,9 @@ prepend-rp-prefix:
 - PublicIPAddressSkuTier
 - StatusLevelTypes
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
   SubResource: ComputeWriteableSubResourceData
@@ -220,7 +223,47 @@ rename-mapping:
   DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
   ImageDiskReference.id: -|arm-id
   DiskImageEncryption.diskEncryptionSetId: -|arm-id
+  GalleryDiskImage.source: GallerySource
+  GalleryDiskImageSource.storageAccountId: -|arm-id
+  GalleryImageVersionStorageProfile.source: GallerySource
   GalleryArtifactVersionSource.id: -|arm-id
+  VirtualMachineExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  Disk.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  DiskUpdate.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  CreationData.performancePlus: IsPerformancePlusEnabled
+  GalleryApplicationCustomActionParameter.required: IsRequired
+  GalleryImageVersionSafetyProfile.reportedForPolicyViolation: IsReportedForPolicyViolation
+  LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
+  LinuxConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  WindowsConfiguration.enableAutomaticUpdates: IsAutomaticUpdatesEnabled
+  WindowsConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  PolicyViolation: GalleryImageVersionPolicyViolation
+  PolicyViolationCategory: GalleryImageVersionPolicyViolationCategory
+  PriorityMixPolicy: VirtualMachineScaleSetPriorityMixPolicy
+  CommunityGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  GalleryArtifactPublishingProfileBase.excludeFromLatest: IsExcludedFromLatest
+  TargetRegion.excludeFromLatest: IsExcludedFromLatest
+  VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  AlternativeOption: ImageAlternativeOption
+  AlternativeType: ImageAlternativeType
+  VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
+  ScheduledEventsProfile: ComputeScheduledEventsProfile
+  ExpandTypeForListVMs: GetVirtualMachineExpandType
+  ExpandTypesForListVm: GetVirtualMachineExpandType
+  SecurityPostureReference: ComputeSecurityPostureReference
+  RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
+  SecurityPostureReference.id: -|arm-id
+  CommunityGalleryImage.properties.identifier: ImageIdentifier
+  GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -310,17 +353,17 @@ directive:
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
-      $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
-  - from: cloudService.json
-    where: $.definitions.LoadBalancerConfigurationProperties
-    transform: >
-      $.properties.frontendIpConfigurations = $.properties.frontendIPConfigurations;
-      $.properties.frontendIpConfigurations["x-ms-client-name"] = "frontendIPConfigurations";
-      $.required = ["frontendIpConfigurations"];
-      $.properties.frontendIPConfigurations = undefined;
-    reason: Service returns response with property name as frontendIpConfigurations.
+      $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
   # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
+  # add a json converter to this model
+  - from: swagger-document
+    where: $.definitions.KeyVaultSecretReference
+    transform: $["x-csharp-usage"] = "converter";
+  # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
+  - from: restorePoint.json
+    where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
+    transform: $["x-ms-client-name"] = "DataDiskList";
 ```

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the ProvisionedCluster data model. </summary>
+    /// <summary>
+    /// A class representing the ProvisionedCluster data model.
+    /// The provisionedClusters resource definition.
+    /// </summary>
     public partial class ProvisionedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>

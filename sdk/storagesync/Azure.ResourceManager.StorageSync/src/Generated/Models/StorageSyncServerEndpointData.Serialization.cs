@@ -18,61 +18,61 @@ namespace Azure.ResourceManager.StorageSync
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerLocalPath))
             {
-                writer.WritePropertyName("serverLocalPath");
+                writer.WritePropertyName("serverLocalPath"u8);
                 writer.WriteStringValue(ServerLocalPath);
             }
             if (Optional.IsDefined(CloudTiering))
             {
-                writer.WritePropertyName("cloudTiering");
+                writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
             if (Optional.IsDefined(VolumeFreeSpacePercent))
             {
-                writer.WritePropertyName("volumeFreeSpacePercent");
+                writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
             if (Optional.IsDefined(TierFilesOlderThanDays))
             {
-                writer.WritePropertyName("tierFilesOlderThanDays");
+                writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ServerResourceId))
             {
-                writer.WritePropertyName("serverResourceId");
+                writer.WritePropertyName("serverResourceId"u8);
                 writer.WriteStringValue(ServerResourceId);
             }
             if (Optional.IsDefined(OfflineDataTransfer))
             {
-                writer.WritePropertyName("offlineDataTransfer");
+                writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
             if (Optional.IsDefined(OfflineDataTransferShareName))
             {
-                writer.WritePropertyName("offlineDataTransferShareName");
+                writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
             if (Optional.IsDefined(InitialDownloadPolicy))
             {
-                writer.WritePropertyName("initialDownloadPolicy");
+                writer.WritePropertyName("initialDownloadPolicy"u8);
                 writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
             }
             if (Optional.IsDefined(LocalCacheMode))
             {
-                writer.WritePropertyName("localCacheMode");
+                writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
             if (Optional.IsDefined(InitialUploadPolicy))
             {
-                writer.WritePropertyName("initialUploadPolicy");
+                writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
             }
             writer.WriteEndObject();
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncServerEndpointData DeserializeStorageSyncServerEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -107,32 +111,31 @@ namespace Azure.ResourceManager.StorageSync
             Optional<string> serverName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,167 +144,154 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serverLocalPath"))
+                        if (property0.NameEquals("serverLocalPath"u8))
                         {
                             serverLocalPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cloudTiering"))
+                        if (property0.NameEquals("cloudTiering"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudTiering = new StorageSyncFeatureStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("volumeFreeSpacePercent"))
+                        if (property0.NameEquals("volumeFreeSpacePercent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             volumeFreeSpacePercent = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("tierFilesOlderThanDays"))
+                        if (property0.NameEquals("tierFilesOlderThanDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tierFilesOlderThanDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverResourceId"))
+                        if (property0.NameEquals("serverResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastWorkflowId"))
+                        if (property0.NameEquals("lastWorkflowId"u8))
                         {
                             lastWorkflowId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastOperationName"))
+                        if (property0.NameEquals("lastOperationName"u8))
                         {
                             lastOperationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("syncStatus"))
+                        if (property0.NameEquals("syncStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncStatus = ServerEndpointSyncStatus.DeserializeServerEndpointSyncStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("offlineDataTransfer"))
+                        if (property0.NameEquals("offlineDataTransfer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             offlineDataTransfer = new StorageSyncFeatureStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("offlineDataTransferStorageAccountResourceId"))
+                        if (property0.NameEquals("offlineDataTransferStorageAccountResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             offlineDataTransferStorageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("offlineDataTransferStorageAccountTenantId"))
+                        if (property0.NameEquals("offlineDataTransferStorageAccountTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             offlineDataTransferStorageAccountTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("offlineDataTransferShareName"))
+                        if (property0.NameEquals("offlineDataTransferShareName"u8))
                         {
                             offlineDataTransferShareName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("cloudTieringStatus"))
+                        if (property0.NameEquals("cloudTieringStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudTieringStatus = ServerEndpointCloudTieringStatus.DeserializeServerEndpointCloudTieringStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("recallStatus"))
+                        if (property0.NameEquals("recallStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recallStatus = ServerEndpointRecallStatus.DeserializeServerEndpointRecallStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("initialDownloadPolicy"))
+                        if (property0.NameEquals("initialDownloadPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             initialDownloadPolicy = new InitialDownloadPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("localCacheMode"))
+                        if (property0.NameEquals("localCacheMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localCacheMode = new LocalCacheMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("initialUploadPolicy"))
+                        if (property0.NameEquals("initialUploadPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             initialUploadPolicy = new InitialUploadPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Create a new Deployment or update an exiting Deployment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Create a new Deployment or update an exiting Deployment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Deployment and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Deployment and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,94 +210,62 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Handles requests to list all resources in an App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments
-        /// Operation Id: Deployments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformDeploymentResource> GetAllAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformDeploymentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformDeploymentDeploymentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformDeploymentDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Handles requests to list all resources in an App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments
-        /// Operation Id: Deployments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformDeploymentResource> GetAll(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformDeploymentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformDeploymentDeploymentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformDeploymentDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,8 +291,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

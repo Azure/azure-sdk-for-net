@@ -17,17 +17,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(DefaultLanguage))
-            {
-                writer.WritePropertyName("defaultLanguage");
-                writer.WriteStringValue(DefaultLanguage);
-            }
-            writer.WritePropertyName("analysisInput");
+            writer.WritePropertyName("analysisInput"u8);
             writer.WriteObjectValue(AnalysisInput);
-            writer.WritePropertyName("tasks");
+            writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Tasks)
             {

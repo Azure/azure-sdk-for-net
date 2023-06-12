@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ManagedIntegrationRuntimeError DeserializeManagedIntegrationRuntimeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<string> code = default;
             Optional<IReadOnlyList<string>> parameters = default;
@@ -24,26 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

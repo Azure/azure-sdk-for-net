@@ -25,8 +25,16 @@ namespace Azure.ResourceManager
 
         /// <summary>
         /// This operation retrieves a single policy assignment, given its name and the scope it was created at.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
-        /// Operation Id: PolicyAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -40,8 +48,16 @@ namespace Azure.ResourceManager
 
         /// <summary>
         /// This operation retrieves a single policy assignment, given its name and the scope it was created at.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
-        /// Operation Id: PolicyAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -62,8 +78,16 @@ namespace Azure.ResourceManager
 
         /// <summary>
         /// Get a management lock by scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// Operation Id: ManagementLocks_GetByScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/locks/{lockName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementLocks_GetByScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,8 +101,16 @@ namespace Azure.ResourceManager
 
         /// <summary>
         /// Get a management lock by scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// Operation Id: ManagementLocks_GetByScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/locks/{lockName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementLocks_GetByScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

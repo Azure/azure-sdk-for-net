@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// AML Compute properties
-    /// Serialized Name: AmlComputeProperties
-    /// </summary>
+    /// <summary> AML Compute properties. </summary>
     public partial class AmlComputeProperties
     {
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
@@ -24,75 +21,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
-        /// <param name="osType">
-        /// Compute OS Type
-        /// Serialized Name: AmlComputeProperties.osType
-        /// </param>
-        /// <param name="vmSize">
-        /// Virtual Machine Size
-        /// Serialized Name: AmlComputeProperties.vmSize
-        /// </param>
-        /// <param name="vmPriority">
-        /// Virtual Machine priority
-        /// Serialized Name: AmlComputeProperties.vmPriority
-        /// </param>
-        /// <param name="virtualMachineImage">
-        /// Virtual Machine image for AML Compute - windows only
-        /// Serialized Name: AmlComputeProperties.virtualMachineImage
-        /// </param>
-        /// <param name="isolatedNetwork">
-        /// Network is isolated or not
-        /// Serialized Name: AmlComputeProperties.isolatedNetwork
-        /// </param>
-        /// <param name="scaleSettings">
-        /// Scale settings for AML Compute
-        /// Serialized Name: AmlComputeProperties.scaleSettings
-        /// </param>
-        /// <param name="userAccountCredentials">
-        /// Credentials for an administrator user account that will be created on each compute node.
-        /// Serialized Name: AmlComputeProperties.userAccountCredentials
-        /// </param>
-        /// <param name="subnet">
-        /// Virtual network subnet resource ID the compute nodes belong to.
-        /// Serialized Name: AmlComputeProperties.subnet
-        /// </param>
-        /// <param name="remoteLoginPortPublicAccess">
-        /// State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled.
-        /// Serialized Name: AmlComputeProperties.remoteLoginPortPublicAccess
-        /// </param>
-        /// <param name="allocationState">
-        /// Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute.
-        /// Serialized Name: AmlComputeProperties.allocationState
-        /// </param>
-        /// <param name="allocationStateTransitionOn">
-        /// The time at which the compute entered its current allocation state.
-        /// Serialized Name: AmlComputeProperties.allocationStateTransitionTime
-        /// </param>
-        /// <param name="errors">
-        /// Collection of errors encountered by various compute nodes during node setup.
-        /// Serialized Name: AmlComputeProperties.errors
-        /// </param>
-        /// <param name="currentNodeCount">
-        /// The number of compute nodes currently assigned to the compute.
-        /// Serialized Name: AmlComputeProperties.currentNodeCount
-        /// </param>
-        /// <param name="targetNodeCount">
-        /// The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation.
-        /// Serialized Name: AmlComputeProperties.targetNodeCount
-        /// </param>
-        /// <param name="nodeStateCounts">
-        /// Counts of various node states on the compute.
-        /// Serialized Name: AmlComputeProperties.nodeStateCounts
-        /// </param>
-        /// <param name="enableNodePublicIP">
-        /// Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs.
-        /// Serialized Name: AmlComputeProperties.enableNodePublicIp
-        /// </param>
-        /// <param name="propertyBag">
-        /// A property bag containing additional properties.
-        /// Serialized Name: AmlComputeProperties.propertyBag
-        /// </param>
-        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, MachineLearningVmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, AmlComputeScaleSettings scaleSettings, MachineLearningUserAccountCredentials userAccountCredentials, ResourceId subnet, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AmlAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
+        /// <param name="osType"> Compute OS Type. </param>
+        /// <param name="vmSize"> Virtual Machine Size. </param>
+        /// <param name="vmPriority"> Virtual Machine priority. </param>
+        /// <param name="virtualMachineImage"> Virtual Machine image for AML Compute - windows only. </param>
+        /// <param name="isolatedNetwork"> Network is isolated or not. </param>
+        /// <param name="scaleSettings"> Scale settings for AML Compute. </param>
+        /// <param name="userAccountCredentials"> Credentials for an administrator user account that will be created on each compute node. </param>
+        /// <param name="subnet"> Virtual network subnet resource ID the compute nodes belong to. </param>
+        /// <param name="remoteLoginPortPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </param>
+        /// <param name="allocationState"> Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute. </param>
+        /// <param name="allocationStateTransitionOn"> The time at which the compute entered its current allocation state. </param>
+        /// <param name="errors"> Collection of errors encountered by various compute nodes during node setup. </param>
+        /// <param name="currentNodeCount"> The number of compute nodes currently assigned to the compute. </param>
+        /// <param name="targetNodeCount"> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </param>
+        /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
+        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
+        /// <param name="propertyBag"> A property bag containing additional properties. </param>
+        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, MachineLearningVmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, AmlComputeScaleSettings scaleSettings, MachineLearningUserAccountCredentials userAccountCredentials, ResourceId subnet, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, MachineLearningAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
         {
             OSType = osType;
             VmSize = vmSize;
@@ -113,109 +59,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PropertyBag = propertyBag;
         }
 
-        /// <summary>
-        /// Compute OS Type
-        /// Serialized Name: AmlComputeProperties.osType
-        /// </summary>
+        /// <summary> Compute OS Type. </summary>
         public MachineLearningOSType? OSType { get; set; }
-        /// <summary>
-        /// Virtual Machine Size
-        /// Serialized Name: AmlComputeProperties.vmSize
-        /// </summary>
+        /// <summary> Virtual Machine Size. </summary>
         public string VmSize { get; set; }
-        /// <summary>
-        /// Virtual Machine priority
-        /// Serialized Name: AmlComputeProperties.vmPriority
-        /// </summary>
+        /// <summary> Virtual Machine priority. </summary>
         public MachineLearningVmPriority? VmPriority { get; set; }
-        /// <summary>
-        /// Virtual Machine image for AML Compute - windows only
-        /// Serialized Name: AmlComputeProperties.virtualMachineImage
-        /// </summary>
+        /// <summary> Virtual Machine image for AML Compute - windows only. </summary>
         internal VirtualMachineImage VirtualMachineImage { get; set; }
-        /// <summary>
-        /// Virtual Machine image path
-        /// Serialized Name: VirtualMachineImage.id
-        /// </summary>
+        /// <summary> Virtual Machine image path. </summary>
         public string VirtualMachineImageId
         {
             get => VirtualMachineImage is null ? default : VirtualMachineImage.Id;
             set => VirtualMachineImage = new VirtualMachineImage(value);
         }
 
-        /// <summary>
-        /// Network is isolated or not
-        /// Serialized Name: AmlComputeProperties.isolatedNetwork
-        /// </summary>
+        /// <summary> Network is isolated or not. </summary>
         public bool? IsolatedNetwork { get; set; }
-        /// <summary>
-        /// Scale settings for AML Compute
-        /// Serialized Name: AmlComputeProperties.scaleSettings
-        /// </summary>
+        /// <summary> Scale settings for AML Compute. </summary>
         public AmlComputeScaleSettings ScaleSettings { get; set; }
-        /// <summary>
-        /// Credentials for an administrator user account that will be created on each compute node.
-        /// Serialized Name: AmlComputeProperties.userAccountCredentials
-        /// </summary>
+        /// <summary> Credentials for an administrator user account that will be created on each compute node. </summary>
         public MachineLearningUserAccountCredentials UserAccountCredentials { get; set; }
-        /// <summary>
-        /// Virtual network subnet resource ID the compute nodes belong to.
-        /// Serialized Name: AmlComputeProperties.subnet
-        /// </summary>
+        /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
         internal ResourceId Subnet { get; set; }
-        /// <summary>
-        /// The ID of the resource
-        /// Serialized Name: ResourceId.id
-        /// </summary>
-        public string SubnetId
+        /// <summary> The ID of the resource. </summary>
+        public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
             set => Subnet = new ResourceId(value);
         }
 
-        /// <summary>
-        /// State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled.
-        /// Serialized Name: AmlComputeProperties.remoteLoginPortPublicAccess
-        /// </summary>
+        /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </summary>
         public MachineLearningRemoteLoginPortPublicAccess? RemoteLoginPortPublicAccess { get; set; }
-        /// <summary>
-        /// Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute.
-        /// Serialized Name: AmlComputeProperties.allocationState
-        /// </summary>
-        public AmlAllocationState? AllocationState { get; }
-        /// <summary>
-        /// The time at which the compute entered its current allocation state.
-        /// Serialized Name: AmlComputeProperties.allocationStateTransitionTime
-        /// </summary>
+        /// <summary> Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute. </summary>
+        public MachineLearningAllocationState? AllocationState { get; }
+        /// <summary> The time at which the compute entered its current allocation state. </summary>
         public DateTimeOffset? AllocationStateTransitionOn { get; }
-        /// <summary>
-        /// Collection of errors encountered by various compute nodes during node setup.
-        /// Serialized Name: AmlComputeProperties.errors
-        /// </summary>
+        /// <summary> Collection of errors encountered by various compute nodes during node setup. </summary>
         public IReadOnlyList<MachineLearningError> Errors { get; }
-        /// <summary>
-        /// The number of compute nodes currently assigned to the compute.
-        /// Serialized Name: AmlComputeProperties.currentNodeCount
-        /// </summary>
+        /// <summary> The number of compute nodes currently assigned to the compute. </summary>
         public int? CurrentNodeCount { get; }
-        /// <summary>
-        /// The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation.
-        /// Serialized Name: AmlComputeProperties.targetNodeCount
-        /// </summary>
+        /// <summary> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </summary>
         public int? TargetNodeCount { get; }
-        /// <summary>
-        /// Counts of various node states on the compute.
-        /// Serialized Name: AmlComputeProperties.nodeStateCounts
-        /// </summary>
+        /// <summary> Counts of various node states on the compute. </summary>
         public MachineLearningNodeStateCounts NodeStateCounts { get; }
-        /// <summary>
-        /// Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs.
-        /// Serialized Name: AmlComputeProperties.enableNodePublicIp
-        /// </summary>
+        /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
         public bool? EnableNodePublicIP { get; set; }
         /// <summary>
         /// A property bag containing additional properties.
-        /// Serialized Name: AmlComputeProperties.propertyBag
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

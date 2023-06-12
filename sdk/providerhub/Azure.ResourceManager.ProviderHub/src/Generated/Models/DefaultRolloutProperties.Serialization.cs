@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Specification))
             {
-                writer.WritePropertyName("specification");
+                writer.WritePropertyName("specification"u8);
                 writer.WriteObjectValue(Specification);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
@@ -35,39 +35,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutProperties DeserializeDefaultRolloutProperties(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<DefaultRolloutPropertiesSpecification> specification = default;
-            Optional<DefaultRolloutPropertiesStatus> status = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Optional<DefaultRolloutSpecification> specification = default;
+            Optional<DefaultRolloutStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("specification"))
+                if (property.NameEquals("specification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    specification = DefaultRolloutPropertiesSpecification.DeserializeDefaultRolloutPropertiesSpecification(property.Value);
+                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = DefaultRolloutPropertiesStatus.DeserializeDefaultRolloutPropertiesStatus(property.Value);
+                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value);
                     continue;
                 }
             }

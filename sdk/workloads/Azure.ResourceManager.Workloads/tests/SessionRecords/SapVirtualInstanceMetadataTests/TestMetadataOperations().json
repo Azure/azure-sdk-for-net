@@ -1,0 +1,804 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-168a4fb506e88341948ef632e0823a78-80f619567f26874e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a4c9a1ee12c1bc8dfbb1016cb1b12787",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "424",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 13:34:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6a9a2950-2f64-4c84-869a-61b0766a7fc2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "6a9a2950-2f64-4c84-869a-61b0766a7fc2",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230403T133429Z:6a9a2950-2f64-4c84-869a-61b0766a7fc2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "SkipCleanup": "true"
+        },
+        "subscriptionId": "49d64d54-e966-4c46-a868-1999802b762c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Az WaaS Test 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/eastus2/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails?api-version=2023-04-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "69",
+        "Content-Type": "application/json",
+        "traceparent": "00-2e7322299357924fa49076e68397617b-47e2a1d9b18aaf4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20230403.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1f75bb0f8423efcdf118b72d90daaa84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "appLocation": "eastus2",
+        "sapProduct": "S4HANA",
+        "databaseType": "HANA"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-01-preview, 2022-10-15-preview, 2022-11-01-preview, 2023-04-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "49",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 13:34:31 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "7be0a8a6-aa6d-4685-ab48-34c83460d1e0",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f75bb0f8423efcdf118b72d90daaa84",
+        "x-ms-correlation-request-id": "1d48b0b3-9d9a-49fb-92d9-cab12f0b0b75",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "90387323-319f-4d66-94ef-d2700b71bbbe",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230403T133432Z:1d48b0b3-9d9a-49fb-92d9-cab12f0b0b75"
+      },
+      "ResponseBody": {
+        "availabilityZonePairs": [
+          {
+            "zoneA": 2,
+            "zoneB": 3
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/eastus2/sapVirtualInstanceMetadata/default/getDiskConfigurations?api-version=2023-04-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "149",
+        "Content-Type": "application/json",
+        "traceparent": "00-385f552892d97f49b2ea621861cdf66b-1dfbdfd21fab1641-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20230403.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e8c1dbef7664117a6af1351c56831b4e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "appLocation": "eastus2",
+        "environment": "NonProd",
+        "sapProduct": "S4HANA",
+        "databaseType": "HANA",
+        "deploymentType": "ThreeTier",
+        "dbVmSku": "Standard_M32ts"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-01-preview, 2022-10-15-preview, 2022-11-01-preview, 2023-04-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "5321",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 13:34:33 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "9c891867-528a-48c3-9279-d0425a0b30e9",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e8c1dbef7664117a6af1351c56831b4e",
+        "x-ms-correlation-request-id": "62da4d4d-51c3-4f81-9e46-e2c65888c061",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "01385484-db7f-4446-8cc1-f8e0c9eceb37",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230403T133434Z:62da4d4d-51c3-4f81-9e46-e2c65888c061"
+      },
+      "ResponseBody": {
+        "volumeConfigurations": {
+          "hana/data": {
+            "recommendedConfiguration": {
+              "count": 4,
+              "sizeGB": 128,
+              "sku": {
+                "name": "Premium_LRS"
+              }
+            },
+            "supportedConfigurations": [
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 4,
+                "maximumSupportedDiskCount": 5,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 100,
+                "diskTier": "P10"
+              }
+            ]
+          },
+          "hana/log": {
+            "recommendedConfiguration": {
+              "count": 3,
+              "sizeGB": 128,
+              "sku": {
+                "name": "Premium_LRS"
+              }
+            },
+            "supportedConfigurations": [
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 3,
+                "maximumSupportedDiskCount": 5,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 100,
+                "diskTier": "P10"
+              }
+            ]
+          },
+          "hana/shared": {
+            "recommendedConfiguration": {
+              "count": 1,
+              "sizeGB": 256,
+              "sku": {
+                "name": "StandardSSD_LRS"
+              }
+            },
+            "supportedConfigurations": [
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 256,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E15"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 512,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E20"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 1024,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E30"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 2048,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E40"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 4096,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E50"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 256,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 1100,
+                "mbpsReadWrite": 125,
+                "diskTier": "P15"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 512,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 2300,
+                "mbpsReadWrite": 150,
+                "diskTier": "P20"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 1024,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 5000,
+                "mbpsReadWrite": 200,
+                "diskTier": "P30"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 2048,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 7500,
+                "mbpsReadWrite": 250,
+                "diskTier": "P40"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 4096,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 7500,
+                "mbpsReadWrite": 250,
+                "diskTier": "P50"
+              }
+            ]
+          },
+          "usr/sap": {
+            "recommendedConfiguration": {
+              "count": 1,
+              "sizeGB": 128,
+              "sku": {
+                "name": "Premium_LRS"
+              }
+            },
+            "supportedConfigurations": [
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E10"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 256,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E15"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 512,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E20"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 100,
+                "diskTier": "P10"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 256,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 1100,
+                "mbpsReadWrite": 125,
+                "diskTier": "P15"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 512,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 2300,
+                "mbpsReadWrite": 150,
+                "diskTier": "P20"
+              }
+            ]
+          },
+          "backup": {
+            "recommendedConfiguration": {
+              "count": 2,
+              "sizeGB": 256,
+              "sku": {
+                "name": "StandardSSD_LRS"
+              }
+            },
+            "supportedConfigurations": [
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 0,
+                "maximumSupportedDiskCount": 6,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E10"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 256,
+                "minimumSupportedDiskCount": 0,
+                "maximumSupportedDiskCount": 6,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E15"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 512,
+                "minimumSupportedDiskCount": 0,
+                "maximumSupportedDiskCount": 6,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E20"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 0,
+                "maximumSupportedDiskCount": 6,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 100,
+                "diskTier": "P10"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 256,
+                "minimumSupportedDiskCount": 0,
+                "maximumSupportedDiskCount": 6,
+                "iopsReadWrite": 1100,
+                "mbpsReadWrite": 125,
+                "diskTier": "P15"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 512,
+                "minimumSupportedDiskCount": 0,
+                "maximumSupportedDiskCount": 6,
+                "iopsReadWrite": 2300,
+                "mbpsReadWrite": 150,
+                "diskTier": "P20"
+              }
+            ]
+          },
+          "os": {
+            "recommendedConfiguration": {
+              "count": 1,
+              "sizeGB": 64,
+              "sku": {
+                "name": "StandardSSD_LRS"
+              }
+            },
+            "supportedConfigurations": [
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 64,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E6"
+              },
+              {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 60,
+                "diskTier": "E10"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 64,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 240,
+                "mbpsReadWrite": 50,
+                "diskTier": "P6"
+              },
+              {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "minimumSupportedDiskCount": 1,
+                "maximumSupportedDiskCount": 1,
+                "iopsReadWrite": 500,
+                "mbpsReadWrite": 100,
+                "diskTier": "P10"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/eastus2/sapVirtualInstanceMetadata/default/getSapSupportedSku?api-version=2023-04-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "160",
+        "Content-Type": "application/json",
+        "traceparent": "00-10d0213dfe71bf4cbd0667a08b5fde12-f017b836eeae7842-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20230403.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "656b6e4c943169c7d3dab3a85a5f2c20",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "appLocation": "eastus2",
+        "environment": "Prod",
+        "sapProduct": "S4HANA",
+        "deploymentType": "ThreeTier",
+        "databaseType": "HANA",
+        "highAvailabilityType": "AvailabilitySet"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-01-preview, 2022-10-15-preview, 2022-11-01-preview, 2023-04-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "3170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 13:34:34 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "0d360f8e-b0d7-4aa8-8bf3-9466c0ca87d9",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "656b6e4c943169c7d3dab3a85a5f2c20",
+        "x-ms-correlation-request-id": "a6718a61-05c6-4504-ae23-b4e42987768b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "6d6417f0-42db-4ee6-b9f8-81d79ff8b0d2",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230403T133435Z:a6718a61-05c6-4504-ae23-b4e42987768b"
+      },
+      "ResponseBody": {
+        "supportedSkus": [
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D16ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D16ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D32ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D32ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D48ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D48ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D4ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D4ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D64ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D64ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D8ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D8ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_D96ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E16ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E16ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E20ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E20ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E32ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E32ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E48ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E48ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_E4ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_E4ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E64ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_E64ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_E8ds_v4"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_E8ds_v5"
+          },
+          {
+            "isAppServerCertified": true,
+            "isDatabaseCertified": false,
+            "vmSku": "Standard_E96ds_v5"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M128ms"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M128s"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M208ms_v2"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M208s_v2"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M32ts"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M416ms_v2"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M416s_v2"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M64ms"
+          },
+          {
+            "isAppServerCertified": false,
+            "isDatabaseCertified": true,
+            "vmSku": "Standard_M64s"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/eastus2/sapVirtualInstanceMetadata/default/getSizingRecommendations?api-version=2023-04-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "215",
+        "Content-Type": "application/json",
+        "traceparent": "00-4637b126bd2ac54e9aeb8aeecfd6bfdb-12ee88466e060147-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20230403.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d57c7c073ef099224063b5324fb1996d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "appLocation": "eastus2",
+        "environment": "Prod",
+        "sapProduct": "S4HANA",
+        "deploymentType": "ThreeTier",
+        "saps": 23622,
+        "dbMemory": 1024,
+        "databaseType": "HANA",
+        "dbScaleMethod": "ScaleUp",
+        "highAvailabilityType": "AvailabilitySet"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-01-preview, 2022-10-15-preview, 2022-11-01-preview, 2023-04-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 13:34:36 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "73920bde-cb69-4240-a3fe-ba3bae022a65",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d57c7c073ef099224063b5324fb1996d",
+        "x-ms-correlation-request-id": "7760cd5e-5c0c-4d1c-9ea0-5d74c2006fdf",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "b39ffbcb-9d97-4a63-85ed-a6348f96115e",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230403T133437Z:7760cd5e-5c0c-4d1c-9ea0-5d74c2006fdf"
+      },
+      "ResponseBody": {
+        "applicationServerVmSku": "Standard_E8ds_v4",
+        "applicationServerInstanceCount": 2,
+        "centralServerVmSku": "Standard_E4ds_v4",
+        "centralServerInstanceCount": 2,
+        "dbVmSku": "Standard_M64ms",
+        "databaseInstanceCount": 2,
+        "deploymentType": "ThreeTier"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com\t",
+    "RandomSeed": "125731798",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "49d64d54-e966-4c46-a868-1999802b762c"
+  }
+}

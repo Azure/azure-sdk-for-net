@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -93,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             using TransportMessageBatch transportBatch = await sender.Object.CreateMessageBatchAsync(options, default);
 
-            using var batch = new ServiceBusMessageBatch(transportBatch, new EntityScopeFactory("somePath","someNamespace"));
+            using var batch = new ServiceBusMessageBatch(transportBatch, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
             batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x15 }));
 
             await sender.Object.SendBatchAsync(batch, CancellationToken.None);

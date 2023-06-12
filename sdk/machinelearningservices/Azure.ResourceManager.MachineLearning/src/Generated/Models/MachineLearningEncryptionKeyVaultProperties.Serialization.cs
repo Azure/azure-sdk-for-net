@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultArmId");
+            writer.WritePropertyName("keyVaultArmId"u8);
             writer.WriteStringValue(KeyVaultArmId);
-            writer.WritePropertyName("keyIdentifier");
+            writer.WritePropertyName("keyIdentifier"u8);
             writer.WriteStringValue(KeyIdentifier);
             if (Optional.IsDefined(IdentityClientId))
             {
-                writer.WritePropertyName("identityClientId");
+                writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEncryptionKeyVaultProperties DeserializeMachineLearningEncryptionKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier keyVaultArmId = default;
             string keyIdentifier = default;
             Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultArmId"))
+                if (property.NameEquals("keyVaultArmId"u8))
                 {
                     keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityClientId"))
+                if (property.NameEquals("identityClientId"u8))
                 {
                     identityClientId = property.Value.GetString();
                     continue;

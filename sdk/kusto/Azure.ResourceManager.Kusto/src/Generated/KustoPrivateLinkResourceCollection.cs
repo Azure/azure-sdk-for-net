@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Gets a private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Gets a private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,62 +128,58 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Returns the list of private link resources.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("KustoPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Returns the list of private link resources.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("KustoPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +205,16 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

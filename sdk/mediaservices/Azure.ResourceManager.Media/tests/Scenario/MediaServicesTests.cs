@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task MediaServicesBasicTests()
         {
             // Create
-            string mediaServiceName = Recording.GenerateAssetName("mediabasic");
+            string mediaServiceName = Recording.GenerateAssetName("mediabasictest");
             var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
             Assert.IsNotNull(mediaService);
             Assert.AreEqual(mediaServiceName, mediaService.Data.Name);

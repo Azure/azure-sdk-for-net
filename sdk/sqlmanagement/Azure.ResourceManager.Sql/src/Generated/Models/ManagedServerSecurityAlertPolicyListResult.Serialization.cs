@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedServerSecurityAlertPolicyListResult DeserializeManagedServerSecurityAlertPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedServerSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServerSecurityAlertPolicyData> array = new List<ManagedServerSecurityAlertPolicyData>();
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

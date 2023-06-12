@@ -50,11 +50,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
-            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, "00000000-0000-0000-0000-000000000000");
+            var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
 
             if (SampleRate is float)
             {
@@ -81,10 +82,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, "00000000-0000-0000-0000-000000000000");
 
             if (SampleRate is float)
             {
@@ -102,18 +104,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(1.0F))
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 1.0F }))
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.NotEmpty(telemetryItems);
-            Assert.Equal(100F, telemetryItems.FirstOrDefault().SampleRate);
+            Assert.Equal(100F, telemetryItems.Last()!.SampleRate);
         }
 
         [Fact]
@@ -122,15 +124,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(0.0F))
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 0.0F }))
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.Empty(telemetryItems);
         }

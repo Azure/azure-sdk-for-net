@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,39 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.3.0 (2023-03-21)
+
+### Features Added
+
+- Bumped API version to 2022-11-01 for Reservations
+
+### Other Changes
+
+- Reservation Return API is changed to be long running operation
+- Introduced new properties based on the 2022-11-01 version of swagger
+
+## 1.2.0 (2023-02-15)
+
+### Features Added
+
+- Introduced property bag for the methods with more than 5 parameters.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0 (2022-10-11)
 

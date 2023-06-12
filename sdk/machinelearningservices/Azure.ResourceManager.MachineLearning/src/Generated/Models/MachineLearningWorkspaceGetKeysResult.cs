@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningWorkspaceGetKeysResult.
-    /// Serialized Name: ListWorkspaceKeysResult
-    /// </summary>
+    /// <summary> The MachineLearningWorkspaceGetKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetKeysResult
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
@@ -19,11 +16,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
-        /// <param name="userStorageKey"> Serialized Name: ListWorkspaceKeysResult.userStorageKey. </param>
-        /// <param name="userStorageResourceId"> Serialized Name: ListWorkspaceKeysResult.userStorageResourceId. </param>
-        /// <param name="appInsightsInstrumentationKey"> Serialized Name: ListWorkspaceKeysResult.appInsightsInstrumentationKey. </param>
-        /// <param name="containerRegistryCredentials"> Serialized Name: ListWorkspaceKeysResult.containerRegistryCredentials. </param>
-        /// <param name="notebookAccessKeys"> Serialized Name: ListWorkspaceKeysResult.notebookAccessKeys. </param>
+        /// <param name="userStorageKey"></param>
+        /// <param name="userStorageResourceId"></param>
+        /// <param name="appInsightsInstrumentationKey"></param>
+        /// <param name="containerRegistryCredentials"></param>
+        /// <param name="notebookAccessKeys"></param>
         internal MachineLearningWorkspaceGetKeysResult(string userStorageKey, string userStorageResourceId, string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys)
         {
             UserStorageKey = userStorageKey;
@@ -33,15 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             NotebookAccessKeys = notebookAccessKeys;
         }
 
-        /// <summary> Serialized Name: ListWorkspaceKeysResult.userStorageKey. </summary>
+        /// <summary> Gets the user storage key. </summary>
         public string UserStorageKey { get; }
-        /// <summary> Serialized Name: ListWorkspaceKeysResult.userStorageResourceId. </summary>
+        /// <summary> Gets the user storage resource id. </summary>
         public string UserStorageResourceId { get; }
-        /// <summary> Serialized Name: ListWorkspaceKeysResult.appInsightsInstrumentationKey. </summary>
+        /// <summary> Gets the app insights instrumentation key. </summary>
         public string AppInsightsInstrumentationKey { get; }
-        /// <summary> Serialized Name: ListWorkspaceKeysResult.containerRegistryCredentials. </summary>
+        /// <summary> Gets the container registry credentials. </summary>
         public MachineLearningContainerRegistryCredentials ContainerRegistryCredentials { get; }
-        /// <summary> Serialized Name: ListWorkspaceKeysResult.notebookAccessKeys. </summary>
+        /// <summary> Gets the notebook access keys. </summary>
         public MachineLearningWorkspaceGetNotebookKeysResult NotebookAccessKeys { get; }
     }
 }

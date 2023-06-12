@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost
-        /// Operation Id: AggregatedCost_GetByManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost
-        /// Operation Id: AggregatedCost_GetByManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

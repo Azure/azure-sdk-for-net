@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ActiveDirectories))
             {
-                writer.WritePropertyName("activeDirectories");
+                writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             writer.WriteEndObject();
@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppAccountData DeserializeNetAppAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -75,32 +79,29 @@ namespace Azure.ResourceManager.NetApp
             Optional<bool?> disableShowmount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -111,37 +112,36 @@ namespace Azure.ResourceManager.NetApp
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,16 +150,15 @@ namespace Azure.ResourceManager.NetApp
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("activeDirectories"))
+                        if (property0.NameEquals("activeDirectories"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
@@ -170,17 +169,16 @@ namespace Azure.ResourceManager.NetApp
                             activeDirectories = array;
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("disableShowmount"))
+                        if (property0.NameEquals("disableShowmount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

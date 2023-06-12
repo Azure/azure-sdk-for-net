@@ -5,14 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using Microsoft.Graph;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
@@ -22,7 +20,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        protected const string ObjectIdKey = "ObjectId";
         protected const int DefSoftDeleteRetentionInDays = 7;
 
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
@@ -62,28 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
             DeletedVaultCollection = Subscription.GetDeletedKeyVaults();
-
-            if (Mode == RecordedTestMode.Playback)
-            {
-                this.ObjectId = Recording.GetVariable(ObjectIdKey, string.Empty);
-            }
-            else if (Mode == RecordedTestMode.Record)
-            {
-                // Get ObjectId of Service Principal
-                // [warning] Microsoft.Graph required corresponding api permission, Please make sure the service has these two api permissions as follows.
-                // 1. ServicePrincipalEndpoint.Read.All(TYPE-Application) 2.ServicePrincipalEndpoint.ReadWrite.All(TYPE-Application)
-                var scopes = new[] { "https://graph.microsoft.com/.default" };
-                var options = new TokenCredentialOptions
-                {
-                    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
-                };
-                var clientSecretCredential = new ClientSecretCredential(TestEnvironment.TenantId, TestEnvironment.ClientId, TestEnvironment.ClientSecret, options);
-                var graphClient = new GraphServiceClient(clientSecretCredential, scopes);
-                var response = await graphClient.ServicePrincipals.Request().GetAsync();
-                var result = response.CurrentPage.Where(i => i.AppId == TestEnvironment.ClientId).FirstOrDefault();
-                this.ObjectId = result.Id;
-                Recording.GetVariable(ObjectIdKey, this.ObjectId);
-            }
+            ObjectId = TestEnvironment.ObjectId;
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
             ArmOperation<ResourceGroupResource> rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);

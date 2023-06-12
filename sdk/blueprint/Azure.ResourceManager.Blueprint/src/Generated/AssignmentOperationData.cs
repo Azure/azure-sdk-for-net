@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    /// <summary> A class representing the AssignmentOperation data model. </summary>
+    /// <summary>
+    /// A class representing the AssignmentOperation data model.
+    /// Represents underlying deployment detail for each update to the blueprint assignment.
+    /// </summary>
     public partial class AssignmentOperationData : ResourceData
     {
         /// <summary> Initializes a new instance of AssignmentOperationData. </summary>

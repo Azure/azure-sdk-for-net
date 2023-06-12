@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProtectableItemProperties DeserializeProtectableItemProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> protectionStatus = default;
             Optional<string> replicationProtectedItemId = default;
@@ -24,31 +28,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ConfigurationSettings> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStatus"))
+                if (property.NameEquals("protectionStatus"u8))
                 {
                     protectionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationProtectedItemId"))
+                if (property.NameEquals("replicationProtectedItemId"u8))
                 {
                     replicationProtectedItemId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryServicesProviderId"))
+                if (property.NameEquals("recoveryServicesProviderId"u8))
                 {
                     recoveryServicesProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionReadinessErrors"))
+                if (property.NameEquals("protectionReadinessErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -59,11 +62,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectionReadinessErrors = array;
                     continue;
                 }
-                if (property.NameEquals("supportedReplicationProviders"))
+                if (property.NameEquals("supportedReplicationProviders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -74,11 +76,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     supportedReplicationProviders = array;
                     continue;
                 }
-                if (property.NameEquals("customDetails"))
+                if (property.NameEquals("customDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customDetails = ConfigurationSettings.DeserializeConfigurationSettings(property.Value);

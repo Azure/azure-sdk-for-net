@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get specific `Reservation` details.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get specific `Reservation` details.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,8 +155,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Updates the applied scopes of the `Reservation`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
@@ -155,7 +179,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationDetailReservationRestClient.UpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,8 +193,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Updates the applied scopes of the `Reservation`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
@@ -185,7 +217,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationDetailReservationRestClient.Update(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,13 +230,21 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get Available Scopes for `Reservation`.
+        /// Check whether the scopes from request is valid for `Reservation`.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes
-        /// Operation Id: Reservation_AvailableScopes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_AvailableScopes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The AvailableScopesContent to use. </param>
+        /// <param name="content"> Scopes to be checked for eligibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AvailableScopesProperties>> GetAvailableScopesAsync(WaitUntil waitUntil, AvailableScopesContent content, CancellationToken cancellationToken = default)
@@ -229,13 +269,21 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get Available Scopes for `Reservation`.
+        /// Check whether the scopes from request is valid for `Reservation`.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes
-        /// Operation Id: Reservation_AvailableScopes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_AvailableScopes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The AvailableScopesContent to use. </param>
+        /// <param name="content"> Scopes to be checked for eligibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AvailableScopesProperties> GetAvailableScopes(WaitUntil waitUntil, AvailableScopesContent content, CancellationToken cancellationToken = default)
@@ -261,8 +309,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Archiving a `Reservation` moves it to `Archived` state.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/archive
-        /// Operation Id: Reservation_Archive
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/archive</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Archive</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ArchiveAsync(CancellationToken cancellationToken = default)
@@ -283,8 +339,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Archiving a `Reservation` moves it to `Archived` state.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/archive
-        /// Operation Id: Reservation_Archive
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/archive</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Archive</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Archive(CancellationToken cancellationToken = default)
@@ -304,10 +368,18 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// Restores a `Reservation` to the state it was before archiving.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/unarchive
-        /// Operation Id: Reservation_Unarchive
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/unarchive</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Unarchive</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> UnarchiveAsync(CancellationToken cancellationToken = default)
@@ -327,10 +399,18 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// Restores a `Reservation` to the state it was before archiving.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/unarchive
-        /// Operation Id: Reservation_Unarchive
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/unarchive</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Unarchive</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Unarchive(CancellationToken cancellationToken = default)

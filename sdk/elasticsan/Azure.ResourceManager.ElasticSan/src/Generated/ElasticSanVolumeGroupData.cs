@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> A class representing the ElasticSanVolumeGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ElasticSanVolumeGroup data model.
+    /// Response for Volume Group request.
+    /// </summary>
     public partial class ElasticSanVolumeGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>

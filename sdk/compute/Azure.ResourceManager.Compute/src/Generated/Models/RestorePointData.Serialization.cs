@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExcludeDisks))
             {
-                writer.WritePropertyName("excludeDisks");
+                writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludeDisks)
                 {
@@ -32,19 +32,24 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SourceMetadata))
+            {
+                writer.WritePropertyName("sourceMetadata"u8);
+                writer.WriteObjectValue(SourceMetadata);
+            }
             if (Optional.IsDefined(ConsistencyMode))
             {
-                writer.WritePropertyName("consistencyMode");
+                writer.WritePropertyName("consistencyMode"u8);
                 writer.WriteStringValue(ConsistencyMode.Value.ToString());
             }
             if (Optional.IsDefined(TimeCreated))
             {
-                writer.WritePropertyName("timeCreated");
+                writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
             if (Optional.IsDefined(SourceRestorePoint))
             {
-                writer.WritePropertyName("sourceRestorePoint");
+                writer.WritePropertyName("sourceRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceRestorePoint);
             }
             writer.WriteEndObject();
@@ -53,6 +58,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static RestorePointData DeserializeRestorePointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -66,32 +75,31 @@ namespace Azure.ResourceManager.Compute
             Optional<RestorePointInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,11 +108,10 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("excludeDisks"))
+                        if (property0.NameEquals("excludeDisks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -115,56 +122,51 @@ namespace Azure.ResourceManager.Compute
                             excludeDisks = array;
                             continue;
                         }
-                        if (property0.NameEquals("sourceMetadata"))
+                        if (property0.NameEquals("sourceMetadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceMetadata = RestorePointSourceMetadata.DeserializeRestorePointSourceMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("consistencyMode"))
+                        if (property0.NameEquals("consistencyMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             consistencyMode = new ConsistencyModeType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("timeCreated"))
+                        if (property0.NameEquals("timeCreated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceRestorePoint"))
+                        if (property0.NameEquals("sourceRestorePoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("instanceView"))
+                        if (property0.NameEquals("instanceView"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = RestorePointInstanceView.DeserializeRestorePointInstanceView(property0.Value);

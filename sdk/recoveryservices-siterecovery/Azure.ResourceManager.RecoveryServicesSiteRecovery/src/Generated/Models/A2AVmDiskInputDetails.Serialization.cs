@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("diskUri");
+            writer.WritePropertyName("diskUri"u8);
             writer.WriteStringValue(DiskUri.AbsoluteUri);
-            writer.WritePropertyName("recoveryAzureStorageAccountId");
+            writer.WritePropertyName("recoveryAzureStorageAccountId"u8);
             writer.WriteStringValue(RecoveryAzureStorageAccountId);
-            writer.WritePropertyName("primaryStagingAzureStorageAccountId");
+            writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
             writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
             writer.WriteEndObject();
         }

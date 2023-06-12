@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseKeyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        SynapseKeyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = SynapseKeyData.DeserializeSynapseKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((SynapseKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
+        public Response<SynapseKeyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        SynapseKeyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = SynapseKeyData.DeserializeSynapseKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((SynapseKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, KeyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, SynapseKeyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="keyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, KeyData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseKeyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, SynapseKeyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        SynapseKeyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = SynapseKeyData.DeserializeSynapseKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="keyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, KeyData data, CancellationToken cancellationToken = default)
+        public Response<SynapseKeyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, SynapseKeyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        SynapseKeyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = SynapseKeyData.DeserializeSynapseKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyData>> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseKeyData>> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -339,13 +339,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        SynapseKeyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = SynapseKeyData.DeserializeSynapseKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((SynapseKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyData> Delete(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
+        public Response<SynapseKeyData> Delete(string subscriptionId, string resourceGroupName, string workspaceName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -372,13 +372,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        KeyData value = default;
+                        SynapseKeyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyData.DeserializeKeyData(document.RootElement);
+                        value = SynapseKeyData.DeserializeSynapseKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((KeyData)null, message.Response);
+                    return Response.FromValue((SynapseKeyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubTestRouteResultDetails DeserializeIotHubTestRouteResultDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RouteCompilationError>> compilationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("compilationErrors"))
+                if (property.NameEquals("compilationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteCompilationError> array = new List<RouteCompilationError>();

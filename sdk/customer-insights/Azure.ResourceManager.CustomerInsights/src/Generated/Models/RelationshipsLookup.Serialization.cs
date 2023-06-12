@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static RelationshipsLookup DeserializeRelationshipsLookup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> profileName = default;
             Optional<IReadOnlyList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
             Optional<string> relatedProfileName = default;
@@ -22,16 +26,15 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> existingRelationshipName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileName"))
+                if (property.NameEquals("profileName"u8))
                 {
                     profileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("profilePropertyReferences"))
+                if (property.NameEquals("profilePropertyReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
@@ -42,16 +45,15 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     profilePropertyReferences = array;
                     continue;
                 }
-                if (property.NameEquals("relatedProfileName"))
+                if (property.NameEquals("relatedProfileName"u8))
                 {
                     relatedProfileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relatedProfilePropertyReferences"))
+                if (property.NameEquals("relatedProfilePropertyReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     relatedProfilePropertyReferences = array;
                     continue;
                 }
-                if (property.NameEquals("existingRelationshipName"))
+                if (property.NameEquals("existingRelationshipName"u8))
                 {
                     existingRelationshipName = property.Value.GetString();
                     continue;

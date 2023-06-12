@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationTimeout))
             {
-                writer.WritePropertyName("operationTimeout");
+                writer.WritePropertyName("operationTimeout"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(OperationTimeout);
 #else
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(UseTempFileRename))
             {
-                writer.WritePropertyName("useTempFileRename");
+                writer.WritePropertyName("useTempFileRename"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseTempFileRename);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTempFileRename.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreWriteSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxConcurrentConnections);
 #else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
+                writer.WritePropertyName("disableMetricsCollection"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DisableMetricsCollection);
 #else
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CopyBehavior))
             {
-                writer.WritePropertyName("copyBehavior");
+                writer.WritePropertyName("copyBehavior"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CopyBehavior);
 #else
@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> operationTimeout = default;
             Optional<BinaryData> useTempFileRename = default;
             string type = default;
@@ -88,56 +92,51 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationTimeout"))
+                if (property.NameEquals("operationTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("useTempFileRename"))
+                if (property.NameEquals("useTempFileRename"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useTempFileRename = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("copyBehavior"))
+                if (property.NameEquals("copyBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyBehavior = BinaryData.FromString(property.Value.GetRawText());

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SkuName))
             {
-                writer.WritePropertyName("skuName");
+                writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName.Value.ToSerialString());
             }
             writer.WriteEndObject();

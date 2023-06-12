@@ -12,7 +12,10 @@ using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    /// <summary> A class representing the AutoScaleVCore data model. </summary>
+    /// <summary>
+    /// A class representing the AutoScaleVCore data model.
+    /// Represents an instance of an auto scale v-core resource.
+    /// </summary>
     public partial class AutoScaleVCoreData : PowerBIDedicatedResourceData
     {
         /// <summary> Initializes a new instance of AutoScaleVCoreData. </summary>

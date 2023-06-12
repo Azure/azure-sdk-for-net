@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProjectNumber))
             {
-                writer.WritePropertyName("projectNumber");
+                writer.WritePropertyName("projectNumber"u8);
                 writer.WriteStringValue(ProjectNumber);
             }
             if (Optional.IsDefined(ProjectId))
             {
-                writer.WritePropertyName("projectId");
+                writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
             writer.WriteEndObject();
@@ -30,22 +30,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpProjectDetails DeserializeGcpProjectDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> projectNumber = default;
             Optional<string> projectId = default;
             Optional<string> workloadIdentityPoolId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("projectNumber"))
+                if (property.NameEquals("projectNumber"u8))
                 {
                     projectNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projectId"))
+                if (property.NameEquals("projectId"u8))
                 {
                     projectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadIdentityPoolId"))
+                if (property.NameEquals("workloadIdentityPoolId"u8))
                 {
                     workloadIdentityPoolId = property.Value.GetString();
                     continue;

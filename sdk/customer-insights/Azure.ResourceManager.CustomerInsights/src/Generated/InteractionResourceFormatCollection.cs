@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Creates an interaction or updates an existing interaction within a hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="interactionName"> The name of the interaction. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Creates an interaction or updates an existing interaction within a hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="interactionName"> The name of the interaction. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets information about the specified interaction.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets information about the specified interaction.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
@@ -181,94 +212,62 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all interactions in the hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions
-        /// Operation Id: Interactions_ListByHub
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_ListByHub</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InteractionResourceFormatResource> GetAllAsync(string localeCode = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<InteractionResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _interactionResourceFormatInteractionsRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<InteractionResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _interactionResourceFormatInteractionsRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all interactions in the hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions
-        /// Operation Id: Interactions_ListByHub
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_ListByHub</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InteractionResourceFormatResource> GetAll(string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Page<InteractionResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _interactionResourceFormatInteractionsRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<InteractionResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _interactionResourceFormatInteractionsRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
@@ -295,8 +294,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>

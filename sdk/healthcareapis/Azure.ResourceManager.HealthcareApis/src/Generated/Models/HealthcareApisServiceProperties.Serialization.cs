@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
-                writer.WritePropertyName("accessPolicies");
+                writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsDefined(CosmosDbConfiguration))
             {
-                writer.WritePropertyName("cosmosDbConfiguration");
+                writer.WritePropertyName("cosmosDbConfiguration"u8);
                 writer.WriteObjectValue(CosmosDbConfiguration);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
-                writer.WritePropertyName("authenticationConfiguration");
+                writer.WritePropertyName("authenticationConfiguration"u8);
                 writer.WriteObjectValue(AuthenticationConfiguration);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
-                writer.WritePropertyName("corsConfiguration");
+                writer.WritePropertyName("corsConfiguration"u8);
                 writer.WriteObjectValue(CorsConfiguration);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
-                writer.WritePropertyName("exportConfiguration");
+                writer.WritePropertyName("exportConfiguration"u8);
                 writer.WriteObjectValue(ExportConfiguration);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections");
+                writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(AcrConfiguration))
             {
-                writer.WritePropertyName("acrConfiguration");
+                writer.WritePropertyName("acrConfiguration"u8);
                 writer.WriteObjectValue(AcrConfiguration);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
-                writer.WritePropertyName("importConfiguration");
+                writer.WritePropertyName("importConfiguration"u8);
                 writer.WriteObjectValue(ImportConfiguration);
             }
             writer.WriteEndObject();
@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IList<HealthcareApisServiceAccessPolicyEntry>> accessPolicies = default;
             Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;
@@ -89,21 +93,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new HealthcareApisProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessPolicies"))
+                if (property.NameEquals("accessPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareApisServiceAccessPolicyEntry> array = new List<HealthcareApisServiceAccessPolicyEntry>();
@@ -114,51 +116,46 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     accessPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("cosmosDbConfiguration"))
+                if (property.NameEquals("cosmosDbConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cosmosDbConfiguration = HealthcareApisServiceCosmosDbConfiguration.DeserializeHealthcareApisServiceCosmosDbConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("authenticationConfiguration"))
+                if (property.NameEquals("authenticationConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationConfiguration = HealthcareApisServiceAuthenticationConfiguration.DeserializeHealthcareApisServiceAuthenticationConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("corsConfiguration"))
+                if (property.NameEquals("corsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     corsConfiguration = HealthcareApisServiceCorsConfiguration.DeserializeHealthcareApisServiceCorsConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("exportConfiguration"))
+                if (property.NameEquals("exportConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exportConfiguration = ServiceExportConfigurationInfo.DeserializeServiceExportConfigurationInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
@@ -169,31 +166,28 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("acrConfiguration"))
+                if (property.NameEquals("acrConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     acrConfiguration = HealthcareApisServiceAcrConfiguration.DeserializeHealthcareApisServiceAcrConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("importConfiguration"))
+                if (property.NameEquals("importConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     importConfiguration = HealthcareApisServiceImportConfiguration.DeserializeHealthcareApisServiceImportConfiguration(property.Value);

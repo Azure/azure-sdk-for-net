@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of RolloutStatusBase. </summary>
         public RolloutStatusBase()
         {
-            CompletedRegions = new ChangeTrackingList<string>();
+            CompletedRegions = new ChangeTrackingList<AzureLocation>();
             FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of RolloutStatusBase. </summary>
         /// <param name="completedRegions"></param>
         /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
-        internal RolloutStatusBase(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)
+        internal RolloutStatusBase(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)
         {
             CompletedRegions = completedRegions;
             FailedOrSkippedRegions = failedOrSkippedRegions;
         }
 
         /// <summary> Gets the completed regions. </summary>
-        public IList<string> CompletedRegions { get; }
+        public IList<AzureLocation> CompletedRegions { get; }
         /// <summary> Dictionary of &lt;ExtendedErrorInfo&gt;. </summary>
         public IDictionary<string, ExtendedErrorInfo> FailedOrSkippedRegions { get; }
     }

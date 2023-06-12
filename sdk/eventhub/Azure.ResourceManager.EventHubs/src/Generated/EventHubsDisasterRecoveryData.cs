@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsDisasterRecovery data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsDisasterRecovery data model.
+    /// Single item in List or Get Alias(Disaster Recovery configuration) operation
+    /// </summary>
     public partial class EventHubsDisasterRecoveryData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsDisasterRecoveryData. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreTrustedIdProviderState ToDataLakeStoreTrustedIdProviderState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreTrustedIdProviderState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreTrustedIdProviderState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataLakeStoreTrustedIdProviderState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataLakeStoreTrustedIdProviderState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreTrustedIdProviderState value.");
         }
     }

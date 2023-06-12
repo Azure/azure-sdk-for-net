@@ -15,31 +15,33 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxSkuCost DeserializeDataBoxSkuCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> meterId = default;
             Optional<string> meterType = default;
             Optional<double> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterId"))
+                if (property.NameEquals("meterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meterId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("meterType"))
+                if (property.NameEquals("meterType"u8))
                 {
                     meterType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiplier"))
+                if (property.NameEquals("multiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multiplier = property.Value.GetDouble();

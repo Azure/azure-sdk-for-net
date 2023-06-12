@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("parameters");
+            writer.WritePropertyName("parameters"u8);
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ClusterFabricSettingsSection DeserializeClusterFabricSettingsSection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<ClusterFabricSettingsParameterDescription> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     List<ClusterFabricSettingsParameterDescription> array = new List<ClusterFabricSettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())

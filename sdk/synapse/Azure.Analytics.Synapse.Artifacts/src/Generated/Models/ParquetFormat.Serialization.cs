@@ -19,16 +19,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
             }
             foreach (var item in AdditionalProperties)
@@ -41,6 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ParquetFormat DeserializeParquetFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<object> serializer = default;
             Optional<object> deserializer = default;
@@ -48,26 +52,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serializer"))
+                if (property.NameEquals("serializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serializer = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("deserializer"))
+                if (property.NameEquals("deserializer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deserializer = property.Value.GetObject();

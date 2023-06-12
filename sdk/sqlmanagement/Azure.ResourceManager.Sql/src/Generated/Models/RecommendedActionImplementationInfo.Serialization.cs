@@ -14,21 +14,24 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecommendedActionImplementationInfo DeserializeRecommendedActionImplementationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImplementationMethod> method = default;
             Optional<string> script = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     method = property.Value.GetString().ToImplementationMethod();
                     continue;
                 }
-                if (property.NameEquals("script"))
+                if (property.NameEquals("script"u8))
                 {
                     script = property.Value.GetString();
                     continue;

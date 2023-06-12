@@ -16,27 +16,29 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static AddressValidationResult DeserializeAddressValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AddressValidationStatus> validationStatus = default;
             Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
             DataBoxValidationInputDiscriminator validationType = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationStatus"))
+                if (property.NameEquals("validationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationStatus = property.Value.GetString().ToAddressValidationStatus();
                     continue;
                 }
-                if (property.NameEquals("alternateAddresses"))
+                if (property.NameEquals("alternateAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
@@ -47,16 +49,15 @@ namespace Azure.ResourceManager.DataBox.Models
                     alternateAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("validationType"))
+                if (property.NameEquals("validationType"u8))
                 {
                     validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());

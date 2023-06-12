@@ -19,7 +19,7 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 
 #if SNIPPET
             Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-            string instanceId = "<instance-id>"
+            string instanceId = "<instance-id>";
             TokenCredential credentials = new DefaultAzureCredential();
 #else
             Uri endpoint = TestEnvironment.AccountEndPoint;

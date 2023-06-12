@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (Optional.IsDefined(Algorithm))
             {
-                writer.WritePropertyName("algorithm");
+                writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ParameterNameOverride))
             {
-                writer.WritePropertyName("parameterNameOverride");
+                writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParameterNameOverride)
                 {
@@ -38,31 +38,33 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriSigningActionProperties DeserializeUriSigningActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriSigningActionType typeName = default;
             Optional<UriSigningAlgorithm> algorithm = default;
             Optional<IList<UriSigningParamIdentifier>> parameterNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new UriSigningActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("algorithm"))
+                if (property.NameEquals("algorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     algorithm = new UriSigningAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameterNameOverride"))
+                if (property.NameEquals("parameterNameOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UriSigningParamIdentifier> array = new List<UriSigningParamIdentifier>();

@@ -19,116 +19,88 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsDefined(Variable))
             {
-                writer.WritePropertyName("variable");
+                writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
             if (Optional.IsDefined(FilledNARatio))
             {
-                if (FilledNARatio != null)
-                {
-                    writer.WritePropertyName("filledNARatio");
-                    writer.WriteNumberValue(FilledNARatio.Value);
-                }
-                else
-                {
-                    writer.WriteNull("filledNARatio");
-                }
+                writer.WritePropertyName("filledNARatio"u8);
+                writer.WriteNumberValue(FilledNARatio.Value);
             }
             if (Optional.IsDefined(EffectiveCount))
             {
-                if (EffectiveCount != null)
-                {
-                    writer.WritePropertyName("effectiveCount");
-                    writer.WriteNumberValue(EffectiveCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("effectiveCount");
-                }
+                writer.WritePropertyName("effectiveCount"u8);
+                writer.WriteNumberValue(EffectiveCount.Value);
             }
             if (Optional.IsDefined(FirstTimestamp))
             {
-                if (FirstTimestamp != null)
-                {
-                    writer.WritePropertyName("firstTimestamp");
-                    writer.WriteStringValue(FirstTimestamp.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("firstTimestamp");
-                }
+                writer.WritePropertyName("firstTimestamp"u8);
+                writer.WriteStringValue(FirstTimestamp.Value, "O");
             }
             if (Optional.IsDefined(LastTimestamp))
             {
-                if (LastTimestamp != null)
-                {
-                    writer.WritePropertyName("lastTimestamp");
-                    writer.WriteStringValue(LastTimestamp.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("lastTimestamp");
-                }
+                writer.WritePropertyName("lastTimestamp"u8);
+                writer.WriteStringValue(LastTimestamp.Value, "O");
             }
             writer.WriteEndObject();
         }
 
         internal static VariableState DeserializeVariableState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
-            Optional<float?> filledNARatio = default;
-            Optional<int?> effectiveCount = default;
-            Optional<DateTimeOffset?> firstTimestamp = default;
-            Optional<DateTimeOffset?> lastTimestamp = default;
+            Optional<float> filledNARatio = default;
+            Optional<int> effectiveCount = default;
+            Optional<DateTimeOffset> firstTimestamp = default;
+            Optional<DateTimeOffset> lastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("variable"))
+                if (property.NameEquals("variable"u8))
                 {
                     variable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filledNARatio"))
+                if (property.NameEquals("filledNARatio"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        filledNARatio = null;
                         continue;
                     }
                     filledNARatio = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("effectiveCount"))
+                if (property.NameEquals("effectiveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        effectiveCount = null;
                         continue;
                     }
                     effectiveCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstTimestamp"))
+                if (property.NameEquals("firstTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firstTimestamp = null;
                         continue;
                     }
                     firstTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTimestamp"))
+                if (property.NameEquals("lastTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lastTimestamp = null;
                         continue;
                     }
                     lastTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new VariableState(variable, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
+            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

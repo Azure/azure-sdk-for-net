@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformMonitoringSetting data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformMonitoringSetting data model.
+    /// Monitoring Setting resource
+    /// </summary>
     public partial class AppPlatformMonitoringSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformMonitoringSettingData. </summary>

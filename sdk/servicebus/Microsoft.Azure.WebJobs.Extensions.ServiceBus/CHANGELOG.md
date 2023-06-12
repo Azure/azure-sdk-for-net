@@ -1,6 +1,6 @@
 # Release History
 
-## 5.9.0-beta.1 (Unreleased)
+## 5.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.11.0 (2023-06-06)
+
+### Bugs Fixed
+
+- Fixed issue where the main entity was not queried by the scale monitor when listening to the deadletter queue.
+
+### Other Changes
+
+- Updated dependency on `Azure.Messaging.ServiceBus` to 7.15.0.
+
+## 5.10.0 (2023-05-10)
+
+### Features Added
+
+- Added `MinMessageBatchSize` and `MaxBatchWaitTime` to `ServiceBusOptions` to allow configuring the minimum number of messages to process in a batch and the maximum time to wait for a batch to be filled before processing.
+
+## 5.9.0 (2023-02-23)
+
+### Features Added
+
+- Target-based scaling support has been added, allowing instances for Service Bus-triggered Functions to more accurately calculate their scale needs and adjust more quickly as the number of messages waiting to be processed changes.
 
 ## 5.8.1 (2022-11-09)
 

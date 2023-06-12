@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ComputeSchedules DeserializeComputeSchedules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeStartStop"))
+                if (property.NameEquals("computeStartStop"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningComputeStartStopSchedule> array = new List<MachineLearningComputeStartStopSchedule>();

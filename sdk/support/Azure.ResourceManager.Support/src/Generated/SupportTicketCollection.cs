@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Creates a new support ticket for Subscription and Service limits (Quota), Technical, Billing, and Subscription Management issues for the specified subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to provide an auxiliary token as per [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant). The primary token will be from the tenant for whom a support ticket is being raised against the subscription, i.e. Cloud solution provider (CSP) customer tenant. The auxiliary token will be from the Cloud solution provider (CSP) partner tenant.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Creates a new support ticket for Subscription and Service limits (Quota), Technical, Billing, and Subscription Management issues for the specified subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to provide an auxiliary token as per [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant). The primary token will be from the tenant for whom a support ticket is being raised against the subscription, i.e. Cloud solution provider (CSP) customer tenant. The auxiliary token will be from the Cloud solution provider (CSP) partner tenant.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +211,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Lists all the support tickets for an Azure subscription. You can also filter the support tickets by _Status_, _CreatedDate_, _ServiceId_, and _ProblemClassificationId_ using the $filter parameter. Output will be a paged result with _nextLink_, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets
-        /// Operation Id: SupportTickets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
@@ -189,43 +228,23 @@ namespace Azure.ResourceManager.Support
         /// <returns> An async collection of <see cref="SupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportTicketResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportTicketRestClient.ListAsync(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SupportTicketResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportTicketRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the support tickets for an Azure subscription. You can also filter the support tickets by _Status_, _CreatedDate_, _ServiceId_, and _ProblemClassificationId_ using the $filter parameter. Output will be a paged result with _nextLink_, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets
-        /// Operation Id: SupportTickets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
@@ -233,43 +252,23 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SupportTicketResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportTicketRestClient.List(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SupportTicketResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportTicketRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -295,8 +294,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewAccountAccessKey DeserializePurviewAccountAccessKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> atlasKafkaPrimaryEndpoint = default;
             Optional<string> atlasKafkaSecondaryEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("atlasKafkaPrimaryEndpoint"))
+                if (property.NameEquals("atlasKafkaPrimaryEndpoint"u8))
                 {
                     atlasKafkaPrimaryEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("atlasKafkaSecondaryEndpoint"))
+                if (property.NameEquals("atlasKafkaSecondaryEndpoint"u8))
                 {
                     atlasKafkaSecondaryEndpoint = property.Value.GetString();
                     continue;

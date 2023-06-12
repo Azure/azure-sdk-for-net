@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorOriginGroup data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorOriginGroup data model.
+    /// AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
+    /// </summary>
     public partial class FrontDoorOriginGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorOriginGroupData. </summary>

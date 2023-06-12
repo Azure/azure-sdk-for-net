@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateUri))
             {
-                writer.WritePropertyName("templateUri");
+                writer.WritePropertyName("templateUri"u8);
                 writer.WriteStringValue(TemplateUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ParametersUri))
             {
-                writer.WritePropertyName("parametersUri");
+                writer.WritePropertyName("parametersUri"u8);
                 writer.WriteStringValue(ParametersUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TemplateArtifactSourceRelativePath))
             {
-                writer.WritePropertyName("templateArtifactSourceRelativePath");
+                writer.WritePropertyName("templateArtifactSourceRelativePath"u8);
                 writer.WriteStringValue(TemplateArtifactSourceRelativePath);
             }
             if (Optional.IsDefined(ParametersArtifactSourceRelativePath))
             {
-                writer.WritePropertyName("parametersArtifactSourceRelativePath");
+                writer.WritePropertyName("parametersArtifactSourceRelativePath"u8);
                 writer.WriteStringValue(ParametersArtifactSourceRelativePath);
             }
             writer.WriteEndObject();
@@ -41,38 +41,40 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static ServiceUnitArtifacts DeserializeServiceUnitArtifacts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> templateUri = default;
             Optional<Uri> parametersUri = default;
             Optional<string> templateArtifactSourceRelativePath = default;
             Optional<string> parametersArtifactSourceRelativePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("templateUri"))
+                if (property.NameEquals("templateUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        templateUri = null;
                         continue;
                     }
                     templateUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parametersUri"))
+                if (property.NameEquals("parametersUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parametersUri = null;
                         continue;
                     }
                     parametersUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("templateArtifactSourceRelativePath"))
+                if (property.NameEquals("templateArtifactSourceRelativePath"u8))
                 {
                     templateArtifactSourceRelativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parametersArtifactSourceRelativePath"))
+                if (property.NameEquals("parametersArtifactSourceRelativePath"u8))
                 {
                     parametersArtifactSourceRelativePath = property.Value.GetString();
                     continue;

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Create the default Service Registry or update the existing Service Registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
@@ -86,8 +93,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Create the default Service Registry or update the existing Service Registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
@@ -117,8 +132,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the Service Registry and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,8 +169,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the Service Registry and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -175,92 +206,60 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Handles requests to list all resources in a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries
-        /// Operation Id: ServiceRegistries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppPlatformServiceRegistryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformServiceRegistryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformServiceRegistryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformServiceRegistryServiceRegistriesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformServiceRegistryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformServiceRegistryServiceRegistriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformServiceRegistryServiceRegistriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformServiceRegistryServiceRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformServiceRegistryResource(Client, AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(e)), _appPlatformServiceRegistryServiceRegistriesClientDiagnostics, Pipeline, "AppPlatformServiceRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Handles requests to list all resources in a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries
-        /// Operation Id: ServiceRegistries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppPlatformServiceRegistryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformServiceRegistryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformServiceRegistryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformServiceRegistryServiceRegistriesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformServiceRegistryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformServiceRegistryServiceRegistriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformServiceRegistryServiceRegistriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformServiceRegistryServiceRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformServiceRegistryResource(Client, AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(e)), _appPlatformServiceRegistryServiceRegistriesClientDiagnostics, Pipeline, "AppPlatformServiceRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -286,8 +285,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

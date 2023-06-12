@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningFqdnEndpointsProperties.
-    /// Serialized Name: FqdnEndpointsProperties
-    /// </summary>
+    /// <summary> The MachineLearningFqdnEndpointsProperties. </summary>
     public partial class MachineLearningFqdnEndpointsProperties
     {
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
@@ -23,17 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
-        /// <param name="category"> Serialized Name: FqdnEndpointsProperties.category. </param>
-        /// <param name="endpoints"> Serialized Name: FqdnEndpointsProperties.endpoints. </param>
+        /// <param name="category"></param>
+        /// <param name="endpoints"></param>
         internal MachineLearningFqdnEndpointsProperties(string category, IReadOnlyList<MachineLearningFqdnEndpoint> endpoints)
         {
             Category = category;
             Endpoints = endpoints;
         }
 
-        /// <summary> Serialized Name: FqdnEndpointsProperties.category. </summary>
+        /// <summary> Gets the category. </summary>
         public string Category { get; }
-        /// <summary> Serialized Name: FqdnEndpointsProperties.endpoints. </summary>
+        /// <summary> Gets the endpoints. </summary>
         public IReadOnlyList<MachineLearningFqdnEndpoint> Endpoints { get; }
     }
 }

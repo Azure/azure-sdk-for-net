@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointId))
             {
-                writer.WritePropertyName("recoveryPointId");
+                writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            writer.WritePropertyName("providerSpecificDetails");
+            writer.WritePropertyName("providerSpecificDetails"u8);
             writer.WriteObjectValue(ProviderSpecificDetails);
             writer.WriteEndObject();
         }

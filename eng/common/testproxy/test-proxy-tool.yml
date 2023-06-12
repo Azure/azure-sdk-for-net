@@ -11,14 +11,17 @@ steps:
     displayName: 'Language Specific Certificate Trust'
     condition: and(succeeded(), ${{ parameters.condition }})
 
+  - task: PowerShell@2
+    displayName: 'Override proxy version if necessary'
+    condition: and(succeeded(), ${{ parameters.condition }}, ne('${{ parameters.targetVersion }}', ''))
+    inputs:
+      targetType: filePath
+      filePath: '${{ parameters.templateRoot }}/eng/common/testproxy/override-proxy-version.ps1'
+      arguments: '-TargetVersion "${{ parameters.targetVersion }}"'
+      pwsh: true
+
   - pwsh: |
       $version = $(Get-Content "${{ parameters.templateRoot }}/eng/common/testproxy/target_version.txt" -Raw).Trim()
-      $overrideVersion = "${{ parameters.targetVersion }}"
-
-      if($overrideVersion) {
-        Write-Host "Overriding default target proxy version of '$version' with override $overrideVersion."
-        $version = $overrideVersion
-      }
 
       dotnet tool install azure.sdk.tools.testproxy `
         --tool-path $(Build.BinariesDirectory)/test-proxy `
@@ -42,13 +45,13 @@ steps:
     - pwsh: |
         Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
           -ArgumentList "--storage-location ${{ parameters.rootFolder }}" `
-          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.templateRoot }}/test-proxy.log
+          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
-        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > ${{ parameters.templateRoot }}/test-proxy.log &
+        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > ${{ parameters.rootFolder }}/test-proxy.log &
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
       workingDirectory: "${{ parameters.rootFolder }}"

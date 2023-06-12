@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> succeededCount = default;
             Optional<float> failedCount = default;
             Optional<float> expiringCount = default;
@@ -25,91 +29,82 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<float> warningCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("succeededCount"))
+                if (property.NameEquals("succeededCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     succeededCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("failedCount"))
+                if (property.NameEquals("failedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("expiringCount"))
+                if (property.NameEquals("expiringCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiringCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("expiredCount"))
+                if (property.NameEquals("expiredCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiredCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("pendingCount"))
+                if (property.NameEquals("pendingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pendingCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("cancelledCount"))
+                if (property.NameEquals("cancelledCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cancelledCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("processingCount"))
+                if (property.NameEquals("processingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processingCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("noBenefitCount"))
+                if (property.NameEquals("noBenefitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     noBenefitCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("warningCount"))
+                if (property.NameEquals("warningCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     warningCount = property.Value.GetSingle();

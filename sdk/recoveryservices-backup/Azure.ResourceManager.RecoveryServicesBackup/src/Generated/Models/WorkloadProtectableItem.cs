@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
     /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureFileShareProtectableItem"/>, <see cref="AzureVmWorkloadProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="AzureIaaSClassicComputeVmProtectableItem"/>, <see cref="AzureIaaSComputeVmProtectableItem"/>, <see cref="AzureVmWorkloadSAPAseSystemProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstance"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaHSR"/>, <see cref="AzureVmWorkloadSAPHanaSystemProtectableItem"/>, <see cref="AzureVmWorkloadSQLAvailabilityGroupProtectableItem"/>, <see cref="AzureVmWorkloadSQLDatabaseProtectableItem"/> and <see cref="AzureVmWorkloadSQLInstanceProtectableItem"/>.
+    /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaHsr"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
     /// </summary>
     public abstract partial class WorkloadProtectableItem
     {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        internal WorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState)
+        internal WorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState)
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Friendly name of the backup item. </summary>
         public string FriendlyName { get; set; }
         /// <summary> State of the back up item. </summary>
-        public ProtectionStatus? ProtectionState { get; set; }
+        public BackupProtectionStatus? ProtectionState { get; set; }
     }
 }

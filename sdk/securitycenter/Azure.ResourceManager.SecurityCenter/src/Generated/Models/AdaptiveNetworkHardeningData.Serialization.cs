@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(RulesCalculatedOn))
             {
-                writer.WritePropertyName("rulesCalculationTime");
+                writer.WritePropertyName("rulesCalculationTime"u8);
                 writer.WriteStringValue(RulesCalculatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(EffectiveNetworkSecurityGroups))
             {
-                writer.WritePropertyName("effectiveNetworkSecurityGroups");
+                writer.WritePropertyName("effectiveNetworkSecurityGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in EffectiveNetworkSecurityGroups)
                 {
@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static AdaptiveNetworkHardeningData DeserializeAdaptiveNetworkHardeningData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -61,32 +65,31 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IList<EffectiveNetworkSecurityGroups>> effectiveNetworkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,11 +98,10 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("rules"))
+                        if (property0.NameEquals("rules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
@@ -110,21 +112,19 @@ namespace Azure.ResourceManager.SecurityCenter
                             rules = array;
                             continue;
                         }
-                        if (property0.NameEquals("rulesCalculationTime"))
+                        if (property0.NameEquals("rulesCalculationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rulesCalculationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("effectiveNetworkSecurityGroups"))
+                        if (property0.NameEquals("effectiveNetworkSecurityGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EffectiveNetworkSecurityGroups> array = new List<EffectiveNetworkSecurityGroups>();

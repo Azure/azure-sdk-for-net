@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("playbackDurationSeconds");
+            writer.WritePropertyName("playbackDurationSeconds"u8);
             writer.WriteNumberValue(PlaybackDurationInSeconds);
-            writer.WritePropertyName("storageDurationSeconds");
+            writer.WritePropertyName("storageDurationSeconds"u8);
             writer.WriteNumberValue(StorageDurationInSeconds);
             writer.WriteEndObject();
         }
 
         internal static ContentKeyPolicyFairPlayOfflineRentalConfiguration DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long playbackDurationSeconds = default;
             long storageDurationSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("playbackDurationSeconds"))
+                if (property.NameEquals("playbackDurationSeconds"u8))
                 {
                     playbackDurationSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageDurationSeconds"))
+                if (property.NameEquals("storageDurationSeconds"u8))
                 {
                     storageDurationSeconds = property.Value.GetInt64();
                     continue;

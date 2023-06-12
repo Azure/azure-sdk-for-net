@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Request from client to check resource name availability. </summary>
+    /// <summary> The check availability request body. </summary>
     public partial class PostgreSqlFlexibleServerNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityContent. </summary>
-        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlFlexibleServerNameAvailabilityContent(string name)
         {
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Name = name;
         }
 
-        /// <summary> Resource name to verify. </summary>
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; }
-        /// <summary> Resource type used for verification. </summary>
+        /// <summary> The resource type. </summary>
         public ResourceType? ResourceType { get; set; }
     }
 }

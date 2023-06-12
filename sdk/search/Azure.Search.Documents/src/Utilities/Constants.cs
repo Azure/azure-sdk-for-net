@@ -67,6 +67,16 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchNextPageKeyJson = JsonEncodedText.Encode("@search.nextPageParameters");
 
         /// <summary>
+        /// The @search.semanticPartialResponseReason key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchSemanticPartialResponseReasonKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseReason");
+
+        /// <summary>
+        /// The @search.semanticPartialResponseType key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchSemanticPartialResponseTypeKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseType");
+
+        /// <summary>
         /// The @search.answers key.
         /// </summary>
         public static readonly JsonEncodedText SearchAnswersKeyJson = JsonEncodedText.Encode("@search.answers");

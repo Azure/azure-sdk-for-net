@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Comments))
             {
-                writer.WritePropertyName("comments");
+                writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
             writer.WriteEndObject();

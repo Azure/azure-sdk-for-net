@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WaitDuration))
             {
-                writer.WritePropertyName("waitDuration");
+                writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
             if (Optional.IsCollectionDefined(Regions))
             {
-                writer.WritePropertyName("regions");
+                writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
@@ -37,31 +37,33 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static TrafficRegionRolloutConfiguration DeserializeTrafficRegionRolloutConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> waitDuration = default;
-            Optional<IList<string>> regions = default;
+            Optional<IList<AzureLocation>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("waitDuration"))
+                if (property.NameEquals("waitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     regions = array;
                     continue;

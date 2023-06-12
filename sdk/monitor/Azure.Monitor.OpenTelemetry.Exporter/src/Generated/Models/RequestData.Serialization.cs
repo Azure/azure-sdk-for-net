@@ -15,32 +15,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("duration");
+            writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration);
-            writer.WritePropertyName("success");
+            writer.WritePropertyName("success"u8);
             writer.WriteBooleanValue(Success);
-            writer.WritePropertyName("responseCode");
+            writer.WritePropertyName("responseCode"u8);
             writer.WriteStringValue(ResponseCode);
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(Url))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             if (Optional.IsCollectionDefined(Measurements))
             {
-                writer.WritePropertyName("measurements");
+                writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();
                 foreach (var item in Measurements)
                 {
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("ver");
+            writer.WritePropertyName("ver"u8);
             writer.WriteNumberValue(Version);
             foreach (var item in AdditionalProperties)
             {

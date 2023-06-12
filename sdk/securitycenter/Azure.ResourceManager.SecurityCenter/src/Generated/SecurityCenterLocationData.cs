@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityCenterLocation data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityCenterLocation data model.
+    /// The ASC location of the subscription is in the &quot;name&quot; field
+    /// </summary>
     public partial class SecurityCenterLocationData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityCenterLocationData. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ClientId != null)
                 {
-                    writer.WritePropertyName("clientId");
+                    writer.WritePropertyName("clientId"u8);
                     writer.WriteStringValue(ClientId.Value);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ObjectId != null)
                 {
-                    writer.WritePropertyName("objectId");
+                    writer.WritePropertyName("objectId"u8);
                     writer.WriteStringValue(ObjectId.Value);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ResourceId != null)
                 {
-                    writer.WritePropertyName("resourceId");
+                    writer.WritePropertyName("resourceId"u8);
                     writer.WriteStringValue(ResourceId);
                 }
                 else
@@ -52,20 +52,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            writer.WritePropertyName("identityType");
+            writer.WritePropertyName("identityType"u8);
             writer.WriteStringValue(IdentityType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningManagedIdentity DeserializeMachineLearningManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid?> clientId = default;
             Optional<Guid?> objectId = default;
             Optional<ResourceIdentifier> resourceId = default;
             IdentityConfigurationType identityType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     clientId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     objectId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identityType"))
+                if (property.NameEquals("identityType"u8))
                 {
                     identityType = new IdentityConfigurationType(property.Value.GetString());
                     continue;

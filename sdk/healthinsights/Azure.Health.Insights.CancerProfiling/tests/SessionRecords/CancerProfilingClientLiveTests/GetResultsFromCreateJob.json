@@ -1,0 +1,614 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs?api-version=2023-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "1048",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28e42bf227d63e00a6d9cc031117c37f-703058def7b3ae57-00",
+        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bde6f932e3bd8ba966d5c6e6e8201526",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "configuration": {
+          "checkForCancerCase": true,
+          "includeEvidence": true
+        },
+        "patients": [
+          {
+            "id": "patient1",
+            "data": [
+              {
+                "clinicalType": "pathology",
+                "content": {
+                  "sourceType": "inline",
+                  "value": "Laterality: Left \n Tumor type present: Invasive duct carcinoma; duct carcinoma in situ \n Tumor site: Upper inner quadrant \n Invasive carcinoma \n Histologic type: Ductal \n Size of invasive component: 0.9 cm \n Histologic Grade - Nottingham combined histologic score: 1 out of 3 \n In situ carcinoma (DCIS) \n Histologic type of DCIS: Cribriform and solid \n Necrosis in DCIS: Yes \n DCIS component of invasive carcinoma: Extensive \n"
+                },
+                "createdDateTime": "2022-01-01T00:00:00",
+                "id": "document1",
+                "kind": "note",
+                "language": "en"
+              }
+            ]
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "7ecc6c49-0fcb-4d64-a79a-cac7734a0724",
+        "Content-Length": "0",
+        "Date": "Mon, 06 Mar 2023 09:10:35 GMT",
+        "Operation-Location": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs/7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc?api-version=2023-03-01-preview",
+        "Retry-After": "5",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs/7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28e42bf227d63e00a6d9cc031117c37f-5ce6f45bb60a201a-00",
+        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0c3e350c34489b80bd2a13d7407f99fa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b5994a1b-0c78-4d59-9954-45f4c582115f",
+        "Content-Length": "199",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:10:35 GMT",
+        "Retry-After": "5",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc",
+        "createdDateTime": "2023-03-06T09:10:35Z",
+        "expirationDateTime": "2023-03-06T09:27:15Z",
+        "lastUpdateDateTime": "2023-03-06T09:10:35Z",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs/7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-28e42bf227d63e00a6d9cc031117c37f-44839a4aebf26a89-00",
+        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "423ec87a7a0144311368b503db9068fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0fd99f75-7326-4d97-9d6d-7ed5b4e9e478",
+        "Content-Length": "6279",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:10:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "results": {
+          "patients": [
+            {
+              "id": "patient1",
+              "inferences": [
+                {
+                  "type": "tumorSite",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Upper inner",
+                        "offset": 101,
+                        "length": 11
+                      },
+                      "importance": 0.5563
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "duct",
+                        "offset": 64,
+                        "length": 4
+                      },
+                      "importance": 0.0156
+                    }
+                  ],
+                  "value": "C50.2",
+                  "description": "BREAST",
+                  "confidenceScore": 0.9214
+                },
+                {
+                  "type": "histology",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Ductal",
+                        "offset": 162,
+                        "length": 6
+                      },
+                      "importance": 0.2937
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct",
+                        "offset": 39,
+                        "length": 13
+                      },
+                      "importance": 0.2439
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive",
+                        "offset": 179,
+                        "length": 8
+                      },
+                      "importance": 0.1588
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "duct",
+                        "offset": 64,
+                        "length": 4
+                      },
+                      "importance": 0.1483
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "solid",
+                        "offset": 345,
+                        "length": 5
+                      },
+                      "importance": 0.0694
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Cribriform",
+                        "offset": 330,
+                        "length": 10
+                      },
+                      "importance": 0.043
+                    }
+                  ],
+                  "value": "8500",
+                  "confidenceScore": 0.9973
+                },
+                {
+                  "type": "clinicalStageT",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct carcinoma; duct",
+                        "offset": 39,
+                        "length": 29
+                      },
+                      "importance": 0.2613
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive",
+                        "offset": 179,
+                        "length": 8
+                      },
+                      "importance": 0.1341
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Laterality: Left",
+                        "offset": 0,
+                        "length": 16
+                      },
+                      "importance": 0.0874
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive",
+                        "offset": 124,
+                        "length": 8
+                      },
+                      "importance": 0.0722
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "situ",
+                        "offset": 82,
+                        "length": 4
+                      },
+                      "importance": 0.0651
+                    }
+                  ],
+                  "value": "T1",
+                  "confidenceScore": 0.9956
+                },
+                {
+                  "type": "clinicalStageN",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct carcinoma; duct carcinoma in situ \n Tumor",
+                        "offset": 39,
+                        "length": 55
+                      },
+                      "importance": 0.1529
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive carcinoma: Extensive",
+                        "offset": 395,
+                        "length": 29
+                      },
+                      "importance": 0.0782
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive",
+                        "offset": 124,
+                        "length": 8
+                      },
+                      "importance": 0.0715
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Left \n Tumor",
+                        "offset": 12,
+                        "length": 12
+                      },
+                      "importance": 0.0325
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Histologic",
+                        "offset": 145,
+                        "length": 10
+                      },
+                      "importance": 0.0066
+                    }
+                  ],
+                  "value": "N0",
+                  "confidenceScore": 0.9931
+                },
+                {
+                  "type": "clinicalStageM",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Laterality: Left \n Tumor",
+                        "offset": 0,
+                        "length": 24
+                      },
+                      "importance": 0.1579
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct",
+                        "offset": 39,
+                        "length": 13
+                      },
+                      "importance": 0.1493
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Histologic Grade - Nottingham",
+                        "offset": 208,
+                        "length": 29
+                      },
+                      "importance": 0.1038
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive",
+                        "offset": 124,
+                        "length": 8
+                      },
+                      "importance": 0.089
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "duct carcinoma",
+                        "offset": 64,
+                        "length": 14
+                      },
+                      "importance": 0.0807
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive",
+                        "offset": 395,
+                        "length": 8
+                      },
+                      "importance": 0.057
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Extensive",
+                        "offset": 415,
+                        "length": 9
+                      },
+                      "importance": 0.0494
+                    }
+                  ],
+                  "value": "None",
+                  "confidenceScore": 0.5217
+                },
+                {
+                  "type": "pathologicStageT",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct",
+                        "offset": 39,
+                        "length": 13
+                      },
+                      "importance": 0.3125
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Left \n Tumor",
+                        "offset": 12,
+                        "length": 12
+                      },
+                      "importance": 0.201
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive",
+                        "offset": 179,
+                        "length": 8
+                      },
+                      "importance": 0.1244
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive",
+                        "offset": 395,
+                        "length": 8
+                      },
+                      "importance": 0.0961
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive",
+                        "offset": 124,
+                        "length": 8
+                      },
+                      "importance": 0.0623
+                    }
+                  ],
+                  "value": "T1",
+                  "confidenceScore": 0.9477
+                },
+                {
+                  "type": "pathologicStageN",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive component:",
+                        "offset": 179,
+                        "length": 19
+                      },
+                      "importance": 0.1402
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Nottingham combined histologic score:",
+                        "offset": 227,
+                        "length": 37
+                      },
+                      "importance": 0.1096
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive carcinoma \n Histologic",
+                        "offset": 124,
+                        "length": 31
+                      },
+                      "importance": 0.1067
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Ductal",
+                        "offset": 162,
+                        "length": 6
+                      },
+                      "importance": 0.0896
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct carcinoma;",
+                        "offset": 39,
+                        "length": 24
+                      },
+                      "importance": 0.0831
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "in situ",
+                        "offset": 79,
+                        "length": 7
+                      },
+                      "importance": 0.042
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Tumor",
+                        "offset": 19,
+                        "length": 5
+                      },
+                      "importance": 0.0092
+                    }
+                  ],
+                  "value": "N0",
+                  "confidenceScore": 0.7927
+                },
+                {
+                  "type": "pathologicStageM",
+                  "evidence": [
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "In situ carcinoma (DCIS)",
+                        "offset": 278,
+                        "length": 24
+                      },
+                      "importance": 0.1111
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Nottingham combined histologic",
+                        "offset": 227,
+                        "length": 30
+                      },
+                      "importance": 0.0999
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive carcinoma:",
+                        "offset": 395,
+                        "length": 19
+                      },
+                      "importance": 0.0787
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "invasive",
+                        "offset": 179,
+                        "length": 8
+                      },
+                      "importance": 0.0617
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive duct carcinoma;",
+                        "offset": 39,
+                        "length": 24
+                      },
+                      "importance": 0.0594
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Tumor",
+                        "offset": 19,
+                        "length": 5
+                      },
+                      "importance": 0.0579
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "of DCIS:",
+                        "offset": 321,
+                        "length": 8
+                      },
+                      "importance": 0.0483
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Laterality:",
+                        "offset": 0,
+                        "length": 11
+                      },
+                      "importance": 0.0324
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Invasive carcinoma",
+                        "offset": 124,
+                        "length": 18
+                      },
+                      "importance": 0.0269
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "carcinoma in",
+                        "offset": 69,
+                        "length": 12
+                      },
+                      "importance": 0.0202
+                    },
+                    {
+                      "patientDataEvidence": {
+                        "id": "document1",
+                        "text": "Tumor",
+                        "offset": 89,
+                        "length": 5
+                      },
+                      "importance": 0.0112
+                    }
+                  ],
+                  "value": "M0",
+                  "confidenceScore": 0.9208
+                }
+              ]
+            }
+          ],
+          "modelVersion": "2022-01-01-preview"
+        },
+        "jobId": "7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc",
+        "createdDateTime": "2023-03-06T09:10:35Z",
+        "expirationDateTime": "2023-03-06T09:27:15Z",
+        "lastUpdateDateTime": "2023-03-06T09:10:36Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_HEALTH_INSIGHTS_API_KEY": "Sanitized",
+    "AZURE_HEALTH_INSIGHTS_ENDPOINT": "https://sanitized.azure-api.net/",
+    "RandomSeed": "1312474858"
+  }
+}

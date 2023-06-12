@@ -16,11 +16,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AlertsSuppressionRulesList DeserializeAlertsSuppressionRulesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityAlertsSuppressionRuleData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SecurityAlertsSuppressionRuleData> array = new List<SecurityAlertsSuppressionRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -17,55 +17,6 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="GetProperties(RequestContext)">
 <example>
@@ -83,55 +34,6 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateAsync(RequestContent,RequestContext)">
 <example>
@@ -174,100 +76,6 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="CreateOrUpdate(RequestContent,RequestContext)">
 <example>
@@ -310,100 +118,6 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="DeleteAsync(RequestContext)">
 <example>
@@ -421,55 +135,6 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
     <member name="Delete(RequestContext)">
 <example>
@@ -487,57 +152,8 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
-<code>{
-  properties: {
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: System, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
-<code>{
-  properties: {
-    minimumPercentageMatch: number, # Optional.
-    classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
-    dataPatterns: [
-      {
-        kind: &quot;Regex&quot;, # Required.
-      }
-    ], # Optional.
-    columnPatterns: [ClassificationRulePattern], # Optional.
-    description: string, # Optional.
-    version: number, # Optional.
-    classificationName: string, # Optional.
-    ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-    createdAt: string (ISO 8601 Format), # Optional.
-    lastModifiedAt: string (ISO 8601 Format), # Optional.
-  }, # Optional.
-  kind: Custom, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-</details>
-</details>
-
-</remarks>
     </member>
-    <member name="TagVersionAsync(Int32,String,RequestContext)">
+    <member name="TagVersionAsync(int,string,RequestContext)">
 <example>
 This sample shows how to call TagVersionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -560,36 +176,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetPrope
 Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationResponse</c>:
-<code>{
-  scanResultId: Guid, # Optional.
-  startTime: string (ISO 8601 Format), # Optional.
-  endTime: string (ISO 8601 Format), # Optional.
-  status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
-  error: {
-    code: string, # Optional.
-    message: string, # Optional.
-    target: string, # Optional.
-    details: [
-      {
-        code: string, # Optional.
-        message: string, # Optional.
-        target: string, # Optional.
-        details: [ErrorInfo], # Optional.
-      }
-    ], # Optional.
-  }, # Optional.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="TagVersion(Int32,String,RequestContext)">
+    <member name="TagVersion(int,string,RequestContext)">
 <example>
 This sample shows how to call TagVersion with required parameters and parse the result.
 <code><![CDATA[
@@ -612,34 +200,6 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetPrope
 Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationResponse</c>:
-<code>{
-  scanResultId: Guid, # Optional.
-  startTime: string (ISO 8601 Format), # Optional.
-  endTime: string (ISO 8601 Format), # Optional.
-  status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
-  error: {
-    code: string, # Optional.
-    message: string, # Optional.
-    target: string, # Optional.
-    details: [
-      {
-        code: string, # Optional.
-        message: string, # Optional.
-        target: string, # Optional.
-        details: [ErrorInfo], # Optional.
-      }
-    ], # Optional.
-  }, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetVersionsAsync(RequestContext)">
 <example>
@@ -649,29 +209,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-await foreach (var data in client.GetVersionsAsync())
+await foreach (var item in client.GetVersionsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ClassificationRuleListValue</c>:
-<code>{
-  kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetVersions(RequestContext)">
 <example>
@@ -681,29 +227,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-foreach (var data in client.GetVersions())
+foreach (var item in client.GetVersions())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ClassificationRuleListValue</c>:
-<code>{
-  kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
-  id: string, # Optional.
-  name: string, # Optional.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

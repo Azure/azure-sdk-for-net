@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HealthCheckStepAttributesType);
             if (Optional.IsDefined(WaitDuration))
             {
-                writer.WritePropertyName("waitDuration");
+                writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
             if (Optional.IsDefined(MaxElasticDuration))
             {
-                writer.WritePropertyName("maxElasticDuration");
+                writer.WritePropertyName("maxElasticDuration"u8);
                 writer.WriteStringValue(MaxElasticDuration.Value, "P");
             }
-            writer.WritePropertyName("healthyStateDuration");
+            writer.WritePropertyName("healthyStateDuration"u8);
             writer.WriteStringValue(HealthyStateDuration, "P");
             writer.WriteEndObject();
         }
 
         internal static HealthCheckStepAttributes DeserializeHealthCheckStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

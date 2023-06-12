@@ -21,44 +21,44 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RepositoryUri))
             {
-                writer.WritePropertyName("repositoryUrl");
+                writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(RepositoryToken))
             {
-                writer.WritePropertyName("repositoryToken");
+                writer.WritePropertyName("repositoryToken"u8);
                 writer.WriteStringValue(RepositoryToken);
             }
             if (Optional.IsDefined(BuildProperties))
             {
-                writer.WritePropertyName("buildProperties");
+                writer.WritePropertyName("buildProperties"u8);
                 writer.WriteObjectValue(BuildProperties);
             }
             if (Optional.IsDefined(StagingEnvironmentPolicy))
             {
-                writer.WritePropertyName("stagingEnvironmentPolicy");
+                writer.WritePropertyName("stagingEnvironmentPolicy"u8);
                 writer.WriteStringValue(StagingEnvironmentPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(AllowConfigFileUpdates))
             {
-                writer.WritePropertyName("allowConfigFileUpdates");
+                writer.WritePropertyName("allowConfigFileUpdates"u8);
                 writer.WriteBooleanValue(AllowConfigFileUpdates.Value);
             }
             if (Optional.IsDefined(TemplateProperties))
             {
-                writer.WritePropertyName("templateProperties");
+                writer.WritePropertyName("templateProperties"u8);
                 writer.WriteObjectValue(TemplateProperties);
             }
             writer.WriteEndObject();
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSitePatch DeserializeStaticSitePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -88,37 +92,36 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,31 +130,29 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("defaultHostname"))
+                        if (property0.NameEquals("defaultHostname"u8))
                         {
                             defaultHostname = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("repositoryUrl"))
+                        if (property0.NameEquals("repositoryUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                repositoryUrl = null;
                                 continue;
                             }
                             repositoryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("branch"))
+                        if (property0.NameEquals("branch"u8))
                         {
                             branch = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customDomains"))
+                        if (property0.NameEquals("customDomains"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -162,26 +163,24 @@ namespace Azure.ResourceManager.AppService.Models
                             customDomains = array;
                             continue;
                         }
-                        if (property0.NameEquals("repositoryToken"))
+                        if (property0.NameEquals("repositoryToken"u8))
                         {
                             repositoryToken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("buildProperties"))
+                        if (property0.NameEquals("buildProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResponseMessageEnvelopeRemotePrivateEndpointConnection> array = new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
@@ -192,51 +191,47 @@ namespace Azure.ResourceManager.AppService.Models
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("stagingEnvironmentPolicy"))
+                        if (property0.NameEquals("stagingEnvironmentPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             stagingEnvironmentPolicy = property0.Value.GetString().ToStagingEnvironmentPolicy();
                             continue;
                         }
-                        if (property0.NameEquals("allowConfigFileUpdates"))
+                        if (property0.NameEquals("allowConfigFileUpdates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowConfigFileUpdates = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("templateProperties"))
+                        if (property0.NameEquals("templateProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contentDistributionEndpoint"))
+                        if (property0.NameEquals("contentDistributionEndpoint"u8))
                         {
                             contentDistributionEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultReferenceIdentity"))
+                        if (property0.NameEquals("keyVaultReferenceIdentity"u8))
                         {
                             keyVaultReferenceIdentity = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userProvidedFunctionApps"))
+                        if (property0.NameEquals("userProvidedFunctionApps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
@@ -247,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
                             userProvidedFunctionApps = array;
                             continue;
                         }
-                        if (property0.NameEquals("provider"))
+                        if (property0.NameEquals("provider"u8))
                         {
                             provider = property0.Value.GetString();
                             continue;

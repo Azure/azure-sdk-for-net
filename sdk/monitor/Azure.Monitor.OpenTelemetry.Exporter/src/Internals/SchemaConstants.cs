@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     /// <summary>
     /// This class encapsulates constant values from the Azure Monitor Swagger

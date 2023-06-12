@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class TimeSeriesInsightsModelFactory
     {
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>

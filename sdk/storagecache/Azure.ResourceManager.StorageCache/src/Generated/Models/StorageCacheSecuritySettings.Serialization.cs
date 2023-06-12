@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
-                writer.WritePropertyName("accessPolicies");
+                writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
@@ -31,14 +31,17 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheSecuritySettings DeserializeStorageCacheSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NfsAccessPolicy>> accessPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessPolicies"))
+                if (property.NameEquals("accessPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NfsAccessPolicy> array = new List<NfsAccessPolicy>();

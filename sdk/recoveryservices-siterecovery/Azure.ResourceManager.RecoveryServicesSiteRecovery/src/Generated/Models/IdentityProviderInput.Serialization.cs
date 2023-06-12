@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tenantId");
+            writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
-            writer.WritePropertyName("applicationId");
+            writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            writer.WritePropertyName("objectId");
+            writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
-            writer.WritePropertyName("audience");
+            writer.WritePropertyName("audience"u8);
             writer.WriteStringValue(Audience);
-            writer.WritePropertyName("aadAuthority");
+            writer.WritePropertyName("aadAuthority"u8);
             writer.WriteStringValue(AadAuthority);
             writer.WriteEndObject();
         }

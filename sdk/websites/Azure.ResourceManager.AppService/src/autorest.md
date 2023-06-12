@@ -17,6 +17,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#  show-serialized-names: true
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -131,8 +134,6 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'serverFarmId': 'arm-id'
-  'thumbprint': 'any'
-  '*Thumbprint': 'any'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -478,6 +479,7 @@ rename-mapping:
   SupportedTlsVersions: AppServiceSupportedTlsVersion
   VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
   VnetValidationTestFailure: VirtualNetworkValidationTestFailure
+  KeyInfoProperties: WebAppKeyInfoProperties
   # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
   DomainCollection: AppServiceDomainListResult
   IdentifierCollection: AppServiceIdentifierListResult
@@ -545,6 +547,17 @@ rename-mapping:
   WebAppStackCollection: WebAppStackListResult
   WebJobCollection: WebJobCListResult
   WorkerPoolCollection: AppServiceWorkerPoolListResult
+  HybridConnection.properties.relayArmUri: relayArmId|arm-id
+  AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString 
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateDetails.thumbprint: ThumbprintString
+  CertificatePatchResource.properties.thumbprint: ThumbprintString
+  HostNameBinding.properties.thumbprint: ThumbprintString
+  HostNameSslState.thumbprint: ThumbprintString
+  PublicCertificate.properties.thumbprint: ThumbprintString
+  SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
+  VnetInfoResource.properties.certThumbprint: CertThumbprintString
+  VnetInfo.certThumbprint: CertThumbprintString
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -693,6 +706,27 @@ directive:
             "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
+# workaround incorrect definition in swagger before it's fixed. github issue 35146
+  - from: WebApps.json
+    where: $.definitions.KeyInfo
+    transform: >
+      $["properties"] = {
+        "properties":{
+          "description": "Properties of function key info.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Key name",
+              "type": "string"
+            },
+            "value": {
+              "description": "Key value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    reason: workaround incorrect definition in swagger before it's fixed. github issue 35146
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
   - from: swagger-document

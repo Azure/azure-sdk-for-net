@@ -24,7 +24,7 @@ Set-StrictMode -Version 1
 [string[]] $errors = @()
 
 # All errors should be logged using this function, as it tracks the errors in
-# the $errors array, which is used in the finally block of the script to determine 
+# the $errors array, which is used in the finally block of the script to determine
 # the return code.
 function LogError([string]$message) {
     if ($env:TF_BUILD) {
@@ -180,6 +180,7 @@ try {
     run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
     run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
     run 'dotnet build /t:GenerateCode' to update the generated code.`
+    run 'dotnet build /t:GenerateTests' to update the generated test code.`
     `
 To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
         }

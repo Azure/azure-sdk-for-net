@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningDeploymentLogsContent.
-    /// Serialized Name: DeploymentLogsRequest
-    /// </summary>
+    /// <summary> The MachineLearningDeploymentLogsContent. </summary>
     public partial class MachineLearningDeploymentLogsContent
     {
         /// <summary> Initializes a new instance of MachineLearningDeploymentLogsContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// The type of container to retrieve logs from.
-        /// Serialized Name: DeploymentLogsRequest.containerType
-        /// </summary>
+        /// <summary> The type of container to retrieve logs from. </summary>
         public MachineLearningContainerType? ContainerType { get; set; }
-        /// <summary>
-        /// The maximum number of lines to tail.
-        /// Serialized Name: DeploymentLogsRequest.tail
-        /// </summary>
+        /// <summary> The maximum number of lines to tail. </summary>
         public int? Tail { get; set; }
     }
 }

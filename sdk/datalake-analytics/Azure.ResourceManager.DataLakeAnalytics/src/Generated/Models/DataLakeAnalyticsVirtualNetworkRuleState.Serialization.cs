@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DataLakeAnalyticsVirtualNetworkRuleState ToDataLakeAnalyticsVirtualNetworkRuleState(this string value)
         {
-            if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsVirtualNetworkRuleState.Active;
-            if (string.Equals(value, "NetworkSourceDeleted", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsVirtualNetworkRuleState.NetworkSourceDeleted;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsVirtualNetworkRuleState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return DataLakeAnalyticsVirtualNetworkRuleState.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetworkSourceDeleted")) return DataLakeAnalyticsVirtualNetworkRuleState.NetworkSourceDeleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return DataLakeAnalyticsVirtualNetworkRuleState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeAnalyticsVirtualNetworkRuleState value.");
         }
     }

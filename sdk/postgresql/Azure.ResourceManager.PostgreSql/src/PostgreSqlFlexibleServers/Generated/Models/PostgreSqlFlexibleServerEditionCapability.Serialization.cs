@@ -15,22 +15,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerEditionCapability DeserializePostgreSqlFlexibleServerEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedStorageEditions"))
+                if (property.NameEquals("supportedStorageEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlFlexibleServerStorageEditionCapability> array = new List<PostgreSqlFlexibleServerStorageEditionCapability>();
@@ -41,11 +44,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedStorageEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedServerVersions"))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlFlexibleServerServerVersionCapability> array = new List<PostgreSqlFlexibleServerServerVersionCapability>();
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedServerVersions = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

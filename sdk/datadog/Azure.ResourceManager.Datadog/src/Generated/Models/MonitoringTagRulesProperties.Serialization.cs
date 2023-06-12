@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogRules))
             {
-                writer.WritePropertyName("logRules");
+                writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
             if (Optional.IsDefined(MetricRules))
             {
-                writer.WritePropertyName("metricRules");
+                writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
             }
             writer.WriteEndObject();
@@ -30,36 +30,37 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MonitoringTagRulesProperties DeserializeMonitoringTagRulesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<LogRules> logRules = default;
             Optional<MetricRules> metricRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("logRules"))
+                if (property.NameEquals("logRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logRules = LogRules.DeserializeLogRules(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metricRules"))
+                if (property.NameEquals("metricRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metricRules = MetricRules.DeserializeMetricRules(property.Value);

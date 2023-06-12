@@ -31,7 +31,6 @@ namespace Azure.AI.TextAnalytics.Models
 
             Entities = entities.ToList();
             Relations = relations.ToList();
-            FhirBundle = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResult. </summary>
@@ -40,19 +39,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
-        /// <param name="fhirBundle"> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </param>
-        internal HealthcareEntitiesDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations, IDictionary<string, object> fhirBundle) : base(id, warnings, statistics)
+        internal HealthcareEntitiesDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations) : base(id, warnings, statistics)
         {
             Entities = entities;
             Relations = relations;
-            FhirBundle = fhirBundle;
         }
 
         /// <summary> Healthcare entities. </summary>
         public IList<HealthcareEntityInternal> Entities { get; }
         /// <summary> Healthcare entity relations. </summary>
         public IList<HealthcareRelationInternal> Relations { get; }
-        /// <summary> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </summary>
-        public IDictionary<string, object> FhirBundle { get; }
     }
 }

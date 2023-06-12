@@ -1,10 +1,10 @@
 {
   "tokenClaims": {},
-  "type": "",
-  "source": "",
+  "source": null,
   "oDataType": "",
   "response": null,
-  "payload": null,
+  "data": null,
+  "type": "",
   "requestStatus": "Failed",
   "statusMessage": "",
   "queryParameters": {

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Primary metrics for classification tasks.
-    /// Serialized Name: ClassificationPrimaryMetrics
-    /// </summary>
+    /// <summary> Primary metrics for classification tasks. </summary>
     public readonly partial struct ClassificationPrimaryMetric : IEquatable<ClassificationPrimaryMetric>
     {
         private readonly string _value;
@@ -35,30 +32,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// AUC is the Area under the curve.
         /// This metric represents arithmetic mean of the score for each class,
         /// weighted by the number of true instances in each class.
-        /// Serialized Name: ClassificationPrimaryMetrics.AUCWeighted
         /// </summary>
         public static ClassificationPrimaryMetric AUCWeighted { get; } = new ClassificationPrimaryMetric(AUCWeightedValue);
-        /// <summary>
-        /// Accuracy is the ratio of predictions that exactly match the true class labels.
-        /// Serialized Name: ClassificationPrimaryMetrics.Accuracy
-        /// </summary>
+        /// <summary> Accuracy is the ratio of predictions that exactly match the true class labels. </summary>
         public static ClassificationPrimaryMetric Accuracy { get; } = new ClassificationPrimaryMetric(AccuracyValue);
         /// <summary>
         /// Normalized macro recall is recall macro-averaged and normalized, so that random
         /// performance has a score of 0, and perfect performance has a score of 1.
-        /// Serialized Name: ClassificationPrimaryMetrics.NormMacroRecall
         /// </summary>
         public static ClassificationPrimaryMetric NormMacroRecall { get; } = new ClassificationPrimaryMetric(NormMacroRecallValue);
         /// <summary>
         /// The arithmetic mean of the average precision score for each class, weighted by
         /// the number of true instances in each class.
-        /// Serialized Name: ClassificationPrimaryMetrics.AveragePrecisionScoreWeighted
         /// </summary>
         public static ClassificationPrimaryMetric AveragePrecisionScoreWeighted { get; } = new ClassificationPrimaryMetric(AveragePrecisionScoreWeightedValue);
-        /// <summary>
-        /// The arithmetic mean of precision for each class, weighted by number of true instances in each class.
-        /// Serialized Name: ClassificationPrimaryMetrics.PrecisionScoreWeighted
-        /// </summary>
+        /// <summary> The arithmetic mean of precision for each class, weighted by number of true instances in each class. </summary>
         public static ClassificationPrimaryMetric PrecisionScoreWeighted { get; } = new ClassificationPrimaryMetric(PrecisionScoreWeightedValue);
         /// <summary> Determines if two <see cref="ClassificationPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ClassificationPrimaryMetric left, ClassificationPrimaryMetric right) => left.Equals(right);

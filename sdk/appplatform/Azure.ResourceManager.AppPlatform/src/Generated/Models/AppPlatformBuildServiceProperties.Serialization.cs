@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KPackVersion))
             {
-                writer.WritePropertyName("kPackVersion");
+                writer.WritePropertyName("kPackVersion"u8);
                 writer.WriteStringValue(KPackVersion);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
-                writer.WritePropertyName("resourceRequests");
+                writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
             writer.WriteEndObject();
@@ -30,31 +30,33 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildServiceProperties DeserializeAppPlatformBuildServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kPackVersion = default;
             Optional<AppPlatformBuildServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformBuildServiceResourceRequirements> resourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kPackVersion"))
+                if (property.NameEquals("kPackVersion"u8))
                 {
                     kPackVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformBuildServiceProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceRequests = AppPlatformBuildServiceResourceRequirements.DeserializeAppPlatformBuildServiceResourceRequirements(property.Value);

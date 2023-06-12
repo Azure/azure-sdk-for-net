@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ProvisionedClustersCommonPropertiesStatusFeaturesStatus DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArcAgentStatus> arcAgentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("arcAgentStatus"))
+                if (property.NameEquals("arcAgentStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arcAgentStatus = ArcAgentStatus.DeserializeArcAgentStatus(property.Value);

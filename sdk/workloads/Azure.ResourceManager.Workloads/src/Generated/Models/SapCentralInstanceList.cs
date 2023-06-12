@@ -11,7 +11,7 @@ using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the collection of SAP Central Instances. </summary>
+    /// <summary> Defines the collection of SAP Central Services Instance resources. </summary>
     internal partial class SapCentralInstanceList
     {
         /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
-        /// <param name="value"> Gets the list of SAP central instances. </param>
+        /// <param name="value"> Gets the list of SAP central services instance resources. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
         internal SapCentralInstanceList(IReadOnlyList<SapCentralServerInstanceData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the list of SAP central instances. </summary>
+        /// <summary> Gets the list of SAP central services instance resources. </summary>
         public IReadOnlyList<SapCentralServerInstanceData> Value { get; }
         /// <summary> Gets the value of next link. </summary>
         public string NextLink { get; }

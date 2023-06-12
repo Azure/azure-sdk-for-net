@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ManagedNetwork
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
-                writer.WritePropertyName("managementGroups");
+                writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagementGroups)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
             if (Optional.IsCollectionDefined(Subscriptions))
             {
-                writer.WritePropertyName("subscriptions");
+                writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
             if (Optional.IsCollectionDefined(VirtualNetworks))
             {
-                writer.WritePropertyName("virtualNetworks");
+                writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworks)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
+                writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         internal static ManagedNetworkGroupData DeserializeManagedNetworkGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedNetworkKind> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -92,52 +96,49 @@ namespace Azure.ResourceManager.ManagedNetwork
             Optional<IList<WritableSubResource>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new ManagedNetworkKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,31 +147,28 @@ namespace Azure.ResourceManager.ManagedNetwork
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("etag"))
+                        if (property0.NameEquals("etag"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             etag = new ETag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("managementGroups"))
+                        if (property0.NameEquals("managementGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -181,11 +179,10 @@ namespace Azure.ResourceManager.ManagedNetwork
                             managementGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("subscriptions"))
+                        if (property0.NameEquals("subscriptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -196,11 +193,10 @@ namespace Azure.ResourceManager.ManagedNetwork
                             subscriptions = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworks"))
+                        if (property0.NameEquals("virtualNetworks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -211,11 +207,10 @@ namespace Azure.ResourceManager.ManagedNetwork
                             virtualNetworks = array;
                             continue;
                         }
-                        if (property0.NameEquals("subnets"))
+                        if (property0.NameEquals("subnets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();

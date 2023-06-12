@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementService data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementService data model.
+    /// A single API Management service resource in List or Get response.
+    /// </summary>
     public partial class ApiManagementServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>

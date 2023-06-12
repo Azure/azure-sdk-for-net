@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CanDelete))
             {
-                writer.WritePropertyName("canDelete");
+                writer.WritePropertyName("canDelete"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
             if (Optional.IsDefined(ShardKey))
             {
-                writer.WritePropertyName("shardKey");
+                writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
             if (Optional.IsDefined(TargetRUs))
             {
-                writer.WritePropertyName("targetRUs");
+                writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBCollectionSettings DeserializeMongoDBCollectionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> canDelete = default;
             Optional<MongoDBShardKeySetting> shardKey = default;
             Optional<int> targetRUs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("canDelete"))
+                if (property.NameEquals("canDelete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     canDelete = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("shardKey"))
+                if (property.NameEquals("shardKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetRUs"))
+                if (property.NameEquals("targetRUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetRUs = property.Value.GetInt32();

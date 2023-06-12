@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,7 +15,8 @@ namespace Azure.Identity
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
         private bool _logAccountDetails;
 
-        internal protected bool IsPiiLoggingEnabled { get; }
+        protected internal bool IsPiiLoggingEnabled { get; }
+        protected internal bool DisableInstanceDiscovery { get; }
 
         /// <summary>
         /// For mocking purposes only.
@@ -30,9 +32,11 @@ namespace Azure.Identity
             // variable rather than in code. In this case we need to validate the endpoint before we use it. However, we can't validate in
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
             // we validate here as all other credentials will create an MSAL client.
-            Validations.ValidateAuthorityHost(pipeline?.AuthorityHost);
+            Validations.ValidateAuthorityHost(options?.AuthorityHost);
+            AuthorityHost = options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault();
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            ITokenCacheOptions cacheOptions = options as ITokenCacheOptions;
+            DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
+            ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
             IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;
@@ -46,6 +50,8 @@ namespace Azure.Identity
         internal string ClientId { get; }
 
         internal TokenCache TokenCache { get; }
+
+        internal Uri AuthorityHost { get; }
 
         protected internal CredentialPipeline Pipeline { get; }
 

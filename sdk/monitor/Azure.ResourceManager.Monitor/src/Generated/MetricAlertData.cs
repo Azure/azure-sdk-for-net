@@ -14,7 +14,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the MetricAlert data model. </summary>
+    /// <summary>
+    /// A class representing the MetricAlert data model.
+    /// The metric alert resource.
+    /// </summary>
     public partial class MetricAlertData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MetricAlertData. </summary>

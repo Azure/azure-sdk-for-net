@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="BlockBlobStorageResourceOptions.CopyMethod"/>.
+        /// the options bag, see <see cref="BlobStorageResourceOptions.CopyMethod"/>.
         /// </summary>
         public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
@@ -179,10 +179,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
             }
-            BlobRequestConditions stageBlockConditions = new BlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-            };
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
@@ -297,7 +293,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override async Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override async Task CompleteTransferAsync(
+            bool overwrite,
+            CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_blocks != null && !_blocks.IsEmpty)
@@ -305,10 +303,26 @@ namespace Azure.Storage.DataMovement.Blobs
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await _blobClient.CommitBlockListAsync(
                     blockIds,
-                    _options.ToCommitBlockOptions(),
+                    _options.ToCommitBlockOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
+        }
+
+        /// <summary>
+        /// Deletes the respective storage resource.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the storage resource exists and is deleted, true will be returned.
+        /// Otherwise if the storage resource does not exist, false will be returned.
+        /// </returns>
+        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

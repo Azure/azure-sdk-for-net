@@ -16,38 +16,40 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> mountTargetId = default;
             Guid fileSystemId = default;
             Optional<IPAddress> ipAddress = default;
             Optional<string> smbServerFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mountTargetId"))
+                if (property.NameEquals("mountTargetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mountTargetId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("fileSystemId"))
+                if (property.NameEquals("fileSystemId"u8))
                 {
                     fileSystemId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("smbServerFqdn"))
+                if (property.NameEquals("smbServerFqdn"u8))
                 {
                     smbServerFqdn = property.Value.GetString();
                     continue;

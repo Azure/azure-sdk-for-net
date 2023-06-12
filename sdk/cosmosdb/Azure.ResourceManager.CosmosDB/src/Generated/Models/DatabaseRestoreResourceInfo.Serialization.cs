@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsCollectionDefined(CollectionNames))
             {
-                writer.WritePropertyName("collectionNames");
+                writer.WritePropertyName("collectionNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in CollectionNames)
                 {
@@ -36,20 +36,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static DatabaseRestoreResourceInfo DeserializeDatabaseRestoreResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<IList<string>> collectionNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collectionNames"))
+                if (property.NameEquals("collectionNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

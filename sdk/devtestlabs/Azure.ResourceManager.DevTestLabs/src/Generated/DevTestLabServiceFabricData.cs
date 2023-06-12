@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabServiceFabric data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabServiceFabric data model.
+    /// A Service Fabric.
+    /// </summary>
     public partial class DevTestLabServiceFabricData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabServiceFabricData. </summary>

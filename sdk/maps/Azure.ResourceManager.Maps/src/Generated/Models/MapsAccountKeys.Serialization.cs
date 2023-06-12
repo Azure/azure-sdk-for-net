@@ -15,37 +15,39 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal static MapsAccountKeys DeserializeMapsAccountKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> primaryKeyLastUpdated = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<DateTimeOffset> secondaryKeyLastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKeyLastUpdated"))
+                if (property.NameEquals("primaryKeyLastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKeyLastUpdated"))
+                if (property.NameEquals("secondaryKeyLastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");

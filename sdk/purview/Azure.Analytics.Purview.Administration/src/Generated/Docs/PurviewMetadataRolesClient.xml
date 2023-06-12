@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewMetadataRolesClient(endpoint, credential);
 
-await foreach (var data in client.GetMetadataRolesAsync())
+await foreach (var item in client.GetMetadataRolesAsync())
 {
 }
 ]]></code>
@@ -23,7 +23,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewMetadataRolesClient(endpoint, credential);
 
-foreach (var data in client.GetMetadataRoles())
+foreach (var item in client.GetMetadataRoles())
 {
 }
 ]]></code>

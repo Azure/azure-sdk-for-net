@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Analysis
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(AnalysisSku);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -32,48 +32,48 @@ namespace Azure.ResourceManager.Analysis
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AsAdministrators))
             {
-                writer.WritePropertyName("asAdministrators");
+                writer.WritePropertyName("asAdministrators"u8);
                 writer.WriteObjectValue(AsAdministrators);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
-                writer.WritePropertyName("backupBlobContainerUri");
+                writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(GatewayDetails))
             {
-                writer.WritePropertyName("gatewayDetails");
+                writer.WritePropertyName("gatewayDetails"u8);
                 writer.WriteObjectValue(GatewayDetails);
             }
             if (Optional.IsDefined(IPv4FirewallSettings))
             {
-                writer.WritePropertyName("ipV4FirewallSettings");
+                writer.WritePropertyName("ipV4FirewallSettings"u8);
                 writer.WriteObjectValue(IPv4FirewallSettings);
             }
             if (Optional.IsDefined(QueryPoolConnectionMode))
             {
-                writer.WritePropertyName("querypoolConnectionMode");
+                writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QueryPoolConnectionMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ManagedMode))
             {
-                writer.WritePropertyName("managedMode");
-                writer.WriteStringValue(ManagedMode.Value.ToString());
+                writer.WritePropertyName("managedMode"u8);
+                writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(ServerMonitorMode))
             {
-                writer.WritePropertyName("serverMonitorMode");
-                writer.WriteStringValue(ServerMonitorMode.Value.ToString());
+                writer.WritePropertyName("serverMonitorMode"u8);
+                writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(AnalysisServerSku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(AnalysisServerSku);
             }
             writer.WriteEndObject();
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Analysis
 
         internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalysisResourceSku sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -102,16 +106,15 @@ namespace Azure.ResourceManager.Analysis
             Optional<AnalysisResourceSku> sku0 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -122,37 +125,36 @@ namespace Azure.ResourceManager.Analysis
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,106 +163,96 @@ namespace Azure.ResourceManager.Analysis
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("asAdministrators"))
+                        if (property0.NameEquals("asAdministrators"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("backupBlobContainerUri"))
+                        if (property0.NameEquals("backupBlobContainerUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                backupBlobContainerUri = null;
                                 continue;
                             }
                             backupBlobContainerUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("gatewayDetails"))
+                        if (property0.NameEquals("gatewayDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("ipV4FirewallSettings"))
+                        if (property0.NameEquals("ipV4FirewallSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("querypoolConnectionMode"))
+                        if (property0.NameEquals("querypoolConnectionMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             querypoolConnectionMode = property0.Value.GetString().ToAnalysisConnectionMode();
                             continue;
                         }
-                        if (property0.NameEquals("managedMode"))
+                        if (property0.NameEquals("managedMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedMode = new AnalysisManagedMode(property0.Value.GetInt32());
                             continue;
                         }
-                        if (property0.NameEquals("serverMonitorMode"))
+                        if (property0.NameEquals("serverMonitorMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverMonitorMode = new ServerMonitorMode(property0.Value.GetInt32());
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new AnalysisState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AnalysisProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serverFullName"))
+                        if (property0.NameEquals("serverFullName"u8))
                         {
                             serverFullName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku0 = AnalysisResourceSku.DeserializeAnalysisResourceSku(property0.Value);

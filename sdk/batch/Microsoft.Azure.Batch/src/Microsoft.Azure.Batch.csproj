@@ -2,7 +2,6 @@
   <PropertyGroup>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
     <Version>15.5.0-beta.1</Version>
-    <ApiCompatVersion>15.4.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -41,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; reliability</IncludeAssets>
     </PackageReference>

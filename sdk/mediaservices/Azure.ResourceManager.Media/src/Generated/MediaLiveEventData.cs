@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaLiveEvent data model. </summary>
+    /// <summary>
+    /// A class representing the MediaLiveEvent data model.
+    /// The live event.
+    /// </summary>
     public partial class MediaLiveEventData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MediaLiveEventData. </summary>

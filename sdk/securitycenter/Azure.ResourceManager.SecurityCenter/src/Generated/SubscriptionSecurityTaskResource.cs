@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetSubscriptionLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionSecurityTaskResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetSubscriptionLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionSecurityTaskResource> Get(CancellationToken cancellationToken = default)

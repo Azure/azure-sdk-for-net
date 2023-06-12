@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegistrationAssignmentData>> GetAsync(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedServicesRegistrationAssignmentData>> GetAsync(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationAssignmentData value = default;
+                        ManagedServicesRegistrationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationAssignmentData.DeserializeRegistrationAssignmentData(document.RootElement);
+                        value = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RegistrationAssignmentData)null, message.Response);
+                    return Response.FromValue((ManagedServicesRegistrationAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegistrationAssignmentData> Get(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
+        public Response<ManagedServicesRegistrationAssignmentData> Get(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationAssignmentData value = default;
+                        ManagedServicesRegistrationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationAssignmentData.DeserializeRegistrationAssignmentData(document.RootElement);
+                        value = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RegistrationAssignmentData)null, message.Response);
+                    return Response.FromValue((ManagedServicesRegistrationAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagedServices
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationAssignmentId, RegistrationAssignmentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationAssignmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string scope, string registrationAssignmentId, RegistrationAssignmentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationAssignmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string scope, string registrationAssignmentId, RegistrationAssignmentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RegistrationAssignmentList>> ListAsync(string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedServicesRegistrationAssignmentListResult>> ListAsync(string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationAssignmentList value = default;
+                        ManagedServicesRegistrationAssignmentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationAssignmentList.DeserializeRegistrationAssignmentList(document.RootElement);
+                        value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<RegistrationAssignmentList> List(string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedServicesRegistrationAssignmentListResult> List(string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationAssignmentList value = default;
+                        ManagedServicesRegistrationAssignmentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationAssignmentList.DeserializeRegistrationAssignmentList(document.RootElement);
+                        value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RegistrationAssignmentList>> ListNextPageAsync(string nextLink, string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedServicesRegistrationAssignmentListResult>> ListNextPageAsync(string nextLink, string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationAssignmentList value = default;
+                        ManagedServicesRegistrationAssignmentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationAssignmentList.DeserializeRegistrationAssignmentList(document.RootElement);
+                        value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RegistrationAssignmentList> ListNextPage(string nextLink, string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedServicesRegistrationAssignmentListResult> ListNextPage(string nextLink, string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationAssignmentList value = default;
+                        ManagedServicesRegistrationAssignmentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationAssignmentList.DeserializeRegistrationAssignmentList(document.RootElement);
+                        value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

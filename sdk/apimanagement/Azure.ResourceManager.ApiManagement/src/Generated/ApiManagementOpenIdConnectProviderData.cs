@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementOpenIdConnectProvider data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementOpenIdConnectProvider data model.
+    /// OpenId Connect Provider details.
+    /// </summary>
     public partial class ApiManagementOpenIdConnectProviderData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>

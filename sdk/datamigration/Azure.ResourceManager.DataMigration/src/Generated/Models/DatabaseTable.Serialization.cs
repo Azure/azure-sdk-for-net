@@ -14,21 +14,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DatabaseTable DeserializeDatabaseTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasRows = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hasRows"))
+                if (property.NameEquals("hasRows"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasRows = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

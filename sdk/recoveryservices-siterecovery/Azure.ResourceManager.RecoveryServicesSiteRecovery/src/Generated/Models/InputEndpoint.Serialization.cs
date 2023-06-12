@@ -14,38 +14,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InputEndpoint DeserializeInputEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpointName = default;
             Optional<int> privatePort = default;
             Optional<int> publicPort = default;
             Optional<string> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointName"))
+                if (property.NameEquals("endpointName"u8))
                 {
                     endpointName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privatePort"))
+                if (property.NameEquals("privatePort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privatePort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("publicPort"))
+                if (property.NameEquals("publicPort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString();
                     continue;

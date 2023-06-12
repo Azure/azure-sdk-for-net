@@ -14,43 +14,44 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteInstructionGroup DeserializeRouteInstructionGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> firstInstructionIndex = default;
             Optional<int> lastInstructionIndex = default;
             Optional<int> groupLengthInMeters = default;
             Optional<string> groupMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstInstructionIndex"))
+                if (property.NameEquals("firstInstructionIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstInstructionIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastInstructionIndex"))
+                if (property.NameEquals("lastInstructionIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastInstructionIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupLengthInMeters"))
+                if (property.NameEquals("groupLengthInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     groupLengthInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupMessage"))
+                if (property.NameEquals("groupMessage"u8))
                 {
                     groupMessage = property.Value.GetString();
                     continue;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityAlert data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityAlert data model.
+    /// Security alert
+    /// </summary>
     public partial class SecurityAlertData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityAlertData. </summary>
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="extendedLinks"> Links related to the alert. </param>
         /// <param name="alertUri"> A direct link to the alert page in Azure Portal. </param>
         /// <param name="generatedOn"> The UTC time the alert was generated in ISO8601 format. </param>
-        /// <param name="productName"> The name of the product which published this alert (Azure Security Center, Azure ATP, Microsoft Defender ATP, O365 ATP, MCAS, and so on). </param>
+        /// <param name="productName"> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </param>
         /// <param name="processingEndOn"> The UTC processing end time of the alert in ISO8601 format. </param>
         /// <param name="entities"> A list of entities related to the alert. </param>
         /// <param name="isIncident"> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </param>
@@ -133,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public Uri AlertUri { get; }
         /// <summary> The UTC time the alert was generated in ISO8601 format. </summary>
         public DateTimeOffset? GeneratedOn { get; }
-        /// <summary> The name of the product which published this alert (Azure Security Center, Azure ATP, Microsoft Defender ATP, O365 ATP, MCAS, and so on). </summary>
+        /// <summary> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </summary>
         public string ProductName { get; }
         /// <summary> The UTC processing end time of the alert in ISO8601 format. </summary>
         public DateTimeOffset? ProcessingEndOn { get; }

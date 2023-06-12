@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetOAuthProviderAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetOAuthProviderAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+Response response = await client.GetOAuthProviderAsync("<oauthProviderId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("appId").ToString());
+Console.WriteLine(result.GetProperty("appSecret").ToString());
+Console.WriteLine(result.GetProperty("apiKey").ToString());
+Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetOAuthProvider(string,RequestContext)">
+<example>
+This sample shows how to call GetOAuthProvider with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+Response response = client.GetOAuthProvider("<oauthProviderId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("appId").ToString());
+Console.WriteLine(result.GetProperty("appSecret").ToString());
+Console.WriteLine(result.GetProperty("apiKey").ToString());
+Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+var data = new {};
+
+Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+var data = new {
+    appId = "<appId>",
+    appSecret = "<appSecret>",
+    apiKey = "<apiKey>",
+    isProductionApp = true,
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("appId").ToString());
+Console.WriteLine(result.GetProperty("appSecret").ToString());
+Console.WriteLine(result.GetProperty("apiKey").ToString());
+Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+var data = new {};
+
+Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+var data = new {
+    appId = "<appId>",
+    appSecret = "<appSecret>",
+    apiKey = "<apiKey>",
+    isProductionApp = true,
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("appId").ToString());
+Console.WriteLine(result.GetProperty("appSecret").ToString());
+Console.WriteLine(result.GetProperty("apiKey").ToString());
+Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<oauthProviderId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Delete(string,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+Response response = client.Delete("<oauthProviderId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetCascadeDeleteJobDetailsAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetCascadeDeleteJobDetails(string,RequestContext)">
+<example>
+This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetOAuthProvidersAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+<example>
+This sample shows how to call GetOAuthProvidersAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+await foreach (var item in client.GetOAuthProvidersAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetOAuthProvidersAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+await foreach (var item in client.GetOAuthProvidersAsync(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("appId").ToString());
+    Console.WriteLine(result.GetProperty("appSecret").ToString());
+    Console.WriteLine(result.GetProperty("apiKey").ToString());
+    Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetOAuthProviders(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+<example>
+This sample shows how to call GetOAuthProviders and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+foreach (var item in client.GetOAuthProviders())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetOAuthProviders with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+foreach (var item in client.GetOAuthProviders(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("appId").ToString());
+    Console.WriteLine(result.GetProperty("appSecret").ToString());
+    Console.WriteLine(result.GetProperty("apiKey").ToString());
+    Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="CreateCascadeDeleteJobAsync(WaitUntil,string,string,RequestContext)">
+<example>
+This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
+
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateCascadeDeleteJob(WaitUntil,string,string,RequestContext)">
+<example>
+This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
+
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

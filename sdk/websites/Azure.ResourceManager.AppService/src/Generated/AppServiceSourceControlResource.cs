@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceSourceControlResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceSourceControlResource> Get(CancellationToken cancellationToken = default)
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: UpdateSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Source control token information. </param>
@@ -167,8 +191,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: UpdateSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Source control token information. </param>

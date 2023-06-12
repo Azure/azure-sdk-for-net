@@ -14,28 +14,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static LogicalNetworkProperties DeserializeLogicalNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> networkVirtualizationStatus = default;
             Optional<string> logicalNetworkUsage = default;
             Optional<string> logicalNetworkDefinitionsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkVirtualizationStatus"))
+                if (property.NameEquals("networkVirtualizationStatus"u8))
                 {
                     networkVirtualizationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logicalNetworkUsage"))
+                if (property.NameEquals("logicalNetworkUsage"u8))
                 {
                     logicalNetworkUsage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logicalNetworkDefinitionsStatus"))
+                if (property.NameEquals("logicalNetworkDefinitionsStatus"u8))
                 {
                     logicalNetworkDefinitionsStatus = property.Value.GetString();
                     continue;

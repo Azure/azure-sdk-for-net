@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             writer.WriteEndObject();
@@ -30,21 +30,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningWorkspaceConnectionManagedIdentity DeserializeMachineLearningWorkspaceConnectionManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationActivityParameterDefinition DeserializeAutomationActivityParameterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<bool> isMandatory = default;
@@ -27,86 +31,79 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IReadOnlyList<AutomationActivityParameterValidationSet>> validationSet = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isMandatory"))
+                if (property.NameEquals("isMandatory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMandatory = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDynamic"))
+                if (property.NameEquals("isDynamic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDynamic = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("valueFromPipeline"))
+                if (property.NameEquals("valueFromPipeline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFromPipeline = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("valueFromPipelineByPropertyName"))
+                if (property.NameEquals("valueFromPipelineByPropertyName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFromPipelineByPropertyName = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("valueFromRemainingArguments"))
+                if (property.NameEquals("valueFromRemainingArguments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFromRemainingArguments = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationSet"))
+                if (property.NameEquals("validationSet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutomationActivityParameterValidationSet> array = new List<AutomationActivityParameterValidationSet>();

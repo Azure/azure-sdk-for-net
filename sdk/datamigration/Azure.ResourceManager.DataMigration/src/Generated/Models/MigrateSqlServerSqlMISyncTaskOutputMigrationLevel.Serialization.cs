@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> databaseCount = default;
             Optional<MigrationState> state = default;
             Optional<DateTimeOffset> startedOn = default;
@@ -30,92 +34,87 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseCount"))
+                if (property.NameEquals("databaseCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     databaseCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new MigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceServerName"))
+                if (property.NameEquals("sourceServerName"u8))
                 {
                     sourceServerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerVersion"))
+                if (property.NameEquals("sourceServerVersion"u8))
                 {
                     sourceServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerBrandVersion"))
+                if (property.NameEquals("sourceServerBrandVersion"u8))
                 {
                     sourceServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerName"))
+                if (property.NameEquals("targetServerName"u8))
                 {
                     targetServerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerVersion"))
+                if (property.NameEquals("targetServerVersion"u8))
                 {
                     targetServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerBrandVersion"))
+                if (property.NameEquals("targetServerBrandVersion"u8))
                 {
                     targetServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseErrorCount"))
+                if (property.NameEquals("databaseErrorCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     databaseErrorCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

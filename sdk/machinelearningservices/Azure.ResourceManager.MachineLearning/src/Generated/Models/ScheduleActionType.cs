@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The ScheduleActionType.
-    /// Serialized Name: ScheduleActionType
-    /// </summary>
+    /// <summary> The ScheduleActionType. </summary>
     internal readonly partial struct ScheduleActionType : IEquatable<ScheduleActionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CreateJobValue = "CreateJob";
         private const string InvokeBatchEndpointValue = "InvokeBatchEndpoint";
 
-        /// <summary>
-        /// CreateJob
-        /// Serialized Name: ScheduleActionType.CreateJob
-        /// </summary>
+        /// <summary> CreateJob. </summary>
         public static ScheduleActionType CreateJob { get; } = new ScheduleActionType(CreateJobValue);
-        /// <summary>
-        /// InvokeBatchEndpoint
-        /// Serialized Name: ScheduleActionType.InvokeBatchEndpoint
-        /// </summary>
+        /// <summary> InvokeBatchEndpoint. </summary>
         public static ScheduleActionType InvokeBatchEndpoint { get; } = new ScheduleActionType(InvokeBatchEndpointValue);
         /// <summary> Determines if two <see cref="ScheduleActionType"/> values are the same. </summary>
         public static bool operator ==(ScheduleActionType left, ScheduleActionType right) => left.Equals(right);

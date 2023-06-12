@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaLiveOutput data model. </summary>
+    /// <summary>
+    /// A class representing the MediaLiveOutput data model.
+    /// The Live Output.
+    /// </summary>
     public partial class MediaLiveOutputData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaLiveOutputData. </summary>

@@ -15,21 +15,24 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageSkuRestriction DeserializeStorageSkuRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<StorageRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -40,11 +43,10 @@ namespace Azure.ResourceManager.Storage.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonCode = new StorageRestrictionReasonCode(property.Value.GetString());

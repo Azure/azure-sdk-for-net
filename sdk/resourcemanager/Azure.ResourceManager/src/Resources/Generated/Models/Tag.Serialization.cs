@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TagValues))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TagValues)
                 {
@@ -32,14 +32,17 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static Tag DeserializeTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

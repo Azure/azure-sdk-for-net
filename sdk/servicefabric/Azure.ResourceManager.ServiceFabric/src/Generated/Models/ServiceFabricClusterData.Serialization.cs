@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AddOnFeatures))
             {
-                writer.WritePropertyName("addOnFeatures");
+                writer.WritePropertyName("addOnFeatures"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddOnFeatures)
                 {
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(AzureActiveDirectory))
             {
-                writer.WritePropertyName("azureActiveDirectory");
+                writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
             if (Optional.IsDefined(Certificate))
             {
-                writer.WritePropertyName("certificate");
+                writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
             if (Optional.IsDefined(CertificateCommonNames))
             {
-                writer.WritePropertyName("certificateCommonNames");
+                writer.WritePropertyName("certificateCommonNames"u8);
                 writer.WriteObjectValue(CertificateCommonNames);
             }
             if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
             {
-                writer.WritePropertyName("clientCertificateCommonNames");
+                writer.WritePropertyName("clientCertificateCommonNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateCommonNames)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsCollectionDefined(ClientCertificateThumbprints))
             {
-                writer.WritePropertyName("clientCertificateThumbprints");
+                writer.WritePropertyName("clientCertificateThumbprints"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateThumbprints)
                 {
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(ClusterCodeVersion))
             {
-                writer.WritePropertyName("clusterCodeVersion");
+                writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
             if (Optional.IsDefined(DiagnosticsStorageAccountConfig))
             {
-                writer.WritePropertyName("diagnosticsStorageAccountConfig");
+                writer.WritePropertyName("diagnosticsStorageAccountConfig"u8);
                 writer.WriteObjectValue(DiagnosticsStorageAccountConfig);
             }
             if (Optional.IsDefined(IsEventStoreServiceEnabled))
             {
-                writer.WritePropertyName("eventStoreServiceEnabled");
+                writer.WritePropertyName("eventStoreServiceEnabled"u8);
                 writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
             }
             if (Optional.IsCollectionDefined(FabricSettings))
             {
-                writer.WritePropertyName("fabricSettings");
+                writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(ManagementEndpoint))
             {
-                writer.WritePropertyName("managementEndpoint");
+                writer.WritePropertyName("managementEndpoint"u8);
                 writer.WriteStringValue(ManagementEndpoint.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(NodeTypes))
             {
-                writer.WritePropertyName("nodeTypes");
+                writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in NodeTypes)
                 {
@@ -122,77 +122,77 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(ReliabilityLevel))
             {
-                writer.WritePropertyName("reliabilityLevel");
+                writer.WritePropertyName("reliabilityLevel"u8);
                 writer.WriteStringValue(ReliabilityLevel.Value.ToString());
             }
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
-                writer.WritePropertyName("reverseProxyCertificate");
+                writer.WritePropertyName("reverseProxyCertificate"u8);
                 writer.WriteObjectValue(ReverseProxyCertificate);
             }
             if (Optional.IsDefined(ReverseProxyCertificateCommonNames))
             {
-                writer.WritePropertyName("reverseProxyCertificateCommonNames");
+                writer.WritePropertyName("reverseProxyCertificateCommonNames"u8);
                 writer.WriteObjectValue(ReverseProxyCertificateCommonNames);
             }
             if (Optional.IsDefined(UpgradeDescription))
             {
-                writer.WritePropertyName("upgradeDescription");
+                writer.WritePropertyName("upgradeDescription"u8);
                 writer.WriteObjectValue(UpgradeDescription);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
-                writer.WritePropertyName("upgradeMode");
+                writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
-                writer.WritePropertyName("applicationTypeVersionsCleanupPolicy");
+                writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
                 writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
             }
             if (Optional.IsDefined(VmImage))
             {
-                writer.WritePropertyName("vmImage");
+                writer.WritePropertyName("vmImage"u8);
                 writer.WriteStringValue(VmImage);
             }
             if (Optional.IsDefined(ServiceFabricZonalUpgradeMode))
             {
-                writer.WritePropertyName("sfZonalUpgradeMode");
+                writer.WritePropertyName("sfZonalUpgradeMode"u8);
                 writer.WriteStringValue(ServiceFabricZonalUpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(VmssZonalUpgradeMode))
             {
-                writer.WritePropertyName("vmssZonalUpgradeMode");
+                writer.WritePropertyName("vmssZonalUpgradeMode"u8);
                 writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
             {
-                writer.WritePropertyName("infrastructureServiceManager");
+                writer.WritePropertyName("infrastructureServiceManager"u8);
                 writer.WriteBooleanValue(IsInfrastructureServiceManagerEnabled.Value);
             }
             if (Optional.IsDefined(UpgradeWave))
             {
-                writer.WritePropertyName("upgradeWave");
+                writer.WritePropertyName("upgradeWave"u8);
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
             if (Optional.IsDefined(UpgradePauseStartOn))
             {
-                writer.WritePropertyName("upgradePauseStartTimestampUtc");
+                writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
             if (Optional.IsDefined(UpgradePauseEndOn))
             {
-                writer.WritePropertyName("upgradePauseEndTimestampUtc");
+                writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
             if (Optional.IsDefined(IsWaveUpgradePaused))
             {
-                writer.WritePropertyName("waveUpgradePaused");
+                writer.WritePropertyName("waveUpgradePaused"u8);
                 writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
-                writer.WritePropertyName("notifications");
+                writer.WritePropertyName("notifications"u8);
                 writer.WriteStartArray();
                 foreach (var item in Notifications)
                 {
@@ -206,6 +206,10 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricClusterData DeserializeServiceFabricClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -247,21 +251,19 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<IList<ClusterNotification>> notifications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -272,37 +274,36 @@ namespace Azure.ResourceManager.ServiceFabric
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -311,11 +312,10 @@ namespace Azure.ResourceManager.ServiceFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("addOnFeatures"))
+                        if (property0.NameEquals("addOnFeatures"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterAddOnFeature> array = new List<ClusterAddOnFeature>();
@@ -326,11 +326,10 @@ namespace Azure.ResourceManager.ServiceFabric
                             addOnFeatures = array;
                             continue;
                         }
-                        if (property0.NameEquals("availableClusterVersions"))
+                        if (property0.NameEquals("availableClusterVersions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterVersionDetails> array = new List<ClusterVersionDetails>();
@@ -341,41 +340,37 @@ namespace Azure.ResourceManager.ServiceFabric
                             availableClusterVersions = array;
                             continue;
                         }
-                        if (property0.NameEquals("azureActiveDirectory"))
+                        if (property0.NameEquals("azureActiveDirectory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureActiveDirectory = ClusterAadSetting.DeserializeClusterAadSetting(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("certificate"))
+                        if (property0.NameEquals("certificate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("certificateCommonNames"))
+                        if (property0.NameEquals("certificateCommonNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("clientCertificateCommonNames"))
+                        if (property0.NameEquals("clientCertificateCommonNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
@@ -386,11 +381,10 @@ namespace Azure.ResourceManager.ServiceFabric
                             clientCertificateCommonNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("clientCertificateThumbprints"))
+                        if (property0.NameEquals("clientCertificateThumbprints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
@@ -401,66 +395,60 @@ namespace Azure.ResourceManager.ServiceFabric
                             clientCertificateThumbprints = array;
                             continue;
                         }
-                        if (property0.NameEquals("clusterCodeVersion"))
+                        if (property0.NameEquals("clusterCodeVersion"u8))
                         {
                             clusterCodeVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clusterEndpoint"))
+                        if (property0.NameEquals("clusterEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterEndpoint = null;
                                 continue;
                             }
                             clusterEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("clusterId"))
+                        if (property0.NameEquals("clusterId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("clusterState"))
+                        if (property0.NameEquals("clusterState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterState = new ServiceFabricClusterState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("diagnosticsStorageAccountConfig"))
+                        if (property0.NameEquals("diagnosticsStorageAccountConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticsStorageAccountConfig = DiagnosticsStorageAccountConfig.DeserializeDiagnosticsStorageAccountConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("eventStoreServiceEnabled"))
+                        if (property0.NameEquals("eventStoreServiceEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventStoreServiceEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("fabricSettings"))
+                        if (property0.NameEquals("fabricSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
@@ -471,21 +459,19 @@ namespace Azure.ResourceManager.ServiceFabric
                             fabricSettings = array;
                             continue;
                         }
-                        if (property0.NameEquals("managementEndpoint"))
+                        if (property0.NameEquals("managementEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                managementEndpoint = null;
                                 continue;
                             }
                             managementEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("nodeTypes"))
+                        if (property0.NameEquals("nodeTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
@@ -496,156 +482,141 @@ namespace Azure.ResourceManager.ServiceFabric
                             nodeTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ServiceFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("reliabilityLevel"))
+                        if (property0.NameEquals("reliabilityLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reliabilityLevel = new ClusterReliabilityLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("reverseProxyCertificate"))
+                        if (property0.NameEquals("reverseProxyCertificate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("reverseProxyCertificateCommonNames"))
+                        if (property0.NameEquals("reverseProxyCertificateCommonNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reverseProxyCertificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("upgradeDescription"))
+                        if (property0.NameEquals("upgradeDescription"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("upgradeMode"))
+                        if (property0.NameEquals("upgradeMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeMode = new ClusterUpgradeMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"))
+                        if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("vmImage"))
+                        if (property0.NameEquals("vmImage"u8))
                         {
                             vmImage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sfZonalUpgradeMode"))
+                        if (property0.NameEquals("sfZonalUpgradeMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sfZonalUpgradeMode = new SfZonalUpgradeMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vmssZonalUpgradeMode"))
+                        if (property0.NameEquals("vmssZonalUpgradeMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vmssZonalUpgradeMode = new VmssZonalUpgradeMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("infrastructureServiceManager"))
+                        if (property0.NameEquals("infrastructureServiceManager"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             infrastructureServiceManager = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("upgradeWave"))
+                        if (property0.NameEquals("upgradeWave"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeWave = new ClusterUpgradeCadence(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("upgradePauseStartTimestampUtc"))
+                        if (property0.NameEquals("upgradePauseStartTimestampUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradePauseStartTimestampUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("upgradePauseEndTimestampUtc"))
+                        if (property0.NameEquals("upgradePauseEndTimestampUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradePauseEndTimestampUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("waveUpgradePaused"))
+                        if (property0.NameEquals("waveUpgradePaused"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             waveUpgradePaused = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("notifications"))
+                        if (property0.NameEquals("notifications"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterNotification> array = new List<ClusterNotification>();

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The compute power action.
-    /// Serialized Name: ComputePowerAction
-    /// </summary>
+    /// <summary> The compute power action. </summary>
     public readonly partial struct MachineLearningComputePowerAction : IEquatable<MachineLearningComputePowerAction>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StartValue = "Start";
         private const string StopValue = "Stop";
 
-        /// <summary>
-        /// Start
-        /// Serialized Name: ComputePowerAction.Start
-        /// </summary>
+        /// <summary> Start. </summary>
         public static MachineLearningComputePowerAction Start { get; } = new MachineLearningComputePowerAction(StartValue);
-        /// <summary>
-        /// Stop
-        /// Serialized Name: ComputePowerAction.Stop
-        /// </summary>
+        /// <summary> Stop. </summary>
         public static MachineLearningComputePowerAction Stop { get; } = new MachineLearningComputePowerAction(StopValue);
         /// <summary> Determines if two <see cref="MachineLearningComputePowerAction"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputePowerAction left, MachineLearningComputePowerAction right) => left.Equals(right);

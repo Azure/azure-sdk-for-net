@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToSourcePostgreSqlSyncTaskOutput DeserializeConnectToSourcePostgreSqlSyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> sourceServerVersion = default;
             Optional<IReadOnlyList<string>> databases = default;
@@ -22,21 +26,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerVersion"))
+                if (property.NameEquals("sourceServerVersion"u8))
                 {
                     sourceServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databases"))
+                if (property.NameEquals("databases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -47,16 +50,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databases = array;
                     continue;
                 }
-                if (property.NameEquals("sourceServerBrandVersion"))
+                if (property.NameEquals("sourceServerBrandVersion"u8))
                 {
                     sourceServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReportableException> array = new List<ReportableException>();

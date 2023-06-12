@@ -1,18 +1,62 @@
 # Release History
 
-## 1.9.0-beta.2 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`.
-- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell.
-- `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable.
-- Fixed an issue when using `ManagedIdentityCredential` in combination with authorities other than Azure public cloud that resulted in a bogus instance metadata validation error. [#32498](https://github.com/Azure/azure-sdk-for-net/issues/32498)
 
 ### Other Changes
+
+## 1.9.0 (2023-05-09)
+
+### Breaking Changes
+- Changed visibility of all environment variable based properties on `EnvironmentCredentialOptions` to internal. These options are again only configurable via environment variables.
+
+## 1.9.0-beta.3 (2023-04-12)
+
+### Breaking Changes
+- Renamed the developer credential options timeout settings as follows:
+  - `AzureCliCredential` to `AzureCliCredentialOptions.ProcessTimeout`
+  - `AzurePowerShellCredential` to `AzurePowerShellCredentialOptions.ProcessTimeout`
+  - `VisualStudioCredential` to `VisualStudioCredentialOptions.ProcessTimeout`
+  - `AzureDeveloperCliCredential` to `AzureDeveloperCliCredentialOptions.ProcessTimeout`
+
+### Bugs Fixed
+- Setting `DefaultAzureCredentialOptions.ExcludeWorkloadIdentityCredential` to `true` also excludes `TokenExchangeManagedIdentitySource` when using `DefaultAzureCredential` selects the `ManagedIdentityCredential`
+
+## 1.9.0-beta.2 (2023-02-21)
+
+### Features Added
+ - Allow `VisualStudioCredential` on non-Windows platforms
+ - Added `AzureDeveloperCliCredential` for Azure Developer CLI
+ - Added `WorkloadIdentityCredential` to support Azure Workload Identity authentication
+ - Added `WorkloadIdentityCredential` and `AzureDeveloperCliCredential` to the `DefaultAzureCredential` authentication flow.
+
+### Bugs Fixed
+- Fixed `ManagedIdentityCredential` authentication in sovereign clouds for services specifying `TenantId` through authentication challenge [#34077](https://github.com/Azure/azure-sdk-for-net/issues/34077)
+
+### Breaking Changes
+- Previously, if environment variables for username and password auth are set in addition to the AZURE_CLIENT_CERTIFICATE_PATH, EnvironmentCredential would select the `UsernamePasswordCredential`. After this change, `ClientCertificateCredential` will be selected, which is consistent with all other languages. This is potentially a behavioral breaking change.
+
+## 1.8.2 (2023-02-08)
+
+### Bugs Fixed
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell. [#31998](https://github.com/Azure/azure-sdk-for-net/issues/31998)
+- Fix regional endpoint validation error when using `ManagedIdentityCredential`. [#32498])(https://github.com/Azure/azure-sdk-for-net/issues/32498)
+
+## 1.8.1 (2023-01-13)
+
+### Bugs Fixed
+- Fixed an issue when using `ManagedIdentityCredential` in combination with authorities other than Azure public cloud that resulted in a incorrect instance metadata validation error. [#32498](https://github.com/Azure/azure-sdk-for-net/issues/32498)
+
+## 1.8.0 (2022-11-08)
+
+### Bugs Fixed
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
+- `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable. [#30467](https://github.com/Azure/azure-sdk-for-net/issues/30467), [#32061](https://github.com/Azure/azure-sdk-for-net/issues/32061)
 
 ## 1.9.0-beta.1 (2022-10-13)
 

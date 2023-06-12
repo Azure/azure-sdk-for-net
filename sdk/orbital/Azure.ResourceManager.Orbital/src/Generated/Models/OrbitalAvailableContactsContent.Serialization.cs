@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Orbital.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contactProfile");
-            JsonSerializer.Serialize(writer, ContactProfile); writer.WritePropertyName("groundStationName");
+            writer.WritePropertyName("contactProfile"u8);
+            JsonSerializer.Serialize(writer, ContactProfile); writer.WritePropertyName("groundStationName"u8);
             writer.WriteStringValue(GroundStationName);
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }

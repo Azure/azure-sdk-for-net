@@ -14,47 +14,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningSkuCapacity DeserializeMachineLearningSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> @default = default;
             Optional<int> maximum = default;
             Optional<int> minimum = default;
             Optional<MachineLearningSkuScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximum = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimum = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scaleType"))
+                if (property.NameEquals("scaleType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scaleType = new MachineLearningSkuScaleType(property.Value.GetString());

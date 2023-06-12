@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Media.Models
         private const string ConfigurationUnsupportedValue = "ConfigurationUnsupported";
         private const string ContentMalformedValue = "ContentMalformed";
         private const string ContentUnsupportedValue = "ContentUnsupported";
+        private const string IdentityUnsupportedValue = "IdentityUnsupported";
 
         /// <summary> Fatal service error, please contact support. </summary>
         public static MediaJobErrorCode ServiceError { get; } = new MediaJobErrorCode(ServiceErrorValue);
@@ -50,6 +51,8 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobErrorCode ContentMalformed { get; } = new MediaJobErrorCode(ContentMalformedValue);
         /// <summary> There was a problem with the format of the input (not valid media file, or an unsupported file/codec), check the validity of the input files. </summary>
         public static MediaJobErrorCode ContentUnsupported { get; } = new MediaJobErrorCode(ContentUnsupportedValue);
+        /// <summary> There was an error verifying to the account identity. Check and fix the identity configurations and retry. If unsuccessful, please contact support. </summary>
+        public static MediaJobErrorCode IdentityUnsupported { get; } = new MediaJobErrorCode(IdentityUnsupportedValue);
         /// <summary> Determines if two <see cref="MediaJobErrorCode"/> values are the same. </summary>
         public static bool operator ==(MediaJobErrorCode left, MediaJobErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobErrorCode"/> values are not the same. </summary>

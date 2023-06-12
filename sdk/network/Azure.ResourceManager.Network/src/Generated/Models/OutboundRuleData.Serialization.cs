@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AllocatedOutboundPorts))
             {
-                writer.WritePropertyName("allocatedOutboundPorts");
+                writer.WritePropertyName("allocatedOutboundPorts"u8);
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
             if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
-                writer.WritePropertyName("frontendIPConfigurations");
+                writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
-                writer.WritePropertyName("backendAddressPool");
+                writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(EnableTcpReset))
             {
-                writer.WritePropertyName("enableTcpReset");
+                writer.WritePropertyName("enableTcpReset"u8);
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
-                writer.WritePropertyName("idleTimeoutInMinutes");
+                writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
             writer.WriteEndObject();
@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.Network
 
         internal static OutboundRuleData DeserializeOutboundRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -85,42 +89,39 @@ namespace Azure.ResourceManager.Network
             Optional<int> idleTimeoutInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,21 +130,19 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("allocatedOutboundPorts"))
+                        if (property0.NameEquals("allocatedOutboundPorts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocatedOutboundPorts = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("frontendIPConfigurations"))
+                        if (property0.NameEquals("frontendIPConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -154,51 +153,46 @@ namespace Azure.ResourceManager.Network
                             frontendIPConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("backendAddressPool"))
+                        if (property0.NameEquals("backendAddressPool"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("protocol"))
+                        if (property0.NameEquals("protocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new LoadBalancerOutboundRuleProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enableTcpReset"))
+                        if (property0.NameEquals("enableTcpReset"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableTcpReset = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("idleTimeoutInMinutes"))
+                        if (property0.NameEquals("idleTimeoutInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             idleTimeoutInMinutes = property0.Value.GetInt32();

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    /// <summary> A class representing the ComponentLinkedStorageAccount data model. </summary>
+    /// <summary>
+    /// A class representing the ComponentLinkedStorageAccount data model.
+    /// An Application Insights component linked storage accounts
+    /// </summary>
     public partial class ComponentLinkedStorageAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of ComponentLinkedStorageAccountData. </summary>

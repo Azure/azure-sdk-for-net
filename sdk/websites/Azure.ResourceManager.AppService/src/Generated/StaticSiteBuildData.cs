@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the StaticSiteBuild data model. </summary>
+    /// <summary>
+    /// A class representing the StaticSiteBuild data model.
+    /// Static Site Build ARM resource.
+    /// </summary>
     public partial class StaticSiteBuildData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>

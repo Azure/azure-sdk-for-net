@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RecoveryServicesProviderProperties DeserializeRecoveryServicesProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricType = default;
             Optional<string> friendlyName = default;
             Optional<string> providerVersion = default;
@@ -38,76 +42,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<VersionDetails> providerVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricType"))
+                if (property.NameEquals("fabricType"u8))
                 {
                     fabricType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerVersion"))
+                if (property.NameEquals("providerVersion"u8))
                 {
                     providerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverVersion"))
+                if (property.NameEquals("serverVersion"u8))
                 {
                     serverVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerVersionState"))
+                if (property.NameEquals("providerVersionState"u8))
                 {
                     providerVersionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerVersionExpiryDate"))
+                if (property.NameEquals("providerVersionExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerVersionExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fabricFriendlyName"))
+                if (property.NameEquals("fabricFriendlyName"u8))
                 {
                     fabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartBeat"))
+                if (property.NameEquals("lastHeartBeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartBeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"))
+                if (property.NameEquals("connectionStatus"u8))
                 {
                     connectionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"))
+                if (property.NameEquals("protectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedItemCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowedScenarios"))
+                if (property.NameEquals("allowedScenarios"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -118,11 +118,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allowedScenarios = array;
                     continue;
                 }
-                if (property.NameEquals("healthErrorDetails"))
+                if (property.NameEquals("healthErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();
@@ -133,61 +132,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("draIdentifier"))
+                if (property.NameEquals("draIdentifier"u8))
                 {
                     draIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineId"))
+                if (property.NameEquals("machineId"u8))
                 {
                     machineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineName"))
+                if (property.NameEquals("machineName"u8))
                 {
                     machineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("biosId"))
+                if (property.NameEquals("biosId"u8))
                 {
                     biosId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationIdentityDetails"))
+                if (property.NameEquals("authenticationIdentityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceAccessIdentityDetails"))
+                if (property.NameEquals("resourceAccessIdentityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceAccessIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataPlaneAuthenticationIdentityDetails"))
+                if (property.NameEquals("dataPlaneAuthenticationIdentityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataPlaneAuthenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerVersionDetails"))
+                if (property.NameEquals("providerVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);

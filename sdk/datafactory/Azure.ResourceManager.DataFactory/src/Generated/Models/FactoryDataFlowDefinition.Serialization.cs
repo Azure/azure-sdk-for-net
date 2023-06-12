@@ -15,19 +15,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -38,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WriteEndObject();
@@ -46,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryDataFlowDefinition DeserializeFactoryDataFlowDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -46,7 +46,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e29c162a-d1d4-4cc3-8295-80057c1f4bd9/resourcegroups/afs-sdk-rg9664?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e29c162a-d1d4-4cc3-8295-80057c1f4bd9/resourcegroups/afs-sdk-rg9664?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

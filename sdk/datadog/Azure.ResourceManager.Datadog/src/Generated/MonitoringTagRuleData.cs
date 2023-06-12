@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
-    /// <summary> A class representing the MonitoringTagRule data model. </summary>
+    /// <summary>
+    /// A class representing the MonitoringTagRule data model.
+    /// Capture logs and metrics of Azure resources based on ARM tags.
+    /// </summary>
     public partial class MonitoringTagRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of MonitoringTagRuleData. </summary>

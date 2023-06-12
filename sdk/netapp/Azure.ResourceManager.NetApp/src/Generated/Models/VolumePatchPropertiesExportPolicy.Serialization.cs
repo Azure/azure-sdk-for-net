@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {

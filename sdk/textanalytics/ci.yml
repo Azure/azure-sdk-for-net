@@ -25,7 +25,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: textanalytics
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.TextAnalytics

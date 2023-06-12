@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Lun))
             {
-                writer.WritePropertyName("lun");
+                writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -30,21 +30,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DiskInformation DeserializeDiskInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> lun = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

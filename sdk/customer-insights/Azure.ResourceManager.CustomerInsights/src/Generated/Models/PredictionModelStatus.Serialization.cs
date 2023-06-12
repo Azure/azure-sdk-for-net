@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WriteEndObject();
         }
 
         internal static PredictionModelStatus DeserializePredictionModelStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> predictionName = default;
             Optional<string> predictionGuidId = default;
@@ -36,87 +40,81 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("predictionName"))
+                if (property.NameEquals("predictionName"u8))
                 {
                     predictionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("predictionGuidId"))
+                if (property.NameEquals("predictionGuidId"u8))
                 {
                     predictionGuidId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new PredictionModelLifeCycle(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trainingSetCount"))
+                if (property.NameEquals("trainingSetCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trainingSetCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("testSetCount"))
+                if (property.NameEquals("testSetCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     testSetCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("validationSetCount"))
+                if (property.NameEquals("validationSetCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationSetCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("trainingAccuracy"))
+                if (property.NameEquals("trainingAccuracy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trainingAccuracy = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("signalsUsed"))
+                if (property.NameEquals("signalsUsed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     signalsUsed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;

@@ -1,0 +1,184 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "256",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-08e8c60c2119de28f95950d39ba622b2-95142bd9dfa234d2-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bac44f8369bcf1e47e5458cdd225d7d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "This test was created through loadtesting C# SDK",
+        "displayName": "Dotnet Testing Framework Loadtest",
+        "loadTestConfig": {
+          "engineInstance": 1,
+          "splitAllCSVs": false
+        },
+        "secrets": {},
+        "enviornmentVariables": {},
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Content-Length": "436",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Jan 2023 16:22:50 GMT",
+        "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+        "mise-correlation-id": "9169bcdc-e243-4fb4-a085-25d9f13406e2",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3f623524-d654-4b4a-a1d7-268114f17aa2"
+      },
+      "ResponseBody": {
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        },
+        "loadTestConfiguration": {
+          "engineInstances": 1,
+          "splitAllCSVs": false,
+          "quickStartTest": false
+        },
+        "inputArtifacts": {
+          "additionalFileInfo": []
+        },
+        "testId": "test-from-csharp-sdk-testing-framework",
+        "description": "This test was created through loadtesting C# SDK",
+        "displayName": "Dotnet Testing Framework Loadtest",
+        "createdDateTime": "2023-01-19T16:22:50.514Z",
+        "lastModifiedDateTime": "2023-01-19T16:22:50.514Z"
+      }
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework/app-components?api-version=2022-11-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "422",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-c2fc8448b29b8f0619f8efacd8e0e0c8-d28586e6e8d6eefd-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "98f616a770c1a073b41da5c5aa2697e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "components": {
+          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo": {
+            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
+            "resourceName": "App-Service-Sample-Demo",
+            "resourceType": "Microsoft.Web/sites",
+            "kind": "web"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Content-Length": "668",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Jan 2023 16:22:50 GMT",
+        "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework/app-components?api-version=2022-11-01",
+        "mise-correlation-id": "54caefa3-72d2-4f22-9925-b6bb5e847def",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "33625fe6-7bd0-453b-b746-14ee9e1dc4ee"
+      },
+      "ResponseBody": {
+        "components": {
+          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo": {
+            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
+            "resourceName": "App-Service-Sample-Demo",
+            "resourceType": "Microsoft.Web/sites",
+            "resourceGroup": "App-Service-Sample-Demo-rg",
+            "subscriptionId": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
+            "kind": "web"
+          }
+        },
+        "testId": "test-from-csharp-sdk-testing-framework",
+        "createdDateTime": "2023-01-19T16:22:50.829Z",
+        "lastModifiedDateTime": "2023-01-19T16:22:50.829Z"
+      }
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework/app-components?api-version=2022-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c595581650f7f966886f9823de716f0-3e84a777324455fc-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a581e758897cc5f485b9c74a1a2d656c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Content-Length": "668",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Jan 2023 16:22:51 GMT",
+        "mise-correlation-id": "4947f478-57b2-4fc4-bac2-e6980ae08c5b",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "78867dc1-8b1a-4f25-933c-ab53207ddf04"
+      },
+      "ResponseBody": {
+        "components": {
+          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo": {
+            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
+            "resourceName": "App-Service-Sample-Demo",
+            "resourceType": "Microsoft.Web/sites",
+            "resourceGroup": "App-Service-Sample-Demo-rg",
+            "subscriptionId": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
+            "kind": "web"
+          }
+        },
+        "testId": "test-from-csharp-sdk-testing-framework",
+        "createdDateTime": "2023-01-19T16:22:50.829Z",
+        "lastModifiedDateTime": "2023-01-19T16:22:50.829Z"
+      }
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-46db77617e486e2458b71da8f61e402e-2474bbc2ae91824f-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fb1c48f184f2122bdb24059ec31f4657",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Date": "Thu, 19 Jan 2023 16:22:51 GMT",
+        "mise-correlation-id": "11c834d5-be99-46a4-9b79-e872e19f6c59",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "899dc3aa-a6bf-4f60-8163-10c466604bef"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "LOADTESTSERVICE_ENDPOINT": "f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com",
+    "LOADTESTSERVICE_RESOURCE_ID": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
+    "RandomSeed": "1622553209"
+  }
+}

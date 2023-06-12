@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceEnvironmentInfo DeserializeMachineLearningComputeInstanceEnvironmentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

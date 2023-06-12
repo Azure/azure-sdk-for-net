@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIpAddress");
+                writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
-                writer.WritePropertyName("privateIpAllocationMethod");
+                writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
             if (Optional.IsDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static LoadBalancerFrontendIPConfigurationResourceSettings DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
@@ -53,37 +57,35 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> zones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateIpAllocationMethod"))
+                if (property.NameEquals("privateIpAllocationMethod"u8))
                 {
                     privateIPAllocationMethod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     zones = property.Value.GetString();
                     continue;

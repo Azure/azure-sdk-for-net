@@ -14,20 +14,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SearchMetadataSchema DeserializeSearchMetadataSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt32();

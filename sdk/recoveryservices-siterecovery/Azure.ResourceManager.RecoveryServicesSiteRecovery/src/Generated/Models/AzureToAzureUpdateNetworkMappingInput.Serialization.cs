@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryNetworkId))
             {
-                writer.WritePropertyName("primaryNetworkId");
+                writer.WritePropertyName("primaryNetworkId"u8);
                 writer.WriteStringValue(PrimaryNetworkId);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

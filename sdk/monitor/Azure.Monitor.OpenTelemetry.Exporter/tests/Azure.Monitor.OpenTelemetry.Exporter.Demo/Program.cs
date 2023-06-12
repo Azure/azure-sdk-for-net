@@ -15,17 +15,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
         public static void Main()
         {
-            var credential = new DefaultAzureCredential();
-            using var traceDemo = new TraceDemo(ConnectionString, credential);
+            // To use AAD, setup your desired credential and provide to the demo class.
+            // var credential = new DefaultAzureCredential();
+            // using var traceDemo = new TraceDemo(ConnectionString, credential);
+
+            using var traceDemo = new TraceDemo(ConnectionString);
             traceDemo.GenerateTraces();
 
-            using var metricDemo = new MetricDemo(ConnectionString, credential);
+            using var metricDemo = new MetricDemo(ConnectionString);
             metricDemo.GenerateMetrics();
 
-            using var logDemo = new LogDemo(ConnectionString, credential);
+            using var logDemo = new LogDemo(ConnectionString);
             logDemo.GenerateLogs();
 
-            Console.WriteLine("Press Enter key to exit.");
+            Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(Start))
             {
-                writer.WritePropertyName("start");
+                writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             if (Optional.IsCollectionDefined(InputDefinitions))
             {
-                writer.WritePropertyName("inputDefinitions");
+                writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
@@ -51,13 +51,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static MediaJobInputClip DeserializeMediaJobInputClip(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -74,11 +78,10 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = "#Microsoft.Media.JobInputClip";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("files"))
+                if (property.NameEquals("files"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -89,36 +92,33 @@ namespace Azure.ResourceManager.Media.Models
                     files = array;
                     continue;
                 }
-                if (property.NameEquals("start"))
+                if (property.NameEquals("start"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     start = ClipTime.DeserializeClipTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("end"))
+                if (property.NameEquals("end"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     end = ClipTime.DeserializeClipTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputDefinitions"))
+                if (property.NameEquals("inputDefinitions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaJobInputDefinition> array = new List<MediaJobInputDefinition>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Media.Models
                     inputDefinitions = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

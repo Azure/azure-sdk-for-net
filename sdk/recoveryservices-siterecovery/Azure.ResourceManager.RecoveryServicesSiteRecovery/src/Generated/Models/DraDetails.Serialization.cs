@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static DraDetails DeserializeDraDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> biosId = default;
@@ -27,51 +31,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> reverseProtectedItemCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("biosId"))
+                if (property.NameEquals("biosId"u8))
                 {
                     biosId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeatUtc"))
+                if (property.NameEquals("lastHeartbeatUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new ProtectionHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthError> array = new List<HealthError>();
@@ -82,21 +83,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("forwardProtectedItemCount"))
+                if (property.NameEquals("forwardProtectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forwardProtectedItemCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("reverseProtectedItemCount"))
+                if (property.NameEquals("reverseProtectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reverseProtectedItemCount = property.Value.GetInt32();

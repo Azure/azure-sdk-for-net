@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyIncident DeserializeAnomalyIncident(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataFeedId = default;
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;
@@ -25,42 +29,42 @@ namespace Azure.AI.MetricsAdvisor.Models
             IncidentProperty property = default;
             foreach (var property0 in element.EnumerateObject())
             {
-                if (property0.NameEquals("dataFeedId"))
+                if (property0.NameEquals("dataFeedId"u8))
                 {
                     dataFeedId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("metricId"))
+                if (property0.NameEquals("metricId"u8))
                 {
                     metricId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("anomalyDetectionConfigurationId"))
+                if (property0.NameEquals("anomalyDetectionConfigurationId"u8))
                 {
                     anomalyDetectionConfigurationId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("incidentId"))
+                if (property0.NameEquals("incidentId"u8))
                 {
                     incidentId = property0.Value.GetString();
                     continue;
                 }
-                if (property0.NameEquals("startTime"))
+                if (property0.NameEquals("startTime"u8))
                 {
                     startTime = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property0.NameEquals("lastTime"))
+                if (property0.NameEquals("lastTime"u8))
                 {
                     lastTime = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property0.NameEquals("rootNode"))
+                if (property0.NameEquals("rootNode"u8))
                 {
                     rootNode = SeriesIdentity.DeserializeSeriesIdentity(property0.Value);
                     continue;
                 }
-                if (property0.NameEquals("property"))
+                if (property0.NameEquals("property"u8))
                 {
                     property = IncidentProperty.DeserializeIncidentProperty(property0.Value);
                     continue;

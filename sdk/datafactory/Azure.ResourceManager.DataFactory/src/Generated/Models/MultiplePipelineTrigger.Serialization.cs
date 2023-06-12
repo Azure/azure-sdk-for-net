@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
             {
-                writer.WritePropertyName("pipelines");
+                writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
@@ -27,19 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -62,6 +67,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MultiplePipelineTrigger DeserializeMultiplePipelineTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -81,11 +90,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipelines"))
+                if (property.NameEquals("pipelines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
@@ -96,37 +104,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                     pipelines = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeState"))
+                if (property.NameEquals("runtimeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;

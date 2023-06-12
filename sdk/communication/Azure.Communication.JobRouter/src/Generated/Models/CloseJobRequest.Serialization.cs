@@ -15,21 +15,21 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assignmentId");
+            writer.WritePropertyName("assignmentId"u8);
             writer.WriteStringValue(AssignmentId);
             if (Optional.IsDefined(DispositionCode))
             {
-                writer.WritePropertyName("dispositionCode");
+                writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
             if (Optional.IsDefined(CloseTime))
             {
-                writer.WritePropertyName("closeTime");
+                writer.WritePropertyName("closeTime"u8);
                 writer.WriteStringValue(CloseTime.Value, "O");
             }
             if (Optional.IsDefined(Note))
             {
-                writer.WritePropertyName("note");
+                writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
             writer.WriteEndObject();

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The ServiceManagedResourcesSettings.
-    /// Serialized Name: ServiceManagedResourcesSettings
-    /// </summary>
+    /// <summary> The ServiceManagedResourcesSettings. </summary>
     internal partial class ServiceManagedResourcesSettings
     {
         /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
@@ -19,24 +16,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
-        /// <param name="cosmosDb">
-        /// The settings for the service managed cosmosdb account.
-        /// Serialized Name: ServiceManagedResourcesSettings.cosmosDb
-        /// </param>
+        /// <param name="cosmosDb"> The settings for the service managed cosmosdb account. </param>
         internal ServiceManagedResourcesSettings(CosmosDbSettings cosmosDb)
         {
             CosmosDb = cosmosDb;
         }
 
-        /// <summary>
-        /// The settings for the service managed cosmosdb account.
-        /// Serialized Name: ServiceManagedResourcesSettings.cosmosDb
-        /// </summary>
+        /// <summary> The settings for the service managed cosmosdb account. </summary>
         internal CosmosDbSettings CosmosDb { get; set; }
-        /// <summary>
-        /// The throughput of the collections in cosmosdb database
-        /// Serialized Name: CosmosDbSettings.collectionsThroughput
-        /// </summary>
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
         public int? CosmosDbCollectionsThroughput
         {
             get => CosmosDb is null ? default : CosmosDb.CollectionsThroughput;

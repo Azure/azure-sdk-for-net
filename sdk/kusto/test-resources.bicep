@@ -70,6 +70,9 @@ module dataConnection './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/da
 
 output EVENT_HUB_ID string = dataConnection.outputs.EVENT_HUB_ID
 output IOT_HUB_ID string = dataConnection.outputs.IOT_HUB_ID
+output COSMOSDB_ACCOUNT_ID string = dataConnection.outputs.COSMOSDB_ACCOUNT_ID
+output COSMOSDB_DATABASE_NAME string = dataConnection.outputs.COSMOSDB_DATABASE_NAME
+output COSMOSDB_CONTAINER_NAME string = dataConnection.outputs.COSMOSDB_CONTAINER_NAME
 
 module storage './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/storage.bicep' = {
     name: 'storage'

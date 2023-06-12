@@ -15,9 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("performShutdown");
+            writer.WritePropertyName("performShutdown"u8);
             writer.WriteStringValue(PerformShutdown);
-            writer.WritePropertyName("instanceType");
+            if (Optional.IsDefined(OSUpgradeVersion))
+            {
+                writer.WritePropertyName("osUpgradeVersion"u8);
+                writer.WriteStringValue(OSUpgradeVersion);
+            }
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

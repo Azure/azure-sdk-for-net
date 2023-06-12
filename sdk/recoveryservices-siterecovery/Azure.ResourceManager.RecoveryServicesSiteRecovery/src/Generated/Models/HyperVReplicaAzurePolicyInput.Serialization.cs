@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointHistoryDuration))
             {
-                writer.WritePropertyName("recoveryPointHistoryDuration");
+                writer.WritePropertyName("recoveryPointHistoryDuration"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryDuration.Value);
             }
             if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
             {
-                writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours");
+                writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
             if (Optional.IsDefined(ReplicationInterval))
             {
-                writer.WritePropertyName("replicationInterval");
+                writer.WritePropertyName("replicationInterval"u8);
                 writer.WriteNumberValue(ReplicationInterval.Value);
             }
             if (Optional.IsDefined(OnlineReplicationStartTime))
             {
-                writer.WritePropertyName("onlineReplicationStartTime");
+                writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
             if (Optional.IsCollectionDefined(StorageAccounts))
             {
-                writer.WritePropertyName("storageAccounts");
+                writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a build service resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a build service resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// List build services resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices
-        /// Operation Id: BuildService_ListBuildServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_ListBuildServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppPlatformBuildServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformBuildServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformBuildServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuildServiceBuildServiceRestClient.ListBuildServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformBuildServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuildServiceBuildServiceRestClient.ListBuildServicesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceResource(Client, AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e)), _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List build services resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices
-        /// Operation Id: BuildService_ListBuildServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_ListBuildServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppPlatformBuildServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformBuildServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformBuildServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuildServiceBuildServiceRestClient.ListBuildServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformBuildServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuildServiceBuildServiceRestClient.ListBuildServicesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceResource(Client, AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e)), _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -37,7 +37,7 @@
         },
         "hsmLocation": {
             "type": "string",
-            "defaultValue": "northcentralus",
+            "defaultValue": "francecentral",
             "allowedValues": [
                 "australiacentral",
                 "australiaeast",
@@ -67,6 +67,13 @@
             ],
             "metadata": {
                 "description": "The location of the Managed HSM. By default, this is 'northcentralus'."
+            }
+        },
+        "enableAttestation": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether to enable deployment of attestation resources. The default is true."
             }
         },
         "enableHsm": {
@@ -223,6 +230,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2020-12-01",
             "name": "[variables('attestationFarm')]",
+            "condition": "[parameters('enableAttestation')]",
             "location": "[parameters('location')]",
             "kind": "linux",
             "sku": {
@@ -237,6 +245,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-12-01",
             "name": "[variables('attestationSite')]",
+            "condition": "[parameters('enableAttestation')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]"
             ],
@@ -290,6 +299,7 @@
         },
         "AZURE_KEYVAULT_ATTESTATION_URL": {
             "type": "string",
+            "condition": "[parameters('enableAttestation')]",
             "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
         }
     }

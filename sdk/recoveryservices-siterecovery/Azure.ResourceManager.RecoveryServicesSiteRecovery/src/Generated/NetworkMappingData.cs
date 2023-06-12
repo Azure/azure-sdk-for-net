@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the NetworkMapping data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkMapping data model.
+    /// Network Mapping model. Ideally it should have been possible to inherit this class from prev version in InheritedModels as long as there is no difference in structure or method signature. Since there were no base Models for certain fields and methods viz NetworkMappingProperties and Load with required return type, the class has been introduced in its entirety with references to base models to facilitate extensions in subsequent versions.
+    /// </summary>
     public partial class NetworkMappingData : ResourceData
     {
         /// <summary> Initializes a new instance of NetworkMappingData. </summary>

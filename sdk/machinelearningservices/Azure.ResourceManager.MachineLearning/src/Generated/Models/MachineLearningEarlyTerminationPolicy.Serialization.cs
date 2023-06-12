@@ -17,21 +17,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DelayEvaluation))
             {
-                writer.WritePropertyName("delayEvaluation");
+                writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
             if (Optional.IsDefined(EvaluationInterval))
             {
-                writer.WritePropertyName("evaluationInterval");
+                writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
-            writer.WritePropertyName("policyType");
+            writer.WritePropertyName("policyType"u8);
             writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningEarlyTerminationPolicy DeserializeMachineLearningEarlyTerminationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("policyType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

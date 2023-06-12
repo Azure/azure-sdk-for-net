@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryAzureV1ResourceGroupId))
             {
-                writer.WritePropertyName("recoveryAzureV1ResourceGroupId");
+                writer.WritePropertyName("recoveryAzureV1ResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureV1ResourceGroupId);
             }
             if (Optional.IsDefined(RecoveryAzureV2ResourceGroupId))
             {
-                writer.WritePropertyName("recoveryAzureV2ResourceGroupId");
+                writer.WritePropertyName("recoveryAzureV2ResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureV2ResourceGroupId);
             }
             if (Optional.IsDefined(UseManagedDisks))
             {
-                writer.WritePropertyName("useManagedDisks");
+                writer.WritePropertyName("useManagedDisks"u8);
                 writer.WriteStringValue(UseManagedDisks);
             }
             if (Optional.IsCollectionDefined(DiskIdToDiskEncryptionMap))
             {
-                writer.WritePropertyName("diskIdToDiskEncryptionMap");
+                writer.WritePropertyName("diskIdToDiskEncryptionMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in DiskIdToDiskEncryptionMap)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
-                writer.WritePropertyName("targetProximityPlacementGroupId");
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
             if (Optional.IsDefined(TargetAvailabilityZone))
             {
-                writer.WritePropertyName("targetAvailabilityZone");
+                writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
             if (Optional.IsCollectionDefined(TargetVmTags))
             {
-                writer.WritePropertyName("targetVmTags");
+                writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetVmTags)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(TargetManagedDiskTags))
             {
-                writer.WritePropertyName("targetManagedDiskTags");
+                writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetManagedDiskTags)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(TargetNicTags))
             {
-                writer.WritePropertyName("targetNicTags");
+                writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetNicTags)
                 {
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(SqlServerLicenseType))
             {
-                writer.WritePropertyName("sqlServerLicenseType");
+                writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(VmDisks))
             {
-                writer.WritePropertyName("vmDisks");
+                writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

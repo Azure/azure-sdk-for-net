@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VmFriendlyName))
             {
-                writer.WritePropertyName("vmFriendlyName");
+                writer.WritePropertyName("vmFriendlyName"u8);
                 writer.WriteStringValue(VmFriendlyName);
             }
-            writer.WritePropertyName("masterTargetId");
+            writer.WritePropertyName("masterTargetId"u8);
             writer.WriteStringValue(MasterTargetId);
-            writer.WritePropertyName("processServerId");
+            writer.WritePropertyName("processServerId"u8);
             writer.WriteStringValue(ProcessServerId);
-            writer.WritePropertyName("retentionDrive");
+            writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
             if (Optional.IsDefined(RunAsAccountId))
             {
-                writer.WritePropertyName("runAsAccountId");
+                writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            writer.WritePropertyName("multiVmGroupId");
+            writer.WritePropertyName("multiVmGroupId"u8);
             writer.WriteStringValue(MultiVmGroupId);
-            writer.WritePropertyName("multiVmGroupName");
+            writer.WritePropertyName("multiVmGroupName"u8);
             writer.WriteStringValue(MultiVmGroupName);
             if (Optional.IsDefined(DatastoreName))
             {
-                writer.WritePropertyName("datastoreName");
+                writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
             if (Optional.IsDefined(DiskExclusionInput))
             {
-                writer.WritePropertyName("diskExclusionInput");
+                writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionInput);
             }
             if (Optional.IsCollectionDefined(DisksToInclude))
             {
-                writer.WritePropertyName("disksToInclude");
+                writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Job endpoint definition
-    /// Serialized Name: JobService
-    /// </summary>
+    /// <summary> Job endpoint definition. </summary>
     public partial class MachineLearningJobService
     {
         /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
@@ -23,30 +20,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
-        /// <param name="endpoint">
-        /// Url for endpoint.
-        /// Serialized Name: JobService.endpoint
-        /// </param>
-        /// <param name="errorMessage">
-        /// Any error in the service.
-        /// Serialized Name: JobService.errorMessage
-        /// </param>
-        /// <param name="jobServiceType">
-        /// Endpoint type.
-        /// Serialized Name: JobService.jobServiceType
-        /// </param>
-        /// <param name="port">
-        /// Port for endpoint.
-        /// Serialized Name: JobService.port
-        /// </param>
-        /// <param name="properties">
-        /// Additional properties to set on the endpoint.
-        /// Serialized Name: JobService.properties
-        /// </param>
-        /// <param name="status">
-        /// Status of endpoint.
-        /// Serialized Name: JobService.status
-        /// </param>
+        /// <param name="endpoint"> Url for endpoint. </param>
+        /// <param name="errorMessage"> Any error in the service. </param>
+        /// <param name="jobServiceType"> Endpoint type. </param>
+        /// <param name="port"> Port for endpoint. </param>
+        /// <param name="properties"> Additional properties to set on the endpoint. </param>
+        /// <param name="status"> Status of endpoint. </param>
         internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, int? port, IDictionary<string, string> properties, string status)
         {
             Endpoint = endpoint;
@@ -57,35 +36,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary>
-        /// Url for endpoint.
-        /// Serialized Name: JobService.endpoint
-        /// </summary>
+        /// <summary> Url for endpoint. </summary>
         public string Endpoint { get; set; }
-        /// <summary>
-        /// Any error in the service.
-        /// Serialized Name: JobService.errorMessage
-        /// </summary>
+        /// <summary> Any error in the service. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Endpoint type.
-        /// Serialized Name: JobService.jobServiceType
-        /// </summary>
+        /// <summary> Endpoint type. </summary>
         public string JobServiceType { get; set; }
-        /// <summary>
-        /// Port for endpoint.
-        /// Serialized Name: JobService.port
-        /// </summary>
+        /// <summary> Port for endpoint. </summary>
         public int? Port { get; set; }
-        /// <summary>
-        /// Additional properties to set on the endpoint.
-        /// Serialized Name: JobService.properties
-        /// </summary>
+        /// <summary> Additional properties to set on the endpoint. </summary>
         public IDictionary<string, string> Properties { get; set; }
-        /// <summary>
-        /// Status of endpoint.
-        /// Serialized Name: JobService.status
-        /// </summary>
+        /// <summary> Status of endpoint. </summary>
         public string Status { get; }
     }
 }

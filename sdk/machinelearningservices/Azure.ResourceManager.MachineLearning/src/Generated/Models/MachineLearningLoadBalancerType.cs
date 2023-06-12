@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Load Balancer Type
-    /// Serialized Name: LoadBalancerType
-    /// </summary>
+    /// <summary> Load Balancer Type. </summary>
     public readonly partial struct MachineLearningLoadBalancerType : IEquatable<MachineLearningLoadBalancerType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PublicIPValue = "PublicIp";
         private const string InternalLoadBalancerValue = "InternalLoadBalancer";
 
-        /// <summary>
-        /// PublicIp
-        /// Serialized Name: LoadBalancerType.PublicIp
-        /// </summary>
+        /// <summary> PublicIp. </summary>
         public static MachineLearningLoadBalancerType PublicIP { get; } = new MachineLearningLoadBalancerType(PublicIPValue);
-        /// <summary>
-        /// InternalLoadBalancer
-        /// Serialized Name: LoadBalancerType.InternalLoadBalancer
-        /// </summary>
+        /// <summary> InternalLoadBalancer. </summary>
         public static MachineLearningLoadBalancerType InternalLoadBalancer { get; } = new MachineLearningLoadBalancerType(InternalLoadBalancerValue);
         /// <summary> Determines if two <see cref="MachineLearningLoadBalancerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningLoadBalancerType left, MachineLearningLoadBalancerType right) => left.Equals(right);

@@ -15,36 +15,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recoveryVirtualNetworkId");
+            writer.WritePropertyName("recoveryVirtualNetworkId"u8);
             writer.WriteStringValue(RecoveryVirtualNetworkId);
             if (Optional.IsDefined(RecoverySubnetName))
             {
-                writer.WritePropertyName("recoverySubnetName");
+                writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
 
         internal static ExistingRecoveryVirtualNetwork DeserializeExistingRecoveryVirtualNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string recoveryVirtualNetworkId = default;
             Optional<string> recoverySubnetName = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryVirtualNetworkId"))
+                if (property.NameEquals("recoveryVirtualNetworkId"u8))
                 {
                     recoveryVirtualNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoverySubnetName"))
+                if (property.NameEquals("recoverySubnetName"u8))
                 {
                     recoverySubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

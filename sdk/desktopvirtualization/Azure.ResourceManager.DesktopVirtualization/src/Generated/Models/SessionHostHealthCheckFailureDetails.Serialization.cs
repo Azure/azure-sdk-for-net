@@ -15,31 +15,33 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static SessionHostHealthCheckFailureDetails DeserializeSessionHostHealthCheckFailureDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<int> errorCode = default;
             Optional<DateTimeOffset> lastHealthCheckDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastHealthCheckDateTime"))
+                if (property.NameEquals("lastHealthCheckDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastHealthCheckDateTime = property.Value.GetDateTimeOffset("O");

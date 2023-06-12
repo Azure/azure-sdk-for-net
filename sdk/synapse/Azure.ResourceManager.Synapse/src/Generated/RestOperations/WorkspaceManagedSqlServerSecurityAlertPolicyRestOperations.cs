@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseServerSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ServerSecurityAlertPolicyData value = default;
+                        SynapseServerSecurityAlertPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
+                        value = SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerSecurityAlertPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseServerSecurityAlertPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public Response<SynapseServerSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -111,19 +111,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ServerSecurityAlertPolicyData value = default;
+                        SynapseServerSecurityAlertPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
+                        value = SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerSecurityAlertPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseServerSecurityAlertPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, SynapseServerSecurityAlertPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, SynapseServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName, SynapseServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerSecurityAlertPolicyListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseServerSecurityAlertPolicyListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ServerSecurityAlertPolicyListResult value = default;
+                        SynapseServerSecurityAlertPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerSecurityAlertPolicyListResult.DeserializeServerSecurityAlertPolicyListResult(document.RootElement);
+                        value = SynapseServerSecurityAlertPolicyListResult.DeserializeSynapseServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerSecurityAlertPolicyListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseServerSecurityAlertPolicyListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ServerSecurityAlertPolicyListResult value = default;
+                        SynapseServerSecurityAlertPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerSecurityAlertPolicyListResult.DeserializeServerSecurityAlertPolicyListResult(document.RootElement);
+                        value = SynapseServerSecurityAlertPolicyListResult.DeserializeSynapseServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerSecurityAlertPolicyListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseServerSecurityAlertPolicyListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ServerSecurityAlertPolicyListResult value = default;
+                        SynapseServerSecurityAlertPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerSecurityAlertPolicyListResult.DeserializeServerSecurityAlertPolicyListResult(document.RootElement);
+                        value = SynapseServerSecurityAlertPolicyListResult.DeserializeSynapseServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerSecurityAlertPolicyListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseServerSecurityAlertPolicyListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ServerSecurityAlertPolicyListResult value = default;
+                        SynapseServerSecurityAlertPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerSecurityAlertPolicyListResult.DeserializeServerSecurityAlertPolicyListResult(document.RootElement);
+                        value = SynapseServerSecurityAlertPolicyListResult.DeserializeSynapseServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -38,7 +38,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         protected FormRecognizerClient CreateFormRecognizerClient(bool useTokenCredential = false, string apiKey = default) => CreateFormRecognizerClient(out _, useTokenCredential, apiKey);
 
@@ -49,7 +48,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         protected FormRecognizerClient CreateFormRecognizerClient(out FormRecognizerClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
@@ -73,10 +71,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
-        /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         protected FormTrainingClient CreateFormTrainingClient(bool useTokenCredential = false, string apiKey = default) => CreateFormTrainingClient(out _, useTokenCredential, apiKey);
 
@@ -87,7 +83,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         protected FormTrainingClient CreateFormTrainingClient(out FormTrainingClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
@@ -121,12 +116,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             string trainingFiles = containerType switch
             {
-                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrlV2,
-                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrlV2,
-                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrlV2,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrlV2,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrlV2,
-                _ => TestEnvironment.BlobContainerSasUrlV2,
+                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
+                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
+                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
+                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
+                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
+                _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
 

@@ -16,36 +16,36 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("virtualNetwork");
+            writer.WritePropertyName("virtualNetwork"u8);
             writer.WriteObjectValue(VirtualNetwork);
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
-                writer.WritePropertyName("internalLoadBalancingMode");
+                writer.WritePropertyName("internalLoadBalancingMode"u8);
                 writer.WriteStringValue(InternalLoadBalancingMode.Value.ToString());
             }
             if (Optional.IsDefined(MultiSize))
             {
-                writer.WritePropertyName("multiSize");
+                writer.WritePropertyName("multiSize"u8);
                 writer.WriteStringValue(MultiSize);
             }
             if (Optional.IsDefined(IPSslAddressCount))
             {
-                writer.WritePropertyName("ipsslAddressCount");
+                writer.WritePropertyName("ipsslAddressCount"u8);
                 writer.WriteNumberValue(IPSslAddressCount.Value);
             }
             if (Optional.IsDefined(DnsSuffix))
             {
-                writer.WritePropertyName("dnsSuffix");
+                writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
             if (Optional.IsDefined(FrontEndScaleFactor))
             {
-                writer.WritePropertyName("frontEndScaleFactor");
+                writer.WritePropertyName("frontEndScaleFactor"u8);
                 writer.WriteNumberValue(FrontEndScaleFactor.Value);
             }
             if (Optional.IsCollectionDefined(ClusterSettings))
             {
-                writer.WritePropertyName("clusterSettings");
+                writer.WritePropertyName("clusterSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClusterSettings)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
-                writer.WritePropertyName("userWhitelistedIpRanges");
+                writer.WritePropertyName("userWhitelistedIpRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserWhitelistedIPRanges)
                 {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(DedicatedHostCount))
             {
-                writer.WritePropertyName("dedicatedHostCount");
+                writer.WritePropertyName("dedicatedHostCount"u8);
                 writer.WriteNumberValue(DedicatedHostCount.Value);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
+                writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceEnvironmentProperties DeserializeAppServiceEnvironmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<HostingEnvironmentStatus> status = default;
             AppServiceVirtualNetworkProfile virtualNetwork = default;
@@ -96,106 +100,97 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> zoneRedundant = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = property.Value.GetString().ToProvisioningState();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToHostingEnvironmentStatus();
                     continue;
                 }
-                if (property.NameEquals("virtualNetwork"))
+                if (property.NameEquals("virtualNetwork"u8))
                 {
                     virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("internalLoadBalancingMode"))
+                if (property.NameEquals("internalLoadBalancingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     internalLoadBalancingMode = new LoadBalancingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiSize"))
+                if (property.NameEquals("multiSize"u8))
                 {
                     multiSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiRoleCount"))
+                if (property.NameEquals("multiRoleCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multiRoleCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipsslAddressCount"))
+                if (property.NameEquals("ipsslAddressCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipSslAddressCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dnsSuffix"))
+                if (property.NameEquals("dnsSuffix"u8))
                 {
                     dnsSuffix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maximumNumberOfMachines"))
+                if (property.NameEquals("maximumNumberOfMachines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumNumberOfMachines = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("frontEndScaleFactor"))
+                if (property.NameEquals("frontEndScaleFactor"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frontEndScaleFactor = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("suspended"))
+                if (property.NameEquals("suspended"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     suspended = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("clusterSettings"))
+                if (property.NameEquals("clusterSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
@@ -206,11 +201,10 @@ namespace Azure.ResourceManager.AppService.Models
                     clusterSettings = array;
                     continue;
                 }
-                if (property.NameEquals("userWhitelistedIpRanges"))
+                if (property.NameEquals("userWhitelistedIpRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -221,31 +215,28 @@ namespace Azure.ResourceManager.AppService.Models
                     userWhitelistedIPRanges = array;
                     continue;
                 }
-                if (property.NameEquals("hasLinuxWorkers"))
+                if (property.NameEquals("hasLinuxWorkers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasLinuxWorkers = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dedicatedHostCount"))
+                if (property.NameEquals("dedicatedHostCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dedicatedHostCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("zoneRedundant"))
+                if (property.NameEquals("zoneRedundant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneRedundant = property.Value.GetBoolean();

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -27,13 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobInputType");
+            writer.WritePropertyName("jobInputType"u8);
             writer.WriteStringValue(JobInputType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MachineLearningJobInput DeserializeMachineLearningJobInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobInputType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerVersion))
             {
-                writer.WritePropertyName("serverVersion");
+                writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static CheckOciDriverTaskInput DeserializeCheckOciDriverTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverVersion"))
+                if (property.NameEquals("serverVersion"u8))
                 {
                     serverVersion = property.Value.GetString();
                     continue;

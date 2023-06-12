@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
-                writer.WritePropertyName("subscriptionStateOverrideActions");
+                writer.WritePropertyName("subscriptionStateOverrideActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateOverrideActions)
                 {
@@ -27,25 +27,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SoftDeleteTTL))
+            if (Optional.IsDefined(SoftDeleteTtl))
             {
-                writer.WritePropertyName("softDeleteTTL");
-                writer.WriteStringValue(SoftDeleteTTL.Value, "P");
+                writer.WritePropertyName("softDeleteTTL"u8);
+                writer.WriteStringValue(SoftDeleteTtl.Value, "P");
             }
             writer.WriteEndObject();
         }
 
         internal static SubscriptionLifecycleNotificationSpecifications DeserializeSubscriptionLifecycleNotificationSpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
-            Optional<TimeSpan> softDeleteTTL = default;
+            Optional<TimeSpan> softDeleteTtl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionStateOverrideActions"))
+                if (property.NameEquals("subscriptionStateOverrideActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SubscriptionStateOverrideAction> array = new List<SubscriptionStateOverrideAction>();
@@ -56,18 +59,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     subscriptionStateOverrideActions = array;
                     continue;
                 }
-                if (property.NameEquals("softDeleteTTL"))
+                if (property.NameEquals("softDeleteTTL"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    softDeleteTTL = property.Value.GetTimeSpan("P");
+                    softDeleteTtl = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTTL));
+            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTtl));
         }
     }
 }

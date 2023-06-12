@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsSasTokenInformation DeserializeDataLakeAnalyticsSasTokenInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

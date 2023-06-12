@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
 
         internal static BatchIPRule DeserializeBatchIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchIPRuleAction action = default;
             string value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = new BatchIPRuleAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

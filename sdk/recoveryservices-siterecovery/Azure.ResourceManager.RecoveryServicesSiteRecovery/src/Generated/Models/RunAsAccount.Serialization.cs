@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RunAsAccount DeserializeRunAsAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             Optional<string> accountName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     accountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;

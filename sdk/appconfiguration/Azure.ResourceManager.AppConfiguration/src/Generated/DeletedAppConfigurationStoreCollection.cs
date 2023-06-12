@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -60,8 +59,16 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Gets a deleted Azure app configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
-        /// Operation Id: ConfigurationStores_GetDeleted
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Gets a deleted Azure app configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
-        /// Operation Id: ConfigurationStores_GetDeleted
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -120,92 +135,60 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Gets information about the deleted configuration stores in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores
-        /// Operation Id: ConfigurationStores_ListDeleted
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_ListDeleted</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedAppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedAppConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationStoresRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeletedAppConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationStoresRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationStoresRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationStoresRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets information about the deleted configuration stores in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores
-        /// Operation Id: ConfigurationStores_ListDeleted
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_ListDeleted</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedAppConfigurationStoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeletedAppConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationStoresRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeletedAppConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationStoresRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationStoresRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationStoresRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
-        /// Operation Id: ConfigurationStores_GetDeleted
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -232,8 +215,16 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
-        /// Operation Id: ConfigurationStores_GetDeleted
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>

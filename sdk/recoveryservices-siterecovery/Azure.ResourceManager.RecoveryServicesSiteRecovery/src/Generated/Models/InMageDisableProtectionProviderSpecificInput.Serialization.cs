@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaVmDeletionStatus))
             {
-                writer.WritePropertyName("replicaVmDeletionStatus");
+                writer.WritePropertyName("replicaVmDeletionStatus"u8);
                 writer.WriteStringValue(ReplicaVmDeletionStatus);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

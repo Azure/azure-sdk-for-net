@@ -65,8 +65,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Validates the workflow definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate
-        /// Operation Id: Workflows_ValidateByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The workflow location. </param>
         /// <param name="workflowName"> The workflow name. </param>
@@ -90,8 +98,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Validates the workflow definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate
-        /// Operation Id: Workflows_ValidateByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The workflow location. </param>
         /// <param name="workflowName"> The workflow name. </param>

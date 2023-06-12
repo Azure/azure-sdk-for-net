@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("virtualMachines");
+            writer.WritePropertyName("virtualMachines"u8);
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Justification))
             {
-                writer.WritePropertyName("justification");
+                writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
             writer.WriteEndObject();

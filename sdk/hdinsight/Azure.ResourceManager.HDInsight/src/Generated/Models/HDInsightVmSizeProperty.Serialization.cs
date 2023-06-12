@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightVmSizeProperty DeserializeHDInsightVmSizeProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> cores = default;
             Optional<string> dataDiskStorageTier = default;
@@ -26,86 +30,79 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<long> webWorkerResourceDiskSizeInMB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cores"))
+                if (property.NameEquals("cores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataDiskStorageTier"))
+                if (property.NameEquals("dataDiskStorageTier"u8))
                 {
                     dataDiskStorageTier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxDataDiskCount"))
+                if (property.NameEquals("maxDataDiskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDataDiskCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryInMb"))
+                if (property.NameEquals("memoryInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryInMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedByVirtualMachines"))
+                if (property.NameEquals("supportedByVirtualMachines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedByVirtualMachines = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportedByWebWorkerRoles"))
+                if (property.NameEquals("supportedByWebWorkerRoles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedByWebWorkerRoles = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("virtualMachineResourceDiskSizeInMb"))
+                if (property.NameEquals("virtualMachineResourceDiskSizeInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualMachineResourceDiskSizeInMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("webWorkerResourceDiskSizeInMb"))
+                if (property.NameEquals("webWorkerResourceDiskSizeInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webWorkerResourceDiskSizeInMB = property.Value.GetInt64();

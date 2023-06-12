@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchAccountCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the BatchAccountCertificate data model.
+    /// Contains information about a certificate.
+    /// </summary>
     public partial class BatchAccountCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchAccountCertificateData. </summary>
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </param>
-        /// <param name="thumbprint"> This must match the thumbprint from the name. </param>
+        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="provisioningState"></param>
         /// <param name="provisioningStateTransitOn"> The time at which the certificate entered its current state. </param>
@@ -36,10 +39,10 @@ namespace Azure.ResourceManager.Batch
         /// <param name="publicData"> The public key of the certificate. </param>
         /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is &apos;Failed&apos;. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, ResponseError deleteCertificateError, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BatchAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, ResponseError deleteCertificateError, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             Format = format;
             ProvisioningState = provisioningState;
             ProvisioningStateTransitOn = provisioningStateTransitOn;
@@ -52,37 +55,8 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
         public string ThumbprintAlgorithm { get; set; }
-        /// <summary>
-        /// This must match the thumbprint from the name.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Thumbprint { get; set; }
+        /// <summary> This must match the thumbprint from the name. </summary>
+        public string ThumbprintString { get; set; }
         /// <summary> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </summary>
         public BatchAccountCertificateFormat? Format { get; set; }
         /// <summary> Gets the provisioning state. </summary>

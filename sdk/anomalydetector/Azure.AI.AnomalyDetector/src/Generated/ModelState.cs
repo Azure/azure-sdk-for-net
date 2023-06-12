@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -24,25 +23,43 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of ModelState. </summary>
-        /// <param name="epochIds"></param>
-        /// <param name="trainLosses"></param>
-        /// <param name="validationLosses"></param>
-        /// <param name="latenciesInSeconds"></param>
+        /// <param name="epochIds">
+        /// Number of passes of the entire training dataset that the
+        /// algorithm has completed.
+        /// </param>
+        /// <param name="trainLosses">
+        /// List of metrics used to assess how the model fits the training data for each
+        /// epoch.
+        /// </param>
+        /// <param name="validationLosses">
+        /// List of metrics used to assess how the model fits the validation set for each
+        /// epoch.
+        /// </param>
+        /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
         internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds)
         {
-            EpochIds = epochIds.ToList();
-            TrainLosses = trainLosses.ToList();
-            ValidationLosses = validationLosses.ToList();
-            LatenciesInSeconds = latenciesInSeconds.ToList();
+            EpochIds = epochIds;
+            TrainLosses = trainLosses;
+            ValidationLosses = validationLosses;
+            LatenciesInSeconds = latenciesInSeconds;
         }
 
-        /// <summary> Gets the epoch ids. </summary>
+        /// <summary>
+        /// Number of passes of the entire training dataset that the
+        /// algorithm has completed.
+        /// </summary>
         public IList<int> EpochIds { get; }
-        /// <summary> Gets the train losses. </summary>
+        /// <summary>
+        /// List of metrics used to assess how the model fits the training data for each
+        /// epoch.
+        /// </summary>
         public IList<float> TrainLosses { get; }
-        /// <summary> Gets the validation losses. </summary>
+        /// <summary>
+        /// List of metrics used to assess how the model fits the validation set for each
+        /// epoch.
+        /// </summary>
         public IList<float> ValidationLosses { get; }
-        /// <summary> Gets the latencies in seconds. </summary>
+        /// <summary> Latency for each epoch. </summary>
         public IList<float> LatenciesInSeconds { get; }
     }
 }

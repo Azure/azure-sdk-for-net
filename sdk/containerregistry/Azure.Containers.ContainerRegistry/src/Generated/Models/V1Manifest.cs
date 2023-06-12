@@ -6,16 +6,15 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested V1 manifest file. </summary>
-    internal partial class V1Manifest : ArtifactManifest
+    internal partial class V1Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V1Manifest. </summary>
-        public V1Manifest()
+        internal V1Manifest()
         {
             FsLayers = new ChangeTrackingList<FsLayer>();
             History = new ChangeTrackingList<History>();
@@ -30,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal V1Manifest(int? schemaVersion, string architecture, string name, string tag, IList<FsLayer> fsLayers, IList<History> history, IList<ImageSignature> signatures) : base(schemaVersion)
+        internal V1Manifest(int? schemaVersion, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
         {
             Architecture = architecture;
             Name = name;
@@ -41,16 +40,16 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> CPU architecture. </summary>
-        public string Architecture { get; set; }
+        public string Architecture { get; }
         /// <summary> Image name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Image tag. </summary>
-        public string Tag { get; set; }
+        public string Tag { get; }
         /// <summary> List of layer information. </summary>
-        public IList<FsLayer> FsLayers { get; }
+        public IReadOnlyList<FsLayer> FsLayers { get; }
         /// <summary> Image history. </summary>
-        public IList<History> History { get; }
+        public IReadOnlyList<History> History { get; }
         /// <summary> Image signature. </summary>
-        public IList<ImageSignature> Signatures { get; }
+        public IReadOnlyList<ImageSignature> Signatures { get; }
     }
 }
