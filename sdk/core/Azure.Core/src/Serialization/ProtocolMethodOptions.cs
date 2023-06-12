@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core.Dynamic;
 
 namespace Azure.Core.Serialization
@@ -16,7 +15,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         internal ProtocolMethodOptions()
         {
-            ResponseContentDateTimeFormat = "o";
+            ResponseContentDateTimeFormat = DynamicData.RoundTripFormat;
         }
 
         /// <summary>

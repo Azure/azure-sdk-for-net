@@ -14,7 +14,7 @@ namespace Azure.Core.Dynamic
         public DynamicDataOptions()
         {
             // Set the default
-            DateTimeFormat = "o";
+            DateTimeFormat = DynamicData.RoundTripFormat;
         }
 
         /// <summary>

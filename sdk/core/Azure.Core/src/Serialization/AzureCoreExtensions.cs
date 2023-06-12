@@ -80,7 +80,7 @@ namespace Azure
         /// </paramref>
         /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat propertyNameFormat, string dateTimeFormat = "o")
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
             DynamicDataOptions options = utf8Json is ResponseContent content ?
                 new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :

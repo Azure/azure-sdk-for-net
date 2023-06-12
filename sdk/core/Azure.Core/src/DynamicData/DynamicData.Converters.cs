@@ -10,6 +10,9 @@ namespace Azure.Core.Dynamic
 {
     public partial class DynamicData
     {
+        internal const string RoundTripFormat = "o";
+        internal const string UnixFormat = "x";
+
         internal class DynamicDateTimeConverter : JsonConverter<DateTime>
         {
             public string Format { get; }
@@ -24,7 +27,7 @@ namespace Azure.Core.Dynamic
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (Format == "x")
+                if (Format == UnixFormat)
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/JsonElementExtensions.cs#L76
                     long unixValue = reader.GetInt64();
@@ -36,7 +39,6 @@ namespace Azure.Core.Dynamic
                     throw new JsonException($"Failed to read 'string' value at JSON position {reader.Position}.");
 
                 // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#L130
-                // TODO: How to make this format specific?
                 DateTime dateTimeValue = DateTime.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
                 return dateTimeValue.ToUniversalTime();
             }
@@ -46,7 +48,7 @@ namespace Azure.Core.Dynamic
                 DateTime dateTimeValue,
                 JsonSerializerOptions options)
             {
-                if (Format == "x")
+                if (Format == UnixFormat)
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#LL19C84-L23C11
                     long unixValue = dateTimeValue.Kind switch
@@ -61,7 +63,7 @@ namespace Azure.Core.Dynamic
                 // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#LL19C84-L23C11
                 string value = dateTimeValue.Kind switch
                 {
-                    DateTimeKind.Utc => ((DateTimeOffset)dateTimeValue).ToUniversalTime().ToString(Format, CultureInfo.InvariantCulture),
+                    DateTimeKind.Utc => dateTimeValue.ToUniversalTime().ToString(Format, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException($"DateTime {dateTimeValue} has a Kind of {dateTimeValue.Kind}. Azure SDK requires it to be UTC. You can call DateTime.SpecifyKind to change Kind property value to DateTimeKind.Utc."),
                 };
                 writer.WriteStringValue(value);
@@ -82,7 +84,7 @@ namespace Azure.Core.Dynamic
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (Format == "x")
+                if (Format == UnixFormat)
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/JsonElementExtensions.cs#L76
                     long unixValue = reader.GetInt64();
@@ -93,25 +95,24 @@ namespace Azure.Core.Dynamic
                     throw new JsonException($"Failed to read 'string' value at JSON position {reader.Position}.");
 
                 // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#L130
-                // TODO: How to make this format specific?
                 return DateTimeOffset.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             }
 
             public override void Write(
                 Utf8JsonWriter writer,
-                DateTimeOffset dateTimeValue,
+                DateTimeOffset dateTimeOffsetValue,
                 JsonSerializerOptions options)
             {
-                if (Format == "x")
+                if (Format == UnixFormat)
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/Utf8JsonWriterExtensions.cs#L64
-                    long unixValue = dateTimeValue.ToUniversalTime().ToUnixTimeSeconds();
+                    long unixValue = dateTimeOffsetValue.ToUniversalTime().ToUnixTimeSeconds();
                     writer.WriteNumberValue(unixValue);
                     return;
                 }
 
                 // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#L29
-                string value = dateTimeValue.ToUniversalTime().ToString(Format, CultureInfo.InvariantCulture);
+                string value = dateTimeOffsetValue.ToUniversalTime().UtcDateTime.ToString(Format, CultureInfo.InvariantCulture);
                 writer.WriteStringValue(value);
             }
         }
