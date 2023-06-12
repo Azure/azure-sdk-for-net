@@ -250,17 +250,6 @@ This sample shows how to call GetPrescriptionMapsByPartyIdAsync with required pa
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPrescriptionMapsByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
-
 await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -291,17 +280,6 @@ This sample shows how to call GetPrescriptionMapsByPartyId with required paramet
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPrescriptionMapsByPartyId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
-
 foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -327,18 +305,7 @@ foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>", new String
     </member>
     <member name="GetPrescriptionMapsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetPrescriptionMapsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetPrescriptionMapsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPrescriptionMapsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionMapsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
@@ -368,18 +335,7 @@ await foreach (var item in client.GetPrescriptionMapsAsync(new String[]{"<types>
     </member>
     <member name="GetPrescriptionMaps(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetPrescriptionMaps and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
-
-foreach (var item in client.GetPrescriptionMaps())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPrescriptionMaps with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionMaps with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");

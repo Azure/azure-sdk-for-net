@@ -51,7 +51,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo.Value);
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

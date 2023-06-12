@@ -260,17 +260,6 @@ This sample shows how to call GetSeasonalFieldsByPartyIdAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSeasonalFieldsByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
-
 await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -302,17 +291,6 @@ This sample shows how to call GetSeasonalFieldsByPartyId with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSeasonalFieldsByPartyId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
-
 foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -339,18 +317,7 @@ foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new String[]
     </member>
     <member name="GetSeasonalFieldsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetSeasonalFieldsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetSeasonalFieldsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSeasonalFieldsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetSeasonalFieldsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
@@ -381,18 +348,7 @@ await foreach (var item in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>
     </member>
     <member name="GetSeasonalFields(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetSeasonalFields and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
-
-foreach (var item in client.GetSeasonalFields())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSeasonalFields with all parameters, and how to parse the result.
+This sample shows how to call GetSeasonalFields with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");

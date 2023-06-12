@@ -238,17 +238,6 @@ This sample shows how to call GetZonesByPartyIdAsync with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetZonesByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetZonesByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
-
 await foreach (var item in client.GetZonesByPartyIdAsync("<partyId>", new String[]{"<types>"}, new String[]{"<managementZoneIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -277,17 +266,6 @@ This sample shows how to call GetZonesByPartyId with required parameters and par
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-foreach (var item in client.GetZonesByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetZonesByPartyId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
-
 foreach (var item in client.GetZonesByPartyId("<partyId>", new String[]{"<types>"}, new String[]{"<managementZoneIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -311,18 +289,7 @@ foreach (var item in client.GetZonesByPartyId("<partyId>", new String[]{"<types>
     </member>
     <member name="GetZonesAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetZonesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
-
-await foreach (var item in client.GetZonesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetZonesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetZonesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
@@ -350,18 +317,7 @@ await foreach (var item in client.GetZonesAsync(new String[]{"<types>"}, new Str
     </member>
     <member name="GetZones(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetZones and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
-
-foreach (var item in client.GetZones())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetZones with all parameters, and how to parse the result.
+This sample shows how to call GetZones with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");

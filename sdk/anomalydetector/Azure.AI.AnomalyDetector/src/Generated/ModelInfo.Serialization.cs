@@ -22,8 +22,15 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(DataSource.AbsoluteUri);
             if (Optional.IsDefined(DataSchema))
             {
-                writer.WritePropertyName("dataSchema"u8);
-                writer.WriteStringValue(DataSchema.Value.ToString());
+                if (DataSchema != null)
+                {
+                    writer.WritePropertyName("dataSchema"u8);
+                    writer.WriteStringValue(DataSchema.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("dataSchema");
+                }
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
@@ -36,8 +43,15 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsDefined(SlidingWindow))
             {
-                writer.WritePropertyName("slidingWindow"u8);
-                writer.WriteNumberValue(SlidingWindow.Value);
+                if (SlidingWindow != null)
+                {
+                    writer.WritePropertyName("slidingWindow"u8);
+                    writer.WriteNumberValue(SlidingWindow.Value);
+                }
+                else
+                {
+                    writer.WriteNull("slidingWindow");
+                }
             }
             if (Optional.IsDefined(AlignPolicy))
             {
@@ -54,13 +68,13 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Uri dataSource = default;
-            Optional<DataSchema> dataSchema = default;
+            Optional<DataSchema?> dataSchema = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             Optional<string> displayName = default;
-            Optional<int> slidingWindow = default;
+            Optional<int?> slidingWindow = default;
             Optional<AlignPolicy> alignPolicy = default;
-            Optional<ModelStatus> status = default;
+            Optional<ModelStatus?> status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<DiagnosticsInfo> diagnosticsInfo = default;
             foreach (var property in element.EnumerateObject())
@@ -74,6 +88,7 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dataSchema = null;
                         continue;
                     }
                     dataSchema = new DataSchema(property.Value.GetString());
@@ -98,6 +113,7 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        slidingWindow = null;
                         continue;
                     }
                     slidingWindow = property.Value.GetInt32();
@@ -116,6 +132,7 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        status = null;
                         continue;
                     }
                     status = new ModelStatus(property.Value.GetString());
@@ -145,7 +162,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName.Value, Optional.ToNullable(slidingWindow), alignPolicy.Value, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo.Value);
+            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName, Optional.ToNullable(slidingWindow), alignPolicy, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

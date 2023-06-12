@@ -625,7 +625,7 @@ https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/questio
     </member>
     <member name="GetProjectsAsync(RequestContext)">
 <example>
-This sample shows how to call GetProjectsAsync and parse the result.
+This sample shows how to call GetProjectsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -654,7 +654,7 @@ https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/questio
     </member>
     <member name="GetProjects(RequestContext)">
 <example>
-This sample shows how to call GetProjects and parse the result.
+This sample shows how to call GetProjects with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -831,18 +831,6 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetQnasAsync("<projectName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
 await foreach (var item in client.GetQnasAsync("<projectName>", "<source>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -881,18 +869,6 @@ https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/questio
     <member name="GetQnas(string,string,RequestContext)">
 <example>
 This sample shows how to call GetQnas with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetQnas("<projectName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetQnas with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -981,21 +957,6 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call ExportAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
 var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
 
 BinaryData responseData = operation.Value;
@@ -1017,21 +978,6 @@ https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/questio
     <member name="Export(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call Export with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-var operation = client.Export(WaitUntil.Completed, "<projectName>");
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call Export with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1065,7 +1011,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var data = new {};
 
-var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1180,7 +1126,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var data = new {};
 
-var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

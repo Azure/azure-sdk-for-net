@@ -66,7 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ImageProcessing.xml" path="doc/members/member[@name='GetRasterizeJobAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -101,7 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ImageProcessing.xml" path="doc/members/member[@name='GetRasterizeJob(string,RequestContext)']/*" />
-        public virtual Response GetRasterizeJob(string jobId, RequestContext context = null)
+        public virtual Response GetRasterizeJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 

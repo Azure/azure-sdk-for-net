@@ -17,8 +17,15 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                if (Timestamp != null)
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("timestamp");
+                }
             }
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);

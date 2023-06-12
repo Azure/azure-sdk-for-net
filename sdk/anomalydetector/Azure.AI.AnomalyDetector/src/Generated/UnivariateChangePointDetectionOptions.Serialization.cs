@@ -26,23 +26,51 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(Granularity.ToString());
             if (Optional.IsDefined(CustomInterval))
             {
-                writer.WritePropertyName("customInterval"u8);
-                writer.WriteNumberValue(CustomInterval.Value);
+                if (CustomInterval != null)
+                {
+                    writer.WritePropertyName("customInterval"u8);
+                    writer.WriteNumberValue(CustomInterval.Value);
+                }
+                else
+                {
+                    writer.WriteNull("customInterval");
+                }
             }
             if (Optional.IsDefined(Period))
             {
-                writer.WritePropertyName("period"u8);
-                writer.WriteNumberValue(Period.Value);
+                if (Period != null)
+                {
+                    writer.WritePropertyName("period"u8);
+                    writer.WriteNumberValue(Period.Value);
+                }
+                else
+                {
+                    writer.WriteNull("period");
+                }
             }
             if (Optional.IsDefined(StableTrendWindow))
             {
-                writer.WritePropertyName("stableTrendWindow"u8);
-                writer.WriteNumberValue(StableTrendWindow.Value);
+                if (StableTrendWindow != null)
+                {
+                    writer.WritePropertyName("stableTrendWindow"u8);
+                    writer.WriteNumberValue(StableTrendWindow.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stableTrendWindow");
+                }
             }
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteNumberValue(Threshold.Value);
+                if (Threshold != null)
+                {
+                    writer.WritePropertyName("threshold"u8);
+                    writer.WriteNumberValue(Threshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("threshold");
+                }
             }
             writer.WriteEndObject();
         }
