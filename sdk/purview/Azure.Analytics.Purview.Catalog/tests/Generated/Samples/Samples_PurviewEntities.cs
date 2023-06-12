@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -509,7 +509,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuids(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, new RequestContext());
+            Response response = client.GetByGuids(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" });
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -622,7 +622,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByGuidsAsync(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, new RequestContext());
+            Response response = await client.GetByGuidsAsync(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" });
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -874,7 +874,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateEntities(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1103,7 +1103,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1193,7 +1193,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuids(new string[] { "<guids>" }, new RequestContext());
+            Response response = client.DeleteByGuids(new string[] { "<guids>" });
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1283,7 +1283,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByGuidsAsync(new string[] { "<guids>" }, new RequestContext());
+            Response response = await client.DeleteByGuidsAsync(new string[] { "<guids>" });
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1404,7 +1404,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.AddClassification(RequestContent.Create(data), new RequestContext());
+            Response response = client.AddClassification(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1461,7 +1461,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.AddClassificationAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddClassificationAsync(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1487,7 +1487,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuid("<guid>", true, true, new RequestContext());
+            Response response = client.GetByGuid("<guid>", true, true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -1600,7 +1600,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByGuidAsync("<guid>", true, true, new RequestContext());
+            Response response = await client.GetByGuidAsync("<guid>", true, true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -1717,7 +1717,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = new { };
 
-            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data), new RequestContext());
+            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1811,7 +1811,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = new { };
 
-            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1901,7 +1901,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuid("<guid>", new RequestContext());
+            Response response = client.DeleteByGuid("<guid>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1991,7 +1991,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.DeleteByGuidAsync("<guid>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -2081,7 +2081,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetClassification("<guid>", "<classificationName>", new RequestContext());
+            Response response = client.GetClassification("<guid>", "<classificationName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityGuid").ToString());
@@ -2119,7 +2119,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", new RequestContext());
+            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityGuid").ToString());
@@ -2155,7 +2155,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteClassification("<guid>", "<classificationName>", new RequestContext());
+            Response response = client.DeleteClassification("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
         }
 
@@ -2179,7 +2179,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>", new RequestContext());
+            Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
         }
 
@@ -2205,7 +2205,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetClassifications("<guid>", new RequestContext());
+            Response response = client.GetClassifications("<guid>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("list")[0].ToString());
@@ -2238,7 +2238,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetClassificationsAsync("<guid>", new RequestContext());
+            Response response = await client.GetClassificationsAsync("<guid>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("list")[0].ToString());
@@ -2297,7 +2297,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.AddClassifications("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddClassifications("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2349,7 +2349,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.AddClassificationsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2401,7 +2401,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.UpdateClassifications("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateClassifications("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2453,7 +2453,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.UpdateClassificationsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2479,7 +2479,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
+            Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -2592,7 +2592,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
+            Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -2849,7 +2849,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3083,7 +3083,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3173,7 +3173,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>", new RequestContext());
+            Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3263,7 +3263,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>", new RequestContext());
+            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3351,7 +3351,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>", new RequestContext());
+            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3375,7 +3375,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>", new RequestContext());
+            Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3427,7 +3427,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3479,7 +3479,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3531,7 +3531,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3583,7 +3583,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3677,7 +3677,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.SetClassifications(RequestContent.Create(data), new RequestContext());
+            Response response = client.SetClassifications(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3773,7 +3773,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.SetClassificationsAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3801,7 +3801,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
+            Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -3914,7 +3914,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
+            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
@@ -4027,7 +4027,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetHeader("<guid>", new RequestContext());
+            Response response = client.GetHeader("<guid>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
@@ -4085,7 +4085,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetHeaderAsync("<guid>", new RequestContext());
+            Response response = await client.GetHeaderAsync("<guid>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
@@ -4151,7 +4151,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4185,7 +4185,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4219,7 +4219,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data), true, new RequestContext());
+            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data), true);
             Console.WriteLine(response.Status);
         }
 
@@ -4253,7 +4253,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data), true, new RequestContext());
+            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data), true);
             Console.WriteLine(response.Status);
         }
 
@@ -4287,7 +4287,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4321,7 +4321,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4355,7 +4355,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4389,7 +4389,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 key = new { },
             };
 
-            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4419,7 +4419,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetSampleBusinessMetadataTemplate(new RequestContext());
+            Response response = client.GetSampleBusinessMetadataTemplate();
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -4455,7 +4455,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetSampleBusinessMetadataTemplateAsync(new RequestContext());
+            Response response = await client.GetSampleBusinessMetadataTemplateAsync();
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -4491,7 +4491,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.ImportBusinessMetadata(RequestContent.Create(data), new RequestContext());
+            Response response = client.ImportBusinessMetadata(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4530,7 +4530,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4571,7 +4571,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4603,7 +4603,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4635,7 +4635,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.SetLabels("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.SetLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4667,7 +4667,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4699,7 +4699,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.AddLabel("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddLabel("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4731,7 +4731,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4763,7 +4763,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4795,7 +4795,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4827,7 +4827,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4859,7 +4859,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4891,7 +4891,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4923,7 +4923,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     "<String>"
 };
 
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
     }

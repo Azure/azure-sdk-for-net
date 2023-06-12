@@ -30,6 +30,24 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
+        /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
+        /// renew the lock, or the <see cref="ServiceBusSessionProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed,
+        /// or when the session lock has been lost, or if <see cref="ReleaseSession"/> is called.
+        /// </summary>
+        public CancellationToken SessionLockCancellationToken
+        {
+            get
+            {
+                if (_manager != null)
+                {
+                    return _manager.SessionLockCancellationToken;
+                }
+                // for mocking
+                return _sessionReceiver.SessionLockedUntil < DateTimeOffset.UtcNow ? new CancellationToken(true) : default;
+            }
+        }
+
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
 
         /// <summary>
@@ -111,7 +129,7 @@ namespace Azure.Messaging.ServiceBus
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
-            _receiveActions = new ProcessorReceiveActions(message, manager, false);
+            _receiveActions = new ProcessorReceiveActions(message, default /* session locks are not message based */, manager, false);
             CancellationToken = cancellationToken;
         }
 
@@ -238,6 +256,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+            _manager?.RefreshSessionLockToken();
         }
 
         /// <summary>

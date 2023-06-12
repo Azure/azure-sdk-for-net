@@ -171,10 +171,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new AppendBlobStorageResourceOptions()
-            {
-                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
-            };
+            return new AppendBlobStorageResourceOptions(options?.ResourceOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -281,10 +278,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new BlockBlobStorageResourceOptions()
-            {
-                CopyMethod = options != default ? options.CopyMethod : TransferCopyMethod.None,
-            };
+            return new BlockBlobStorageResourceOptions(options?.ResourceOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(this BlockBlobStorageResourceOptions options, HttpRange range)
@@ -412,7 +406,7 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options)
+        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options, bool overwrite)
         {
             // There's a lot of conditions that cannot be applied to a StageBlock Request.
             // We need to omit them, but still apply them to other requests that do accept them.
@@ -426,17 +420,14 @@ namespace Azure.Storage.DataMovement.Blobs
                 AccessTier = options?.AccessTier,
                 ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
                 LegalHold = options?.LegalHold,
-                Conditions = CreateRequestConditions(options?.DestinationConditions, true)
+                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
         }
 
         internal static PageBlobStorageResourceOptions ToPageBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new PageBlobStorageResourceOptions()
-            {
-                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
-            };
+            return new PageBlobStorageResourceOptions(options?.ResourceOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
