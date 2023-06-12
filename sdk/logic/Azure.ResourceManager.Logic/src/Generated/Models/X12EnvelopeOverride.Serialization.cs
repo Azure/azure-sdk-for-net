@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeOverride : IUtf8JsonSerializable
+    public partial class X12EnvelopeOverride : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetNamespace"u8);
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static X12EnvelopeOverride DeserializeX12EnvelopeOverride(JsonElement element)
+        internal static X12EnvelopeOverride DeserializeX12EnvelopeOverride(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

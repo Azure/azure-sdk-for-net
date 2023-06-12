@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class B2BPartnerContent : IUtf8JsonSerializable
+    internal partial class B2BPartnerContent : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BusinessIdentities))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static B2BPartnerContent DeserializeB2BPartnerContent(JsonElement element)
+        internal static B2BPartnerContent DeserializeB2BPartnerContent(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

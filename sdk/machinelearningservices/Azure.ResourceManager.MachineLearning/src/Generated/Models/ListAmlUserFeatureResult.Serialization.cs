@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class ListAmlUserFeatureResult
     {
-        internal static ListAmlUserFeatureResult DeserializeListAmlUserFeatureResult(JsonElement element)
+        internal static ListAmlUserFeatureResult DeserializeListAmlUserFeatureResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

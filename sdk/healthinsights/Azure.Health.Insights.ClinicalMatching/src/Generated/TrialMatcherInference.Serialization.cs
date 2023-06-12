@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class TrialMatcherInference
     {
-        internal static TrialMatcherInference DeserializeTrialMatcherInference(JsonElement element)
+        internal static TrialMatcherInference DeserializeTrialMatcherInference(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAzureFileDatastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureFileDatastore : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAzureFileDatastore DeserializeMachineLearningAzureFileDatastore(JsonElement element)
+        internal static MachineLearningAzureFileDatastore DeserializeMachineLearningAzureFileDatastore(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

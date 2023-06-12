@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonMultiLineStringData : IUtf8JsonSerializable
+    public partial class GeoJsonMultiLineStringData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("coordinates"u8);
@@ -46,7 +49,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonMultiLineStringData DeserializeGeoJsonMultiLineStringData(JsonElement element)
+        internal static GeoJsonMultiLineStringData DeserializeGeoJsonMultiLineStringData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

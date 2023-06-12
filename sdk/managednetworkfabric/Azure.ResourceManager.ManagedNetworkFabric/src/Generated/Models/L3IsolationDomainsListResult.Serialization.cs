@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     internal partial class L3IsolationDomainsListResult
     {
-        internal static L3IsolationDomainsListResult DeserializeL3IsolationDomainsListResult(JsonElement element)
+        internal static L3IsolationDomainsListResult DeserializeL3IsolationDomainsListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

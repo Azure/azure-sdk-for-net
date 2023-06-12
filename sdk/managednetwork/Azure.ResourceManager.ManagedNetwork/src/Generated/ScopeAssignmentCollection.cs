@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeAssignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeAssignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AccountEncryption : IUtf8JsonSerializable
+    public partial class AccountEncryption : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static AccountEncryption DeserializeAccountEncryption(JsonElement element)
+        internal static AccountEncryption DeserializeAccountEncryption(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

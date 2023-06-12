@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (KeyId != null)
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(JsonElement element)
+        internal static ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

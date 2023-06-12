@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipCommunityListIPCommunityListsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipCommunityListIPCommunityListsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPCommunityListResource(Client, IPCommunityListData.DeserializeIPCommunityListData(e)), _ipCommunityListIPCommunityListsClientDiagnostics, Pipeline, "IPCommunityListCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IPCommunityListResource(Client, IPCommunityListData.DeserializeIPCommunityListData(e)), _ipCommunityListIPCommunityListsClientDiagnostics, Pipeline, "IPCommunityListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipCommunityListIPCommunityListsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipCommunityListIPCommunityListsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPCommunityListResource(Client, IPCommunityListData.DeserializeIPCommunityListData(e)), _ipCommunityListIPCommunityListsClientDiagnostics, Pipeline, "IPCommunityListCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IPCommunityListResource(Client, IPCommunityListData.DeserializeIPCommunityListData(e)), _ipCommunityListIPCommunityListsClientDiagnostics, Pipeline, "IPCommunityListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

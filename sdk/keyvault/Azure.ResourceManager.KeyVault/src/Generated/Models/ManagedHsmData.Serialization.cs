@@ -8,14 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class ManagedHsmData : IUtf8JsonSerializable
+    public partial class ManagedHsmData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmData DeserializeManagedHsmData(JsonElement element)
+        internal static ManagedHsmData DeserializeManagedHsmData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

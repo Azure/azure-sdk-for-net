@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class ClinicalTrialResearchFacility : IUtf8JsonSerializable
+    public partial class ClinicalTrialResearchFacility : IUtf8JsonSerializable, IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new SerializableOptions());
+
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -33,7 +36,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteEndObject();
         }
 
-        internal static ClinicalTrialResearchFacility DeserializeClinicalTrialResearchFacility(JsonElement element)
+        internal static ClinicalTrialResearchFacility DeserializeClinicalTrialResearchFacility(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

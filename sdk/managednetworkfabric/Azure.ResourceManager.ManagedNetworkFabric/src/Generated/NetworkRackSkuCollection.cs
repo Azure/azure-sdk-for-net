@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkRackSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkRackSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkRackSkuResource(Client, NetworkRackSkuData.DeserializeNetworkRackSkuData(e)), _networkRackSkuClientDiagnostics, Pipeline, "NetworkRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkRackSkuResource(Client, NetworkRackSkuData.DeserializeNetworkRackSkuData(e)), _networkRackSkuClientDiagnostics, Pipeline, "NetworkRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkRackSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkRackSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkRackSkuResource(Client, NetworkRackSkuData.DeserializeNetworkRackSkuData(e)), _networkRackSkuClientDiagnostics, Pipeline, "NetworkRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkRackSkuResource(Client, NetworkRackSkuData.DeserializeNetworkRackSkuData(e)), _networkRackSkuClientDiagnostics, Pipeline, "NetworkRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

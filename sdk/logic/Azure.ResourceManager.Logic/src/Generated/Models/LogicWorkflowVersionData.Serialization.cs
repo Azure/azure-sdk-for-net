@@ -9,14 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowVersionData : IUtf8JsonSerializable
+    public partial class LogicWorkflowVersionData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.Logic
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowVersionData DeserializeLogicWorkflowVersionData(JsonElement element)
+        internal static LogicWorkflowVersionData DeserializeLogicWorkflowVersionData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class StorageSpacesExtendedLocation : IUtf8JsonSerializable
+    public partial class StorageSpacesExtendedLocation : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageSpacesExtendedLocationType))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static StorageSpacesExtendedLocation DeserializeStorageSpacesExtendedLocation(JsonElement element)
+        internal static StorageSpacesExtendedLocation DeserializeStorageSpacesExtendedLocation(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

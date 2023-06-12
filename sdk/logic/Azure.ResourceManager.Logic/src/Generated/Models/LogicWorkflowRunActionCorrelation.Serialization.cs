@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRunActionCorrelation : IUtf8JsonSerializable
+    public partial class LogicWorkflowRunActionCorrelation : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionTrackingId))
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowRunActionCorrelation DeserializeLogicWorkflowRunActionCorrelation(JsonElement element)
+        internal static LogicWorkflowRunActionCorrelation DeserializeLogicWorkflowRunActionCorrelation(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

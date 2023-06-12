@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _l2IsolationDomainRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _l2IsolationDomainRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new L2IsolationDomainResource(Client, L2IsolationDomainData.DeserializeL2IsolationDomainData(e)), _l2IsolationDomainClientDiagnostics, Pipeline, "L2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new L2IsolationDomainResource(Client, L2IsolationDomainData.DeserializeL2IsolationDomainData(e)), _l2IsolationDomainClientDiagnostics, Pipeline, "L2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _l2IsolationDomainRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _l2IsolationDomainRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new L2IsolationDomainResource(Client, L2IsolationDomainData.DeserializeL2IsolationDomainData(e)), _l2IsolationDomainClientDiagnostics, Pipeline, "L2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new L2IsolationDomainResource(Client, L2IsolationDomainData.DeserializeL2IsolationDomainData(e)), _l2IsolationDomainClientDiagnostics, Pipeline, "L2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

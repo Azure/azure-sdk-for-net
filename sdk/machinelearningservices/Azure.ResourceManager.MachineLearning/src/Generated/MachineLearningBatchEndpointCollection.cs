@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

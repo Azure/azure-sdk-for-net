@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     internal partial class NetworkInterfacesList
     {
-        internal static NetworkInterfacesList DeserializeNetworkInterfacesList(JsonElement element)
+        internal static NetworkInterfacesList DeserializeNetworkInterfacesList(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable
+    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AudioLanguage))
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static AudioAnalyzerPreset DeserializeAudioAnalyzerPreset(JsonElement element)
+        internal static AudioAnalyzerPreset DeserializeAudioAnalyzerPreset(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

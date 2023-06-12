@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class GetDeviceStatusProperties
     {
-        internal static GetDeviceStatusProperties DeserializeGetDeviceStatusProperties(JsonElement element)
+        internal static GetDeviceStatusProperties DeserializeGetDeviceStatusProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

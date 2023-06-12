@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class InterfaceStatus
     {
-        internal static InterfaceStatus DeserializeInterfaceStatus(JsonElement element)
+        internal static InterfaceStatus DeserializeInterfaceStatus(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

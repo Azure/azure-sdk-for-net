@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

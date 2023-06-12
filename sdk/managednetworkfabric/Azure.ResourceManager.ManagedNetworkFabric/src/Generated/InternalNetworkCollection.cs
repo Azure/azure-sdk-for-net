@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _internalNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _internalNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InternalNetworkResource(Client, InternalNetworkData.DeserializeInternalNetworkData(e)), _internalNetworkClientDiagnostics, Pipeline, "InternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new InternalNetworkResource(Client, InternalNetworkData.DeserializeInternalNetworkData(e)), _internalNetworkClientDiagnostics, Pipeline, "InternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _internalNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _internalNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InternalNetworkResource(Client, InternalNetworkData.DeserializeInternalNetworkData(e)), _internalNetworkClientDiagnostics, Pipeline, "InternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new InternalNetworkResource(Client, InternalNetworkData.DeserializeInternalNetworkData(e)), _internalNetworkClientDiagnostics, Pipeline, "InternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

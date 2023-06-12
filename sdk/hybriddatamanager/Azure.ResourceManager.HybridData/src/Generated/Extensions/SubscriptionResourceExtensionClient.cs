@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridData
         public virtual AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HybridDataManagerDataManagersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HybridDataManagerResource(Client, HybridDataManagerData.DeserializeHybridDataManagerData(e)), HybridDataManagerDataManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridDataManagers", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new HybridDataManagerResource(Client, HybridDataManagerData.DeserializeHybridDataManagerData(e)), HybridDataManagerDataManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridDataManagers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridData
         public virtual Pageable<HybridDataManagerResource> GetHybridDataManagers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HybridDataManagerDataManagersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new HybridDataManagerResource(Client, HybridDataManagerData.DeserializeHybridDataManagerData(e)), HybridDataManagerDataManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridDataManagers", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new HybridDataManagerResource(Client, HybridDataManagerData.DeserializeHybridDataManagerData(e)), HybridDataManagerDataManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridDataManagers", "value", null, cancellationToken);
         }
     }
 }

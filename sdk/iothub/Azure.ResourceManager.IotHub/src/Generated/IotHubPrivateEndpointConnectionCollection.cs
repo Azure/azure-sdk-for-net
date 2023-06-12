@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.IotHub
         public virtual AsyncPageable<IotHubPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotHubPrivateEndpointConnectionResource(Client, IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(e)), _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotHubPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new IotHubPrivateEndpointConnectionResource(Client, IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(e)), _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotHubPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.IotHub
         public virtual Pageable<IotHubPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotHubPrivateEndpointConnectionResource(Client, IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(e)), _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotHubPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new IotHubPrivateEndpointConnectionResource(Client, IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(e)), _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotHubPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

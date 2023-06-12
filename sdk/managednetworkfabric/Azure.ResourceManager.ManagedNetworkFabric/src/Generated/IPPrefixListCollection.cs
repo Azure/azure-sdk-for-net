@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipPrefixListIPPrefixListsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipPrefixListIPPrefixListsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPPrefixListResource(Client, IPPrefixListData.DeserializeIPPrefixListData(e)), _ipPrefixListIPPrefixListsClientDiagnostics, Pipeline, "IPPrefixListCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IPPrefixListResource(Client, IPPrefixListData.DeserializeIPPrefixListData(e)), _ipPrefixListIPPrefixListsClientDiagnostics, Pipeline, "IPPrefixListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipPrefixListIPPrefixListsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipPrefixListIPPrefixListsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPPrefixListResource(Client, IPPrefixListData.DeserializeIPPrefixListData(e)), _ipPrefixListIPPrefixListsClientDiagnostics, Pipeline, "IPPrefixListCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IPPrefixListResource(Client, IPPrefixListData.DeserializeIPPrefixListData(e)), _ipPrefixListIPPrefixListsClientDiagnostics, Pipeline, "IPPrefixListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

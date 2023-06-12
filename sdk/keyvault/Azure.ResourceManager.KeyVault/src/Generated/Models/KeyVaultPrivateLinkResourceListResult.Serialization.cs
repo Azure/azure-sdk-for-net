@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     internal partial class KeyVaultPrivateLinkResourceListResult
     {
-        internal static KeyVaultPrivateLinkResourceListResult DeserializeKeyVaultPrivateLinkResourceListResult(JsonElement element)
+        internal static KeyVaultPrivateLinkResourceListResult DeserializeKeyVaultPrivateLinkResourceListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

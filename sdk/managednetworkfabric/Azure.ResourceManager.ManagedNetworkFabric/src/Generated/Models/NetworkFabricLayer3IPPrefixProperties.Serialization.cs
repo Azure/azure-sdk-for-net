@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricLayer3IPPrefixProperties : IUtf8JsonSerializable
+    public partial class NetworkFabricLayer3IPPrefixProperties : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryIPv4Prefix))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkFabricLayer3IPPrefixProperties DeserializeNetworkFabricLayer3IPPrefixProperties(JsonElement element)
+        internal static NetworkFabricLayer3IPPrefixProperties DeserializeNetworkFabricLayer3IPPrefixProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

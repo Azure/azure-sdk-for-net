@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricControllerPropertiesInfrastructureServices
     {
-        internal static NetworkFabricControllerPropertiesInfrastructureServices DeserializeNetworkFabricControllerPropertiesInfrastructureServices(JsonElement element)
+        internal static NetworkFabricControllerPropertiesInfrastructureServices DeserializeNetworkFabricControllerPropertiesInfrastructureServices(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

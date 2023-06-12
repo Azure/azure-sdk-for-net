@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingCmkEncryptionProperties : IUtf8JsonSerializable
+    public partial class LoadTestingCmkEncryptionProperties : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static LoadTestingCmkEncryptionProperties DeserializeLoadTestingCmkEncryptionProperties(JsonElement element)
+        internal static LoadTestingCmkEncryptionProperties DeserializeLoadTestingCmkEncryptionProperties(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
