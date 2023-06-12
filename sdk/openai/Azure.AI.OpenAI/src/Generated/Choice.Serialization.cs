@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
             string text = default;
             int index = default;
             Optional<CompletionsLogProbabilityModel> logprobs = default;
-            Optional<CompletionsFinishReason> finishReason = default;
+            Optional<CompletionsFinishReason?> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -48,13 +48,14 @@ namespace Azure.AI.OpenAI
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        finishReason = null;
                         continue;
                     }
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
             }
-            return new Choice(text, index, logprobs.Value, Optional.ToNullable(finishReason));
+            return new Choice(text, index, logprobs, Optional.ToNullable(finishReason));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

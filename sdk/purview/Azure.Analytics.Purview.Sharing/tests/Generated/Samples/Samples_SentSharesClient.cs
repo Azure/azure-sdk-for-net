@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetSentShare("<sentShareId>");
+            Response response = client.GetSentShare("<sentShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetSentShareAsync("<sentShareId>");
+            Response response = await client.GetSentShareAsync("<sentShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>");
+            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
+            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -244,7 +244,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>");
+            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
+            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAllSentShares("<referenceName>"))
+            foreach (var item in client.GetAllSentShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -333,7 +333,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAllSentSharesAsync("<referenceName>"))
+            await foreach (var item in client.GetAllSentSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -364,7 +364,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAllSentShareInvitations("<sentShareId>"))
+            foreach (var item in client.GetAllSentShareInvitations("<sentShareId>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -395,7 +395,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>"))
+            await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -590,7 +590,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>");
+            var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -624,7 +624,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>");
+            var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -658,7 +658,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+            var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -692,7 +692,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+            var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

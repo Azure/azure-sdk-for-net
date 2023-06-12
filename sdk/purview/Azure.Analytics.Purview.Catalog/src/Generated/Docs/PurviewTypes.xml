@@ -1697,18 +1697,7 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetAllTypeDefinitionsAsync(bool?,string,RequestContext)">
 <example>
-This sample shows how to call GetAllTypeDefinitionsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-Response response = await client.GetAllTypeDefinitionsAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetAllTypeDefinitionsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAllTypeDefinitionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2055,18 +2044,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
     </member>
     <member name="GetAllTypeDefinitions(bool?,string,RequestContext)">
 <example>
-This sample shows how to call GetAllTypeDefinitions and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-Response response = client.GetAllTypeDefinitions();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetAllTypeDefinitions with all parameters, and how to parse the result.
+This sample shows how to call GetAllTypeDefinitions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -5425,18 +5403,7 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetTypeDefinitionHeadersAsync(bool?,string,RequestContext)">
 <example>
-This sample shows how to call GetTypeDefinitionHeadersAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-Response response = await client.GetTypeDefinitionHeadersAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetTypeDefinitionHeadersAsync with all parameters, and how to parse the result.
+This sample shows how to call GetTypeDefinitionHeadersAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -5453,18 +5420,7 @@ Console.WriteLine(result[0].GetProperty("name").ToString());
     </member>
     <member name="GetTypeDefinitionHeaders(bool?,string,RequestContext)">
 <example>
-This sample shows how to call GetTypeDefinitionHeaders and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-Response response = client.GetTypeDefinitionHeaders();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetTypeDefinitionHeaders with all parameters, and how to parse the result.
+This sample shows how to call GetTypeDefinitionHeaders with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

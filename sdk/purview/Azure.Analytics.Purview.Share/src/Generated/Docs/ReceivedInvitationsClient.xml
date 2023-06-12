@@ -127,19 +127,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
     </member>
     <member name="GetReceivedInvitationsAsync(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetReceivedInvitationsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
-
-await foreach (var item in client.GetReceivedInvitationsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetReceivedInvitationsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetReceivedInvitationsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
@@ -157,19 +145,7 @@ await foreach (var item in client.GetReceivedInvitationsAsync("<skipToken>", "<f
     </member>
     <member name="GetReceivedInvitations(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetReceivedInvitations and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetReceivedInvitations())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetReceivedInvitations with all parameters, and how to parse the result.
+This sample shows how to call GetReceivedInvitations with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);

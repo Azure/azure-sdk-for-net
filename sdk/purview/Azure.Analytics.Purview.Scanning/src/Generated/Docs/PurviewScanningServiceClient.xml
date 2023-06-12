@@ -201,7 +201,7 @@ var data = new {
     kind = "AzureSubscription",
 };
 
-Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -251,7 +251,7 @@ var data = new {
     kind = "AzureSubscription",
 };
 
-Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -377,18 +377,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanningServiceClient(endpoint, credential);
 
-Response response = await client.GetSystemRulesetsForVersionAsync(1234);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanningServiceClient(endpoint, credential);
-
 Response response = await client.GetSystemRulesetsForVersionAsync(1234, "<dataSourceType>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -409,18 +397,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanningServiceClient(endpoint, credential);
 
-Response response = client.GetSystemRulesetsForVersion(1234);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetSystemRulesetsForVersion with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanningServiceClient(endpoint, credential);
-
 Response response = client.GetSystemRulesetsForVersion(1234, "<dataSourceType>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -435,19 +411,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetLatestSystemRulesetsAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetLatestSystemRulesetsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanningServiceClient(endpoint, credential);
-
-Response response = await client.GetLatestSystemRulesetsAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLatestSystemRulesetsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetLatestSystemRulesetsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -467,19 +431,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetLatestSystemRulesets(string,RequestContext)">
 <example>
-This sample shows how to call GetLatestSystemRulesets and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanningServiceClient(endpoint, credential);
-
-Response response = client.GetLatestSystemRulesets();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLatestSystemRulesets with all parameters, and how to parse the result.
+This sample shows how to call GetLatestSystemRulesets with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -499,7 +451,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetKeyVaultReferencesAsync(RequestContext)">
 <example>
-This sample shows how to call GetKeyVaultReferencesAsync and parse the result.
+This sample shows how to call GetKeyVaultReferencesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -518,7 +470,7 @@ await foreach (var item in client.GetKeyVaultReferencesAsync(new RequestContext(
     </member>
     <member name="GetKeyVaultReferences(RequestContext)">
 <example>
-This sample shows how to call GetKeyVaultReferences and parse the result.
+This sample shows how to call GetKeyVaultReferences with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -537,7 +489,7 @@ foreach (var item in client.GetKeyVaultReferences(new RequestContext()))
     </member>
     <member name="GetClassificationRulesAsync(RequestContext)">
 <example>
-This sample shows how to call GetClassificationRulesAsync and parse the result.
+This sample shows how to call GetClassificationRulesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -555,7 +507,7 @@ await foreach (var item in client.GetClassificationRulesAsync(new RequestContext
     </member>
     <member name="GetClassificationRules(RequestContext)">
 <example>
-This sample shows how to call GetClassificationRules and parse the result.
+This sample shows how to call GetClassificationRules with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -573,7 +525,7 @@ foreach (var item in client.GetClassificationRules(new RequestContext()))
     </member>
     <member name="GetDataSourcesAsync(RequestContext)">
 <example>
-This sample shows how to call GetDataSourcesAsync and parse the result.
+This sample shows how to call GetDataSourcesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -619,7 +571,7 @@ await foreach (var item in client.GetDataSourcesAsync(new RequestContext()))
     </member>
     <member name="GetDataSources(RequestContext)">
 <example>
-This sample shows how to call GetDataSources and parse the result.
+This sample shows how to call GetDataSources with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -665,7 +617,7 @@ foreach (var item in client.GetDataSources(new RequestContext()))
     </member>
     <member name="GetScanRulesetsAsync(RequestContext)">
 <example>
-This sample shows how to call GetScanRulesetsAsync and parse the result.
+This sample shows how to call GetScanRulesetsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -686,7 +638,7 @@ await foreach (var item in client.GetScanRulesetsAsync(new RequestContext()))
     </member>
     <member name="GetScanRulesets(RequestContext)">
 <example>
-This sample shows how to call GetScanRulesets and parse the result.
+This sample shows how to call GetScanRulesets with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -707,7 +659,7 @@ foreach (var item in client.GetScanRulesets(new RequestContext()))
     </member>
     <member name="GetSystemRulesetsAsync(RequestContext)">
 <example>
-This sample shows how to call GetSystemRulesetsAsync and parse the result.
+This sample shows how to call GetSystemRulesetsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -728,7 +680,7 @@ await foreach (var item in client.GetSystemRulesetsAsync(new RequestContext()))
     </member>
     <member name="GetSystemRulesets(RequestContext)">
 <example>
-This sample shows how to call GetSystemRulesets and parse the result.
+This sample shows how to call GetSystemRulesets with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -749,20 +701,7 @@ foreach (var item in client.GetSystemRulesets(new RequestContext()))
     </member>
     <member name="GetSystemRulesetsVersionsAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetSystemRulesetsVersionsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanningServiceClient(endpoint, credential);
-
-await foreach (var item in client.GetSystemRulesetsVersionsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSystemRulesetsVersionsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetSystemRulesetsVersionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -783,20 +722,7 @@ await foreach (var item in client.GetSystemRulesetsVersionsAsync("<dataSourceTyp
     </member>
     <member name="GetSystemRulesetsVersions(string,RequestContext)">
 <example>
-This sample shows how to call GetSystemRulesetsVersions and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanningServiceClient(endpoint, credential);
-
-foreach (var item in client.GetSystemRulesetsVersions())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSystemRulesetsVersions with all parameters, and how to parse the result.
+This sample shows how to call GetSystemRulesetsVersions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

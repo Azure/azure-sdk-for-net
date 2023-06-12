@@ -145,19 +145,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
     </member>
     <member name="GetReceivedSharesAsync(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetReceivedSharesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
-await foreach (var item in client.GetReceivedSharesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetReceivedSharesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetReceivedSharesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -175,19 +163,7 @@ await foreach (var item in client.GetReceivedSharesAsync("<skipToken>", "<filter
     </member>
     <member name="GetReceivedShares(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetReceivedShares and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetReceivedShares())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetReceivedShares with all parameters, and how to parse the result.
+This sample shows how to call GetReceivedShares with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);

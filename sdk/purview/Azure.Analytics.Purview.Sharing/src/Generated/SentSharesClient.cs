@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSentShareAsync(string sentShareId, RequestContext context = null)
+        public virtual async Task<Response> GetSentShareAsync(string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShare(string,RequestContext)']/*" />
-        public virtual Response GetSentShare(string sentShareId, RequestContext context = null)
+        public virtual Response GetSentShare(string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitation(string,string,RequestContext)']/*" />
-        public virtual Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -301,7 +301,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitationAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitation(string,string,string,RequestContext)']/*" />
-        public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -377,7 +377,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentSharesAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllSentSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllSentSharesAsync(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
@@ -405,7 +405,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShares(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllSentShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllSentShares(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
@@ -434,7 +434,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitationsAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllSentShareInvitationsAsync(string sentShareId, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllSentShareInvitationsAsync(string sentShareId, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitations(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllSentShareInvitations(string sentShareId, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllSentShareInvitations(string sentShareId, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -566,7 +566,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -602,7 +602,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShare(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteSentShare(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteSentShare(WaitUntil waitUntil, string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -639,7 +639,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitationAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -677,7 +677,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitation(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));

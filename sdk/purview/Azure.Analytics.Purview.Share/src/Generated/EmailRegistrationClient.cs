@@ -145,7 +145,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='RegisterAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> RegisterAsync(string repeatabilityRequestId = null, RequestContext context = null)
+        public virtual async Task<Response> RegisterAsync(string repeatabilityRequestId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");
             scope.Start();
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Register(string,RequestContext)']/*" />
-        public virtual Response Register(string repeatabilityRequestId = null, RequestContext context = null)
+        public virtual Response Register(string repeatabilityRequestId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");
             scope.Start();

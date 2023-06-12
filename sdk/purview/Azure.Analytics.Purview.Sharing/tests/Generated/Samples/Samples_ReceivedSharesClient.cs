@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetReceivedShare("<receivedShareId>");
+            Response response = client.GetReceivedShare("<receivedShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetReceivedShareAsync("<receivedShareId>");
+            Response response = await client.GetReceivedShareAsync("<receivedShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -170,7 +170,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.RegisterTenantEmailRegistration();
+            Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.RegisterTenantEmailRegistrationAsync();
+            Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>"))
+            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
+            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -298,7 +298,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAllDetachedReceivedShares())
+            foreach (var item in client.GetAllDetachedReceivedShares("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -329,7 +329,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAllDetachedReceivedSharesAsync())
+            await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -486,7 +486,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>");
+            var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -520,7 +520,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
+            var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

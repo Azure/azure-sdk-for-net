@@ -3,7 +3,7 @@
   <members>
     <member name="GetResourceSetRuleAsync(RequestContext)">
 <example>
-This sample shows how to call GetResourceSetRuleAsync and parse the result.
+This sample shows how to call GetResourceSetRuleAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -102,7 +102,7 @@ Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version")
     </member>
     <member name="GetResourceSetRule(RequestContext)">
 <example>
-This sample shows how to call GetResourceSetRule and parse the result.
+This sample shows how to call GetResourceSetRule with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
