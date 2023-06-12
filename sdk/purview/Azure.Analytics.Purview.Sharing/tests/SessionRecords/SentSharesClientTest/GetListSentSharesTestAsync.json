@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-05324fdf39771848a40aad9fbf9c4eb1-2e1db21e8d02264b-00",
+        "traceparent": "00-0375693c18a64e48bdcdc1f0069deca3-1bf59a2116fc4942-00",
         "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.0-alpha.20230607.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "0e49cdb3ebb98a9f46f73df2b6c38a17",
+        "x-ms-client-request-id": "48adeb6e735a6e5c20156bb0ea79ce99",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,10 +17,10 @@
       "ResponseHeaders": {
         "Content-Length": "714",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 12 Jun 2023 04:08:51 GMT",
+        "Date": "Mon, 12 Jun 2023 04:52:31 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "4e750002-9eff-4e12-8d45-03fc40bb4f64"
+        "x-ms-correlation-request-id": "2ad45e28-d928-4c8a-b6d5-01a8251b9583"
       },
       "ResponseBody": {
         "properties": {
@@ -61,18 +61,18 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.0-alpha.20230607.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "7bd2fad9feee62418116d8f37228e8e3",
+        "x-ms-client-request-id": "2caed9620907af35e2d8e2e7f554dc91",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1436",
+        "Content-Length": "726",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 12 Jun 2023 04:08:51 GMT",
+        "Date": "Mon, 12 Jun 2023 04:52:32 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "629b79a7-0be7-4603-a772-1552c5ee6856"
+        "x-ms-correlation-request-id": "9ad864bc-0e76-4483-bf5e-07c0316be477"
       },
       "ResponseBody": {
         "value": [
@@ -98,37 +98,6 @@
                 }
               },
               "state": "Succeeded",
-              "createdAt": "2023-06-07T20:32:05.7129648Z",
-              "dependsOn": [],
-              "senderName": "sdk-05-30-share",
-              "senderTenantName": "Microsoft"
-            },
-            "shareKind": "InPlace",
-            "id": "fe11781e-9a7d-488d-bd22-cc2c95536e96",
-            "type": "SentShare"
-          },
-          {
-            "properties": {
-              "displayName": "testDisplayName1",
-              "description": "updatedDescription",
-              "artifact": {
-                "properties": {
-                  "paths": [
-                    {
-                      "containerName": "container1",
-                      "senderPath": "testfolder1",
-                      "receiverPath": "testfolder1"
-                    }
-                  ],
-                  "location": "australiaeast"
-                },
-                "storeKind": "AdlsGen2Account",
-                "storeReference": {
-                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls",
-                  "type": "ArmResourceReference"
-                }
-              },
-              "state": "Succeeded",
               "createdAt": "2023-06-12T03:59:13.6941854Z",
               "dependsOn": [],
               "senderName": "sdk-05-30-share",
@@ -145,6 +114,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
-    "RandomSeed": "1250130153"
+    "RandomSeed": "948823037"
   }
 }
