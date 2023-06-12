@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceGroup method.
     /// </summary>
-    public partial class ResourceGroupResource : ArmResource, IResource
+    public partial class ResourceGroupResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
@@ -86,8 +86,6 @@ namespace Azure.ResourceManager.Resources
                 return _data;
             }
         }
-
-        ISerializable IResource.DataBag => new ResourceGroupData();
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -834,5 +832,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new ResourceGroupData();
     }
 }

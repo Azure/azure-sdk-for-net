@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetTenantPolicySetDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPolicySetDefinition method.
     /// </summary>
-    public partial class TenantPolicySetDefinitionResource : ArmResource
+    public partial class TenantPolicySetDefinitionResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPolicySetDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string policySetDefinitionName)
@@ -149,5 +149,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new PolicySetDefinitionData();
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetPolicyAssignmentResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyAssignment method.
     /// </summary>
-    public partial class PolicyAssignmentResource : ArmResource
+    public partial class PolicyAssignmentResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyAssignmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyAssignmentName)
@@ -173,7 +173,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _policyAssignmentRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +209,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _policyAssignmentRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -286,5 +290,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new PolicyAssignmentData();
     }
 }

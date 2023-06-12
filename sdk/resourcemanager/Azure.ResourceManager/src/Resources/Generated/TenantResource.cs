@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
     /// </summary>
-    public partial class TenantResource : ArmResource
+    public partial class TenantResource : ArmResource, ResourceManager.IResource
     {
 
         private readonly ClientDiagnostics _tenantClientDiagnostics;
@@ -460,5 +460,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new TenantData();
     }
 }

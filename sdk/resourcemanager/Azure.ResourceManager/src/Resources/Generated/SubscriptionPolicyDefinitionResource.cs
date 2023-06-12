@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionPolicyDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionPolicyDefinition method.
     /// </summary>
-    public partial class SubscriptionPolicyDefinitionResource : ArmResource
+    public partial class SubscriptionPolicyDefinitionResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicyDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policyDefinitionName)
@@ -301,5 +301,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new PolicyDefinitionData();
     }
 }

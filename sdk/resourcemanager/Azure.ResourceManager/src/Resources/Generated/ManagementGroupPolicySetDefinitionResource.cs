@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupPolicySetDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupPolicySetDefinition method.
     /// </summary>
-    public partial class ManagementGroupPolicySetDefinitionResource : ArmResource
+    public partial class ManagementGroupPolicySetDefinitionResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicySetDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policySetDefinitionName)
@@ -302,5 +302,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new PolicySetDefinitionData();
     }
 }

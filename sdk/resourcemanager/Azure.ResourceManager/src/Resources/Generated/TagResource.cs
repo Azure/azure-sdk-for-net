@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetTagResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetTagResource method.
     /// </summary>
-    public partial class TagResource : ArmResource
+    public partial class TagResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TagResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
@@ -370,5 +370,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new TagResourceData();
     }
 }

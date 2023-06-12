@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetDataPolicyManifestResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetDataPolicyManifest method.
     /// </summary>
-    public partial class DataPolicyManifestResource : ArmResource
+    public partial class DataPolicyManifestResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifestResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string policyMode)
@@ -149,5 +149,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new DataPolicyManifestData();
     }
 }

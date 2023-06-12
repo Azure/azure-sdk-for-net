@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetFeatureResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceProviderResource" /> using the GetFeature method.
     /// </summary>
-    public partial class FeatureResource : ArmResource
+    public partial class FeatureResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FeatureResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace, string featureName)
@@ -263,5 +263,6 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        ISerializable ResourceManager.IResource.DataBag => new FeatureData();
     }
 }

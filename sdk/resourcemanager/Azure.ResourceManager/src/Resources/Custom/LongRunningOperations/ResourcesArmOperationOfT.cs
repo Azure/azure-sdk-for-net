@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal ResourcesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia): base(source, clientDiagnostics, pipeline, request, response, finalStateVia, "ResourcesArmOperation")
+        internal ResourcesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null): base(source, clientDiagnostics, pipeline, request, response, finalStateVia, "ResourcesArmOperation", skipApiVersionOverride, apiVersionOverrideValue)
         {
         }
     }
