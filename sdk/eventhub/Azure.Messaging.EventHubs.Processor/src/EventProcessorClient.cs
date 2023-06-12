@@ -489,7 +489,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -525,7 +525,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -561,7 +561,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
