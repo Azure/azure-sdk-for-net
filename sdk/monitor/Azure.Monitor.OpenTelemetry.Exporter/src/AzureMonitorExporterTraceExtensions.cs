@@ -49,7 +49,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
 
-            return builder.AddProcessor(sp =>
+            return builder.SetSampler(sp =>
+            {
+                var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
+                if (name == null && configure != null)
+                {
+                    configure(exporterOptions);
+                }
+
+                return new ApplicationInsightsSampler(exporterOptions.SamplingRatio);
+            })
+            .AddProcessor(sp =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
 

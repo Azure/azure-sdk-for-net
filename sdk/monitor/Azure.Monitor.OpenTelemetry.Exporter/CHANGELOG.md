@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
+  ([#]())
+
 ### Breaking Changes
 
 ### Bugs Fixed
