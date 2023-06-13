@@ -34,9 +34,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            // Currently our pipeline will run this test project with project reference
-            // And we jsut upgraded the version of ManagedServiceIdentities, therefore the related tests will fail
-            // Use the version override as a work around because we lack the test resource now.
             ArmClientOptions options = new ArmClientOptions();
             options.SetApiVersion(UserAssignedIdentityResource.ResourceType, "2018-11-30");
 

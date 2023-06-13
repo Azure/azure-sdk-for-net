@@ -2,28 +2,27 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
+namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
 {
-    public class ManagedClusterTests : ServiceFabricManagedClustersManagementTestBase
+    internal class NodeTypeTests : ServiceFabricManagedClustersManagementTestBase
     {
         public ServiceFabricManagedClusterCollection clusterCollection { get; set; }
         public string clusterName;
         private ResourceGroupResource resourceGroupResource;
         public ServiceFabricManagedClusterResource serviceFabricManagedCluster;
-        public ManagedClusterTests(bool isAsync) : base(isAsync)
+
+        public NodeTypeTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task BasicClusterTestAsync()
+        [SetUp]
+        public async Task Setup()
         {
             resourceGroupResource = await CreateResourceGroupAsync();
 
@@ -43,9 +42,34 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             };
 
             serviceFabricManagedCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
+        }
 
-            ServiceFabricManagedClusterData resourceData = serviceFabricManagedCluster.Data;
-            Assert.AreEqual(clusterName, resourceData.Name);
+        [Test]
+        [RecordedTest]
+        public async Task SecurityTypeSecureBootTest()
+        {
+            var nodeTypeCollection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
+
+            var nodeTypeName = "nodetype1";
+            var nodeTypeData = new ServiceFabricManagedNodeTypeData()
+            {
+                IsPrimary = true,
+                VmInstanceCount = 5,
+                DataDiskSizeInGB = 100,
+                VmSize = "Standard_D4ds_v5",
+                VmImagePublisher = "MicrosoftWindowsServer",
+                VmImageOffer = "WindowsServer",
+                VmImageSku = "2019-datacenter-gensecond",
+                VmImageVersion = "latest",
+                SecurityType = "TrustedLaunch",
+                SecureBootEnabled = true,
+            };
+
+            var serviveFabricManagedClusterNodeType = (await nodeTypeCollection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, nodeTypeData)).Value;
+
+            var resourceData = serviveFabricManagedClusterNodeType.Data;
+            Assert.AreEqual(nodeTypeData.SecurityType, resourceData.SecurityType);
+            Assert.AreEqual(nodeTypeData.SecureBootEnabled, resourceData.SecureBootEnabled);
         }
     }
 }
