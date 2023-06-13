@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -40,6 +39,7 @@ namespace Azure.Core.Dynamic
                     new DynamicData.DynamicTimeSpanConverter(),
                     new DynamicData.DynamicDateTimeConverter(options.DateTimeFormat),
                     new DynamicData.DynamicDateTimeOffsetConverter(options.DateTimeFormat),
+                    DynamicData.AllowListConverterFactory.Default,
                 }
             };
 

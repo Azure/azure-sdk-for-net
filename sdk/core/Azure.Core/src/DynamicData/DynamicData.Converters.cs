@@ -143,7 +143,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private class AllowListConverterFactory : JsonConverterFactory
+        internal class AllowListConverterFactory : JsonConverterFactory
         {
             public static readonly AllowListConverterFactory Default = new();
 
