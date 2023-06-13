@@ -126,8 +126,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AbstractiveSummarizeOperation operation = await client.AbstractiveSummarizeAsync(WaitUntil.Started, s_batchDocuments);
             Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
             ValidateOperationProperties(operation);
         }
 
@@ -204,8 +208,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AbstractiveSummarizeOperation operation = await client.AbstractiveSummarizeAsync(WaitUntil.Started, s_batchConvenienceDocuments);
             Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
             ValidateOperationProperties(operation);
         }
 

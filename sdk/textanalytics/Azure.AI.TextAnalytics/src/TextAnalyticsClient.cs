@@ -1759,6 +1759,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
@@ -1767,6 +1771,130 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.AnalyzeHealthcareEntitiesAsync(waitUntil, documents, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.AnalyzeHealthcareEntities(waitUntil, documents, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.AnalyzeHealthcareEntities(waitUntil, documents, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.AnalyzeHealthcareEntitiesAsync(waitUntil, documents, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1800,6 +1928,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1826,6 +1955,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1852,6 +1982,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);

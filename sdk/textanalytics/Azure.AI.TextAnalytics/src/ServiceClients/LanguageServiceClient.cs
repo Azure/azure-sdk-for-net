@@ -1375,36 +1375,76 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #region Healthcare
 
+        public override AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeHealthcareEntities)}";
+
+            return AnalyzeHealthcareEntities(scopeName, waitUntil, documentInputs, options, cancellationToken);
+        }
+
+        public override AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(documents, nameof(documents));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeHealthcareEntities)}";
+
+            return AnalyzeHealthcareEntities(scopeName, waitUntil, documentInputs, options, cancellationToken);
+        }
+
+        public override async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeHealthcareEntities)}";
+
+            return await AnalyzeHealthcareEntitiesAsync(scopeName, waitUntil, documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(documents, nameof(documents));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeHealthcareEntities)}";
+
+            return await AnalyzeHealthcareEntitiesAsync(scopeName, waitUntil, documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
         public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}";
 
-            return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await AnalyzeHealthcareEntitiesAsync(scopeName, WaitUntil.Started, documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}";
 
-            return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
+            return AnalyzeHealthcareEntities(scopeName, WaitUntil.Started, documentInputs, options, cancellationToken);
         }
 
         public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}";
 
-            return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
+            return AnalyzeHealthcareEntities(scopeName, WaitUntil.Started, documentInputs, options, cancellationToken);
         }
 
         public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}";
 
-            return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await AnalyzeHealthcareEntitiesAsync(scopeName, WaitUntil.Started, documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         private static HealthcareLROTask CreateHealthcareTask(AnalyzeHealthcareEntitiesOptions options)
@@ -1420,11 +1460,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             };
         }
 
-        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(string scopeName, WaitUntil waitUntil, MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
             try
@@ -1440,7 +1480,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                var operation = new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -1449,11 +1496,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(string scopeName, WaitUntil waitUntil, MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
             try
@@ -1469,7 +1516,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                var operation = new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {

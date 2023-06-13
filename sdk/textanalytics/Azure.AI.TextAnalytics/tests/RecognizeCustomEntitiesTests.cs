@@ -142,8 +142,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
             Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
             ValidateOperationProperties(operation);
         }
 
@@ -287,8 +291,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
             Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
             ValidateOperationProperties(operation);
         }
 
@@ -364,8 +372,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
             Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
             ValidateOperationProperties(operation);
 
             var expectedOutput = new Dictionary<string, List<string>>()
@@ -393,8 +405,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
             Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
             ValidateOperationProperties(operation);
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
