@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         new StorageApplianceConfigurationData(createCreds, 1, "serialno"){},
                     },
                 },
-                "testAnalyticsWorkspaceID",
                 ClusterType.SingleRack,
                 "0.1.6",
                 "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/m15-lab/providers/Microsoft.Network/virtualNetworks/m15-vnet/subnets/M15ClusterManagerSubnet"
             )
             {
+                AnalyticsWorkspaceId = "testAnalyticsWorkspaceID",
                 Tags =
                 {
                     ["key1"] = "myvalue1",

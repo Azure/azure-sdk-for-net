@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -292,7 +292,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/hybridAksClusters?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/hybridAksClusters?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -12592,7 +12592,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters/haks8bc7e-682051ac?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters/haks8bc7e-682051ac?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -12694,7 +12694,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters/haks8bc7e-682051ac?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters/haks8bc7e-682051ac?api-version=2023-05-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -12804,7 +12804,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters/haks8bc7e-682051ac?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/m15-fe00d8e76084-HostedResources-38F5B30F/providers/Microsoft.NetworkCloud/hybridAksClusters/haks8bc7e-682051ac?api-version=2023-05-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",

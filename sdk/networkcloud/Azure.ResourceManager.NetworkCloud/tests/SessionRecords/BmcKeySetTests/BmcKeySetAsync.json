@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2023-05-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -79,7 +79,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "1551",
         "Content-Type": "application/json; charset=utf-8",
@@ -134,7 +134,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -170,7 +170,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -206,7 +206,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -242,7 +242,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -278,7 +278,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -314,7 +314,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -350,7 +350,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -386,7 +386,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/8ee7c3bf-b690-4c73-8881-b4d4c080fe5c*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -425,7 +425,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -499,7 +499,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -574,7 +574,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -695,7 +695,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2023-05-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -716,14 +716,14 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 20 Mar 2023 17:41:06 GMT",
         "ETag": "\u00220100c055-0000-0100-0000-64189ab20000\u0022",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+        "Location": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
         "mise-correlation-id": "6dada27f-b209-46e7-8178-48507b7ef489",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -738,7 +738,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -774,7 +774,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -810,7 +810,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -846,7 +846,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -882,7 +882,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -918,7 +918,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -954,7 +954,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -990,7 +990,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/3f02506b-e40f-4787-af30-62caea4a733e*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1029,7 +1029,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1104,7 +1104,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/j18-cluster/providers/Microsoft.NetworkCloud/clusters/j18-31ff9d11b6e8/bmcKeySets/bmckeyset7269?api-version=2023-05-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1117,14 +1117,14 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 20 Mar 2023 17:41:41 GMT",
         "ETag": "\u00220100c855-0000-0100-0000-64189ad50000\u0022",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+        "Location": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
         "mise-correlation-id": "3b6d4b58-d950-4e05-8693-16749c9cc3b0",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -1139,7 +1139,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1175,7 +1175,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1211,7 +1211,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1247,7 +1247,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1283,7 +1283,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1319,7 +1319,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1355,7 +1355,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1391,7 +1391,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2022-12-12-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/092650b3-bcb1-4dbd-a4bb-86d9b353d2d1*6FAFC249ED5E759D0ED863722006B0D7183ACB44E9C61DD5E74B58E53F666F59?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
