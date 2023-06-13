@@ -226,7 +226,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
                 }
-                copyBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
+                await copyBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
             }
         }
 
@@ -801,7 +801,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
                 }
-                copyBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
+                await copyBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
             }
         }
 
@@ -1237,7 +1237,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
                 }
-                copyBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
+                await copyBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
             }
         }
 
@@ -1467,7 +1467,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(skippedSeen);
             Assert.IsTrue(await destinationClient.ExistsAsync());
 
-            testEventRaised.AssertSingleSkippedCheck();
+            await testEventRaised.AssertSingleSkippedCheck();
             Assert.AreEqual(sourceResource.Path, testEventRaised.SkippedEvents.First().SourceResource.Path);
             Assert.AreEqual(destinationResource.Uri, testEventRaised.SkippedEvents.First().DestinationResource.Uri);
             Assert.AreEqual(transfer.Id, testEventRaised.SkippedEvents.First().TransferId);
