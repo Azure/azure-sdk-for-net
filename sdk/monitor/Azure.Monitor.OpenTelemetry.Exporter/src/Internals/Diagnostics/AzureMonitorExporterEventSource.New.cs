@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                FailedToExport(ex.LogAsyncException().ToInvariantString());
+                FailedToExport(ex.FlattenException().ToInvariantString());
             }
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                FailedToTransmit(ex.LogAsyncException().ToInvariantString());
+                FailedToTransmit(ex.FlattenException().ToInvariantString());
             }
         }
 
