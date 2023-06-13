@@ -2941,6 +2941,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? IsCurrent { get { throw null; } }
         public bool? IsOnline { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `PrivateUriString` instead.", false)]
         public System.Uri PrivateUri { get { throw null; } }
         public string PrivateUriString { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
