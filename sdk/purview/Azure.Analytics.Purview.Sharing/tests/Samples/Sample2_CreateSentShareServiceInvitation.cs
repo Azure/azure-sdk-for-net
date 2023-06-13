@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
         [RecordedTest]
         public async Task CreateSentShareServiceInvitationTest()
         {
-            #region Snippet:SentSharesClientSample_CreateSentShareServiceInvitation
+            #region Snippet:SentSharesClientSample_CreateSentShareInvitation
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();

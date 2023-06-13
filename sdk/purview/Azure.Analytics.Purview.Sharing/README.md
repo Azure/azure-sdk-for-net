@@ -171,7 +171,7 @@ Response response = await sentShareClient.CreateSentShareInvitationAsync("sentSh
 
 Data providers can also extend invitations to services or applications by specifying the tenant id and object id of the service. *The object id used for sending an invitation to a service must be the object id associated with the Enterprise Application (not the application registration)*.
 
-```C# Snippet:SentSharesClientSample_CreateSentShareServiceInvitation
+```C# Snippet:SentSharesClientSample_CreateSentShareInvitation
 var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
