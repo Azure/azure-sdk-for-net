@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         }
 
         [Event(7, Message = "Failed to transmit due to an exception: {0}", Level = EventLevel.Error)]
-        public void FailedToTransmit(string exceptionMessage) => WriteEvent(6, exceptionMessage);
+        public void FailedToTransmit(string exceptionMessage) => WriteEvent(7, exceptionMessage);
 
         [NonEvent]
         public void TransmissionFailed(bool fromStorage, int statusCode, ConnectionVars connectionVars, string? requestEndpoint, bool willRetry)
