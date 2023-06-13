@@ -119,11 +119,12 @@ if ($relatedTypeSpecProjectFolder) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
           $generatedSDKPackages = @{
             result = "failed";
-            path=@( esolve-Path $sdkProjectFolder -Relative);
+            path=@("");
           }
         } else {
+            $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
-            -projectFolder $projectFolder `
+            -projectFolder $sdkProjectFolder `
             -sdkRootPath $sdkPath `
             -path $relativeSdkPath `
             -downloadUrlPrefix $downloadUrlPrefix `
