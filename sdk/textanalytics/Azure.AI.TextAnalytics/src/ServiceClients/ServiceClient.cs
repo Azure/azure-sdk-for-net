@@ -146,10 +146,29 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #region Multi Label Classify
 
-        public abstract ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
-        public abstract ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
-        public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
-        public abstract Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default);
+        public virtual ClassifyDocumentOperation MultiLabelClassify(WaitUntil waitUntil, IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.MultiLabelClassify)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual ClassifyDocumentOperation MultiLabelClassify(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.MultiLabelClassify)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(WaitUntil waitUntil, IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.MultiLabelClassifyAsync)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.MultiLabelClassifyAsync)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassify)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassify)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassifyAsync)}", ServiceVersion.V2022_05_01, ServiceVersion);
+
+        public virtual Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartMultiLabelClassifyAsync)}", ServiceVersion.V2022_05_01, ServiceVersion);
 
         #endregion
 

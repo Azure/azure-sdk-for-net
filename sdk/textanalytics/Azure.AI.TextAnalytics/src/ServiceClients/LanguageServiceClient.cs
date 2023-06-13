@@ -1978,36 +1978,76 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #region Multi Label Classify
 
+        public override ClassifyDocumentOperation MultiLabelClassify(WaitUntil waitUntil, IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(MultiLabelClassify)}";
+
+            return MultiLabelClassify(scopeName, waitUntil, input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override ClassifyDocumentOperation MultiLabelClassify(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(MultiLabelClassify)}";
+
+            return MultiLabelClassify(scopeName, waitUntil, input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override async Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(WaitUntil waitUntil, IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(MultiLabelClassify)}";
+
+            return await MultiLabelClassifyAsync(scopeName, waitUntil, input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(MultiLabelClassify)}";
+
+            return await MultiLabelClassifyAsync(scopeName, waitUntil, input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
         public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}";
 
-            return StartMultiLabelClassify(input, projectName, deploymentName, options, cancellationToken);
+            return MultiLabelClassify(scopeName, WaitUntil.Started, input, projectName, deploymentName, options, cancellationToken);
         }
 
         public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}";
 
-            return StartMultiLabelClassify(input, projectName, deploymentName, options, cancellationToken);
+            return MultiLabelClassify(scopeName, WaitUntil.Started, input, projectName, deploymentName, options, cancellationToken);
         }
 
         public override async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}";
 
-            return await StartMultiLabelClassifyAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+            return await MultiLabelClassifyAsync(scopeName, WaitUntil.Started, input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+            string scopeName = $"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}";
 
-            return await StartMultiLabelClassifyAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+            return await MultiLabelClassifyAsync(scopeName, WaitUntil.Started, input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 
         private static CustomMultiLabelClassificationLROTask CreateCustomMultiLabelClassificationTask(string projectName, string deploymentName, MultiLabelClassifyOptions options)
@@ -2021,11 +2061,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             };
         }
 
-        private ClassifyDocumentOperation StartMultiLabelClassify(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, MultiLabelClassifyOptions options, CancellationToken cancellationToken)
+        private ClassifyDocumentOperation MultiLabelClassify(string scopeName, WaitUntil waitUntil, MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, MultiLabelClassifyOptions options, CancellationToken cancellationToken)
         {
             options ??= new MultiLabelClassifyOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
             try
@@ -2041,7 +2081,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
-                return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                var operation = new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -2050,11 +2097,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, MultiLabelClassifyOptions options, CancellationToken cancellationToken)
+        private async Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(string scopeName, WaitUntil waitUntil, MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, MultiLabelClassifyOptions options, CancellationToken cancellationToken)
         {
             options ??= new MultiLabelClassifyOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
             try
@@ -2070,7 +2117,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
-                return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                var operation = new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
