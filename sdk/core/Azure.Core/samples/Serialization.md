@@ -100,7 +100,7 @@ DogListProperty dog = new DogListProperty
 };
 
 //STJ example
-string json = JsonSerializer.Serialize(dog);
+string json = System.Text.Json.JsonSerializer.Serialize(dog);
 ```
 
 Deserialization
@@ -109,7 +109,7 @@ Deserialization
 string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
 
 //stj example
-DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
+DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json);
 ```
 
 ## Using static deserializer
@@ -195,7 +195,7 @@ DogListProperty dog = new DogListProperty
 JsonSerializerOptions options = new JsonSerializerOptions();
 options.Converters.Add(new ModelJsonConverter(false));
 
-string json = JsonSerializer.Serialize(dog, options);
+string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
 ```
 
 Deserialization
@@ -206,7 +206,7 @@ string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"","
 JsonSerializerOptions options = new JsonSerializerOptions();
 options.Converters.Add(new ModelJsonConverter(false));
 
-DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json, options);
+DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json, options);
 ```
 
 ## Envelope BYOM Case

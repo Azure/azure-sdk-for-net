@@ -113,7 +113,7 @@ namespace Azure.Core.Samples
             };
 
             //STJ example
-            string json = JsonSerializer.Serialize(dog);
+            string json = System.Text.Json.JsonSerializer.Serialize(dog);
             #endregion
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Core.Samples
             string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
 
             //stj example
-            DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
+            DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 
@@ -218,7 +218,7 @@ namespace Azure.Core.Samples
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter(false));
 
-            string json = JsonSerializer.Serialize(dog, options);
+            string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
             #endregion
         }
 
@@ -232,7 +232,7 @@ namespace Azure.Core.Samples
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter(false));
 
-            DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json, options);
+            DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json, options);
             #endregion
         }
 
