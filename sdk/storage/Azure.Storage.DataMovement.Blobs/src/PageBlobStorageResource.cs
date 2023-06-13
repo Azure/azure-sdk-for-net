@@ -2,17 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -25,6 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private PageBlobClient _blobClient;
         private PageBlobStorageResourceOptions _options;
         private long? _length;
+        private ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// Gets the URL of the storage resource.
@@ -44,7 +39,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="PageBlobStorageResourceOptions.CopyMethod"/>.
+        /// the options bag, see <see cref="BlobStorageResourceOptions.CopyMethod"/>.
         /// </summary>
         public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
@@ -112,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length)),
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -274,14 +269,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return properties.ToStorageResourceProperties();
+            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            GrabEtag(response.GetRawResponse());
+            return response.Value.ToStorageResourceProperties();
         }
 
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -301,6 +297,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        private void GrabEtag(Response response)
+        {
+            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
+            {
+                _etagDownloadLock = etag;
+            }
         }
     }
 }

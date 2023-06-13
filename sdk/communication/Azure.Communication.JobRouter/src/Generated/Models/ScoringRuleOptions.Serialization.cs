@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in ScoringParameters)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter
                     List<ScoringRuleParameterSelector> array = new List<ScoringRuleParameterSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToScoringRuleParameterSelector());
+                        array.Add(new ScoringRuleParameterSelector(item.GetString()));
                     }
                     scoringParameters = array;
                     continue;

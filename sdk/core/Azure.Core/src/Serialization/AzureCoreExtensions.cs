@@ -61,23 +61,33 @@ namespace Azure
         }
 
         /// <summary>
-        /// Return the content of the BinaryData as a dynamic type.
+        /// Return the content of the BinaryData as a dynamic type.  Please see https://aka.ms/azsdk/net/dynamiccontent for details.
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                content.ProtocolOptions.GetDynamicOptions() :
+                new DynamicDataOptions();
+
+            return utf8Json.ToDynamicFromJson(options);
         }
 
         /// <summary>
-        /// Return the content of the BinaryData as a dynamic type.
+        /// Return the content of the BinaryData as a dynamic type.  Please see https://aka.ms/azsdk/net/dynamiccontent for details.
+        /// <paramref name="propertyNameFormat">The format of property names in the JSON content.
+        /// This value indicates to the dynamic type that it can convert property names on the returned value to this format in the underlying JSON.
+        /// Please see https://aka.ms/azsdk/net/dynamiccontent#use-c-naming-conventions for details.
+        /// </paramref>
+        /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicCaseMapping caseMapping, DynamicDateTimeHandling dateTimeHandling = DynamicDateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
-            DynamicDataOptions options = new()
-            {
-                CaseMapping = caseMapping,
-                DateTimeHandling = dateTimeHandling
-            };
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
+                new DynamicDataOptions();
+
+            options.PropertyNameFormat = propertyNameFormat;
+            options.DateTimeFormat = dateTimeFormat;
 
             return utf8Json.ToDynamicFromJson(options);
         }
@@ -85,9 +95,9 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
+        internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.GetSerializerOptions(options));
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicDataOptions.ToSerializerOptions(options));
             return new DynamicData(mdoc.RootElement, options);
         }
 
