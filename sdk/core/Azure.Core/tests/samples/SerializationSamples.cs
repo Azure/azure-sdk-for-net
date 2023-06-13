@@ -238,7 +238,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void BYOMWithNewtonsofSerialize()
+        public void BYOMWithNewtonsoftSerialize()
         {
             #region Snippet:BYOMWithNewtonsoftSerialize
             Envelope<ModelT> envelope = new Envelope<ModelT>();
