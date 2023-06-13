@@ -8,11 +8,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 {
-    [TestFixture("deleteTest")]
+    [TestFixture("delete")]
     public class DeleteMccfTest : MccfManagementTestBase
     {
         private ManagedCcfResource _mccfResource;
-        public DeleteMccfTest(string testFixtureName) : base(true, RecordedTestMode.Record, testFixtureName)
+        public DeleteMccfTest(string testFixtureName) : base(true, RecordedTestMode.Playback, testFixtureName)
         {
         }
 

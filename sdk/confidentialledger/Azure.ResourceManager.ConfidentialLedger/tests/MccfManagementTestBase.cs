@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         protected SubscriptionResource Subscription;
         protected string mccfName;
 
-        private readonly string _testResourceGroupPrefix = "sdk-test-rg-";
-        private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestUS;
+        private readonly string _testResourceGroupPrefix = "sdk-rg-";
+        private static readonly AzureLocation s_defaultTestLocation = AzureLocation.SouthCentralUS;
         private string _resourceGroupName;
         private readonly string _testFixtureName;
         private ResourceGroupResource _resourceGroup;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
                     },
                     DeploymentType = new ConfidentialLedgerDeploymentType()
                     {
-                        LanguageRuntime = ConfidentialLedgerLanguageRuntime.CPP,
+                        LanguageRuntime = ConfidentialLedgerLanguageRuntime.JS,
                         AppSourceUri = new Uri("https://myaccount.blob.core.windows.net/storage/mccfsource"),
                     }
                 }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         /// </summary>
         /// <param name="mccfName"></param>
         /// <param name="mccfData"></param>
-        protected async Task UpdateMCcf(string mccfName, ManagedCcfData mccfData)
+        protected async Task UpdateMccf(string mccfName, ManagedCcfData mccfData)
         {
             await _resourceGroup.GetManagedCcfs().CreateOrUpdateAsync(WaitUntil.Completed, mccfData.Name, mccfData);
         }
