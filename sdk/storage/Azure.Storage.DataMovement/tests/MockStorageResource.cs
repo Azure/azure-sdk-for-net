@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResource(default, uriType, maxChunkSize ?? 1024);
         }
 
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
