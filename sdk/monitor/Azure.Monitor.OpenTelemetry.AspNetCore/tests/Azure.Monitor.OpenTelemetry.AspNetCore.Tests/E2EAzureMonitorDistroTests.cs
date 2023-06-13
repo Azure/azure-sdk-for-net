@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
-    public class AzureMonitorDistroTests
+    public class E2EAzureMonitorDistroTests
     {
         [Fact]
         public async Task ValidateTelemetryExport()
@@ -64,6 +64,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal(5, summary["Metric"]);
             Assert.Equal(1, summary["RemoteDependency"]);
             Assert.Equal(1, summary["Request"]);
+
+            // TODO: This test needs to assert telemetry content. (ie: sample rate)
         }
 
         private void WaitForRequest(MockTransport transport)
