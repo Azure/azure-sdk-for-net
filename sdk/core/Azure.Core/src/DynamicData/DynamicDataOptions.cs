@@ -60,7 +60,7 @@ namespace Azure.Core.Dynamic
         {
             DynamicDataOptions value = new();
 
-            JsonConverter c = options.Converters.FirstOrDefault(c => c is DynamicData.DynamicDateTimeConverter);
+            JsonConverter? c = options.Converters.FirstOrDefault(c => c is DynamicData.DynamicDateTimeConverter);
             if (c is DynamicData.DynamicDateTimeConverter dtc)
             {
                 value.DateTimeFormat = dtc.Format;
