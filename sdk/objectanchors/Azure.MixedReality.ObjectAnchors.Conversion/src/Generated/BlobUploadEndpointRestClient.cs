@@ -27,8 +27,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary> Initializes a new instance of BlobUploadEndpointRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> server parameter. The default is "". </param>
+        /// <param name="apiVersion"> Api Version. The default is "0.3-preview.2". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public BlobUploadEndpointRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.3-preview.2")
         {
