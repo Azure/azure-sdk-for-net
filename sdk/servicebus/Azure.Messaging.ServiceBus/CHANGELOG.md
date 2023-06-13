@@ -10,7 +10,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Features Added
 
 - `ProcessMessageEventArgs` provides a `MessageLockCancellationToken` that gets cancelled when the `ServiceBusReceivedMessage.LockUntil` time expired or the processor detected the lock was lost.
-- `ProcessSessionMessageEventArgs` and `ProcessSessionEventArgs` provide a `SessionLockCancellationToken` that gets cancelled when the `ServiceBusSessionProcessor.SessionLockedUntil` time expired or the session processor detected the lock was lost.
+- `ProcessSessionMessageEventArgs` provides a `SessionLockCancellationToken` that gets cancelled when the `ServiceBusSessionProcessor.SessionLockedUntil` time expired or the session processor detected the lock was lost.
 
 ### Breaking Changes
 

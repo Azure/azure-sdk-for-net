@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         {
             if (IsEnabled(eventLevel))
             {
-                WriteEvent(eventId, name, exception.LogAsyncException()?.ToInvariantString());
+                WriteEvent(eventId, name, exception.FlattenException()?.ToInvariantString());
             }
         }
 

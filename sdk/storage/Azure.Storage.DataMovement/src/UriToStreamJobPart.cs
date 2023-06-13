@@ -326,11 +326,14 @@ namespace Azure.Storage.DataMovement
         #region PartitionedDownloader
         internal async Task CompleteFileDownload()
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
             try
             {
+                CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
+
                 // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
+                await _destinationResource.CompleteTransferAsync(
+                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlers().ConfigureAwait(false);
@@ -340,7 +343,6 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                // The file either does not exist any more, got moved, or renamed.
                 await InvokeFailedArg(ex).ConfigureAwait(false);
             }
         }
@@ -351,7 +353,7 @@ namespace Azure.Storage.DataMovement
             {
                 ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
                     range.Offset,
-                    (long) range.Length,
+                    (long)range.Length,
                     _cancellationToken).ConfigureAwait(false);
                 await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
                     transferId: _dataTransfer.Id,
@@ -359,13 +361,31 @@ namespace Azure.Storage.DataMovement
                     offset: range.Offset,
                     bytesTransferred: (long)range.Length,
                     result: result.Content,
+                    exception: default,
                     false,
                     _cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                // Unexpected exception
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                if (_downloadChunkHandler != null)
+                {
+                    await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                        transferId: _dataTransfer.Id,
+                        success: false,
+                        offset: range.Offset,
+                        bytesTransferred: (long)range.Length,
+                        result: default,
+                        exception: ex,
+                        false,
+                        _cancellationToken)).ConfigureAwait(false);
+                }
+                else
+                {
+                    // If the _downloadChunkHandler has been disposed before we call to it
+                    // we should at least filter the exception to error handling just in case.
+                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                }
+                return;
             }
         }
 
@@ -394,12 +414,8 @@ namespace Azure.Storage.DataMovement
             when (_createMode == StorageResourceCreateMode.Skip &&
                 ex.Message.Contains("Cannot overwrite file."))
             {
-                // Skip file that already exsits on the destination.
+                // Skip file that already exists on the destination.
                 await InvokeSkippedArg().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
             }
             return false;
         }
@@ -408,40 +424,17 @@ namespace Azure.Storage.DataMovement
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
-            try
+            using (FileStream fileStream = File.OpenWrite(chunkFilePath))
             {
-                using (FileStream fileStream = File.OpenWrite(chunkFilePath))
-                {
-                    await source.CopyToAsync(
-                        fileStream,
-                        Constants.DefaultDownloadCopyBufferSize,
-                        _cancellationToken)
-                        .ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await source.CopyToAsync(
+                    fileStream,
+                    Constants.DefaultDownloadCopyBufferSize,
+                    _cancellationToken)
+                    .ConfigureAwait(false);
             }
         }
 
-        // If Encryption is enabled this is required to flush
-        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/33016
-        private async Task FlushFinalCryptoStreamInternal()
-        {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
-
-            try
-            {
-                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
-        }
-
-        internal static DownloadChunkHandler GetDownloadChunkHandler(
+        internal DownloadChunkHandler GetDownloadChunkHandler(
             long currentTranferred,
             long expectedLength,
             IList<HttpRange> ranges,
@@ -450,7 +443,8 @@ namespace Azure.Storage.DataMovement
                 currentTranferred,
                 expectedLength,
                 ranges,
-                GetDownloadChunkHandlerBehaviors(jobPart));
+                GetDownloadChunkHandlerBehaviors(jobPart),
+                _cancellationToken);
 
         internal static DownloadChunkHandler.Behaviors GetDownloadChunkHandlerBehaviors(UriToStreamJobPart job)
         {

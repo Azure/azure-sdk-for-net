@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteStringValue(CurrentValue);
+            }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
@@ -44,7 +49,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> value = default;
+            Optional<string> currentValue = default;
             Optional<string> description = default;
+            Optional<string> documentationLink = default;
             Optional<string> defaultValue = default;
             Optional<string> dataType = default;
             Optional<string> allowedValues = default;
@@ -92,9 +99,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             value = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("currentValue"u8))
+                        {
+                            currentValue = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("documentationLink"u8))
+                        {
+                            documentationLink = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("defaultValue"u8))
@@ -152,7 +169,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new MySqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, dataType.Value, allowedValues.Value, Optional.ToNullable(source), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), Optional.ToNullable(isDynamicConfig));
+            return new MySqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, currentValue.Value, description.Value, documentationLink.Value, defaultValue.Value, dataType.Value, allowedValues.Value, Optional.ToNullable(source), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), Optional.ToNullable(isDynamicConfig));
         }
     }
 }
