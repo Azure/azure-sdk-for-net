@@ -27,7 +27,7 @@ namespace Azure.Core.Serialization
         public bool PrettyPrint { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
         public Dictionary<Type, ObjectSerializer> Serializers = new Dictionary<Type, ObjectSerializer>();
     }
