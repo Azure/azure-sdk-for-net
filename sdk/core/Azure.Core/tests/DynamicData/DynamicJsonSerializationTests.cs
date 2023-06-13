@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 
@@ -49,6 +48,30 @@ namespace Azure.Core.Tests
 
             // New property
             Assert.Throws<NotSupportedException>(() => json.Bar = data);
+        }
+
+        [Test]
+        public void CanAssignObjectArray()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            // Existing property
+            Assert.DoesNotThrow(() => json.Foo = new object[] { 1, null, "a" });
+
+            // New property
+            Assert.DoesNotThrow(() => json.Bar = new object[] { 2, false, "b" });
+        }
+
+        [Test]
+        public void CannotAssignObjectArrayContainingUnallowedTypes()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = new object[] { 1, BinaryData.FromString("no"), "a" });
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = new object[] { 2, BinaryData.FromString("no"), "b" });
         }
 
         [Test]

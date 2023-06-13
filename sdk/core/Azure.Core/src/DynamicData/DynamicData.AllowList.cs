@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -17,14 +16,9 @@ namespace Azure.Core.Dynamic
         {
             public static void AssertAllowedType<T>(T value)
             {
-                if (value == null)
+                if (!IsAllowedType(typeof(T)))
                 {
-                    return;
-                }
-
-                if (!IsAllowedType(value.GetType()))
-                {
-                    throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
+                    throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'.");
                 }
             }
 
@@ -40,21 +34,15 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedKnownType(Type type)
             {
-                if (type == typeof(object))
-                {
-                    return true;
-                }
-
                 return IsAllowedPrimitive(type) ||
+                    type == typeof(object) ||
                     type == typeof(JsonElement) ||
                     type == typeof(JsonDocument) ||
                     // We assume these were pre-validated
                     type == typeof(MutableJsonDocument) ||
                     type == typeof(MutableJsonElement) ||
                     type == typeof(DynamicData) ||
-                    IsAllowedArrayType(type) ||
-                    IsAllowedCollectionType(type) ||
-                    IsAllowedEnumerableType(type);
+                    IsAllowedCollectionType(type);
             }
 
             private static bool IsAllowedPrimitive(Type type)
@@ -71,38 +59,11 @@ namespace Azure.Core.Dynamic
                     type == typeof(ETag);
             }
 
-            private static bool IsAllowedArrayType(Type type)
-            {
-                if (!type.IsArray)
-                {
-                    return false;
-                }
-
-                Type? elementType = type.GetElementType();
-                return elementType != null && IsAllowedType(elementType);
-            }
-
             private static bool IsAllowedCollectionType(Type type)
             {
                 return
-                    IsAllowedListType(type) ||
-                    IsAllowedDictionaryType(type);
-            }
-
-            private static bool IsAllowedListType(Type type)
-            {
-                if (!type.IsGenericType)
-                {
-                    return false;
-                }
-
-                if (type.GetGenericTypeDefinition() != typeof(List<>))
-                {
-                    return false;
-                }
-
-                Type[] types = type.GetGenericArguments();
-                return IsAllowedType(types[0]);
+                    IsAllowedDictionaryType(type) ||
+                    IsAllowedEnumerableType(type);
             }
 
             private static bool IsAllowedDictionaryType(Type type)
@@ -126,12 +87,34 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedEnumerableType(Type type)
             {
-                if (!type.IsGenericType)
+                return IsAllowedEnumerableInterface(type) ||
+                    IsAllowedEnumerableImplementation(type);
+            }
+
+            private static bool IsAllowedEnumerableImplementation(Type type)
+            {
+                if (type.GetInterface("IEnumerable`1") is not Type ieType)
                 {
                     return false;
                 }
 
+                if (!ieType.IsGenericType)
+                {
+                    return false;
+                }
+
+                Type[] types = ieType.GetGenericArguments();
+                return types.Length == 1 && IsAllowedType(types[0]);
+            }
+
+            private static bool IsAllowedEnumerableInterface(Type type)
+            {
                 if (!type.IsInterface)
+                {
+                    return false;
+                }
+
+                if (!type.IsGenericType)
                 {
                     return false;
                 }
