@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         /// <summary> Gateway URL for accessing the non-current API Revision. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use `PrivateUriString` instead.", false)]
         public Uri PrivateUri { get; }
     }
 }
