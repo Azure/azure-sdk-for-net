@@ -26,11 +26,6 @@ namespace Azure.Core.Serialization
         /// </summary>
         public bool PrettyPrint { get; set; }
 
-        ///// <summary>
-        ///// todo
-        ///// </summary>
-        //public ObjectSerializer? Serializer { get; set; }
-
         /// <summary>
         /// TODO
         /// </summary>
