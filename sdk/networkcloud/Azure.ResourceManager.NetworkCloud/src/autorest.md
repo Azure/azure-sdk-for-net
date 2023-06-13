@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/c94569d116a82ee11a94c5dfb190650dd675a1bf/specification/networkcloud/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7a92098c9b3cf46ec9158ae91dc8c5cdf87b6c12/specification/networkcloud/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -48,6 +48,12 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  # The core library Azure.ResourceManager has been generated when the subscriptionId was not marked as an uuid.
+  # v5 of common-types defines `subscriptionId` as `guid` format and needs to be removed in order to generate valid code.
+  - from: types.json
+    where: $.parameters.SubscriptionIdParameter
+    transform: >
+      delete $['format'];
   - from: networkcloud.json
     where: $.definitions
     transform:

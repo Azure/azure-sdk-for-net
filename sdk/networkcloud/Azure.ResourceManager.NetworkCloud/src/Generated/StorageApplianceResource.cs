@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
+        /// Update properties of the provided storage appliance, or update tags associated with the storage appliance Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
+        /// Update properties of the provided storage appliance, or update tags associated with the storage appliance Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -432,82 +432,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var response = _storageApplianceRestClient.RunReadCommands(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 var operation = new NetworkCloudArmOperation(_storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate the hardware of the provided storage appliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}/validateHardware</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAppliances_ValidateHardware</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ValidateHardwareAsync(WaitUntil waitUntil, StorageApplianceValidateHardwareContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _storageApplianceClientDiagnostics.CreateScope("StorageApplianceResource.ValidateHardware");
-            scope.Start();
-            try
-            {
-                var response = await _storageApplianceRestClient.ValidateHardwareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation(_storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateValidateHardwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate the hardware of the provided storage appliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}/validateHardware</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAppliances_ValidateHardware</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ValidateHardware(WaitUntil waitUntil, StorageApplianceValidateHardwareContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _storageApplianceClientDiagnostics.CreateScope("StorageApplianceResource.ValidateHardware");
-            scope.Start();
-            try
-            {
-                var response = _storageApplianceRestClient.ValidateHardware(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation(_storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateValidateHardwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
