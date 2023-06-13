@@ -124,12 +124,12 @@ namespace Azure.Identity
                 }
                 catch (Exception e)
                 {
-                    throw scope.FailWrapAndThrow(e);
+                    throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
                 }
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Identity
             catch (InvalidOperationException exception)
             {
                 CheckForErrors(exception.Message);
-                throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
+                throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
             }
             return DeserializeOutput(output);
         }
