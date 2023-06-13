@@ -384,6 +384,58 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanRaiseLockLostOnMockProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            bool processMessageCalled = false;
+            bool sessionOpenCalled = false;
+            bool sessionCloseCalled = false;
+            var mockReceiver = new Mock<ServiceBusSessionReceiver>();
+            mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
+            mockReceiver.Setup(r => r.SessionLockedUntil).Returns(DateTimeOffset.UtcNow.AddSeconds(-5));
+
+            var processArgs = new ProcessSessionMessageEventArgs(
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId"),
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                processMessageCalled = true;
+                Assert.IsTrue(args.SessionLockCancellationToken.IsCancellationRequested);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
+
+            var processSessionArgs = new ProcessSessionEventArgs(
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            mockProcessor.SessionInitializingAsync += args =>
+            {
+                sessionOpenCalled = true;
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.SessionClosingAsync += args =>
+            {
+                sessionCloseCalled = true;
+                return Task.CompletedTask;
+            };
+
+            await mockProcessor.OnProcessSessionMessageAsync(processArgs);
+            await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
+            await mockProcessor.OnSessionClosingAsync(processSessionArgs);
+
+            Assert.IsTrue(processMessageCalled);
+            Assert.IsTrue(sessionOpenCalled);
+            Assert.IsTrue(sessionCloseCalled);
+        }
+
+        [Test]
         public async Task CloseRespectsCancellationToken()
         {
             var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};

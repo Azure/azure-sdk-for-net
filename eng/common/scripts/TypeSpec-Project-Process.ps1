@@ -8,7 +8,8 @@ param (
   [Parameter(Position = 1)]
   [string] $CommitHash,
   [Parameter(Position = 2)]
-  [string] $RepoUrl
+  [string] $RepoUrl,
+  [switch] $SkipSyncAndGenerate
 )
 
 . $PSScriptRoot/common.ps1
@@ -111,7 +112,7 @@ $specRepoRoot = ""
 $generateFromLocalTypeSpec = $false
 # remote url scenario
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
-if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
+if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
   try {
     $TypeSpecProjectDirectory = $TypeSpecProjectDirectory -replace "https://github.com/(.*)/(tree|blob)", "https://raw.githubusercontent.com/`$1"
     Invoke-WebRequest $TypeSpecProjectDirectory -OutFile $tspConfigPath -MaximumRetryCount 3
@@ -165,25 +166,53 @@ if (Test-Path $tmpTspConfigPath) {
 
 $sdkProjectFolder = ""
 if ($generateFromLocalTypeSpec) {
+  Write-Host "Generating sdk code based on local type specs at specRepoRoot: $specRepoRoot."
   $sdkProjectFolder = Get-TspLocationFolder $tspConfigYaml $sdkRepoRootPath
   $tspLocationYamlPath = Join-Path $sdkProjectFolder "tsp-location.yaml"
   if (!(Test-Path -Path $tspLocationYamlPath)) {
-    Write-Error "Failed to find tsp-location.yaml in '$sdkProjectFolder', please make sure to provide CommitHash and RepoUrl parameters along with the local path of tspconfig.yaml in order to create tsp-location.yaml."
-    exit 1
+    # try to create tsp-location.yaml using HEAD commit of the local spec repo
+    Write-Warning "Failed to find tsp-location.yaml in '$sdkProjectFolder'. Trying to create tsp-location.yaml using HEAD commit of the local spec repo then proceed the sdk generation based upon local typespecs at $specRepoRoot. Alternatively, please make sure to provide CommitHash and RepoUrl parameters when running this script."
+    # set default repo to Azure/azure-rest-api-specs
+    $repo = "Azure/azure-rest-api-specs"
+    try {
+      Push-Location $specRepoRoot
+      $CommitHash = $(git rev-parse HEAD)
+      $gitOriginUrl = (git remote get-url origin)
+      if ($gitOriginUrl -and $gitOriginUrl -match '(.*)?github.com:(?<repo>[^/]*/azure-rest-api-specs(-pr)?)(.git)?') {
+        $repo = $Matches["repo"]
+        Write-Host "Found git origin repo: $repo"
+      }
+      else {
+        Write-Warning "Failed to find git origin repo of the local spec repo at specRepoRoot: $specRepoRoot. Using default repo: $repo"
+      }
+    }
+    catch {
+      Write-Error "Failed to get HEAD commit or remote origin of the local spec repo at specRepoRoot: $specRepoRoot."
+      exit 1
+    }
+    finally {
+      Pop-Location
+    }
+    $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath  
   }
 } else {
   # call CreateUpdate-TspLocation function
-  $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath  
+  $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath
 }
 
-# call TypeSpec-Project-Sync.ps1
-$syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
-& $syncScript $sdkProjectFolder $specRepoRoot
-if ($LASTEXITCODE) { exit $LASTEXITCODE }
+# checking skip switch
+if ($SkipSyncAndGenerate) {
+  Write-Host "Skip calling TypeSpec-Project-Sync.ps1 and TypeSpec-Project-Generate.ps1."
+} else {
+  # call TypeSpec-Project-Sync.ps1
+  $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
+  & $syncScript $sdkProjectFolder $specRepoRoot
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-# call TypeSpec-Project-Generate.ps1
-$generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
-& $generateScript $sdkProjectFolder
-if ($LASTEXITCODE) { exit $LASTEXITCODE }
+  # call TypeSpec-Project-Generate.ps1
+  $generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
+  & $generateScript $sdkProjectFolder
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
+}
 
 return $sdkProjectFolder

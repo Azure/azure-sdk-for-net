@@ -1,6 +1,6 @@
 # Release History
 
-## 4.17.0-beta.1 (Unreleased)
+## 4.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.17.0 (2023-06-08)
+
+### Features Added
+
+- Added new system events for Container Service. 
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.17.0-beta.2 (2023-06-06)
+
+### Other Changes
+
+- Docs updated to remove example that was causing the doc build to fail.
+
+## 4.17.0-beta.1 (2023-05-22)
+
+### Features Added
+
+- Added `EventGridClient` for interacting with topic and subscription namespaces.
 
 ## 4.16.0 (2023-05-09)
 
