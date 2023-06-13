@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using System;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
