@@ -108,7 +108,7 @@ namespace Microsoft.Extensions.Azure
             {
                 if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
                 {
-                    throw new ArgumentException("Cannot specify both 'clientId' and 'UserAssignedManagedIdentityResourceId'");
+                    throw new ArgumentException("Cannot specify both 'clientId' and 'managedIdentityResourceId'");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
