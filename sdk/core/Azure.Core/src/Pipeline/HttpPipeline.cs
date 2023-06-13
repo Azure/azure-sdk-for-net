@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Pipeline
 {
@@ -55,7 +56,8 @@ namespace Azure.Core.Pipeline
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
-                ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
+                ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()),
+                new ProtocolMethodOptions());
             policies.CopyTo(all, 0);
 
             _pipeline = all;

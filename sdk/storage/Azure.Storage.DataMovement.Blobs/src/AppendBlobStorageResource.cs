@@ -20,6 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private AppendBlobClient _blobClient;
         private AppendBlobStorageResourceOptions _options;
         private long? _length;
+        private ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// Gets the URL of the storage resource.
@@ -101,7 +102,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length)),
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -240,14 +241,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return properties.ToStorageResourceProperties();
+            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            GrabEtag(response.GetRawResponse());
+            return response.Value.ToStorageResourceProperties();
         }
 
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -267,6 +269,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        private void GrabEtag(Response response)
+        {
+            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
+            {
+                _etagDownloadLock = etag;
+            }
         }
     }
 }

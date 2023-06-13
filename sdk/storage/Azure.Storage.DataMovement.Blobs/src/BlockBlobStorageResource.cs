@@ -28,6 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private ConcurrentDictionary<long, string> _blocks;
         private BlockBlobStorageResourceOptions _options;
         private long? _length;
+        private ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// Gets the URL of the storage resource.
@@ -118,7 +119,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<BlobDownloadStreamingResult> response =
                 await _blobClient.DownloadStreamingAsync(
-                    _options.ToBlobDownloadOptions(new HttpRange(position, length)),
+                    _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                     cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -169,10 +170,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
             }
-            BlobRequestConditions stageBlockConditions = new BlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-            };
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
@@ -263,14 +260,17 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return properties.ToStorageResourceProperties();
+            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            GrabEtag(response.GetRawResponse());
+            return response.Value.ToStorageResourceProperties();
         }
 
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override async Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override async Task CompleteTransferAsync(
+            bool overwrite,
+            CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_blocks != null && !_blocks.IsEmpty)
@@ -278,7 +278,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await _blobClient.CommitBlockListAsync(
                     blockIds,
-                    _options.ToCommitBlockOptions(),
+                    _options.ToCommitBlockOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
@@ -298,6 +298,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        private void GrabEtag(Response response)
+        {
+            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
+            {
+                _etagDownloadLock = etag;
+            }
         }
     }
 }

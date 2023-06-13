@@ -66,20 +66,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
-        #region MySqlFlexibleServerResource
+        #region MySqlFlexibleServerAadAdministratorResource
         /// <summary>
-        /// Gets an object representing a <see cref="MySqlFlexibleServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MySqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlFlexibleServerAadAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerAadAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerAadAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MySqlFlexibleServerResource" /> object. </returns>
-        public static MySqlFlexibleServerResource GetMySqlFlexibleServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFlexibleServerAadAdministratorResource" /> object. </returns>
+        public static MySqlFlexibleServerAadAdministratorResource GetMySqlFlexibleServerAadAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MySqlFlexibleServerResource.ValidateResourceId(id);
-                return new MySqlFlexibleServerResource(client, id);
+                MySqlFlexibleServerAadAdministratorResource.ValidateResourceId(id);
+                return new MySqlFlexibleServerAadAdministratorResource(client, id);
             }
             );
         }
@@ -104,20 +104,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
         #endregion
 
-        #region MySqlFlexibleServerFirewallRuleResource
+        #region MySqlFlexibleServerConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="MySqlFlexibleServerFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MySqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlFlexibleServerConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MySqlFlexibleServerFirewallRuleResource" /> object. </returns>
-        public static MySqlFlexibleServerFirewallRuleResource GetMySqlFlexibleServerFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFlexibleServerConfigurationResource" /> object. </returns>
+        public static MySqlFlexibleServerConfigurationResource GetMySqlFlexibleServerConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MySqlFlexibleServerFirewallRuleResource.ValidateResourceId(id);
-                return new MySqlFlexibleServerFirewallRuleResource(client, id);
+                MySqlFlexibleServerConfigurationResource.ValidateResourceId(id);
+                return new MySqlFlexibleServerConfigurationResource(client, id);
             }
             );
         }
@@ -142,20 +142,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
         #endregion
 
-        #region MySqlFlexibleServerConfigurationResource
+        #region MySqlFlexibleServerFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="MySqlFlexibleServerConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MySqlFlexibleServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlFlexibleServerFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MySqlFlexibleServerConfigurationResource" /> object. </returns>
-        public static MySqlFlexibleServerConfigurationResource GetMySqlFlexibleServerConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFlexibleServerFirewallRuleResource" /> object. </returns>
+        public static MySqlFlexibleServerFirewallRuleResource GetMySqlFlexibleServerFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MySqlFlexibleServerConfigurationResource.ValidateResourceId(id);
-                return new MySqlFlexibleServerConfigurationResource(client, id);
+                MySqlFlexibleServerFirewallRuleResource.ValidateResourceId(id);
+                return new MySqlFlexibleServerFirewallRuleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MySqlFlexibleServerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MySqlFlexibleServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MySqlFlexibleServerResource" /> object. </returns>
+        public static MySqlFlexibleServerResource GetMySqlFlexibleServerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MySqlFlexibleServerResource.ValidateResourceId(id);
+                return new MySqlFlexibleServerResource(client, id);
             }
             );
         }
@@ -401,6 +420,54 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Argument.AssertNotNull(content, nameof(content));
 
             return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailability(locationName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the availability of name for server
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithoutLocation_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The required parameters for checking if server name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(this SubscriptionResource subscriptionResource, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the availability of name for server
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithoutLocation_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The required parameters for checking if server name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(this SubscriptionResource subscriptionResource, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(content, cancellationToken);
         }
 
         /// <summary>
