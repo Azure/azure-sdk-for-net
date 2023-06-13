@@ -24,6 +24,11 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// .
         /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public ModelJsonConverter()
             : this(true) { }
 
@@ -34,6 +39,7 @@ namespace Azure.Core.Serialization
         public ModelJsonConverter(bool ignoreAdditionalProperties)
         {
             IgnoreAdditionalProperties = ignoreAdditionalProperties;
+            Version = "latest";
         }
 
         /// <summary>
@@ -43,8 +49,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.GetInterfaces().Any(i => i.Equals(typeof(IModelSerializable))) &&
-                !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
+            return !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
         }
 
         /// <summary>
@@ -80,14 +85,15 @@ namespace Azure.Core.Serialization
         public override void Write(Utf8JsonWriter writer, IModel value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            ((IModelSerializable)value).Serialize(writer, ConvertOptions(options));
+            value.Serialize(writer, ConvertOptions(options));
         }
 
-        private SerializableOptions ConvertOptions(JsonSerializerOptions options)
+        private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
         {
-            SerializableOptions serializableOptions = new SerializableOptions();
+            ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
             serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
             serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
+            //serializableOptions.Version = Version;
             return serializableOptions;
         }
     }

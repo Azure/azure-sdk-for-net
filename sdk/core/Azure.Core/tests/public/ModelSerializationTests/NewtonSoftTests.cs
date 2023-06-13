@@ -11,12 +11,12 @@ using Azure.Core.Serialization;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class NewtonSoftTests
     {
-        private readonly SerializableOptions _wireOptions = new SerializableOptions { IgnoreReadOnlyProperties = false };
-        private readonly SerializableOptions _objectOptions = new SerializableOptions();
+        private readonly ModelSerializerOptions _wireOptions = new ModelSerializerOptions { IgnoreReadOnlyProperties = false };
+        private readonly ModelSerializerOptions _objectOptions = new ModelSerializerOptions();
 
         [TestCase(true)]
         [TestCase(false)]

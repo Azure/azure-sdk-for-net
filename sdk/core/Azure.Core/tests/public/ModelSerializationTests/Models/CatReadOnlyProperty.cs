@@ -7,9 +7,9 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IModelSerializable, IUtf8JsonSerializable
+    public class CatReadOnlyProperty : Animal, IModel, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -26,7 +26,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)=> ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -51,7 +53,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 {
                     writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+                    writer.WriteRawValue(property.Value);
 #else
                     JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
 #endif
@@ -60,7 +62,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, SerializableOptions options)
+        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options)
         {
             double weight = default;
             string name = "";

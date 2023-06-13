@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Animal : IUtf8JsonSerializable, IModelSerializable
+    public class Animal : IUtf8JsonSerializable, IModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -45,7 +46,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -76,7 +79,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Animal DeserializeAnimal(JsonElement element, SerializableOptions options)
+        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options)
         {
             double weight = default;
             string name = "";
@@ -128,10 +131,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
             this.RawData = model.RawData;
         }
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
-        {
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-        }
         #endregion
     }
 }

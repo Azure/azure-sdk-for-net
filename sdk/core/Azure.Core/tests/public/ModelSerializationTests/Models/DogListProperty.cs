@@ -9,10 +9,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     [JsonConverter(typeof(DogListPropertyConverter))]
-    public class DogListProperty : Animal, IModelSerializable, IUtf8JsonSerializable
+    public class DogListProperty : Animal, IModel, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
         public IList<string> FoodConsumed { get; private set; }
@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            var serializationOptions = new SerializableOptions()
+            var serializationOptions = new ModelSerializerOptions()
             {
                 IgnoreReadOnlyProperties = false,
                 IgnoreAdditionalProperties = false
@@ -50,12 +50,14 @@ namespace Azure.Core.Tests.ModelSerializationTests
             var content = new Utf8JsonRequestContent();
             //content.JsonWriter.WriteObjectValue(dog);
             //temp implementation due to IUtf8JsonSerializable signature mismatch since we added an options parameter
-            ((IUtf8JsonSerializable)dog).Write(content.JsonWriter, new SerializableOptions());
+            ((IUtf8JsonSerializable)dog).Write(content.JsonWriter);
             return content;
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -97,7 +99,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static DogListProperty DeserializeDogListProperty(JsonElement element, SerializableOptions options)
+        internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions options)
         {
             double weight = default;
             string name = "";
@@ -158,12 +160,12 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)
             {
-                ((IUtf8JsonSerializable)value).Write(writer, ConvertOptions(options));
+                ((IModel)value).Serialize(writer, ConvertOptions(options));
             }
 
-            private SerializableOptions ConvertOptions(JsonSerializerOptions options)
+            private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
             {
-                var serializableOptions = new SerializableOptions();
+                var serializableOptions = new ModelSerializerOptions();
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c=>c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;

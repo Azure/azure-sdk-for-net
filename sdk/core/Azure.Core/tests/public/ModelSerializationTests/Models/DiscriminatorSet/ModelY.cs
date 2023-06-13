@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Newtonsoft.Json.Linq;
 
-namespace Azure.Core.Tests.ModelSerializationTests.Models
+namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class ModelY : BaseModel, IUtf8JsonSerializable, IModelSerializable
+    internal class ModelY : BaseModel, IUtf8JsonSerializable, IModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -31,7 +31,9 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
 
         public string YProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -62,7 +64,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelY DeserializeModelY(JsonElement element, SerializableOptions options = default)
+        internal static ModelY DeserializeModelY(JsonElement element, ModelSerializerOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

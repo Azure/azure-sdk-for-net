@@ -9,16 +9,18 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests.Models
+namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal abstract class BaseModel : IUtf8JsonSerializable, IModelSerializable
+    internal abstract class BaseModel : IUtf8JsonSerializable, IModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -44,7 +46,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseModel DeserializeBaseModel(JsonElement element, SerializableOptions options = default)
+        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,11 +63,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
                 }
             }
             return UnknownBaseModel.DeserializeUnknownBaseModel(element, options);
-        }
-
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
-        {
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
         }
 
         protected abstract void CopyModel(BaseModel model);

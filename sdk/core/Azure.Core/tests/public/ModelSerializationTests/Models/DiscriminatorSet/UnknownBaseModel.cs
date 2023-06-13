@@ -8,29 +8,29 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Newtonsoft.Json.Linq;
 
-namespace Azure.Core.Tests.ModelSerializationTests.Models
+namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class ModelX : BaseModel, IUtf8JsonSerializable, IModelSerializable
+    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
-        public ModelX()
+        public UnknownBaseModel()
         {
-            Kind = "X";
+            Kind = "Unknown";
         }
 
-        internal ModelX(string kind, string name, int xProperty, Dictionary<string, BinaryData> rawData)
+        internal UnknownBaseModel(string kind, string name, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
             Name = name;
-            XProperty = xProperty;
             RawData = rawData;
         }
 
-        public int XProperty { get; private set; }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -39,11 +39,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
-            }
-            if (!options.IgnoreReadOnlyProperties)
-            {
-                writer.WritePropertyName("xProperty"u8);
-                writer.WriteNumberValue(XProperty);
             }
             if (!options.IgnoreAdditionalProperties)
             {
@@ -61,7 +56,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelX DeserializeModelX(JsonElement element, SerializableOptions options = default)
+        internal static UnknownBaseModel DeserializeUnknownBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -69,7 +64,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             }
             string kind = default;
             Optional<string> name = default;
-            int xProperty = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
@@ -83,26 +77,20 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("xProperty"u8))
-                {
-                    xProperty = property.Value.GetInt32();
-                    continue;
-                }
                 if (!options.IgnoreAdditionalProperties)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ModelX(kind, name, xProperty, rawData);
+            return new UnknownBaseModel(kind, name, rawData);
         }
 
         protected override void CopyModel(BaseModel model)
         {
-            var that = model as ModelX;
+            var that = model as UnknownBaseModel;
             this.Name = that.Name;
             this.Kind = that.Kind;
-            this.XProperty = that.XProperty;
             this.RawData = that.RawData;
         }
     }

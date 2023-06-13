@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class VerifyModels
     {
-        public static void CheckAnimals(Animal x, Animal y, SerializableOptions options)
+        public static void CheckAnimals(Animal x, Animal y, ModelSerializerOptions options)
         {
             VerifyProperties(x, y, options);
         }
 
-        private static void VerifyProperties(Animal x, Animal y, SerializableOptions options)
+        private static void VerifyProperties(Animal x, Animal y, ModelSerializerOptions options)
         {
             if (!options.IgnoreReadOnlyProperties)
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
@@ -42,13 +42,13 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
         }
 
-        public static void CheckCats(CatReadOnlyProperty x, CatReadOnlyProperty y, SerializableOptions options)
+        public static void CheckCats(CatReadOnlyProperty x, CatReadOnlyProperty y, ModelSerializerOptions options)
         {
             VerifyProperties(x, y, options);
             Assert.That(x.HasWhiskers, Is.EqualTo(y.HasWhiskers));
         }
 
-        public static void CheckDogs(DogListProperty x, DogListProperty y, SerializableOptions options)
+        public static void CheckDogs(DogListProperty x, DogListProperty y, ModelSerializerOptions options)
         {
             VerifyProperties(x, y, options);
             Assert.That(x.FoodConsumed, Is.EqualTo(y.FoodConsumed));
