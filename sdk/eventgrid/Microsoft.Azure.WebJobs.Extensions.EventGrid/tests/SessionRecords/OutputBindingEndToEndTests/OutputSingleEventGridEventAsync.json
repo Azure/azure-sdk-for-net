@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://t9b55506e142b41d0topic.westus-1.eventgrid.azure.net/api/events?api-version=2018-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "160",
+        "Content-Type": "application/json",
+        "traceparent": "00-5ad8b5d4e1fb87362ee5b7210766b2da-a2bd15a35f0bbcfb-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.14.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "856c75bc53b7cb240be7edd82a0574d2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u002268600f90-acdd-4f1f-8b26-9e808e7a3e3e\u0022,\u0022subject\u0022:\u0022source\u0022,\u0022data\u0022:\u0022data\u0022,\u0022eventType\u0022:\u0022type\u0022,\u0022eventTime\u0022:\u00222023-06-13T18:13:37.3489668Z\u0022,\u0022dataVersion\u0022:\u00221\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2018-01-01",
+        "Content-Length": "0",
+        "Date": "Tue, 13 Jun 2023 18:13:37 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-request-id": "ce810c92-b054-4205-b811-d8fb262f5f7c"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "CLIENT_ID": "78f2836e-6452-462e-b839-d4dd54a5c252",
+    "EVENT_GRID_TOPIC_ENDPOINT": "https://t9b55506e142b41d0topic.westus-1.eventgrid.azure.net/api/events",
+    "EVENT_GRID_TOPIC_KEY": "Kg==",
+    "RandomSeed": "1425093738",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  }
+}
