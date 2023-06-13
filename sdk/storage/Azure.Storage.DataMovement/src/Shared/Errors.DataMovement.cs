@@ -92,5 +92,32 @@ namespace Azure.Storage
 
         public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
             => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
+
+        public static ArgumentException InvalidDownloadOffset(long offset, long length)
+            => new ArgumentException($"Cannot find offset returned by Successful Download Range in the expected Range.\n" +
+                $"Offset: \"{offset}\"\n" +
+                $"Length: \"{length}\"");
+
+        public static ArgumentException InvalidExpectedLength(long length)
+            => new ArgumentException($"Expected positive non-zero length, but was given: {length}");
+
+        public static InvalidOperationException FailedDownloadRange(long offset, long bytesTransferred, string transferId)
+            => new InvalidOperationException($"Unexpected error: Experienced failed download range argument. " +
+                    $"Range: {offset} - {bytesTransferred} with Transfer ID: {transferId}");
+
+        public static FileNotFoundException TempChunkFileNotFound(long offset, long length, string filePath)
+            => new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
+                $"\"{offset}\" and Length: \"{length}\"," +
+                $"due to the chunk file missing: \"{filePath}\"");
+
+        public static InvalidOperationException MismatchLengthTransferred(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Amount of bytes transferred exceeds expected length\n" +
+                $"Expected Bytes Transferred Length: {expectedLength}\n" +
+                $"Actual Bytes Transferred Length: {actualLength}.");
+
+        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred)
+            => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
+                    $"Offset: \"{offset}\"\n" +
+                    $"Length: \"{bytesTransferred}\"");
     }
 }

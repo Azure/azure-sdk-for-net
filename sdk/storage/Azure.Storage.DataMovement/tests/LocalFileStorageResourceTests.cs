@@ -282,7 +282,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
 
             // Assert
             Assert.IsTrue(File.Exists(path));

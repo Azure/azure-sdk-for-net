@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+* Remove metric namespace mapping.
+  ([#36968](https://github.com/Azure/azure-sdk-for-net/pull/36968))
+
 ## 1.0.0-beta.12 (2023-06-06)
 
 ### Features Added

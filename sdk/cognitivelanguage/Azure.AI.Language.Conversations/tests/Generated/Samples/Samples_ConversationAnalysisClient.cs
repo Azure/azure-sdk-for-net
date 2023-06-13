@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Conversations.Samples
                 kind = "Conversation",
             };
 
-            Response response = client.AnalyzeConversation(RequestContent.Create(data), new RequestContext());
+            Response response = client.AnalyzeConversation(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -195,7 +195,7 @@ namespace Azure.AI.Language.Conversations.Samples
                 kind = "Conversation",
             };
 
-            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -226,7 +226,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true, new RequestContext());
+            Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -277,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true, new RequestContext());
+            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -394,7 +394,7 @@ namespace Azure.AI.Language.Conversations.Samples
     },
             };
 
-            var operation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data), new RequestContext());
+            var operation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -512,7 +512,7 @@ namespace Azure.AI.Language.Conversations.Samples
     },
             };
 
-            var operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data), new RequestContext());
+            var operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -560,7 +560,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            var operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.NewGuid(), new RequestContext());
+            var operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.NewGuid());
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -586,7 +586,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            var operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.NewGuid(), new RequestContext());
+            var operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.NewGuid());
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
