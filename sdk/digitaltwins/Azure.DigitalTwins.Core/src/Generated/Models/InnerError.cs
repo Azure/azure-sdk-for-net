@@ -8,10 +8,10 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A more specific error description than was provided by the containing error. </summary>
-    internal partial class InnerError
+    public partial class InnerError
     {
         /// <summary> Initializes a new instance of InnerError. </summary>
-        internal InnerError()
+        public InnerError()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary> A more specific error code than was provided by the containing error. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerError Innererror { get; }
+        public InnerError Innererror { get; set; }
     }
 }

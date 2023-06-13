@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-865258957?api-version=2022-05-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-895414626?api-version=2023-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "84",
         "Content-Type": "application/json",
-        "traceparent": "00-66109f2ef067fb4ba67c506a3f783192-815cd743a644404f-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "8c0855cfe95b547c9fb6356312fa9d60",
+        "traceparent": "00-54420d89fb4aa35fceb48385637128a8-3af2f086d03cf49b-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "30033753bb3d0ffb4c2eeeda5de52179",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,10 +21,11 @@
       "ResponseHeaders": {
         "Content-Length": "249",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jun 2022 09:18:04 GMT",
-        "mise-correlation-id": "6d0594a3-9cf4-461e-be23-009a1dd1bd82",
+        "Date": "Thu, 18 May 2023 23:07:53 GMT",
+        "mise-correlation-id": "cdf30b4c-a79b-4a2a-993e-385a471b5c32",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-66109f2ef067fb4ba67c506a3f783192-c9cd6ad9931cdf48-01"
+        "traceresponse": "00-54420d89fb4aa35fceb48385637128a8-8c1d25de2cd29afe-01",
+        "x-ms-error-code": "EventRouteFilterInvalid"
       },
       "ResponseBody": {
         "error": {
@@ -35,8 +36,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "AZURE_AUTHORITY_HOST": null,
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "2047305928"
+    "RandomSeed": "1718679563"
   }
 }

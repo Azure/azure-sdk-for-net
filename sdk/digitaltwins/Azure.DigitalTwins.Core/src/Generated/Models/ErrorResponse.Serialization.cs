@@ -18,12 +18,12 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Error error = default;
+            ErrorInformation error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(property.Value);
+                    error = ErrorInformation.DeserializeErrorInformation(property.Value);
                     continue;
                 }
             }
