@@ -1,16 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
@@ -71,8 +66,8 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             CatReadOnlyProperty correctCat = new CatReadOnlyProperty(2.5, default, "Cat", false, default);
             VerifyModels.CheckAnimals(correctCat, model.ModelA, options);
-            Assert.AreEqual("hello", model.ModelC.X);
-            Assert.AreEqual("bye", model.ModelC.Y);
+            Assert.AreEqual("hello", model.ModelT.X);
+            Assert.AreEqual("bye", model.ModelT.Y);
             stream = ModelSerializer.Serialize(model, options);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
@@ -81,7 +76,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             var model2 = ModelSerializer.Deserialize<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
             ModelC correctModelC = new ModelC("hello", "bye");
-            ModelC.VerifyModelC(correctModelC, model2.ModelC);
+            ModelC.VerifyModelC(correctModelC, model2.ModelT);
         }
 
         // Generate a class that implements the NewtonSoft default contract resolver so that ReadOnly properties are not serialized

@@ -208,3 +208,39 @@ options.Converters.Add(new ModelJsonConverter(false));
 
 DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json, options);
 ```
+
+## Envelope BYOM Case
+The following examples show a use case where a User brings a model unknown to the Serializer. The serialization used for each model can also be set in the SerializableOptions options property Serializers. 
+
+Model Being Used by User
+private class ModelT
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+
+Serialization
+```C# Snippet:BYOMWithNewtonsoftSerialize
+Envelope<ModelT> envelope = new Envelope<ModelT>();
+envelope.ModelA = new CatReadOnlyProperty();
+envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
+
+SerializableOptions options = new SerializableOptions();
+options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
+
+Stream stream = ModelSerializer.Serialize(envelope, options);
+```
+
+Deserialization
+```C# Snippet:BYOMWithNewtonsoftDeserialize
+string serviceResponse =
+    "{\"readOnlyProperty\":\"read\"," +
+    "\"modelA\":{\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5}," +
+    "\"modelT\":{\"Name\":\"hello\",\"Age\":1}" +
+    "}";
+
+SerializableOptions options = new SerializableOptions();
+options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
+
+Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+```

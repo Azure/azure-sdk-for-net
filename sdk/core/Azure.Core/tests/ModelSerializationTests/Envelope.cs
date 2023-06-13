@@ -29,12 +29,12 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             ReadOnlyProperty = property;
             ModelA = cat;
-            ModelC = modelC;
+            ModelT = modelC;
             RawData = rawData;
         }
 
         public CatReadOnlyProperty ModelA { get; set; }
-        public T ModelC { get; set; }
+        public T ModelT { get; set; }
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
@@ -104,7 +104,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         private void SerializeT(Utf8JsonWriter writer, SerializableOptions options)
         {
             ObjectSerializer serializer = GetObjectSerializer(options);
-            BinaryData data = serializer.Serialize(ModelC);
+            BinaryData data = serializer.Serialize(ModelT);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(data);
 #else
@@ -173,7 +173,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             var model = DeserializeEnvelope(jsonDocument.RootElement, options ?? new SerializableOptions());
             this.ReadOnlyProperty = model.ReadOnlyProperty;
             this.ModelA = model.ModelA;
-            this.ModelC = model.ModelC;
+            this.ModelT = model.ModelT;
             this.RawData = model.RawData;
         }
 

@@ -9,6 +9,7 @@ using Azure.Core.Experimental.Tests;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.ModelSerializationTests;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -233,6 +234,46 @@ namespace Azure.Core.Samples
 
             DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json, options);
             #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void BYOMWithNewtonsofSerialize()
+        {
+            #region Snippet:BYOMWithNewtonsoftSerialize
+            Envelope<ModelT> envelope = new Envelope<ModelT>();
+            envelope.ModelA = new CatReadOnlyProperty();
+            envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
+
+            SerializableOptions options = new SerializableOptions();
+            options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
+
+            Stream stream = ModelSerializer.Serialize(envelope, options);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void BYOMWithNewtonsoftDeserialize()
+        {
+            #region Snippet:BYOMWithNewtonsoftDeserialize
+            string serviceResponse =
+                "{\"readOnlyProperty\":\"read\"," +
+                "\"modelA\":{\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5}," +
+                "\"modelT\":{\"Name\":\"hello\",\"Age\":1}" +
+                "}";
+
+            SerializableOptions options = new SerializableOptions();
+            options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
+
+            Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            #endregion
+        }
+
+        private class ModelT
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
         }
     }
 }

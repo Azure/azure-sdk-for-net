@@ -29,6 +29,6 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
-        public Dictionary<Type, ObjectSerializer> Serializers = new Dictionary<Type, ObjectSerializer>();
+        public Dictionary<Type, ObjectSerializer> Serializers { get; } = new Dictionary<Type, ObjectSerializer>();
     }
 }
