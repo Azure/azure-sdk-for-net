@@ -38,44 +38,7 @@ namespace Azure.Core.Dynamic
         {
             _element = element;
             _options = options;
-            _serializerOptions = GetSerializerOptions(options);
-        }
-
-        internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
-        {
-            JsonSerializerOptions serializerOptions = new()
-            {
-                Converters =
-                {
-                    new DefaultTimeSpanConverter(),
-                    AllowListConverterFactory.Default,
-                }
-            };
-
-            switch (options.PropertyNamingConvention)
-            {
-                case PropertyNamingConvention.CamelCase:
-                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    break;
-                case PropertyNamingConvention.None:
-                default:
-                    break;
-            }
-
-            switch (options.DateTimeHandling)
-            {
-                case DynamicDateTimeHandling.UnixTime:
-                    serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
-                    serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
-                    break;
-                case DynamicDateTimeHandling.Rfc3339:
-                default:
-                    serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
-                    serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
-                    break;
-            }
-
-            return serializerOptions;
+            _serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
         }
 
         internal void WriteTo(Stream stream)
@@ -104,7 +67,7 @@ namespace Azure.Core.Dynamic
             }
 
             // If the dynamic content uses a naming convention, do a second look-up.
-            if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
+            if (_options.PropertyNameFormat != PropertyNameFormat.None)
             {
                 if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
                 {
@@ -123,11 +86,11 @@ namespace Azure.Core.Dynamic
 
         private string ApplyNamingConvention(string value)
         {
-            return _options.PropertyNamingConvention switch
+            return _options.PropertyNameFormat switch
             {
-                PropertyNamingConvention.None => value,
-                PropertyNamingConvention.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
-                _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNamingConvention}'."),
+                PropertyNameFormat.None => value,
+                PropertyNameFormat.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNameFormat}'."),
             };
         }
 
@@ -182,7 +145,7 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.PropertyNamingConvention == PropertyNamingConvention.None ||
+            if (_options.PropertyNameFormat == PropertyNameFormat.None ||
                 _element.TryGetProperty(name, out MutableJsonElement _))
             {
                 _element = _element.SetProperty(name, value);
@@ -387,7 +350,7 @@ namespace Azure.Core.Dynamic
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.Default);
+                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.FromSerializerOptions(options));
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)
