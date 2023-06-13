@@ -1045,6 +1045,16 @@ namespace Azure.Core.Json
                 return element;
             }
 
+            if (value is MutableJsonDocument mjd)
+            {
+                mjd.RootElement.EnsureValid();
+            }
+
+            if (value is MutableJsonElement mje)
+            {
+                mje.EnsureValid();
+            }
+
             // If it's not a special type, we'll serialize it on assignment.
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
             return JsonDocument.Parse(bytes).RootElement;
