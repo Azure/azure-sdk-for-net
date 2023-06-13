@@ -113,7 +113,7 @@ if ($inputFileToGen) {
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
         $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
-        $processScript = Join-Path "../common/scripts" "TypeSpec-Project-Process.ps1"
+        $processScript = Resolve-Path (Join-Path "./eng/common/scripts" "TypeSpec-Project-Process.ps1")
         $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
