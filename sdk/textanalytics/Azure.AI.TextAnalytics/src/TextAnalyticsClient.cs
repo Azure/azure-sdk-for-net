@@ -1883,6 +1883,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="projectName">The name of the project which owns the models being consumed.</param>
         /// <param name="deploymentName">The name of the deployment being consumed.</param>
@@ -1902,6 +1906,183 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual ClassifyDocumentOperation SingleLabelClassify(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.SingleLabelClassify(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual ClassifyDocumentOperation SingleLabelClassify(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.SingleLabelClassify(waitUntil, documents, projectName, deploymentName, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<ClassifyDocumentOperation> SingleLabelClassifyAsync(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.SingleLabelClassifyAsync(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<ClassifyDocumentOperation> SingleLabelClassifyAsync(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.SingleLabelClassifyAsync(waitUntil, documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ClassifyDocumentOperation StartSingleLabelClassify(
             IEnumerable<string> documents,
             string projectName,
@@ -1940,6 +2121,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ClassifyDocumentOperation StartSingleLabelClassify(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -1982,6 +2164,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(
             IEnumerable<string> documents,
             string projectName,
@@ -2020,6 +2203,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
