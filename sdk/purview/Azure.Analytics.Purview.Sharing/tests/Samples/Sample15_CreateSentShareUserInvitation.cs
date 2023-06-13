@@ -9,16 +9,16 @@ using System;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
-    public class Sample2_CreateSentShareInvitation : SentSharesClientTestBase
+    internal class Sample15_CreateSentShareUserInvitation : SentSharesClientTestBase
     {
-        public Sample2_CreateSentShareInvitation(bool isAsync) : base(isAsync)
+        public Sample15_CreateSentShareUserInvitation(bool isAsync) : base(isAsync)
         {
         }
 
         [RecordedTest]
-        public async Task CreateSentShareInvitationTest()
+        public async Task CreateSentShareUserInvitationTest()
         {
-            #region Snippet:SentSharesClientSample_CreateSentShareInvitation
+            #region Snippet:SentSharesClientSample_CreateSentShareUserInvitation
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
@@ -30,15 +30,15 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
             var data = new
             {
-                invitationKind = "Service",
+                invitationKind = "User",
                 properties = new
                 {
 #if SNIPPET
-                    TargetActiveDirectoryId = "targetActiveDirectoryId",
-                    TargetObjectId = "targetObjectId",
+                    TargetEmail = "receiver@microsoft.com",
+                    Notify = true,
 #else
-                    TargetActiveDirectoryId = "165944e1-1963-4e83-920f-4d0e9c44599c",
-                    TargetObjectId = "5fc438a9-bdb9-46d4-89d7-43fdccc0f23e",
+                    TargetEmail = "customer@contoso.com",
+                    Notify = true,
 #endif
                 }
             };
@@ -46,10 +46,10 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #if SNIPPET
             Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
 #else
-            Response response = await sentShareClient.CreateSentShareInvitationAsync("016eb068-ddaa-41be-8804-8bef566663a5", "4ae8a8dc-0662-4027-960e-92b4778fc5ff", RequestContent.Create(data));
+            Response response = await sentShareClient.CreateSentShareInvitationAsync("b9228fde-9f48-4d9f-a634-24206bbce06b", "e6f27ecd-e78c-466b-842b-2d8211cc9d35", RequestContent.Create(data));
 #endif
 
-#endregion
+            #endregion
         }
     }
 }

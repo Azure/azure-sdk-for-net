@@ -105,7 +105,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         }
 
         [RecordedTest]
-        public async Task CreateSentShareInvitationTest()
+        public async Task CreateSentShareServiceInvitationTest()
         {
             var data = new
             {
@@ -114,6 +114,25 @@ namespace Azure.Analytics.Purview.Sharing.Tests
                 {
                     TargetActiveDirectoryId = "165944e1-1963-4e83-920f-4d0e9c44599c",
                     TargetObjectId = "5fc438a9-bdb9-46d4-89d7-43fdccc0f23e",
+                }
+            };
+
+            SentSharesClient client = GetSentSharesClient();
+
+            Response response = await client.CreateSentShareInvitationAsync(sentShareId, sentShareInvitationId, RequestContent.Create(data));
+
+            Assert.AreEqual(201, response.Status);
+        }
+        [RecordedTest]
+        public async Task CreateSentShareUserInvitationTest()
+        {
+            var data = new
+            {
+                invitationKind = "User",
+                properties = new
+                {
+                    TargetEmail = "customer@contoso.com",
+                    Notify = true,
                 }
             };
 
