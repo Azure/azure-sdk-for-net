@@ -28,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2021-07-01". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="apiVersion"/> is null. </exception>
         public AuthenticationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string apiVersion = "2021-07-01")
         {
@@ -156,10 +156,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
-        /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
+        /// <param name="grantType"> Grant type is expected to be refresh_token. The default is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
-        public async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string refreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken cancellationToken = default)
+        public async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string refreshToken, TokenGrantType grantType, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
@@ -194,10 +194,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
-        /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
+        /// <param name="grantType"> Grant type is expected to be refresh_token. The default is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
-        public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string refreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken cancellationToken = default)
+        public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string refreshToken, TokenGrantType grantType, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
