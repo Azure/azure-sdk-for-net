@@ -15,6 +15,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
     {
         public static TestRecording CurrentRecording { get; private set; }
 
+        private string ClientSecret => Mode == RecordedTestMode.Playback ? "fakesecret" : TestEnvironment.ClientSecret;
+
         public OutputBindingEndToEndTests(bool isAsync) : base(isAsync)
         {
         }
@@ -57,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 { "eventgridConnection:topicEndpointUri", TestEnvironment.TopicHost },
                 { "eventgridConnection:tenantId", TestEnvironment.TenantId },
                 { "eventgridConnection:clientId", TestEnvironment.ClientId },
-                { "eventgridConnection:clientSecret", TestEnvironment.ClientSecret },
+                { "eventgridConnection:clientSecret", ClientSecret },
             };
             var host = TestHelpers.NewHost<OutputFunctions_Connection>(configuration: config, recording: this);
             await host.GetJobHost().CallAsync(nameof(OutputFunctions_Connection.SingleEvent_Connection));
@@ -95,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 { "eventgridConnection:topicEndpointUri", TestEnvironment.CloudEventTopicHost },
                 { "eventgridConnection:tenantId", TestEnvironment.TenantId },
                 { "eventgridConnection:clientId", TestEnvironment.ClientId },
-                { "eventgridConnection:clientSecret", TestEnvironment.ClientSecret },
+                { "eventgridConnection:clientSecret", ClientSecret },
             };
             var host = TestHelpers.NewHost<OutputFunctions_CloudEvent_Connection>(configuration: config, recording: this);
             await host.GetJobHost().CallAsync(nameof(OutputFunctions_CloudEvent_Connection.SingleCloudEvent_Connection));
