@@ -23,6 +23,10 @@ namespace Azure.Core.Tests.ModelSerializationTests
             RawData = rawData;
         }
 
+        internal CatReadOnlyProperty()
+        {
+        }
+
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization

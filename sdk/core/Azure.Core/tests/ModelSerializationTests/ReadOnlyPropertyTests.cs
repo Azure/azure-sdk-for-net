@@ -139,7 +139,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public void PrettyPrint()
         {
 #if NET6_0_OR_GREATER
-            CatReadOnlyProperty model = new CatReadOnlyProperty(3.2, "Felis catus", "Catto", true, false);
+            CatReadOnlyProperty model = new CatReadOnlyProperty(2.5, "Felis catus", "Catto", true, false);
 
             Stream stream = new MemoryStream();
             model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { PrettyPrint = true });;
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                   "hasWhiskers": false,
                   "name": "Catto",
                   "isHungry": true,
-                  "weight": 3.2
+                  "weight": 2.5
                 }
                 """;
 

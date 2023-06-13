@@ -1,19 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    internal class NewtonSoftTests
+    internal class EnvelopeTests
     {
         private readonly SerializableOptions _wireOptions = new SerializableOptions { IgnoreReadOnlyProperties = false };
         private readonly SerializableOptions _objectOptions = new SerializableOptions();
@@ -24,16 +20,23 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             Stream stream = new MemoryStream();
             string serviceResponse =
-                "{\"latinName\":\"Animalia\",\"weight\":2.5,\"name\":\"Rabbit\",\"isHungry\":false}";
+                "{\"readOnlyProperty\":\"read\"," +
+                "\"modelA\":{\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5}," +
+                "\"modelC\":{\"x\":\"hello\",\"y\":\"bye\"}" +
+                "}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            expectedSerialized.Append("\"IsHungry\":false,");
-            expectedSerialized.Append("\"Weight\":2.5,");
             if (!ignoreReadOnly)
             {
-                expectedSerialized.Append("\"LatinName\":\"Animalia\",");
+                expectedSerialized.Append("\"readOnlyProperty\":\"read\",");
             }
-            expectedSerialized.Append("\"Name\":\"Rabbit\"");
+            expectedSerialized.Append("\"modelA\":{");
+            if (!ignoreReadOnly)
+            {
+                expectedSerialized.Append("\"latinName\":\"Felis catus\",\"hasWhiskers\":false,");
+            }
+            expectedSerialized.Append("\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5},");
+            expectedSerialized.Append("\"modelC\":{\"X\":\"hello\",\"Y\":\"bye\"}"); //using NewtonSoft Serializer
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
@@ -45,31 +48,35 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 {
                     ContractResolver = new IgnoreReadOnlyPropertiesResolver()
                 };
-                options.Serializers.Add(typeof(Animal), new NewtonsoftJsonObjectSerializer(settings));
+                options.Serializers.Add(typeof(ModelC), new NewtonsoftJsonObjectSerializer(settings));
             }
             else
-                options.Serializers.Add(typeof(Animal), new NewtonsoftJsonObjectSerializer());
+                options.Serializers.Add(typeof(ModelC), new NewtonsoftJsonObjectSerializer());
 
-            var model = ModelSerializer.Deserialize<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            Envelope<ModelC> m = new Envelope<ModelC>();
+            m.Deserialize(
+                new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)),
+                options: options);
+            Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
             if (!ignoreReadOnly)
             {
-                Assert.That(model.LatinName, Is.EqualTo("Animalia"));
+                Assert.That(model.ReadOnlyProperty, Is.EqualTo("read"));
             }
-            Assert.That(model.Name, Is.EqualTo("Rabbit"));
-            Assert.IsFalse(model.IsHungry);
-            Assert.That(model.Weight, Is.EqualTo(2.5));
 
-            stream = ModelSerializer.Serialize<Animal>(model, options);
+            CatReadOnlyProperty correctCat = new CatReadOnlyProperty(2.5, default, "Cat", false, default);
+            VerifyModels.CheckAnimals(correctCat, model.ModelA, options);
+            Assert.AreEqual("hello", model.ModelT.X);
+            Assert.AreEqual("bye", model.ModelT.Y);
+            stream = ModelSerializer.Serialize(model, options);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
 
-#if NET6_0_OR_GREATER
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
-#endif
 
-            var model2 = ModelSerializer.Deserialize<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
-            VerifyModels.CheckAnimals(model, model2, options);
+            var model2 = ModelSerializer.Deserialize<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
+            ModelC correctModelC = new ModelC("hello", "bye");
+            ModelC.VerifyModelC(correctModelC, model2.ModelT);
         }
 
         // Generate a class that implements the NewtonSoft default contract resolver so that ReadOnly properties are not serialized
@@ -86,6 +93,24 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 }
 
                 return property;
+            }
+        }
+
+        private class ModelC
+        {
+            public ModelC(string x1, string y1)
+            {
+                X = x1;
+                Y = y1;
+            }
+
+            public string X { get; set; }
+            public string Y { get; set; }
+
+            public static void VerifyModelC(ModelC c1, ModelC c2)
+            {
+                Assert.That(c1.X == c2.X);
+                Assert.That(c1.Y == c2.Y);
             }
         }
     }

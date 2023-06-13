@@ -20,13 +20,18 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static Stream Serialize<T>(T model, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
-            // if options.Serializer is set
-            if (options != null && options.Serializer != null)
+            // if options.Serializers is set and the model is in the dictionary, use the serializer
+            if (options != null)
             {
-                System.BinaryData data = options.Serializer.Serialize(model);
-                return data.ToStream();
-            }
+                ObjectSerializer? serializer;
 
+                if (options.Serializers.TryGetValue(typeof(T), out serializer))
+                {
+                    System.BinaryData data = serializer.Serialize(model);
+                    return data.ToStream();
+                }
+            }
+            // else use default STJ serializer
             IJsonSerializable serializable = (model ??= new T()) as IJsonSerializable;
             Stream stream = new MemoryStream();
             serializable.Serialize(stream, options);
@@ -42,13 +47,18 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
-            if (options != null && options.Serializer != null)
+            if (options != null)
             {
-                var obj = options.Serializer.Deserialize(stream, typeof(T), default);
-                if (obj is null)
-                    throw new InvalidOperationException();
-                else
-                    return (T)obj;
+                ObjectSerializer? serializer;
+
+                if (options.Serializers.TryGetValue(typeof(T), out serializer))
+                {
+                    var obj = serializer.Deserialize(stream, typeof(T), default); //problem here T is Envelope<T> and typeof(T) is Envelope<T> but we want typeof(T) to be DogListProperty
+                    if (obj is null)
+                        throw new InvalidOperationException();
+                    else
+                        return (T)obj;
+                }
             }
 
             IJsonSerializable serializable = new T();
@@ -69,14 +79,18 @@ namespace Azure.Core.Serialization
             using StreamWriter writer = new StreamWriter(stream);
             writer.Write(json);
             stream.Position = 0;
+            ObjectSerializer? serializer;
 
-            if (options != null && options.Serializer != null)
+            if (options != null)
             {
-                var obj = options.Serializer.Deserialize(stream, typeof(T), default);
-                if (obj is null)
-                    throw new InvalidOperationException();
-                else
-                    return (T)obj;
+                if (options.Serializers.TryGetValue(typeof(T), out serializer))
+                {
+                    var obj = serializer.Deserialize(stream, typeof(T), default);
+                    if (obj is null)
+                        throw new InvalidOperationException();
+                    else
+                        return (T)obj;
+                }
             }
 
             IJsonSerializable serializable = new T();
