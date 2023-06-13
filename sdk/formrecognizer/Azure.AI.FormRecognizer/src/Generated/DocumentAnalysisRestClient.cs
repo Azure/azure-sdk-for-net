@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Supported Cognitive Services endpoints (protocol and hostname, for
         /// example: https://westus2.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2023-02-28-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public DocumentAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-02-28-preview")
         {
