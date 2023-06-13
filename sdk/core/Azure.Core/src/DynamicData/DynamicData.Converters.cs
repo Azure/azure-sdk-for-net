@@ -27,12 +27,12 @@ namespace Azure.Core.Dynamic
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (Format == UnixFormat)
+                if (Format.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/JsonElementExtensions.cs#L76
                     long unixValue = reader.GetInt64();
                     DateTimeOffset offset = DateTimeOffset.FromUnixTimeSeconds(unixValue);
-                    return offset.DateTime.ToUniversalTime();
+                    return offset.UtcDateTime;
                 }
 
                 string? value = reader.GetString() ??
@@ -48,7 +48,7 @@ namespace Azure.Core.Dynamic
                 DateTime dateTimeValue,
                 JsonSerializerOptions options)
             {
-                if (Format == UnixFormat)
+                if (Format.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#LL19C84-L23C11
                     long unixValue = dateTimeValue.Kind switch
@@ -84,7 +84,7 @@ namespace Azure.Core.Dynamic
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (Format == UnixFormat)
+                if (Format.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/JsonElementExtensions.cs#L76
                     long unixValue = reader.GetInt64();
@@ -103,7 +103,7 @@ namespace Azure.Core.Dynamic
                 DateTimeOffset dateTimeOffsetValue,
                 JsonSerializerOptions options)
             {
-                if (Format == UnixFormat)
+                if (Format.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/Utf8JsonWriterExtensions.cs#L64
                     long unixValue = dateTimeOffsetValue.ToUniversalTime().ToUnixTimeSeconds();

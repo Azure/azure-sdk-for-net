@@ -277,7 +277,7 @@ namespace Azure.Core.Dynamic
         {
             try
             {
-                if (value._options.DateTimeFormat == UnixFormat)
+                if (value._options.DateTimeFormat.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return value.ConvertTo<DateTime>();
                 }
@@ -302,7 +302,7 @@ namespace Azure.Core.Dynamic
         {
             try
             {
-                if (value._options.DateTimeFormat == UnixFormat)
+                if (value._options.DateTimeFormat.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return value.ConvertTo<DateTimeOffset>();
                 }
