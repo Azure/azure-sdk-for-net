@@ -2014,6 +2014,10 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
         /// support of custom action features.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions">The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2029,6 +2033,203 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        public virtual async Task<AnalyzeActionsOperation> AnalyzeActionsAsync(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            TextAnalyticsActions actions,
+            string language = default,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.AnalyzeActionsAsync(waitUntil, documents, actions, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual AnalyzeActionsOperation AnalyzeActions(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            TextAnalyticsActions actions,
+            string language = default,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.AnalyzeActions(waitUntil, documents, actions, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual AnalyzeActionsOperation AnalyzeActions(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            TextAnalyticsActions actions,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.AnalyzeActions(waitUntil, documents, actions, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual async Task<AnalyzeActionsOperation> AnalyzeActionsAsync(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            TextAnalyticsActions actions,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.AnalyzeActionsAsync(waitUntil, documents, actions, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions">The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(
             IEnumerable<string> documents,
             TextAnalyticsActions actions,
@@ -2075,6 +2276,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeActionsOperation StartAnalyzeActions(
             IEnumerable<string> documents,
             TextAnalyticsActions actions,
@@ -2120,6 +2322,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeActionsOperation StartAnalyzeActions(
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
@@ -2164,6 +2367,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,

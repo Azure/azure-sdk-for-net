@@ -269,8 +269,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationExtractiveSummarize",
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions);
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_batchConvenienceDocuments, batchActions);
             Assert.IsTrue(operation.HasCompleted);
 
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();

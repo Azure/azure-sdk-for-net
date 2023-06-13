@@ -313,8 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_englishBatchConvenienceDocuments, batchActions);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page.
@@ -348,8 +347,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_englishBatchConvenienceDocuments, batchActions);
             Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page.
