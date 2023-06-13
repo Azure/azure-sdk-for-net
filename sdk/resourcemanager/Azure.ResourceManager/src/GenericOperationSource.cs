@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,11 +26,14 @@ namespace Azure.ResourceManager
             {
                 throw new InvalidOperationException("Type T should implement ISerializable. ");
             }
-            var model = Activator.CreateInstance(typeof(T));
+            //var model = Activator.CreateInstance(typeof(T));
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            ((ISerializable)model).TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
-            return (T)model;
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ModelJsonConverter());
+            var result = JsonSerializer.Deserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), typeof(T), options);
+            //((ISerializable)model).TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            return (T)result;
         }
     }
 }
