@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -20,7 +21,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://my-account-name.purview.azure.com/share";
+            var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var sentShareClient = new SentSharesClient(endPoint, credential);
 
             Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId");

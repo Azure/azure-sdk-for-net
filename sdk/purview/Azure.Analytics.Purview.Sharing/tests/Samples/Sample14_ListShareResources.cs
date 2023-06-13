@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples;
 
@@ -23,7 +24,7 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://my-account-name.purview.azure.com/share";
+            var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 #else
         var shareResourcesClient = GetShareResourcesClient();

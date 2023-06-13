@@ -30,13 +30,13 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C# Snippet:SentSharesClientSample_CreateSentSharesClient
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 ```
 
 ```C# Snippet:ReceivedSharesClientSample_CreateReceivedSharesClient
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 ```
 
@@ -70,7 +70,7 @@ The following section shows you how to initialize and authenticate your client a
 
 ```C# Snippet:SentSharesClientSample_CreateSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 var data = new
@@ -111,7 +111,7 @@ Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSent
 
 ```C# Snippet:SentSharesClientSample_GetSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 Response response = await sentShareClient.GetSentShareAsync("sentShareId");
@@ -121,7 +121,7 @@ Response response = await sentShareClient.GetSentShareAsync("sentShareId");
 
 ```C# Snippet:SentSharesClientSample_ListSentShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referenceName").ToEnumerableAsync();
@@ -131,7 +131,7 @@ List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referen
 
 ```C# Snippet:SentSharesClientSample_CreateSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 var data = new
@@ -151,7 +151,7 @@ Response response = await sentShareClient.CreateSentShareInvitationAsync("sentSh
 
 ```C# Snippet:SentSharesClientSample_GetSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId");
@@ -161,7 +161,7 @@ Response response = await sentShareClient.GetSentShareInvitationAsync("sentShare
 
 ```C# Snippet:SentSharesClientSample_ListSentShareInvitations
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId").ToEnumerableAsync();
@@ -171,7 +171,7 @@ List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInv
 
 ```C# Snippet:ReceivedSharesClientSample_ListDetachedReceivedShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
@@ -181,7 +181,7 @@ List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedRecei
 
 ```C# Snippet:ReceivedSharesClientSample_CreateReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 var data = new
@@ -216,7 +216,7 @@ Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplac
 
 ```C# Snippet:ReceivedSharesClientSample_GetReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
@@ -226,7 +226,7 @@ Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedS
 
 ```C# Snippet:ReceivedSharesClientSample_ListAttachedReceivedShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName").ToEnumerableAsync();
@@ -236,7 +236,7 @@ List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedRecei
 
 ```C# Snippet:ReceivedSharesClientSample_DeleteReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId");
@@ -246,7 +246,7 @@ Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUn
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId");
@@ -256,7 +256,7 @@ Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitU
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId");
@@ -266,7 +266,7 @@ Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Compl
 
 ```C# Snippet:ShareResourcesClientExample_ListShareResources
 var credential = new DefaultAzureCredential();
-var endPoint = "https://my-account-name.purview.azure.com/share";
+var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 
 Response operation = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
