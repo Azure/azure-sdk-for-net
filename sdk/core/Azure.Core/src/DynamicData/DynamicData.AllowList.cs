@@ -157,6 +157,11 @@ namespace Azure.Core.Dynamic
                         continue;
                     }
 
+                    if (IsAllowedCollectionType(property.PropertyType))
+                    {
+                        continue;
+                    }
+
                     // Trust but verify
                     if (ancestorTypes.Contains(property.PropertyType))
                     {
