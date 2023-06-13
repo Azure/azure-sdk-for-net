@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)
         /// </summary>
         /// <returns>The Task which Commits the list of ids</returns>
-        public abstract Task CompleteTransferAsync(CancellationToken cancellationToken = default);
+        public abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the respective storage resource.

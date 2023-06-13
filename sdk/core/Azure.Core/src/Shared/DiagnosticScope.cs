@@ -92,6 +92,11 @@ namespace Azure.Core.Pipeline
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
+        public void SetDisplayName(string displayName)
+        {
+            _activityAdapter?.SetDisplayName(displayName);
+        }
+
         public void SetStartTime(DateTime dateTime)
         {
             _activityAdapter?.SetStartTime(dateTime);
@@ -181,6 +186,7 @@ namespace Azure.Core.Pipeline
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
+            private string? _displayName;
 
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
@@ -334,7 +340,18 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
+                if (_displayName != null)
+                {
+                    _currentActivity?.SetDisplayName(_displayName);
+                }
+
                 return _currentActivity;
+            }
+
+            public void SetDisplayName(string displayName)
+            {
+                _displayName = displayName;
+                _currentActivity?.SetDisplayName(displayName);
             }
 
             private Activity? StartActivitySourceActivity()
@@ -435,6 +452,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
         private static MethodInfo? ParseActivityContextMethod;
+        private static Action<Activity, string>? SetDisplayNameMethod;
 
         public static object? GetCustomProperty(this Activity activity, string propertyName)
         {
@@ -564,6 +582,30 @@ namespace Azure.Core.Pipeline
                 }
             }
             return GetAllDataRequestedMethod(activity);
+        }
+
+        public static void SetDisplayName(this Activity activity, string displayName)
+        {
+            if (displayName != null)
+            {
+                if (SetDisplayNameMethod == null)
+                {
+                    var method = typeof(Activity).GetProperty("DisplayName")?.SetMethod;
+                    if (method == null)
+                    {
+                        SetDisplayNameMethod = (_, _) => { };
+                    }
+                    else
+                    {
+                        var displayNameParameter = Expression.Parameter(typeof(string));
+                        var convertedParameter = Expression.Convert(displayNameParameter, method.GetParameters()[0].ParameterType);
+                        SetDisplayNameMethod = Expression.Lambda<Action<Activity, string>>(
+                            Expression.Call(ActivityParameter, method, convertedParameter),
+                            ActivityParameter, displayNameParameter).Compile();
+                    }
+                }
+                SetDisplayNameMethod(activity, displayName);
+            }
         }
 
         public static void SetTraceState(this Activity activity, string? tracestate)

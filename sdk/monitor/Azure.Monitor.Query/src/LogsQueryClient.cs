@@ -322,19 +322,24 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
-        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// LogsTable table = result.Value.Table;
-        ///
-        /// foreach (LogsTableRow row in table.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
         ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
         /// }
         /// </code>
         /// </example>
@@ -356,19 +361,24 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
-        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// LogsTable table = result.Value.Table;
-        ///
-        /// foreach (LogsTableRow row in table.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
         ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
         /// }
         /// </code>
         /// </example>
@@ -381,7 +391,7 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = await QueryWorkspaceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
+            Response<LogsQueryResult> response = await QueryResourceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
         }
@@ -390,19 +400,24 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
-        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// LogsTable table = result.Value.Table;
-        ///
-        /// foreach (LogsTableRow row in table.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
         ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
         /// }
         /// </code>
         /// </example>
@@ -434,19 +449,24 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
-        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// LogsTable table = result.Value.Table;
-        ///
-        /// foreach (LogsTableRow row in table.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
         ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
         /// }
         /// </code>
         /// </example>

@@ -308,25 +308,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task SingleLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-
-            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(
-                s_batchConvenienceDocuments,
-                TestEnvironment.SingleClassificationProjectName,
-                TestEnvironment.SingleClassificationDeploymentName,
-                "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationSingleLabelClassifyActionNotSupported()
         {
@@ -344,34 +325,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationSingleLabelClassifyWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            List<string> documents = s_batchConvenienceDocuments;
-            TextAnalyticsActions actions = new()
-            {
-                SingleLabelClassifyActions = new List<SingleLabelClassifyAction>()
-                {
-                    new SingleLabelClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
-                },
-                DisplayName = "SingleLabelClassifyWithAutoDetectedLanguage",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<SingleLabelClassifyActionResult> actionResults = resultCollection.SingleLabelClassifyResults;
-            Assert.IsNotNull(actionResults);
-
-            ClassifyDocumentResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
-        }
-
         private void ValidateSummaryDocumentResult(ClassificationCategory? classification)
         {
             Assert.IsNotNull(classification);
@@ -383,8 +336,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateSummaryBatchResult(
             ClassifyDocumentResultCollection results,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             Assert.AreEqual(results.ProjectName, TestEnvironment.SingleClassificationProjectName);
             Assert.AreEqual(results.DeploymentName, TestEnvironment.SingleClassificationDeploymentName);
@@ -417,21 +369,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
-                }
-
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateSummaryDocumentResult(result.ClassificationCategories.FirstOrDefault());

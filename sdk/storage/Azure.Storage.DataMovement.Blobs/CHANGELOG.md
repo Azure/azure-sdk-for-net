@@ -3,17 +3,21 @@
 ## 12.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added `ResourceOptions` to `BlobStorageResourceContainerOptions` which allows setting resource specific options on all resources in a container transfer.
 
 ### Breaking Changes
+- Removed `Traits` and `States` from `BlobStorageResourceContainerOptions`.
+- Removed `CopyMethod` from `BlobStorageResourceContainerOptions`. Use `ResouceOptions.CopyMethod` now.
 
 ### Bugs Fixed
+- Fixed bug where the extension methods `BlobContainerClient.StartUploadDirectoryAsync` and `StartDownloadToDirectoryAsync` throws an exception when attempting to lazy construct the `TransferManager`.
 
 ### Other Changes
 
 ## 12.0.0-beta.2 (2023-04-26)
 - This release contains bug fixes to improve quality.
 - Added option to `BlobStorageResourceContainerOptions` to choose `BlobType` when uploading blobs.
-- Added the folloiwng extension methods to upload and download blob virtual directories using the `BlobContainerClient`:
+- Added the following extension methods to upload and download blob virtual directories using the `BlobContainerClient`:
     - `BlobContainerClient.StartDownloadToDirectoryAsync`
     - `BlobContainerClient.StartUploadDirectoryAsync`
 

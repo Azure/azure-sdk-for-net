@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
@@ -42,10 +43,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    if (LogResource?.MetricTelemetry != null)
-                    {
-                        telemetryItems.Add(LogResource.MetricTelemetry);
-                    }
                     exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 }
             }

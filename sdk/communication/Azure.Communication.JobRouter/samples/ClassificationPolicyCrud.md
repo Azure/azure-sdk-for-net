@@ -82,6 +82,17 @@ Console.WriteLine($"Classification policy successfully update with new prioritiz
 
 *NOTE: It is not possible to update a single QueueSelectorAttachment or WorkerSelectorAttachment. In order to add QueueSelectorAttachment to an already existing set of QueueSelectorAttachment(s), either specify all the QueueSelectorAttachment(s) again OR perform a Get operation first to retrieve the current value of the classification policy (preferred).
 
+## Remove from classification policy
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp
+Response updatedClassificationPolicyWithoutName = routerAdministrationClient.UpdateClassificationPolicy(classificationPolicyId,
+    RequestContent.Create(new { Name = (string?)null }));
+
+Response<ClassificationPolicy> queriedClassificationPolicyWithoutName = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
+
+Console.WriteLine($"Classification policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedClassificationPolicyWithoutName.Value.Name)}");
+```
+
 ## List classification policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies

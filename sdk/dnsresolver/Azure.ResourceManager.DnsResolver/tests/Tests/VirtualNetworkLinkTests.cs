@@ -31,10 +31,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             _dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
             var resourceGroup = await CreateResourceGroupAsync();
 
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
                 await CreateVirtualNetworkAsync();
-            }
 
             //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";

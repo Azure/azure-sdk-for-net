@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
         /// <param name="memory"> Recommended memory range. </param>
         /// <param name="vCpus"> Recommended vCPU range. </param>
-        internal RecommendedMachineConfiguration(ResourceRange memory, ResourceRange vCpus)
+        internal RecommendedMachineConfiguration(DevCenterResourceRange memory, DevCenterResourceRange vCpus)
         {
             Memory = memory;
             VCpus = vCpus;
         }
 
         /// <summary> Recommended memory range. </summary>
-        public ResourceRange Memory { get; }
+        public DevCenterResourceRange Memory { get; }
         /// <summary> Recommended vCPU range. </summary>
-        public ResourceRange VCpus { get; }
+        public DevCenterResourceRange VCpus { get; }
     }
 }

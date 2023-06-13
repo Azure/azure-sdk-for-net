@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, EnvironmentRole>> roles = default;
+            Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roles"u8))
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    Dictionary<string, EnvironmentRole> dictionary = new Dictionary<string, EnvironmentRole>();
+                    Dictionary<string, DevCenterEnvironmentRole> dictionary = new Dictionary<string, DevCenterEnvironmentRole>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EnvironmentRole.DeserializeEnvironmentRole(property0.Value));
+                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value));
                     }
                     roles = dictionary;
                     continue;

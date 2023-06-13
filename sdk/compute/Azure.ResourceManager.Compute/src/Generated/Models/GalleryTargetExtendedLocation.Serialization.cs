@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<GalleryExtendedLocation> extendedLocation = default;
             Optional<int> extendedLocationReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
+            Optional<EdgeZoneStorageAccountType> storageAccountType = default;
             Optional<EncryptionImages> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    storageAccountType = new EdgeZoneStorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))

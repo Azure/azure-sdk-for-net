@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.Shared
 {
@@ -100,6 +101,9 @@ namespace Azure.Storage.Shared
             bool async,
             CancellationToken cancellationToken)
         {
+            Argument.AssertInRange(minCount, 0L, maxCount, nameof(minCount));
+            Argument.AssertInRange(maxCount, minCount, long.MaxValue, nameof(maxCount));
+
             long totalRead = 0;
 
             long previousPosition = stream.Position;

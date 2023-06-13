@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
-        public static SelfHelpDiagnosticResourceCollection GetSelfHelpDiagnosticResources(this ArmClient client, ResourceIdentifier scope)
+        public static SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnosticResources();
+            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnostics();
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticResourceAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetSelfHelpDiagnosticResources(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+            return await client.GetSelfHelpDiagnostics(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetSelfHelpDiagnosticResources(scope).Get(diagnosticsResourceName, cancellationToken);
+            return client.GetSelfHelpDiagnostics(scope).Get(diagnosticsResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).CheckNameAvailabilityDiagnosticAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetArmResourceExtensionClient(client, scope).CheckSelfHelpNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityDiagnostic(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).CheckNameAvailabilityDiagnostic(content, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).CheckSelfHelpNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<SolutionMetadataResource> GetDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<SolutionMetadataResource> GetDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public static Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiscoverySolutions(filter, skiptoken, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiscoverySolutions(filter, skiptoken, cancellationToken);
         }
     }
 }
