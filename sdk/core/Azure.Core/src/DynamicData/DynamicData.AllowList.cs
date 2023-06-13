@@ -24,7 +24,12 @@ namespace Azure.Core.Dynamic
 
             public static bool IsAllowedType(Type type)
             {
-                if (IsAllowedKnownType(type))
+                if (IsAllowedPrimitive(type))
+                {
+                    return true;
+                }
+
+                if (IsAllowedCollectionType(type))
                 {
                     return true;
                 }
@@ -32,19 +37,7 @@ namespace Azure.Core.Dynamic
                 return IsAllowedPocoType(type, new HashSet<Type>());
             }
 
-            private static bool IsAllowedKnownType(Type type)
-            {
-                return IsAllowedPrimitive(type) ||
-                    type == typeof(object) ||
-                    type == typeof(JsonElement) ||
-                    type == typeof(JsonDocument) ||
-                    // We assume these were pre-validated
-                    type == typeof(MutableJsonDocument) ||
-                    type == typeof(MutableJsonElement) ||
-                    type == typeof(DynamicData) ||
-                    IsAllowedCollectionType(type);
-            }
-
+            // Primitive means "not a collection and not a POCO"
             private static bool IsAllowedPrimitive(Type type)
             {
                 return
@@ -56,7 +49,19 @@ namespace Azure.Core.Dynamic
                     type == typeof(TimeSpan) ||
                     type == typeof(Uri) ||
                     type == typeof(Guid) ||
-                    type == typeof(ETag);
+                    type == typeof(ETag) ||
+
+                    // Allowable for DynamicData assignments.
+                    type == typeof(JsonElement) ||
+                    type == typeof(JsonDocument) ||
+                    type == typeof(MutableJsonDocument) ||
+                    type == typeof(MutableJsonElement) ||
+                    type == typeof(DynamicData) ||
+
+                    // We allow object so we can allow heterogenous object[] and
+                    // Dictionary<string, object>. It also means we have to validate
+                    // the types of values as well.
+                    type == typeof(object);
             }
 
             private static bool IsAllowedCollectionType(Type type)
@@ -76,7 +81,7 @@ namespace Azure.Core.Dynamic
                 if (type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 {
                     Type[] types = type.GetGenericArguments();
-                    if (IsAllowedType(types[0]) && IsAllowedType(types[1]))
+                    if (types[0] == typeof(string) && IsAllowedType(types[1]))
                     {
                         return true;
                     }
@@ -147,7 +152,7 @@ namespace Azure.Core.Dynamic
                         return false;
                     }
 
-                    if (IsAllowedKnownType(property.PropertyType))
+                    if (IsAllowedPrimitive(property.PropertyType))
                     {
                         continue;
                     }
