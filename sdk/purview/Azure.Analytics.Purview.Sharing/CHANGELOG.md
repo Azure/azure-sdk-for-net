@@ -4,7 +4,12 @@
 
 ### Features Added
 
-- Add new List Share Resources API
+- Added the new share resource capability that allows listing resources associated with sent and received shares.
+
+### Breaking Changes
+
+- Removed skipToken as a parameter from all client list calls
+- Constructor for clients now takes in Uri object as oppose to a string parameter
 
 ## 1.0.0-beta.2 (2023-03-13)
 
