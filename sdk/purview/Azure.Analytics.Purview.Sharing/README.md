@@ -269,7 +269,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 
-Response operation = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
+List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 ```
 
 

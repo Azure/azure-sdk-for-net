@@ -23,15 +23,15 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
         #region Snippet:ShareResourcesClientExample_ListShareResources
 
 #if SNIPPET
-            var credential = new DefaultAzureCredential();
-            var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
-            var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
+        var credential = new DefaultAzureCredential();
+        var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
+        var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 #else
         var shareResourcesClient = GetShareResourcesClient();
 #endif
-
+            
 #if SNIPPET
-            Response operation = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
+        List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 #else
         List<BinaryData> shareResources = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 #endif
