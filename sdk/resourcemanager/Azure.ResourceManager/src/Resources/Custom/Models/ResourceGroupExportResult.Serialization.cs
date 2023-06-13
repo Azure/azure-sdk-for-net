@@ -6,29 +6,27 @@
 #nullable disable
 
 using System;
-using System.Buffers;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceGroupExportResult : ISerializable
+    public partial class ResourceGroupExportResult : IModelSerializable
     {
-        bool ISerializable.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
         {
-            using var document = JsonDocument.Parse(BinaryData.FromBytes(data.ToArray()).ToString());
-            Deserialize(document.RootElement);
-            bytesConsumed = data.Length;
-            return true;
+            ((IUtf8JsonSerializable)this).Write(writer);
         }
 
-        bool ISerializable.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="model"></param>
+        protected void CopyModel(ResourceGroupExportResult model)
         {
-            var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
-            ((IUtf8JsonSerializable)this).Write(writer);
-            bytesWritten = buffer.Length;
-            return true;
+            var that = model as ResourceGroupExportResult;
+            this.Template = that.Template;
+            this.Error = that.Error;
         }
 
         private void Deserialize(JsonElement element)

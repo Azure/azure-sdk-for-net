@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -34,7 +35,10 @@ namespace Azure.ResourceManager
             var model = _resource.DataBag;
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            model.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ModelJsonConverter());
+            var result = JsonSerializer.Deserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), typeof(T), options);
+            //model.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, model }, null);
         }
     }
