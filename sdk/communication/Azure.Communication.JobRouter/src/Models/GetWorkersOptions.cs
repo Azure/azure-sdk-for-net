@@ -11,7 +11,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// If specified, filter workers by worker status.
         /// </summary>
-        public WorkerStateSelector Status { get; set; }
+        public WorkerStateSelector? Status { get; set; } = null;
 
         /// <summary>
         /// Worker available in the particular channel.

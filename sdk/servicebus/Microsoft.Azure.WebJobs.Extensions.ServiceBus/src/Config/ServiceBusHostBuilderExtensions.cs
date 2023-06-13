@@ -5,6 +5,8 @@ using System;
 using System.Net;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
 using Microsoft.Extensions.Azure;
@@ -101,6 +103,26 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddAzureClientsCore();
             builder.Services.TryAddSingleton<MessagingProvider>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
+            return builder;
+        }
+
+        public static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        {
+            IServiceProvider serviceProvider = null;
+            Lazy<ServiceBusScalerProvider> scalerProvider = new Lazy<ServiceBusScalerProvider>(() => new ServiceBusScalerProvider(serviceProvider, triggerMetadata));
+
+            builder.Services.AddSingleton<IScaleMonitorProvider>(resolvedServiceProvider =>
+            {
+                serviceProvider = serviceProvider ?? resolvedServiceProvider;
+                return scalerProvider.Value;
+            });
+
+            builder.Services.AddSingleton<ITargetScalerProvider>(resolvedServiceProvider =>
+            {
+                serviceProvider = serviceProvider ?? resolvedServiceProvider;
+                return scalerProvider.Value;
+            });
+
             return builder;
         }
     }

@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="AppendBlobStorageResourceOptions.CopyMethod"/>
+        /// the options bag, see <see cref="BlobStorageResourceOptions.CopyMethod"/>
         /// </summary>
         public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
@@ -270,7 +270,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;

@@ -17,10 +17,10 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
-            if (Optional.IsDefined(PlaySourceCacheId))
+            if (Optional.IsDefined(PlaySourceId))
             {
-                writer.WritePropertyName("playSourceCacheId"u8);
-                writer.WriteStringValue(PlaySourceCacheId);
+                writer.WritePropertyName("playSourceId"u8);
+                writer.WriteStringValue(PlaySourceId);
             }
             if (Optional.IsDefined(FileSource))
             {
