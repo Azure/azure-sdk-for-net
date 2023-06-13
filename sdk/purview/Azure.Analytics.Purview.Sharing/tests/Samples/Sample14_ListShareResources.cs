@@ -29,7 +29,7 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
 #else
         var shareResourcesClient = GetShareResourcesClient();
 #endif
-            
+
 #if SNIPPET
         List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 #else
