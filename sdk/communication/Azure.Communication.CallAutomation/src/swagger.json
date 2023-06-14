@@ -2826,7 +2826,6 @@
       "enum": [
         "dtmf",
         "speech",
-        "speechOrDtmf",
         "choices"
       ],
       "type": "string",
@@ -3165,18 +3164,10 @@
           "type": "string",
           "readOnly": true
         },
-        "hangup": {
-          "$ref": "#/definitions/Hangup",
-          "description": "Hangup data from the Conversation Conductor",
+        "ivrContext": {
+          "description": "Ivr Context",
+          "type": "object",
           "readOnly": true
-        }
-      }
-    },
-    "Hangup": {
-      "type": "object",
-      "properties": {
-        "reason": {
-          "type": "string"
         }
       }
     },
@@ -3265,18 +3256,15 @@
           "type": "string",
           "readOnly": true
         },
-        "languageChange": {
-          "$ref": "#/definitions/LanguageChange",
-          "description": "LanguageChange data from the Conversation Conductor",
-          "readOnly": true
-        }
-      }
-    },
-    "LanguageChange": {
-      "type": "object",
-      "properties": {
         "selectedLanguage": {
-          "type": "string"
+          "description": "Selected Language",
+          "type": "string",
+          "readOnly": true
+        },
+        "ivrContext": {
+          "description": "Ivr Context",
+          "type": "object",
+          "readOnly": true
         }
       }
     },

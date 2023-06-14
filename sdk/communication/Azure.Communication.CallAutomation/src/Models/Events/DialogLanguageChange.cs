@@ -27,7 +27,8 @@ namespace Azure.Communication.CallAutomation
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
             DialogId = internalEvent.DialogId;
-            LanguageChange = internalEvent.LanguageChange;
+            SelectedLanguage = internalEvent.SelectedLanguage;
+            IvrContext = internalEvent.IvrContext;
         }
 
         /// <summary> Determines the type of the dialog. </summary>
@@ -37,7 +38,10 @@ namespace Azure.Communication.CallAutomation
         public string DialogId { get; }
 
         /// <summary> LanguageChange data </summary>
-        public LanguageChange LanguageChange { get; }
+        public string SelectedLanguage { get; }
+
+        /// <summary> IvrContext </summary>
+        public object IvrContext { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogLanguageChange"/> event.

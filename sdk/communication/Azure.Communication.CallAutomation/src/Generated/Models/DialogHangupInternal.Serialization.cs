@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<ResultInformation> resultInformation = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> dialogId = default;
-            Optional<Hangup> hangup = default;
+            Optional<object> ivrContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -72,17 +72,17 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     dialogId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hangup"u8))
+                if (property.NameEquals("ivrContext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hangup = Hangup.DeserializeHangup(property.Value);
+                    ivrContext = property.Value.GetObject();
                     continue;
                 }
             }
-            return new DialogHangupInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, hangup.Value);
+            return new DialogHangupInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value);
         }
     }
 }

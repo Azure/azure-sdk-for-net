@@ -25,8 +25,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        /// <param name="hangup"> Hangup data from the Conversation Conductor. </param>
-        internal DialogHangupInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, Hangup hangup)
+        /// <param name="ivrContext"> Ivr Context. </param>
+        internal DialogHangupInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, object ivrContext)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             ResultInformation = resultInformation;
             DialogInputType = dialogInputType;
             DialogId = dialogId;
-            Hangup = hangup;
+            IvrContext = ivrContext;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
         public DialogInputType? DialogInputType { get; }
         /// <summary> Dialog ID. </summary>
         public string DialogId { get; }
-        /// <summary> Hangup data from the Conversation Conductor. </summary>
-        public Hangup Hangup { get; }
+        /// <summary> Ivr Context. </summary>
+        public object IvrContext { get; }
     }
 }

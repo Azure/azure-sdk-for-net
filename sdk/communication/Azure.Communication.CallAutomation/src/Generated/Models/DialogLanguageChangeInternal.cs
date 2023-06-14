@@ -25,8 +25,9 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        /// <param name="languageChange"> LanguageChange data from the Conversation Conductor. </param>
-        internal DialogLanguageChangeInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, LanguageChange languageChange)
+        /// <param name="selectedLanguage"> Selected Language. </param>
+        /// <param name="ivrContext"> Ivr Context. </param>
+        internal DialogLanguageChangeInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, string selectedLanguage, object ivrContext)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -35,7 +36,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
             ResultInformation = resultInformation;
             DialogInputType = dialogInputType;
             DialogId = dialogId;
-            LanguageChange = languageChange;
+            SelectedLanguage = selectedLanguage;
+            IvrContext = ivrContext;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -52,7 +54,9 @@ namespace Azure.Communication.CallAutomation.Models.Events
         public DialogInputType? DialogInputType { get; }
         /// <summary> Dialog ID. </summary>
         public string DialogId { get; }
-        /// <summary> LanguageChange data from the Conversation Conductor. </summary>
-        public LanguageChange LanguageChange { get; }
+        /// <summary> Selected Language. </summary>
+        public string SelectedLanguage { get; }
+        /// <summary> Ivr Context. </summary>
+        public object IvrContext { get; }
     }
 }

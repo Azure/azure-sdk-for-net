@@ -233,22 +233,6 @@ namespace Azure.Communication.CallAutomation
             return new UserConsent(recording);
         }
 
-        /// <summary> Initializes a new instance of Hangup. </summary>
-        /// <param name="reason"></param>
-        /// <returns> A new <see cref="CallAutomation.Hangup"/> instance for mocking. </returns>
-        public static Hangup Hangup(string reason = null)
-        {
-            return new Hangup(reason);
-        }
-
-        /// <summary> Initializes a new instance of LanguageChange. </summary>
-        /// <param name="selectedLanguage"></param>
-        /// <returns> A new <see cref="CallAutomation.LanguageChange"/> instance for mocking. </returns>
-        public static LanguageChange LanguageChange(string selectedLanguage = null)
-        {
-            return new LanguageChange(selectedLanguage);
-        }
-
         /// <summary> Initializes a new instance of SensitiveFlag. </summary>
         /// <param name="recording"></param>
         /// <returns> A new <see cref="CallAutomation.SensitiveFlag"/> instance for mocking. </returns>

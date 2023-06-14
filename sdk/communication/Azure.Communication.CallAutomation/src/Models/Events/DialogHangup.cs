@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
-            Hangup = internalEvent.Hangup;
+            IvrContext = internalEvent.IvrContext;
             DialogId = internalEvent.DialogId;
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Hangup struct
         /// </summary>
-        public Hangup Hangup { get; }
+        public object IvrContext { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogHangup"/> event.
