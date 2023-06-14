@@ -836,6 +836,6 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// TODO
         /// </summary>
-        internal ResourceGroupData DataType => throw new NotImplementedException();
+        internal static Type DataType => typeof(ResourceGroupData);
     }
 }

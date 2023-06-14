@@ -32,12 +32,12 @@ namespace Azure.ResourceManager
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter());
-            var property = typeof(T).GetProperty("DataType", BindingFlags.NonPublic | BindingFlags.Instance);
+            var property = typeof(T).GetProperty("DataType", BindingFlags.NonPublic | BindingFlags.Static);
             if (property is null)
             {
                 throw new InvalidOperationException("Can't get data type from resrouce type");
             }
-            var dataType = property.PropertyType;
+            var dataType = (Type)property.GetValue(null, null);
             var data = JsonSerializer.Deserialize(response.Content, dataType, options);
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }
