@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedCcfResource> GetManagedCcfsAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedCcfResource> GetManagedCcfs(string filter = null, CancellationToken cancellationToken = default)
