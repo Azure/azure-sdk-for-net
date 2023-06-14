@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: MeterDetailsResponse.meterName
         /// </param>
         /// <param name="meterCategory">
-        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
+        /// The category of the meter, for example, 'Cloud services', 'Networking', etc..
         /// Serialized Name: MeterDetailsResponse.meterCategory
         /// </param>
         /// <param name="meterSubCategory">
-        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
+        /// The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc..
         /// Serialized Name: MeterDetailsResponse.meterSubCategory
         /// </param>
         /// <param name="unitOfMeasure">
-        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
+        /// The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc.
         /// Serialized Name: MeterDetailsResponse.unitOfMeasure
         /// </param>
         /// <param name="serviceFamily">
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string MeterName { get; }
         /// <summary>
-        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
+        /// The category of the meter, for example, 'Cloud services', 'Networking', etc..
         /// Serialized Name: MeterDetailsResponse.meterCategory
         /// </summary>
         public string MeterCategory { get; }
         /// <summary>
-        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
+        /// The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc..
         /// Serialized Name: MeterDetailsResponse.meterSubCategory
         /// </summary>
         public string MeterSubCategory { get; }
         /// <summary>
-        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
+        /// The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc.
         /// Serialized Name: MeterDetailsResponse.unitOfMeasure
         /// </summary>
         public string UnitOfMeasure { get; }

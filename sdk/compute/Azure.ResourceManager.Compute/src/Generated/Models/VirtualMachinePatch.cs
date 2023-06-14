@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </summary>
         public VirtualMachinePriorityType? Priority { get; set; }
-        /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2017-10-30-preview. </summary>
+        /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </summary>
         public VirtualMachineEvictionPolicyType? EvictionPolicy { get; set; }
         /// <summary> Specifies the billing related details of a Azure Spot virtual machine. Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string VmId { get; }
         /// <summary> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </summary>
         public string ExtensionsTimeBudget { get; set; }
-        /// <summary> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the &apos;virtualMachineScaleSet&apos; property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have &apos;platformFaultDomainCount&apos; greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </summary>
+        /// <summary> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </summary>
         public int? PlatformFaultDomain { get; set; }
         /// <summary> Specifies Scheduled Event related configurations. </summary>
         public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }

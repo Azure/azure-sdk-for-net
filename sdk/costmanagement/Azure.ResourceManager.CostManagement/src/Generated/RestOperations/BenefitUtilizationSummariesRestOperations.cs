@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: &apos;Daily&apos; and &apos;Monthly&apos;. </summary>
+        /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
