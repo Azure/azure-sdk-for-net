@@ -120,7 +120,6 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <!-- Accepts version 1.5.0 up to 1.5.x on update, but not 1.6 and higher. -->
     <PackageReference Update="OpenTelemetry" Version="[1.5.0, 1.6.0)" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.5.0" />
     <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" Version="1.0.0-beta.4" />
