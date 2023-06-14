@@ -101,7 +101,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the &quot;user region&quot; parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         /// 
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -149,7 +149,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the &quot;user region&quot; parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         /// 
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -627,15 +627,15 @@ namespace Azure.Maps.Rendering
         /// <param name="style"> Map style to be returned. Possible values are main and dark. </param>
         /// <param name="zoom"> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details. </param>
         /// <param name="center">
-        /// Coordinates of the center point. Format: &apos;lon,lat&apos;. Projection used
+        /// Coordinates of the center point. Format: 'lon,lat'. Projection used
         /// - EPSG:3857. Longitude range: -180 to 180. Latitude range: -85 to 85. 
         /// 
         /// Note: Either center or bbox are required parameters. They are
         /// mutually exclusive.
         /// </param>
         /// <param name="boundingBoxPrivate">
-        /// Bounding box. Projection used - EPSG:3857. Format : &apos;minLon, minLat,
-        /// maxLon, maxLat&apos;. 
+        /// Bounding box. Projection used - EPSG:3857. Format : 'minLon, minLat,
+        /// maxLon, maxLat'. 
         /// 
         /// Note: Either bbox or center are required
         /// parameters. They are mutually exclusive. It shouldn’t be used with
@@ -655,7 +655,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the &quot;user region&quot; parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         /// 
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -693,7 +693,7 @@ namespace Azure.Maps.Rendering
         /// the locations and labels. Style modifiers each have a two-letter name. These abbreviated names are used to help
         /// reduce the length of the URL.
         /// 
-        /// To change the color of the pushpin, use the &apos;co&apos; style modifier and specify the color using the HTML/CSS RGB color
+        /// To change the color of the pushpin, use the 'co' style modifier and specify the color using the HTML/CSS RGB color
         /// format which is a six-digit hexadecimal number (the three-digit form is not supported). For example, to use
         /// a deep pink color which you would specify as #FF1493 in CSS, use
         /// 
@@ -702,38 +702,38 @@ namespace Azure.Maps.Rendering
         /// ### Pushpin Labels
         /// 
         /// To add a label to the pins, put the label in single quotes just before the coordinates. For example, to label
-        /// three pins with the values &apos;1&apos;, &apos;2&apos;, and &apos;3&apos;, use
+        /// three pins with the values '1', '2', and '3', use
         /// 
-        /// `pins=default||&apos;1&apos;-122 45|&apos;2&apos;-119.5 43.2|&apos;3&apos;-121.67 47.12`
+        /// `pins=default||'1'-122 45|'2'-119.5 43.2|'3'-121.67 47.12`
         /// 
-        /// There is a built in pushpin style called &apos;none&apos; that does not display a pushpin image. You can use this if
+        /// There is a built in pushpin style called 'none' that does not display a pushpin image. You can use this if
         /// you want to display labels without any pin image. For example,
         /// 
-        /// `pins=none||&apos;A&apos;-122 45|&apos;B&apos;-119.5 43.2`
+        /// `pins=none||'A'-122 45|'B'-119.5 43.2`
         /// 
-        /// To change the color of the pushpin labels, use the &apos;lc&apos; label color style modifier. For example, to use pink
+        /// To change the color of the pushpin labels, use the 'lc' label color style modifier. For example, to use pink
         /// pushpins with black labels, use
         /// 
         /// `pins=default|coFF1493|lc000000||-122 45`
         /// 
-        /// To change the size of the labels, use the &apos;ls&apos; label size style modifier. The label size represents the approximate
+        /// To change the size of the labels, use the 'ls' label size style modifier. The label size represents the approximate
         /// height of the label text in pixels. For example, to increase the label size to 12, use
         /// 
-        /// `pins=default|ls12||&apos;A&apos;-122 45|&apos;B&apos;-119 43`
+        /// `pins=default|ls12||'A'-122 45|'B'-119 43`
         /// 
-        /// The labels are centered at the pushpin &apos;label anchor.&apos; The anchor location is predefined for built-in pushpins and
-        /// is at the top center of custom pushpins (see below). To override the label anchor, using the &apos;la&apos; style modifier
+        /// The labels are centered at the pushpin 'label anchor.' The anchor location is predefined for built-in pushpins and
+        /// is at the top center of custom pushpins (see below). To override the label anchor, using the 'la' style modifier
         /// and provide X and Y pixel coordinates for the anchor. These coordinates are relative to the top left corner of the
         /// pushpin image. Positive X values move the anchor to the right, and positive Y values move the anchor down. For example,
         /// to position the label anchor 10 pixels right and 4 pixels above the top left corner of the pushpin image,
         /// use
         /// 
-        /// `pins=default|la10 -4||&apos;A&apos;-122 45|&apos;B&apos;-119 43`
+        /// `pins=default|la10 -4||'A'-122 45|'B'-119 43`
         /// 
         /// ### Custom Pushpins
         /// 
-        /// To use a custom pushpin image, use the word &apos;custom&apos; as the pin style name, and then specify a URL after the
-        /// location and label information. Use two pipe characters to indicate that you&apos;re done specifying locations and are
+        /// To use a custom pushpin image, use the word 'custom' as the pin style name, and then specify a URL after the
+        /// location and label information. Use two pipe characters to indicate that you're done specifying locations and are
         /// starting the URL. For example,
         /// 
         /// `pins=custom||-122 45||http://contoso.com/pushpins/red.png`
@@ -742,33 +742,33 @@ namespace Azure.Maps.Rendering
         /// 
         /// `pins=custom%7C%7C-122+45%7C%7Chttp%3A%2F%2Fcontoso.com%2Fpushpins%2Fred.png`
         /// 
-        /// By default, custom pushpin images are drawn centered at the pin coordinates. This usually isn&apos;t ideal as it obscures
-        /// the location that you&apos;re trying to highlight. To override the anchor location of the pin image, use the &apos;an&apos;
-        /// style modifier. This uses the same format as the &apos;la&apos; label anchor style modifier. For example, if your custom
+        /// By default, custom pushpin images are drawn centered at the pin coordinates. This usually isn't ideal as it obscures
+        /// the location that you're trying to highlight. To override the anchor location of the pin image, use the 'an'
+        /// style modifier. This uses the same format as the 'la' label anchor style modifier. For example, if your custom
         /// pin image has the tip of the pin at the top left corner of the image, you can set the anchor to that spot by
         /// using
         /// 
         /// `pins=custom|an0 0||-122 45||http://contoso.com/pushpins/red.png`
         /// 
-        /// Note: If you use the &apos;co&apos; color modifier with a custom pushpin image, the specified color will replace the RGB 
+        /// Note: If you use the 'co' color modifier with a custom pushpin image, the specified color will replace the RGB 
         /// channels of the pixels in the image but will leave the alpha (opacity) channel unchanged. This would usually
         /// only be done with a solid-color custom image.
         /// 
         /// ### Scale, Rotation, and Opacity
         /// 
-        /// You can make pushpins and their labels larger or smaller by using the &apos;sc&apos; scale style modifier. This is a
+        /// You can make pushpins and their labels larger or smaller by using the 'sc' scale style modifier. This is a
         /// value greater than zero. A value of 1 is the standard scale. Values larger than 1 will make the pins larger, and
         /// values smaller than 1 will make them smaller. For example, to draw the pushpins 50% larger than normal, use
         /// 
         /// `pins=default|sc1.5||-122 45`
         /// 
-        /// You can rotate pushpins and their labels by using the &apos;ro&apos; rotation style modifier. This is a number of degrees
+        /// You can rotate pushpins and their labels by using the 'ro' rotation style modifier. This is a number of degrees
         /// of clockwise rotation. Use a negative number to rotate counter-clockwise. For example, to rotate the pushpins
         /// 90 degrees clockwise and double their size, use
         /// 
         /// `pins=default|ro90|sc2||-122 45`
         /// 
-        /// You can make pushpins and their labels partially transparent by specifying the &apos;al&apos; alpha style modifier.
+        /// You can make pushpins and their labels partially transparent by specifying the 'al' alpha style modifier.
         /// This is a number between 0 and 1 indicating the opacity of the pushpins. Zero makes them completely transparent
         /// (and not visible) and 1 makes them completely opaque (which is the default). For example, to make pushpins
         /// and their labels only 67% opaque, use
@@ -828,7 +828,7 @@ namespace Azure.Maps.Rendering
         /// Style modifiers each have a two-letter name. These abbreviated names are used to help reduce the length
         /// of the URL.
         /// 
-        /// To change the color of the outline, use the &apos;lc&apos; style modifier and specify the color using the HTML/CSS RGB color
+        /// To change the color of the outline, use the 'lc' style modifier and specify the color using the HTML/CSS RGB color
         /// format which is a six-digit hexadecimal number (the three-digit form is not supported). For example, to use
         /// a deep pink color which you would specify as #FF1493 in CSS, use
         /// 
@@ -916,15 +916,15 @@ namespace Azure.Maps.Rendering
         /// <param name="style"> Map style to be returned. Possible values are main and dark. </param>
         /// <param name="zoom"> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details. </param>
         /// <param name="center">
-        /// Coordinates of the center point. Format: &apos;lon,lat&apos;. Projection used
+        /// Coordinates of the center point. Format: 'lon,lat'. Projection used
         /// - EPSG:3857. Longitude range: -180 to 180. Latitude range: -85 to 85. 
         /// 
         /// Note: Either center or bbox are required parameters. They are
         /// mutually exclusive.
         /// </param>
         /// <param name="boundingBoxPrivate">
-        /// Bounding box. Projection used - EPSG:3857. Format : &apos;minLon, minLat,
-        /// maxLon, maxLat&apos;. 
+        /// Bounding box. Projection used - EPSG:3857. Format : 'minLon, minLat,
+        /// maxLon, maxLat'. 
         /// 
         /// Note: Either bbox or center are required
         /// parameters. They are mutually exclusive. It shouldn’t be used with
@@ -944,7 +944,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the &quot;user region&quot; parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         /// 
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -982,7 +982,7 @@ namespace Azure.Maps.Rendering
         /// the locations and labels. Style modifiers each have a two-letter name. These abbreviated names are used to help
         /// reduce the length of the URL.
         /// 
-        /// To change the color of the pushpin, use the &apos;co&apos; style modifier and specify the color using the HTML/CSS RGB color
+        /// To change the color of the pushpin, use the 'co' style modifier and specify the color using the HTML/CSS RGB color
         /// format which is a six-digit hexadecimal number (the three-digit form is not supported). For example, to use
         /// a deep pink color which you would specify as #FF1493 in CSS, use
         /// 
@@ -991,38 +991,38 @@ namespace Azure.Maps.Rendering
         /// ### Pushpin Labels
         /// 
         /// To add a label to the pins, put the label in single quotes just before the coordinates. For example, to label
-        /// three pins with the values &apos;1&apos;, &apos;2&apos;, and &apos;3&apos;, use
+        /// three pins with the values '1', '2', and '3', use
         /// 
-        /// `pins=default||&apos;1&apos;-122 45|&apos;2&apos;-119.5 43.2|&apos;3&apos;-121.67 47.12`
+        /// `pins=default||'1'-122 45|'2'-119.5 43.2|'3'-121.67 47.12`
         /// 
-        /// There is a built in pushpin style called &apos;none&apos; that does not display a pushpin image. You can use this if
+        /// There is a built in pushpin style called 'none' that does not display a pushpin image. You can use this if
         /// you want to display labels without any pin image. For example,
         /// 
-        /// `pins=none||&apos;A&apos;-122 45|&apos;B&apos;-119.5 43.2`
+        /// `pins=none||'A'-122 45|'B'-119.5 43.2`
         /// 
-        /// To change the color of the pushpin labels, use the &apos;lc&apos; label color style modifier. For example, to use pink
+        /// To change the color of the pushpin labels, use the 'lc' label color style modifier. For example, to use pink
         /// pushpins with black labels, use
         /// 
         /// `pins=default|coFF1493|lc000000||-122 45`
         /// 
-        /// To change the size of the labels, use the &apos;ls&apos; label size style modifier. The label size represents the approximate
+        /// To change the size of the labels, use the 'ls' label size style modifier. The label size represents the approximate
         /// height of the label text in pixels. For example, to increase the label size to 12, use
         /// 
-        /// `pins=default|ls12||&apos;A&apos;-122 45|&apos;B&apos;-119 43`
+        /// `pins=default|ls12||'A'-122 45|'B'-119 43`
         /// 
-        /// The labels are centered at the pushpin &apos;label anchor.&apos; The anchor location is predefined for built-in pushpins and
-        /// is at the top center of custom pushpins (see below). To override the label anchor, using the &apos;la&apos; style modifier
+        /// The labels are centered at the pushpin 'label anchor.' The anchor location is predefined for built-in pushpins and
+        /// is at the top center of custom pushpins (see below). To override the label anchor, using the 'la' style modifier
         /// and provide X and Y pixel coordinates for the anchor. These coordinates are relative to the top left corner of the
         /// pushpin image. Positive X values move the anchor to the right, and positive Y values move the anchor down. For example,
         /// to position the label anchor 10 pixels right and 4 pixels above the top left corner of the pushpin image,
         /// use
         /// 
-        /// `pins=default|la10 -4||&apos;A&apos;-122 45|&apos;B&apos;-119 43`
+        /// `pins=default|la10 -4||'A'-122 45|'B'-119 43`
         /// 
         /// ### Custom Pushpins
         /// 
-        /// To use a custom pushpin image, use the word &apos;custom&apos; as the pin style name, and then specify a URL after the
-        /// location and label information. Use two pipe characters to indicate that you&apos;re done specifying locations and are
+        /// To use a custom pushpin image, use the word 'custom' as the pin style name, and then specify a URL after the
+        /// location and label information. Use two pipe characters to indicate that you're done specifying locations and are
         /// starting the URL. For example,
         /// 
         /// `pins=custom||-122 45||http://contoso.com/pushpins/red.png`
@@ -1031,33 +1031,33 @@ namespace Azure.Maps.Rendering
         /// 
         /// `pins=custom%7C%7C-122+45%7C%7Chttp%3A%2F%2Fcontoso.com%2Fpushpins%2Fred.png`
         /// 
-        /// By default, custom pushpin images are drawn centered at the pin coordinates. This usually isn&apos;t ideal as it obscures
-        /// the location that you&apos;re trying to highlight. To override the anchor location of the pin image, use the &apos;an&apos;
-        /// style modifier. This uses the same format as the &apos;la&apos; label anchor style modifier. For example, if your custom
+        /// By default, custom pushpin images are drawn centered at the pin coordinates. This usually isn't ideal as it obscures
+        /// the location that you're trying to highlight. To override the anchor location of the pin image, use the 'an'
+        /// style modifier. This uses the same format as the 'la' label anchor style modifier. For example, if your custom
         /// pin image has the tip of the pin at the top left corner of the image, you can set the anchor to that spot by
         /// using
         /// 
         /// `pins=custom|an0 0||-122 45||http://contoso.com/pushpins/red.png`
         /// 
-        /// Note: If you use the &apos;co&apos; color modifier with a custom pushpin image, the specified color will replace the RGB 
+        /// Note: If you use the 'co' color modifier with a custom pushpin image, the specified color will replace the RGB 
         /// channels of the pixels in the image but will leave the alpha (opacity) channel unchanged. This would usually
         /// only be done with a solid-color custom image.
         /// 
         /// ### Scale, Rotation, and Opacity
         /// 
-        /// You can make pushpins and their labels larger or smaller by using the &apos;sc&apos; scale style modifier. This is a
+        /// You can make pushpins and their labels larger or smaller by using the 'sc' scale style modifier. This is a
         /// value greater than zero. A value of 1 is the standard scale. Values larger than 1 will make the pins larger, and
         /// values smaller than 1 will make them smaller. For example, to draw the pushpins 50% larger than normal, use
         /// 
         /// `pins=default|sc1.5||-122 45`
         /// 
-        /// You can rotate pushpins and their labels by using the &apos;ro&apos; rotation style modifier. This is a number of degrees
+        /// You can rotate pushpins and their labels by using the 'ro' rotation style modifier. This is a number of degrees
         /// of clockwise rotation. Use a negative number to rotate counter-clockwise. For example, to rotate the pushpins
         /// 90 degrees clockwise and double their size, use
         /// 
         /// `pins=default|ro90|sc2||-122 45`
         /// 
-        /// You can make pushpins and their labels partially transparent by specifying the &apos;al&apos; alpha style modifier.
+        /// You can make pushpins and their labels partially transparent by specifying the 'al' alpha style modifier.
         /// This is a number between 0 and 1 indicating the opacity of the pushpins. Zero makes them completely transparent
         /// (and not visible) and 1 makes them completely opaque (which is the default). For example, to make pushpins
         /// and their labels only 67% opaque, use
@@ -1117,7 +1117,7 @@ namespace Azure.Maps.Rendering
         /// Style modifiers each have a two-letter name. These abbreviated names are used to help reduce the length
         /// of the URL.
         /// 
-        /// To change the color of the outline, use the &apos;lc&apos; style modifier and specify the color using the HTML/CSS RGB color
+        /// To change the color of the outline, use the 'lc' style modifier and specify the color using the HTML/CSS RGB color
         /// format which is a six-digit hexadecimal number (the three-digit form is not supported). For example, to use
         /// a deep pink color which you would specify as #FF1493 in CSS, use
         /// 
@@ -1287,7 +1287,7 @@ namespace Azure.Maps.Rendering
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
         /// 
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
-        /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile&apos;s zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
+        /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
@@ -1322,7 +1322,7 @@ namespace Azure.Maps.Rendering
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
         /// 
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
-        /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile&apos;s zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
+        /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>

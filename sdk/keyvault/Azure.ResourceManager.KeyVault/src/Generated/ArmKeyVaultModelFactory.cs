@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
-        /// <param name="accessPolicies"> An array of 0 to 1024 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. When `createMode` is set to `recover`, access policies are not required. Otherwise, access policies are required. </param>
+        /// <param name="accessPolicies"> An array of 0 to 1024 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. When `createMode` is set to `recover`, access policies are not required. Otherwise, access policies are required. </param>
         /// <param name="vaultUri"> The URI of the vault for performing operations on keys and secrets. </param>
         /// <param name="hsmPoolResourceId"> The resource id of HSM Pool. </param>
         /// <param name="enabledForDeployment"> Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault. </param>
         /// <param name="enabledForDiskEncryption"> Property to specify whether Azure Disk Encryption is permitted to retrieve secrets from the vault and unwrap keys. </param>
         /// <param name="enabledForTemplateDeployment"> Property to specify whether Azure Resource Manager is permitted to retrieve secrets from the key vault. </param>
-        /// <param name="enableSoftDelete"> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this key vault. If it&apos;s not set to any value(true or false) when creating new key vault, it will be set to true by default. Once set to true, it cannot be reverted to false. </param>
+        /// <param name="enableSoftDelete"> Property to specify whether the 'soft delete' functionality is enabled for this key vault. If it's not set to any value(true or false) when creating new key vault, it will be set to true by default. Once set to true, it cannot be reverted to false. </param>
         /// <param name="softDeleteRetentionInDays"> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </param>
         /// <param name="enableRbacAuthorization"> Property that controls how data actions are authorized. When true, the key vault will use Role Based Access Control (RBAC) for authorization of data actions, and the access policies specified in vault properties will be  ignored. When false, the key vault will use the access policies specified in vault properties, and any policy stored on Azure Resource Manager will be ignored. If null or not specified, the vault is created with the default value of false. Note that management actions are always authorized with RBAC. </param>
-        /// <param name="createMode"> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </param>
+        /// <param name="createMode"> The vault's create mode to indicate whether the vault need to be recovered or not. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </param>
         /// <param name="networkRuleSet"> Rules governing the accessibility of the key vault from specific network locations. </param>
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
-        /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
+        /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
         /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
         public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null, Uri vaultUri = null, string hsmPoolResourceId = null, bool? enabledForDeployment = null, bool? enabledForDiskEncryption = null, bool? enabledForTemplateDeployment = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enableRbacAuthorization = null, KeyVaultCreateMode? createMode = null, bool? enablePurgeProtection = null, KeyVaultNetworkRuleSet networkRuleSet = null, KeyVaultProvisioningState? provisioningState = null, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = null, string publicNetworkAccess = null)
         {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
-        /// <param name="enableSoftDelete"> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </param>
+        /// <param name="enableSoftDelete"> Property to specify whether the 'soft delete' functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </param>
         /// <param name="softDeleteRetentionInDays"> Soft deleted data retention days. When you delete an HSM or a key, it will remain recoverable for the configured retention period or for a default period of 90 days. It accepts values between 7 and 90. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. Enabling this functionality is irreversible. </param>
         /// <param name="createMode"> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </param>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of SecretProperties. </summary>
-        /// <param name="value"> The value of the secret. NOTE: &apos;value&apos; will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
+        /// <param name="value"> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>
         /// <param name="secretUri"> The URI to retrieve the current version of the secret. </param>
