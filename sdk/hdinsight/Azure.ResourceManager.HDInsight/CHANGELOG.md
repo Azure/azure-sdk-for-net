@@ -14,7 +14,7 @@
 
 ### Features Added
 
-- Customer can choose to use secure channel or not during creation.
+- Added feature to support selecting use secure channel during creation.
 - The paramter would force to true if the cluster created based on a stroage account that secure transfer enabled, no matter it use 'blob' or 'dfs' type.
 
 ## 1.1.0-beta.1 (2023-05-30)
