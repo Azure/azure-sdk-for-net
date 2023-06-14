@@ -395,6 +395,39 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(options.ScheduleDeletionOptions.ExpiresOn, propertiesResponse.Value.ExpiresOn);
         }
 
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task CreateAsync_EncryptionContext(bool createIfNotExists)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Arrange
+            DataLakeAppendFileClient file = InstrumentClient(directory.GetAppendFileClient(GetNewFileName()));
+
+            string encryptionContext = "encryptionContext";
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                EncryptionContext = encryptionContext
+            };
+
+            // Act
+            Response<PathInfo> response;
+            if (createIfNotExists)
+            {
+                response = await file.CreateIfNotExistsAsync(options);
+            }
+            else
+            {
+                response = await file.CreateAsync(options);
+            }
+
+            // Assert
+            AssertValidStoragePathInfo(response.Value);
+        }
+
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateAsync_Conditions()
@@ -640,6 +673,30 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Assert.IsNull(concurrentAppendResponse.Value.FastPathSessionData);
             Assert.IsNull(concurrentAppendResponse.Value.FastPathSessionDataExpiresOn);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task AppendAsync_Large()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeAppendFileClient file = InstrumentClient(test.FileSystem.GetAppendFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(101 * Constants.MB);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            Response<ConcurrentAppendResult> concurrentAppendResponse = await file.AppendAsync(stream);
+
+            // Assert
+            Assert.AreEqual(1, concurrentAppendResponse.Value.CommittedBlockCount);
+            Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
+            MemoryStream actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
     }
 }
