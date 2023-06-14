@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -93,6 +94,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
             tracerProvider.ForceFlush();
             tracerProvider.Shutdown();
+
+            var meterProvider = app.Services.GetRequiredService<MeterProvider>();
+            meterProvider.ForceFlush();
+            meterProvider.Shutdown();
 
             await app.StopAsync(); // shutdown to prevent collecting the log queries.
 
