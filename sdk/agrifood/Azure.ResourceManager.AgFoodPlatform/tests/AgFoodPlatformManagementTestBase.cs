@@ -13,29 +13,42 @@ namespace Azure.ResourceManager.AgFoodPlatform.Tests
     public class AgFoodPlatformManagementTestBase : ManagementRecordedTestBase<AgFoodPlatformManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected AzureLocation DefaultLocation => TestEnvironment.Location;
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected AgFoodPlatformManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected AutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..uri");
         }
 
-        protected AgFoodPlatformManagementTestBase(bool isAsync)
+        protected AutomationManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..uri");
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return rgOp.Value;
         }
     }
 }
