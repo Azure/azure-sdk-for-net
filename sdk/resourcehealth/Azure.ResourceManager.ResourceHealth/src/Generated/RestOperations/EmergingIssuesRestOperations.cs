@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        /// <summary> Lists Azure services&apos; emerging issues. </summary>
+        /// <summary> Lists Azure services' emerging issues. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<EmergingIssueListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
-        /// <summary> Lists Azure services&apos; emerging issues. </summary>
+        /// <summary> Lists Azure services' emerging issues. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<EmergingIssueListResult> List(CancellationToken cancellationToken = default)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        /// <summary> Gets Azure services&apos; emerging issues. </summary>
+        /// <summary> Gets Azure services' emerging issues. </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ServiceEmergingIssueData>> GetAsync(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
-        /// <summary> Gets Azure services&apos; emerging issues. </summary>
+        /// <summary> Gets Azure services' emerging issues. </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ServiceEmergingIssueData> Get(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        /// <summary> Lists Azure services&apos; emerging issues. </summary>
+        /// <summary> Lists Azure services' emerging issues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
-        /// <summary> Lists Azure services&apos; emerging issues. </summary>
+        /// <summary> Lists Azure services' emerging issues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>

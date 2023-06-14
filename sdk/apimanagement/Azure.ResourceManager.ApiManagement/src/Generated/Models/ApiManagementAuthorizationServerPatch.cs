@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
         /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
         /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
-        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {&quot;name&quot; : &quot;name value&quot;, &quot;value&quot;: &quot;a value&quot;}. </param>
+        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
         /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
         /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
         /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
         /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
         /// <param name="clientId"> Client or app id registered with this authorization server. </param>
-        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         internal ApiManagementAuthorizationServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
         {
             Description = description;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public IList<AuthorizationMethod> AuthorizationMethods { get; }
         /// <summary> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </summary>
         public IList<ClientAuthenticationMethod> ClientAuthenticationMethods { get; }
-        /// <summary> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {&quot;name&quot; : &quot;name value&quot;, &quot;value&quot;: &quot;a value&quot;}. </summary>
+        /// <summary> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </summary>
         public IList<TokenBodyParameterContract> TokenBodyParameters { get; }
         /// <summary> OAuth token endpoint. Contains absolute URI to entity being referenced. </summary>
         public string TokenEndpoint { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public IList<GrantType> GrantTypes { get; }
         /// <summary> Client or app id registered with this authorization server. </summary>
         public string ClientId { get; set; }
-        /// <summary> Client or app secret registered with this authorization server. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
+        /// <summary> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         public string ClientSecret { get; set; }
     }
 }

@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of FieldRestrictions. </summary>
-        /// <param name="field"> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </param>
+        /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
         /// <returns> A new <see cref="Models.FieldRestrictions"/> instance for mocking. </returns>
         public static FieldRestrictions FieldRestrictions(string field = null, IEnumerable<FieldRestriction> restrictions = null)
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
-        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered. </param>
+        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
         /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
         public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = null, string evaluationResult = null, PolicyEvaluationDetails evaluationDetails = null)

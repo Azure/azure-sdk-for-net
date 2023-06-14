@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
         /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
-        /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </param>
+        /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
         /// <param name="applicationName"> The name of the Application Insights component. </param>
         /// <param name="subscriptionId"> The subscription of the Application Insights component. </param>
         /// <param name="resourceGroup"> The resource group of the Application Insights component. </param>
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationStorageLocationId"> The destination account location ID. </param>
         /// <param name="destinationAccountId"> The name of destination account. </param>
         /// <param name="destinationType"> The destination type. </param>
-        /// <param name="isUserEnabled"> This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;. </param>
+        /// <param name="isUserEnabled"> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </param>
         /// <param name="lastUserUpdate"> Last time the Continuous Export configuration was updated. </param>
         /// <param name="notificationQueueEnabled"> Deprecated. </param>
-        /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;. </param>
+        /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </param>
         /// <param name="lastSuccessTime"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
         /// <param name="lastGapTime"> The last time the Continuous Export configuration started failing. </param>
-        /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;. </param>
+        /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
         /// <param name="storageName"> The name of the destination storage account. </param>
         /// <param name="containerName"> The name of the destination storage container. </param>
         internal ApplicationInsightsComponentExportConfiguration(string exportId, string instrumentationKey, string recordTypes, string applicationName, string subscriptionId, string resourceGroup, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId, string destinationType, string isUserEnabled, string lastUserUpdate, string notificationQueueEnabled, string exportStatus, string lastSuccessTime, string lastGapTime, string permanentErrorReason, string storageName, string containerName)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string ExportId { get; }
         /// <summary> The instrumentation key of the Application Insights component. </summary>
         public string InstrumentationKey { get; }
-        /// <summary> This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </summary>
+        /// <summary> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </summary>
         public string RecordTypes { get; }
         /// <summary> The name of the Application Insights component. </summary>
         public string ApplicationName { get; }
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string DestinationAccountId { get; }
         /// <summary> The destination type. </summary>
         public string DestinationType { get; }
-        /// <summary> This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;. </summary>
+        /// <summary> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </summary>
         public string IsUserEnabled { get; }
         /// <summary> Last time the Continuous Export configuration was updated. </summary>
         public string LastUserUpdate { get; }
         /// <summary> Deprecated. </summary>
         public string NotificationQueueEnabled { get; }
-        /// <summary> This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;. </summary>
+        /// <summary> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </summary>
         public string ExportStatus { get; }
         /// <summary> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </summary>
         public string LastSuccessTime { get; }
         /// <summary> The last time the Continuous Export configuration started failing. </summary>
         public string LastGapTime { get; }
-        /// <summary> This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;. </summary>
+        /// <summary> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </summary>
         public string PermanentErrorReason { get; }
         /// <summary> The name of the destination storage account. </summary>
         public string StorageName { get; }

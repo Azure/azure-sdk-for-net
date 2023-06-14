@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="revisionId"> The id of the workbook&apos;s revision. </param>
+        /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="revisionId"> The id of the workbook&apos;s revision. </param>
+        /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>

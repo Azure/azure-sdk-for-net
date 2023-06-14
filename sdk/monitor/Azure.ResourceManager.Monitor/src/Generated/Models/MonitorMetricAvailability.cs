@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorMetricAvailability. </summary>
-        /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
-        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
+        /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
+        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         internal MonitorMetricAvailability(TimeSpan? timeGrain, TimeSpan? retention)
         {
             TimeGrain = timeGrain;
             Retention = retention;
         }
 
-        /// <summary> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </summary>
+        /// <summary> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </summary>
         public TimeSpan? TimeGrain { get; }
-        /// <summary> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </summary>
+        /// <summary> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </summary>
         public TimeSpan? Retention { get; }
     }
 }

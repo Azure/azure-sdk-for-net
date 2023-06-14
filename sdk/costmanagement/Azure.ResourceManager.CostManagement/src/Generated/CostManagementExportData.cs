@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="format"> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </param>
+        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <param name="runHistory"> If requested, has the most recent run history for the export. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement
             ETag = eTag;
         }
 
-        /// <summary> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </summary>
+        /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
         public ExportFormatType? Format { get; set; }
         /// <summary> Has delivery information for the export. </summary>
         internal ExportDeliveryInfo DeliveryInfo { get; set; }

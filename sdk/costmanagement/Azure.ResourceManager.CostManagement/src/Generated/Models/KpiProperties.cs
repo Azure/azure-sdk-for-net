@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Each KPI must contain a &apos;type&apos; and &apos;enabled&apos; key. </summary>
+    /// <summary> Each KPI must contain a 'type' and 'enabled' key. </summary>
     public partial class KpiProperties
     {
         /// <summary> Initializes a new instance of KpiProperties. </summary>
