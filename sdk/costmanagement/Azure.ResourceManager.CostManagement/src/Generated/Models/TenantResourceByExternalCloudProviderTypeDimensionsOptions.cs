@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class TenantResourceByExternalCloudProviderTypeDimensionsOptions
     {
         /// <summary> Initializes a new instance of TenantResourceByExternalCloudProviderTypeDimensionsOptions. </summary>
-        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
-        /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
+        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
+        /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
         public TenantResourceByExternalCloudProviderTypeDimensionsOptions(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)
         {
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             ExternalCloudProviderId = externalCloudProviderId;
         }
 
-        /// <summary> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </summary>
+        /// <summary> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </summary>
         public ExternalCloudProviderType ExternalCloudProviderType { get; }
-        /// <summary> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </summary>
+        /// <summary> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </summary>
         public string ExternalCloudProviderId { get; }
-        /// <summary> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are &apos;eq&apos;,&apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;. </summary>
+        /// <summary> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </summary>
         public string Filter { get; set; }
         /// <summary> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </summary>
         public string Expand { get; set; }

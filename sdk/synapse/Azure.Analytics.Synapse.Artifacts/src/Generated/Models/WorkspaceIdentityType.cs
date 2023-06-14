@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The identity type. Currently the only supported type is &apos;SystemAssigned&apos;. </summary>
+    /// <summary> The identity type. Currently the only supported type is 'SystemAssigned'. </summary>
     public readonly partial struct WorkspaceIdentityType : IEquatable<WorkspaceIdentityType>
     {
         private readonly string _value;

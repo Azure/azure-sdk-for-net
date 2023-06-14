@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        /// <summary> Updates a factory&apos;s repo information. </summary>
+        /// <summary> Updates a factory's repo information. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        /// <summary> Updates a factory&apos;s repo information. </summary>
+        /// <summary> Updates a factory's repo information. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>

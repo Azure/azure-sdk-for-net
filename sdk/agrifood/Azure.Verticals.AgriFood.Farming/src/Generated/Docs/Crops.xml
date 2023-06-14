@@ -8,7 +8,7 @@ This sample shows how to call GetCropAsync with required parameters and parse th
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-Response response = await client.GetCropAsync("<cropId>", new RequestContext());
+Response response = await client.GetCropAsync("<cropId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -36,7 +36,7 @@ This sample shows how to call GetCrop with required parameters and parse the res
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-Response response = client.GetCrop("<cropId>", new RequestContext());
+Response response = client.GetCrop("<cropId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -94,7 +94,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -152,7 +152,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -180,7 +180,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<cropId>", new RequestContext());
+Response response = await client.DeleteAsync("<cropId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -192,7 +192,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-Response response = client.Delete("<cropId>", new RequestContext());
+Response response = client.Delete("<cropId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -215,7 +215,7 @@ This sample shows how to call GetCropsAsync with all parameters, and how to pars
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetCropsAsync(new String[]{"<phenotypes>"}, new String[]{"<breedingMethods>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetCropsAsync(new String[]{"<phenotypes>"}, new String[]{"<breedingMethods>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -255,7 +255,7 @@ This sample shows how to call GetCrops with all parameters, and how to parse the
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-foreach (var item in client.GetCrops(new String[]{"<phenotypes>"}, new String[]{"<breedingMethods>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetCrops(new String[]{"<phenotypes>"}, new String[]{"<breedingMethods>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("phenotype").ToString());

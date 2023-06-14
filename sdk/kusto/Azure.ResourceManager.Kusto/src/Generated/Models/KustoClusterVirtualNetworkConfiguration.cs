@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
         /// <param name="subnetId"> The subnet resource id. </param>
-        /// <param name="enginePublicIPId"> Engine service&apos;s public IP address resource id. </param>
-        /// <param name="dataManagementPublicIPId"> Data management&apos;s service public IP address resource id. </param>
+        /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
+        /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/>, <paramref name="enginePublicIPId"/> or <paramref name="dataManagementPublicIPId"/> is null. </exception>
         public KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId)
         {
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> The subnet resource id. </summary>
         public string SubnetId { get; set; }
-        /// <summary> Engine service&apos;s public IP address resource id. </summary>
+        /// <summary> Engine service's public IP address resource id. </summary>
         public string EnginePublicIPId { get; set; }
-        /// <summary> Data management&apos;s service public IP address resource id. </summary>
+        /// <summary> Data management's service public IP address resource id. </summary>
         public string DataManagementPublicIPId { get; set; }
     }
 }

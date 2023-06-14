@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        /// <summary> Updates an existing component&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing component's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary> Updates an existing component&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing component's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>

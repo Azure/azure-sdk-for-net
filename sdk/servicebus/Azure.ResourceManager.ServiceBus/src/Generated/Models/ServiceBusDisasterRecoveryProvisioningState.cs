@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </summary>
+    /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>
     public enum ServiceBusDisasterRecoveryProvisioningState
     {
         /// <summary> Accepted. </summary>

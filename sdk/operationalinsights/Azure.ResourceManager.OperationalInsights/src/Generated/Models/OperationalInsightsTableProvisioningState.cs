@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Table&apos;s current provisioning state. If set to &apos;updating&apos;, indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
+    /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
     public readonly partial struct OperationalInsightsTableProvisioningState : IEquatable<OperationalInsightsTableProvisioningState>
     {
         private readonly string _value;

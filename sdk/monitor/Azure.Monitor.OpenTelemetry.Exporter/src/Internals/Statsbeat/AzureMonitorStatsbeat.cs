@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -29,6 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private static string? s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
 
         private static string? s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
+
+        private static bool s_hasSdkPrefix => SdkVersionUtils.SdkVersionPrefix != null;
 
         private static string? s_operatingSystem;
 
@@ -109,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     new Measurement<int>(1,
                         new("rp", _resourceProvider),
                         new("rpId", _resourceProviderId),
-                        new("attach", "sdk"),
+                        new("attach", s_hasSdkPrefix ? "codeless" : "sdk"),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
                         new("language", "dotnet"),

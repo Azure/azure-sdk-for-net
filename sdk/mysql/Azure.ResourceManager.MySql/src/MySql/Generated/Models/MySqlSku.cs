@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlSku. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
-        /// <param name="capacity"> The scale up/out capacity, representing server&apos;s compute units. </param>
+        /// <param name="capacity"> The scale up/out capacity, representing server's compute units. </param>
         /// <param name="size"> The size code, to be interpreted by resource as appropriate. </param>
         /// <param name="family"> The family of hardware. </param>
         internal MySqlSku(string name, MySqlSkuTier? tier, int? capacity, string size, string family)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql.Models
         public string Name { get; set; }
         /// <summary> The tier of the particular SKU, e.g. Basic. </summary>
         public MySqlSkuTier? Tier { get; set; }
-        /// <summary> The scale up/out capacity, representing server&apos;s compute units. </summary>
+        /// <summary> The scale up/out capacity, representing server's compute units. </summary>
         public int? Capacity { get; set; }
         /// <summary> The size code, to be interpreted by resource as appropriate. </summary>
         public string Size { get; set; }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
         /// <param name="roleInstance"> Instance view statuses. </param>
         /// <param name="sdkVersion"> The version of the SDK that was used to generate the package for the cloud service. </param>
-        /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </param>
+        /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
         /// <param name="statuses"></param>
         internal CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance, string sdkVersion, IReadOnlyList<string> privateIds, IReadOnlyList<ResourceInstanceViewStatus> statuses)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The version of the SDK that was used to generate the package for the cloud service. </summary>
         public string SdkVersion { get; }
-        /// <summary> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </summary>
+        /// <summary> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </summary>
         public IReadOnlyList<string> PrivateIds { get; }
         /// <summary> Gets the statuses. </summary>
         public IReadOnlyList<ResourceInstanceViewStatus> Statuses { get; }

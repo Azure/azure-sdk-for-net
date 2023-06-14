@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="remoteVirtualNetwork"> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </param>
         /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
         /// <param name="remoteVirtualNetworkAddressSpace"> The reference to the current address space of the remote virtual network. </param>
-        /// <param name="remoteBgpCommunities"> The reference to the remote virtual network&apos;s Bgp Communities. </param>
-        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network&apos;s encryption. </param>
+        /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
+        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network's encryption. </param>
         /// <param name="peeringState"> The status of the virtual network peering. </param>
         /// <param name="peeringSyncLevel"> The peering sync status of the virtual network peering. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The reference to the remote virtual network&apos;s Bgp Communities. </summary>
+        /// <summary> The reference to the remote virtual network's Bgp Communities. </summary>
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
-        /// <summary> The reference to the remote virtual network&apos;s encryption. </summary>
+        /// <summary> The reference to the remote virtual network's encryption. </summary>
         public VirtualNetworkEncryption RemoteVirtualNetworkEncryption { get; }
         /// <summary> The status of the virtual network peering. </summary>
         public VirtualNetworkPeeringState? PeeringState { get; set; }
