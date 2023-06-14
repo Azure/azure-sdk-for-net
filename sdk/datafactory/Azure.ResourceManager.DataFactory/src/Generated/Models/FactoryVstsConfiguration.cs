@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s VSTS repo information. </summary>
+    /// <summary> Factory's VSTS repo information. </summary>
     public partial class FactoryVstsConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryVstsConfiguration. </summary>

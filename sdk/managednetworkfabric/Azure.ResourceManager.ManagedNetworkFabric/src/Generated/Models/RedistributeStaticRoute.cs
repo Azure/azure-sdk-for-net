@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Advertise Static Routes. Ex: &quot;True&quot; | &quot;False&quot;. </summary>
+    /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
     public readonly partial struct RedistributeStaticRoute : IEquatable<RedistributeStaticRoute>
     {
         private readonly string _value;

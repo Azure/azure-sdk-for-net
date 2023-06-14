@@ -198,7 +198,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be searched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
         /// <param name="skip"> Skip token for getting next set of results. </param>
@@ -237,7 +237,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be searched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
         /// <param name="skip"> Skip token for getting next set of results. </param>
@@ -276,7 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
@@ -313,7 +313,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>

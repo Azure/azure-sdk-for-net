@@ -29,11 +29,13 @@ namespace Azure.Containers.ContainerRegistry
         private readonly string _registryName;
         private readonly string _repositoryName;
         private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipelineWithRedirects;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
         private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
+        private readonly ContainerRegistryBlobRestClient _blobRestClientWithRedirects;
         private readonly int _maxRetries;
 
         /// <summary>
@@ -119,8 +121,10 @@ namespace Azure.Containers.ContainerRegistry
             };
             pipelineOptions.PerRetryPolicies.Add(new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            _pipelineWithRedirects = HttpPipelineBuilder.Build(pipelineOptions, new HttpPipelineTransportOptions { IsClientRedirectEnabled = true });
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _blobRestClientWithRedirects = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipelineWithRedirects, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryContentClient for mocking. </summary>
@@ -760,8 +764,8 @@ namespace Azure.Containers.ContainerRegistry
         private async Task<Response<DownloadRegistryBlobResult>> DownloadBlobContentInternalAsync(string digest, bool async, CancellationToken cancellationToken)
         {
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
-                await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
-                _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+                await _blobRestClientWithRedirects.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
+                _blobRestClientWithRedirects.GetBlob(_repositoryName, digest, cancellationToken);
 
             Response response = blobResult.GetRawResponse();
             CheckContentLength(response);
@@ -865,8 +869,8 @@ namespace Azure.Containers.ContainerRegistry
         private async Task<Response<DownloadRegistryBlobStreamingResult>> DownloadBlobStreamingInternalAsync(string digest, bool async, CancellationToken cancellationToken)
         {
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
-                await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
-                _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+                await _blobRestClientWithRedirects.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
+                _blobRestClientWithRedirects.GetBlob(_repositoryName, digest, cancellationToken);
 
             Response response = blobResult.GetRawResponse();
             CheckContentLength(response);
@@ -876,8 +880,8 @@ namespace Azure.Containers.ContainerRegistry
             // allow retrying if it fails.
             Stream retriableStream = RetriableStream.Create(
                 blobResult.Value,
-                offset => _blobRestClient.GetChunk(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).Value,
-                async offset => await _blobRestClient.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
+                offset => _blobRestClientWithRedirects.GetChunk(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).Value,
+                async offset => await _blobRestClientWithRedirects.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
                 _pipeline.ResponseClassifier,
                 _maxRetries);
 
@@ -1037,8 +1041,8 @@ namespace Azure.Containers.ContainerRegistry
                     string requestRange = new HttpRange(blobBytes, requestLength).ToString();
 
                     ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> getChunkResponse = async ?
-                        await _blobRestClient.GetChunkAsync(_repositoryName, digest, requestRange, cancellationToken).ConfigureAwait(false) :
-                        _blobRestClient.GetChunk(_repositoryName, digest, requestRange, cancellationToken);
+                        await _blobRestClientWithRedirects.GetChunkAsync(_repositoryName, digest, requestRange, cancellationToken).ConfigureAwait(false) :
+                        _blobRestClientWithRedirects.GetChunk(_repositoryName, digest, requestRange, cancellationToken);
 
                     blobSize ??= GetBlobSize(getChunkResponse.GetRawResponse());
 

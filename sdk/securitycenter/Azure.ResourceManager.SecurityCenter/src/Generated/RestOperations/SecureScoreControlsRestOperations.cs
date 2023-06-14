@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get all security controls for a specific initiative within a scope. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get all security controls for a specific initiative within a scope. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Get all security controls for a specific initiative within a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Get all security controls for a specific initiative within a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>

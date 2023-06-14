@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    /// <summary> Global service auth configuration properties. These are the data-plane authorization keys and are used if a service doesn&apos;t define it&apos;s own. </summary>
+    /// <summary> Global service auth configuration properties. These are the data-plane authorization keys and are used if a service doesn't define it's own. </summary>
     public partial class ServiceAuthConfiguration
     {
         /// <summary> Initializes a new instance of ServiceAuthConfiguration. </summary>

@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalUsageQuota"> The amount of usage quota time the user gets in addition to the lab usage quota. </param>
         /// <param name="provisioningState"> Current provisioning state of the user resource. </param>
-        /// <param name="displayName"> Display name of the user, for example user&apos;s full name. </param>
+        /// <param name="displayName"> Display name of the user, for example user's full name. </param>
         /// <param name="email"> Email address of the user. </param>
-        /// <param name="registrationState"> State of the user&apos;s registration within the lab. </param>
+        /// <param name="registrationState"> State of the user's registration within the lab. </param>
         /// <param name="invitationState"> State of the invitation message for the user. </param>
         /// <param name="invitationSentOn"> Date and time when the invitation message was sent to the user. </param>
         /// <param name="totalUsage"> How long the user has used their virtual machines in this lab. </param>

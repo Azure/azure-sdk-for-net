@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
         private const string CapacityOverloadedValue = "capacityOverloaded";
         private const string TransientValue = "transient";
 
-        /// <summary> If &apos;semanticMaxWaitInMilliseconds&apos; was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
+        /// <summary> If 'semanticMaxWaitInMilliseconds' was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
         public static SemanticPartialResponseReason MaxWaitExceeded { get; } = new SemanticPartialResponseReason(MaxWaitExceededValue);
         /// <summary> The request was throttled. Only the base results were returned. </summary>
         public static SemanticPartialResponseReason CapacityOverloaded { get; } = new SemanticPartialResponseReason(CapacityOverloadedValue);

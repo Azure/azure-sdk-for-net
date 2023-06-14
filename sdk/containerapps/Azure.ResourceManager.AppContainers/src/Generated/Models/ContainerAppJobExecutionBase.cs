@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App&apos;s Job execution name. </summary>
+    /// <summary> Container App's Job execution name. </summary>
     public partial class ContainerAppJobExecutionBase
     {
         /// <summary> Initializes a new instance of ContainerAppJobExecutionBase. </summary>

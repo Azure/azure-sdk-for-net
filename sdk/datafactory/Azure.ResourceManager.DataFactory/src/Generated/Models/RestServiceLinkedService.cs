@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
-        /// <param name="servicePrincipalId"> The application&apos;s client ID used in AadServicePrincipal authentication type. </param>
+        /// <param name="servicePrincipalId"> The application's client ID used in AadServicePrincipal authentication type. </param>
         /// <param name="servicePrincipalKey">
-        /// The application&apos;s key used in AadServicePrincipal authentication type.
+        /// The application's key used in AadServicePrincipal authentication type.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AuthHeaders { get; set; }
         /// <summary>
-        /// The application&apos;s client ID used in AadServicePrincipal authentication type.
+        /// The application's client ID used in AadServicePrincipal authentication type.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
-        /// The application&apos;s key used in AadServicePrincipal authentication type.
+        /// The application's key used in AadServicePrincipal authentication type.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>

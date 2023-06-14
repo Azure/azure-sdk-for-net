@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="backendPools"> Backend pools available to routing rules. </param>
         /// <param name="frontendEndpoints"> Frontend endpoints available to routing rules. </param>
         /// <param name="backendPoolsSettings"> Settings for all backendPools. </param>
-        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="resourceState"> Resource status of the Front Door. </param>
         /// <param name="provisioningState"> Provisioning state of the Front Door. </param>
         /// <param name="cname"> The host that each frontendEndpoint must CNAME to. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="frontendEndpoints"> Frontend endpoints associated with this rule. </param>
         /// <param name="acceptedProtocols"> Protocol schemes to match for this rule. </param>
         /// <param name="patternsToMatch"> The route patterns of the rule. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="routeConfiguration">
         /// A reference to the routing configuration.
         /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
         /// <param name="address"> Location of the backend (IP address or FQDN). </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
         /// <param name="privateEndpointStatus"> The Approval status for the connection to the Private Link. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="httpPort"> The HTTP TCP port number. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The HTTPS TCP port number. Must be between 1 and 65535. </param>
-        /// <param name="enabledState"> Whether to enable use of this backend. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="priority"> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </param>
         /// <param name="weight"> Weight of this endpoint for load balancing purposes. </param>
         /// <param name="backendHostHeader"> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="hostName"> The host name of the frontendEndpoint. Must be a domain name. </param>
-        /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
         /// <param name="sessionAffinityTtlInSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
         /// <param name="webApplicationFirewallPolicyLinkId"> Defines the Web Application Firewall policy for each host (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>

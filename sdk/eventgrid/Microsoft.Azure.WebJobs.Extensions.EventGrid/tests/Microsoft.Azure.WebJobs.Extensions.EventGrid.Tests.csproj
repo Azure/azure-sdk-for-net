@@ -21,7 +21,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGrid\src\Constants.cs" LinkBase="Shared" />
+    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGrid\tests\Infrastructure\EventGridLiveTestBase.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGrid\tests\Infrastructure\EventGridTestEnvironment.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
