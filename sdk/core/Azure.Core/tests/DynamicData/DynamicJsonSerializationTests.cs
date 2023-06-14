@@ -248,6 +248,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void NewCyclesTest()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            Foo model = new()
+            {
+                BarProp = new Bar { N = 1 },
+                FooProp = new Foo { BarProp = new Bar { N = 2 } },
+                StreamProp = new MemoryStream()
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = model);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = model);
+        }
+
+        [Test]
         public void CanAssignDictionaryContainingAllowedTypes_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -496,6 +514,18 @@ namespace Azure.Core.Tests
         }
 
         #region Helpers
+        public class Foo
+        {
+            public Bar BarProp { get; set; }
+            public Foo FooProp { get; set; }
+            public Stream StreamProp { get; set; }
+        }
+
+        public class Bar
+        {
+            public int N { get; set; }
+        }
+
         internal class BinaryDataModel
         {
             public BinaryDataModel() { }
