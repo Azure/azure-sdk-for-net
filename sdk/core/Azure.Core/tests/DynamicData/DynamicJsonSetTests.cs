@@ -10,6 +10,7 @@ namespace Azure.Core.Tests
     internal class DynamicJsonSetTests
     {
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignTopDown()
         {
             dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -134,6 +135,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignBottomUp()
         {
             dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -257,6 +259,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignLeftRight()
         {
             dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);

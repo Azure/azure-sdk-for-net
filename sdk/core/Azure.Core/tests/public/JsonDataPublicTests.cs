@@ -263,6 +263,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void RoundtripObjects()
         {
             var model = new SampleModel("Hello World", 5);

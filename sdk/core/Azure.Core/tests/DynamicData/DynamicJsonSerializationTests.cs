@@ -123,6 +123,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesOneDeep_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -148,6 +149,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesOneDeep_NewProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -173,6 +175,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesTwoDeep_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -198,6 +201,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesTwoDeep_NewProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -308,6 +312,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignModelWithValidObjectProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -332,6 +337,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void ModelAssignmentRespectsValueSemantics()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -377,6 +383,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void ModelAssignmentRespectsValueSemanticsAndThrowsWithNewUnallowedValue()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);

@@ -329,6 +329,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAddPocoProperty()
         {
             DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
@@ -373,6 +374,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAddNestedPocoProperty()
         {
             DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
@@ -417,6 +419,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanSetNestedPocoProperty()
         {
             DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };

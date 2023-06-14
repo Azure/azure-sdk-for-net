@@ -34,7 +34,7 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                return IsAllowedPocoType(type, new HashSet<Type>());
+                return IsAllowedAnonymousType(type, new HashSet<Type>());
             }
 
             // Primitive means "not a collection and not a POCO"
@@ -133,25 +133,15 @@ namespace Azure.Core.Dynamic
                 return IsAllowedType(types[0]);
             }
 
-            private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes)
+            private static bool IsAllowedAnonymousType(Type type, HashSet<Type> ancestorTypes)
             {
-                if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
+                if (!IsAnonymousType(type))
                 {
                     return false;
                 }
 
                 foreach (PropertyInfo property in type.GetProperties())
                 {
-                    if (!property.CanRead)
-                    {
-                        return false;
-                    }
-
-                    if (!property.CanWrite && !IsAnonymousType(type))
-                    {
-                        return false;
-                    }
-
                     if (IsAllowedPrimitive(property.PropertyType))
                     {
                         continue;
@@ -162,7 +152,7 @@ namespace Azure.Core.Dynamic
                         continue;
                     }
 
-                    // Trust but verify
+                    // Detect cycles: trust but verify
                     if (ancestorTypes.Contains(property.PropertyType))
                     {
                         continue;
@@ -170,18 +160,13 @@ namespace Azure.Core.Dynamic
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedPocoType(property.PropertyType, ancestorTypes))
+                    if (!IsAllowedAnonymousType(property.PropertyType, ancestorTypes))
                     {
                         return false;
                     }
                 }
 
                 return true;
-            }
-
-            private static bool HasPublicParameterlessConstructor(Type type)
-            {
-                return type.GetConstructor(Type.EmptyTypes) != null;
             }
 
             private static bool IsAnonymousType(Type type)
