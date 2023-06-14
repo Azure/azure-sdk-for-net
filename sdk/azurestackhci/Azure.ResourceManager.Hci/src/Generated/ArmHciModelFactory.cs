@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
         public static HciClusterData HciClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, Guid? cloudId = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? typeIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
         {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
         /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of HciExtensionInstanceView. </summary>
         /// <param name="name"> The extension name. </param>
-        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is &quot;MicrosoftMonitoringAgent&quot;. </param>
+        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="namePropertiesProgressName"> Name of the step. </param>
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
-        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: &apos;Success&apos;, &apos;Error&apos;, &apos;InProgress&apos;, and &apos;Unknown status&apos;. </param>
+        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
         /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
