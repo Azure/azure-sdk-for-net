@@ -7,7 +7,7 @@ using Moq;
 using Moq.Language;
 using Moq.Language.Flow;
 
-namespace Azure.ResourceManager.Resources.Testing
+namespace Azure.ResourceManager.Moq
 {
     internal class AzureVoidAdapter<T> : IReturnsResult<T>, ISetup<T> where T : class
     {

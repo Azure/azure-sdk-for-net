@@ -6,10 +6,20 @@ using System.Linq.Expressions;
 using Moq;
 using Moq.Language.Flow;
 
-namespace Azure.ResourceManager.Resources.Testing
+namespace Azure.ResourceManager.Moq
 {
-    internal class AzureMock<T> : Mock<T> where T : class
+    /// <summary>
+    /// Mock{T} extension for Azure Management SDKs
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class AzureMock<T> : Mock<T> where T : class
     {
+        /// <summary>
+        /// The fixed version of Setup{R} for Azure Management SDKs
+        /// </summary>
+        /// <typeparam name="R"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public new ISetup<T, R> Setup<R>(Expression<Func<T, R>> expression)
         {
             // add this check since we only have extension methods on `ArmResource` and `ArmClient`
@@ -25,6 +35,11 @@ namespace Azure.ResourceManager.Resources.Testing
             }
         }
 
+        /// <summary>
+        /// The fixed version of Setup{R} for Azure Management SDKs
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public new ISetup<T> Setup(Expression<Action<T>> expression)
         {
             if (ExpressionUtilities.IsExtensionMethod(expression, out var extensionMethodInfo))

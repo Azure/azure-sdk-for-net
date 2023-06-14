@@ -6,7 +6,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Testing;
+using Azure.ResourceManager.Moq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Tests

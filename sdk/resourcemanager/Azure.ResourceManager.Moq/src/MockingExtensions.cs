@@ -8,7 +8,7 @@ using Moq.Language.Flow;
 using System.Reflection;
 using System.Linq;
 
-namespace Azure.ResourceManager.Resources.Testing
+namespace Azure.ResourceManager.Moq
 {
     /// <summary>
     /// Provides extensions to Moq.Mock{T}

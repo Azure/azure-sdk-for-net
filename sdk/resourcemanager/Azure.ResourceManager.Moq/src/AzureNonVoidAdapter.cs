@@ -6,7 +6,7 @@ using System.Reflection;
 using Moq;
 using Moq.Language.Flow;
 
-namespace Azure.ResourceManager.Resources.Testing
+namespace Azure.ResourceManager.Moq
 {
     internal class AzureNonVoidAdapter<T, R> : ISetup<T, R> where T : class
     {

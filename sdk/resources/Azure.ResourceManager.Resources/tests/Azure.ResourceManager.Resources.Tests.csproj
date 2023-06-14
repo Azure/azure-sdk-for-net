@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Resources.csproj" />
+    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager.Moq\src\Azure.ResourceManager.Moq.csproj" />
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
