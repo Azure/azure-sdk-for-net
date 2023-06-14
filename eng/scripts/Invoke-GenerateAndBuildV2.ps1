@@ -117,10 +117,10 @@ if ($relatedTypeSpecProjectFolder) {
         $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          $generatedSDKPackages = @{
+          $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");
-          }
+          })
         } else {
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
