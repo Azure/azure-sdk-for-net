@@ -71,7 +71,6 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
-            #region Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewOperationStatus
             // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -79,7 +78,6 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
-            #endregion
 
             #region Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewResults
             // View the operation results.
