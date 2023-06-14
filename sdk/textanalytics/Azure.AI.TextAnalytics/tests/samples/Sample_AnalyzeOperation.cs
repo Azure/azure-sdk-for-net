@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeActionsOperation operation = client.AnalyzeActions(WaitUntil.Started, batchedDocuments, actions);
+            AnalyzeActionsOperation operation = client.AnalyzeActions(WaitUntil.Completed, batchedDocuments, actions);
 
             Console.WriteLine($"Status: {operation.Status}");
             Console.WriteLine($"Created On: {operation.CreatedOn}");
