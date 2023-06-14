@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Image Classification Multilabel. Multi-label image classification is used when an image could have one or more labels
-    /// from a set of labels - e.g. an image could be labeled with both &apos;cat&apos; and &apos;dog&apos;.
+    /// from a set of labels - e.g. an image could be labeled with both 'cat' and 'dog'.
     /// </summary>
     public partial class ImageClassificationMultilabel : AutoMLVertical
     {

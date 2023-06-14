@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public HealthProbeSettings HealthProbeSettings { get; set; }
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         public int? TrafficRestorationTimeInMinutes { get; set; }
-        /// <summary> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
         public EnabledState? SessionAffinityState { get; set; }
     }
 }

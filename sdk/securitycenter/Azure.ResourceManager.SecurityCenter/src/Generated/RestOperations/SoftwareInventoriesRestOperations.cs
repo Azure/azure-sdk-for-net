@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the software inventory of the virtual machine. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the software inventory of the virtual machine. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets a single software data of the virtual machine. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets a single software data of the virtual machine. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets the software inventory of the virtual machine. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets the software inventory of the virtual machine. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>

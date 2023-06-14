@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBFailoverPolicy. </summary>
-        /// <param name="id"> The unique identifier of the region in which the database account replicates to. Example: &amp;lt;accountName&amp;gt;-&amp;lt;locationName&amp;gt;. </param>
+        /// <param name="id"> The unique identifier of the region in which the database account replicates to. Example: &lt;accountName&gt;-&lt;locationName&gt;. </param>
         /// <param name="locationName"> The name of the region in which the database account exists. </param>
         /// <param name="failoverPriority"> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </param>
         internal CosmosDBFailoverPolicy(string id, AzureLocation? locationName, int? failoverPriority)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             FailoverPriority = failoverPriority;
         }
 
-        /// <summary> The unique identifier of the region in which the database account replicates to. Example: &amp;lt;accountName&amp;gt;-&amp;lt;locationName&amp;gt;. </summary>
+        /// <summary> The unique identifier of the region in which the database account replicates to. Example: &lt;accountName&gt;-&lt;locationName&gt;. </summary>
         public string Id { get; }
         /// <summary> The name of the region in which the database account exists. </summary>
         public AzureLocation? LocationName { get; set; }

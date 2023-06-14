@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterResource> GetDevCentersAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterResource> GetDevCenters(int? top = null, CancellationToken cancellationToken = default)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterProjectResource> GetDevCenterProjects(int? top = null, CancellationToken cancellationToken = default)
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(int? top = null, CancellationToken cancellationToken = default)

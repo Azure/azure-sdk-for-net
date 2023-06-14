@@ -1011,13 +1011,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLoadSnapshotStatus()
+        public void Example_GetLoadSnapshotJobStatus()
         {
             var credential = new AzureKeyCredential("<key>");
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response response = client.GetLoadSnapshotJobStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1028,13 +1028,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLoadSnapshotStatus_AllParameters()
+        public void Example_GetLoadSnapshotJobStatus_AllParameters()
         {
             var credential = new AzureKeyCredential("<key>");
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response response = client.GetLoadSnapshotJobStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1062,13 +1062,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLoadSnapshotStatus_Async()
+        public async Task Example_GetLoadSnapshotJobStatus_Async()
         {
             var credential = new AzureKeyCredential("<key>");
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response response = await client.GetLoadSnapshotJobStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1079,13 +1079,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLoadSnapshotStatus_AllParameters_Async()
+        public async Task Example_GetLoadSnapshotJobStatus_AllParameters_Async()
         {
             var credential = new AzureKeyCredential("<key>");
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response response = await client.GetLoadSnapshotJobStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());

@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="key"> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </param>
         /// <param name="prefix"> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> The version for the S3 object. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeStart"> The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeStart"> The start of S3 object's modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of S3 object's modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="format">
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Version { get; set; }
         /// <summary>
-        /// The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// The start of S3 object's modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary>
-        /// The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// The end of S3 object's modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

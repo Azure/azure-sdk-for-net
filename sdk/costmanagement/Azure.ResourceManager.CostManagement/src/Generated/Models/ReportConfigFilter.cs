@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of ReportConfigFilter. </summary>
-        /// <param name="and"> The logical &quot;AND&quot; expression. Must have at least 2 items. </param>
-        /// <param name="or"> The logical &quot;OR&quot; expression. Must have at least 2 items. </param>
+        /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
+        /// <param name="or"> The logical "OR" expression. Must have at least 2 items. </param>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>
         internal ReportConfigFilter(IList<ReportConfigFilter> and, IList<ReportConfigFilter> or, ReportConfigComparisonExpression dimensions, ReportConfigComparisonExpression tags)
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             Tags = tags;
         }
 
-        /// <summary> The logical &quot;AND&quot; expression. Must have at least 2 items. </summary>
+        /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>
         public IList<ReportConfigFilter> And { get; }
-        /// <summary> The logical &quot;OR&quot; expression. Must have at least 2 items. </summary>
+        /// <summary> The logical "OR" expression. Must have at least 2 items. </summary>
         public IList<ReportConfigFilter> Or { get; }
         /// <summary> Has comparison expression for a dimension. </summary>
         public ReportConfigComparisonExpression Dimensions { get; set; }

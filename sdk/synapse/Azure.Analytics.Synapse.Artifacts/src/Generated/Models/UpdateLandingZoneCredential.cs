@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
-        /// <summary> Landing zone&apos;s sas token. </summary>
+        /// <summary> Landing zone's sas token. </summary>
         public SecureString SasToken { get; set; }
     }
 }

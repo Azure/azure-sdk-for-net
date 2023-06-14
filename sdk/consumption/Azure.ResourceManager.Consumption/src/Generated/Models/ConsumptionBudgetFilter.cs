@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
         /// <param name="and">
-        /// The logical &quot;AND&quot; expression. Must have at least 2 items.
+        /// The logical "AND" expression. Must have at least 2 items.
         /// Serialized Name: BudgetFilter.and
         /// </param>
         /// <param name="dimensions">
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary>
-        /// The logical &quot;AND&quot; expression. Must have at least 2 items.
+        /// The logical "AND" expression. Must have at least 2 items.
         /// Serialized Name: BudgetFilter.and
         /// </summary>
         public IList<BudgetFilterProperties> And { get; }

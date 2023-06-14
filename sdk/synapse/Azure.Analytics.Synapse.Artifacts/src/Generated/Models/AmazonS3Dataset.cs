@@ -41,8 +41,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="key"> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </param>
         /// <param name="prefix"> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> The version for the S3 object. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeStart"> The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeStart"> The start of S3 object's modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of S3 object's modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="format">
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,9 +70,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Prefix { get; set; }
         /// <summary> The version for the S3 object. Type: string (or Expression with resultType string). </summary>
         public object Version { get; set; }
-        /// <summary> The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The start of S3 object's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The end of S3 object's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeEnd { get; set; }
         /// <summary>
         /// The format of files.

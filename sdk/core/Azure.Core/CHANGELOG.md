@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `DynamicData` type to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamicdata](https://aka.ms/azsdk/net/dynamicdata) for further details.
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
 
 ### Breaking Changes
 

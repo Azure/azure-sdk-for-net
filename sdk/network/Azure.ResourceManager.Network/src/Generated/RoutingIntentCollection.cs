@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a RoutingIntent resource if it doesn&apos;t exist else updates the existing RoutingIntent.
+        /// Creates a RoutingIntent resource if it doesn't exist else updates the existing RoutingIntent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a RoutingIntent resource if it doesn&apos;t exist else updates the existing RoutingIntent.
+        /// Creates a RoutingIntent resource if it doesn't exist else updates the existing RoutingIntent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

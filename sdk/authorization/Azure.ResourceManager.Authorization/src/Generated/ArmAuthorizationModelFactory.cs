@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principalId"> The principal ID. </param>
         /// <param name="principalType"> The principal type of the assigned principal ID. </param>
         /// <param name="description"> Description of role assignment. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently the only accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently the only accepted value is '2.0'. </param>
         /// <param name="createdOn"> Time it was created. </param>
         /// <param name="updatedOn"> Time it was updated. </param>
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="status"> The status of the role assignment schedule. </param>
         /// <param name="startOn"> Start DateTime when role assignment schedule. </param>
         /// <param name="endOn"> End DateTime when role assignment schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role assignment schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="linkedRoleEligibilityScheduleInstanceId"> roleEligibilityScheduleInstanceId linked to this roleAssignmentScheduleInstance. </param>
         /// <param name="assignmentType"> Assignment type of the role assignment schedule. </param>
         /// <param name="memberType"> Membership type of the role assignment schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         /// <returns> A new <see cref="Authorization.RoleAssignmentScheduleInstanceData"/> instance for mocking. </returns>
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="linkedRoleEligibilityScheduleId"> The linked role eligibility schedule id - to activate an eligibility. </param>
         /// <param name="justification"> Justification for the role assignment. </param>
         /// <param name="ticketInfo"> Ticket Info of the role assignment. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="status"> The status of the role eligibility schedule. </param>
         /// <param name="startOn"> Start DateTime when role eligibility schedule. </param>
         /// <param name="endOn"> End DateTime when role eligibility schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role eligibility schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
@@ -319,8 +319,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="startOn"> The startDateTime of the role eligibility schedule instance. </param>
         /// <param name="endOn"> The endDateTime of the role eligibility schedule instance. </param>
         /// <param name="memberType"> Membership type of the role eligibility schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         /// <returns> A new <see cref="Authorization.RoleEligibilityScheduleInstanceData"/> instance for mocking. </returns>
@@ -345,8 +345,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="targetRoleEligibilityScheduleInstanceId"> The role eligibility schedule instance id being updated. </param>
         /// <param name="justification"> Justification for the role eligibility. </param>
         /// <param name="ticketInfo"> Ticket Info of the role eligibility. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>

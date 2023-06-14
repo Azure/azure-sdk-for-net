@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// 
         /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
         /// 
-        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database&apos;s original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
+        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
         /// 
         /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
         /// 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant per database CMK scenario. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
-        /// <param name="encryptionProtector"> The azure key vault URI of the database if it&apos;s configured with per Database Customer Managed Keys. </param>
+        /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
         /// <param name="sourceResourceId">
         /// The resource identifier of the source associated with the create operation of this database.
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Sql
         /// 
         /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
         /// 
-        /// To trigger cutover, please provide &apos;performCutover&apos; parameter when the Scaling operation is in Waiting state.
+        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
         /// </param>
         /// <param name="performCutover">
         /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
         /// 
-        /// This property parameter is only applicable for scaling operations that are initiated along with &apos;manualCutover&apos; parameter.
+        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
         /// 
         /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
         /// 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// 
         /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
         /// 
-        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database&apos;s original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
+        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
         /// 
         /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
         /// 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Sql
         public Guid? FederatedClientId { get; set; }
         /// <summary> The resource ids of the user assigned identities to use. </summary>
         public IDictionary<string, SqlDatabaseKey> Keys { get; }
-        /// <summary> The azure key vault URI of the database if it&apos;s configured with per Database Customer Managed Keys. </summary>
+        /// <summary> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </summary>
         public string EncryptionProtector { get; set; }
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
@@ -340,13 +340,13 @@ namespace Azure.ResourceManager.Sql
         /// 
         /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
         /// 
-        /// To trigger cutover, please provide &apos;performCutover&apos; parameter when the Scaling operation is in Waiting state.
+        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
         /// </summary>
         public bool? ManualCutover { get; set; }
         /// <summary>
         /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
         /// 
-        /// This property parameter is only applicable for scaling operations that are initiated along with &apos;manualCutover&apos; parameter.
+        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
         /// 
         /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
         /// 

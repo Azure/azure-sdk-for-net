@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Image Classification. Multi-class image classification is used when an image is classified with only a single label
-    /// from a set of classes - e.g. each image is classified as either an image of a &apos;cat&apos; or a &apos;dog&apos; or a &apos;duck&apos;.
+    /// from a set of classes - e.g. each image is classified as either an image of a 'cat' or a 'dog' or a 'duck'.
     /// </summary>
     public partial class ImageClassification : AutoMLVertical
     {
