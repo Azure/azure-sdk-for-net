@@ -22,4 +22,10 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
+  <!-- Test classes to share in public space-->
+  <ItemGroup>
+    <Compile Include="..\TestClients\LowLevelClient\PetStoreClient.cs" LinkBase="Shared/Tests" />
+    <Compile Include="..\TestClients\LowLevelClient\PetStoreClientOptions.cs" LinkBase="Shared/Tests" />
+  </ItemGroup>
+
 </Project>

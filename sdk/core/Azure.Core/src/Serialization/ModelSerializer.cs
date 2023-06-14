@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Reflection;
+using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
@@ -18,7 +20,7 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Stream Serialize<T>(T model, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModel
         {
             // if options.Serializers is set and the model is in the dictionary, use the serializer
             if (options != null)
@@ -27,14 +29,15 @@ namespace Azure.Core.Serialization
 
                 if (options.Serializers.TryGetValue(typeof(T), out serializer))
                 {
-                    System.BinaryData data = serializer.Serialize(model);
+                    BinaryData data = serializer.Serialize(model);
                     return data.ToStream();
                 }
             }
             // else use default STJ serializer
-            IJsonSerializable serializable = (model ??= new T()) as IJsonSerializable;
             Stream stream = new MemoryStream();
-            serializable.Serialize(stream, options);
+            var writer = new Utf8JsonWriter(stream);
+            model.Serialize(writer, options ?? new ModelSerializerOptions());
+            writer.Flush();
             return stream;
         }
 
@@ -45,7 +48,7 @@ namespace Azure.Core.Serialization
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IModel
         {
             if (options != null)
             {
@@ -61,9 +64,25 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            IJsonSerializable serializable = new T();
-            serializable.Deserialize(stream, options);
-            return (T)serializable;
+            return DeserializeWithReflection<T>(stream, options);
+        }
+
+        private static T DeserializeWithReflection<T>(Stream stream, ModelSerializerOptions? options) where T : class, IModel
+        {
+            Type typeToConvert = typeof(T);
+
+            var classNameInMethod = typeToConvert.Name.AsSpan();
+            classNameInMethod = classNameInMethod.Slice(0, classNameInMethod.IndexOf('`'));
+            var methodName = $"Deserialize{classNameInMethod.ToString()}";
+
+            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            if (method is null)
+                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
+
+            var model = method.Invoke(null, new object[] { JsonDocument.Parse(stream).RootElement, options ?? new ModelSerializerOptions() }) as T;
+            if (model is null)
+                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
+            return model;
         }
 
         /// <summary>
@@ -73,7 +92,7 @@ namespace Azure.Core.Serialization
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(string json, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IModel
         {
             using Stream stream = new MemoryStream();
             using StreamWriter writer = new StreamWriter(stream);
@@ -93,9 +112,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            IJsonSerializable serializable = new T();
-            serializable.Deserialize(stream, options);
-            return (T)serializable;
+            return DeserializeWithReflection<T>(stream, options);
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Azure.Core.Experimental.Tests;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Public.ModelSerializationTests;
@@ -17,73 +18,13 @@ namespace Azure.Core.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void TrySerialize()
-        {
-            #region Snippet:Try_Serialize
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-            using Stream stream = new MemoryStream();
-            Animal model = new Animal();
-            //model.TrySerialize(stream, out long bytesWritten, options: options);
-            stream.Position = 0;
-            string json = new StreamReader(stream).ReadToEnd();
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void TryDeserialize()
-        {
-            #region Snippet:Try_Deserialize
-            using Stream stream = new MemoryStream();
-            bool ignoreReadOnly = false;
-            bool ignoreUnknown = false;
-            //string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
-
-            Animal model = new Animal();
-            //model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void NonTrySerialize()
-        {
-            #region Snippet:NonTry_Serialize
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-            using Stream stream = new MemoryStream();
-            Animal model = new Animal();
-            //model.Serialize(stream, options: options);
-            stream.Position = 0;
-            string roundTrip = new StreamReader(stream).ReadToEnd();
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void NonTryDeserialize()
-        {
-            #region Snippet:NonTry_Deserialize
-            using Stream stream = new MemoryStream();
-            bool ignoreReadOnly = false;
-            bool ignoreUnknown = false;
-            //string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
-
-            Animal model = new Animal();
-            //model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public void ExplicitCastSerialize()
         {
             #region Snippet:ExplicitCast_Serialize
-            //PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
-            //DogListProperty dog = new DogListProperty("myPet");
-            //Response response = client.CreatePet("myPet", (RequestContent)dog);
-            //var response2 = client.CreatePet("myPet", RequestContent.Create(dog));
+            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
+            DogListProperty dog = new DogListProperty("myPet");
+            Response response = client.CreatePet("myPet", (RequestContent)dog);
+            var response2 = client.CreatePet("myPet", RequestContent.Create(dog));
             #endregion
         }
 
@@ -92,10 +33,10 @@ namespace Azure.Core.Samples
         public void ExplicitCastDeserialize()
         {
             #region Snippet:ExplicitCast_Deserialize
-            //PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
-            //Response response = client.GetPet("myPet");
-            //DogListProperty dog = (DogListProperty)response;
-            //Console.WriteLine(dog.IsHungry);
+            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
+            Response response = client.GetPet("myPet");
+            DogListProperty dog = (DogListProperty)response;
+            Console.WriteLine(dog.IsHungry);
             #endregion
         }
 
@@ -131,19 +72,6 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void StaticDeserialize()
-        {
-            #region Snippet:Static_Deserialize
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
-            //string serviceResponse =
-                //"{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
-
-            //Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public void NewtonSoftSerialize()
         {
             #region Snippet:NewtonSoft_Serialize
@@ -157,7 +85,7 @@ namespace Azure.Core.Samples
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 
-            //Stream stream = ModelSerializer.Serialize(dog, options);
+            Stream stream = ModelSerializer.Serialize(dog, options);
             #endregion
         }
 
@@ -166,11 +94,11 @@ namespace Azure.Core.Samples
         public void NewtonSoftDeserialize()
         {
             #region Snippet:NewtonSoft_Deserialize
-            SerializableOptions options = new SerializableOptions();
+            ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
-            //string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            //DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
+            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
             #endregion
         }
 
@@ -187,7 +115,7 @@ namespace Azure.Core.Samples
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
 
-            //Stream stream = ModelSerializer.Serialize(dog);
+            Stream stream = ModelSerializer.Serialize(dog);
             #endregion
         }
 
@@ -196,9 +124,9 @@ namespace Azure.Core.Samples
         public void ModelSerializerDeserialize()
         {
             #region Snippet:ModelSerializer_Deserialize
-            //string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            //DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
+            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 
@@ -247,7 +175,7 @@ namespace Azure.Core.Samples
             envelope.ModelA = new CatReadOnlyProperty();
             envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
 
-            SerializableOptions options = new SerializableOptions();
+            ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
             Stream stream = ModelSerializer.Serialize(envelope, options);
@@ -265,17 +193,19 @@ namespace Azure.Core.Samples
                 "\"modelT\":{\"Name\":\"hello\",\"Age\":1}" +
                 "}";
 
-            SerializableOptions options = new SerializableOptions();
+            ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
             Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
 
+        #region Snippet:Example_Model
         private class ModelT
         {
             public string Name { get; set; }
             public int Age { get; set; }
         }
+        #endregion
     }
 }

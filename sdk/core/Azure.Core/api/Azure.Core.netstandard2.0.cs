@@ -18,8 +18,7 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicCaseMapping caseMapping, Azure.Core.Dynamic.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Dynamic.DynamicDateTimeHandling.Rfc3339) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameFormat propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -94,6 +93,7 @@ namespace Azure
     }
     public partial interface IModel
     {
+        void Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
     }
     public partial class JsonPatchDocument
     {
@@ -384,6 +384,7 @@ namespace Azure.Core
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        public Azure.Core.Serialization.ProtocolMethodOptions ProtocolMethods { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -547,7 +548,9 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
-        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer = null) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameFormat propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
@@ -783,11 +786,6 @@ namespace Azure.Core.Diagnostics
 }
 namespace Azure.Core.Dynamic
 {
-    public enum DynamicCaseMapping
-    {
-        None = 0,
-        PascalToCamel = 1,
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -817,17 +815,6 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DynamicDataOptions
-    {
-        public DynamicDataOptions() { }
-        public Azure.Core.Dynamic.DynamicCaseMapping CaseMapping { get { throw null; } set { } }
-        public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
-    }
-    public enum DynamicDateTimeHandling
-    {
-        Rfc3339 = 0,
-        UnixTime = 1,
     }
 }
 namespace Azure.Core.Extensions
@@ -1090,6 +1077,7 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipelineTransportOptions() { }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
+        public bool IsClientRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
     public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
@@ -1143,9 +1131,24 @@ namespace Azure.Core.Serialization
         public ModelJsonConverter() { }
         public ModelJsonConverter(bool ignoreAdditionalProperties) { }
         public bool IgnoreAdditionalProperties { get { throw null; } }
+        public string Version { get { throw null; } set { } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.IModel Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.IModel value, System.Text.Json.JsonSerializerOptions options) { }
+    }
+    public static partial class ModelSerializer
+    {
+        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.IModel { throw null; }
+        public static T Deserialize<T>(string json, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.IModel { throw null; }
+        public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.IModel { throw null; }
+    }
+    public partial class ModelSerializerOptions
+    {
+        public ModelSerializerOptions() { }
+        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
+        public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
+        public bool PrettyPrint { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
     }
     public abstract partial class ObjectSerializer
     {
@@ -1156,6 +1159,17 @@ namespace Azure.Core.Serialization
         public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public enum PropertyNameFormat
+    {
+        None = 0,
+        CamelCase = 1,
+    }
+    public partial class ProtocolMethodOptions
+    {
+        internal ProtocolMethodOptions() { }
+        public string ResponseContentDateTimeFormat { get { throw null; } set { } }
+        public Azure.Core.Serialization.PropertyNameFormat ResponseContentPropertyNameFormat { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging

@@ -7,12 +7,12 @@ using Azure.Core.Serialization;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class EnvelopeTests
     {
-        private readonly SerializableOptions _wireOptions = new SerializableOptions { IgnoreReadOnlyProperties = false };
-        private readonly SerializableOptions _objectOptions = new SerializableOptions();
+        private readonly ModelSerializerOptions _wireOptions = new ModelSerializerOptions { IgnoreReadOnlyProperties = false };
+        private readonly ModelSerializerOptions _objectOptions = new ModelSerializerOptions();
 
         [TestCase(true)]
         [TestCase(false)]
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly };
+            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = ignoreReadOnly };
 
             if (ignoreReadOnly)
             {
@@ -53,10 +53,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
             else
                 options.Serializers.Add(typeof(ModelC), new NewtonsoftJsonObjectSerializer());
 
-            Envelope<ModelC> m = new Envelope<ModelC>();
-            m.Deserialize(
-                new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)),
-                options: options);
             Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
             if (!ignoreReadOnly)
