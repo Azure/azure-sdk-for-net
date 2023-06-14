@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="statusDetail"> The outcome of this indexer execution. </param>
-        /// <param name="currentState"> All of the state that defines and dictates the indexer&apos;s current execution. </param>
+        /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
         /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>

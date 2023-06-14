@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of UserArtifactSettings. </summary>
         /// <param name="packageFileName"> Optional. The name to assign the downloaded package file on the VM. This is limited to 4096 characters. If not specified, the package file will be named the same as the Gallery Application name. </param>
-        /// <param name="configFileName"> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with &quot;_config&quot;. </param>
+        /// <param name="configFileName"> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with "_config". </param>
         internal UserArtifactSettings(string packageFileName, string configFileName)
         {
             PackageFileName = packageFileName;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Optional. The name to assign the downloaded package file on the VM. This is limited to 4096 characters. If not specified, the package file will be named the same as the Gallery Application name. </summary>
         public string PackageFileName { get; set; }
-        /// <summary> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with &quot;_config&quot;. </summary>
+        /// <summary> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with "_config". </summary>
         public string ConfigFileName { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Job&apos;s execution template, containing container configuration for a job&apos;s execution. </summary>
+    /// <summary> Job's execution template, containing container configuration for a job's execution. </summary>
     public partial class ContainerAppJobExecutionTemplate
     {
         /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>

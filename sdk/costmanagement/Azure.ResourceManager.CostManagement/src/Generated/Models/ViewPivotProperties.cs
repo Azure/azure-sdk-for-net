@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Each pivot must contain a &apos;type&apos; and &apos;name&apos;. </summary>
+    /// <summary> Each pivot must contain a 'type' and 'name'. </summary>
     public partial class ViewPivotProperties
     {
         /// <summary> Initializes a new instance of ViewPivotProperties. </summary>

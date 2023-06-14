@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </summary>
         public string Name { get; }
-        /// <summary> The type of the resource whose name is to be validated. This value must always be &apos;searchServices&apos;. </summary>
+        /// <summary> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </summary>
         public SearchServiceResourceType ResourceType { get; }
     }
 }

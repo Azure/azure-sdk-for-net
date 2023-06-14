@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </summary>
+    /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>
     public partial class UserManagedHttpsContent : CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of UserManagedHttpsContent. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </param>
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
         public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(protocolType)
         {
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
-        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </param>
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
         internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
         {
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = certificateSource;
         }
 
-        /// <summary> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </summary>
+        /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>
         public KeyVaultCertificateSource CertificateSourceParameters { get; set; }
     }
 }
