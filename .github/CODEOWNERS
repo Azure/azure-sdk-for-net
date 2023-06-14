@@ -208,7 +208,7 @@
 /sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
-#/<NotInRepo>/                                                     @robch @oscholz
+#/<NotInRepo>/                                                     @robch
 
 # ServiceLabel: %Cognitive - LUIS %Service Attention
 /sdk/cognitiveservices/Language.LUIS*                              @cahann @kayousef
