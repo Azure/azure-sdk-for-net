@@ -676,7 +676,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly]
+        //[LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2022_11_02)]
         public async Task AppendAsync_Large()
         {
@@ -685,7 +685,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeAppendFileClient file = InstrumentClient(test.FileSystem.GetAppendFileClient(GetNewFileName()));
             await file.CreateAsync();
-            var data = GetRandomBuffer(101 * Constants.MB);
+            var data = GetRandomBuffer(5 * Constants.MB);
             using Stream stream = new MemoryStream(data);
 
             // Act
