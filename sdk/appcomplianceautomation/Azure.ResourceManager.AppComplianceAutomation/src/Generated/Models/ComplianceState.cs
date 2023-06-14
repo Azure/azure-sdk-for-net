@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> The compliance result&apos;s status. </summary>
+    /// <summary> The compliance result's status. </summary>
     public readonly partial struct ComplianceState : IEquatable<ComplianceState>
     {
         private readonly string _value;

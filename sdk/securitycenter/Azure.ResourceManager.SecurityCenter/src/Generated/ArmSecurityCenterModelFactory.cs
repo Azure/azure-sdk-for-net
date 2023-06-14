@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="export"> List of additional options for exporting to workspace data. </param>
         /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
         /// <param name="iotHubs"> IoT Hub resource IDs. </param>
-        /// <param name="userDefinedResources"> Properties of the IoT Security solution&apos;s user defined resources. </param>
+        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
         /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
         /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
         /// <param name="createdOn"> The time this task was discovered in UTC. </param>
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangedOn"> The time this task&apos;s details were last changed in UTC. </param>
+        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityTaskData"/> instance for mocking. </returns>
         public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string state = null, DateTimeOffset? createdOn = null, SecurityTaskProperties securityTaskParameters = null, DateTimeOffset? lastStateChangedOn = null, string subState = null)
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
-        /// <param name="phone"> The security contact&apos;s phone number. </param>
+        /// <param name="phone"> The security contact's phone number. </param>
         /// <param name="alertNotifications"> Defines whether to send email notifications about new security alerts. </param>
         /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityContactData"/> instance for mocking. </returns>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Aggregative state based on the standard&apos;s supported controls states. </param>
+        /// <param name="state"> Aggregative state based on the standard's supported controls states. </param>
         /// <param name="passedControls"> The number of supported regulatory compliance controls of the given standard with a passed state. </param>
         /// <param name="failedControls"> The number of supported regulatory compliance controls of the given standard with a failed state. </param>
         /// <param name="skippedControls"> The number of supported regulatory compliance controls of the given standard with a skipped state. </param>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> The description of the regulatory compliance control. </param>
-        /// <param name="state"> Aggregative state based on the control&apos;s supported assessments states. </param>
+        /// <param name="state"> Aggregative state based on the control's supported assessments states. </param>
         /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
         /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
         /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
@@ -566,11 +566,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the regulatory compliance assessment. </param>
         /// <param name="assessmentType"> The expected type of assessment contained in the AssessmentDetailsLink. </param>
         /// <param name="assessmentDetailsLink"> Link to more detailed assessment results data. The response type will be according to the assessmentType field. </param>
-        /// <param name="state"> Aggregative state based on the assessment&apos;s scanned resources states. </param>
-        /// <param name="passedResources"> The given assessment&apos;s related resources count with passed state. </param>
-        /// <param name="failedResources"> The given assessment&apos;s related resources count with failed state. </param>
-        /// <param name="skippedResources"> The given assessment&apos;s related resources count with skipped state. </param>
-        /// <param name="unsupportedResources"> The given assessment&apos;s related resources count with unsupported state. </param>
+        /// <param name="state"> Aggregative state based on the assessment's scanned resources states. </param>
+        /// <param name="passedResources"> The given assessment's related resources count with passed state. </param>
+        /// <param name="failedResources"> The given assessment's related resources count with failed state. </param>
+        /// <param name="skippedResources"> The given assessment's related resources count with skipped state. </param>
+        /// <param name="unsupportedResources"> The given assessment's related resources count with unsupported state. </param>
         /// <returns> A new <see cref="SecurityCenter.RegulatoryComplianceAssessmentData"/> instance for mocking. </returns>
         public static RegulatoryComplianceAssessmentData RegulatoryComplianceAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string assessmentType = null, string assessmentDetailsLink = null, RegulatoryComplianceState? state = null, int? passedResources = null, int? failedResources = null, int? skippedResources = null, int? unsupportedResources = null)
         {
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use &apos;*&apos;. </param>
+        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
         /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
         /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
@@ -965,9 +965,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the discovered solution. </param>
-        /// <param name="offer"> The security solutions&apos; image offer. </param>
-        /// <param name="publisher"> The security solutions&apos; image publisher. </param>
-        /// <param name="sku"> The security solutions&apos; image sku. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.DiscoveredSecuritySolution"/> instance for mocking. </returns>
         public static DiscoveredSecuritySolution DiscoveredSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string offer = null, string publisher = null, string sku = null, AzureLocation? location = null)
@@ -981,12 +981,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the security solution. </param>
-        /// <param name="alertVendorName"> The security solutions&apos; vendor name. </param>
-        /// <param name="packageInfoUri"> The security solutions&apos; package info url. </param>
-        /// <param name="productName"> The security solutions&apos; product name. </param>
-        /// <param name="publisher"> The security solutions&apos; publisher. </param>
-        /// <param name="publisherDisplayName"> The security solutions&apos; publisher display name. </param>
-        /// <param name="template"> The security solutions&apos; template. </param>
+        /// <param name="alertVendorName"> The security solutions' vendor name. </param>
+        /// <param name="packageInfoUri"> The security solutions' package info url. </param>
+        /// <param name="productName"> The security solutions' product name. </param>
+        /// <param name="publisher"> The security solutions' publisher. </param>
+        /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
+        /// <param name="template"> The security solutions' template. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.SecuritySolutionsReferenceData"/> instance for mocking. </returns>
         public static SecuritySolutionsReferenceData SecuritySolutionsReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string alertVendorName = null, Uri packageInfoUri = null, string productName = null, string publisher = null, string publisherDisplayName = null, string template = null, AzureLocation? location = null)
@@ -1068,8 +1068,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the security solution. </param>
         /// <param name="provisioningState"> The security family provisioning State. </param>
-        /// <param name="template"> The security solutions&apos; template. </param>
-        /// <param name="protectionStatus"> The security solutions&apos; status. </param>
+        /// <param name="template"> The security solutions' template. </param>
+        /// <param name="protectionStatus"> The security solutions' status. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.SecuritySolution"/> instance for mocking. </returns>
         public static SecuritySolution SecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily? securityFamily = null, SecurityFamilyProvisioningState? provisioningState = null, string template = null, string protectionStatus = null, AzureLocation? location = null)
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="alertDisplayName"> The display name of the alert. </param>
         /// <param name="description"> Description of the suspicious activity that was detected. </param>
         /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
-        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </param>
+        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
         /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
         /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers">
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> The location. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
         /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
-        /// <param name="environmentName"> The multi cloud resource&apos;s cloud name. </param>
+        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
         /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

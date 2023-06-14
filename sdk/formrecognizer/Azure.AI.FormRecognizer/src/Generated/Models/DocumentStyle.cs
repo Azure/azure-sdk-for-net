@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Initializes a new instance of DocumentStyle. </summary>
         /// <param name="isHandwritten"> Is content handwritten?. </param>
-        /// <param name="similarFontFamily"> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. &apos;Arial, sans-serif&apos;). </param>
+        /// <param name="similarFontFamily"> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. 'Arial, sans-serif'). </param>
         /// <param name="fontStyle"> Font style. </param>
         /// <param name="fontWeight"> Font weight. </param>
         /// <param name="color"> Foreground color in #rrggbb hexadecimal format. </param>
@@ -50,7 +50,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Is content handwritten?. </summary>
         public bool? IsHandwritten { get; }
-        /// <summary> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. &apos;Arial, sans-serif&apos;). </summary>
+        /// <summary> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. 'Arial, sans-serif'). </summary>
         public string SimilarFontFamily { get; }
         /// <summary> Font style. </summary>
         public FontStyle? FontStyle { get; }

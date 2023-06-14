@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
-        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
+        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format 'azure' will return azure auth-provider kubeconfig; format 'exec' will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
-        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
+        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format 'azure' will return azure auth-provider kubeconfig; format 'exec' will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>

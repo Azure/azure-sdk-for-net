@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </summary>
+    /// <summary> When PlayerVisibility is set to "Visible", the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to "Hidden", the text will not be available to the client. The default value is "Visible". </summary>
     public readonly partial struct PlayerVisibility : IEquatable<PlayerVisibility>
     {
         private readonly string _value;
