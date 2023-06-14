@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     [TestFixture("create")]
     public class CreateMccfTest : MccfManagementTestBase
     {
-        public CreateMccfTest(string testFixtureName) : base(true, RecordedTestMode.Playback, testFixtureName)
+        public CreateMccfTest(string testFixtureName) : base(true, testFixtureName)
         {
         }
 
