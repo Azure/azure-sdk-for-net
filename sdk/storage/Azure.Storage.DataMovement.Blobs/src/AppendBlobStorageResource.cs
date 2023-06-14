@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class AppendBlobStorageResource : StorageResource
     {
-        private AppendBlobClient _blobClient;
+        internal AppendBlobClient BlobClient { get; set; }
         private AppendBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
@@ -25,12 +25,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Gets the path of the storage resource.
         /// </summary>
-        public override string Path => _blobClient.Name;
+        public override string Path => BlobClient.Name;
 
         /// <summary>
         /// Defines whether the storage resource type can produce a URL.
@@ -65,12 +65,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
-        /// <param name="blobClient">The blob client <see cref="BlobClient"/>
+        /// <param name="blobClient">The blob client <see cref="Storage.Blobs.BlobClient"/>
         /// which will service the storage resource operations.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         public AppendBlobStorageResource(AppendBlobClient blobClient, AppendBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _options = options;
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
+            Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
                 _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
@@ -148,13 +148,13 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (position == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
-                await _blobClient.AppendBlockAsync(
+                await BlobClient.AppendBlockAsync(
                     content: stream,
                     options: _options.ToAppendBlockOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -187,7 +187,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
-                await _blobClient.StartCopyFromUriAsync(
+                await BlobClient.StartCopyFromUriAsync(
                     sourceResource.Uri,
                     _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -195,11 +195,11 @@ namespace Azure.Storage.DataMovement.Blobs
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
                 // Create Append blob beforehand
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     options: _options.ToCreateOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                await _blobClient.SyncCopyFromUriAsync(
+                await BlobClient.SyncCopyFromUriAsync(
                     sourceResource.Uri,
                     _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -236,11 +236,11 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 if (range.Offset == 0)
                 {
-                    await _blobClient.CreateAsync(
+                    await BlobClient.CreateAsync(
                         _options.ToCreateOptions(overwrite),
                         cancellationToken).ConfigureAwait(false);
                 }
-                await _blobClient.AppendBlockFromUriAsync(
+                await BlobClient.AppendBlockFromUriAsync(
                 sourceResource.Uri,
                 options: _options.ToAppendBlockFromUriOptions(
                     overwrite,
@@ -262,7 +262,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
         }
@@ -289,7 +289,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private void GrabEtag(Response response)

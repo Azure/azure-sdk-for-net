@@ -173,48 +173,101 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public async Task ContainerProvidesETagFromList()
         {
-            const int blobCount = 3;
+            // Arrange
+
+            List<BlobType> blobTypes = new() { BlobType.Block, BlobType.Page, BlobType.Append };
             Random random = new();
-            List<ETag> etags = Enumerable.Range(0, blobCount)
+            List<ETag> etags = Enumerable.Range(0, blobTypes.Count)
                 .Select(_ => new ETag(Convert.ToBase64String(Guid.NewGuid().ToByteArray())))
+                .ToList();
+            List<BlobItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
+                .Select(i => BlobsModelFactory.BlobItemProperties(
+                    accessTierInferred: false, eTag: etags[i], blobType: blobTypes[i]))
+                .Select(props => BlobsModelFactory.BlobItem(properties: props))
                 .ToList();
             Mock<BlobContainerClient> mock = new();
             mock.Setup(c => c.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(AsyncPageable<BlobItem>.FromPages(new List<Page<BlobItem>>()
                 {
                     Page<BlobItem>.FromValues(
-                        etags.Select(etag => BlobsModelFactory.BlobItemProperties(accessTierInferred: false, eTag: etag))
-                            .Select(props => BlobsModelFactory.BlobItem(properties: props))
-                            .ToList(),
+                        blobListItems,
                         continuationToken: null,
                         response: null)
                 }));
 
+            // Act
+
             BlobStorageResourceContainer containerResource = new(mock.Object);
             List<StorageResourceBase> children = await containerResource.GetStorageResourcesAsync().ToEnumerableAsync();
 
-            // Assert each child has the correct etag
-            Assert.AreEqual(etags.Count, children.Count);
-            for (int i = 0; i < children.Count; i++)
+            // Assert
+
+            // to assert each child resource is initialized with the correct etag, mock the backing client
+            // and assert the client is recieving the etag in its calls.
+            Assert.AreEqual(blobTypes.Count, children.Count);
+            for (int i = 0; i < blobTypes.Count; i++)
             {
-                BlockBlobStorageResource child = children[i] as BlockBlobStorageResource;
                 ETag expectedEtag = etags[i];
-                //replace resource's client with a mock
-                Mock<BlockBlobClient> bbClient = new();
-                bbClient.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
-                    .Returns(Task.FromResult(Response.FromValue(
-                        BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
-                        new MockResponse(201))));
-                child.BlobClient = bbClient.Object;
+                BlobType blobType = blobTypes[i];
+                switch (blobType)
+                {
+                    case BlobType.Block:
+                        BlockBlobStorageResource blockChild = children[i] as BlockBlobStorageResource;
+                        Mock<BlockBlobClient> blockClient = new();
+                        blockClient.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
+                            .Returns(Task.FromResult(Response.FromValue(
+                                BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
+                                new MockResponse(201))));
+                        blockChild.BlobClient = blockClient.Object;
 
-                await child.ReadStreamAsync();
+                        await blockChild.ReadStreamAsync();
 
-                bbClient.Verify(
-                    b => b.DownloadStreamingAsync(
-                        It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == expectedEtag),
-                        It.IsAny<CancellationToken>()),
-                    Times.Once());
-                bbClient.VerifyNoOtherCalls();
+                        blockClient.Verify(
+                            b => b.DownloadStreamingAsync(
+                                It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == expectedEtag),
+                                It.IsAny<CancellationToken>()),
+                            Times.Once());
+                        blockClient.VerifyNoOtherCalls();
+                        break;
+
+                    case BlobType.Page:
+                        PageBlobStorageResource pageChild = children[i] as PageBlobStorageResource;
+                        Mock<PageBlobClient> pageClient = new();
+                        pageClient.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
+                            .Returns(Task.FromResult(Response.FromValue(
+                                BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
+                                new MockResponse(201))));
+                        pageChild.BlobClient = pageClient.Object;
+
+                        await pageChild.ReadStreamAsync();
+
+                        pageClient.Verify(
+                            b => b.DownloadStreamingAsync(
+                                It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == expectedEtag),
+                                It.IsAny<CancellationToken>()),
+                            Times.Once());
+                        pageClient.VerifyNoOtherCalls();
+                        break;
+
+                    case BlobType.Append:
+                        AppendBlobStorageResource appendChild = children[i] as AppendBlobStorageResource;
+                        Mock<AppendBlobClient> appendClient = new();
+                        appendClient.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
+                            .Returns(Task.FromResult(Response.FromValue(
+                                BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
+                                new MockResponse(201))));
+                        appendChild.BlobClient = appendClient.Object;
+
+                        await appendChild.ReadStreamAsync();
+
+                        appendClient.Verify(
+                            b => b.DownloadStreamingAsync(
+                                It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == expectedEtag),
+                                It.IsAny<CancellationToken>()),
+                            Times.Once());
+                        appendClient.VerifyNoOtherCalls();
+                        break;
+                }
             }
         }
     }
