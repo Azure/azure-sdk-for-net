@@ -34,12 +34,13 @@ namespace Azure.ResourceManager
         {
             var model = _resource.DataBag;
             var memoryStream = new MemoryStream();
+            // TODO: get rid of copy
             response.ContentStream.CopyTo(memoryStream);
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter());
-            var result = JsonSerializer.Deserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), typeof(T), options);
+            var result = JsonSerializer.Deserialize<IModel>(new ReadOnlySpan<byte>(memoryStream.ToArray()), options);
             //model.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
-            return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, model }, null);
+            return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, result }, null);
         }
     }
 }
