@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Azure.Storage.DataMovement.Tests
         public List<TransferFailedEventArgs> FailedEvents { get; internal set; }
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
         public List<TransferSkippedEventArgs> SkippedEvents { get; internal set; }
-        public List<SingleTransferCompletedEventArgs> SingleCompletedEvents { get; internal set; }
+        public ConcurrentBag<SingleTransferCompletedEventArgs> SingleCompletedEvents { get; internal set; }
 
         private List<TransferOptions> _options;
 
@@ -36,7 +37,7 @@ namespace Azure.Storage.DataMovement.Tests
             FailedEvents = new List<TransferFailedEventArgs>();
             StatusEvents = new List<TransferStatusEventArgs>();
             SkippedEvents = new List<TransferSkippedEventArgs>();
-            SingleCompletedEvents = new List<SingleTransferCompletedEventArgs>();
+            SingleCompletedEvents = new ConcurrentBag<SingleTransferCompletedEventArgs>();
         }
 
         public TestEventsRaised(TransferOptions options)
@@ -94,6 +95,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private Task AppendSingleTransferCompleted(SingleTransferCompletedEventArgs args)
         {
+            Console.WriteLine("Received single completed event!");
             SingleCompletedEvents.Add(args);
             return Task.CompletedTask;
         }

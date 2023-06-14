@@ -314,19 +314,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
-            // NOTE: There is a chance this event can be triggered after the transfer has
-            // completed if more job parts complete before the next instance of this event is handled.
-
             StorageTransferStatus jobPartStatus = args.StorageTransferStatus;
             StorageTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
-
-            if (jobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers ||
-                jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers ||
-                jobPartStatus == StorageTransferStatus.Completed ||
-                jobPartStatus == StorageTransferStatus.Paused)
-            {
-                Interlocked.Decrement(ref _pendingJobParts);
-            }
 
             // Cancel the entire job if one job part fails and StopOnFailure is set
             if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
@@ -348,6 +337,8 @@ namespace Azure.Storage.DataMovement
                     jobStatus == StorageTransferStatus.PauseInProgress ||
                     jobStatus == StorageTransferStatus.CancellationInProgress))
             {
+                Interlocked.Decrement(ref _pendingJobParts);
+
                 if (_enumerationComplete)
                 {
                     await CheckAndUpdateStatusAsync().ConfigureAwait(false);
