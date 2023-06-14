@@ -46,13 +46,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Returns the preferred method of how to perform service to service
-        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="BlobStorageResourceOptions.CopyMethod"/>.
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
-
-        /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
         /// </summary>
         public override TransferType TransferType => TransferType.Concurrent;
@@ -210,22 +203,12 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
-            {
-                await _blobClient.StartCopyFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
-            {
-                // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
-                // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncUploadFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
+            // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
+            // TODO: subject to change as we scale to support resource types outside of blobs.
+            await _blobClient.SyncUploadFromUriAsync(
+                sourceResource.Uri,
+                _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,23 +239,16 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
+            if (!_blocks.TryAdd(range.Offset, id))
             {
-                string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
-                if (!_blocks.TryAdd(range.Offset, id))
-                {
-                    throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
-                }
-                await _blobClient.StageBlockFromUriAsync(
-                    sourceResource.Uri,
-                    id,
-                    options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
             }
-            else
-            {
-                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
-            }
+            await _blobClient.StageBlockFromUriAsync(
+                sourceResource.Uri,
+                id,
+                options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
