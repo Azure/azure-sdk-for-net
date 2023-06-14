@@ -156,7 +156,7 @@ namespace Azure.Core.Dynamic
                         continue;
                     }
 
-                    // Don't allow heterogenous arrays
+                    // Don't allow heterogenous collections
                     if (item.GetType() != elementType)
                     {
                         return false;
@@ -210,9 +210,7 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAnonymousType(Type type)
             {
-                return
-                    type.Namespace == null &&
-                    Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
+                return type.Namespace == null && type.Name.StartsWith("<>f__AnonymousType");
             }
         }
     }
