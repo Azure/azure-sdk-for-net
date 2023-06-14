@@ -368,7 +368,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -415,7 +415,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>

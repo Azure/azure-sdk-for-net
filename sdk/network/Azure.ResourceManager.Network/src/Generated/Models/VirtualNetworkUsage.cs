@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Subnet identifier. </param>
         /// <param name="limit"> Indicates the size of the subnet. </param>
         /// <param name="name"> The name containing common and localized value for usage. </param>
-        /// <param name="unit"> Usage units. Returns &apos;Count&apos;. </param>
+        /// <param name="unit"> Usage units. Returns 'Count'. </param>
         internal VirtualNetworkUsage(double? currentValue, ResourceIdentifier id, double? limit, VirtualNetworkUsageName name, string unit)
         {
             CurrentValue = currentValue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         public double? Limit { get; }
         /// <summary> The name containing common and localized value for usage. </summary>
         public VirtualNetworkUsageName Name { get; }
-        /// <summary> Usage units. Returns &apos;Count&apos;. </summary>
+        /// <summary> Usage units. Returns 'Count'. </summary>
         public string Unit { get; }
     }
 }

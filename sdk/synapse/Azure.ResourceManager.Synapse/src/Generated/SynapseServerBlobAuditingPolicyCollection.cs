@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or Update a workspace managed sql server&apos;s blob auditing policy.
+        /// Create or Update a workspace managed sql server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or Update a workspace managed sql server&apos;s blob auditing policy.
+        /// Create or Update a workspace managed sql server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s blob auditing policy.
+        /// Get a workspace managed sql server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s blob auditing policy.
+        /// Get a workspace managed sql server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// List workspace managed sql server&apos;s blob auditing policies.
+        /// List workspace managed sql server's blob auditing policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// List workspace managed sql server&apos;s blob auditing policies.
+        /// List workspace managed sql server's blob auditing policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

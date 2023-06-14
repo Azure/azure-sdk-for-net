@@ -102,9 +102,13 @@ namespace Azure.Identity
 
                 return scope.Succeeded(accessToken);
             }
-            catch (Exception e)
+            catch (CredentialUnavailableException e)
             {
                 throw scope.FailWrapAndThrow(e);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
             }
         }
 

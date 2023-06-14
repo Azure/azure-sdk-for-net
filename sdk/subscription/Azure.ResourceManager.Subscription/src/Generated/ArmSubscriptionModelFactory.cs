@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Subscription.Models
 
         /// <summary> Initializes a new instance of TenantPolicyProperties. </summary>
         /// <param name="policyId"> Policy Id. </param>
-        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user&apos;s tenant. </param>
-        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user&apos;s tenant. </param>
-        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user&apos;s tenant. </param>
+        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
+        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
+        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
         /// <returns> A new <see cref="Models.TenantPolicyProperties"/> instance for mocking. </returns>
         public static TenantPolicyProperties TenantPolicyProperties(string policyId = null, bool? blockSubscriptionsLeavingTenant = null, bool? blockSubscriptionsIntoTenant = null, IEnumerable<Guid> exemptedPrincipals = null)
         {

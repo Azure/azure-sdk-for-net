@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
-        /// <param name="subject"> The certificate&apos;s subject name. </param>
-        /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprint"> The certificate's thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
         /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
-        /// <param name="createdOn"> The certificate&apos;s creation date and time. </param>
-        /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
+        /// <param name="createdOn"> The certificate's creation date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesCertificateProperties"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesCertificateProperties DeviceProvisioningServicesCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, BinaryData certificate = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of ResourceStatus. </summary>
         /// <param name="resourceStatusType"> The type of the condition. </param>
         /// <param name="status"> Status of the condition. </param>
-        /// <param name="reason"> The reason for the condition&apos;s status. </param>
+        /// <param name="reason"> The reason for the condition's status. </param>
         /// <param name="message"> A human readable message indicating details about the status. </param>
         /// <param name="severity"> Severity with which to treat failures of this type of condition. </param>
         /// <param name="lastUpdatedOn"> The last update time for this condition. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string ResourceStatusType { get; }
         /// <summary> Status of the condition. </summary>
         public string Status { get; }
-        /// <summary> The reason for the condition&apos;s status. </summary>
+        /// <summary> The reason for the condition's status. </summary>
         public string Reason { get; }
         /// <summary> A human readable message indicating details about the status. </summary>
         public string Message { get; }
