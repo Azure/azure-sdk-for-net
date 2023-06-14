@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string ClusterRG => GetRecordedVariable("CLUSTER_RG");
         public System.DateTimeOffset DayFromNow => System.DateTimeOffset.Parse(GetRecordedVariable("DAY_FROM_NOW"));
         public string DefaultCniNetworkName => GetRecordedVariable("DEFAULT_CNI_NETWORK_NAME");
+        public string KubernetesClusterName => GetRecordedVariable("KUBERNETES_CLUSTER_NAME");
+        public ResourceIdentifier KubernetesClusterId => new ResourceIdentifier(GetRecordedVariable("KUBERNETES_CLUSTER_ID"));
+        public string KubernetesClusterRG => GetRecordedVariable("KUBERNETES_CLUSTER_RG");
         public string L2IsolationDomainId => GetRecordedVariable("L2_ISOLATION_DOMAIN_ID");
         public string L2NetworkName => GetRecordedVariable("L2_NETWORK_NAME");
         public string L3Ipv4Prefix => GetRecordedVariable("L3_IPV4_PREFIX");
