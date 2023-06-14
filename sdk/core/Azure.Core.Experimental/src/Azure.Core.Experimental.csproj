@@ -11,8 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!--<PackageReference Include="Azure.Core" />-->
     <PackageReference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
