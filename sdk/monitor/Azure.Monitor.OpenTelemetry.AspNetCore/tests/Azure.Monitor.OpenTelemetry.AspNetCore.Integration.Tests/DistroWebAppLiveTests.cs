@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 #if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
@@ -89,11 +90,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
-
-            // NOTE: If this test starts failing, Flushing may be necessary.
-            //var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
-            //tracerProvider.ForceFlush();
-            //tracerProvider.Shutdown();
+            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+            tracerProvider.Shutdown();
 
             await app.StopAsync(); // shutdown to prevent collecting the log queries.
 
