@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class QueryResultDocumentRerankerOptions
+    public partial class QueryResultDocumentRerankerInput
     {
-        internal static QueryResultDocumentRerankerOptions DeserializeQueryResultDocumentRerankerOptions(JsonElement element)
+        internal static QueryResultDocumentRerankerInput DeserializeQueryResultDocumentRerankerInput(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new QueryResultDocumentRerankerOptions(title.Value, content.Value, keywords.Value);
+            return new QueryResultDocumentRerankerInput(title.Value, content.Value, keywords.Value);
         }
     }
 }

@@ -115,7 +115,7 @@ directive:
 
 ### Add `arm-id` format for `AuthResourceId`
 
- Add `"format": "arm-id"` for `AuthResourceId` to generate as [Azure.Core.ResourceIdentifier](https://learn.microsoft.com/en-us/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet).
+ Add `"format": "arm-id"` for `AuthResourceId` to generate as [Azure.Core.ResourceIdentifier](https://learn.microsoft.com/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet).
 
 ```yaml
 directive:
@@ -133,17 +133,6 @@ directive:
 - from: searchindex.json
   where: $.definitions.Vector.properties.k
   transform: $["x-ms-client-name"] = "KNearestNeighborsCount";
-```
-
-### Rename QueryResultDocumentRerankerInput
-
- Rename `QueryResultDocumentRerankerInput` to `QueryResultDocumentRerankerOptions`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.QueryResultDocumentRerankerInput
-  transform: $["x-ms-client-name"] = "QueryResultDocumentRerankerOptions";
 ```
 
 ### Rename QueryResultDocumentSemanticFieldState

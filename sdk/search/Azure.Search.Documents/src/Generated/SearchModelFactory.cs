@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="keywordFields"> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="rerankerInput"> The raw concatenated strings that were sent to the semantic enrichment process. </param>
         /// <returns> A new <see cref="Models.SemanticDebugInfo"/> instance for mocking. </returns>
-        public static SemanticDebugInfo SemanticDebugInfo(QueryResultDocumentSemanticField titleField = null, IEnumerable<QueryResultDocumentSemanticField> contentFields = null, IEnumerable<QueryResultDocumentSemanticField> keywordFields = null, QueryResultDocumentRerankerOptions rerankerInput = null)
+        public static SemanticDebugInfo SemanticDebugInfo(QueryResultDocumentSemanticField titleField = null, IEnumerable<QueryResultDocumentSemanticField> contentFields = null, IEnumerable<QueryResultDocumentSemanticField> keywordFields = null, QueryResultDocumentRerankerInput rerankerInput = null)
         {
             contentFields ??= new List<QueryResultDocumentSemanticField>();
             keywordFields ??= new List<QueryResultDocumentSemanticField>();
@@ -84,14 +84,14 @@ namespace Azure.Search.Documents.Models
             return new QueryResultDocumentSemanticField(name, state);
         }
 
-        /// <summary> Initializes a new instance of QueryResultDocumentRerankerOptions. </summary>
+        /// <summary> Initializes a new instance of QueryResultDocumentRerankerInput. </summary>
         /// <param name="title"> The raw string for the title field that was used for semantic enrichment. </param>
         /// <param name="content"> The raw concatenated strings for the content fields that were used for semantic enrichment. </param>
         /// <param name="keywords"> The raw concatenated strings for the keyword fields that were used for semantic enrichment. </param>
-        /// <returns> A new <see cref="Models.QueryResultDocumentRerankerOptions"/> instance for mocking. </returns>
-        public static QueryResultDocumentRerankerOptions QueryResultDocumentRerankerOptions(string title = null, string content = null, string keywords = null)
+        /// <returns> A new <see cref="Models.QueryResultDocumentRerankerInput"/> instance for mocking. </returns>
+        public static QueryResultDocumentRerankerInput QueryResultDocumentRerankerInput(string title = null, string content = null, string keywords = null)
         {
-            return new QueryResultDocumentRerankerOptions(title, content, keywords);
+            return new QueryResultDocumentRerankerInput(title, content, keywords);
         }
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
