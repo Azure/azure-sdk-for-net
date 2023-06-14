@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void SerializeTest(bool ignoreReadonlyProperties, bool ignoreAdditionalProperties)
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(ignoreAdditionalProperties));
+            options.Converters.Add(new ModelJsonConverter());
             options.IgnoreReadOnlyProperties = ignoreReadonlyProperties;
 
             string expected = "{";

@@ -11,7 +11,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class ModelX : BaseModel, IUtf8JsonSerializable, IModel
+    internal class ModelX : BaseModel, IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -30,9 +30,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public int XProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);

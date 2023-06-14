@@ -4,14 +4,12 @@
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// TODO
     /// </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
-    public interface IModel
-#pragma warning restore AZC0012 // Avoid single word type names
+    public interface IModelSerializable
     {
         /// <summary>
         /// .

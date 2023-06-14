@@ -91,10 +91,6 @@ namespace Azure
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial interface IModel
-    {
-        void Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
-    }
     public partial class JsonPatchDocument
     {
         public JsonPatchDocument() { }
@@ -1113,6 +1109,10 @@ namespace Azure.Core.Serialization
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
+    public partial interface IModelSerializable
+    {
+        void Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
+    }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
@@ -1126,21 +1126,20 @@ namespace Azure.Core.Serialization
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.IModel>
+    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
     {
         public ModelJsonConverter() { }
         public ModelJsonConverter(bool ignoreAdditionalProperties) { }
-        public bool IgnoreAdditionalProperties { get { throw null; } }
-        public string Version { get { throw null; } set { } }
+        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.IModel Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.IModel value, System.Text.Json.JsonSerializerOptions options) { }
+        public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelSerializable value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public static partial class ModelSerializer
     {
-        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.IModel { throw null; }
-        public static T Deserialize<T>(string json, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.IModel { throw null; }
-        public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.IModel { throw null; }
+        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
+        public static T Deserialize<T>(string json, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
+        public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
     }
     public partial class ModelSerializerOptions
     {

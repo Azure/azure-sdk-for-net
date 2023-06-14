@@ -10,7 +10,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Envelope<T> : IModel, IUtf8JsonSerializable
+    public class Envelope<T> : IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -37,9 +37,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModel)this).Serialize(writer, new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            ((IModel)ModelA).Serialize(writer, options);
+            ((IModelSerializable)ModelA).Serialize(writer, options);
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 

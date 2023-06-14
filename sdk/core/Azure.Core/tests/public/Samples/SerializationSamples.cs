@@ -144,9 +144,7 @@ namespace Azure.Core.Samples
             };
 
             JsonSerializerOptions options = new JsonSerializerOptions();
-            var converter = new ModelJsonConverter(false);
-            converter.Version = "x";
-            options.Converters.Add(converter);
+            options.Converters.Add(new ModelJsonConverter(false));
 
             string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
             #endregion

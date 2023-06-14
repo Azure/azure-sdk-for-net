@@ -20,7 +20,7 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModel
+        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
             // if options.Serializers is set and the model is in the dictionary, use the serializer
             if (options != null)
@@ -48,7 +48,7 @@ namespace Azure.Core.Serialization
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IModel
+        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
             if (options != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.Core.Serialization
             return DeserializeWithReflection<T>(stream, options);
         }
 
-        private static T DeserializeWithReflection<T>(Stream stream, ModelSerializerOptions? options) where T : class, IModel
+        private static T DeserializeWithReflection<T>(Stream stream, ModelSerializerOptions? options) where T : class, IModelSerializable
         {
             Type typeToConvert = typeof(T);
 
@@ -92,7 +92,7 @@ namespace Azure.Core.Serialization
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IModel
+        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
             using Stream stream = new MemoryStream();
             using StreamWriter writer = new StreamWriter(stream);
