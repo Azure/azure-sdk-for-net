@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
         /// <param name="id"> Article id. </param>
-        /// <param name="title"> This insight&apos;s title. </param>
+        /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>
         /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
         internal SelfHelpDiagnosticInsight(string id, string title, string results, SelfHelpImportanceLevel? insightImportanceLevel)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Article id. </summary>
         public string Id { get; }
-        /// <summary> This insight&apos;s title. </summary>
+        /// <summary> This insight's title. </summary>
         public string Title { get; }
         /// <summary> Detailed result content. </summary>
         public string Results { get; }
