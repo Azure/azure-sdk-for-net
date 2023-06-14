@@ -22,17 +22,9 @@ namespace Azure.ResourceManager
 
         private static T CreateResult(Response response)
         {
-            //if (typeof(T).GetInterface(nameof(ISerializable)) is null)
-            //{
-            //    throw new InvalidOperationException("Type T should implement ISerializable. ");
-            //}
-            //var model = Activator.CreateInstance(typeof(T));
-            var memoryStream = new MemoryStream();
-            response.ContentStream.CopyTo(memoryStream);
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter());
-            var result = JsonSerializer.Deserialize<IModel>(new ReadOnlySpan<byte>(memoryStream.ToArray()), options);
-            //((ISerializable)model).TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            var result = JsonSerializer.Deserialize<IModel>(response.Content, options);
             return (T)result;
         }
     }

@@ -16,12 +16,11 @@ namespace Azure.ResourceManager
     internal class GenericResourceOperationSource<T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
-        private readonly IResource _resource;
+        private readonly Type _dataType;
 
-        public GenericResourceOperationSource(ArmClient client, IResource resource)
+        public GenericResourceOperationSource(ArmClient client)
         {
             _client = client;
-            _resource = resource;
         }
 
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
@@ -32,14 +31,9 @@ namespace Azure.ResourceManager
 
         private T CreateResult(Response response)
         {
-            var model = _resource.DataBag;
-            var memoryStream = new MemoryStream();
-            // TODO: get rid of copy
-            response.ContentStream.CopyTo(memoryStream);
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter());
-            var result = JsonSerializer.Deserialize<IModel>(new ReadOnlySpan<byte>(memoryStream.ToArray()), options);
-            //model.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            var result = JsonSerializer.Deserialize(response.Content, _dataType, options);
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, result }, null);
         }
     }

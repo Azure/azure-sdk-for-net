@@ -302,6 +302,5 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
-        ISerializable ResourceManager.IResource.DataBag => new PolicySetDefinitionData();
     }
 }

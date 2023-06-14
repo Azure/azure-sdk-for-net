@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourceGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class for mocking. </summary>
-        public ResourceGroupResource()
+        protected ResourceGroupResource()
         {
         }
 
@@ -832,6 +832,5 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
-        ISerializable ResourceManager.IResource.DataBag => new ResourceGroupData();
     }
 }

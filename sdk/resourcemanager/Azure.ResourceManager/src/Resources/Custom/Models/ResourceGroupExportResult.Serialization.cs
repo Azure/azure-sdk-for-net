@@ -17,33 +17,5 @@ namespace Azure.ResourceManager.Resources.Models
         {
             ((IUtf8JsonSerializable)this).Write(writer);
         }
-
-        private void Deserialize(JsonElement element)
-        {
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("template"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Template = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("error"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
-                    continue;
-                }
-            }
-        }
-
     }
 }

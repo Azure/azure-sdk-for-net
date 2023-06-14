@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Template { get; private set; }
+        public BinaryData Template { get; }
         /// <summary> The template export error. </summary>
-        public ResponseError Error { get; private set; }
+        public ResponseError Error { get; }
     }
 }
