@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> resource sku. </param>
-        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: ["1"]. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Initializes a new instance of IscsiTargetInfo. </summary>
-        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
+        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="targetPortalHostname"> iSCSI Target Portal Host Name. </param>
         /// <param name="targetPortalPort"> iSCSI Target Portal Port. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
