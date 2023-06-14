@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
-        /// <param name="deploymentState"> Observed deployment state of the Arc Agents on the target cluster. Possible values include: &apos;pending&apos;, &apos;provisioning&apos;, &apos;provisioned&apos;, &apos;deleting&apos;, &apos;failed&apos;, &apos;upgrading&apos;. </param>
+        /// <param name="deploymentState"> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="errorMessage"> Error messages while onboarding/upgrading/uninstalling the Arc agents. </param>
         /// <param name="onboardingPublicKey"> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. Will be used to create the hybridIdentityMetadata proxy resource and will not be persisted. </param>
         /// <param name="agentVersion"> Version of the Arc agents currently running on the Provisioned cluster resource. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfile. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="name"> The Agent Pool name. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
+        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/> instance for mocking. </returns>
         public static ProvisionedClusterPoolUpgradeProfile ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion = null, string name = null, OSType? osType = null, IEnumerable<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = null)
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
         /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
         /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </param>
+        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: 'System', 'LB', 'User'. Default is 'User'. </param>
         /// <param name="nodeLabels"> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </param>
         /// <param name="nodeTaints"> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
+        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </param>
         /// <param name="nodeImageVersion"> The version of node image. </param>
         /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
         /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>

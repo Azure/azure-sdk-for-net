@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a workspace SQL server&apos;s extended blob auditing policy. </summary>
+        /// <summary> Get a workspace SQL server's extended blob auditing policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a workspace SQL server&apos;s extended blob auditing policy. </summary>
+        /// <summary> Get a workspace SQL server's extended blob auditing policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Create or Update a workspace managed sql server&apos;s extended blob auditing policy. </summary>
+        /// <summary> Create or Update a workspace managed sql server's extended blob auditing policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Create or Update a workspace managed sql server&apos;s extended blob auditing policy. </summary>
+        /// <summary> Create or Update a workspace managed sql server's extended blob auditing policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> List workspace managed sql server&apos;s extended blob auditing policies. </summary>
+        /// <summary> List workspace managed sql server's extended blob auditing policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> List workspace managed sql server&apos;s extended blob auditing policies. </summary>
+        /// <summary> List workspace managed sql server's extended blob auditing policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> List workspace managed sql server&apos;s extended blob auditing policies. </summary>
+        /// <summary> List workspace managed sql server's extended blob auditing policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> List workspace managed sql server&apos;s extended blob auditing policies. </summary>
+        /// <summary> List workspace managed sql server's extended blob auditing policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

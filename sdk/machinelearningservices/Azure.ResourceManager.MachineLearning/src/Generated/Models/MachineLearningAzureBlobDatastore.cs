@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="containerName"> Storage account container name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Endpoint { get; set; }
         /// <summary> Protocol used to communicate with the storage account. </summary>
         public string Protocol { get; set; }
-        /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
+        /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
     }
 }

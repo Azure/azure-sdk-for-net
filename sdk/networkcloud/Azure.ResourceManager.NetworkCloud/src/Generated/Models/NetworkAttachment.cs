@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="macAddress"> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </param>
         /// <param name="networkAttachmentName">
-        /// The associated network&apos;s interface name.
+        /// The associated network's interface name.
         /// If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine.
         /// If the user doesn’t specify this value, the default interface name of the network resource will be used.
         /// For a CloudServicesNetwork resource, this name will be ignored.
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </summary>
         public string MacAddress { get; }
         /// <summary>
-        /// The associated network&apos;s interface name.
+        /// The associated network's interface name.
         /// If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine.
         /// If the user doesn’t specify this value, the default interface name of the network resource will be used.
         /// For a CloudServicesNetwork resource, this name will be ignored.

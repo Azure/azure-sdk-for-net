@@ -37,13 +37,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Returns the preferred method of how to perform service to service
-        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="BlobStorageResourceOptions.CopyMethod"/>.
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
-
-        /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
         /// </summary>
         public override TransferType TransferType => TransferType.Concurrent;
@@ -185,24 +178,21 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
-            {
-                await _blobClient.StartCopyFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
-            {
-                await _blobClient.CreateAsync(
-                    size: completeLength,
-                    options: _options.ToCreateOptions(overwrite),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _blobClient.CreateAsync(
+                size: completeLength,
+                options: _options.ToCreateOptions(overwrite),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncCopyFromUriAsync(
+            // There is no synchronous single-call copy API for Append/Page -> Page Blob
+            // so use a single Put Page from URL instead.
+            if (completeLength > 0)
+            {
+                HttpRange range = new HttpRange(0, completeLength);
+                await _blobClient.UploadPagesFromUriAsync(
                     sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    sourceRange: range,
+                    range: range,
+                    options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -233,32 +223,25 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            // Create the blob first before uploading the pages
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
             {
-                // Create the blob first before uploading the pages
-                PageBlobRequestConditions conditions = new PageBlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-                };
-                if (range.Offset == 0)
-                {
-                    await _blobClient.CreateAsync(
-                        size: completeLength,
-                        _options.ToCreateOptions(overwrite),
-                        cancellationToken).ConfigureAwait(false);
-                }
-                await _blobClient.UploadPagesFromUriAsync(
-                    sourceResource.Uri,
-                    sourceRange: range,
-                    range: range,
-                    options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else
+                // TODO: copy over the other conditions from the uploadOptions
+                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+            };
+            if (range.Offset == 0)
             {
-                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
+                await _blobClient.CreateAsync(
+                    size: completeLength,
+                    _options.ToCreateOptions(overwrite),
+                    cancellationToken).ConfigureAwait(false);
             }
+            await _blobClient.UploadPagesFromUriAsync(
+                sourceResource.Uri,
+                sourceRange: range,
+                range: range,
+                options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

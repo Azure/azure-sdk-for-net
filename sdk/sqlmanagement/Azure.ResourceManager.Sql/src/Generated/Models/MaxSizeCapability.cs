@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of MaxSizeCapability. </summary>
-        /// <param name="limit"> The maximum size limit (see &apos;unit&apos; for the units). </param>
+        /// <param name="limit"> The maximum size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
         internal MaxSizeCapability(int? limit, MaxSizeUnit? unit)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             Unit = unit;
         }
 
-        /// <summary> The maximum size limit (see &apos;unit&apos; for the units). </summary>
+        /// <summary> The maximum size limit (see 'unit' for the units). </summary>
         public int? Limit { get; }
         /// <summary> The units that the limit is expressed in. </summary>
         public MaxSizeUnit? Unit { get; }

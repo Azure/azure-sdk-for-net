@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of LastPatchInstallationSummary. </summary>
-        /// <param name="status"> The overall success or failure status of the operation. It remains &quot;InProgress&quot; until the operation completes. At that point it will become &quot;Unknown&quot;, &quot;Failed&quot;, &quot;Succeeded&quot;, or &quot;CompletedWithWarnings.&quot;. </param>
+        /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </param>
         /// <param name="maintenanceWindowExceeded"> Describes whether the operation ran out of time before it completed all its intended actions. </param>
-        /// <param name="notSelectedPatchCount"> The number of all available patches but not going to be installed because it didn&apos;t match a classification or inclusion list entry. </param>
+        /// <param name="notSelectedPatchCount"> The number of all available patches but not going to be installed because it didn't match a classification or inclusion list entry. </param>
         /// <param name="excludedPatchCount"> The number of all available patches but excluded explicitly by a customer-specified exclusion list match. </param>
         /// <param name="pendingPatchCount"> The number of all available patches expected to be installed over the course of the patch installation operation. </param>
         /// <param name="installedPatchCount"> The count of patches that successfully installed. </param>
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Compute.Models
             Error = error;
         }
 
-        /// <summary> The overall success or failure status of the operation. It remains &quot;InProgress&quot; until the operation completes. At that point it will become &quot;Unknown&quot;, &quot;Failed&quot;, &quot;Succeeded&quot;, or &quot;CompletedWithWarnings.&quot;. </summary>
+        /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </summary>
         public PatchOperationStatus? Status { get; }
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string InstallationActivityId { get; }
         /// <summary> Describes whether the operation ran out of time before it completed all its intended actions. </summary>
         public bool? MaintenanceWindowExceeded { get; }
-        /// <summary> The number of all available patches but not going to be installed because it didn&apos;t match a classification or inclusion list entry. </summary>
+        /// <summary> The number of all available patches but not going to be installed because it didn't match a classification or inclusion list entry. </summary>
         public int? NotSelectedPatchCount { get; }
         /// <summary> The number of all available patches but excluded explicitly by a customer-specified exclusion list match. </summary>
         public int? ExcludedPatchCount { get; }
