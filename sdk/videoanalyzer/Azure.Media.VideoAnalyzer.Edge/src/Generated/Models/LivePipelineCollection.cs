@@ -21,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of LivePipelineCollection. </summary>
         /// <param name="value"> List of live pipelines. </param>
-        /// <param name="continuationToken"> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won&apos;t fit in a single response. </param>
+        /// <param name="continuationToken"> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won't fit in a single response. </param>
         internal LivePipelineCollection(IList<LivePipeline> value, string continuationToken)
         {
             Value = value;
@@ -30,7 +30,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> List of live pipelines. </summary>
         public IList<LivePipeline> Value { get; }
-        /// <summary> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won&apos;t fit in a single response. </summary>
+        /// <summary> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won't fit in a single response. </summary>
         public string ContinuationToken { get; set; }
     }
 }

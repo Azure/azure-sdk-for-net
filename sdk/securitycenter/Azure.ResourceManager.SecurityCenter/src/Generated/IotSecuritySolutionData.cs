@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="export"> List of additional options for exporting to workspace data. </param>
         /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
         /// <param name="iotHubs"> IoT Hub resource IDs. </param>
-        /// <param name="userDefinedResources"> Properties of the IoT Security solution&apos;s user defined resources. </param>
+        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
         /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
         /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public IList<IotSecuritySolutionDataSource> DisabledDataSources { get; }
         /// <summary> IoT Hub resource IDs. </summary>
         public IList<string> IotHubs { get; }
-        /// <summary> Properties of the IoT Security solution&apos;s user defined resources. </summary>
+        /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
         public UserDefinedResourcesProperties UserDefinedResources { get; set; }
         /// <summary> List of resources that were automatically discovered as relevant to the security solution. </summary>
         public IReadOnlyList<string> AutoDiscoveredResources { get; }

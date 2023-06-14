@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="defaultStorageAccount"> The lab&apos;s default storage account. </param>
-        /// <param name="defaultPremiumStorageAccount"> The lab&apos;s default premium storage account. </param>
-        /// <param name="artifactsStorageAccount"> The lab&apos;s artifact storage account. </param>
-        /// <param name="premiumDataDiskStorageAccount"> The lab&apos;s premium data disk storage account. </param>
-        /// <param name="vaultName"> The lab&apos;s Key vault. </param>
+        /// <param name="defaultStorageAccount"> The lab's default storage account. </param>
+        /// <param name="defaultPremiumStorageAccount"> The lab's default premium storage account. </param>
+        /// <param name="artifactsStorageAccount"> The lab's artifact storage account. </param>
+        /// <param name="premiumDataDiskStorageAccount"> The lab's premium data disk storage account. </param>
+        /// <param name="vaultName"> The lab's Key vault. </param>
         /// <param name="labStorageType"> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </param>
         /// <param name="mandatoryArtifactsResourceIdsLinux"> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </param>
         /// <param name="mandatoryArtifactsResourceIdsWindows"> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </param>
         /// <param name="createdOn"> The creation date of the lab. </param>
         /// <param name="premiumDataDisks">
         /// The setting to enable usage of premium data disks.
-        /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
-        /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
+        /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
+        /// When its value is 'Disabled', only creation of standard data disks is allowed.
         /// </param>
         /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
         /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
         /// <param name="support"> The properties of any lab support message associated with this lab. </param>
         /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
-        /// <param name="publicIPId"> The public IP address for the lab&apos;s load balancer. </param>
+        /// <param name="publicIPId"> The public IP address for the lab's load balancer. </param>
         /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
         /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
         /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="displayName"> The artifact source&apos;s display name. </param>
-        /// <param name="uri"> The artifact source&apos;s URI. </param>
-        /// <param name="sourceType"> The artifact source&apos;s type. </param>
+        /// <param name="displayName"> The artifact source's display name. </param>
+        /// <param name="uri"> The artifact source's URI. </param>
+        /// <param name="sourceType"> The artifact source's type. </param>
         /// <param name="folderPath"> The folder containing artifacts. </param>
         /// <param name="armTemplateFolderPath"> The folder containing Azure Resource Manager templates. </param>
-        /// <param name="branchRef"> The artifact source&apos;s branch reference. </param>
+        /// <param name="branchRef"> The artifact source's branch reference. </param>
         /// <param name="securityToken"> The security token to authenticate to the artifact source. </param>
         /// <param name="status"> Indicates if the artifact source is enabled (values: Enabled, Disabled). </param>
-        /// <param name="createdOn"> The artifact source&apos;s creation date. </param>
+        /// <param name="createdOn"> The artifact source's creation date. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactSourceData"/> instance for mocking. </returns>
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="title"> The artifact&apos;s title. </param>
-        /// <param name="description"> The artifact&apos;s description. </param>
-        /// <param name="publisher"> The artifact&apos;s publisher. </param>
+        /// <param name="title"> The artifact's title. </param>
+        /// <param name="description"> The artifact's description. </param>
+        /// <param name="publisher"> The artifact's publisher. </param>
         /// <param name="filePath"> The file path to the artifact. </param>
         /// <param name="icon"> The URI to the artifact icon. </param>
-        /// <param name="targetOSType"> The artifact&apos;s target OS. </param>
-        /// <param name="parameters"> The artifact&apos;s parameters. </param>
-        /// <param name="createdOn"> The artifact&apos;s creation date. </param>
+        /// <param name="targetOSType"> The artifact's target OS. </param>
+        /// <param name="parameters"> The artifact's parameters. </param>
+        /// <param name="createdOn"> The artifact's creation date. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactData"/> instance for mocking. </returns>
         public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOSType = null, BinaryData parameters = null, DateTimeOffset? createdOn = null)
         {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
-        /// <param name="template"> The template&apos;s contents. </param>
+        /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         /// <returns> A new <see cref="Models.DevTestLabArmTemplateInfo"/> instance for mocking. </returns>
         public static DevTestLabArmTemplateInfo DevTestLabArmTemplateInfo(BinaryData template = null, BinaryData parameters = null)
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location. </param>
         /// <param name="deploymentProperties"> The deployment properties of the environment. </param>
         /// <param name="armTemplateDisplayName"> The display name of the Azure Resource Manager template that produced the environment. </param>
-        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment&apos;s resources. </param>
+        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment's resources. </param>
         /// <param name="createdByUser"> The creator of the environment. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="externalServiceFabricId"> The backing service fabric resource&apos;s id. </param>
+        /// <param name="externalServiceFabricId"> The backing service fabric resource's id. </param>
         /// <param name="environmentId"> The resource id of the environment under which the service fabric resource is present. </param>
         /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>

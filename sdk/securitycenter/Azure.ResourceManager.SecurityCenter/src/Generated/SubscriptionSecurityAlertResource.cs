@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update the alert&apos;s state
+        /// Update the alert's state
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

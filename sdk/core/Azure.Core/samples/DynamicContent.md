@@ -28,11 +28,11 @@ string name = widget.name;
 By default, properties on dynamic content use exact name matches to lookup and set new properties in the content data.
 
 To use [C# naming conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions#naming-conventions) with dynamic content,
-set `options.ProtocolMethods.ResponseContentConvention` to `PropertyNamingConvention.CamelCase` on the client's options.  This will enable PascalCase C# property names to get and set camelCase JSON members.
+set `options.ProtocolMethods.ResponseContentPropertyNameFormat` to `PropertyNameFormat.CamelCase` on the client's options.  This will enable PascalCase C# property names to get and set camelCase JSON members.
 
 ```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
 WidgetsClientOptions options = new WidgetsClientOptions();
-options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
+options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
 
 WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
 
@@ -152,11 +152,11 @@ When working with JSON from Azure services, you can learn what properties are av
 
 Note that most Azure services name JSON fields [with camelCase names](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing) to [treat them with case-sensitivity](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-names-case-sensitivity).  Not every Azure service adheres to this convention; please consult the service REST API documentation.
 
-If `ClientOptions.ProtocolMethods.ResponseContentConvention` is set to a value other than `PropertyNamingConvention.None` and there is a need to bypass the name mapping, you can override the naming convention on a dynamic content instance by passing `PropertyNamingConvention.None`.
+If `ClientOptions.ProtocolMethods.ResponseContentPropertyNameFormat` is set to a value other than `PropertyNameFormat.None` and there is a need to bypass the name mapping, you can override the naming convention on a dynamic content instance by passing `PropertyNamingConvention.None`.
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.None);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.None);
 
 widget.details.IPAddress = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -166,7 +166,7 @@ Similarly, if a dynamic content instance has a naming convention set, you can by
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.CamelCase);
 
 widget.details["IPAddress"] = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`

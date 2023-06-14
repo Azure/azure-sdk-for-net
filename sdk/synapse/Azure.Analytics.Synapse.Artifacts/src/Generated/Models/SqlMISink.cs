@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="preCopyScript"> SQL pre-copy script. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> SQL stored procedure parameters. </param>
         /// <param name="storedProcedureTableTypeParameterName"> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </param>
-        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
+        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </param>
         internal SqlMISink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object sqlWriterStoredProcedureName, object sqlWriterTableType, object preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, object storedProcedureTableTypeParameterName, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
         /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureTableTypeParameterName { get; set; }
-        /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
         public object TableOption { get; set; }
     }
 }

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="collectionId"> Gets collection Id. </param>
         /// <param name="collectionName"> Gets or sets collection name. </param>
-        /// <param name="claim"> Gets or sets the association with Commercial&apos;s Billing Account. </param>
+        /// <param name="claim"> Gets or sets the association with Commercial's Billing Account. </param>
         /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
         /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
         /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="offerId"> Gets or sets unique offer id. </param>
         /// <param name="offerDisplayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> The offer&apos;s publisher id. </param>
+        /// <param name="publisherId"> The offer's publisher id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
         /// <param name="isClosed"> Gets a value indicating whether the request is closed. </param>
         /// <param name="messageCode"> Gets or sets the request approval message code. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="planId"> Gets or sets Plan Id. </param>
         /// <param name="status"> Gets the plan status. </param>
         /// <param name="requestDate"> Gets request date. </param>
-        /// <param name="justification"> Gets or sets user&apos;s justification for the plan&apos;s request. </param>
+        /// <param name="justification"> Gets or sets user's justification for the plan's request. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription id that the user is requesting to add the plan to. </param>
         /// <param name="subscriptionName"> Gets or sets the subscription name that the user is requesting to add the plan to. </param>
         /// <returns> A new <see cref="Models.PrivateStorePlanDetails"/> instance for mocking. </returns>

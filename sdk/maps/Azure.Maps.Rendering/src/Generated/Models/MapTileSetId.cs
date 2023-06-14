@@ -127,7 +127,7 @@ namespace Azure.Maps.Rendering
         public static MapTileSetId MicrosoftWeatherInfraredMain { get; } = new MapTileSetId(MicrosoftWeatherInfraredMainValue);
         /// <summary>
         /// Digital Elevation Model tiles. The tiles are in the GeoTIFF format with a single 32-bit floating point band. The tiles cover the whole landmass of Earth. Some small islands (e.g., atolls) might not be represented accurately.&lt;br&gt;
-        /// * The vertical unit for measurement of elevation height is meters. An elevation value of -32767.0 is used for points that have no data value, most often returned where there isn&apos;t landmass (i.e. water).&lt;br&gt;
+        /// * The vertical unit for measurement of elevation height is meters. An elevation value of -32767.0 is used for points that have no data value, most often returned where there isn't landmass (i.e. water).&lt;br&gt;
         /// * The horizontal reference datum is the World Geodetic System 1984 (WGS84-G1150) and the vertical reference datum is the Earth Gravitational Model 2008 (EGM2008).&lt;br&gt;
         /// * Tiles are 258x258 pixel squares rather than the standard 256 x 256. This is done to allow for accurate interpolation of values at the tile edges. As such adjacent tiles overlap by 1 pixel along all edges.&lt;br&gt;
         /// * Tile data comes from the [Airbus WorldDEM4Ortho product](https://www.intelligence-airbusds.com/worlddem-streaming/). Urban areas are approximately leveled down to ground level. All other areas are represented by the object surface level (e.g., trees). &lt;br&gt;
