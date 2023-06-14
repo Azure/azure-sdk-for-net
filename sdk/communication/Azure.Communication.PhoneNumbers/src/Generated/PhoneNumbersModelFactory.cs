@@ -14,6 +14,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Model factory for models. </summary>
     public static partial class PhoneNumbersModelFactory
     {
+
         /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
         /// <param name="areaCode"> An area code. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAreaCode"/> instance for mocking. </returns>
