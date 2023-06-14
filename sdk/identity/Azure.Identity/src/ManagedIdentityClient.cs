@@ -62,6 +62,16 @@ namespace Azure.Identity
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
 
+        public async ValueTask<AccessToken> AuthenticateOnBehalfOfAsync(
+            UserAssertion userAssertion, bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            AuthenticationResult result = await _msal
+                .AcquireTokenOnBehalfOfAsync(context.Scopes, context.TenantId, userAssertion, async, cancellationToken)
+                .ConfigureAwait(false);
+
+            return new AccessToken(result.AccessToken, result.ExpiresOn);
+        }
+
         public virtual async ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context,
             CancellationToken cancellationToken)
         {
