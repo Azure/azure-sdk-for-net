@@ -51,9 +51,9 @@ namespace Azure.Core.Tests.Public
         public void NewObjectPropertiesCanBeAssignedWithArrays()
         {
             dynamic json = JsonDataTestHelpers.CreateEmpty();
-            json.a = new object[] { 1, 2, null, "string" };
+            json.a = new string[] { "a", null, "string" };
 
-            Assert.AreEqual(json.ToString(), "{\"a\":[1,2,null,\"string\"]}");
+            Assert.AreEqual(json.ToString(), "{\"a\":[\"a\",null,\"string\"]}");
         }
 
         [Test]

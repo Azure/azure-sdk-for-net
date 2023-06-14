@@ -1056,6 +1056,9 @@ namespace Azure.Core.Json
             }
 
             // If it's not a special type, we'll serialize it on assignment.
+            // for debugging
+            string sval = JsonSerializer.Serialize(value, _root.SerializerOptions);
+            // end
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
             return JsonDocument.Parse(bytes).RootElement;
         }

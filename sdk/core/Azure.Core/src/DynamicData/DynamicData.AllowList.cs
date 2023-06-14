@@ -16,9 +16,16 @@ namespace Azure.Core.Dynamic
         {
             public static void AssertAllowedType<T>(T value)
             {
-                if (!IsAllowedType(typeof(T)))
+                if (value == null)
                 {
-                    throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'.");
+                    return;
+                }
+
+                Type type = value.GetType();
+
+                if (!IsAllowedType(type))
+                {
+                    throw new NotSupportedException($"Type is not currently supported: '{type}'.");
                 }
             }
 
@@ -56,12 +63,7 @@ namespace Azure.Core.Dynamic
                     type == typeof(JsonDocument) ||
                     type == typeof(MutableJsonDocument) ||
                     type == typeof(MutableJsonElement) ||
-                    type == typeof(DynamicData) ||
-
-                    // We allow object so we can allow heterogenous object[] and
-                    // Dictionary<string, object>. It also means we have to validate
-                    // the types of values as well.
-                    type == typeof(object);
+                    type == typeof(DynamicData);
             }
 
             private static bool IsAllowedCollectionType(Type type)

@@ -934,9 +934,9 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new object[] { 1, 2, null, "string" };
+            json.a = new bool[] { true, false, true, false };
 
-            Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
+            Assert.AreEqual("{\"a\":[true,false,true,false]}", json.ToString());
         }
 
         [Test]

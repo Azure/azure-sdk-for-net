@@ -51,6 +51,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing object support in current version.")]
         public void CanAssignObjectArray()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
@@ -274,7 +275,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
 
-            Dictionary<string, object> values = new();
+            Dictionary<string, string> values = new();
             values["stringValue"] = "a";
             values["intValue"] = "b";
 
@@ -287,9 +288,9 @@ namespace Azure.Core.Tests
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
 
-            Dictionary<string, object> values = new();
-            values["stringValue"] = "a";
-            values["intValue"] = "b";
+            Dictionary<string, int> values = new();
+            values["stringValue"] = 1;
+            values["intValue"] = 2;
 
             // New property
             json.Bar = values;
@@ -490,8 +491,8 @@ namespace Azure.Core.Tests
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
 
-            List<List<object>> list = new();
-            list.Add(new List<object>() { "a" });
+            List<List<string>> list = new();
+            list.Add(new List<string>() { "a" });
 
             Assert.AreEqual("a", list[0][0]);
 
