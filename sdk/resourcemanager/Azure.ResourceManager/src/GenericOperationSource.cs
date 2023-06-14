@@ -24,7 +24,7 @@ namespace Azure.ResourceManager
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter());
-            var result = JsonSerializer.Deserialize<IModel>(response.Content, options);
+            var result = JsonSerializer.Deserialize(response.Content, typeof(T), options);
             return (T)result;
         }
     }

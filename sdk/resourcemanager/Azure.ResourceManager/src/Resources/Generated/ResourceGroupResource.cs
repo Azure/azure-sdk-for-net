@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourceGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class for mocking. </summary>
-        protected ResourceGroupResource()
+        public ResourceGroupResource()
         {
         }
 
@@ -832,5 +832,10 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        internal ResourceGroupData DataType => throw new NotImplementedException();
     }
 }

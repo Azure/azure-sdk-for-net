@@ -16,7 +16,6 @@ namespace Azure.ResourceManager
     internal class GenericResourceOperationSource<T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
-        private readonly Type _dataType;
 
         public GenericResourceOperationSource(ArmClient client)
         {
@@ -33,8 +32,14 @@ namespace Azure.ResourceManager
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter());
-            var result = JsonSerializer.Deserialize(response.Content, _dataType, options);
-            return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, result }, null);
+            var property = typeof(T).GetProperty("DataType", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (property is null)
+            {
+                throw new InvalidOperationException("Can't get data type from resrouce type");
+            }
+            var dataType = property.PropertyType;
+            var data = JsonSerializer.Deserialize(response.Content, dataType, options);
+            return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }
     }
 }

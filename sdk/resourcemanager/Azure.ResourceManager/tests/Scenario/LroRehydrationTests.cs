@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, orgData);
             var rg = rgOp.Value;
             var rgOpId = rgOp.Id;
-            var rehydratedOrgOperation = new ArmOperation<ResourceGroupResource>(Client, rgOpId, typeof(ResourceGroupData));
+            var rehydratedOrgOperation = new ArmOperation<ResourceGroupResource>(Client, rgOpId);
             var rehydratedOrgResponse = await rehydratedOrgOperation.UpdateStatusAsync();
             //var rehydratedRg = rehydratedOrgOperation.Value;
             var response = rgOp.GetRawResponse();
