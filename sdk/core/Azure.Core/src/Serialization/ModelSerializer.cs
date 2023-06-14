@@ -64,25 +64,34 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            return DeserializeWithReflection<T>(stream, options);
+            return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
         }
 
-        private static T DeserializeWithReflection<T>(Stream stream, ModelSerializerOptions? options) where T : class, IModelSerializable
+        private static T DeserializeWithReflection<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IModelSerializable
         {
             Type typeToConvert = typeof(T);
+            options ??= new ModelSerializerOptions();
 
+            T? model = DeserializeObject(rootElement, typeToConvert, options) as T;
+            if (model is null)
+                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
+
+            return model;
+        }
+
+        internal static object? DeserializeObject(JsonElement rootElement, Type typeToConvert, ModelSerializerOptions options)
+        {
             var classNameInMethod = typeToConvert.Name.AsSpan();
-            classNameInMethod = classNameInMethod.Slice(0, classNameInMethod.IndexOf('`'));
+            int backtickIndex = classNameInMethod.IndexOf('`');
+            if (backtickIndex != -1)
+                classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
             var methodName = $"Deserialize{classNameInMethod.ToString()}";
 
             var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
             if (method is null)
                 throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
 
-            var model = method.Invoke(null, new object[] { JsonDocument.Parse(stream).RootElement, options ?? new ModelSerializerOptions() }) as T;
-            if (model is null)
-                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
-            return model;
+            return method.Invoke(null, new object[] { rootElement, options });
         }
 
         /// <summary>
@@ -112,7 +121,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            return DeserializeWithReflection<T>(stream, options);
+            return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
         }
     }
 }

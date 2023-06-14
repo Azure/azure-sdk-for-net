@@ -57,11 +57,7 @@ namespace Azure.Core.Serialization
         public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            var method = typeToConvert.GetMethod($"Deserialize{typeToConvert.Name}", BindingFlags.NonPublic | BindingFlags.Static);
-            if (method is null)
-                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
-
-            var model = method.Invoke(null, new object[] { JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options) }) as IModelSerializable;
+            var model = ModelSerializer.DeserializeObject(JsonDocument.ParseValue(ref reader).RootElement, typeToConvert, ConvertOptions(options)) as IModelSerializable;
             if (model is null)
                 throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
 
