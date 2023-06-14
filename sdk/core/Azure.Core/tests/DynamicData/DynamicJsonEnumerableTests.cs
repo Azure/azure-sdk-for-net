@@ -10,6 +10,7 @@ namespace Azure.Core.Tests
     internal class DynamicJsonEnumerableTests
     {
         [Test]
+        [Ignore("Disallowing general IEnumerable support in current version.")]
         public void CanConvertToIntEnumerable()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
@@ -42,6 +43,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing general IEnumerable support in current version.")]
         public void CanConvertToIntEnumerableWithChanges()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");

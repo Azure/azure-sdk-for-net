@@ -67,8 +67,36 @@ namespace Azure.Core.Dynamic
             private static bool IsAllowedCollectionType(Type type)
             {
                 return
-                    IsAllowedDictionaryType(type) ||
-                    IsAllowedEnumerableType(type);
+                    IsAllowedArrayType(type) ||
+                    IsAllowedListType(type) ||
+                    IsAllowedDictionaryType(type);
+            }
+
+            private static bool IsAllowedArrayType(Type type)
+            {
+                if (!type.IsArray)
+                {
+                    return false;
+                }
+
+                Type? elementType = type.GetElementType();
+                return elementType != null && IsAllowedType(elementType);
+            }
+
+            private static bool IsAllowedListType(Type type)
+            {
+                if (!type.IsGenericType)
+                {
+                    return false;
+                }
+
+                if (type.GetGenericTypeDefinition() != typeof(List<>))
+                {
+                    return false;
+                }
+
+                Type[] types = type.GetGenericArguments();
+                return IsAllowedType(types[0]);
             }
 
             private static bool IsAllowedDictionaryType(Type type)
@@ -88,49 +116,6 @@ namespace Azure.Core.Dynamic
                 }
 
                 return false;
-            }
-
-            private static bool IsAllowedEnumerableType(Type type)
-            {
-                return IsAllowedEnumerableInterface(type) ||
-                    IsAllowedEnumerableImplementation(type);
-            }
-
-            private static bool IsAllowedEnumerableImplementation(Type type)
-            {
-                if (type.GetInterface("IEnumerable`1") is not Type ieType)
-                {
-                    return false;
-                }
-
-                if (!ieType.IsGenericType)
-                {
-                    return false;
-                }
-
-                Type[] types = ieType.GetGenericArguments();
-                return types.Length == 1 && IsAllowedType(types[0]);
-            }
-
-            private static bool IsAllowedEnumerableInterface(Type type)
-            {
-                if (!type.IsInterface)
-                {
-                    return false;
-                }
-
-                if (!type.IsGenericType)
-                {
-                    return false;
-                }
-
-                if (type.GetGenericTypeDefinition() != typeof(IEnumerable<>))
-                {
-                    return false;
-                }
-
-                Type[] types = type.GetGenericArguments();
-                return IsAllowedType(types[0]);
             }
 
             private static bool IsAllowedAnonymousType(Type type, HashSet<Type> ancestorTypes)
