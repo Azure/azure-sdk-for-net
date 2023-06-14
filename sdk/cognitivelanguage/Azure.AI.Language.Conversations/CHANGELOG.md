@@ -26,6 +26,7 @@ The following changes are only breaking from the previous beta. They are not bre
 - Removed `ConversationAuthoringClient.UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`.
 - Renamed `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` that took a `WaitUntil` parameter to `AnalyzeConversations` and `AnalyzeConversationsAsync`.
 - Renamed `ConversationAnalysisClient.CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync` to `CancelAnalyzeConversations` and `CancelAnalyzeConversationsAsync`.
+- Renamed `ConversationAuthoringClient.GetLoadSnapshotStatus` and `GetLoadSnapshotStatusAsync` to `GetLoadSnapshotJobStatus` and `GetLoadSnapshotJobStatusAsync`.
 
 ## 1.1.0-beta.2 (2022-11-10)
 

@@ -765,15 +765,15 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis
 
 </remarks>
     </member>
-    <member name="GetLoadSnapshotStatusAsync(string,string,string,RequestContext)">
+    <member name="GetLoadSnapshotJobStatusAsync(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetLoadSnapshotStatusAsync with required parameters and parse the result.
+This sample shows how to call GetLoadSnapshotJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response response = await client.GetLoadSnapshotJobStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -806,15 +806,15 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis
 
 </remarks>
     </member>
-    <member name="GetLoadSnapshotStatus(string,string,string,RequestContext)">
+    <member name="GetLoadSnapshotJobStatus(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetLoadSnapshotStatus with required parameters and parse the result.
+This sample shows how to call GetLoadSnapshotJobStatus with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response response = client.GetLoadSnapshotJobStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());

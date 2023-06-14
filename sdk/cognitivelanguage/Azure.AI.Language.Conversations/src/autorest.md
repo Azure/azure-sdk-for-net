@@ -233,6 +233,10 @@ directive:
 - rename-operation:
     from: ConversationalAnalysisAuthoring_Import
     to: ConversationalAnalysisAuthoring_ImportProject
+
+- rename-operation:
+    from: ConversationalAnalysisAuthoring_GetLoadSnapshotStatus
+    to: ConversationalAnalysisAuthoring_GetLoadSnapshotJobStatus
 ```
 
 ### C# customizations
