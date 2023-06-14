@@ -13,5 +13,56 @@ namespace Azure.AI.OpenAI
 {
     public partial class Choice
     {
+        internal static Choice DeserializeChoice(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string text = default;
+            int index = default;
+            Optional<CompletionsLogProbabilityModel> logprobs = default;
+            Optional<CompletionsFinishReason> finishReason = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("text"u8))
+                {
+                    text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("index"u8))
+                {
+                    index = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("finish_reason"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    finishReason = new CompletionsFinishReason(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new Choice(text, index, logprobs.Value, Optional.ToNullable(finishReason));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Choice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChoice(document.RootElement);
+        }
     }
 }

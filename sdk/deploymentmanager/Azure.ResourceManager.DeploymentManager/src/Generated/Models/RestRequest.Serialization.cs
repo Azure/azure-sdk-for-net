@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestRequest DeserializeRestRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RestRequestMethod method = default;
             Uri uri = default;
             RestRequestAuthentication authentication = default;

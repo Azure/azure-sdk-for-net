@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 
 namespace Azure
@@ -52,13 +53,21 @@ namespace Azure
         public override string ToString()
         {
             // No additional validation by design. API can validate parameter by case, and use this method.
-            var endRange = "";
             if (Length.HasValue && Length != 0)
             {
-                endRange = (Offset + Length.Value - 1).ToString(CultureInfo.InvariantCulture);
+                var endRange = Offset + Length.Value - 1;
+#if NET6_0_OR_GREATER
+                return string.Create(CultureInfo.InvariantCulture, $"{Unit}={Offset}-{endRange}");
+#else
+                return FormattableString.Invariant($"{Unit}={Offset}-{endRange}");
+#endif
             }
 
-            return FormattableString.Invariant($"{Unit}={Offset}-{endRange}");
+#if NET6_0_OR_GREATER
+            return string.Create(CultureInfo.InvariantCulture, $"{Unit}={Offset}-");
+#else
+            return FormattableString.Invariant($"{Unit}={Offset}-");
+#endif
         }
 
         /// <summary>

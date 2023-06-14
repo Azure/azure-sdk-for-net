@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleProperties DeserializeAlertProcessingRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> scopes = default;
             Optional<IList<AlertProcessingRuleCondition>> conditions = default;
             Optional<AlertProcessingRuleSchedule> schedule = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AlertProcessingRuleCondition> array = new List<AlertProcessingRuleCondition>();
@@ -97,7 +100,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value);
@@ -122,7 +124,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

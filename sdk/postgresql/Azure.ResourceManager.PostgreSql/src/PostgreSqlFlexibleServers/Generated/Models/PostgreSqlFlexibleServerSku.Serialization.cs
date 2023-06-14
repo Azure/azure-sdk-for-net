@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerSku DeserializePostgreSqlFlexibleServerSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             PostgreSqlFlexibleServerSkuTier tier = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static TwitterRegistration DeserializeTwitterRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> consumerKey = default;
             Optional<string> consumerSecretSettingName = default;
             foreach (var property in element.EnumerateObject())

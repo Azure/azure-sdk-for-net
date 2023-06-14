@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static AvsPrivateCloudDatastoreData DeserializeAvsPrivateCloudDatastoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AvsPrivateCloudDatastoreProvisioningState(property0.Value.GetString());
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             netAppVolume = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -104,7 +105,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value);
@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new DatastoreStatus(property0.Value.GetString());

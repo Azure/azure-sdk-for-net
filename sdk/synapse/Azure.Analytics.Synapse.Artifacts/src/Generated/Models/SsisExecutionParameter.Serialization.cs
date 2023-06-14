@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisExecutionParameter DeserializeSsisExecutionParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object value = default;
             foreach (var property in element.EnumerateObject())
             {

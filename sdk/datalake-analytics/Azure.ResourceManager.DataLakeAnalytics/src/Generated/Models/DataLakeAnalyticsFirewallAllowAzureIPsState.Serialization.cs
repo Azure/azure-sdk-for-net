@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DataLakeAnalyticsFirewallAllowAzureIPsState ToDataLakeAnalyticsFirewallAllowAzureIPsState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsFirewallAllowAzureIPsState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsFirewallAllowAzureIPsState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataLakeAnalyticsFirewallAllowAzureIPsState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataLakeAnalyticsFirewallAllowAzureIPsState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeAnalyticsFirewallAllowAzureIPsState value.");
         }
     }

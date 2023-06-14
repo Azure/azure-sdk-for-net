@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ServiceFabricManagedClustersSku DeserializeServiceFabricManagedClustersSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServiceFabricManagedClustersSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {

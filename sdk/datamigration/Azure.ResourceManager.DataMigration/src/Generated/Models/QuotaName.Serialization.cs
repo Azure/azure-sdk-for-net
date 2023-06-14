@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static QuotaName DeserializeQuotaName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localizedValue = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

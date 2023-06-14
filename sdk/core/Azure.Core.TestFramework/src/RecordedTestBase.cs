@@ -7,11 +7,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -37,6 +35,10 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
+        private static readonly object s_syncLock = new();
+
+        private static bool s_ranTestProxyValidation;
+
         private TestProxy _proxy;
 
         private DateTime _testStartTime;
@@ -47,7 +49,7 @@ namespace Azure.Core.TestFramework
 
         public const string SanitizeValue = "Sanitized";
         public const string AssetsJson = "assets.json";
-        public string AssetsJsonPath { get; set; }
+        public virtual string AssetsJsonPath { get; }
 
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
@@ -352,6 +354,12 @@ namespace Azure.Core.TestFramework
             // Clean up unused test files
             if (Mode == RecordedTestMode.Record)
             {
+                var testClassDirectory = new DirectoryInfo(GetSessionFileDirectory());
+                if (!testClassDirectory.Exists)
+                {
+                    return;
+                }
+
                 var knownMethods = new HashSet<string>();
 
                 // Management tests record in ctor
@@ -373,7 +381,7 @@ namespace Azure.Core.TestFramework
                     knownMethods.Add(method.Name);
                 }
 
-                foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
+                foreach (var fileInfo in testClassDirectory.EnumerateFiles())
                 {
                     bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
 
@@ -443,6 +451,11 @@ namespace Azure.Core.TestFramework
             if (Recording != null)
             {
                 await Recording.DisposeAsync(save);
+
+                if (Mode == RecordedTestMode.Record && save)
+                {
+                    AssertTestProxyToolIsInstalled();
+                }
             }
 
             _proxy?.CheckForErrors();
@@ -505,6 +518,76 @@ namespace Azure.Core.TestFramework
                 return Task.Delay(playbackDelayMilliseconds.Value);
             }
             return Task.CompletedTask;
+        }
+
+        private void AssertTestProxyToolIsInstalled()
+        {
+            if (s_ranTestProxyValidation ||
+                TestEnvironment.GlobalIsRunningInCI ||
+                !TestEnvironment.IsWindows ||
+                AssetsJsonPath == null)
+            {
+                return;
+            }
+
+            lock (s_syncLock)
+            {
+                if (s_ranTestProxyValidation)
+                {
+                    return;
+                }
+
+                s_ranTestProxyValidation = true;
+
+                try
+                {
+                    if (IsTestProxyToolInstalled())
+                    {
+                        return;
+                    }
+
+                    string path = Path.Combine(
+                        TestEnvironment.RepositoryRoot,
+                        "eng",
+                        "scripts",
+                        "Install-TestProxyTool.ps1");
+
+                    var processInfo = new ProcessStartInfo("pwsh.exe", path)
+                    {
+                        UseShellExecute = true
+                    };
+
+                    var process = Process.Start(processInfo);
+
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                    }
+                }
+                catch (Exception)
+                {
+                    // Ignore
+                }
+            }
+        }
+
+        private bool IsTestProxyToolInstalled()
+        {
+            var processInfo = new ProcessStartInfo("dotnet.exe", "tool list --global")
+            {
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            };
+
+            var process = Process.Start(processInfo);
+            var output = process.StandardOutput.ReadToEnd();
+
+            if (process != null)
+            {
+                process.WaitForExit();
+            }
+
+            return output != null && output.Contains("azure.sdk.tools.testproxy");
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);

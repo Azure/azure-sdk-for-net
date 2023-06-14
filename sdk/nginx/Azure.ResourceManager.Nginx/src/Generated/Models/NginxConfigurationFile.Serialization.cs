@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxConfigurationFile DeserializeNginxConfigurationFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> content = default;
             Optional<string> virtualPath = default;
             foreach (var property in element.EnumerateObject())

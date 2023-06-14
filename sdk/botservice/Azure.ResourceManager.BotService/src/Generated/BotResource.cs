@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.BotService
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<BotChannelResource> GetBotChannel(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             return GetBotChannels().Get(channelName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectionSettingResources in the Bot. </summary>
-        /// <returns> An object representing collection of ConnectionSettingResources and their operations over a ConnectionSettingResource. </returns>
-        public virtual ConnectionSettingCollection GetConnectionSettings()
+        /// <summary> Gets a collection of BotConnectionSettingResources in the Bot. </summary>
+        /// <returns> An object representing collection of BotConnectionSettingResources and their operations over a BotConnectionSettingResource. </returns>
+        public virtual BotConnectionSettingCollection GetBotConnectionSettings()
         {
-            return GetCachedClient(Client => new ConnectionSettingCollection(Client, Id));
+            return GetCachedClient(Client => new BotConnectionSettingCollection(Client, Id));
         }
 
         /// <summary>
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectionSettingResource>> GetConnectionSettingAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotConnectionSettingResource>> GetBotConnectionSettingAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            return await GetConnectionSettings().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetBotConnectionSettings().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectionSettingResource> GetConnectionSetting(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<BotConnectionSettingResource> GetBotConnectionSetting(string connectionName, CancellationToken cancellationToken = default)
         {
-            return GetConnectionSettings().Get(connectionName, cancellationToken);
+            return GetBotConnectionSettings().Get(connectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BotServicePrivateEndpointConnectionResources in the Bot. </summary>
@@ -473,11 +473,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> RegenerateKeysDirectLineAsync(RegenerateKeysChannelName channelName, SiteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.RegenerateKeysDirectLine");
+            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
             scope.Start();
             try
             {
@@ -508,11 +508,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BotChannelResource> RegenerateKeysDirectLine(RegenerateKeysChannelName channelName, SiteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeys(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.RegenerateKeysDirectLine");
+            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
             scope.Start();
             try
             {
@@ -540,9 +540,9 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateEmailSignInUrlResponse>> CreateSignInUrlEmailAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotCreateEmailSignInUriResult>> CreateEmailSignInUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateSignInUrlEmail");
+            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
             scope.Start();
             try
             {
@@ -570,9 +570,9 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateEmailSignInUrlResponse> CreateSignInUrlEmail(CancellationToken cancellationToken = default)
+        public virtual Response<BotCreateEmailSignInUriResult> CreateEmailSignInUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateSignInUrlEmail");
+            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
             scope.Start();
             try
             {
@@ -600,11 +600,11 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BotServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -621,11 +621,11 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BotServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>

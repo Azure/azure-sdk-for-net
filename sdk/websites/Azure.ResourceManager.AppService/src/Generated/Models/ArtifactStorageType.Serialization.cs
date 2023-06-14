@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ArtifactStorageType ToArtifactStorageType(this string value)
         {
-            if (string.Equals(value, "LocalNode", StringComparison.InvariantCultureIgnoreCase)) return ArtifactStorageType.LocalNode;
-            if (string.Equals(value, "NetworkFileSystem", StringComparison.InvariantCultureIgnoreCase)) return ArtifactStorageType.NetworkFileSystem;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalNode")) return ArtifactStorageType.LocalNode;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetworkFileSystem")) return ArtifactStorageType.NetworkFileSystem;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArtifactStorageType value.");
         }
     }

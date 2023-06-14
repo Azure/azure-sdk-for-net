@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownRecoveryPoint DeserializeUnknownRecoveryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

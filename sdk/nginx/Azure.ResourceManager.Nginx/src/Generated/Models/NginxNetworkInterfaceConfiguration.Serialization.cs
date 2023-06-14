@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxNetworkInterfaceConfiguration DeserializeNginxNetworkInterfaceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorIcmpConfiguration DeserializeConnectionMonitorIcmpConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disableTraceRoute = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableTraceRoute = property.Value.GetBoolean();

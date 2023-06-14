@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static SharedAccessAuthorizationRuleProperties DeserializeSharedAccessAuthorizationRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AuthorizationRuleAccessRight>> rights = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedTime = property.Value.GetDateTimeOffset("O");
@@ -97,7 +99,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");
@@ -107,7 +108,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     revision = property.Value.GetInt32();

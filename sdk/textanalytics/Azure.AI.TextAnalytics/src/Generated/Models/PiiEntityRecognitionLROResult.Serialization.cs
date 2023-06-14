@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static PiiEntityRecognitionLROResult DeserializePiiEntityRecognitionLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PiiEntitiesResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;

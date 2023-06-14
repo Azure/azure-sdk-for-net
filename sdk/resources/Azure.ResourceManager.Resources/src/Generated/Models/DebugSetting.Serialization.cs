@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static DebugSetting DeserializeDebugSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> detailLevel = default;
             foreach (var property in element.EnumerateObject())
             {

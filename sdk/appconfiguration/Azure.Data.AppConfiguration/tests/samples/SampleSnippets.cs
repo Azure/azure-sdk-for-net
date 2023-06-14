@@ -116,23 +116,45 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void ThrowNotFoundError()
         {
+            #region Snippet:ThrowNotFoundError
 #if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
 #endif
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
+            var client = new ConfigurationClient(connectionString);
 
             try
             {
-                #region Snippet:ThrowNotFoundError
-#if SNIPPET
-                string connectionString = "<connection_string>";
-#endif
-                var client = new ConfigurationClient(connectionString);
                 ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
-                #endregion Snippet:ThrowNotFoundError
             }
-            catch (RequestFailedException)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
+                Console.WriteLine("Key wasn't found.");
             }
+            #endregion Snippet:ThrowNotFoundError
+        }
+
+        [Test]
+        public void ThrowAuthenticationError()
+        {
+            #region Snippet:ThrowAuthenticationError
+#if SNIPPET
+            // Create a ConfigurationClient using the DefaultAzureCredential
+            string endpoint = "<endpoint>";
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+
+            try
+            {
+                client.GetConfigurationSetting("key");
+            }
+            catch (AuthenticationFailedException e)
+            {
+                Console.WriteLine($"Authentication Failed. {e.Message}");
+            }
+#endif
+            #endregion Snippet:ThrowAuthenticationError
         }
 
         [OneTimeTearDown]

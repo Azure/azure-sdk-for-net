@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static MonitorServiceList DeserializeMonitorServiceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MonitorServiceDetails> data = default;
             ServiceAlertMetadataIdentifier metadataIdentifier = default;
             foreach (var property in element.EnumerateObject())

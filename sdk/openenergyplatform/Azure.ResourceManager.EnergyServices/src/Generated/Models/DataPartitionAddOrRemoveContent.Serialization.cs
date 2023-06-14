@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         internal static DataPartitionAddOrRemoveContent DeserializeDataPartitionAddOrRemoveContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataPartitionName> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value);

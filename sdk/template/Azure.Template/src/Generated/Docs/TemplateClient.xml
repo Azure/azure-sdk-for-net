@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetSecretAsync(String,RequestContext)">
+    <member name="GetSecretAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetSecretAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -19,27 +19,8 @@ Console.WriteLine(result.GetProperty("kid").ToString());
 Console.WriteLine(result.GetProperty("managed").ToString());
 ]]></code>
 </example>
-<remarks>
-The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SecretBundle</c>:
-<code>{
-  value: string, # Optional. The secret value.
-  id: string, # Optional. The secret id.
-  contentType: string, # Optional. The content type of the secret.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
-  kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
-  managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetSecret(String,RequestContext)">
+    <member name="GetSecret(string,RequestContext)">
 <example>
 This sample shows how to call GetSecret with required parameters and parse the result.
 <code><![CDATA[
@@ -57,25 +38,6 @@ Console.WriteLine(result.GetProperty("kid").ToString());
 Console.WriteLine(result.GetProperty("managed").ToString());
 ]]></code>
 </example>
-<remarks>
-The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SecretBundle</c>:
-<code>{
-  value: string, # Optional. The secret value.
-  id: string, # Optional. The secret id.
-  contentType: string, # Optional. The content type of the secret.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
-  kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
-  managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

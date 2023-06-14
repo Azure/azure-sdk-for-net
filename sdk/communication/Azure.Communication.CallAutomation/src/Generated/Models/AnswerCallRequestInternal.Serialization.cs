@@ -19,6 +19,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
@@ -28,6 +33,11 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
                 writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+            }
+            if (Optional.IsDefined(AnsweredByIdentifier))
+            {
+                writer.WritePropertyName("answeredByIdentifier"u8);
+                writer.WriteObjectValue(AnsweredByIdentifier);
             }
             writer.WriteEndObject();
         }

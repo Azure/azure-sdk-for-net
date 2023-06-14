@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -16,15 +17,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
         internal ServerPrivateEndpointConnectionProperties()
         {
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
+        /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal ServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState)
+        internal ServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState)
         {
             PrivateEndpoint = privateEndpoint;
+            GroupIds = groupIds;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
@@ -37,6 +41,8 @@ namespace Azure.ResourceManager.Sql.Models
             get => PrivateEndpoint?.Id;
         }
 
+        /// <summary> Group IDs. </summary>
+        public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state of the private endpoint connection. </summary>
         public SqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; }
         /// <summary> State of the private endpoint connection. </summary>

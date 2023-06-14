@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiCreateOrUpdatePropertiesWsdlSelector DeserializeApiCreateOrUpdatePropertiesWsdlSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> wsdlServiceName = default;
             Optional<string> wsdlEndpointName = default;
             foreach (var property in element.EnumerateObject())

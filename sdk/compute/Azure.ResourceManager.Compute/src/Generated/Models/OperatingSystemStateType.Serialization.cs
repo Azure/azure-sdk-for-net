@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static OperatingSystemStateType ToOperatingSystemStateType(this string value)
         {
-            if (string.Equals(value, "Generalized", StringComparison.InvariantCultureIgnoreCase)) return OperatingSystemStateType.Generalized;
-            if (string.Equals(value, "Specialized", StringComparison.InvariantCultureIgnoreCase)) return OperatingSystemStateType.Specialized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Generalized")) return OperatingSystemStateType.Generalized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Specialized")) return OperatingSystemStateType.Specialized;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperatingSystemStateType value.");
         }
     }

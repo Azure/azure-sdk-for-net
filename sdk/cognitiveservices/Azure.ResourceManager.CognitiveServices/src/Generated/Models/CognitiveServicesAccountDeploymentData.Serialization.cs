@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CognitiveServicesAccountDeploymentData DeserializeCognitiveServicesAccountDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<CognitiveServicesAccountDeploymentProperties> properties = default;
             ResourceIdentifier id = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = CognitiveServicesAccountDeploymentProperties.DeserializeCognitiveServicesAccountDeploymentProperties(property.Value);
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

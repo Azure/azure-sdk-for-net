@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionColumnName = BinaryData.FromString(property.Value.GetRawText());

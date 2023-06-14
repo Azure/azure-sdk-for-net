@@ -1,6 +1,6 @@
 # Generated code configuration
 
-Run `dotnet build /t:GenerateTest` to generate code.
+Run `dotnet build /t:GenerateTests` to generate code.
 
 # Azure.ResourceManager.Blueprint.Tests
 
@@ -10,4 +10,6 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
+  skipped-operations:
+  - Assignments_CreateOrUpdate
 ```

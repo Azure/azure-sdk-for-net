@@ -28,6 +28,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractedSummarySentence DeserializeExtractedSummarySentence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             double rankScore = default;
             int offset = default;

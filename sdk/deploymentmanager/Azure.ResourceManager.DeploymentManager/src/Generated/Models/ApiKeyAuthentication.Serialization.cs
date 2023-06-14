@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static ApiKeyAuthentication DeserializeApiKeyAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             RestAuthLocation @in = default;
             string value = default;

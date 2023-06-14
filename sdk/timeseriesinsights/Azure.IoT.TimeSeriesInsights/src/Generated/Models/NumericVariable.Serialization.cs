@@ -36,6 +36,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static NumericVariable DeserializeNumericVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
             TimeSeriesExpression aggregation = default;
@@ -52,7 +56,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
@@ -72,7 +75,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);

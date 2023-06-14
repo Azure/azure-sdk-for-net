@@ -37,6 +37,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object packagePath = default;
             Optional<string> packageName = default;
             object packageContent = default;

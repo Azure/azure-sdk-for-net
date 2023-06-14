@@ -15,6 +15,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#   show-serialized-names: true
+
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
@@ -129,6 +132,8 @@ rename-mapping:
   WindowsUpdateClasses: WindowsUpdateClassification
   WindowsProperties.excludedKbNumbers: ExcludedKBNumbers
   WindowsProperties.includedKbNumbers: IncludedKBNumbers
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
 
 prepend-rp-prefix:
   - Certificate
@@ -191,7 +196,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -218,6 +222,9 @@ rename-rules:
 
 no-property-type-replacement:
   - JobNavigation
+
+models-to-treat-empty-string-as-null:
+  - AutomationWebhookData
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields: AutomationAccountResource

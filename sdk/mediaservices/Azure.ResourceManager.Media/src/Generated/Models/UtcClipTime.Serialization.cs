@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UtcClipTime DeserializeUtcClipTime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset time = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

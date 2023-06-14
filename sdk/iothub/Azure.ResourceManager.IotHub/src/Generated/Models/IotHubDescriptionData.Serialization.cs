@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.IotHub
 
         internal static IotHubDescriptionData DeserializeIotHubDescriptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IotHubProperties> properties = default;
             IotHubSkuInfo sku = default;
@@ -70,7 +74,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -80,7 +83,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = IotHubProperties.DeserializeIotHubProperties(property.Value);
@@ -95,7 +97,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -105,7 +106,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

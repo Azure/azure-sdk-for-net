@@ -13,10 +13,10 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
-string datasource = TestEnvironment.DataSource;
-Console.WriteLine(endpoint);
-var endpointUri = new Uri(endpoint);
-var credential = new AzureKeyCredential(apiKey);
+Uri dataSource = new Uri(TestEnvironment.DataSource);
+
+Uri endpointUri = new Uri(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 
 //create client
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
@@ -31,60 +31,63 @@ You could add the data source, along with start time and end time to a `ModelInf
 Call `CreateAndTrainMultivariateModel` with the created data feed and extract the model ID from the response. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModelValue` with the model ID. Wait until the model status is ready.
 
 ```C# Snippet:TrainMultivariateModel
-private String TrainModel(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+private string TrainModel(AnomalyDetectorClient client, Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime, int maxTryout = 500)
 {
     try
     {
         Console.WriteLine("Training new model...");
 
-        Console.WriteLine(String.Format("{0} available models before training.", GetModelNumber(client)));
+        Console.WriteLine($"{GetModelNumber(client)} available models before training.");
 
-        ModelInfo request = new ModelInfo(datasource, start_time, end_time);
-        request.SlidingWindow = 200;
-
-        TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
-        AnomalyDetectionModel response = client.TrainMultivariateModel(request);
-        String trained_model_id = response.ModelId;
-        Console.WriteLine(String.Format("Training model id is {0}", trained_model_id));
-
-        // Wait until the model is ready. It usually takes several minutes
-        ModelStatus? model_status = null;
-        int tryout_count = 1;
-        response = client.GetMultivariateModelValue(trained_model_id);
-        while (tryout_count < max_tryout & model_status != ModelStatus.Ready & model_status != ModelStatus.Failed)
+        ModelInfo modelInfo = new ModelInfo(dataSource, startTime, endTime)
         {
-            System.Threading.Thread.Sleep(1000);
-            response = client.GetMultivariateModelValue(trained_model_id);
-            model_status = response.ModelInfo.Status;
-            TestContext.Progress.WriteLine(String.Format("try {0}, model_id: {1}, status: {2}.", tryout_count, trained_model_id, model_status));
-            tryout_count += 1;
+            SlidingWindow = 200
         };
 
-        if (model_status == ModelStatus.Ready)
+        Console.WriteLine("Training new model...(it may take a few minutes)");
+        AnomalyDetectionModel response = client.TrainMultivariateModel(modelInfo);
+        string trainedModelId = response.ModelId.ToString();
+        Console.WriteLine($"Training model id is {trainedModelId}");
+
+        // Wait until the model is ready. It usually takes several minutes
+        ModelStatus? modelStatus = null;
+        int tryoutCount = 1;
+        response = client.GetMultivariateModel(trainedModelId);
+        while (tryoutCount < maxTryout & modelStatus != ModelStatus.Ready & modelStatus != ModelStatus.Failed)
+        {
+            System.Threading.Thread.Sleep(1000);
+            response = client.GetMultivariateModel(trainedModelId);
+            modelStatus = response.ModelInfo.Status;
+            TestContext.Progress.WriteLine($"try {tryoutCount}, model id: {trainedModelId}, status: {modelStatus}.");
+            tryoutCount += 1;
+        };
+
+        if (modelStatus == ModelStatus.Ready)
         {
             Console.WriteLine("Creating model succeeds.");
-            Console.WriteLine(String.Format("{0} available models after training.", GetModelNumber(client)));
-            return trained_model_id;
+            Console.WriteLine($"{GetModelNumber(client)} available models after training.");
+            return trainedModelId;
         }
 
-        if (model_status == ModelStatus.Failed)
+        if (modelStatus == ModelStatus.Failed)
         {
             Console.WriteLine("Creating model failed.");
             Console.WriteLine("Errors:");
+            ErrorResponse error = response.ModelInfo.Errors[0];
             try
             {
-                Console.WriteLine(String.Format("Error code: {0}, Message: {1}", response.ModelInfo.Errors[0].Code.ToString(), response.ModelInfo.Errors[0].Message.ToString()));
+                Console.WriteLine($"Error code: {error.Code}, Message: {error.Message}");
             }
             catch (Exception e)
             {
-                Console.WriteLine(String.Format("Get error message fail: {0}", e.Message));
+                Console.WriteLine($"Get error message fail: {e.Message}");
             }
         }
         return null;
     }
     catch (Exception e)
     {
-        Console.WriteLine(String.Format("Train error. {0}", e.Message));
+        Console.WriteLine($"Train error. {e.Message}");
         throw;
     }
 }
@@ -95,50 +98,44 @@ private String TrainModel(AnomalyDetectorClient client, string datasource, DateT
 To detect anomalies using your newly trained model, create a private async Task named `BatchDetect`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectMultivariateBatchAnomaly` and get a `DetectionResult` and extract result ID from it. With the result ID, you could get the detection content and detection status by `GetMultivariateBatchDetectionResultValue`. Return the detection content when the detection status is ready.
 
 ```C# Snippet:DetectMultivariateAnomaly
-private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, string datasource, String model_id, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, Uri datasource, string modelId, DateTimeOffset startTime, DateTimeOffset endTime, int maxTryout = 500)
 {
     try
     {
         Console.WriteLine("Start batch detect...");
-        MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, start_time, end_time);
+        MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, startTime, endTime);
 
-        TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
-        MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
-        String result_id = response.ResultId;
-        TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
+        Console.WriteLine("Start batch detection, this might take a few minutes...");
+        MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(modelId, request);
+        Guid resultId = response.ResultId;
+        Console.WriteLine($"result id is: {resultId.ToString()}");
 
         // get detection result
-        MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
-        MultivariateBatchDetectionStatus result_status = resultResponse.Summary.Status;
-        int tryout_count = 0;
-        while (tryout_count < max_tryout & result_status != MultivariateBatchDetectionStatus.Ready & result_status != MultivariateBatchDetectionStatus.Failed)
+        MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResult(resultId);
+        MultivariateBatchDetectionStatus resultStatus = resultResponse.Summary.Status;
+        int tryoutCount = 0;
+        while (tryoutCount < maxTryout & resultStatus != MultivariateBatchDetectionStatus.Ready & resultStatus != MultivariateBatchDetectionStatus.Failed)
         {
             System.Threading.Thread.Sleep(1000);
-            resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
-            result_status = resultResponse.Summary.Status;
-            TestContext.Progress.WriteLine(String.Format("try: {0}, result id: {1} Detection status is {2}", tryout_count, result_id, result_status.ToString()));
-            Console.Out.Flush();
+            resultResponse = client.GetMultivariateBatchDetectionResult(resultId);
+            resultStatus = resultResponse.Summary.Status;
+            Console.WriteLine($"try: {tryoutCount}, result id: {resultId} Detection status is {resultStatus}");
         }
 
-        if (result_status == MultivariateBatchDetectionStatus.Failed)
+        if (resultStatus == MultivariateBatchDetectionStatus.Failed)
         {
             Console.WriteLine("Detection failed.");
             Console.WriteLine("Errors:");
-            try
-            {
-                Console.WriteLine(String.Format("Error code: {}. Message: {}", resultResponse.Results[0].Errors[0].Code.ToString(), resultResponse.Results[0].Errors[0].Message.ToString()));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(String.Format("Get error message fail: {0}", e.Message));
-            }
+            ErrorResponse error = resultResponse.Results[0].Errors[0];
+            Console.WriteLine($"Error code: {error.Code}. Message: {error.Message}");
             return null;
         }
+
         return resultResponse;
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-        Console.WriteLine(String.Format("Detection error. {0}", e.Message));
+        Console.WriteLine($"Detection error. {ex.Message}");
         throw;
     }
 }
@@ -149,7 +146,7 @@ private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, st
 To detect anomalies using your newly trained model, create a private async Task named `DetectLast`. You will create a new `LastDetectionRequest`, you could assign how many last points you want to detect in the request. Pass `LastDetectionRequest` as a parameter to `LastDetectionRequest` and get the response. Return the detection content when the detection status is ready.
 
 ```C# Snippet:DetectLastMultivariateAnomaly
-private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client, String model_id)
+private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client, string modelId)
 {
     Console.WriteLine("Start last detect...");
     try
@@ -159,18 +156,18 @@ private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client,
         {
             string json = r.ReadToEnd();
             JsonElement lastDetectVariables = JsonDocument.Parse(json).RootElement.GetProperty("variables");
-            foreach (var index in Enumerable.Range(0, lastDetectVariables.GetArrayLength()))
+            foreach (JsonElement item in lastDetectVariables.EnumerateArray())
             {
-                variables.Add(new VariableValues(lastDetectVariables[index].GetProperty("variable").ToString(), JsonConvert.DeserializeObject<IEnumerable<String>>(lastDetectVariables[index].GetProperty("timestamps").ToString()), JsonConvert.DeserializeObject<IEnumerable<float>>(lastDetectVariables[index].GetProperty("values").ToString())));
+                variables.Add(new VariableValues(item.GetProperty("variable").ToString(), JsonConvert.DeserializeObject<IEnumerable<string>>(item.GetProperty("timestamps").ToString()), JsonConvert.DeserializeObject<IEnumerable<float>>(item.GetProperty("values").ToString())));
             }
         }
-        MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables, 1);
-        MultivariateLastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
+        MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables);
+        MultivariateLastDetectionResult response = client.DetectMultivariateLastAnomaly(modelId, request);
         return response;
     }
     catch (Exception ex)
     {
-        Console.WriteLine(String.Format("Last detection error. {0}", ex.Message));
+        Console.WriteLine($"Last detection error. {ex.Message}");
         throw;
     }
 }
@@ -181,11 +178,11 @@ private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client,
 To delete a model that you have created previously use `DeleteMultivariateModel` and pass the model ID of the model you wish to delete. You can check the number of models after deletion with `GetModelNumber`.
 
 ```C# Snippet:DeleteMultivariateModel
-private void DeleteModel(AnomalyDetectorClient client, String model_id)
+private void DeleteModel(AnomalyDetectorClient client, string modelId)
 {
-    client.DeleteMultivariateModel(model_id);
-    int model_number = GetModelNumber(client);
-    Console.WriteLine(String.Format("{0} available models after deletion.", model_number));
+    client.DeleteMultivariateModel(modelId);
+    int modelNumber = GetModelNumber(client);
+    Console.WriteLine($"{modelNumber} available models after deletion.");
 }
 ```
 

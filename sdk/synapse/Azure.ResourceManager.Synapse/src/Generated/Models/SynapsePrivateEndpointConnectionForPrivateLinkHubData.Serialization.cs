@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse
     {
         internal static SynapsePrivateEndpointConnectionForPrivateLinkHubData DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapsePrivateEndpointConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SynapsePrivateEndpointConnectionProperties.DeserializeSynapsePrivateEndpointConnectionProperties(property.Value);
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

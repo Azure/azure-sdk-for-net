@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static QueueStatistics DeserializeQueueStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string queueId = default;
             int length = default;
             Optional<IReadOnlyDictionary<string, double>> estimatedWaitTimeMinutes = default;
@@ -35,7 +39,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, double> dictionary = new Dictionary<string, double>();
@@ -50,7 +53,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     longestJobWaitTimeMinutes = property.Value.GetDouble();

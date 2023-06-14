@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobLimits DeserializeMachineLearningJobLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobLimitsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

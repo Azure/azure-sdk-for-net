@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsClusterSku DeserializeEventHubsClusterSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventHubsClusterSkuName name = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

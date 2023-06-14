@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static AppConfigurationKeyValueData DeserializeAppConfigurationKeyValueData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -81,7 +85,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -120,7 +123,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eTag = new ETag(property0.Value.GetString());
@@ -130,7 +132,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModified = property0.Value.GetDateTimeOffset("O");
@@ -140,7 +141,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             locked = property0.Value.GetBoolean();
@@ -150,7 +150,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

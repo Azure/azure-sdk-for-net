@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
         public virtual PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministrator()
         {
-            return new PostgreSqlServerAdministratorResource(Client, new ResourceIdentifier(Id.ToString() + "/administrators/activeDirectory"));
+            return new PostgreSqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
         }
 
         /// <summary> Gets a collection of PostgreSqlServerSecurityAlertPolicyResources in the PostgreSqlServer. </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

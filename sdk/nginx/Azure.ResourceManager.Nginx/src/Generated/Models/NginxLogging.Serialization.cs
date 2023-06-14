@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxLogging DeserializeNginxLogging(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxStorageAccount> storageAccount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value);

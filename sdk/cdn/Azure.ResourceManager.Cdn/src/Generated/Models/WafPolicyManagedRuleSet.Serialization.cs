@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafPolicyManagedRuleSet DeserializeWafPolicyManagedRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleSetType = default;
             string ruleSetVersion = default;
             Optional<int> anomalyScore = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     anomalyScore = property.Value.GetInt32();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleGroupOverrideSetting> array = new List<ManagedRuleGroupOverrideSetting>();

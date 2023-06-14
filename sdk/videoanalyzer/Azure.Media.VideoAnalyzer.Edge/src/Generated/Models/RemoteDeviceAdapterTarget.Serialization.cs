@@ -22,6 +22,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RemoteDeviceAdapterTarget DeserializeRemoteDeviceAdapterTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string host = default;
             foreach (var property in element.EnumerateObject())
             {

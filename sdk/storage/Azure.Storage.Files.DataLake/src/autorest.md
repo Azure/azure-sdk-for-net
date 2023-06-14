@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/36e33a9eb25659628132be2c9b09f73bd35bc33f/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2021-06-08/DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7f32df7854911a0e65bf8111f0fc0ac0f210a25c/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2021-06-08/DataLakeStorage.json
 generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
@@ -151,4 +151,17 @@ directive:
       "None",
       "AES256"
     ];
+```
+
+### Rename LeaseAction
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.LeaseAction["x-ms-enum"];
+    $.LeaseAction["x-ms-enum"] = {
+        "name": "DataLakeLeaseAction",
+        "modelAsString": false
+    };
 ```

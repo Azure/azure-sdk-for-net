@@ -72,9 +72,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// encrypted VNet.</param>
         /// <param name="ipAllocations">Array of IpAllocation which reference
         /// this VNET.</param>
+        /// <param name="flowLogs">A collection of references to flow log
+        /// resources.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), int? flowTimeoutInMinutes = default(int?), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), VirtualNetworkBgpCommunities bgpCommunities = default(VirtualNetworkBgpCommunities), VirtualNetworkEncryption encryption = default(VirtualNetworkEncryption), IList<SubResource> ipAllocations = default(IList<SubResource>), string etag = default(string))
+        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), int? flowTimeoutInMinutes = default(int?), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), VirtualNetworkBgpCommunities bgpCommunities = default(VirtualNetworkBgpCommunities), VirtualNetworkEncryption encryption = default(VirtualNetworkEncryption), IList<SubResource> ipAllocations = default(IList<SubResource>), IList<FlowLog> flowLogs = default(IList<FlowLog>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -91,6 +93,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BgpCommunities = bgpCommunities;
             Encryption = encryption;
             IpAllocations = ipAllocations;
+            FlowLogs = flowLogs;
             Etag = etag;
             CustomInit();
         }
@@ -196,6 +199,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> IpAllocations { get; set; }
 
         /// <summary>
+        /// Gets a collection of references to flow log resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.flowLogs")]
+        public IList<FlowLog> FlowLogs { get; private set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -227,6 +236,16 @@ namespace Microsoft.Azure.Management.Network.Models
             if (Encryption != null)
             {
                 Encryption.Validate();
+            }
+            if (FlowLogs != null)
+            {
+                foreach (var element1 in FlowLogs)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static NaptConfiguration DeserializeNaptConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NaptEnabled> enabled = default;
             Optional<PortRange> portRange = default;
             Optional<PortReuseHoldTimes> portReuseHoldTime = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = new NaptEnabled(property.Value.GetString());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     portRange = PortRange.DeserializePortRange(property.Value);
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     portReuseHoldTime = PortReuseHoldTimes.DeserializePortReuseHoldTimes(property.Value);
@@ -86,7 +87,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pinholeLimits = property.Value.GetInt32();
@@ -96,7 +96,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pinholeTimeouts = PinholeTimeouts.DeserializePinholeTimeouts(property.Value);

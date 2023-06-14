@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static PrePostStep DeserializePrePostStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string stepId = default;
             foreach (var property in element.EnumerateObject())
             {

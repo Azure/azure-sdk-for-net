@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -209,6 +209,11 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
@@ -239,7 +244,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -266,7 +271,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static EntityLinkingTaskResult DeserializeEntityLinkingTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntityLinkingResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = EntityLinkingResult.DeserializeEntityLinkingResult(property.Value);

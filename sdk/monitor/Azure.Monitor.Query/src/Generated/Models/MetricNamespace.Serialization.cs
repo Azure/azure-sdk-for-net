@@ -14,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricNamespace DeserializeMetricNamespace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> type = default;
             Optional<string> name = default;
@@ -40,7 +44,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     classification = new MetricNamespaceClassification(property.Value.GetString());
@@ -50,7 +53,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value);

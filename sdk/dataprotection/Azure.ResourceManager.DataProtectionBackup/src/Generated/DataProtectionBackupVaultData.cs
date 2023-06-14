@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary> A class representing the DataProtectionBackupVault data model. </summary>
+    /// <summary>
+    /// A class representing the DataProtectionBackupVault data model.
+    /// Backup Vault Resource
+    /// </summary>
     public partial class DataProtectionBackupVaultData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataProtectionBackupVaultData. </summary>

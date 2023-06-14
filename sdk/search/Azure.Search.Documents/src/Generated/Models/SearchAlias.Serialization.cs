@@ -35,6 +35,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchAlias DeserializeSearchAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<string> indexes = default;
             Optional<string> odataEtag = default;

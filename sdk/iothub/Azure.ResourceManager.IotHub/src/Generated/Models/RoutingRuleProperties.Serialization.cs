@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingRuleProperties DeserializeRoutingRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IotHubRoutingSource source = default;
             Optional<string> condition = default;

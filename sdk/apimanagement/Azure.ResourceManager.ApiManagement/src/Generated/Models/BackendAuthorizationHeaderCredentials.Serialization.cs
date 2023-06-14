@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendAuthorizationHeaderCredentials DeserializeBackendAuthorizationHeaderCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string scheme = default;
             string parameter = default;
             foreach (var property in element.EnumerateObject())

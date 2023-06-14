@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesSqlTaskInput DeserializeGetUserTablesSqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             Optional<string> encryptedKeyForSecureFields = default;

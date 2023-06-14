@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformApp data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformApp data model.
+    /// App resource payload
+    /// </summary>
     public partial class AppPlatformAppData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformAppData. </summary>

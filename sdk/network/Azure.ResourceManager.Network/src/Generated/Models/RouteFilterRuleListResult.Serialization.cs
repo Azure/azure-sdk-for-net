@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RouteFilterRuleListResult DeserializeRouteFilterRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RouteFilterRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();

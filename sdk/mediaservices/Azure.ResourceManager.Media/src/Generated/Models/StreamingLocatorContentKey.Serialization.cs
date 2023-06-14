@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingLocatorContentKey DeserializeStreamingLocatorContentKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid id = default;
             Optional<StreamingLocatorContentKeyType> type = default;
             Optional<string> labelReferenceInStreamingPolicy = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new StreamingLocatorContentKeyType(property.Value.GetString());
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();

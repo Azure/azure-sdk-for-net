@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.2 (Unreleased)
+## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.1.2 (2023-04-27)
+- Fixed bug where the blob container would scan from the beginning due not correctly updating the latest scan time. (#35145)
+
+## 5.1.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 5.1.0 (2023-02-21)
+- Includes all features from 5.1.0-beta.1.
+- Added Target Based Scaling support for Storage Queues and Blobs
 
 ## 5.1.0-beta.1 (2023-02-07)
 - Added logging for details of a storage blob listener on start/stop operations.

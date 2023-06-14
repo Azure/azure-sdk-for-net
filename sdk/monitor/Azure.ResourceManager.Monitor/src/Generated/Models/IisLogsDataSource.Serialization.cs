@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static IisLogsDataSource DeserializeIisLogsDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> streams = default;
             Optional<IList<string>> logDirectories = default;
             Optional<string> name = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

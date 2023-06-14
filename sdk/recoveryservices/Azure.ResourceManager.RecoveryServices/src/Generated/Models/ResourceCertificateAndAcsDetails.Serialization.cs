@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ResourceCertificateAndAcsDetails DeserializeResourceCertificateAndAcsDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string globalAcsNamespace = default;
             string globalAcsHostName = default;
             string globalAcsRPRealm = default;
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<string> issuer = default;
             Optional<long> resourceId = default;
             Optional<string> subject = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<DateTimeOffset> validFrom = default;
             Optional<DateTimeOffset> validTo = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certificate = property.Value.GetBytesFromBase64("D");
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = property.Value.GetInt64();
@@ -86,14 +88,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("validFrom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validFrom = property.Value.GetDateTimeOffset("O");
@@ -103,7 +108,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validTo = property.Value.GetDateTimeOffset("O");

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformAzureFileVolume DeserializeAppPlatformAzureFileVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string shareName = default;
             UnderlyingResourceType type = default;
             string mountPath = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readOnly = property.Value.GetBoolean();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

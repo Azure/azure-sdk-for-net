@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Quota
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-03-15-preview";
+            _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary> List all the operations supported by the Microsoft.Quota resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OperationList>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<QuotaOperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Quota
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        QuotaOperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = QuotaOperationListResult.DeserializeQuotaOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary> List all the operations supported by the Microsoft.Quota resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OperationList> List(CancellationToken cancellationToken = default)
+        public Response<QuotaOperationListResult> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Quota
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        QuotaOperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = QuotaOperationListResult.DeserializeQuotaOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<OperationList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<QuotaOperationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Quota
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        QuotaOperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = QuotaOperationListResult.DeserializeQuotaOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<OperationList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<QuotaOperationListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.Quota
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        QuotaOperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = QuotaOperationListResult.DeserializeQuotaOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

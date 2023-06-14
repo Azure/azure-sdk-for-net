@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Maintenance.Models
     {
         internal static MaintenanceUpdate DeserializeMaintenanceUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceImpactType> impactType = default;
             Optional<MaintenanceUpdateStatus> status = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maintenanceScope = new MaintenanceScope(property.Value.GetString());
@@ -37,7 +40,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     impactType = new MaintenanceImpactType(property.Value.GetString());
@@ -47,7 +49,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MaintenanceUpdateStatus(property.Value.GetString());
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     impactDurationInSec = property.Value.GetInt32();
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notBefore = property.Value.GetDateTimeOffset("O");
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());

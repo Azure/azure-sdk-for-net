@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static CustomOpenIdConnectProvider DeserializeCustomOpenIdConnectProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<OpenIdConnectRegistration> registration = default;
             Optional<OpenIdConnectLogin> login = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registration = OpenIdConnectRegistration.DeserializeOpenIdConnectRegistration(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     login = OpenIdConnectLogin.DeserializeOpenIdConnectLogin(property.Value);

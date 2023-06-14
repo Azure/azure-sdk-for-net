@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobExternal DeserializeStreamingJobExternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsStorageAccount> storageAccount = default;
             Optional<string> container = default;
             Optional<string> path = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value);
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value);

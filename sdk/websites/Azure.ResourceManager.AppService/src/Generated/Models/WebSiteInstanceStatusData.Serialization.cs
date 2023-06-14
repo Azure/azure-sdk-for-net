@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebSiteInstanceStatusData DeserializeWebSiteInstanceStatusData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -105,7 +109,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -124,7 +127,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToSiteRuntimeState();
@@ -134,7 +136,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                statusUrl = null;
                                 continue;
                             }
                             statusUrl = new Uri(property0.Value.GetString());
@@ -144,7 +145,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                detectorUrl = null;
                                 continue;
                             }
                             detectorUrl = new Uri(property0.Value.GetString());
@@ -154,7 +154,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                consoleUrl = null;
                                 continue;
                             }
                             consoleUrl = new Uri(property0.Value.GetString());
@@ -164,7 +163,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                healthCheckUrl = null;
                                 continue;
                             }
                             healthCheckUrl = new Uri(property0.Value.GetString());
@@ -174,7 +172,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ContainerInfo> dictionary = new Dictionary<string, ContainerInfo>();

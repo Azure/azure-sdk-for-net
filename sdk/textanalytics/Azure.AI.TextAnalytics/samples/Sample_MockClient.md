@@ -3,6 +3,7 @@
 This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `TextAnalyticsClient` method.
 
 ## Define method that uses TextAnalyticsClient
+
 To show the usage of mocks, define a method that will be tested with mocked objects. For this case, we are going to create a method that will verify if a document is writen in Spanish.
 
 ```C# Snippet:MethodToTest
@@ -14,11 +15,12 @@ private static async Task<bool> IsSpanishAsync(string document, TextAnalyticsCli
 ```
 
 ## Create and setup mocks
+
 To start, create a mock for the `TextAnalyticsClient` and `Response`.
 
 ```C# Snippet:CreateMocks
-var mockResponse = new Mock<Response>();
-var mockClient = new Mock<TextAnalyticsClient>();
+Mock<Response> mockResponse = new();
+Mock<TextAnalyticsClient> mockClient = new();
 ```
 
 Then, set up the client methods that will be executed. In this case, we will call the `DetectLanguageAsync` method.
@@ -31,6 +33,7 @@ mockClient.Setup(c => c.DetectLanguageAsync("Este documento está en español.",
 ```
 
 ## Use mocks
+
 Now, to validate if the document is in Spanish without making a network call, use `TextAnalyticsClient` mock.
 
 ```C# Snippet:UseMocks

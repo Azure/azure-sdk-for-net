@@ -207,6 +207,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceFabricManagedClustersSku> sku = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -252,7 +256,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ServiceFabricManagedClustersSku.DeserializeServiceFabricManagedClustersSku(property.Value);
@@ -262,7 +265,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -272,7 +274,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -307,7 +308,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -336,7 +336,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ipv4Address = IPAddress.Parse(property0.Value.GetString());
@@ -346,7 +345,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterId = property0.Value.GetGuid();
@@ -356,7 +354,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterState = new ServiceFabricManagedClusterState(property0.Value.GetString());
@@ -366,13 +363,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             clusterCertificateThumbprints = array;
                             continue;
@@ -381,7 +384,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientConnectionPort = property0.Value.GetInt32();
@@ -391,7 +393,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             httpGatewayConnectionPort = property0.Value.GetInt32();
@@ -411,7 +412,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterLoadBalancingRule> array = new List<ManagedClusterLoadBalancingRule>();
@@ -426,7 +426,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowRdpAccess = property0.Value.GetBoolean();
@@ -436,7 +435,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
@@ -451,7 +449,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterClientCertificate> array = new List<ManagedClusterClientCertificate>();
@@ -466,7 +463,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureActiveDirectory = ManagedClusterAzureActiveDirectory.DeserializeManagedClusterAzureActiveDirectory(property0.Value);
@@ -476,7 +472,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterFabricSettingsSection> array = new List<ClusterFabricSettingsSection>();
@@ -491,7 +486,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ServiceFabricManagedResourceProvisioningState(property0.Value.GetString());
@@ -506,7 +500,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterUpgradeMode = new ManagedClusterUpgradeMode(property0.Value.GetString());
@@ -516,7 +509,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterUpgradeCadence = new ManagedClusterUpgradeCadence(property0.Value.GetString());
@@ -526,7 +518,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterAddOnFeature> array = new List<ManagedClusterAddOnFeature>();
@@ -541,7 +532,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAutoOSUpgrade = property0.Value.GetBoolean();
@@ -551,7 +541,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             zonalResiliency = property0.Value.GetBoolean();
@@ -561,7 +550,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
@@ -571,7 +559,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableIPv6 = property0.Value.GetBoolean();
@@ -586,7 +573,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterIPTag> array = new List<ManagedClusterIPTag>();
@@ -601,7 +587,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ipv6Address = IPAddress.Parse(property0.Value.GetString());
@@ -611,7 +596,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableServicePublicIP = property0.Value.GetBoolean();
@@ -621,7 +605,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterSubnet> array = new List<ManagedClusterSubnet>();
@@ -636,7 +619,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterServiceEndpoint> array = new List<ManagedClusterServiceEndpoint>();

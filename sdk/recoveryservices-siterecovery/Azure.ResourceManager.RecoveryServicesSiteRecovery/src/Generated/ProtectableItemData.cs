@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ProtectableItem data model. </summary>
+    /// <summary>
+    /// A class representing the ProtectableItem data model.
+    /// Replication protected item.
+    /// </summary>
     public partial class ProtectableItemData : ResourceData
     {
         /// <summary> Initializes a new instance of ProtectableItemData. </summary>

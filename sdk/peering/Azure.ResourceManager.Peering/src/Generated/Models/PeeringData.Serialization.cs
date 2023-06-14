@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeeringData DeserializePeeringData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PeeringSku sku = default;
             PeeringKind kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -86,7 +90,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -121,7 +124,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -140,7 +142,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value);
@@ -150,7 +151,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value);
@@ -165,7 +165,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PeeringProvisioningState(property0.Value.GetString());

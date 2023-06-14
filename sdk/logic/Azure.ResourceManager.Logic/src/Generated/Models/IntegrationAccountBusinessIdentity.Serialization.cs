@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountBusinessIdentity DeserializeIntegrationAccountBusinessIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string qualifier = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

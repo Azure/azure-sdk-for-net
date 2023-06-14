@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static ConversionList DeserializeConversionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AssetConversion> conversions = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

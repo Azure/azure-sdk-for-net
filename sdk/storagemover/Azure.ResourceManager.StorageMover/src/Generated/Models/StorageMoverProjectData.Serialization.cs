@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageMover
 
         internal static StorageMoverProjectData DeserializeStorageMoverProjectData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());

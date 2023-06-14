@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ExistingRecoveryProximityPlacementGroup DeserializeExistingRecoveryProximityPlacementGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryProximityPlacementGroupId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())

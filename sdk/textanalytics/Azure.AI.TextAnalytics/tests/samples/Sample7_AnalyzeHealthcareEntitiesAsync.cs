@@ -13,13 +13,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task AnalyzeHealthcareEntitiesAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Get the documents.
-            string document1 =
+            string documentA =
                 "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
                 + " CORONARY ARTERY DISEASE | Signed | DIS |"
                 + Environment.NewLine
@@ -37,16 +35,17 @@ namespace Azure.AI.TextAnalytics.Samples
                 + " to the patient'sincreased symptoms and family history and history left main disease with total"
                 + " occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+            string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-            // Prepare the input of the text analysis operation.
-            List<TextDocumentInput> documentBatch = new()
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<TextDocumentInput> batchedDocuments = new()
             {
-                new TextDocumentInput("1", document1)
+                new TextDocumentInput("1", documentA)
                 {
                     Language = "en"
                 },
-                new TextDocumentInput("2", document2)
+                new TextDocumentInput("2", documentB)
                 {
                     Language = "en"
                 }
@@ -58,38 +57,37 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Start the text analysis operation.
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(documentBatch, options);
-
-            await healthOperation.WaitForCompletionAsync();
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments, options);
+            await operation.WaitForCompletionAsync();
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
             // View the operation status.
-            Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
-            Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
-            Console.WriteLine($"Id           : {healthOperation.Id}");
-            Console.WriteLine($"Status       : {healthOperation.Status}");
-            Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
+            Console.WriteLine($"Created On   : {operation.CreatedOn}");
+            Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+            Console.WriteLine($"Id           : {operation.Id}");
+            Console.WriteLine($"Status       : {operation.Status}");
+            Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
 
             // View the operation results.
-            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
+            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in operation.GetValues())
             {
-                Console.WriteLine($"Results of \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Analyze Healthcare Entities, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
                 int i = 0;
 
                 foreach (AnalyzeHealthcareEntitiesResult documentResult in documentsInPage)
                 {
-                    TextDocumentInput document = documentBatch[i++];
-                    Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+                    TextDocumentInput document = batchedDocuments[i++];
+                    Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
                     if (documentResult.HasError)
                     {
                         Console.WriteLine($"  Error!");
-                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}.");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
                         Console.WriteLine($"  Message: {documentResult.Error.Message}");
                         continue;
                     }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static IdentityManagement DeserializeIdentityManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IdentityManagementType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new IdentityManagementType(property.Value.GetString());

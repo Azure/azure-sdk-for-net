@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkConfigurationReference DeserializeSparkConfigurationReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SparkConfigurationReferenceType type = default;
             string referenceName = default;
             foreach (var property in element.EnumerateObject())

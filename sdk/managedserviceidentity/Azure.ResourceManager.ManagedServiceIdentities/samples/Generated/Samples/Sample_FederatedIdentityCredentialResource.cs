@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_FederatedIdentityCredentialCreate()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialCreate.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialCreate.json
             // this example is just showing the usage of "FederatedIdentityCredentials_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this FederatedIdentityCredentialResource created on azure
             // for more information of creating FederatedIdentityCredentialResource, please refer to the document of FederatedIdentityCredentialResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             string federatedIdentityCredentialResourceName = "ficResourceName";
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             // invoke the operation
             FederatedIdentityCredentialData data = new FederatedIdentityCredentialData()
             {
-                IssuerUri = new Uri("https://oidc.prod-aks.azure.com/IssuerGUID"),
+                IssuerUri = new Uri("https://oidc.prod-aks.azure.com/TenantGUID/IssuerGUID"),
                 Subject = "system:serviceaccount:ns:svcaccount",
                 Audiences =
 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_FederatedIdentityCredentialGet()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialGet.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialGet.json
             // this example is just showing the usage of "FederatedIdentityCredentials_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this FederatedIdentityCredentialResource created on azure
             // for more information of creating FederatedIdentityCredentialResource, please refer to the document of FederatedIdentityCredentialResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             string federatedIdentityCredentialResourceName = "ficResourceName";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_FederatedIdentityCredentialDelete()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/FederatedIdentityCredentialDelete.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialDelete.json
             // this example is just showing the usage of "FederatedIdentityCredentials_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this FederatedIdentityCredentialResource created on azure
             // for more information of creating FederatedIdentityCredentialResource, please refer to the document of FederatedIdentityCredentialResource
-            string subscriptionId = "subid";
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             string federatedIdentityCredentialResourceName = "ficResourceName";

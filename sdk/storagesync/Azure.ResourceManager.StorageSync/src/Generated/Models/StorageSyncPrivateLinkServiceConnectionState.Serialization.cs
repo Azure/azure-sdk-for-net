@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static StorageSyncPrivateLinkServiceConnectionState DeserializeStorageSyncPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSyncPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new StorageSyncPrivateEndpointServiceConnectionStatus(property.Value.GetString());

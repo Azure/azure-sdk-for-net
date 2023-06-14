@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetFilterProperties DeserializeBudgetFilterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BudgetComparisonExpression> dimensions = default;
             Optional<BudgetComparisonExpression> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);

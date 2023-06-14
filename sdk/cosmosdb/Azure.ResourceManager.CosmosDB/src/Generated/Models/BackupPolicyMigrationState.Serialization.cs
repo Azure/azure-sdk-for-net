@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static BackupPolicyMigrationState DeserializeBackupPolicyMigrationState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupPolicyMigrationStatus> status = default;
             Optional<BackupPolicyType> targetType = default;
             Optional<DateTimeOffset> startTime = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new BackupPolicyMigrationStatus(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetType = new BackupPolicyType(property.Value.GetString());
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");

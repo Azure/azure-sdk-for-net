@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInputTrackSelection DeserializeLiveEventInputTrackSelection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> property = default;
             Optional<string> operation = default;
             Optional<string> value = default;

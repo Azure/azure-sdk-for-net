@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static CheckOciDriverTaskInput DeserializeCheckOciDriverTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverVersion = default;
             foreach (var property in element.EnumerateObject())
             {

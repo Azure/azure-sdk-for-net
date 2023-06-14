@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogAgreementResource DeserializeDatadogAgreementResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DatadogAgreementProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DatadogAgreementProperties.DeserializeDatadogAgreementProperties(property.Value);
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

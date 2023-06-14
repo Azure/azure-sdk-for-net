@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IdentityAccessKeyPermission>> keys = default;
             Optional<IList<IdentityAccessSecretPermission>> secrets = default;
             Optional<IList<IdentityAccessCertificatePermission>> certificates = default;
@@ -71,7 +75,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessKeyPermission> array = new List<IdentityAccessKeyPermission>();
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessSecretPermission> array = new List<IdentityAccessSecretPermission>();
@@ -101,7 +103,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessCertificatePermission> array = new List<IdentityAccessCertificatePermission>();
@@ -116,7 +117,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessStoragePermission> array = new List<IdentityAccessStoragePermission>();

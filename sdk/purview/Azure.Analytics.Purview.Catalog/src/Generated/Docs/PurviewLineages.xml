@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLineageGraphAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageGraphAsync(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageGraphAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -69,41 +69,8 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetLineageGraph(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageGraph with required parameters and parse the result.
 <code><![CDATA[
@@ -171,41 +138,8 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="NextPageLineageAsync(String,String,Boolean,Int32,Int32,RequestContext)">
+    <member name="NextPageLineageAsync(string,string,bool?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call NextPageLineageAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -273,41 +207,8 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="NextPageLineage(String,String,Boolean,Int32,Int32,RequestContext)">
+    <member name="NextPageLineage(string,string,bool?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call NextPageLineage with required parameters and parse the result.
 <code><![CDATA[
@@ -375,41 +276,8 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetLineageByUniqueAttributeAsync(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageByUniqueAttributeAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -477,41 +345,8 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetLineageByUniqueAttribute(String,String,Int32,Int32,Boolean,Boolean,RequestContext)">
+    <member name="GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageByUniqueAttribute with required parameters and parse the result.
 <code><![CDATA[
@@ -579,39 +414,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

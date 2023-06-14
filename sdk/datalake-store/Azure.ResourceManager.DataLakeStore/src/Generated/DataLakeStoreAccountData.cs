@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
-    /// <summary> A class representing the DataLakeStoreAccount data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeStoreAccount data model.
+    /// Data Lake Store account information.
+    /// </summary>
     public partial class DataLakeStoreAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The Key Vault encryption identity, if any. </param>
+        /// <param name="identity"> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </param>
         /// <param name="accountId"> The unique identifier associated with this Data Lake Store account. </param>
         /// <param name="provisioningState"> The provisioning status of the Data Lake Store account. </param>
         /// <param name="state"> The state of the Data Lake Store account. </param>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.DataLakeStore
             Tags = tags;
         }
 
-        /// <summary> The Key Vault encryption identity, if any. </summary>
+        /// <summary> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; }
         /// <summary> The unique identifier associated with this Data Lake Store account. </summary>
         public Guid? AccountId { get; }

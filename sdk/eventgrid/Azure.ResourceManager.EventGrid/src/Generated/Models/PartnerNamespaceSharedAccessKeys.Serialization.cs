@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static PartnerNamespaceSharedAccessKeys DeserializePartnerNamespaceSharedAccessKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key1 = default;
             Optional<string> key2 = default;
             foreach (var property in element.EnumerateObject())

@@ -356,6 +356,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelDistributionSettings DeserializeImageModelDistributionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> amsGradient = default;
             Optional<string> augmentations = default;
             Optional<string> beta1 = default;

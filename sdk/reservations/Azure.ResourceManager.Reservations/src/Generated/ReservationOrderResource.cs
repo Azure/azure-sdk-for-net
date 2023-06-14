@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Return a reservation.
+        /// Return a reservation and get refund information.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -598,10 +598,11 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ReservationRefundResult>> ReturnAsync(ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationOrderResource>> ReturnAsync(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -610,7 +611,10 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -620,7 +624,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Return a reservation.
+        /// Return a reservation and get refund information.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -632,10 +636,11 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ReservationRefundResult> Return(ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationOrderResource> Return(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -644,7 +649,10 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
-                return response;
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

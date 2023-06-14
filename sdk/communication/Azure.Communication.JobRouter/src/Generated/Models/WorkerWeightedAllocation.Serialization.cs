@@ -30,6 +30,10 @@ namespace Azure.Communication.JobRouter
 
         internal static WorkerWeightedAllocation DeserializeWorkerWeightedAllocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double weight = default;
             IList<WorkerSelector> labelSelectors = default;
             foreach (var property in element.EnumerateObject())

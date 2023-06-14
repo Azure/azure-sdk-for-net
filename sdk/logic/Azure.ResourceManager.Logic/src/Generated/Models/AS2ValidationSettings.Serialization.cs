@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2ValidationSettings DeserializeAS2ValidationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool overrideMessageProperties = default;
             bool encryptMessage = default;
             bool signMessage = default;
@@ -104,7 +108,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     signingAlgorithm = new AS2SigningAlgorithm(property.Value.GetString());

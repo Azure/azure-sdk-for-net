@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static QosIPRange DeserializeQosIPRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> startIP = default;
             Optional<string> endIP = default;
             foreach (var property in element.EnumerateObject())

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
-    /// <summary> A class representing the DataLakeStoreTrustedIdProvider data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeStoreTrustedIdProvider data model.
+    /// Data Lake Store trusted identity provider information.
+    /// </summary>
     public partial class DataLakeStoreTrustedIdProviderData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderData. </summary>

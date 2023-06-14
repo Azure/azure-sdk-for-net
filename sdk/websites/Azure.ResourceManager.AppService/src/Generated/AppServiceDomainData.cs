@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceDomain data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceDomain data model.
+    /// Information about a domain.
+    /// </summary>
     public partial class AppServiceDomainData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceDomainData. </summary>

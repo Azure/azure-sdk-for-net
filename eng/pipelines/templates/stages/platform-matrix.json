@@ -15,13 +15,13 @@
         "Pool": "azsdk-pool-mms-ubuntu-2004-general",
         "TestTargetFramework": "net7.0"
       },
-      "Windows2022_NET461": {
-        "OSVmImage": "MMS2022",
+      "Windows2022_NET462": {
+        "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
-        "TestTargetFramework": "net461"
+        "TestTargetFramework": "net462"
       },
       "Windows2022_NET7.0": {
-        "OSVmImage": "MMS2022",
+        "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
         "TestTargetFramework": "net7.0"
       },
@@ -49,7 +49,7 @@
     {
       "Agent": {
         "Windows2022_NET7.0": {
-          "OSVmImage": "MMS2022",
+          "OSVmImage": "windows-2022",
           "Pool": "azsdk-pool-mms-win-2022-general",
           "TestTargetFramework": "net7.0"
         }

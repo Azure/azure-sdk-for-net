@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorRouteCacheConfiguration DeserializeFrontDoorRouteCacheConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<string> queryParameters = default;
             Optional<RouteCacheCompressionSettings> compressionSettings = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryStringCachingBehavior = new FrontDoorQueryStringCachingBehavior(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value);

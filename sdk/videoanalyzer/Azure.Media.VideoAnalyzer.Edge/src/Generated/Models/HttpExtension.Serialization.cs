@@ -41,6 +41,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static HttpExtension DeserializeHttpExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointBase endpoint = default;
             ImageProperties image = default;
             Optional<SamplingOptions> samplingOptions = default;
@@ -63,7 +67,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingOptions = SamplingOptions.DeserializeSamplingOptions(property.Value);

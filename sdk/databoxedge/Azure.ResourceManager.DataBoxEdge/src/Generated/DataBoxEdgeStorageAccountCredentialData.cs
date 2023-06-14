@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeStorageAccountCredential data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeStorageAccountCredential data model.
+    /// The storage account credential.
+    /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountCredentialData. </summary>

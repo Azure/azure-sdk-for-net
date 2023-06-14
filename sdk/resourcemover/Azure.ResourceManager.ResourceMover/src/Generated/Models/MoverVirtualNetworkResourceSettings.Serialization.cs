@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool?> enableDdosProtection = default;
             Optional<IList<string>> addressSpace = default;

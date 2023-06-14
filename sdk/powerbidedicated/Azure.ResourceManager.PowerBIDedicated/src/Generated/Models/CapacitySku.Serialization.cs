@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static CapacitySku DeserializeCapacitySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<CapacitySkuTier> tier = default;
             Optional<int> capacity = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new CapacitySkuTier(property.Value.GetString());
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

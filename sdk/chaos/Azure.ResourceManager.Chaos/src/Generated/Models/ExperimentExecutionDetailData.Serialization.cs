@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Chaos
     {
         internal static ExperimentExecutionDetailData DeserializeExperimentExecutionDetailData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Chaos
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Chaos
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDateTime = property0.Value.GetDateTimeOffset("O");
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.Chaos
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastActionDateTime = property0.Value.GetDateTimeOffset("O");
@@ -104,7 +105,6 @@ namespace Azure.ResourceManager.Chaos
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDateTime = property0.Value.GetDateTimeOffset("O");
@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.Chaos
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             stopDateTime = property0.Value.GetDateTimeOffset("O");
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.Chaos
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             runInformation = ExperimentExecutionDetailsPropertiesRunInformation.DeserializeExperimentExecutionDetailsPropertiesRunInformation(property0.Value);

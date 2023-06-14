@@ -26,6 +26,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static NamedLineString DeserializeNamedLineString(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string line = default;
             string type = default;
             string name = default;

@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAccountKeyDatastoreSecrets DeserializeMachineLearningAccountKeyDatastoreSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             SecretsType secretsType = default;
             foreach (var property in element.EnumerateObject())

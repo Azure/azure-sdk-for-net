@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static EdgeOrderData DeserializeEdgeOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -73,13 +76,19 @@ namespace Azure.ResourceManager.EdgeOrder
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             orderItemIds = array;
                             continue;
@@ -88,7 +97,6 @@ namespace Azure.ResourceManager.EdgeOrder
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property0.Value);
@@ -98,7 +106,6 @@ namespace Azure.ResourceManager.EdgeOrder
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EdgeOrderStageDetails> array = new List<EdgeOrderStageDetails>();

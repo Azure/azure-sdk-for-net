@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource" /> object. </returns>
         public virtual MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSetting()
         {
-            return new MongoDBDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new MongoDBDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary> Gets a collection of MongoDBCollectionResources in the MongoDBDatabase. </summary>

@@ -14,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricNamespaceName DeserializeMetricNamespaceName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricNamespaceName = default;
             foreach (var property in element.EnumerateObject())
             {

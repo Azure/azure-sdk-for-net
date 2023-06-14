@@ -54,10 +54,13 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
                 {
                     Encryption = new ServiceAccountEncryptionProperties()
                     {
+                        KeyVaultProperties = new CognitiveServicesKeyVaultProperties()
+                        {
+                            KeyName = "KeyName",
+                            KeyVersion = "891CF236-D241-4738-9462-D506AF493DFA",
+                            KeyVaultUri = new Uri("https://pltfrmscrts-use-pc-dev.vault.azure.net/"),
+                        },
                         KeySource = ServiceAccountEncryptionKeySource.MicrosoftKeyVault,
-                        KeyName = "KeyName",
-                        KeyVersion = "891CF236-D241-4738-9462-D506AF493DFA",
-                        KeyVaultUri = new Uri("https://pltfrmscrts-use-pc-dev.vault.azure.net/"),
                     },
                     UserOwnedStorage =
 {

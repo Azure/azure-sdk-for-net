@@ -23,12 +23,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
         /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <param name="reverseTransportPreferences"> Optional Preferences related to the reverse shipment logistics of the sku. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
-        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences)
+        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences)
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
+            ReverseTransportPreferences = reverseTransportPreferences;
             EncryptionPreferences = encryptionPreferences;
             StorageAccountAccessTierPreferences = storageAccountAccessTierPreferences;
         }
@@ -36,31 +38,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Preferred data center region. </summary>
         public IList<string> PreferredDataCenterRegion { get; }
         /// <summary> Preferences related to the shipment logistics of the sku. </summary>
-        internal TransportPreferences TransportPreferences { get; set; }
-        /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
-        public TransportShipmentType? TransportPreferencesPreferredShipmentType
-        {
-            get => TransportPreferences is null ? default(TransportShipmentType?) : TransportPreferences.PreferredShipmentType;
-            set
-            {
-                TransportPreferences = value.HasValue ? new TransportPreferences(value.Value) : null;
-            }
-        }
-
+        public TransportPreferences TransportPreferences { get; set; }
+        /// <summary> Optional Preferences related to the reverse shipment logistics of the sku. </summary>
+        public TransportPreferences ReverseTransportPreferences { get; set; }
         /// <summary> Preferences related to the Encryption. </summary>
-        internal DataBoxEncryptionPreferences EncryptionPreferences { get; set; }
-        /// <summary> Defines secondary layer of software-based encryption enablement. </summary>
-        public DataBoxDoubleEncryption? DoubleEncryption
-        {
-            get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryption;
-            set
-            {
-                if (EncryptionPreferences is null)
-                    EncryptionPreferences = new DataBoxEncryptionPreferences();
-                EncryptionPreferences.DoubleEncryption = value;
-            }
-        }
-
+        public DataBoxEncryptionPreferences EncryptionPreferences { get; set; }
         /// <summary> Preferences related to the Access Tier of storage accounts. </summary>
         public IList<string> StorageAccountAccessTierPreferences { get; }
     }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleId = default;
             Optional<ManagedRuleEnabledState> defaultState = default;
             Optional<RuleMatchActionType> defaultAction = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultState = new ManagedRuleEnabledState(property.Value.GetString());
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAction = new RuleMatchActionType(property.Value.GetString());

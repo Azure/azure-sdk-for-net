@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static SingleSignOnIdentitySource DeserializeSingleSignOnIdentitySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @alias = default;
             Optional<string> domain = default;
@@ -112,7 +116,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        primaryServer = null;
                         continue;
                     }
                     primaryServer = new Uri(property.Value.GetString());
@@ -122,7 +125,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secondaryServer = null;
                         continue;
                     }
                     secondaryServer = new Uri(property.Value.GetString());
@@ -132,7 +134,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssl = new SslCertificateStatus(property.Value.GetString());

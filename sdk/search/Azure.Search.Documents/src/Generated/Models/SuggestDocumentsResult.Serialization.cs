@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SuggestResult> value = default;
             Optional<double> searchCoverage = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +37,6 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchCoverage = property.Value.GetDouble();

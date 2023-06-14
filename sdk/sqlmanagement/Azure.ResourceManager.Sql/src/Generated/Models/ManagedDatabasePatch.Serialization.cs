@@ -58,10 +58,20 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
+            if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
+            {
+                writer.WritePropertyName("crossSubscriptionSourceDatabaseId"u8);
+                writer.WriteStringValue(CrossSubscriptionSourceDatabaseId);
+            }
             if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
+            }
+            if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
+            {
+                writer.WritePropertyName("crossSubscriptionRestorableDroppedDatabaseId"u8);
+                writer.WriteStringValue(CrossSubscriptionRestorableDroppedDatabaseId);
             }
             if (Optional.IsDefined(StorageContainerIdentity))
             {
@@ -92,6 +102,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
+            }
+            if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
+            {
+                writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
+                writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

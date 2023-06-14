@@ -35,5 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string NetworkId { get; }
         /// <summary> The list of NIC details. </summary>
         public IList<VMwareCbtNicInput> VmNics { get; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSku DeserializeSynapseSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tier = default;
             Optional<string> name = default;
             Optional<int> capacity = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

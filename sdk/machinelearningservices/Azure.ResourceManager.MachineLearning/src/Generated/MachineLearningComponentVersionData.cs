@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningComponentVersion data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningComponentVersion data model.
+    /// Azure Resource Manager resource envelope.
+    /// </summary>
     public partial class MachineLearningComponentVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>

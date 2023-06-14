@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static AppConfigurationStoreData DeserializeAppConfigurationStoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             AppConfigurationSku sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -101,7 +105,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -116,7 +119,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -151,7 +153,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -170,7 +171,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AppConfigurationProvisioningState(property0.Value.GetString());
@@ -180,7 +180,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
@@ -195,7 +194,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value);
@@ -220,7 +218,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new AppConfigurationPublicNetworkAccess(property0.Value.GetString());
@@ -230,7 +227,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();
@@ -240,7 +236,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             softDeleteRetentionInDays = property0.Value.GetInt32();
@@ -250,7 +245,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePurgeProtection = property0.Value.GetBoolean();
@@ -260,7 +254,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createMode = property0.Value.GetString().ToAppConfigurationCreateMode();

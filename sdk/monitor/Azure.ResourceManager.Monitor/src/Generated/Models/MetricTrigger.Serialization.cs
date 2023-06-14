@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricTrigger DeserializeMetricTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string metricName = default;
             Optional<string> metricNamespace = default;
             ResourceIdentifier metricResourceUri = default;
@@ -103,7 +107,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metricResourceLocation = new AzureLocation(property.Value.GetString());
@@ -158,7 +161,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dividePerInstance = property.Value.GetBoolean();

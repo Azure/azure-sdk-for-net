@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationContentHash DeserializeAutomationContentHash(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string algorithm = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

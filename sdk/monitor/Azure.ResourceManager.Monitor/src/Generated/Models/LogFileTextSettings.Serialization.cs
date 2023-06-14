@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogFileTextSettings DeserializeLogFileTextSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat = default;
             foreach (var property in element.EnumerateObject())
             {

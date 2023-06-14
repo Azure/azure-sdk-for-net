@@ -69,15 +69,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(TimeZone))
-            {
-                writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(TimeZone);
-            }
-            if (Optional.IsDefined(HostPoolType))
+            writer.WritePropertyName("timeZone"u8);
+            writer.WriteStringValue(TimeZone);
+            if (Optional.IsDefined(ScalingHostPoolType))
             {
                 writer.WritePropertyName("hostPoolType"u8);
-                writer.WriteStringValue(HostPoolType.Value.ToString());
+                writer.WriteStringValue(ScalingHostPoolType.Value.ToString());
             }
             if (Optional.IsDefined(ExclusionTag))
             {
@@ -110,6 +107,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static ScalingPlanData DeserializeScalingPlanData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
@@ -125,8 +126,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> objectId = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
-            Optional<string> timeZone = default;
-            Optional<HostPoolType> hostPoolType = default;
+            string timeZone = default;
+            Optional<ScalingHostPoolType> hostPoolType = default;
             Optional<string> exclusionTag = default;
             Optional<IList<ScalingSchedule>> schedules = default;
             Optional<IList<ScalingHostPoolReference>> hostPoolReferences = default;
@@ -136,7 +137,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedBy = new ResourceIdentifier(property.Value.GetString());
@@ -151,7 +151,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -161,7 +160,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -171,7 +169,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
@@ -181,7 +178,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
@@ -191,7 +187,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -226,7 +221,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -265,10 +259,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostPoolType = new HostPoolType(property0.Value.GetString());
+                            hostPoolType = new ScalingHostPoolType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("exclusionTag"u8))
@@ -280,7 +273,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ScalingSchedule> array = new List<ScalingSchedule>();
@@ -295,7 +287,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ScalingHostPoolReference> array = new List<ScalingHostPoolReference>();
@@ -310,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

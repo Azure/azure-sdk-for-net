@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogsIngestionEndpointSpec DeserializeLogsIngestionEndpointSpec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {

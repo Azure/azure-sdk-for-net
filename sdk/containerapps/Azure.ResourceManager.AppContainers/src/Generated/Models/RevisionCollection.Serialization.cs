@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static RevisionCollection DeserializeRevisionCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppRevisionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

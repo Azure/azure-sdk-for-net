@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -226,6 +227,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         private int EventBatchMaximumCount { get; }
 
         /// <summary>
+        ///   The client diagnostics for this processor.
+        /// </summary>
+        ///
+        private MessagingClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
         /// </summary>
         ///
@@ -325,6 +332,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             LoadBalancer = new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -443,6 +456,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
             LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, Options.PartitionOwnershipExpirationInterval, Options.LoadBalancingUpdateInterval);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -554,6 +573,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventPosition">The position in the event stream where the consumer should begin reading.</param>
         /// <param name="connection">The connection to use for the consumer.</param>
         /// <param name="options">The options to use for configuring the consumer.</param>
+        /// <param name="exclusive"><c>true</c> if this should be an exclusive consumer; otherwise, <c>false</c>.</param>
         ///
         /// <returns>An <see cref="TransportConsumer" /> with the requested configuration.</returns>
         ///
@@ -562,8 +582,19 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           string consumerIdentifier,
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
-                                                          EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, consumerIdentifier, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
+                                                          EventProcessorOptions options,
+                                                          bool exclusive) =>
+            connection.CreateTransportConsumer(
+                consumerGroup,
+                partitionId,
+                consumerIdentifier,
+                eventPosition,
+                options.RetryOptions.ToRetryPolicy(),
+                options.TrackLastEnqueuedEventProperties,
+                InvalidateConsumerWhenPartitionIsStolen,
+                prefetchCount: (uint?)options.PrefetchCount,
+                prefetchSizeInBytes: options.PrefetchSizeInBytes,
+                ownerLevel: exclusive ? 0 : null);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.
@@ -591,17 +622,18 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
 
-            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
                 var isBatch = (EventBatchMaximumCount > 1);
 
+                if (isBatch && ActivityExtensions.SupportsActivitySource())
+                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
+
                 foreach (var eventData in eventBatch)
                 {
-                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
                     {
                         if (isBatch)
                         {
@@ -612,11 +644,11 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                             // Use links only when the batch size is not set to a single event.
 
-                            diagnosticScope.AddLink(diagnosticId, null, attributes);
+                            diagnosticScope.AddLink(traceparent, tracestate, attributes);
                         }
                         else
                         {
-                            diagnosticScope.SetTraceparent(diagnosticId);
+                            diagnosticScope.SetTraceContext(traceparent, tracestate);
                             diagnosticScope.AddAttribute(
                                 DiagnosticProperty.EnqueuedTimeAttribute,
                                 eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));
@@ -711,13 +743,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // was passed.  In the event that initialization is run and encounters an
                 // exception, it takes responsibility for firing the error handler.
 
-                var startingPosition = startingPositionOverride switch
+                var (startingPosition, checkpointUsed) = startingPositionOverride switch
                 {
-                    _ when startingPositionOverride.HasValue => startingPositionOverride.Value,
+                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, false),
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -747,7 +779,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options);
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, true);
 
                         // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
                         // in response to force-close the link and short-circuit any receive operation that is blocked and
@@ -1763,15 +1795,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partition">The partition to initialize.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The <see cref="EventPosition" /> to start processing from.</returns>
+        /// <returns>A tuple containing the <see cref="EventPosition" /> to start processing from and whether the position was based on a checkpoint or not.</returns>
         ///
         /// <remarks>
         ///   This method will invoke the error handler should an exception be encountered; the
         ///   exception will then be bubbled to callers.
         /// </remarks>
         ///
-        private async Task<EventPosition> InitializePartitionForProcessingAsync(TPartition partition,
-                                                                                CancellationToken cancellationToken)
+        private async Task<(EventPosition Position, bool CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
+                                                                                                                CancellationToken cancellationToken)
         {
             var operationDescription = Resources.OperationClaimOwnership;
 
@@ -1792,10 +1824,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (checkpoint != null)
                 {
-                    return checkpoint.StartingPosition;
+                    return (checkpoint.StartingPosition, true);
                 }
 
-                return Options.DefaultStartingPosition;
+                return (Options.DefaultStartingPosition, false);
             }
             catch (Exception ex)
             {
@@ -2009,11 +2041,16 @@ namespace Azure.Messaging.EventHubs.Primitives
             // To ensure validity of the requested consumer group and that at least one partition exists,
             // attempt to read from a partition.
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], "validate", EventPosition.Earliest, connection, Options);
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
 
             try
             {
                 await consumer.ReceiveAsync(1, TimeSpan.FromMilliseconds(5), cancellationToken).ConfigureAwait(false);
+            }
+            catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+            {
+                // This is expected when another processor is already running; no action is needed, as it
+                // validates that the reader was able to connect.
             }
             finally
             {

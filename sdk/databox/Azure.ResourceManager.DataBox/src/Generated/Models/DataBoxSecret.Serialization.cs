@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxSecret DeserializeDataBoxSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceSerialNumber = default;
             Optional<string> devicePassword = default;
             Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplianceNetworkConfiguration> array = new List<ApplianceNetworkConfiguration>();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxAccountCredentialDetails> array = new List<DataBoxAccountCredentialDetails>();

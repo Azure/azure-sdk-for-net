@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CustomSetupBase DeserializeCustomSetupBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
         }
 

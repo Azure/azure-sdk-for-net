@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static GlobalParameterListResponse DeserializeGlobalParameterListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FactoryGlobalParameterData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

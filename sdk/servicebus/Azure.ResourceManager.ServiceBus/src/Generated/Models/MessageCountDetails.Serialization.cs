@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> activeMessageCount = default;
             Optional<long> deadLetterMessageCount = default;
             Optional<long> scheduledMessageCount = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeMessageCount = property.Value.GetInt64();
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deadLetterMessageCount = property.Value.GetInt64();
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledMessageCount = property.Value.GetInt64();
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferMessageCount = property.Value.GetInt64();
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferDeadLetterMessageCount = property.Value.GetInt64();

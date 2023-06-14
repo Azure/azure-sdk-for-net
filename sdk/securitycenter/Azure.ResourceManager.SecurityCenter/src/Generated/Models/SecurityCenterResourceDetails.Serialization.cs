@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterResourceDetails DeserializeSecurityCenterResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("source", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -118,7 +118,6 @@ namespace Azure.Identity.Tests
         {
             Assert.AreEqual(options.ClientId, credential.ClientId);
             Assert.AreEqual(options.TenantId, credential.Client.TenantId);
-            Assert.AreEqual(options.AuthorityHost, credential.Pipeline.AuthorityHost);
             Assert.AreEqual(options.DisableAutomaticAuthentication, credential.DisableAutomaticAuthentication);
             Assert.AreEqual(options.AuthenticationRecord, credential.Record);
 

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallSku DeserializeAzureFirewallSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureFirewallSkuName> name = default;
             Optional<AzureFirewallSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new AzureFirewallSkuName(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new AzureFirewallSkuTier(property.Value.GetString());

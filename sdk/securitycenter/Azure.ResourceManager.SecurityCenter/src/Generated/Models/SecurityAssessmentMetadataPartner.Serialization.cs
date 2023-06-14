@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentMetadataPartner DeserializeSecurityAssessmentMetadataPartner(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string partnerName = default;
             Optional<string> productName = default;
             string secret = default;

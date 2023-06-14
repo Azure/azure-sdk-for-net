@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptActivityScriptBlock DeserializeScriptActivityScriptBlock(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object text = default;
             ScriptType type = default;
             Optional<IList<ScriptActivityParameter>> parameters = default;
@@ -57,7 +61,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScriptActivityParameter> array = new List<ScriptActivityParameter>();

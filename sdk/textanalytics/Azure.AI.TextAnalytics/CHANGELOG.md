@@ -1,18 +1,90 @@
 # Release History
 
-## 5.3.0-beta.2 (Unreleased)
+## 5.3.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+> Note: The following breaking changes only apply when upgrading from the previous beta versions (5.3.0-beta.*) and do not impact stable versions.
+
+- Changes to extractive summarization:
+  - Renamed the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to `TextAnalyticsClient.StartExtractiveSummarize` and `TextAnalyticsClient.StartExtractiveSummarizeAsync` respectively.
+  - Renamed the `TextAnalyticsActions.ExtractSummaryActions` property to `TextAnalyticsActions.ExtractiveSummarizeActions`.
+  - Renamed the `AnalyzeActionResult.ExtractSummaryResults` property to `AnalyzeActionResult.ExtractiveSummarizeResults`.
+  - Renamed the `ExtractSummaryAction` class to `ExtractiveSummarizeAction`.
+  - Renamed the `ExtractSummaryActionResult` class to `ExtractiveSummarizeActionResult`.
+  - Renamed the `ExtractSummaryOperation` class to `ExtractiveSummarizeOperation`.
+  - Renamed the `ExtractSummaryOptions` class to `ExtractiveSummarizeOptions`.
+  - Renamed the `ExtractSummaryResult` class to `ExtractiveSummarizeResult`.
+  - Renamed the `ExtractSummaryResultCollection` class to `ExtractiveSummarizeResultCollection`.
+  - Renamed the `SummarySentencesOrder` enum to `ExtractiveSummarySentencesOrder`.
+  - Renamed the `SummarySentence` class to `ExtractiveSummarySentence`.
+- Changes to abstractive summarization:
+  - Renamed the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to `TextAnalyticsClient.StartAbstractiveSummarize` and `TextAnalyticsClient.StartAbstractiveSummarizeAsync` respectively.
+  - Renamed the `TextAnalyticsActions.AbstractSummaryActions` property to `TextAnalyticsActions.AbstractiveSummarizeActions`.
+  - Renamed the `AnalyzeActionResult.AbstractSummaryResults` property to `AnalyzeActionResult.AbstractiveSummarizeResults`.
+  - Renamed the `AbstractSummaryAction` class to `AbstractiveSummarizeAction`.
+  - Renamed the `AbstractSummaryActionResult` class to `AbstractiveSummarizeActionResult`.
+  - Renamed the `AbstractSummaryOperation` class to `AbstractiveSummarizeOperation`.
+  - Renamed the `AbstractSummaryOptions` class to `AbstractiveSummarizeOptions`.
+  - Renamed the `AbstractSummaryResult` class to `AbstractiveSummarizeResult`.
+  - Renamed the `AbstractSummaryResultCollection` class to `AbstractiveSummarizeResultCollection`.
+  - Renamed the `AbstractSummaryAction` class to `AbstractiveSummaryAction`.
+  - Renamed the `SummaryContext` class to `AbstractiveSummaryContext`.
+- Removed support for dynamic classification:
+  - Removed the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Removed the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Removed the `DynamicClassifyDocumentResultCollection` class.
+  - Removed the `ClassificationType` enum.
+
 ### Bugs Fixed
 
 ### Other Changes
 
+The client now defaults to targeting service API version `2023-04-01`.
+
+## 5.3.0-beta.3 (2023-03-11)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 5.3.0-beta.2 (2023-03-07)
+
+### Features Added
+
+- Added support for logging the "warn-text" response header.
+
+### Breaking Changes
+
+> Note: The following breaking changes only apply when upgrading from the previous beta version (5.3.0-beta.1) and do not impact stable versions.
+
+- Changes to dynamic classification:
+  - Added the `classificationType` parameter to the following methods: `TextAnalyticsClient.DynamicClassify`, `TextAnalyticsClient.DynamicClassifyAsync`, `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Removed the `options` parameter from the following methods for consistency: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Removed the `DynamicClassifyOptions` class for consistency.
+- Changes to abstractive summarization:
+  - Renamed `AbstractSummaryAction.MaxSentenceCount` to `AbstractSummaryAction.SentenceCount`.
+  - Renamed `AbstractSummaryOptions.MaxSentenceCount` to `AbstractSummaryOptions.SentenceCount`.
+- Changes to Fast Healthcare Interoperability Resources (FHIR) bundles as part of healthcare text analysis.
+  - Renamed the `WellKnownFhirVersion` enum to `FhirVersion`.
+  - Changed the type of the `AnalyzeHealthcareEntitiesResult.FhirBundle` property from `IReadOnlyDictionary<string, object>` to `BinaryData`.
+- Changes to named entity recognition (NER) resolutions:
+  - Removed the `BooleanResolution` class; boolean resolutions are not supported by the service.
+- Changes to automatic language detection:
+  - Removed the `AbstractSummaryOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `AnalyzeActionsOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `AnalyzeHealthcareEntitiesOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `ExtractSummaryOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `MultiLabelClassifyOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `RecognizeCustomEntitiesOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `SingleLabelClassifyOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+
 ## 5.3.0-beta.1 (2022-12-01)
 
 ### Features Added
+
 - Added support for dynamic classification.
   - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
   - Added the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
@@ -57,6 +129,7 @@
   - Added the `ScriptKind` enum.
 
 ### Other Changes
+
 The client now defaults to targeting service API version `2022-10-01-preview`.
 
 ## 5.2.0 (2022-09-08)

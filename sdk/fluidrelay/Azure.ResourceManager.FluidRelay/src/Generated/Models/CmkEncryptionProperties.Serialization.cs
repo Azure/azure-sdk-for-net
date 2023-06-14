@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
             Optional<Uri> keyEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value);
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyEncryptionKeyUrl = null;
                         continue;
                     }
                     keyEncryptionKeyUrl = new Uri(property.Value.GetString());

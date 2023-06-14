@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebSite data model. </summary>
+    /// <summary>
+    /// A class representing the WebSite data model.
+    /// A web app, a mobile app backend, or an API app.
+    /// </summary>
     public partial class WebSiteData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WebSiteData. </summary>
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
-        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </param>
-        /// <param name="appServicePlanId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
+        /// <param name="appServicePlanId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
         /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
@@ -167,9 +170,9 @@ namespace Azure.ResourceManager.AppService
         public IReadOnlyList<string> EnabledHostNames { get; }
         /// <summary> Management information availability state for the app. </summary>
         public WebSiteAvailabilityState? AvailabilityState { get; }
-        /// <summary> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </summary>
+        /// <summary> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </summary>
         public IList<HostNameSslState> HostNameSslStates { get; }
-        /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
+        /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
         public ResourceIdentifier AppServicePlanId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsReserved { get; set; }

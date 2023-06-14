@@ -20,12 +20,22 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
+            if (Optional.IsDefined(PortRange))
+            {
+                writer.WritePropertyName("portRange"u8);
+                writer.WriteStringValue(PortRange);
+            }
             writer.WriteEndObject();
         }
 
         internal static VpnNatRuleMapping DeserializeVpnNatRuleMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> addressSpace = default;
+            Optional<string> portRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressSpace"u8))
@@ -33,8 +43,13 @@ namespace Azure.ResourceManager.Network.Models
                     addressSpace = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("portRange"u8))
+                {
+                    portRange = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VpnNatRuleMapping(addressSpace.Value);
+            return new VpnNatRuleMapping(addressSpace.Value, portRange.Value);
         }
     }
 }

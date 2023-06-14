@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static SimStaticIPPropertiesStaticIP DeserializeSimStaticIPPropertiesStaticIP(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis
 {
-    /// <summary> A class representing the AnalysisServer data model. </summary>
+    /// <summary>
+    /// A class representing the AnalysisServer data model.
+    /// Represents an instance of an Analysis Services resource.
+    /// </summary>
     public partial class AnalysisServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AnalysisServerData. </summary>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="backupBlobContainerUri"> The SAS container URI to the backup container. </param>
         /// <param name="gatewayDetails"> The gateway details configured for the AS server. </param>
         /// <param name="iPv4FirewallSettings"> The firewall settings for the AS server. </param>
-        /// <param name="queryPoolConnectionMode"> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
+        /// <param name="queryPoolConnectionMode"> How the read-write server's participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
         /// <param name="managedMode"> The managed mode of the server (0 = not managed, 1 = managed). </param>
         /// <param name="serverMonitorMode"> The server monitor mode for AS server. </param>
         /// <param name="state"> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </param>
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.Analysis
         public AnalysisGatewayDetails GatewayDetails { get; set; }
         /// <summary> The firewall settings for the AS server. </summary>
         public AnalysisIPv4FirewallSettings IPv4FirewallSettings { get; set; }
-        /// <summary> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </summary>
+        /// <summary> How the read-write server's participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </summary>
         public AnalysisConnectionMode? QueryPoolConnectionMode { get; set; }
         /// <summary> The managed mode of the server (0 = not managed, 1 = managed). </summary>
         public AnalysisManagedMode? ManagedMode { get; set; }

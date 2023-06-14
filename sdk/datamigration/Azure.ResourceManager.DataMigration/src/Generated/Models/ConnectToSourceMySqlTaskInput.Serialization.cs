@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceMySqlTaskInput DeserializeConnectToSourceMySqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlConnectionInfo sourceConnectionInfo = default;
             Optional<MySqlTargetPlatformType> targetPlatform = default;
             Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetPlatform = new MySqlTargetPlatformType(property.Value.GetString());
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     checkPermissionsGroup = property.Value.GetString().ToServerLevelPermissionsGroup();
@@ -72,7 +74,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOfflineMigration = property.Value.GetBoolean();

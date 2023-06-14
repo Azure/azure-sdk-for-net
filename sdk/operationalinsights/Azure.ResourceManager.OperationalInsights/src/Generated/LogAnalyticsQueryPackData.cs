@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the LogAnalyticsQueryPack data model. </summary>
+    /// <summary>
+    /// A class representing the LogAnalyticsQueryPack data model.
+    /// An Log Analytics QueryPack definition.
+    /// </summary>
     public partial class LogAnalyticsQueryPackData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LogAnalyticsQueryPackData. </summary>

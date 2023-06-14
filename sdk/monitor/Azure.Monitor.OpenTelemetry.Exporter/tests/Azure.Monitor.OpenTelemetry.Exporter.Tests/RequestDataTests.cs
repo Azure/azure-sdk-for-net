@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -44,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
@@ -53,9 +52,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
@@ -79,14 +78,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
         }
@@ -104,17 +104,129 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
             Assert.Equal(isSuccess, requestData.Success);
+        }
+
+        [Fact]
+        public void RequestDataContainsAzureNamespace()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Server);
+            activity?.AddTag("az.namespace", "DemoAzureResource");
+
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
+        }
+
+        [Fact]
+        public void RequestDataContainsTimeSinceEnqueuedForConsumerSpans()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            List<ActivityLink>? links = new List<ActivityLink>();
+            long enqueued0 = DateTimeOffset.UtcNow.AddMilliseconds(-100).ToUnixTimeMilliseconds();
+            long enqueued1 = DateTimeOffset.UtcNow.AddMilliseconds(-200).ToUnixTimeMilliseconds();
+            long enqueued2 = DateTimeOffset.UtcNow.AddMilliseconds(-300).ToUnixTimeMilliseconds();
+
+            links.Add(AddActivityLink(enqueued0));
+            links.Add(AddActivityLink(enqueued1));
+            links.Add(AddActivityLink(enqueued2));
+
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Consumer, null, null, links);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
+
+            long expectedTimeInQueue = ((startTimeEpoch - enqueued0) +
+                                      (startTimeEpoch - enqueued1) +
+                                      (startTimeEpoch - enqueued2)) / 3; // avg diff with request start time across links
+
+            Assert.True(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
+
+            Assert.Equal(expectedTimeInQueue, timeInQueue);
+        }
+
+        [Fact]
+        public void RequestDataTimeSinceEnqueuedNegative()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            List<ActivityLink>? links = new List<ActivityLink>();
+            long enqueued0 = DateTimeOffset.UtcNow.AddMilliseconds(-100).ToUnixTimeMilliseconds();
+            long enqueued1 = DateTimeOffset.UtcNow.AddMilliseconds(-200).ToUnixTimeMilliseconds();
+            long enqueued2 = DateTimeOffset.UtcNow.AddMilliseconds(300).ToUnixTimeMilliseconds(); // ignored
+
+            links.Add(AddActivityLink(enqueued0));
+            links.Add(AddActivityLink(enqueued1));
+            links.Add(AddActivityLink(enqueued2));
+
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Consumer, null, null, links);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
+
+            long expectedTimeInQueue = ((startTimeEpoch - enqueued0) +
+                                      (startTimeEpoch - enqueued1)) / 3; // avg diff with request start time across links
+
+            Assert.True(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
+
+            Assert.Equal(expectedTimeInQueue, timeInQueue);
+        }
+
+        [Fact]
+        public void RequestDataTimeSinceEnqueuedInvalidEmqueuedTime()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            List<ActivityLink>? links = new List<ActivityLink>();
+
+            ActivityTagsCollection tags = new ActivityTagsCollection();
+            tags.Add("enqueuedTime", "Invalid");
+            var link = new ActivityLink(new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.None, null), tags);
+            links.Add(link);
+
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Consumer, null, null, links);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
+
+            Assert.False(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
+        }
+
+        private ActivityLink AddActivityLink(long enqueuedTime)
+        {
+            ActivityTagsCollection tags = new ActivityTagsCollection
+            {
+                { "enqueuedTime", enqueuedTime.ToString() }
+            };
+            var link = new ActivityLink(new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.None, null), tags);
+
+            return link;
         }
     }
 }

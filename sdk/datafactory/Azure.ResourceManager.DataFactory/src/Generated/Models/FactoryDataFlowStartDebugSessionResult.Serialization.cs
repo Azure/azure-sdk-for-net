@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryDataFlowStartDebugSessionResult DeserializeFactoryDataFlowStartDebugSessionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {

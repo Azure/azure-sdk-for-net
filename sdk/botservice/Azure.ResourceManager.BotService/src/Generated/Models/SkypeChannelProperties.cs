@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Initializes a new instance of SkypeChannelProperties. </summary>
-        /// <param name="enableMessaging"> Enable messaging for Skype channel. </param>
-        /// <param name="enableMediaCards"> Enable media cards for Skype channel. </param>
-        /// <param name="enableVideo"> Enable video for Skype channel. </param>
-        /// <param name="enableCalling"> Enable calling for Skype channel. </param>
-        /// <param name="enableScreenSharing"> Enable screen sharing for Skype channel. </param>
-        /// <param name="enableGroups"> Enable groups for Skype channel. </param>
+        /// <param name="isMessagingEnabled"> Enable messaging for Skype channel. </param>
+        /// <param name="isMediaCardsEnabled"> Enable media cards for Skype channel. </param>
+        /// <param name="isVideoEnabled"> Enable video for Skype channel. </param>
+        /// <param name="isCallingEnabled"> Enable calling for Skype channel. </param>
+        /// <param name="isScreenSharingEnabled"> Enable screen sharing for Skype channel. </param>
+        /// <param name="isGroupsEnabled"> Enable groups for Skype channel. </param>
         /// <param name="groupsMode"> Group mode for Skype channel. </param>
         /// <param name="callingWebHook"> Calling web hook for Skype channel. </param>
         /// <param name="incomingCallRoute"> Incoming call route for Skype channel. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        internal SkypeChannelProperties(bool? enableMessaging, bool? enableMediaCards, bool? enableVideo, bool? enableCalling, bool? enableScreenSharing, bool? enableGroups, string groupsMode, string callingWebHook, string incomingCallRoute, bool isEnabled)
+        internal SkypeChannelProperties(bool? isMessagingEnabled, bool? isMediaCardsEnabled, bool? isVideoEnabled, bool? isCallingEnabled, bool? isScreenSharingEnabled, bool? isGroupsEnabled, string groupsMode, string callingWebHook, string incomingCallRoute, bool isEnabled)
         {
-            EnableMessaging = enableMessaging;
-            EnableMediaCards = enableMediaCards;
-            EnableVideo = enableVideo;
-            EnableCalling = enableCalling;
-            EnableScreenSharing = enableScreenSharing;
-            EnableGroups = enableGroups;
+            IsMessagingEnabled = isMessagingEnabled;
+            IsMediaCardsEnabled = isMediaCardsEnabled;
+            IsVideoEnabled = isVideoEnabled;
+            IsCallingEnabled = isCallingEnabled;
+            IsScreenSharingEnabled = isScreenSharingEnabled;
+            IsGroupsEnabled = isGroupsEnabled;
             GroupsMode = groupsMode;
             CallingWebHook = callingWebHook;
             IncomingCallRoute = incomingCallRoute;
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Enable messaging for Skype channel. </summary>
-        public bool? EnableMessaging { get; set; }
+        public bool? IsMessagingEnabled { get; set; }
         /// <summary> Enable media cards for Skype channel. </summary>
-        public bool? EnableMediaCards { get; set; }
+        public bool? IsMediaCardsEnabled { get; set; }
         /// <summary> Enable video for Skype channel. </summary>
-        public bool? EnableVideo { get; set; }
+        public bool? IsVideoEnabled { get; set; }
         /// <summary> Enable calling for Skype channel. </summary>
-        public bool? EnableCalling { get; set; }
+        public bool? IsCallingEnabled { get; set; }
         /// <summary> Enable screen sharing for Skype channel. </summary>
-        public bool? EnableScreenSharing { get; set; }
+        public bool? IsScreenSharingEnabled { get; set; }
         /// <summary> Enable groups for Skype channel. </summary>
-        public bool? EnableGroups { get; set; }
+        public bool? IsGroupsEnabled { get; set; }
         /// <summary> Group mode for Skype channel. </summary>
         public string GroupsMode { get; set; }
         /// <summary> Calling web hook for Skype channel. </summary>

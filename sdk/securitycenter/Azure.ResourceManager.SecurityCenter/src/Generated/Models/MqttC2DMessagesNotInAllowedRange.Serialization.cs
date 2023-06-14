@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static MqttC2DMessagesNotInAllowedRange DeserializeMqttC2DMessagesNotInAllowedRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;

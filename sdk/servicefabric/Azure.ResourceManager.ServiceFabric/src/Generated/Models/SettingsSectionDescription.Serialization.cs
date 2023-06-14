@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static SettingsSectionDescription DeserializeSettingsSectionDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<SettingsParameterDescription> parameters = default;
             foreach (var property in element.EnumerateObject())

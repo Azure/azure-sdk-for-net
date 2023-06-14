@@ -92,7 +92,60 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
         public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSetting()
         {
-            return new CosmosDBSqlDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CosmosDBSqlDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+        }
+
+        /// <summary> Gets a collection of CosmosDBSqlClientEncryptionKeyResources in the CosmosDBSqlDatabase. </summary>
+        /// <returns> An object representing collection of CosmosDBSqlClientEncryptionKeyResources and their operations over a CosmosDBSqlClientEncryptionKeyResource. </returns>
+        public virtual CosmosDBSqlClientEncryptionKeyCollection GetCosmosDBSqlClientEncryptionKeys()
+        {
+            return GetCachedClient(Client => new CosmosDBSqlClientEncryptionKeyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the ClientEncryptionKey under an existing Azure Cosmos DB SQL database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetClientEncryptionKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientEncryptionKeyName"> Cosmos DB ClientEncryptionKey name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CosmosDBSqlClientEncryptionKeyResource>> GetCosmosDBSqlClientEncryptionKeyAsync(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
+        {
+            return await GetCosmosDBSqlClientEncryptionKeys().GetAsync(clientEncryptionKeyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the ClientEncryptionKey under an existing Azure Cosmos DB SQL database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetClientEncryptionKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientEncryptionKeyName"> Cosmos DB ClientEncryptionKey name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBSqlClientEncryptionKeyResource> GetCosmosDBSqlClientEncryptionKey(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
+        {
+            return GetCosmosDBSqlClientEncryptionKeys().Get(clientEncryptionKeyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBSqlContainerResources in the CosmosDBSqlDatabase. </summary>

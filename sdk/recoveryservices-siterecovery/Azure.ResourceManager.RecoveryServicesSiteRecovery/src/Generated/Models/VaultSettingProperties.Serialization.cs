@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VaultSettingProperties DeserializeVaultSettingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationSolutionId = default;
             Optional<string> vmwareToAzureProviderType = default;
             foreach (var property in element.EnumerateObject())

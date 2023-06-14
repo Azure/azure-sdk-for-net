@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorRecurrence DeserializeMonitorRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecurrenceFrequency frequency = default;
             RecurrentSchedule schedule = default;
             foreach (var property in element.EnumerateObject())

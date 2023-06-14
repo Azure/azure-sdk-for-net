@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralAppTemplatesResult DeserializeIotCentralAppTemplatesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<IotCentralAppTemplate>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IotCentralAppTemplate> array = new List<IotCentralAppTemplate>();

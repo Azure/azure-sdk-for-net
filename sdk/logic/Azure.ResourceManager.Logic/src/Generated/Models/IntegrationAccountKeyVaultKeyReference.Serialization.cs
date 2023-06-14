@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountKeyVaultKeyReference DeserializeIntegrationAccountKeyVaultKeyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
             Optional<string> keyVersion = default;
             Optional<ResourceIdentifier> id = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.Logic.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id = new ResourceIdentifier(property0.Value.GetString());
@@ -80,7 +83,6 @@ namespace Azure.ResourceManager.Logic.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type = new ResourceType(property0.Value.GetString());

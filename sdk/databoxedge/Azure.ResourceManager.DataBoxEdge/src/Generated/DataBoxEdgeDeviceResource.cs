@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting()
         {
-            return new DiagnosticProactiveLogCollectionSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/diagnosticProactiveLogCollectionSettings/default"));
+            return new DiagnosticProactiveLogCollectionSettingResource(Client, Id.AppendChildResource("diagnosticProactiveLogCollectionSettings", "default"));
         }
 
         /// <summary> Gets an object representing a DiagnosticRemoteSupportSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
         /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource" /> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting()
         {
-            return new DiagnosticRemoteSupportSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/diagnosticRemoteSupportSettings/default"));
+            return new DiagnosticRemoteSupportSettingResource(Client, Id.AppendChildResource("diagnosticRemoteSupportSettings", "default"));
         }
 
         /// <summary> Gets a collection of DataBoxEdgeJobResources in the DataBoxEdgeDevice. </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeOrderResource" /> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrder()
         {
-            return new DataBoxEdgeOrderResource(Client, new ResourceIdentifier(Id.ToString() + "/orders/default"));
+            return new DataBoxEdgeOrderResource(Client, Id.AppendChildResource("orders", "default"));
         }
 
         /// <summary> Gets a collection of DataBoxEdgeRoleResources in the DataBoxEdgeDevice. </summary>

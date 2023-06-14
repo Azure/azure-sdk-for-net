@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static SingletonPartitionScheme DeserializeSingletonPartitionScheme(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PartitionScheme partitionScheme = default;
             foreach (var property in element.EnumerateObject())
             {

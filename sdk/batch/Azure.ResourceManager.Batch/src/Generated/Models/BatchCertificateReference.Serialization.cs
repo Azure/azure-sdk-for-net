@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchCertificateReference DeserializeBatchCertificateReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<BatchCertificateStoreLocation> storeLocation = default;
             Optional<string> storeName = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storeLocation = property.Value.GetString().ToBatchCertificateStoreLocation();
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchCertificateVisibility> array = new List<BatchCertificateVisibility>();

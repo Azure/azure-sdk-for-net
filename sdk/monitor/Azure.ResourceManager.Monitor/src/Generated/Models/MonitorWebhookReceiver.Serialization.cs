@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorWebhookReceiver DeserializeMonitorWebhookReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Uri serviceUri = default;
             Optional<bool> useCommonAlertSchema = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useAadAuth = property.Value.GetBoolean();
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identifierUri = null;
                         continue;
                     }
                     identifierUri = new Uri(property.Value.GetString());
@@ -108,7 +109,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

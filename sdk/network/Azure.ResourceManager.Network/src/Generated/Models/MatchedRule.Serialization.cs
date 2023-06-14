@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static MatchedRule DeserializeMatchedRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleName = default;
             Optional<string> action = default;
             foreach (var property in element.EnumerateObject())

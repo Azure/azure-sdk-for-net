@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Marketplace
                 foreach (var item in IconFileUris)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value.AbsoluteUri);
                 }
                 writer.WriteEndObject();
@@ -69,6 +74,10 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static PrivateStoreOfferData DeserializePrivateStoreOfferData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -105,7 +114,6 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -139,7 +147,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eTag = new ETag(property0.Value.GetString());
@@ -149,7 +156,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateStoreId = property0.Value.GetGuid();
@@ -159,7 +165,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -169,7 +174,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             modifiedAt = property0.Value.GetDateTimeOffset("O");
@@ -179,7 +183,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -194,7 +197,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updateSuppressedDueIdempotence = property0.Value.GetBoolean();
@@ -204,13 +206,19 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                }
                             }
                             iconFileUris = dictionary;
                             continue;
@@ -219,7 +227,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateStorePlan> array = new List<PrivateStorePlan>();

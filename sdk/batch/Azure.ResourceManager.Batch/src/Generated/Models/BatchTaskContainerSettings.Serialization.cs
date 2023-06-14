@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerRunOptions = default;
             string imageName = default;
             Optional<BatchVmContainerRegistry> registry = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value);
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workingDirectory = property.Value.GetString().ToBatchContainerWorkingDirectory();

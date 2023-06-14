@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static CardinalityType ToCardinalityType(this string value)
         {
-            if (string.Equals(value, "OneToOne", StringComparison.InvariantCultureIgnoreCase)) return CardinalityType.OneToOne;
-            if (string.Equals(value, "OneToMany", StringComparison.InvariantCultureIgnoreCase)) return CardinalityType.OneToMany;
-            if (string.Equals(value, "ManyToMany", StringComparison.InvariantCultureIgnoreCase)) return CardinalityType.ManyToMany;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OneToOne")) return CardinalityType.OneToOne;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OneToMany")) return CardinalityType.OneToMany;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManyToMany")) return CardinalityType.ManyToMany;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CardinalityType value.");
         }
     }

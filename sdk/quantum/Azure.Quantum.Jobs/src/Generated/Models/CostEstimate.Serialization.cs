@@ -15,6 +15,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static CostEstimate DeserializeCostEstimate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<IReadOnlyList<UsageEvent>> events = default;
             Optional<float> estimatedTotal = default;
@@ -29,7 +33,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UsageEvent> array = new List<UsageEvent>();
@@ -44,7 +47,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedTotal = property.Value.GetSingle();

@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -412,7 +410,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.That(
                 () => ClientFactory.CreateCredential(configuration),
-                Throws.InstanceOf<ArgumentException>());
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
         }
 
         [Test]

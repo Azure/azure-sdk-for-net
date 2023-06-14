@@ -117,6 +117,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<long?> timeoutInSeconds = default;
             Optional<long?> syncIntervalInSeconds = default;

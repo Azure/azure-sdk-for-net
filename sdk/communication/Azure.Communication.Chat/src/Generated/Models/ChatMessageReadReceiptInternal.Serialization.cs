@@ -16,6 +16,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageReadReceiptInternal DeserializeChatMessageReadReceiptInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string chatMessageId = default;
             DateTimeOffset readOn = default;

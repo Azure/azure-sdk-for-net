@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceSingleSignOnResourceListResult DeserializeDynatraceSingleSignOnResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DynatraceSingleSignOnData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

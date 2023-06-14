@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentInfo DeserializeDynatraceEnvironmentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> environmentId = default;
             Optional<string> ingestionKey = default;
             Optional<Uri> logsIngestionEndpoint = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        logsIngestionEndpoint = null;
                         continue;
                     }
                     logsIngestionEndpoint = new Uri(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        landingUri = null;
                         continue;
                     }
                     landingUri = new Uri(property.Value.GetString());

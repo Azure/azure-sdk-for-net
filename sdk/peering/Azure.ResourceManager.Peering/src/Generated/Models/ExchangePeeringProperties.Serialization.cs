@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static ExchangePeeringProperties DeserializeExchangePeeringProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PeeringExchangeConnection>> connections = default;
             Optional<WritableSubResource> peerAsn = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal static ManagementGroupChildInfo DeserializeManagementGroupChildInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagementGroupChildType> type = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ManagementGroupChildType(property.Value.GetString());
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();

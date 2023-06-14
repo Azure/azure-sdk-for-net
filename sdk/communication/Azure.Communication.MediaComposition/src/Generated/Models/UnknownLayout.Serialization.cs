@@ -38,6 +38,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownLayout DeserializeUnknownLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LayoutType kind = "Unknown";
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;
@@ -53,7 +57,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
@@ -68,7 +71,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingMode = new ScalingMode(property.Value.GetString());

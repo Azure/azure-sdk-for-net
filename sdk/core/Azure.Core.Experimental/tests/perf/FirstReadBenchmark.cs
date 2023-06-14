@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core.Dynamic;
 using BenchmarkDotNet.Attributes;
 
 namespace Azure.Core.Experimental.Perf.Benchmarks
@@ -23,7 +22,7 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
         [Benchmark]
         public int ReadJsonData()
         {
-            return (int)_binaryData.ToDynamic()["a"]["b"];
+            return (int)_binaryData.ToDynamicFromJson()["a"]["b"];
         }
     }
 }

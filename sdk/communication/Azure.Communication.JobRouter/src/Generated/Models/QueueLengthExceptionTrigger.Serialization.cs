@@ -24,6 +24,10 @@ namespace Azure.Communication.JobRouter
 
         internal static QueueLengthExceptionTrigger DeserializeQueueLengthExceptionTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int threshold = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

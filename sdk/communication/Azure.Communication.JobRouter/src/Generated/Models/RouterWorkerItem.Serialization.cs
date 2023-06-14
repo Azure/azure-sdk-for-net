@@ -14,6 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static RouterWorkerItem DeserializeRouterWorkerItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouterWorker> routerWorker = default;
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routerWorker = RouterWorker.DeserializeRouterWorker(property.Value);

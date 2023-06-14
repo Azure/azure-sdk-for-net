@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PortalSettingValidationKeyContract DeserializePortalSettingValidationKeyContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validationKey = default;
             foreach (var property in element.EnumerateObject())
             {

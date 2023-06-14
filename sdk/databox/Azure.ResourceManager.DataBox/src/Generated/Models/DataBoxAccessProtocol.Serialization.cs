@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxAccessProtocol ToDataBoxAccessProtocol(this string value)
         {
-            if (string.Equals(value, "SMB", StringComparison.InvariantCultureIgnoreCase)) return DataBoxAccessProtocol.Smb;
-            if (string.Equals(value, "NFS", StringComparison.InvariantCultureIgnoreCase)) return DataBoxAccessProtocol.Nfs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SMB")) return DataBoxAccessProtocol.Smb;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NFS")) return DataBoxAccessProtocol.Nfs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxAccessProtocol value.");
         }
     }

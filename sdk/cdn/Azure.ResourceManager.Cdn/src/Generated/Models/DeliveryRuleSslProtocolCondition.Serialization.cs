@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleSslProtocolCondition DeserializeDeliveryRuleSslProtocolCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DeliveryRuleSslProtocolMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())

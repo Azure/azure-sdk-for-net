@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Additional information provided through arbitrary metadata. </summary>
     public partial class OciAnnotations
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="title"> Human-readable title of the image. </param>
         /// <param name="description"> Human-readable description of the software packaged in the image. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal OciAnnotations(DateTimeOffset? createdOn, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
+        internal OciAnnotations(DateTimeOffset? createdOn, string authors, Uri url, Uri documentation, Uri source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
         {
             CreatedOn = createdOn;
             Authors = authors;
@@ -52,12 +52,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
         /// <summary> Contact details of the people or organization responsible for the image. </summary>
         public string Authors { get; set; }
-        /// <summary> URL to find more information on the image. </summary>
-        public string Url { get; set; }
-        /// <summary> URL to get documentation on the image. </summary>
-        public string Documentation { get; set; }
-        /// <summary> URL to get source code for building the image. </summary>
-        public string Source { get; set; }
         /// <summary> Version of the packaged software. The version MAY match a label or tag in the source code repository, may also be Semantic versioning-compatible. </summary>
         public string Version { get; set; }
         /// <summary> Source control revision identifier for the packaged software. </summary>

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubHubProperties DeserializeWebPubSubHubProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WebPubSubEventHandler>> eventHandlers = default;
             Optional<string> anonymousConnectPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebPubSubEventHandler> array = new List<WebPubSubEventHandler>();

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the StreamingLocator data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingLocator data model.
+    /// A Streaming Locator resource
+    /// </summary>
     public partial class StreamingLocatorData : ResourceData
     {
         /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="startOn"> The start time of the Streaming Locator. </param>
         /// <param name="endOn"> The end time of the Streaming Locator. </param>
         /// <param name="streamingLocatorId"> The StreamingLocatorId of the Streaming Locator. </param>
-        /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: &apos;Predefined_DownloadOnly&apos;, &apos;Predefined_ClearStreamingOnly&apos;, &apos;Predefined_DownloadAndClearStreaming&apos;, &apos;Predefined_ClearKey&apos;, &apos;Predefined_MultiDrmCencStreaming&apos; and &apos;Predefined_MultiDrmStreaming&apos;. </param>
+        /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: 'Predefined_DownloadOnly', 'Predefined_ClearStreamingOnly', 'Predefined_DownloadAndClearStreaming', 'Predefined_ClearKey', 'Predefined_MultiDrmCencStreaming' and 'Predefined_MultiDrmStreaming'. </param>
         /// <param name="defaultContentKeyPolicyName"> Name of the default ContentKeyPolicy used by this Streaming Locator. </param>
         /// <param name="contentKeys"> The ContentKeys used by this Streaming Locator. </param>
         /// <param name="alternativeMediaId"> Alternative Media ID of this Streaming Locator. </param>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Media
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The StreamingLocatorId of the Streaming Locator. </summary>
         public Guid? StreamingLocatorId { get; set; }
-        /// <summary> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: &apos;Predefined_DownloadOnly&apos;, &apos;Predefined_ClearStreamingOnly&apos;, &apos;Predefined_DownloadAndClearStreaming&apos;, &apos;Predefined_ClearKey&apos;, &apos;Predefined_MultiDrmCencStreaming&apos; and &apos;Predefined_MultiDrmStreaming&apos;. </summary>
+        /// <summary> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: 'Predefined_DownloadOnly', 'Predefined_ClearStreamingOnly', 'Predefined_DownloadAndClearStreaming', 'Predefined_ClearKey', 'Predefined_MultiDrmCencStreaming' and 'Predefined_MultiDrmStreaming'. </summary>
         public string StreamingPolicyName { get; set; }
         /// <summary> Name of the default ContentKeyPolicy used by this Streaming Locator. </summary>
         public string DefaultContentKeyPolicyName { get; set; }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputError DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReportableException> error = default;
             Optional<string> id = default;
             string resultType = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ReportableException.DeserializeReportableException(property.Value);

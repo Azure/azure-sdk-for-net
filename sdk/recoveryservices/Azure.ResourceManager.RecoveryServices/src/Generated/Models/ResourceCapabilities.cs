@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,20 +15,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         /// <summary> Initializes a new instance of ResourceCapabilities. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceCapabilitiesBaseType"/> is null. </exception>
-        public ResourceCapabilities(string resourceCapabilitiesBaseType) : base(resourceCapabilitiesBaseType)
+        public ResourceCapabilities(ResourceType resourceCapabilitiesBaseType) : base(resourceCapabilitiesBaseType)
         {
-            Argument.AssertNotNull(resourceCapabilitiesBaseType, nameof(resourceCapabilitiesBaseType));
         }
 
         /// <summary> Initializes a new instance of ResourceCapabilities. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         /// <param name="properties"> Capabilities information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceCapabilitiesBaseType"/> is null. </exception>
-        internal ResourceCapabilities(string resourceCapabilitiesBaseType, CapabilitiesProperties properties) : base(resourceCapabilitiesBaseType)
+        internal ResourceCapabilities(ResourceType resourceCapabilitiesBaseType, CapabilitiesProperties properties) : base(resourceCapabilitiesBaseType)
         {
-            Argument.AssertNotNull(resourceCapabilitiesBaseType, nameof(resourceCapabilitiesBaseType));
-
             Properties = properties;
         }
 

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataSourceResourceSku DeserializeSynapseDataSourceResourceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<SynapseDataSourceSku> sku = default;
             Optional<SynapseDataSourceCapacity> capacity = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = SynapseDataSourceCapacity.DeserializeSynapseDataSourceCapacity(property.Value);

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeDataProxyProperties DeserializeSynapseIntegrationRuntimeDataProxyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseEntityReference> connectVia = default;
             Optional<SynapseEntityReference> stagingLinkedService = default;
             Optional<string> path = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);

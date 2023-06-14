@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Tenant data model. </summary>
+    /// <summary>
+    /// A class representing the Tenant data model.
+    /// Tenant Id information.
+    /// </summary>
     public partial class TenantData
     {
         /// <summary> Initializes a new instance of TenantData. </summary>
@@ -30,8 +33,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> The display name of the tenant. </param>
         /// <param name="domains"> The list of domains for the tenant. </param>
         /// <param name="defaultDomain"> The default domain for the tenant. </param>
-        /// <param name="tenantType"> The tenant type. Only available for &apos;Home&apos; tenant category. </param>
-        /// <param name="tenantBrandingLogoUri"> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </param>
+        /// <param name="tenantType"> The tenant type. Only available for 'Home' tenant category. </param>
+        /// <param name="tenantBrandingLogoUri"> The tenant's branding logo URL. Only available for 'Home' tenant category. </param>
         internal TenantData(string id, Guid? tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains, string defaultDomain, string tenantType, Uri tenantBrandingLogoUri)
         {
             Id = id;
@@ -62,9 +65,9 @@ namespace Azure.ResourceManager.Resources
         public IReadOnlyList<string> Domains { get; }
         /// <summary> The default domain for the tenant. </summary>
         public string DefaultDomain { get; }
-        /// <summary> The tenant type. Only available for &apos;Home&apos; tenant category. </summary>
+        /// <summary> The tenant type. Only available for 'Home' tenant category. </summary>
         public string TenantType { get; }
-        /// <summary> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </summary>
+        /// <summary> The tenant's branding logo URL. Only available for 'Home' tenant category. </summary>
         public Uri TenantBrandingLogoUri { get; }
     }
 }

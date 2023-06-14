@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the Alert data model. </summary>
+    /// <summary>
+    /// A class representing the Alert data model.
+    /// Implements the Alert class.
+    /// </summary>
     public partial class AlertData : ResourceData
     {
         /// <summary> Initializes a new instance of AlertData. </summary>

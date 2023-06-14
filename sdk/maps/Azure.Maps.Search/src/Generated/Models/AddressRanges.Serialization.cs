@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static AddressRanges DeserializeAddressRanges(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rangeLeft = default;
             Optional<string> rangeRight = default;
             Optional<LatLongPairAbbreviated> @from = default;
@@ -34,7 +38,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @from = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
@@ -44,7 +47,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     to = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);

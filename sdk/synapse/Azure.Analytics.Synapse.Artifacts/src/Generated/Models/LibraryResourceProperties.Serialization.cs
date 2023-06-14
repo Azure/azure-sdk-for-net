@@ -23,6 +23,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LibraryResourceProperties DeserializeLibraryResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> path = default;
             Optional<string> containerName = default;

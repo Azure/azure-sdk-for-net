@@ -14,6 +14,10 @@ namespace Azure.Security.Attestation.Models
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CloudErrorBody> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.Security.Attestation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = CloudErrorBody.DeserializeCloudErrorBody(property.Value);

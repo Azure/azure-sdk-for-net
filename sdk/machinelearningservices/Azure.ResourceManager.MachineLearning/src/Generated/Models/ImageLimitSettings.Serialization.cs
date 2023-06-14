@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageLimitSettings DeserializeImageLimitSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxConcurrentTrials = default;
             Optional<int> maxTrials = default;
             Optional<TimeSpan> timeout = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentTrials = property.Value.GetInt32();
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTrials = property.Value.GetInt32();
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");

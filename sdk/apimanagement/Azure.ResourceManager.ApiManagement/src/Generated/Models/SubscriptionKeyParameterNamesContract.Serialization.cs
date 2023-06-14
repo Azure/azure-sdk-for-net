@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static SubscriptionKeyParameterNamesContract DeserializeSubscriptionKeyParameterNamesContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> header = default;
             Optional<string> query = default;
             foreach (var property in element.EnumerateObject())

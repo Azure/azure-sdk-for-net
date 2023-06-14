@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(SKIP_TEST_RUN)]
         public async Task BeginCreateOrUpdateTestRun()
         {
-           TestRunOperation testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
+           TestRunResultOperation testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                 WaitUntil.Completed, _testRunId, RequestContent.Create(
                     new
                     {

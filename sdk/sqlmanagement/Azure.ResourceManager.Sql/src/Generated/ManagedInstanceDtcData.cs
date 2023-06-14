@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceDtc data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceDtc data model.
+    /// SQL Managed Instance DTC
+    /// </summary>
     public partial class ManagedInstanceDtcData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>

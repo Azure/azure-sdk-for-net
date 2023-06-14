@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataCustomerSecret DeserializeHybridDataCustomerSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyIdentifier = default;
             string keyValue = default;
             SupportedEncryptionAlgorithm algorithm = default;

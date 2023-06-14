@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DnsSettings DeserializeDnsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> servers = default;
             Optional<bool> enableProxy = default;
             Optional<bool?> requireProxyForNetworkRules = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableProxy = property.Value.GetBoolean();

@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseReadOnlyFollowingDatabase DeserializeSynapseReadOnlyFollowingDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -105,7 +107,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ResourceProvisioningState(property0.Value.GetString());
@@ -115,7 +116,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             softDeletePeriod = property0.Value.GetTimeSpan("P");
@@ -125,7 +125,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hotCachePeriod = property0.Value.GetTimeSpan("P");
@@ -135,7 +134,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
@@ -155,7 +153,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalsModificationKind = new SynapsePrincipalsModificationKind(property0.Value.GetString());

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RunCommandInputParameter DeserializeRunCommandInputParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraSchema DeserializeCassandraSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CassandraColumn>> columns = default;
             Optional<IList<CassandraPartitionKey>> partitionKeys = default;
             Optional<IList<CassandraClusterKey>> clusterKeys = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraColumn> array = new List<CassandraColumn>();
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraPartitionKey> array = new List<CassandraPartitionKey>();
@@ -90,7 +92,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraClusterKey> array = new List<CassandraClusterKey>();

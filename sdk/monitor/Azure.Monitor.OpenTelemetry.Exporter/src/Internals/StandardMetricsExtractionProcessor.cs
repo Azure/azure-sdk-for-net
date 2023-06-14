@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
     {
         private bool _disposed;
-        private AzureMonitorResource _resource;
+        private AzureMonitorResource? _resource;
+        internal readonly MeterProvider? _meterProvider;
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
         private readonly Histogram<double> _dependencyDuration;
@@ -26,10 +26,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [StandardMetricConstants.DependencyDurationInstrumentName] = StandardMetricConstants.DependencyDurationMetricIdValue,
         };
 
-        internal AzureMonitorResource StandardMetricResource => _resource ??= ParentProvider.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal StandardMetricsExtractionProcessor()
+        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
         {
+            _meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(StandardMetricConstants.StandardMetricMeterName)
+                .AddReader(new PeriodicExportingMetricReader(metricExporter)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
             _dependencyDuration = _meter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
@@ -59,23 +64,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void ReportRequestDurationMetric(Activity activity, string statusCodeAttribute)
         {
-            string statusCodeAttributeValue = null;
-            foreach (var tag in activity.EnumerateTagObjects())
+            string? statusCodeAttributeValue = null;
+            foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
                 if (tag.Key == statusCodeAttribute)
                 {
-                    statusCodeAttributeValue = tag.Value.ToString();
+                    statusCodeAttributeValue = tag.Value?.ToString();
                     break;
                 }
             }
 
             TagList tags = default;
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.RequestResultCodeKey, statusCodeAttributeValue));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.RequestDurationMetricIdValue));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource.RoleInstance));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource.RoleName));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.RequestSuccessKey, RequestData.isSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestResultCodeKey, statusCodeAttributeValue ?? "0"));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.RequestDurationMetricIdValue));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource?.RoleName));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestSuccessKey, RequestData.IsSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
@@ -83,23 +88,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void ReportDependencyDurationMetric(Activity activity)
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var dependencyTarget = monitorTags.MappedTags.GetDependencyTarget(monitorTags.activityType);
+            var dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
 
-            var statusCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode);
+            var statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString();
 
-            var dependencyType = monitorTags.MappedTags.GetDependencyType(monitorTags.activityType);
+            var dependencyType = activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
 
             TagList tags = default;
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyResultCodeKey, statusCode));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource.RoleInstance));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource.RoleName));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTypeKey, dependencyType));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyResultCodeKey, statusCode ?? "0"));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource?.RoleName));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTypeKey, dependencyType));
 
             // Report metric
             _dependencyDuration.Record(activity.Duration.TotalMilliseconds, tags);
@@ -113,6 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
+                        _meterProvider?.Dispose();
                         _meter?.Dispose();
                     }
                     catch (Exception)

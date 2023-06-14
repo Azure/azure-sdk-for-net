@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSensitivityLabel data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSensitivityLabel data model.
+    /// A sensitivity label.
+    /// </summary>
     public partial class SynapseSensitivityLabelData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSensitivityLabelData. </summary>

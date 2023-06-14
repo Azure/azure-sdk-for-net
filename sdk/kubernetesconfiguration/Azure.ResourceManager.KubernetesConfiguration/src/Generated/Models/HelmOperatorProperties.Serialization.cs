@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static HelmOperatorProperties DeserializeHelmOperatorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> chartVersion = default;
             Optional<string> chartValues = default;
             foreach (var property in element.EnumerateObject())

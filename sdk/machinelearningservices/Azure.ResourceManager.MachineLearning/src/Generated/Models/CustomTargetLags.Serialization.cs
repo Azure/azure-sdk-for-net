@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomTargetLags DeserializeCustomTargetLags(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<int> values = default;
             TargetLagsMode mode = default;
             foreach (var property in element.EnumerateObject())

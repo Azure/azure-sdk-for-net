@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmFailbackPolicyDetails DeserializeInMageRcmFailbackPolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> appConsistentFrequencyInMinutes = default;
             Optional<int> crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appConsistentFrequencyInMinutes = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crashConsistentFrequencyInMinutes = property.Value.GetInt32();

@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource" /> object. </returns>
         public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadata()
         {
-            return new WebSiteResourceHealthMetadataResource(Client, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
+            return new WebSiteResourceHealthMetadataResource(Client, Id.AppendChildResource("resourceHealthMetadata", "default"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotResources in the WebSite. </summary>
@@ -546,14 +546,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicy()
         {
-            return new WebSiteFtpPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
+            return new WebSiteFtpPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "ftp"));
         }
 
         /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSite. </summary>
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicy()
         {
-            return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "scm"));
         }
 
         /// <summary> Gets a collection of SiteConfigAppsettingResources in the WebSite. </summary>
@@ -666,21 +666,21 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteConfigResource" /> object. </returns>
         public virtual LogsSiteConfigResource GetLogsSiteConfig()
         {
-            return new LogsSiteConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
+            return new LogsSiteConfigResource(Client, Id.AppendChildResource("config", "logs"));
         }
 
         /// <summary> Gets an object representing a SlotConfigNamesResource along with the instance operations that can be performed on it in the WebSite. </summary>
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
         public virtual SlotConfigNamesResource GetSlotConfigNamesResource()
         {
-            return new SlotConfigNamesResource(Client, new ResourceIdentifier(Id.ToString() + "/config/slotConfigNames"));
+            return new SlotConfigNamesResource(Client, Id.AppendChildResource("config", "slotConfigNames"));
         }
 
         /// <summary> Gets an object representing a WebSiteConfigResource along with the instance operations that can be performed on it in the WebSite. </summary>
         /// <returns> Returns a <see cref="WebSiteConfigResource" /> object. </returns>
         public virtual WebSiteConfigResource GetWebSiteConfig()
         {
-            return new WebSiteConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/web"));
+            return new WebSiteConfigResource(Client, Id.AppendChildResource("config", "web"));
         }
 
         /// <summary> Gets a collection of WebSiteContinuousWebJobResources in the WebSite. </summary>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
         public virtual SiteExtensionResource GetSiteExtension()
         {
-            return new SiteExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+            return new SiteExtensionResource(Client, Id.AppendChildResource("extensions", "MSDeploy"));
         }
 
         /// <summary> Gets a collection of SiteFunctionResources in the WebSite. </summary>
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteNetworkConfigResource" /> object. </returns>
         public virtual SiteNetworkConfigResource GetSiteNetworkConfig()
         {
-            return new SiteNetworkConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
+            return new SiteNetworkConfigResource(Client, Id.AppendChildResource("networkConfig", "virtualNetwork"));
         }
 
         /// <summary> Gets a collection of WebSitePremierAddonResources in the WebSite. </summary>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSitePrivateAccessResource" /> object. </returns>
         public virtual WebSitePrivateAccessResource GetWebSitePrivateAccess()
         {
-            return new WebSitePrivateAccessResource(Client, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
+            return new WebSitePrivateAccessResource(Client, Id.AppendChildResource("privateAccess", "virtualNetworks"));
         }
 
         /// <summary> Gets a collection of SitePublicCertificateResources in the WebSite. </summary>
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSourceControlResource" /> object. </returns>
         public virtual WebSiteSourceControlResource GetWebSiteSourceControl()
         {
-            return new WebSiteSourceControlResource(Client, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
+            return new WebSiteSourceControlResource(Client, Id.AppendChildResource("sourcecontrols", "web"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotTriggeredWebJobResources in the WebSite. </summary>
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetHistoryForWebAppRecommendationsAsync(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1642,7 +1642,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetHistoryForWebAppRecommendations(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1666,7 +1666,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetRecommendedRulesForWebAppRecommendationsAsync(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetRecommendedRulesForWebAppRecommendations(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
@@ -2275,7 +2275,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2309,7 +2309,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2343,7 +2343,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2373,7 +2373,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4099,7 +4099,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
@@ -4134,7 +4134,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
@@ -4637,7 +4637,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PerfMonResponseInfo> GetPerfMonCountersAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -4660,7 +4660,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PerfMonResponseInfo> GetPerfMonCounters(string filter = null, CancellationToken cancellationToken = default)
@@ -4671,7 +4671,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets web app&apos;s event logs.
+        /// Description for Gets web app's event logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4701,7 +4701,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets web app&apos;s event logs.
+        /// Description for Gets web app's event logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4785,7 +4785,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsAsync(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
@@ -4819,7 +4819,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual Response<Stream> GetPublishingProfileXmlWithSecrets(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
@@ -5795,7 +5795,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -5818,7 +5818,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmUsageQuota> GetUsages(string filter = null, CancellationToken cancellationToken = default)

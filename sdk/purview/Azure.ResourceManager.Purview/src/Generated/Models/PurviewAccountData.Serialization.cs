@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Purview
 
         internal static PurviewAccountData DeserializePurviewAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurviewAccountSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -85,7 +89,6 @@ namespace Azure.ResourceManager.Purview
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = PurviewAccountSku.DeserializePurviewAccountSku(property.Value);
@@ -95,7 +98,6 @@ namespace Azure.ResourceManager.Purview
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -105,7 +107,6 @@ namespace Azure.ResourceManager.Purview
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -140,7 +141,6 @@ namespace Azure.ResourceManager.Purview
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -159,7 +159,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property0.Value);
@@ -169,7 +168,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -189,7 +187,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property0.Value);
@@ -209,7 +206,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property0.Value);
@@ -219,7 +215,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PurviewPrivateEndpointConnectionData> array = new List<PurviewPrivateEndpointConnectionData>();
@@ -234,7 +229,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PurviewProvisioningState(property0.Value.GetString());
@@ -244,7 +238,6 @@ namespace Azure.ResourceManager.Purview
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new PurviewPublicNetworkAccess(property0.Value.GetString());

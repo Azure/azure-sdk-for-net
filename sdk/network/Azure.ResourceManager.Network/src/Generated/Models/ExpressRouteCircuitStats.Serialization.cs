@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitStats DeserializeExpressRouteCircuitStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> primarybytesIn = default;
             Optional<long> primarybytesOut = default;
             Optional<long> secondarybytesIn = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primarybytesIn = property.Value.GetInt64();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primarybytesOut = property.Value.GetInt64();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondarybytesIn = property.Value.GetInt64();
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondarybytesOut = property.Value.GetInt64();

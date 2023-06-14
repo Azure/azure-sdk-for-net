@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    /// <summary> A class representing the ServiceUnitResource data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceUnitResource data model.
+    /// Represents the response of a service unit resource.
+    /// </summary>
     public partial class ServiceUnitResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceUnitResourceData. </summary>

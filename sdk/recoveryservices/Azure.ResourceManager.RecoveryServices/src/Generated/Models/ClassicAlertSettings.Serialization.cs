@@ -25,17 +25,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static ClassicAlertSettings DeserializeClassicAlertSettings(JsonElement element)
         {
-            Optional<AlertsState> alertsForCriticalOperations = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<RecoveryServicesAlertsState> alertsForCriticalOperations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForCriticalOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alertsForCriticalOperations = new AlertsState(property.Value.GetString());
+                    alertsForCriticalOperations = new RecoveryServicesAlertsState(property.Value.GetString());
                     continue;
                 }
             }

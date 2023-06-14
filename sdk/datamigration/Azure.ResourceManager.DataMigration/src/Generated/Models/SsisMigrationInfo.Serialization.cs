@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SsisMigrationInfo DeserializeSsisMigrationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SsisStoreType> ssisStoreType = default;
             Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
             Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssisStoreType = new SsisStoreType(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     projectOverwriteOption = new SsisMigrationOverwriteOption(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     environmentOverwriteOption = new SsisMigrationOverwriteOption(property.Value.GetString());

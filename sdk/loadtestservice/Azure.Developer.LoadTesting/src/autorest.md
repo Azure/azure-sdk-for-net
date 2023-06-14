@@ -20,4 +20,12 @@ directive:
       where: $["paths"]["/test-runs/{testRunId}"].patch
       transform: >
         $["x-accessibility"] = "internal";
+    - from: swagger-document
+      where: $["paths"]["/test-runs/{testRunId}/metric-dimensions/{name}/values"].get
+      transform: >
+        $["parameters"][5]["x-ms-client-name"] = "timeInterval";
+    - from: swagger-document
+      where: $["paths"]["/test-runs/{testRunId}/metric-dimensions/{name}/values"].get
+      transform: >
+        $["parameters"][3]["x-ms-client-name"] = "metricName";
 ```

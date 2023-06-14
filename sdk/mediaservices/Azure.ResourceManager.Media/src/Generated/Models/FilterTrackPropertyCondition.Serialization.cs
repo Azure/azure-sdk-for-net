@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static FilterTrackPropertyCondition DeserializeFilterTrackPropertyCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FilterTrackPropertyType property = default;
             string value = default;
             FilterTrackPropertyCompareOperation operation = default;

@@ -27,9 +27,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in Results)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStartArray();
                         foreach (var item1 in item0)
                         {

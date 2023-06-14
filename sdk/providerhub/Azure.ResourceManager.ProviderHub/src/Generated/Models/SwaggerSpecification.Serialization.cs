@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SwaggerSpecification DeserializeSwaggerSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> apiVersions = default;
             Optional<Uri> swaggerSpecFolderUri = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        swaggerSpecFolderUri = null;
                         continue;
                     }
                     swaggerSpecFolderUri = new Uri(property.Value.GetString());

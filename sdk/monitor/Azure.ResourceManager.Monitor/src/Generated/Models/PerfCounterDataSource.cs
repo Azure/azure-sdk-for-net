@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="counterSpecifiers">
         /// A list of specifier names of the performance counters you want to collect.
         /// Use a wildcard (*) to collect a counter for all instances.
-        /// To get a list of performance counters on Windows, run the command &apos;typeperf&apos;.
+        /// To get a list of performance counters on Windows, run the command 'typeperf'.
         /// </param>
         /// <param name="name">
         /// A friendly name for the data source. 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// A list of specifier names of the performance counters you want to collect.
         /// Use a wildcard (*) to collect a counter for all instances.
-        /// To get a list of performance counters on Windows, run the command &apos;typeperf&apos;.
+        /// To get a list of performance counters on Windows, run the command 'typeperf'.
         /// </summary>
         public IList<string> CounterSpecifiers { get; }
         /// <summary>

@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static SmartGroupModificationProperties DeserializeSmartGroupModificationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> smartGroupId = default;
             Optional<IList<SmartGroupModificationItemInfo>> modifications = default;
             Optional<string> nextLink = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smartGroupId = property.Value.GetGuid();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SmartGroupModificationItemInfo> array = new List<SmartGroupModificationItemInfo>();

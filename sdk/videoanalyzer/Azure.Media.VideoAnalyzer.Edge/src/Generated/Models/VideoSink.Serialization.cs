@@ -48,6 +48,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoSink DeserializeVideoSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string videoName = default;
             Optional<VideoCreationProperties> videoCreationProperties = default;
             Optional<VideoPublishingOptions> videoPublishingOptions = default;
@@ -67,7 +71,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     videoCreationProperties = VideoCreationProperties.DeserializeVideoCreationProperties(property.Value);
@@ -77,7 +80,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     videoPublishingOptions = VideoPublishingOptions.DeserializeVideoPublishingOptions(property.Value);

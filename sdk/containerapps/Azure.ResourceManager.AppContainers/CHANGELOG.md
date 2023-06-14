@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,55 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2023-05-29)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0-beta.1 (2023-05-15)
+
+### Features Added
+- Upgrade to 2022-11-01-preview api version
+- Add API to start, stop and executions for ContainerAppJobs
+- Support keyvault for container app secret
+- Add managedBy for ContainerApps
+- Add keda/dapr version support
+- Add API to support ManagedCertificate
+- Add AppState and LatestReadyRevisionName
+- Add Client certificate mode for mTLS authentication and corsPolicy for Container App
+- Add Friendly workload profile name support
+
+### Bugs Fixed
+- Fix certifaicte password format for environment custom domain
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.32.0`
+- Upgraded dependent `Azure.ResourceManager` to `1.5.0`
+
+## 1.0.3 (2023-03-28)
+
+### Bugs Fixed
+
+- Property `RegistryUri` in class `ContainerAppRegistryInfo` is now obsoleted, please use `RegistryServer` instead.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.0.2 (2023-02-21)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.1 (2022-12-27)
 

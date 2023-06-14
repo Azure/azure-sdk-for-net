@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemAddressProperties DeserializeEdgeOrderItemAddressProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeOrderShippingAddress> shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property.Value);
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     addressValidationStatus = new EdgeOrderAddressValidationStatus(property.Value.GetString());

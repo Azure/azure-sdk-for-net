@@ -14,6 +14,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> index = default;
             Optional<int> statusCode = default;
             Optional<string> message = default;
@@ -23,7 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     index = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();

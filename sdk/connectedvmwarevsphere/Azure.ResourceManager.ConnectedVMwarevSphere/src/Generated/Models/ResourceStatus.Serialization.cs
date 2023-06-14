@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static ResourceStatus DeserializeResourceStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> status = default;
             Optional<string> reason = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedAt = property.Value.GetDateTimeOffset("O");

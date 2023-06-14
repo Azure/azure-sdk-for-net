@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Authorization
     {
         internal static RoleAssignmentData DeserializeRoleAssignmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
@@ -88,7 +90,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalId = property0.Value.GetGuid();
@@ -98,7 +99,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalType = new RoleManagementPrincipalType(property0.Value.GetString());
@@ -123,7 +123,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdOn = property0.Value.GetDateTimeOffset("O");
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedOn = property0.Value.GetDateTimeOffset("O");

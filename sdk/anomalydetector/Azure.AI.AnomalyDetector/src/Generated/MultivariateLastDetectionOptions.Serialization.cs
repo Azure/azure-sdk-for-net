@@ -22,8 +22,11 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("topContributorCount"u8);
-            writer.WriteNumberValue(TopContributorCount);
+            if (Optional.IsDefined(TopContributorCount))
+            {
+                writer.WritePropertyName("topContributorCount"u8);
+                writer.WriteNumberValue(TopContributorCount.Value);
+            }
             writer.WriteEndObject();
         }
 

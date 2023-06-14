@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsCaaRecordInfo DeserializeDnsCaaRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> flags = default;
             Optional<string> tag = default;
             Optional<string> value = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Dns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     flags = property.Value.GetInt32();

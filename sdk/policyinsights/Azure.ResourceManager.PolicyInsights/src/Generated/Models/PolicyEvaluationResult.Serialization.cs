@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyEvaluationResult DeserializePolicyEvaluationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyReference> policyInfo = default;
             Optional<string> evaluationResult = default;
             Optional<PolicyEvaluationDetails> evaluationDetails = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyInfo = PolicyReference.DeserializePolicyReference(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     evaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value);

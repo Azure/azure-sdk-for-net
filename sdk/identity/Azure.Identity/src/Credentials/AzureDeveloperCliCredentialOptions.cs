@@ -9,10 +9,10 @@ namespace Azure.Identity
     /// <summary>
     /// Options for configuring the <see cref="AzureDeveloperCliCredential"/>.
     /// </summary>
-    public class AzureDeveloperCliCredentialOptions : TokenCredentialOptions
+    public class AzureDeveloperCliCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
-        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'azd login' command.
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'azd auth login' command.
         /// </summary>
         public string TenantId { get; set; }
 
@@ -21,11 +21,11 @@ namespace Azure.Identity
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
         /// </summary>
-        public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
+        public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
         /// The CLI process timeout.
         /// </summary>
-        public TimeSpan? AzdCliProcessTimeout { get; set; }
+        public TimeSpan? ProcessTimeout { get; set; }
     }
 }

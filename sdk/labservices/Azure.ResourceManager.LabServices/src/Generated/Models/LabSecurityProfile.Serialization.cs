@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabSecurityProfile DeserializeLabSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> registrationCode = default;
             Optional<LabServicesEnableState> openAccess = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     openAccess = property.Value.GetString().ToLabServicesEnableState();

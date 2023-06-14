@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static PrivateStoreData DeserializePrivateStoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -117,7 +121,6 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -136,7 +139,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availability = new PrivateStoreAvailability(property0.Value.GetString());
@@ -146,7 +148,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateStoreId = property0.Value.GetGuid();
@@ -156,7 +157,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eTag = new ETag(property0.Value.GetString());
@@ -171,7 +171,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -181,7 +180,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isGov = property0.Value.GetBoolean();
@@ -191,7 +189,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Guid> array = new List<Guid>();
@@ -206,7 +203,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -230,7 +226,6 @@ namespace Azure.ResourceManager.Marketplace
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     List<NotificationRecipient> array = new List<NotificationRecipient>();
@@ -245,7 +240,6 @@ namespace Azure.ResourceManager.Marketplace
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     sendToAllMarketplaceAdmins = property1.Value.GetBoolean();

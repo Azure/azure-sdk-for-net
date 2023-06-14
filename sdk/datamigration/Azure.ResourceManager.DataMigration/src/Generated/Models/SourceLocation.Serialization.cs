@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SourceLocation DeserializeSourceLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlFileShare> fileShare = default;
             Optional<AzureBlob> azureBlob = default;
             Optional<string> fileStorageType = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileShare = SqlFileShare.DeserializeSqlFileShare(property.Value);
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureBlob = AzureBlob.DeserializeAzureBlob(property.Value);

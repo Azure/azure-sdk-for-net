@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static PeriodicTimerEventTrigger DeserializePeriodicTimerEventTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TriggerEventType kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

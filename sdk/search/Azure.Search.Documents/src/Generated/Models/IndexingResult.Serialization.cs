@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static IndexingResult DeserializeIndexingResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             Optional<string> errorMessage = default;
             bool status = default;

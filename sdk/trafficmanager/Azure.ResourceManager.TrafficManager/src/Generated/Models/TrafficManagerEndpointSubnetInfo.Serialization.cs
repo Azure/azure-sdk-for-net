@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> first = default;
             Optional<IPAddress> last = default;
             Optional<int> scope = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     first = IPAddress.Parse(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     last = IPAddress.Parse(property.Value.GetString());
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scope = property.Value.GetInt32();

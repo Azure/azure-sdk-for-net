@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static BatchResponse DeserializeBatchResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchQueryResponse>> responses = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchQueryResponse> array = new List<BatchQueryResponse>();

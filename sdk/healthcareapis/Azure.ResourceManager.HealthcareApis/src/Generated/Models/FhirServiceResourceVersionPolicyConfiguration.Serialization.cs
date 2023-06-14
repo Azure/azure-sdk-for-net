@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static FhirServiceResourceVersionPolicyConfiguration DeserializeFhirServiceResourceVersionPolicyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FhirResourceVersionPolicy> @default = default;
             Optional<IDictionary<string, FhirResourceVersionPolicy>> resourceTypeOverrides = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = new FhirResourceVersionPolicy(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, FhirResourceVersionPolicy> dictionary = new Dictionary<string, FhirResourceVersionPolicy>();

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static DiskEncryptionKeyInfo DeserializeDiskEncryptionKeyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretIdentifier = default;
             Optional<string> keyVaultResourceArmId = default;
             foreach (var property in element.EnumerateObject())

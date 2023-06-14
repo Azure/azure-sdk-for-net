@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static CustomHttpsConfiguration DeserializeCustomHttpsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
@@ -90,7 +94,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificateType = new FrontDoorEndpointConnectionCertificateType(property0.Value.GetString());
@@ -112,7 +115,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

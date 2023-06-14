@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the JobRun data model. </summary>
+    /// <summary>
+    /// A class representing the JobRun data model.
+    /// The Job Run resource.
+    /// </summary>
     public partial class JobRunData : ResourceData
     {
         /// <summary> Initializes a new instance of JobRunData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The state of the job execution. </param>
-        /// <param name="scanStatus"> The status of Agent&apos;s scanning of source. </param>
+        /// <param name="scanStatus"> The status of Agent's scanning of source. </param>
         /// <param name="agentName"> Name of the Agent assigned to this run. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent assigned to this run. </param>
         /// <param name="executionStartOn"> Start time of the run. Null if no Agent reported that the job has started. </param>
@@ -46,11 +49,11 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="bytesTransferred"> Bytes of data successfully transferred to target. </param>
         /// <param name="sourceName"> Name of source Endpoint resource. This resource may no longer exist. </param>
         /// <param name="sourceResourceId"> Fully qualified resource id of source Endpoint. This id may no longer exist. </param>
-        /// <param name="sourceProperties"> Copy of source Endpoint resource&apos;s properties at time of Job Run creation. </param>
+        /// <param name="sourceProperties"> Copy of source Endpoint resource's properties at time of Job Run creation. </param>
         /// <param name="targetName"> Name of target Endpoint resource. This resource may no longer exist. </param>
         /// <param name="targetResourceId"> Fully qualified resource id of of Endpoint. This id may no longer exist. </param>
-        /// <param name="targetProperties"> Copy of Endpoint resource&apos;s properties at time of Job Run creation. </param>
-        /// <param name="jobDefinitionProperties"> Copy of parent Job Definition&apos;s properties at time of Job Run creation. </param>
+        /// <param name="targetProperties"> Copy of Endpoint resource's properties at time of Job Run creation. </param>
+        /// <param name="jobDefinitionProperties"> Copy of parent Job Definition's properties at time of Job Run creation. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
@@ -87,7 +90,7 @@ namespace Azure.ResourceManager.StorageMover
 
         /// <summary> The state of the job execution. </summary>
         public JobRunStatus? Status { get; }
-        /// <summary> The status of Agent&apos;s scanning of source. </summary>
+        /// <summary> The status of Agent's scanning of source. </summary>
         public JobRunScanStatus? ScanStatus { get; }
         /// <summary> Name of the Agent assigned to this run. </summary>
         public string AgentName { get; }
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Fully qualified resource id of source Endpoint. This id may no longer exist. </summary>
         public ResourceIdentifier SourceResourceId { get; }
         /// <summary>
-        /// Copy of source Endpoint resource&apos;s properties at time of Job Run creation.
+        /// Copy of source Endpoint resource's properties at time of Job Run creation.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Fully qualified resource id of of Endpoint. This id may no longer exist. </summary>
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary>
-        /// Copy of Endpoint resource&apos;s properties at time of Job Run creation.
+        /// Copy of Endpoint resource's properties at time of Job Run creation.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -194,7 +197,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         public BinaryData TargetProperties { get; }
         /// <summary>
-        /// Copy of parent Job Definition&apos;s properties at time of Job Run creation.
+        /// Copy of parent Job Definition's properties at time of Job Run creation.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

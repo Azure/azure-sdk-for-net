@@ -30,13 +30,6 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
-
-            var options = new EnvironmentCredentialOptions
-            {
-                Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
-            };
-            var pipeline = CredentialPipeline.GetInstance(options);
             using (new TestEnvVar(
                 new()
                 {
@@ -49,6 +42,14 @@ namespace Azure.Identity.Tests
                     { "AZURE_CLIENT_CERTIFICATE_PATH", Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem") },
                 }))
             {
+                var options = new EnvironmentCredentialOptions
+                {
+                    Transport = config.Transport,
+                    DisableInstanceDiscovery = config.DisableInstanceDiscovery
+                };
+
+                var pipeline = CredentialPipeline.GetInstance(options);
+
                 return InstrumentClient(new EnvironmentCredential(pipeline, options));
             }
         }

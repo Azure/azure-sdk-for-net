@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static JobCollection DeserializeJobCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RouterJobItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static QuotaDimension DeserializeQuotaDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> scope = default;
             Optional<string> period = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quota = property.Value.GetSingle();

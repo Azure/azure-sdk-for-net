@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmSku DeserializeManagedHsmSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedHsmSkuFamily family = default;
             ManagedHsmSkuName name = default;
             foreach (var property in element.EnumerateObject())

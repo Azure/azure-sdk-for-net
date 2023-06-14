@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPTag DeserializeIPTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipTagType = default;
             Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())

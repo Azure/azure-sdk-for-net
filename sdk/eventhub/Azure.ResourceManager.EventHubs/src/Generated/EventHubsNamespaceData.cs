@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsNamespace data model.
+    /// Single Namespace item in List or Get Operation
+    /// </summary>
     public partial class EventHubsNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubsNamespaceData. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
         /// <param name="createdOn"> The time the Namespace was created. </param>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="isAutoInflateEnabled"> Value that indicates whether AutoInflate is enabled for eventhub namespace. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( &apos;0&apos; if AutoInflateEnabled = true). </param>
+        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </param>
         /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
         /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs
         public EventHubsSku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
         public EventHubsTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Provisioning state of the Namespace. </summary>
         public string ProvisioningState { get; }
@@ -96,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs
         public bool? IsAutoInflateEnabled { get; set; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         public EventHubsPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( &apos;0&apos; if AutoInflateEnabled = true). </summary>
+        /// <summary> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </summary>
         public int? MaximumThroughputUnits { get; set; }
         /// <summary> Value that indicates whether Kafka is enabled for eventhub namespace. </summary>
         public bool? KafkaEnabled { get; set; }

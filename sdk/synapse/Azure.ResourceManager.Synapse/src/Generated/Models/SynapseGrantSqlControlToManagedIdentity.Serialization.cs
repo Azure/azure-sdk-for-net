@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseGrantSqlControlToManagedIdentity DeserializeSynapseGrantSqlControlToManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseDesiredState> desiredState = default;
             Optional<SynapseGrantSqlControlToManagedIdentityState> actualState = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     desiredState = property.Value.GetString().ToSynapseDesiredState();
@@ -43,7 +46,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actualState = property.Value.GetString().ToSynapseGrantSqlControlToManagedIdentityState();

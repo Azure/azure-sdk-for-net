@@ -12,7 +12,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsLinkedStorageAccounts data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsLinkedStorageAccounts data model.
+    /// Linked storage accounts top level resource container.
+    /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>

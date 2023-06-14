@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static InboundSecurityRules DeserializeInboundSecurityRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InboundSecurityRulesProtocol> protocol = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<int> destinationPortRange = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new InboundSecurityRulesProtocol(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationPortRange = property.Value.GetInt32();

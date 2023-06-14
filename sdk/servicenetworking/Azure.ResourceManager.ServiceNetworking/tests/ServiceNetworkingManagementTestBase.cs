@@ -18,11 +18,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Tests
         protected ServiceNetworkingManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected ServiceNetworkingManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
         public Resources.SubscriptionResource Subscription
         {

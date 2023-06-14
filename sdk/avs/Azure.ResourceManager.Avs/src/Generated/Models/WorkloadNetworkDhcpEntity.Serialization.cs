@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static WorkloadNetworkDhcpEntity DeserializeWorkloadNetworkDhcpEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("dhcpType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

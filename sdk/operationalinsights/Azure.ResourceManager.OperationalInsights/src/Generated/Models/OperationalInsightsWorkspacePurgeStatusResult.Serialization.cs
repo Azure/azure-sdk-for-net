@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsWorkspacePurgeStatusResult DeserializeOperationalInsightsWorkspacePurgeStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OperationalInsightsWorkspacePurgeState status = default;
             foreach (var property in element.EnumerateObject())
             {

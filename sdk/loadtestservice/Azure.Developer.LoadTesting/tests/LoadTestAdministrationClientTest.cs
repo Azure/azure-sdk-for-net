@@ -318,7 +318,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task UploadTestFile()
         {
-            FileUploadOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
+            FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                 WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
                     )

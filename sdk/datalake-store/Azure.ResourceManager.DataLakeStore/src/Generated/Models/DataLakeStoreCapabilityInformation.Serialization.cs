@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> subscriptionId = default;
             Optional<DataLakeStoreSubscriptionState> state = default;
             Optional<int> maxAccountCount = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionId = property.Value.GetGuid();
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new DataLakeStoreSubscriptionState(property.Value.GetString());
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAccountCount = property.Value.GetInt32();
@@ -56,7 +57,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountCount = property.Value.GetInt32();
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = property.Value.GetBoolean();

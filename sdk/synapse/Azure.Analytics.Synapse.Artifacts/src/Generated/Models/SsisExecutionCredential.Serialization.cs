@@ -29,6 +29,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisExecutionCredential DeserializeSsisExecutionCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object domain = default;
             object userName = default;
             SecureString password = default;

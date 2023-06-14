@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the AutoProvisioningSetting data model. </summary>
+    /// <summary>
+    /// A class representing the AutoProvisioningSetting data model.
+    /// Auto provisioning setting
+    /// </summary>
     public partial class AutoProvisioningSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of AutoProvisioningSettingData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double amount = default;
             string currencyCode = default;
             BillingFrequency billingFrequency = default;

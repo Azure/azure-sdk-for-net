@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerHttpGet DeserializeContainerHttpGet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             int port = default;
             Optional<ContainerHttpGetScheme> scheme = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheme = new ContainerHttpGetScheme(property.Value.GetString());
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerHttpHeader> array = new List<ContainerHttpHeader>();

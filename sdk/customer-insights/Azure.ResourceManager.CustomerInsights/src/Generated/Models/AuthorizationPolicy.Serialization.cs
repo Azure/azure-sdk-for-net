@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static AuthorizationPolicy DeserializeAuthorizationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> policyName = default;
             IReadOnlyList<PermissionType> permissions = default;
             Optional<string> primaryKey = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceOperationSteps DeserializeManagedInstanceOperationSteps(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> totalSteps = default;
             Optional<int> currentStep = default;
             Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentStep = property.Value.GetInt32();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SelectedCertificateInput DeserializeSelectedCertificateInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string certificateName = default;
             string password = default;
             foreach (var property in element.EnumerateObject())

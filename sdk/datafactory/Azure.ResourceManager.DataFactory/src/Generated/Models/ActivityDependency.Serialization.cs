@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ActivityDependency DeserializeActivityDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string activity = default;
             IList<DependencyCondition> dependencyConditions = default;
             IDictionary<string, BinaryData> additionalProperties = default;

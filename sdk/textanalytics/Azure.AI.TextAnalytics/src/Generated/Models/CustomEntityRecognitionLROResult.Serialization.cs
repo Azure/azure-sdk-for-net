@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomEntityRecognitionLROResult DeserializeCustomEntityRecognitionLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomEntitiesResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;

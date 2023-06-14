@@ -78,6 +78,30 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("degreeOfParallelism");
                 }
             }
+            if (Optional.IsDefined(AuthResourceId))
+            {
+                if (AuthResourceId != null)
+                {
+                    writer.WritePropertyName("authResourceId"u8);
+                    writer.WriteStringValue(AuthResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("authResourceId");
+                }
+            }
+            if (Optional.IsDefined(AuthIdentity))
+            {
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity");
+                }
+            }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -114,12 +138,18 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static WebApiSkill DeserializeWebApiSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string uri = default;
             Optional<IDictionary<string, string>> httpHeaders = default;
             Optional<string> httpMethod = default;
             Optional<TimeSpan?> timeout = default;
             Optional<int?> batchSize = default;
             Optional<int?> degreeOfParallelism = default;
+            Optional<string> authResourceId = default;
+            Optional<SearchIndexerDataIdentity> authIdentity = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -183,6 +213,26 @@ namespace Azure.Search.Documents.Indexes.Models
                     degreeOfParallelism = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("authResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authResourceId = null;
+                        continue;
+                    }
+                    authResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authIdentity = null;
+                        continue;
+                    }
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
@@ -224,7 +274,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WebApiSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), Optional.ToNullable(batchSize), Optional.ToNullable(degreeOfParallelism));
+            return new WebApiSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), Optional.ToNullable(batchSize), Optional.ToNullable(degreeOfParallelism), authResourceId.Value, authIdentity.Value);
         }
     }
 }

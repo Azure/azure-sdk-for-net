@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeInstanceSshSettings DeserializeMachineLearningComputeInstanceSshSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningSshPublicAccess> sshPublicAccess = default;
             Optional<string> adminUserName = default;
             Optional<int> sshPort = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sshPublicAccess = new MachineLearningSshPublicAccess(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sshPort = property.Value.GetInt32();

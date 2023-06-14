@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringRegisteredAsnListResult DeserializePeeringRegisteredAsnListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PeeringRegisteredAsnData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeeringRegisteredAsnData> array = new List<PeeringRegisteredAsnData>();

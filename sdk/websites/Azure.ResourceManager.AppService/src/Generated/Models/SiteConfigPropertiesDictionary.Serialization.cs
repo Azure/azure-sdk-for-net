@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> use32BitWorkerProcess = default;
             Optional<string> linuxFxVersion = default;
             Optional<string> javaVersion = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     use32BitWorkerProcess = property.Value.GetBoolean();

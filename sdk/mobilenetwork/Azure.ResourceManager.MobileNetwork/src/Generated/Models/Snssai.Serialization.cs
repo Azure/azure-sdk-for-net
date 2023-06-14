@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static Snssai DeserializeSnssai(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int sst = default;
             Optional<string> sd = default;
             foreach (var property in element.EnumerateObject())

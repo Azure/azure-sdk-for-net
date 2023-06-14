@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSparkConfigurationListResult DeserializeSynapseSparkConfigurationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SynapseSparkConfigurationData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

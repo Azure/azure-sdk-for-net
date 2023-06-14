@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecuritySolutionPatch DeserializeIotSecuritySolutionPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<UserDefinedResourcesProperties> userDefinedResources = default;
             Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value);
@@ -93,7 +95,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RecommendationConfigurationProperties> array = new List<RecommendationConfigurationProperties>();

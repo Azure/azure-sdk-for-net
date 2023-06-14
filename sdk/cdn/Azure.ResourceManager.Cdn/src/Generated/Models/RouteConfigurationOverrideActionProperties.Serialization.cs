@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RouteConfigurationOverrideActionProperties DeserializeRouteConfigurationOverrideActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RouteConfigurationOverrideActionType typeName = default;
             Optional<OriginGroupOverride> originGroupOverride = default;
             Optional<CacheConfiguration> cacheConfiguration = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value);

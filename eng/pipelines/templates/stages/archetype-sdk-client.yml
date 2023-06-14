@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20230206.1
+      ref: refs/tags/azure-sdk-build-tools_20230425.1
 
 parameters:
 - name: Artifacts
@@ -58,6 +58,12 @@ parameters:
 - name: LimitForPullRequest
   type: boolean
   default: false
+- name: LiveTestStages
+  type: stageList
+  default: []
+- name: ReleaseDependsOnLiveTests
+  type: string
+  default: not-specified
 
 variables:
   - template: ../variables/globals.yml
@@ -92,14 +98,24 @@ stages:
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
+    - ${{ parameters.LiveTestStages }}
+
     - template: archetype-net-release.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        DependsOn: Build
+        DependsOn:
+          - Build
+          # Only depend on live test stages if the build depends on live tests and the build reason is manual.
+          # This prevents check-in builds and scheduled builds from having a requirement on live test stages.
+          - ${{ if eq(parameters.ReleaseDependsOnLiveTests, 'true') }}:
+            - ${{ each liveTestStage in parameters.LiveTestStages }}:
+              - ${{ liveTestStage.stage }}
         Artifacts: ${{ parameters.Artifacts }}
         ${{ if eq(parameters.ServiceDirectory, 'template') }}:
           TestPipeline: true
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         TargetDocRepoName: ${{ parameters.TargetDocRepoName }}
+        ${{ if eq(parameters.ReleaseDependsOnLiveTests, 'false') }}:
+          Environment: 'nuget-break-glass-approvers'

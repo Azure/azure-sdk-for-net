@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="privateEndpoint"> The Private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
-        internal RecoveryServicesPrivateEndpointConnection(ProvisioningState? provisioningState, SubResource privateEndpoint, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IReadOnlyList<VaultSubResourceType> groupIds)
+        internal RecoveryServicesPrivateEndpointConnection(RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IReadOnlyList<VaultSubResourceType> groupIds)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public RecoveryServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint network resource that is linked to the Private Endpoint connection. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>

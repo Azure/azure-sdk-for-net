@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlDatabase data model.
+    /// Represents a Database.
+    /// </summary>
     public partial class MySqlDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlDatabaseData. </summary>

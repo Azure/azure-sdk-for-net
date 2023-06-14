@@ -26,6 +26,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SmartDetectionCondition DeserializeSmartDetectionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double sensitivity = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;

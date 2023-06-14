@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryPlatformProperties DeserializeContainerRegistryPlatformProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistryOS os = default;
             Optional<ContainerRegistryOSArchitecture> architecture = default;
             Optional<ContainerRegistryCpuVariant> variant = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     architecture = new ContainerRegistryOSArchitecture(property.Value.GetString());
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     variant = new ContainerRegistryCpuVariant(property.Value.GetString());

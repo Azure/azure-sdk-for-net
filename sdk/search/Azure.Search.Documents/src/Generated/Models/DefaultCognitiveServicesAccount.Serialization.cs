@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DefaultCognitiveServicesAccount DeserializeDefaultCognitiveServicesAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())

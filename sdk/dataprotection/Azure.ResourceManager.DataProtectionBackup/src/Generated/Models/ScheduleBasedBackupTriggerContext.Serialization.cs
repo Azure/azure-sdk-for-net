@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ScheduleBasedBackupTriggerContext DeserializeScheduleBasedBackupTriggerContext(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupSchedule schedule = default;
             IList<DataProtectionBackupTaggingCriteria> taggingCriteria = default;
             string objectType = default;

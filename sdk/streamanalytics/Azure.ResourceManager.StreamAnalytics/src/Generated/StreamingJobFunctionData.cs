@@ -10,7 +10,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamingJobFunction data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingJobFunction data model.
+    /// A function object, containing all information associated with the named function. All functions are contained under a streaming job.
+    /// </summary>
     public partial class StreamingJobFunctionData : StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of StreamingJobFunctionData. </summary>

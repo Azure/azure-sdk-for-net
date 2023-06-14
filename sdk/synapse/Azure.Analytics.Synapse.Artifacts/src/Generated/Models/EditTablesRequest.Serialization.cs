@@ -34,6 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static EditTablesRequest DeserializeEditTablesRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LinkTableRequest>> linkTables = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LinkTableRequest> array = new List<LinkTableRequest>();

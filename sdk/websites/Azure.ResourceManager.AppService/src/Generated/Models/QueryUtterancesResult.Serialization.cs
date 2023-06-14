@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static QueryUtterancesResult DeserializeQueryUtterancesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SampleUtterance> sampleUtterance = default;
             Optional<float> score = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     score = property.Value.GetSingle();

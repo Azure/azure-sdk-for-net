@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxCertificateProperties DeserializeNginxCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> keyVirtualPath = default;
             Optional<string> certificateVirtualPath = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());

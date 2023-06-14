@@ -32,9 +32,9 @@ namespace Azure.Identity.Tests
             var options = new InteractiveBrowserCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 TokenCachePersistenceOptions = tokenCacheOptions,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
             };
             var pipeline = CredentialPipeline.GetInstance(options);
@@ -144,16 +144,16 @@ namespace Azure.Identity.Tests
             // neither Environment variable or AppContext switch is set.
             // environment variable is set and AppContext switch is not set
             // AppContext switch is set
-            await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+            await ValidateSyncWorkaroundCompatSwitch(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
 
             using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", string.Empty))
             {
-                await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+                await ValidateSyncWorkaroundCompatSwitch(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
             }
 
             using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "false"))
             {
-                await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+                await ValidateSyncWorkaroundCompatSwitch(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
             }
 
             using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "true"))
@@ -172,7 +172,7 @@ namespace Azure.Identity.Tests
 
             AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", false);
 
-            await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+            await ValidateSyncWorkaroundCompatSwitch(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
         }
 
         [Test]

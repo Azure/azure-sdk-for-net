@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubGcmCredential DeserializeNotificationHubGcmCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> gcmEndpoint = default;
             Optional<string> googleApiKey = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                gcmEndpoint = null;
                                 continue;
                             }
                             gcmEndpoint = new Uri(property0.Value.GetString());

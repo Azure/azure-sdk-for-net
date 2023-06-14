@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DayOfWeek> day = default;
             Optional<int> occurrence = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     day = property.Value.GetString().ToDayOfWeek();
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     occurrence = property.Value.GetInt32();

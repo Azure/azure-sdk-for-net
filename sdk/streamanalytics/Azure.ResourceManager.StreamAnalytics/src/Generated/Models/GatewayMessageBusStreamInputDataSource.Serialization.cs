@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static GatewayMessageBusStreamInputDataSource DeserializeGatewayMessageBusStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> topic = default;
             foreach (var property in element.EnumerateObject())

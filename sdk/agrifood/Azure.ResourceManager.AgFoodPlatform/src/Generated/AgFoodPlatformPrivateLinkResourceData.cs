@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    /// <summary> A class representing the AgFoodPlatformPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the AgFoodPlatformPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class AgFoodPlatformPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceData. </summary>

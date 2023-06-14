@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static StackPreferredOS ToStackPreferredOS(this string value)
         {
-            if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return StackPreferredOS.Windows;
-            if (string.Equals(value, "Linux", StringComparison.InvariantCultureIgnoreCase)) return StackPreferredOS.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return StackPreferredOS.Windows;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return StackPreferredOS.Linux;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOS value.");
         }
     }

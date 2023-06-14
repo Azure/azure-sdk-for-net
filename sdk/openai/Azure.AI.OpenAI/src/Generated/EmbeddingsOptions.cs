@@ -6,64 +6,71 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Schema to create a prompt completion from a deployment. </summary>
+    /// <summary>
+    /// The configuration information for an embeddings request.
+    /// Embeddings measure the relatedness of text strings and are commonly used for search, clustering,
+    /// recommendations, and other similar scenarios.
+    /// </summary>
     public partial class EmbeddingsOptions
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="input">
-        /// Input text to get embeddings for, encoded as a string.
-        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
+        /// Input texts to get embeddings for, encoded as a an array of strings.
         /// Each input must not exceed 2048 tokens in length.
         /// 
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsOptions(string input)
+        public EmbeddingsOptions(IEnumerable<string> input)
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            Input = input;
+            Input = input.ToList();
         }
 
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
-        /// <param name="user"> The ID of the end-user, for use in tracking and rate-limiting. </param>
-        /// <param name="inputType"> input type of embedding search to use. </param>
-        /// <param name="model"> ID of the model to use. </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="internalNonAzureModelName">
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
         /// <param name="input">
-        /// Input text to get embeddings for, encoded as a string.
-        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
+        /// Input texts to get embeddings for, encoded as a an array of strings.
         /// Each input must not exceed 2048 tokens in length.
         /// 
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
-        internal EmbeddingsOptions(string user, string inputType, string model, string input)
+        internal EmbeddingsOptions(string user, string internalNonAzureModelName, IList<string> input)
         {
             User = user;
-            InputType = inputType;
-            Model = model;
+            InternalNonAzureModelName = internalNonAzureModelName;
             Input = input;
         }
 
-        /// <summary> The ID of the end-user, for use in tracking and rate-limiting. </summary>
-        public string User { get; set; }
-        /// <summary> input type of embedding search to use. </summary>
-        public string InputType { get; set; }
-        /// <summary> ID of the model to use. </summary>
-        public string Model { get; set; }
         /// <summary>
-        /// Input text to get embeddings for, encoded as a string.
-        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </summary>
+        public string User { get; set; }
+        /// <summary>
+        /// Input texts to get embeddings for, encoded as a an array of strings.
         /// Each input must not exceed 2048 tokens in length.
         /// 
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </summary>
-        public string Input { get; set; }
+        public IList<string> Input { get; }
     }
 }

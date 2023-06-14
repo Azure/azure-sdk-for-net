@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorDimension DeserializeMonitorDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             MonitorDimensionOperator @operator = default;
             IList<string> values = default;

@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LinkConnectionRefreshStatus DeserializeLinkConnectionRefreshStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> refreshStatus = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())

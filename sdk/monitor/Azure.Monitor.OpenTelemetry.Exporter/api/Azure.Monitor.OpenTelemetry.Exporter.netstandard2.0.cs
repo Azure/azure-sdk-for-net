@@ -13,6 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public AzureMonitorExporterOptions() { }
         public AzureMonitorExporterOptions(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion version = Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion.v2_1) { }
         public string? ConnectionString { get { throw null; } set { } }
+        public Azure.Core.TokenCredential? Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public string? StorageDirectory { get { throw null; } set { } }
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion Version { get { throw null; } set { } }

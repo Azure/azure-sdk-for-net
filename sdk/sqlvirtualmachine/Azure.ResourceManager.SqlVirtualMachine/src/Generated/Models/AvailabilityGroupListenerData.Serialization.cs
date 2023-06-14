@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static AvailabilityGroupListenerData DeserializeAvailabilityGroupListenerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -98,7 +102,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -127,7 +130,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AvailabilityGroupListenerLoadBalancerConfiguration> array = new List<AvailabilityGroupListenerLoadBalancerConfiguration>();
@@ -142,7 +144,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MultiSubnetIPConfiguration> array = new List<MultiSubnetIPConfiguration>();
@@ -157,7 +158,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createDefaultAvailabilityGroupIfNotExist = property0.Value.GetBoolean();
@@ -167,7 +167,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
@@ -177,7 +176,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value);

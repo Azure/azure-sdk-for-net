@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PolicyDefinitionGroup DeserializePolicyDefinitionGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> displayName = default;
             Optional<string> category = default;

@@ -344,6 +344,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    encryptionContext: options?.EncryptionContext,
                     conditions: options?.Conditions,
                     async: false,
                     cancellationToken: cancellationToken)
@@ -406,6 +407,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    encryptionContext: options?.EncryptionContext,
                     conditions: options?.Conditions,
                     async: true,
                     cancellationToken: cancellationToken)
@@ -469,6 +471,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    encryptionContext: options?.EncryptionContext,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
@@ -529,6 +532,7 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    encryptionContext: options?.EncryptionContext,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);

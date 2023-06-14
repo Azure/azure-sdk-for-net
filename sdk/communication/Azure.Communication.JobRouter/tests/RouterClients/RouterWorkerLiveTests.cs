@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var workerId = GenerateUniqueId($"{IdPrefix}{nameof(CreateWorkerTest)}");
             var totalCapacity = 100;
 
-            var channelConfig1 = new ChannelConfiguration(20);
+            var channelConfig1 = new ChannelConfiguration(20) { MaxNumberOfJobs = 5 };
 
             var channelConfigList = new Dictionary<string, ChannelConfiguration>()
             {
@@ -51,14 +51,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     QueueIds = queueAssignmentList.ToDictionary(x => x, _ => new QueueAssignment()),
                     Labels = workerLabels,
-                    ChannelConfigurations = channelConfigList,
+                    ChannelConfigurations = channelConfigList
                 });
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
             AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queueAssignmentList,
                 totalCapacity, workerLabels, channelConfigList);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(routerWorkerResponse.Value.Id)));
         }
 
         [Test]
@@ -71,10 +70,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var totalCapacity = 100;
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, totalCapacity) {AvailableForOffers = true});
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(routerWorkerResponse.Value.Id)));
         }
 
         [Test]
@@ -128,8 +126,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
-                        ["WebChat"] = new ChannelConfiguration(1),
-                        ["Voip"] = new ChannelConfiguration(10)
+                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 4 },
+                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 9 }
                     },
                     AvailableForOffers = true,
                 });
@@ -146,7 +144,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
-                        ["WebChat"] = new ChannelConfiguration(1),
+                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 12 },
                         ["Voip"] = new ChannelConfiguration(10)
                     },
                     AvailableForOffers = true,

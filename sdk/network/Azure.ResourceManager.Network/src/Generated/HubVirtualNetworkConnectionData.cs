@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the HubVirtualNetworkConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HubVirtualNetworkConnection data model.
+    /// HubVirtualNetworkConnection Resource.
+    /// </summary>
     public partial class HubVirtualNetworkConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="remoteVirtualNetwork"> Reference to the remote virtual network. </param>
         /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
-        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub&apos;s gateways. </param>
+        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </summary>
         public bool? AllowHubToRemoteVnetTransit { get; set; }
-        /// <summary> Deprecated: Allow RemoteVnet to use Virtual Hub&apos;s gateways. </summary>
+        /// <summary> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </summary>
         public bool? AllowRemoteVnetToUseHubVnetGateways { get; set; }
         /// <summary> Enable internet security. </summary>
         public bool? EnableInternetSecurity { get; set; }

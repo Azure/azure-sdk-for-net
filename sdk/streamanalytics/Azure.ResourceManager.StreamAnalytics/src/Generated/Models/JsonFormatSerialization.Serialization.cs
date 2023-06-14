@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static JsonFormatSerialization DeserializeJsonFormatSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventSerializationType type = default;
             Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
             Optional<JsonOutputSerializationFormat> format = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encoding = new StreamAnalyticsDataSerializationEncoding(property0.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             format = new JsonOutputSerializationFormat(property0.Value.GetString());

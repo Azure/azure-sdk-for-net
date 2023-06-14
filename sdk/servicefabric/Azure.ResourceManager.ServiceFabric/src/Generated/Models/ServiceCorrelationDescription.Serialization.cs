@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceCorrelationDescription DeserializeServiceCorrelationDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServiceCorrelationScheme scheme = default;
             string serviceName = default;
             foreach (var property in element.EnumerateObject())

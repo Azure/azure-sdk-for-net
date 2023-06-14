@@ -30,6 +30,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static X509Thumbprint DeserializeX509Thumbprint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryThumbprint = default;
             Optional<string> secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())

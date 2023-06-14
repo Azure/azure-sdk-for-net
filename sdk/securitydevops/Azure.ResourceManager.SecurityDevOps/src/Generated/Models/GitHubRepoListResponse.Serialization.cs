@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         internal static GitHubRepoListResponse DeserializeGitHubRepoListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GitHubRepoData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GitHubRepoData> array = new List<GitHubRepoData>();

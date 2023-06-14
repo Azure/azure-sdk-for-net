@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupDnsConfiguration DeserializeContainerGroupDnsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> nameServers = default;
             Optional<string> searchDomains = default;
             Optional<string> options = default;

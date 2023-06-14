@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningManagedIdentityAuthTypeWorkspaceConnection DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningWorkspaceConnectionManagedIdentity> credentials = default;
             MachineLearningConnectionAuthType authType = default;
             Optional<MachineLearningConnectionCategory> category = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credentials = MachineLearningWorkspaceConnectionManagedIdentity.DeserializeMachineLearningWorkspaceConnectionManagedIdentity(property.Value);
@@ -74,7 +77,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     category = new MachineLearningConnectionCategory(property.Value.GetString());
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFormat = new MachineLearningValueFormat(property.Value.GetString());

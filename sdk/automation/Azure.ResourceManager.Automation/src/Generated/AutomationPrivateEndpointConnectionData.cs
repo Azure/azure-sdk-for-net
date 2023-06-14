@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationPrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class AutomationPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>

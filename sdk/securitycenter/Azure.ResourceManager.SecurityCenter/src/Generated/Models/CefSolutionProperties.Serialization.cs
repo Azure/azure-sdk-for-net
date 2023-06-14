@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> agent = default;
             Optional<string> lastEventReceived = default;
@@ -101,7 +105,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspace = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

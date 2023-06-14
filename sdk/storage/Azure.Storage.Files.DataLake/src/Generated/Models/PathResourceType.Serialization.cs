@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static PathResourceType ToPathResourceType(this string value)
         {
-            if (string.Equals(value, "directory", StringComparison.InvariantCultureIgnoreCase)) return PathResourceType.Directory;
-            if (string.Equals(value, "file", StringComparison.InvariantCultureIgnoreCase)) return PathResourceType.File;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "directory")) return PathResourceType.Directory;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "file")) return PathResourceType.File;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathResourceType value.");
         }
     }

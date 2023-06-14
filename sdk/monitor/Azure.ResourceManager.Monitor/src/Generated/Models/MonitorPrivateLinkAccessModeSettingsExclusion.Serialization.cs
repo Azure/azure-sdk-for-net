@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorPrivateLinkAccessModeSettingsExclusion DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> privateEndpointConnectionName = default;
             Optional<MonitorPrivateLinkAccessMode> queryAccessMode = default;
             Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingestionAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());

@@ -435,16 +435,27 @@ function EnsureCustomSource($package) {
   return $package
 }
 
+$PackageExclusions = @{
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+
+  Write-Host "Excluded packages:"
+  foreach ($excludedPackage in $PackageExclusions.Keys) {
+    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
+  }
+
+  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
+
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
-    $DocsMetadata
+    $FilteredMetadata
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
     'latest' `
-    $DocsMetadata
+    $FilteredMetadata
 }
 
 function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
@@ -544,9 +555,9 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
 }
 
 function Get-dotnet-EmitterName() {
-  return "@azure-tools/cadl-csharp"
+  return "@azure-tools/typespec-csharp"
 }
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
-  return "--option @azure-tools/cadl-csharp.emitter-output-dir=$projectDirectory/src"
+  return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
 }

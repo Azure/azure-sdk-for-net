@@ -112,7 +112,7 @@
                 await client.Apps.DeleteAsync(testAppId);
 
                 Assert.NotNull(importedVerion);
-                Assert.Equal(importedVerion.Version, VersionId);
+                Assert.Equal(VersionId, importedVerion.Version);
             });
         }
 

@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownMetricAlertCriteria DeserializeUnknownMetricAlertCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MonitorOdataType odataType = "Unknown";
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

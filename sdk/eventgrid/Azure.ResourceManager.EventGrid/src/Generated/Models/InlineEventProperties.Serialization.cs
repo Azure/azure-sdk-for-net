@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static InlineEventProperties DeserializeInlineEventProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<Uri> documentationUri = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        documentationUri = null;
                         continue;
                     }
                     documentationUri = new Uri(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataSchemaUri = null;
                         continue;
                     }
                     dataSchemaUri = new Uri(property.Value.GetString());

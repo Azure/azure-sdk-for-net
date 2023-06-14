@@ -85,7 +85,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -238,7 +238,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -336,7 +336,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -434,7 +434,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -532,7 +532,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -630,7 +630,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -728,7 +728,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -826,7 +826,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -924,7 +924,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -956,7 +956,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/locations/canadacentral/deletedVaults/sdktest-vault-8752?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/locations/canadacentral/deletedVaults/sdktest-vault-8752?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1004,7 +1004,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1157,7 +1157,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1255,7 +1255,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1353,7 +1353,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1451,7 +1451,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1549,7 +1549,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1647,7 +1647,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1745,7 +1745,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1843,7 +1843,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1875,7 +1875,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/locations/canadacentral/deletedVaults/sdktest-vault-7585?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/locations/canadacentral/deletedVaults/sdktest-vault-7585?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1923,7 +1923,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2076,7 +2076,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2174,7 +2174,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2272,7 +2272,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2370,7 +2370,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2468,7 +2468,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2566,7 +2566,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2664,7 +2664,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2762,7 +2762,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-2728/providers/Microsoft.KeyVault/vaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2794,7 +2794,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/locations/canadacentral/deletedVaults/sdktest-vault-1129?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/locations/canadacentral/deletedVaults/sdktest-vault-1129?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2842,7 +2842,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3001,11 +3001,11 @@
             }
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=1VDdboIwGH0XsuxqCOVHxcQsndXEzbYBW5Z5V7EoVoFQVKzx3Uf2Frs7J%2bfny3ceVim7dlWUSluThzWHa8bX1sQ6tG2tJ45zFqXYy7Ms24Ewl0YOsurs6MtWZ01Rt0VVaicQo20eyKE9BJ60g9EY2CLyfdsPIymCKIrCfOjUTXUtdrLRDi6yptJV3g6%2b5D0Vl1Pr7ORJtnL3R%2fS7qAv72jv78qnnesAGru2C1xet%2bouVkuWUq%2fQ7ST9ZwpMFm6d8zSO64ieeoyXALAMYQRczZYjBAUW4x5sxVssuOWYgdnFIjPIJim8U7T2KoEmO%2bxvpdYLwnTJovVkzSCCCszlhCVz98zlcypTXz%2bJiAw1FsUvYxzhh2CNm6VN0WMQG96%2f%2fhASpDvO4o2iDMMNhojjoM9bz%2bQs%3d"
+        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=1VDdboIwGH0XsuxqCOVHxcQsndXEzbYBW5Z5V7EoVoFQVKzx3Uf2Frs7J%2bfny3ceVim7dlWUSluThzWHa8bX1sQ6tG2tJ45zFqXYy7Ms24Ewl0YOsurs6MtWZ01Rt0VVaicQo20eyKE9BJ60g9EY2CLyfdsPIymCKIrCfOjUTXUtdrLRDi6yptJV3g6%2b5D0Vl1Pr7ORJtnL3R%2fS7qAv72jv78qnnesAGru2C1xet%2bouVkuWUq%2fQ7ST9ZwpMFm6d8zSO64ieeoyXALAMYQRczZYjBAUW4x5sxVssuOWYgdnFIjPIJim8U7T2KoEmO%2bxvpdYLwnTJovVkzSCCCszlhCVz98zlcypTXz%2bJiAw1FsUvYxzhh2CNm6VN0WMQG96%2f%2fhASpDvO4o2iDMMNhojjoM9bz%2bQs%3d"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=1VDdboIwGH0XsuxqCOVHxcQsndXEzbYBW5Z5V7EoVoFQVKzx3Uf2Frs7J%2bfny3ceVim7dlWUSluThzWHa8bX1sQ6tG2tJ45zFqXYy7Ms24Ewl0YOsurs6MtWZ01Rt0VVaicQo20eyKE9BJ60g9EY2CLyfdsPIymCKIrCfOjUTXUtdrLRDi6yptJV3g6%2b5D0Vl1Pr7ORJtnL3R%2fS7qAv72jv78qnnesAGru2C1xet%2bouVkuWUq%2fQ7ST9ZwpMFm6d8zSO64ieeoyXALAMYQRczZYjBAUW4x5sxVssuOWYgdnFIjPIJim8U7T2KoEmO%2bxvpdYLwnTJovVkzSCCCszlhCVz98zlcypTXz%2bJiAw1FsUvYxzhh2CNm6VN0WMQG96%2f%2fhASpDvO4o2iDMMNhojjoM9bz%2bQs%3d",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=1VDdboIwGH0XsuxqCOVHxcQsndXEzbYBW5Z5V7EoVoFQVKzx3Uf2Frs7J%2bfny3ceVim7dlWUSluThzWHa8bX1sQ6tG2tJ45zFqXYy7Ms24Ewl0YOsurs6MtWZ01Rt0VVaicQo20eyKE9BJ60g9EY2CLyfdsPIymCKIrCfOjUTXUtdrLRDi6yptJV3g6%2b5D0Vl1Pr7ORJtnL3R%2fS7qAv72jv78qnnesAGru2C1xet%2bouVkuWUq%2fQ7ST9ZwpMFm6d8zSO64ieeoyXALAMYQRczZYjBAUW4x5sxVssuOWYgdnFIjPIJim8U7T2KoEmO%2bxvpdYLwnTJovVkzSCCCszlhCVz98zlcypTXz%2bJiAw1FsUvYxzhh2CNm6VN0WMQG96%2f%2fhASpDvO4o2iDMMNhojjoM9bz%2bQs%3d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3114,11 +3114,11 @@
             }
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=HY1bb4IwGED%2fC1n2VsvNCyRmQcBkzkLoWpY9VvhQKAKh1TmM%2f31mjyc5OedudHDT%2b7qTyvDvRhgkQRSEccJosDd846T1oHyMz6ITRzhDp2diuowwK%2fozVpeDKsZ60HXfKeyK5aFyYYEWlg3IXa4sJDzHQc7cA%2bF6njevFngY%2b2tdwqgwqYuxV32lZx%2fwm4tLq3EJLWgo%2f0G9iaFG16f5jK9t07aQZSLTen1R8nnsJXRrLvMvmu8Y5XTL4px%2fci%2fd85ZX0btFWGGmTNqEySlpilvKvn8I262yZrOlTRtmbLdJeeYmEd1QdjQzM74lzSkmE42I5HYiifF4%2fAE%3d"
+        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=HY1bb4IwGED%2fC1n2VsvNCyRmQcBkzkLoWpY9VvhQKAKh1TmM%2f31mjyc5OedudHDT%2b7qTyvDvRhgkQRSEccJosDd846T1oHyMz6ITRzhDp2diuowwK%2fozVpeDKsZ60HXfKeyK5aFyYYEWlg3IXa4sJDzHQc7cA%2bF6njevFngY%2b2tdwqgwqYuxV32lZx%2fwm4tLq3EJLWgo%2f0G9iaFG16f5jK9t07aQZSLTen1R8nnsJXRrLvMvmu8Y5XTL4px%2fci%2fd85ZX0btFWGGmTNqEySlpilvKvn8I262yZrOlTRtmbLdJeeYmEd1QdjQzM74lzSkmE42I5HYiifF4%2fAE%3d"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=HY1bb4IwGED%2fC1n2VsvNCyRmQcBkzkLoWpY9VvhQKAKh1TmM%2f31mjyc5OedudHDT%2b7qTyvDvRhgkQRSEccJosDd846T1oHyMz6ITRzhDp2diuowwK%2fozVpeDKsZ60HXfKeyK5aFyYYEWlg3IXa4sJDzHQc7cA%2bF6njevFngY%2b2tdwqgwqYuxV32lZx%2fwm4tLq3EJLWgo%2f0G9iaFG16f5jK9t07aQZSLTen1R8nnsJXRrLvMvmu8Y5XTL4px%2fci%2fd85ZX0btFWGGmTNqEySlpilvKvn8I262yZrOlTRtmbLdJeeYmEd1QdjQzM74lzSkmE42I5HYiifF4%2fAE%3d",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=HY1bb4IwGED%2fC1n2VsvNCyRmQcBkzkLoWpY9VvhQKAKh1TmM%2f31mjyc5OedudHDT%2b7qTyvDvRhgkQRSEccJosDd846T1oHyMz6ITRzhDp2diuowwK%2fozVpeDKsZ60HXfKeyK5aFyYYEWlg3IXa4sJDzHQc7cA%2bF6njevFngY%2b2tdwqgwqYuxV32lZx%2fwm4tLq3EJLWgo%2f0G9iaFG16f5jK9t07aQZSLTen1R8nnsJXRrLvMvmu8Y5XTL4px%2fci%2fd85ZX0btFWGGmTNqEySlpilvKvn8I262yZrOlTRtmbLdJeeYmEd1QdjQzM74lzSkmE42I5HYiifF4%2fAE%3d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3228,11 +3228,11 @@
             }
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=HY1db4IwGEb%2fC1l2V9vyoUJiFiIscZMausKyy4ovDopAaP0Yxv8u2cVzcZKT89ytFm5mW7VKW8HdWocsjMJ1zAQPt1Zg%2fRrT6wDjk2zlEU7QmpkczwPMiu6E9Xmvi6HqTdW1GrtysS9dmKM5tQG5iyVF0ncc5Hg%2bSNf3fa%2bc437oLtUBBo2Tqhg63ZVm9gl%2fuTw3Bh%2bgAQOHf9Bvsq%2fQZTKn%2bMomNkWUIEJfX7SaHjsF7SpT%2bTfPPwTP%2bLuI8%2bwr83fbrMnKaEMTUZCdUHZSb0gSKcLEzzS2ZHHscJF6u6i4pqO6seg4MrIhXMRjWqdXrhKP1TFlorAejyc%3d"
+        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=HY1db4IwGEb%2fC1l2V9vyoUJiFiIscZMausKyy4ovDopAaP0Yxv8u2cVzcZKT89ytFm5mW7VKW8HdWocsjMJ1zAQPt1Zg%2fRrT6wDjk2zlEU7QmpkczwPMiu6E9Xmvi6HqTdW1GrtysS9dmKM5tQG5iyVF0ncc5Hg%2bSNf3fa%2bc437oLtUBBo2Tqhg63ZVm9gl%2fuTw3Bh%2bgAQOHf9Bvsq%2fQZTKn%2bMomNkWUIEJfX7SaHjsF7SpT%2bTfPPwTP%2bLuI8%2bwr83fbrMnKaEMTUZCdUHZSb0gSKcLEzzS2ZHHscJF6u6i4pqO6seg4MrIhXMRjWqdXrhKP1TFlorAejyc%3d"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=HY1db4IwGEb%2fC1l2V9vyoUJiFiIscZMausKyy4ovDopAaP0Yxv8u2cVzcZKT89ytFm5mW7VKW8HdWocsjMJ1zAQPt1Zg%2fRrT6wDjk2zlEU7QmpkczwPMiu6E9Xmvi6HqTdW1GrtysS9dmKM5tQG5iyVF0ncc5Hg%2bSNf3fa%2bc437oLtUBBo2Tqhg63ZVm9gl%2fuTw3Bh%2bgAQOHf9Bvsq%2fQZTKn%2bMomNkWUIEJfX7SaHjsF7SpT%2bTfPPwTP%2bLuI8%2bwr83fbrMnKaEMTUZCdUHZSb0gSKcLEzzS2ZHHscJF6u6i4pqO6seg4MrIhXMRjWqdXrhKP1TFlorAejyc%3d",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=HY1db4IwGEb%2fC1l2V9vyoUJiFiIscZMausKyy4ovDopAaP0Yxv8u2cVzcZKT89ytFm5mW7VKW8HdWocsjMJ1zAQPt1Zg%2fRrT6wDjk2zlEU7QmpkczwPMiu6E9Xmvi6HqTdW1GrtysS9dmKM5tQG5iyVF0ncc5Hg%2bSNf3fa%2bc437oLtUBBo2Tqhg63ZVm9gl%2fuTw3Bh%2bgAQOHf9Bvsq%2fQZTKn%2bMomNkWUIEJfX7SaHjsF7SpT%2bTfPPwTP%2bLuI8%2bwr83fbrMnKaEMTUZCdUHZSb0gSKcLEzzS2ZHHscJF6u6i4pqO6seg4MrIhXMRjWqdXrhKP1TFlorAejyc%3d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3294,11 +3294,11 @@
             }
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=HY1db4IwGIX%2fC1l2V8qnColZGGCisyWwlmWXFV4cQ4HQohPjfx%2fb3TnJc55z11r4Ufu6baTm37UwoEEUhDFlWbDXfO1LqV76GJ9FK45whlbpYhoH0IvujOV4kMVQ96ruWokdsTxUDizQwrQAOcuViYRn28h2PRCO53lutcD90F3qEgaJSV0Mnewqpb%2fBLRfjSeESTqCg%2fC%2fyRfQ1uszkLF9bhmUi00CG%2bfwkm%2fmxa6Bd8yb%2fyPIdy3i2YXHO37mX7PmJV9HWJKwwEtZY5JtcE5ZOSTRntltljE9JTMMs3rpkSq802kSEHW%2fkbzOlNmWvEW24S9mn9nj8Ag%3d%3d"
+        "nextLink": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=HY1db4IwGIX%2fC1l2V8qnColZGGCisyWwlmWXFV4cQ4HQohPjfx%2fb3TnJc55z11r4Ufu6baTm37UwoEEUhDFlWbDXfO1LqV76GJ9FK45whlbpYhoH0IvujOV4kMVQ96ruWokdsTxUDizQwrQAOcuViYRn28h2PRCO53lutcD90F3qEgaJSV0Mnewqpb%2fBLRfjSeESTqCg%2fC%2fyRfQ1uszkLF9bhmUi00CG%2bfwkm%2fmxa6Bd8yb%2fyPIdy3i2YXHO37mX7PmJV9HWJKwwEtZY5JtcE5ZOSTRntltljE9JTMMs3rpkSq802kSEHW%2fkbzOlNmWvEW24S9mn9nj8Ag%3d%3d"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-10-01\u0026%24skiptoken=HY1db4IwGIX%2fC1l2V8qnColZGGCisyWwlmWXFV4cQ4HQohPjfx%2fb3TnJc55z11r4Ufu6baTm37UwoEEUhDFlWbDXfO1LqV76GJ9FK45whlbpYhoH0IvujOV4kMVQ96ruWokdsTxUDizQwrQAOcuViYRn28h2PRCO53lutcD90F3qEgaJSV0Mnewqpb%2fBLRfjSeESTqCg%2fC%2fyRfQ1uszkLF9bhmUi00CG%2bfwkm%2fmxa6Bd8yb%2fyPIdy3i2YXHO37mX7PmJV9HWJKwwEtZY5JtcE5ZOSTRntltljE9JTMMs3rpkSq802kSEHW%2fkbzOlNmWvEW24S9mn9nj8Ag%3d%3d",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.KeyVault/deletedVaults?api-version=2023-02-01\u0026%24skiptoken=HY1db4IwGIX%2fC1l2V8qnColZGGCisyWwlmWXFV4cQ4HQohPjfx%2fb3TnJc55z11r4Ufu6baTm37UwoEEUhDFlWbDXfO1LqV76GJ9FK45whlbpYhoH0IvujOV4kMVQ96ruWokdsTxUDizQwrQAOcuViYRn28h2PRCO53lutcD90F3qEgaJSV0Mnewqpb%2fBLRfjSeESTqCg%2fC%2fyRfQ1uszkLF9bhmUi00CG%2bfwkm%2fmxa6Bd8yb%2fyPIdy3i2YXHO37mX7PmJV9HWJKwwEtZY5JtcE5ZOSTRntltljE9JTMMs3rpkSq802kSEHW%2fkbzOlNmWvEW24S9mn9nj8Ag%3d%3d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

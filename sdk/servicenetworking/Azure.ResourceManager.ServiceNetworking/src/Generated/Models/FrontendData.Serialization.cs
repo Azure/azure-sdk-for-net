@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
@@ -34,36 +33,23 @@ namespace Azure.ResourceManager.ServiceNetworking
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
-            if (Optional.IsDefined(IPAddressVersion))
-            {
-                writer.WritePropertyName("ipAddressVersion"u8);
-                writer.WriteStringValue(IPAddressVersion.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(PublicIPAddress))
-            {
-                writer.WritePropertyName("publicIPAddress"u8);
-                JsonSerializer.Serialize(writer, PublicIPAddress);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static FrontendData DeserializeFrontendData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<FrontendMode> mode = default;
-            Optional<FrontendIPAddressVersion> ipAddressVersion = default;
-            Optional<WritableSubResource> publicIPAddress = default;
+            Optional<string> fqdn = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +57,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -106,7 +91,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -121,41 +105,15 @@ namespace Azure.ResourceManager.ServiceNetworking
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("mode"u8))
+                        if (property0.NameEquals("fqdn"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            mode = new FrontendMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAddressVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            ipAddressVersion = property0.Value.GetString().ToFrontendIPAddressVersion();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicIPAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            fqdn = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -165,7 +123,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     continue;
                 }
             }
-            return new FrontendData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(mode), Optional.ToNullable(ipAddressVersion), publicIPAddress, Optional.ToNullable(provisioningState));
+            return new FrontendData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, fqdn.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

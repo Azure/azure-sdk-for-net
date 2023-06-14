@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAuthenticationMode ToBatchAuthenticationMode(this string value)
         {
-            if (string.Equals(value, "SharedKey", StringComparison.InvariantCultureIgnoreCase)) return BatchAuthenticationMode.SharedKey;
-            if (string.Equals(value, "AAD", StringComparison.InvariantCultureIgnoreCase)) return BatchAuthenticationMode.Aad;
-            if (string.Equals(value, "TaskAuthenticationToken", StringComparison.InvariantCultureIgnoreCase)) return BatchAuthenticationMode.TaskAuthenticationToken;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SharedKey")) return BatchAuthenticationMode.SharedKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD")) return BatchAuthenticationMode.Aad;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskAuthenticationToken")) return BatchAuthenticationMode.TaskAuthenticationToken;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAuthenticationMode value.");
         }
     }

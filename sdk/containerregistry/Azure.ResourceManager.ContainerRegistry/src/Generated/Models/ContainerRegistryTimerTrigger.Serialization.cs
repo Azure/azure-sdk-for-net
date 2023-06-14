@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTimerTrigger DeserializeContainerRegistryTimerTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string schedule = default;
             Optional<ContainerRegistryTriggerStatus> status = default;
             string name = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ContainerRegistryTriggerStatus(property.Value.GetString());

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxValidationStatus ToDataBoxValidationStatus(this string value)
         {
-            if (string.Equals(value, "Valid", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationStatus.Valid;
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationStatus.Invalid;
-            if (string.Equals(value, "Skipped", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationStatus.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return DataBoxValidationStatus.Valid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return DataBoxValidationStatus.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return DataBoxValidationStatus.Skipped;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxValidationStatus value.");
         }
     }

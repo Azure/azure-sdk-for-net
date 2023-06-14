@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBPrivilegeResourceInfo DeserializeMongoDBPrivilegeResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> db = default;
             Optional<string> collection = default;
             foreach (var property in element.EnumerateObject())

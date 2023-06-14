@@ -29,6 +29,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static TeamsMeetingInput DeserializeTeamsMeetingInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string teamsJoinUrl = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;

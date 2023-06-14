@@ -38,6 +38,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static FileSink DeserializeFileSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string baseDirectoryPath = default;
             string fileNamePattern = default;
             string maximumSizeMiB = default;

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationConnectionFieldDefinition DeserializeAutomationConnectionFieldDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEncrypted = default;
             Optional<bool> isOptional = default;
             string type = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEncrypted = property.Value.GetBoolean();
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOptional = property.Value.GetBoolean();

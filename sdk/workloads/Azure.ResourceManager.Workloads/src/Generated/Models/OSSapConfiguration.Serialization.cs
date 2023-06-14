@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static OSSapConfiguration DeserializeOSSapConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeployerVmPackages> deployerVmPackages = default;
             Optional<string> sapFqdn = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value);

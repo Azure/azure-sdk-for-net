@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static SecretValueReference DeserializeSecretValueReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource keyVault = default;
             string secretName = default;
             Optional<string> secretVersion = default;

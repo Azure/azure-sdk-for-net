@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         public static PostgreSqlSslEnforcementEnum ToPostgreSqlSslEnforcementEnum(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return PostgreSqlSslEnforcementEnum.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return PostgreSqlSslEnforcementEnum.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return PostgreSqlSslEnforcementEnum.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return PostgreSqlSslEnforcementEnum.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PostgreSqlSslEnforcementEnum value.");
         }
     }

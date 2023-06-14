@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the MsixPackage data model. </summary>
+    /// <summary>
+    /// A class representing the MsixPackage data model.
+    /// Schema for MSIX Package properties.
+    /// </summary>
     public partial class MsixPackageData : ResourceData
     {
         /// <summary> Initializes a new instance of MsixPackageData. </summary>

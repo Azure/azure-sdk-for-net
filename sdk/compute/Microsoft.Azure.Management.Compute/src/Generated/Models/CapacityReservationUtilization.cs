@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="currentCapacity">The value provides the current
         /// capacity of the VM size which was reserved successfully and for
-        /// which the customer is getting billed.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2022-08-01.</param>
+        /// which the customer is getting billed. Minimum api-version:
+        /// 2022-08-01.</param>
         /// <param name="virtualMachinesAllocated">A list of all virtual
         /// machines resource ids allocated against the capacity
         /// reservation.</param>
@@ -56,8 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the value provides the current capacity of the VM size which
         /// was reserved successfully and for which the customer is getting
-        /// billed.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2022-08-01.
+        /// billed. Minimum api-version: 2022-08-01.
         /// </summary>
         [JsonProperty(PropertyName = "currentCapacity")]
         public int? CurrentCapacity { get; private set; }

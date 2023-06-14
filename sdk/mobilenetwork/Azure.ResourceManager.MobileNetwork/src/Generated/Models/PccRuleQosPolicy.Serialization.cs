@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Ambr> guaranteedBitRate = default;
             Optional<int> _5qi = default;
             Optional<int> allocationAndRetentionPriorityLevel = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     guaranteedBitRate = Ambr.DeserializeAmbr(property.Value);
@@ -69,7 +72,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     _5qi = property.Value.GetInt32();
@@ -79,7 +81,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationAndRetentionPriorityLevel = property.Value.GetInt32();
@@ -89,7 +90,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preemptionCapability = new PreemptionCapability(property.Value.GetString());
@@ -99,7 +99,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preemptionVulnerability = new PreemptionVulnerability(property.Value.GetString());

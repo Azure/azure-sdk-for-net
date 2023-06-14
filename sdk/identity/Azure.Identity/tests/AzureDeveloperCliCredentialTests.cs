@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
         {
             var azdCliOptions = new AzureDeveloperCliCredentialOptions
             {
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
@@ -90,8 +90,8 @@ namespace Azure.Identity.Tests
             yield return new object[] { AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, typeof(CredentialUnavailableException) };
             yield return new object[] { RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
-            yield return new object[] { "AADSTS12345: Some AAD error. To re-authenticate, please run: azd login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: azd login", typeof(AuthenticationFailedException) };
+            yield return new object[] { "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", typeof(CredentialUnavailableException) };
+            yield return new object[] { "AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", typeof(CredentialUnavailableException) };
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Azure.Identity.Tests
             AzureDeveloperCliCredential credential = InstrumentClient(
                 new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess),
-                    new AzureDeveloperCliCredentialOptions() { AzdCliProcessTimeout = TimeSpan.Zero }));
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                    new AzureDeveloperCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero }));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzureDeveloperCliCredential.AzdCliTimeoutError, ex.Message);
         }
     }

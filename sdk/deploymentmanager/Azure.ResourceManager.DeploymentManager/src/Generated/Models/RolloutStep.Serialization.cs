@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static RolloutStep DeserializeRolloutStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> status = default;
             Optional<string> stepGroup = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationInfo = StepOperationInfo.DeserializeStepOperationInfo(property.Value);
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceOperation> array = new List<ResourceOperation>();
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Message> array = new List<Message>();

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeRemoteSupportSettings DeserializeEdgeRemoteSupportSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
             Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
             Optional<DateTimeOffset> expirationTimeStampInUtc = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     remoteApplicationType = new EdgeRemoteApplicationType(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessLevel = new EdgeRemoteApplicationAccessLevel(property.Value.GetString());
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationTimeStampInUtc = property.Value.GetDateTimeOffset("O");

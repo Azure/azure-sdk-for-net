@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeContactDetails DeserializeDataBoxEdgeContactDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contactPerson = default;
             string companyName = default;
             string phone = default;

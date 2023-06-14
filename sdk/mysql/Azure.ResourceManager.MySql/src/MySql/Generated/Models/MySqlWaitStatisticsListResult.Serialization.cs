@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlWaitStatisticsListResult DeserializeMySqlWaitStatisticsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlWaitStatisticData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlWaitStatisticData> array = new List<MySqlWaitStatisticData>();

@@ -27,6 +27,11 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
+            if (Optional.IsDefined(SpeechLanguage))
+            {
+                writer.WritePropertyName("speechLanguage"u8);
+                writer.WriteStringValue(SpeechLanguage);
+            }
             if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
@@ -41,6 +46,11 @@ namespace Azure.Communication.CallAutomation
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SpeechOptions))
+            {
+                writer.WritePropertyName("speechOptions"u8);
+                writer.WriteObjectValue(SpeechOptions);
             }
             writer.WriteEndObject();
         }

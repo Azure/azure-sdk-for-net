@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the LogicalDatabaseTransparentDataEncryption data model. </summary>
+    /// <summary>
+    /// A class representing the LogicalDatabaseTransparentDataEncryption data model.
+    /// A logical database transparent data encryption state.
+    /// </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionData : ResourceData
     {
         /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionData. </summary>

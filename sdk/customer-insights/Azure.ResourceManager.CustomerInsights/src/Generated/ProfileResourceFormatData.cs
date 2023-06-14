@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the ProfileResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the ProfileResourceFormat data model.
+    /// The profile resource format.
+    /// </summary>
     public partial class ProfileResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>

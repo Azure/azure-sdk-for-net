@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -13,36 +14,51 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetParticipant"></param>
-        public TransferToParticipantOptions(CommunicationIdentifier targetParticipant)
+        /// <param name="targetPhoneNumberIdentity"> The target to transfer the call to. </param>
+        /// <param name="sipHeaders"> Custom Context Sip headers. </param>
+        public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity, IDictionary<string, string> sipHeaders = null)
         {
-            TargetParticipant = targetParticipant;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
+            Target = targetPhoneNumberIdentity;
+            SipHeaders = sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
         }
 
         /// <summary>
-        /// The target participant to transfer the call to.
+        /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        public CommunicationIdentifier TargetParticipant { get; }
+        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        /// <param name="voipHeaders"> Custom Context Voip headers. </param>
+        public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        {
+            Target = targetIdentity;
+            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+        }
 
         /// <summary>
-        /// The caller id of the source.
+        /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        public PhoneNumberIdentifier SourceCallerId { get; set; }
+        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        /// <param name="voipHeaders"> Custom Context Voip headers. </param>
+        public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        {
+            Target = targetIdentity;
+            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+        }
 
         /// <summary>
-        /// The UserToUserInformation.
+        /// The target callee.
         /// </summary>
-        public string UserToUserInformation { get; set; }
+        /// <value></value>
+        public CommunicationIdentifier Target { get; }
+
+        /// <summary> Dictionary of VOIP headers. </summary>
+        public IDictionary<string, string> VoipHeaders { get; }
+
+        /// <summary> Dictionary of SIP headers. </summary>
+        public IDictionary<string, string> SipHeaders { get; }
 
         /// <summary>
         /// The operationContext for this transfer call.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

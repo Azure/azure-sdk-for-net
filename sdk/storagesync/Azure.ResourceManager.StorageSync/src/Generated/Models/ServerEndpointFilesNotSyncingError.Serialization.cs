@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointFilesNotSyncingError DeserializeServerEndpointFilesNotSyncingError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> errorCode = default;
             Optional<long> persistentCount = default;
             Optional<long> transientCount = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     persistentCount = property.Value.GetInt64();
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transientCount = property.Value.GetInt64();

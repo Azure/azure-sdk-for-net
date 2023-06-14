@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StaticDeliveryAttributeMapping DeserializeStaticDeliveryAttributeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             DeliveryAttributeMappingType type = default;
             Optional<string> value = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isSecret = property0.Value.GetBoolean();

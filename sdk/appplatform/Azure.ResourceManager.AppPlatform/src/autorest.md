@@ -15,6 +15,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 format-by-name-rules:
   'etag': 'etag'
   'location': 'azure-location'
@@ -130,7 +133,7 @@ rename-mapping:
   CustomDomainResourceProvisioningState: AppPlatformCustomDomainProvisioningState
   ServiceResource: AppPlatformService
   ClusterResourceProperties: AppPlatformServiceProperties
-  ClusterResourceProperties.serviceId: -|uuid
+  ClusterResourceProperties.serviceId: ServiceInstanceId
   ClusterResourceProperties.zoneRedundant: IsZoneRedundant
   NetworkProfile: AppPlatformServiceNetworkProfile
   PowerState: AppPlatformServicePowerState
@@ -281,6 +284,7 @@ rename-mapping:
   NetworkProfile.appSubnetId: -|arm-id
   ResourceSku.locations: -|azure-location
   ResourceSkuRestrictionInfo.locations: -|azure-location
+  AppResourceProperties.url: UriString|string
 
 parameter-rename-mapping:
   ConfigServers_Validate:

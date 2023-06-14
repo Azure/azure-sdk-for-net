@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static RegulatoryComplianceAssessmentList DeserializeRegulatoryComplianceAssessmentList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RegulatoryComplianceAssessmentData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

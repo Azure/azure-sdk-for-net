@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SoftwareUpdateConfigurationNavigation DeserializeSoftwareUpdateConfigurationNavigation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {

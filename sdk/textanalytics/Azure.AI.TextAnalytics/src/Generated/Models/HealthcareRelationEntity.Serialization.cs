@@ -24,6 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareRelationEntity DeserializeHealthcareRelationEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string @ref = default;
             string role = default;
             foreach (var property in element.EnumerateObject())

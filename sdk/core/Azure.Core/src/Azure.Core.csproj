@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.29.0-beta.1</Version>
+    <Version>1.33.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.28.0</ApiCompatVersion>
+    <ApiCompatVersion>1.32.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
@@ -49,13 +49,12 @@
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
-    <Compile Include="Shared\ConstantDelayStrategy.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DictionaryHeaders.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
-    <Compile Include="Shared\ExponentialDelayStrategy.cs" />
+    <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
@@ -65,12 +64,11 @@
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
-    <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
+    <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
-    <Compile Include="Shared\DelayStrategy.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
     <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>

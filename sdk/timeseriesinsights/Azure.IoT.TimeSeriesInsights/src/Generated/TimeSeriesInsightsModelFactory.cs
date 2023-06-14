@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class TimeSeriesInsightsModelFactory
     {
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>
-        /// <param name="name"> Time series model display name which is shown in the UX. Examples: &quot;Temperature Sensors&quot;, &quot;MyDevices&quot;. </param>
+        /// <param name="name"> Time series model display name which is shown in the UX. Examples: "Temperature Sensors", "MyDevices". </param>
         /// <param name="timeSeriesIdProperties"> Time series ID properties defined during environment creation. </param>
         /// <param name="defaultTypeId"> Default type ID of the model that new time series instances will automatically belong to. </param>
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesModelSettings"/> instance for mocking. </returns>
@@ -55,7 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Initializes a new instance of TimeSeriesIdProperty. </summary>
         /// <param name="name"> The name of the property. </param>
-        /// <param name="type"> The type of the property. Currently, only &quot;String&quot; is supported. </param>
+        /// <param name="type"> The type of the property. Currently, only "String" is supported. </param>
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesIdProperty"/> instance for mocking. </returns>
         public static TimeSeriesIdProperty TimeSeriesIdProperty(string name = null, TimeSeriesIdPropertyType? type = null)
         {

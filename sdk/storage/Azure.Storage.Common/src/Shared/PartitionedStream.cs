@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.Shared
 {
@@ -15,7 +16,7 @@ namespace Azure.Storage.Shared
     /// Functions like a readable <see cref="MemoryStream"/> but uses an ArrayPool to supply the backing memory.
     /// This stream support buffering long sizes.
     /// </summary>
-    internal class PartitionedStream : SlicedStream
+    internal class PartitionedStream : Stream
     {
         private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
 
@@ -43,20 +44,14 @@ namespace Azure.Storage.Shared
         public ArrayPool<byte> ArrayPool { get; }
 
         /// <summary>
-        /// Absolute position of this stream in the larger stream it was chunked from.
-        /// </summary>
-        public override long AbsolutePosition { get; }
-
-        /// <summary>
         /// List of arrays making up the overall buffer. Since ArrayPool may give us a larger array than needed,
         /// each array is paired with a count of the space actually used in the array. This <b>should</b> only
         /// be important for the final buffer.
         /// </summary>
         private List<BufferPartition> BufferSet { get; } = new List<BufferPartition>();
 
-        public PartitionedStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
+        public PartitionedStream(ArrayPool<byte> arrayPool, int maxArraySize)
         {
-            AbsolutePosition = absolutePosition;
             ArrayPool = arrayPool;
             MaxArraySize = maxArraySize;
         }
@@ -106,12 +101,15 @@ namespace Azure.Storage.Shared
             bool async,
             CancellationToken cancellationToken)
         {
+            Argument.AssertInRange(minCount, 0L, maxCount, nameof(minCount));
+            Argument.AssertInRange(maxCount, minCount, long.MaxValue, nameof(maxCount));
+
             long totalRead = 0;
 
             long previousPosition = stream.Position;
             stream.Position = absolutePosition;
 
-            var streamPartition = new PartitionedStream(arrayPool, absolutePosition, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
+            var streamPartition = new PartitionedStream(arrayPool, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
 
             // max count to write into a single array
             int maxCountIndividualBuffer;

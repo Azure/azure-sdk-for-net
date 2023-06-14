@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionResetSharedKey DeserializeConnectionResetSharedKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int keyLength = default;
             foreach (var property in element.EnumerateObject())
             {

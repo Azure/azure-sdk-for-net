@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanVirtualNetworkRule DeserializeElasticSanVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<ElasticSanVirtualNetworkRuleAction> action = default;
             Optional<ElasticSanVirtualNetworkRuleState> state = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new ElasticSanVirtualNetworkRuleAction(property.Value.GetString());
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = property.Value.GetString().ToElasticSanVirtualNetworkRuleState();

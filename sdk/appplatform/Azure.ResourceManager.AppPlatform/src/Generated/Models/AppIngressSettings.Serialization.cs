@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppIngressSettings DeserializeAppIngressSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> readTimeoutInSeconds = default;
             Optional<int> sendTimeoutInSeconds = default;
             Optional<AppSessionAffinity> sessionAffinity = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readTimeoutInSeconds = property.Value.GetInt32();
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendTimeoutInSeconds = property.Value.GetInt32();
@@ -82,7 +84,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionAffinity = new AppSessionAffinity(property.Value.GetString());
@@ -92,7 +93,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionCookieMaxAge = property.Value.GetInt32();
@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendProtocol = new AppBackendProtocol(property.Value.GetString());
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientAuth = IngressSettingsClientAuth.DeserializeIngressSettingsClientAuth(property.Value);

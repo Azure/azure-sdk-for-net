@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabArtifactDeploymentStatus DeserializeDevTestLabArtifactDeploymentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deploymentStatus = default;
             Optional<int> artifactsApplied = default;
             Optional<int> totalArtifacts = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     artifactsApplied = property.Value.GetInt32();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalArtifacts = property.Value.GetInt32();

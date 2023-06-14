@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DeletedWebAppListResult DeserializeDeletedWebAppListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DeletedSiteData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

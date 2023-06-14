@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="resourceId"> Resource ID of the vault. </param>
         /// <param name="subject"> Certificate Subject Name. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="validFrom"> Certificate Validity start Date time. </param>
-        /// <param name="validTo"> Certificate Validity End Date time. </param>
-        internal UnknownResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, string thumbprint, DateTimeOffset? validFrom, DateTimeOffset? validTo) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validFrom, validTo)
+        /// <param name="validStartOn"> Certificate Validity start Date time. </param>
+        /// <param name="validEndOn"> Certificate Validity End Date time. </param>
+        internal UnknownResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn)
         {
             AuthType = authType ?? "Unknown";
         }

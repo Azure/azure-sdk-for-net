@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         internal static DedicatedCapacityData DeserializeDedicatedCapacityData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CapacitySku sku = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -100,7 +104,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -115,7 +118,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);
@@ -134,7 +136,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value);
@@ -144,7 +145,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mode = new Mode(property0.Value.GetString());
@@ -154,7 +154,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -169,7 +168,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new State(property0.Value.GetString());
@@ -179,7 +177,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new CapacityProvisioningState(property0.Value.GetString());

@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static RawValueSecretInfo DeserializeRawValueSecretInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())

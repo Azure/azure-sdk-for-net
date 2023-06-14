@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ActivityDependency DeserializeActivityDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string activity = default;
             IList<DependencyCondition> dependencyConditions = default;
             IDictionary<string, object> additionalProperties = default;

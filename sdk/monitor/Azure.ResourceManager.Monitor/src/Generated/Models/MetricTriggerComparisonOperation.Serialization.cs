@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static MetricTriggerComparisonOperation ToMetricTriggerComparisonOperation(this string value)
         {
-            if (string.Equals(value, "Equals", StringComparison.InvariantCultureIgnoreCase)) return MetricTriggerComparisonOperation.EqualsValue;
-            if (string.Equals(value, "NotEquals", StringComparison.InvariantCultureIgnoreCase)) return MetricTriggerComparisonOperation.NotEquals;
-            if (string.Equals(value, "GreaterThan", StringComparison.InvariantCultureIgnoreCase)) return MetricTriggerComparisonOperation.GreaterThan;
-            if (string.Equals(value, "GreaterThanOrEqual", StringComparison.InvariantCultureIgnoreCase)) return MetricTriggerComparisonOperation.GreaterThanOrEqual;
-            if (string.Equals(value, "LessThan", StringComparison.InvariantCultureIgnoreCase)) return MetricTriggerComparisonOperation.LessThan;
-            if (string.Equals(value, "LessThanOrEqual", StringComparison.InvariantCultureIgnoreCase)) return MetricTriggerComparisonOperation.LessThanOrEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equals")) return MetricTriggerComparisonOperation.EqualsValue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotEquals")) return MetricTriggerComparisonOperation.NotEquals;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan")) return MetricTriggerComparisonOperation.GreaterThan;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThanOrEqual")) return MetricTriggerComparisonOperation.GreaterThanOrEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan")) return MetricTriggerComparisonOperation.LessThan;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThanOrEqual")) return MetricTriggerComparisonOperation.LessThanOrEqual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricTriggerComparisonOperation value.");
         }
     }

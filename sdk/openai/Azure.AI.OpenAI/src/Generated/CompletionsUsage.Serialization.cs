@@ -15,6 +15,10 @@ namespace Azure.AI.OpenAI
     {
         internal static CompletionsUsage DeserializeCompletionsUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int completionTokens = default;
             int promptTokens = default;
             int totalTokens = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static AppConfigurationKeyValueListResult DeserializeAppConfigurationKeyValueListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppConfigurationKeyValueData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppConfigurationKeyValueData> array = new List<AppConfigurationKeyValueData>();

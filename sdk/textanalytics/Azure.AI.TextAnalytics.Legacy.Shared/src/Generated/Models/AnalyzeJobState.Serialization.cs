@@ -17,6 +17,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static AnalyzeJobState DeserializeAnalyzeJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TasksStateTasks tasks = default;
             Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
             Optional<RequestStatistics> statistics = default;
@@ -38,7 +42,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TextAnalyticsError> array = new List<TextAnalyticsError>();
@@ -53,7 +56,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
@@ -78,7 +80,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationDateTime = property.Value.GetDateTimeOffset("O");

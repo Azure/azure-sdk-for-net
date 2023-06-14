@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppManagedEnvironmentStorage data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppManagedEnvironmentStorage data model.
+    /// Storage resource for managedEnvironment.
+    /// </summary>
     public partial class ContainerAppManagedEnvironmentStorageData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentStorageData. </summary>

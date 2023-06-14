@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceStorageAccountState ToAppServiceStorageAccountState(this string value)
         {
-            if (string.Equals(value, "Ok", StringComparison.InvariantCultureIgnoreCase)) return AppServiceStorageAccountState.Ok;
-            if (string.Equals(value, "InvalidCredentials", StringComparison.InvariantCultureIgnoreCase)) return AppServiceStorageAccountState.InvalidCredentials;
-            if (string.Equals(value, "InvalidShare", StringComparison.InvariantCultureIgnoreCase)) return AppServiceStorageAccountState.InvalidShare;
-            if (string.Equals(value, "NotValidated", StringComparison.InvariantCultureIgnoreCase)) return AppServiceStorageAccountState.NotValidated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ok")) return AppServiceStorageAccountState.Ok;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidCredentials")) return AppServiceStorageAccountState.InvalidCredentials;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidShare")) return AppServiceStorageAccountState.InvalidShare;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotValidated")) return AppServiceStorageAccountState.NotValidated;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceStorageAccountState value.");
         }
     }

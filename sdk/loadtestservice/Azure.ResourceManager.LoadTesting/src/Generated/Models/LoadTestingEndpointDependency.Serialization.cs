@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static LoadTestingEndpointDependency DeserializeLoadTestingEndpointDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<LoadTestingEndpointDetail>> endpointDetails = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadTestingEndpointDetail> array = new List<LoadTestingEndpointDetail>();

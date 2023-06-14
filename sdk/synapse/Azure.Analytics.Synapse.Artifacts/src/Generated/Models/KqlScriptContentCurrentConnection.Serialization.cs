@@ -40,6 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static KqlScriptContentCurrentConnection DeserializeKqlScriptContentCurrentConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> poolName = default;
             Optional<string> databaseName = default;

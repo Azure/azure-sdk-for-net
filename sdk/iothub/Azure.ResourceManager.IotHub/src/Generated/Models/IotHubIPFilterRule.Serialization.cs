@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubIPFilterRule DeserializeIotHubIPFilterRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string filterName = default;
             IotHubIPFilterActionType action = default;
             string ipMask = default;

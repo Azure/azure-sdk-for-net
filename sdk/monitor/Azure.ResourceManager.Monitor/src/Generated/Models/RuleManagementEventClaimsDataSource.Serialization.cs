@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleManagementEventClaimsDataSource DeserializeRuleManagementEventClaimsDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {

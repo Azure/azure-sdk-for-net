@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static AppendMode ToAppendMode(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return AppendMode.None;
-            if (string.Equals(value, "autoCreate", StringComparison.InvariantCultureIgnoreCase)) return AppendMode.AutoCreate;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return AppendMode.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "autoCreate")) return AppendMode.AutoCreate;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppendMode value.");
         }
     }

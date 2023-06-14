@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-416ede8510c73f62f493c74c57747521-f3a860bfa391e085-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "35a8679a0480cd58a519356d925a086b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 08:36:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d0310bd4-3e8c-47a2-bd7f-8dade599905c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "d0310bd4-3e8c-47a2-bd7f-8dade599905c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T083610Z:d0310bd4-3e8c-47a2-bd7f-8dade599905c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-666/providers/Microsoft.Web/certificates/aeronline.net-myfirstapp0102-null?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "228",
+        "Content-Type": "application/json",
+        "traceparent": "00-6c1f6351799a8713a85d17c55b248bfb-de9d63d8c3775861-00",
+        "User-Agent": "azsdk-net-ResourceManager.AppService/1.1.0-alpha.20230217.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ba7e994d050e8bc8682b2bcdbd81060a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "serverFarmId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-666/providers/Microsoft.Web/serverfarms/ASP-testRG666-b64f",
+          "canonicalName": "aeronline.net"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "942",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Feb 2023 08:36:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f26eedf6-d53e-4304-b9ed-bf20833d0527",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "28a6a87c-b145-410a-8a83-387edc7d8caa",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T083612Z:f26eedf6-d53e-4304-b9ed-bf20833d0527",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-666/providers/Microsoft.Web/certificates/aeronline.net-myfirstapp0102-null",
+        "name": "aeronline.net-myfirstapp0102-null",
+        "type": "Microsoft.Web/certificates",
+        "location": "East US",
+        "properties": {
+          "password": null,
+          "friendlyName": "",
+          "subjectName": "aeronline.net",
+          "hostNames": [
+            "aeronline.net"
+          ],
+          "pfxBlob": null,
+          "siteName": null,
+          "selfLink": null,
+          "issuer": "GeoTrust Global TLS RSA4096 SHA256 2022 CA1",
+          "issueDate": "2023-02-17T00:00:00\u002B00:00",
+          "expirationDate": "2023-08-17T23:59:59\u002B00:00",
+          "thumbprint": "75CE2A48A3A8F7FC4085C4D3EBB86E89AD1CA5E6",
+          "valid": null,
+          "toDelete": null,
+          "cerBlob": null,
+          "publicKeyHash": null,
+          "hostingEnvironment": null,
+          "hostingEnvironmentProfile": null,
+          "keyVaultId": "",
+          "keyVaultSecretName": "",
+          "keyVaultSecretStatus": "Initialized",
+          "webSpace": "testRG-666-EastUSwebspace",
+          "serverFarmId": null,
+          "canonicalName": "aeronline.net",
+          "tags": null,
+          "resourceGroup": "testRG-666"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2043430084",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

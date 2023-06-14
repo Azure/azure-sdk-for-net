@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="environmentVariables"> The environment variables to set in the init container. </param>
         /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
         /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
-        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<ContainerVolumeMount> volumeMounts)
+        /// <param name="securityContext"> The container security properties. </param>
+        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<ContainerVolumeMount> volumeMounts, ContainerSecurityContextDefinition securityContext)
         {
             Name = name;
             Image = image;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             EnvironmentVariables = environmentVariables;
             InstanceView = instanceView;
             VolumeMounts = volumeMounts;
+            SecurityContext = securityContext;
         }
 
         /// <summary> The name for the init container. </summary>
@@ -56,5 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public InitContainerPropertiesDefinitionInstanceView InstanceView { get; }
         /// <summary> The volume mounts available to the init container. </summary>
         public IList<ContainerVolumeMount> VolumeMounts { get; }
+        /// <summary> The container security properties. </summary>
+        public ContainerSecurityContextDefinition SecurityContext { get; set; }
     }
 }

@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static RemoteRenderingServiceError DeserializeRemoteRenderingServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<IReadOnlyList<RemoteRenderingServiceError>> details = default;
@@ -36,7 +40,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RemoteRenderingServiceError> array = new List<RemoteRenderingServiceError>();
@@ -56,7 +59,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innerError = DeserializeRemoteRenderingServiceError(property.Value);

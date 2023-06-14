@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNfsMountConfiguration DeserializeBatchNfsMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string source = default;
             string relativeMountPath = default;
             Optional<string> mountOptions = default;

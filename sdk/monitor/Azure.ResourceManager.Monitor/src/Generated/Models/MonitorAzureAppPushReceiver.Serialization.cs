@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorAzureAppPushReceiver DeserializeMonitorAzureAppPushReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string emailAddress = default;
             foreach (var property in element.EnumerateObject())

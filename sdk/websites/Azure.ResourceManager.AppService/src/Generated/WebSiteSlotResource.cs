@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource" /> object. </returns>
         public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadata()
         {
-            return new WebSiteSlotResourceHealthMetadataResource(Client, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
+            return new WebSiteSlotResourceHealthMetadataResource(Client, Id.AppendChildResource("resourceHealthMetadata", "default"));
         }
 
         /// <summary> Gets a collection of SiteSlotBackupResources in the WebSiteSlot. </summary>
@@ -426,14 +426,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicy()
         {
-            return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
+            return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "ftp"));
         }
 
         /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy()
         {
-            return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "scm"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotConfigAppSettingResources in the WebSiteSlot. </summary>
@@ -546,14 +546,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource" /> object. </returns>
         public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfig()
         {
-            return new LogsSiteSlotConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
+            return new LogsSiteSlotConfigResource(Client, Id.AppendChildResource("config", "logs"));
         }
 
         /// <summary> Gets an object representing a WebSiteSlotConfigResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource" /> object. </returns>
         public virtual WebSiteSlotConfigResource GetWebSiteSlotConfig()
         {
-            return new WebSiteSlotConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/web"));
+            return new WebSiteSlotConfigResource(Client, Id.AppendChildResource("config", "web"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotContinuousWebJobResources in the WebSiteSlot. </summary>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
         public virtual SiteSlotExtensionResource GetSiteSlotExtension()
         {
-            return new SiteSlotExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+            return new SiteSlotExtensionResource(Client, Id.AppendChildResource("extensions", "MSDeploy"));
         }
 
         /// <summary> Gets a collection of SiteSlotFunctionResources in the WebSiteSlot. </summary>
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource" /> object. </returns>
         public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfig()
         {
-            return new SiteSlotNetworkConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
+            return new SiteSlotNetworkConfigResource(Client, Id.AppendChildResource("networkConfig", "virtualNetwork"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotPremierAddOnResources in the WebSiteSlot. </summary>
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource" /> object. </returns>
         public virtual WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccess()
         {
-            return new WebSiteSlotPrivateAccessResource(Client, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
+            return new WebSiteSlotPrivateAccessResource(Client, Id.AppendChildResource("privateAccess", "virtualNetworks"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotPublicCertificateResources in the WebSiteSlot. </summary>
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource" /> object. </returns>
         public virtual MigrateMySqlStatusResource GetMigrateMySqlStatus()
         {
-            return new MigrateMySqlStatusResource(Client, new ResourceIdentifier(Id.ToString() + "/migratemysql/status"));
+            return new MigrateMySqlStatusResource(Client, Id.AppendChildResource("migratemysql", "status"));
         }
 
         /// <summary> Gets a collection of NetworkFeatureResources in the WebSiteSlot. </summary>
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource" /> object. </returns>
         public virtual WebSiteSlotSourceControlResource GetWebSiteSlotSourceControl()
         {
-            return new WebSiteSlotSourceControlResource(Client, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
+            return new WebSiteSlotSourceControlResource(Client, Id.AppendChildResource("sourcecontrols", "web"));
         }
 
         /// <summary> Gets a collection of WebSiteTriggeredwebJobResources in the WebSiteSlot. </summary>
@@ -1992,7 +1992,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Updates site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2060,7 +2060,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2090,7 +2090,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Description for Gets site's Authentication / Authorization settings for apps via the V2 format
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4068,7 +4068,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PerfMonResponseInfo> GetPerfMonCountersSlotAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -4091,7 +4091,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PerfMonResponseInfo> GetPerfMonCountersSlot(string filter = null, CancellationToken cancellationToken = default)
@@ -4102,7 +4102,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets web app&apos;s event logs.
+        /// Description for Gets web app's event logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4132,7 +4132,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets web app&apos;s event logs.
+        /// Description for Gets web app's event logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4216,7 +4216,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
@@ -4250,7 +4250,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual Response<Stream> GetPublishingProfileXmlWithSecretsSlot(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
@@ -5226,7 +5226,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesSlotAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -5249,7 +5249,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmUsageQuota> GetUsagesSlot(string filter = null, CancellationToken cancellationToken = default)

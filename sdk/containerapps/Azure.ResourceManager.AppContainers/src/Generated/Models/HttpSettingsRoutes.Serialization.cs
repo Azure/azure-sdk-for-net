@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static HttpSettingsRoutes DeserializeHttpSettingsRoutes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiPrefix = default;
             foreach (var property in element.EnumerateObject())
             {

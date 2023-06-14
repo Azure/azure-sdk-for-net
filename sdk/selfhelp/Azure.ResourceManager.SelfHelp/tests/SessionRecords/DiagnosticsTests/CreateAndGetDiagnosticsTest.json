@@ -1,0 +1,160 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ab80f6995b43f1eb78b28329d2188b0b-f8ff10bc48a3f122-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b355bf73b09a9c12e567c22c3ff85643",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "417",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 May 2023 14:42:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ae13c3da-8753-4bc5-8d55-03566772747c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "ae13c3da-8753-4bc5-8d55-03566772747c",
+        "x-ms-routing-request-id": "EASTUS:20230530T144203Z:ae13c3da-8753-4bc5-8d55-03566772747c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Azure Triage Resource Provider - Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439?api-version=2023-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "107",
+        "Content-Type": "application/json",
+        "traceparent": "00-44cdc87de030631ec24db5a0a1b7e722-42a829b2cbef8f49-00",
+        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230530.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "87a341050ca4ffcc5d112e6413dd7aad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "globalParameters": {
+            "startTime": "2020-07-01"
+          },
+          "insights": [
+            {
+              "solutionId": "Demo2InsightV2"
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/providers/Microsoft.Help/Diagnostics/testResource5439/operationResults/bb5fc2d7-97a1-414f-9775-971b776669d8?api-version=2023-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "371",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 May 2023 14:42:04 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/providers/Microsoft.Help/Diagnostics/testResource5439/operationResults/bb5fc2d7-97a1-414f-9775-971b776669d8?api-version=2023-06-01",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "23f5b4cc-9150-4fff-8ce0-aa877ccee87f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "72",
+        "x-ms-request-id": "23f5b4cc-9150-4fff-8ce0-aa877ccee87f",
+        "x-ms-routing-request-id": "EASTUS:20230530T144204Z:23f5b4cc-9150-4fff-8ce0-aa877ccee87f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439",
+        "name": "testResource5439",
+        "type": "Microsoft.Help/Diagnostics",
+        "properties": {
+          "provisioningState": "Running",
+          "acceptedAt": "2023-05-30T14:42:04.5957939Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439?api-version=2023-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-23d851b5600254902f1f8d284ae693c4-a951dd8825a2214a-00",
+        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230530.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6c7677b758cfb3cf89b33d9ee438d18a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2314",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 May 2023 14:42:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fe86be59-28f7-4a7c-871c-c547f27cb024",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "71",
+        "x-ms-request-id": "fe86be59-28f7-4a7c-871c-c547f27cb024",
+        "x-ms-routing-request-id": "EASTUS:20230530T144205Z:fe86be59-28f7-4a7c-871c-c547f27cb024",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439",
+        "name": "testResource5439",
+        "type": "Microsoft.Help/Diagnostics",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "acceptedAt": "2023-05-30T14:42:04.5957939Z",
+          "diagnostics": [
+            {
+              "solutionId": "Demo2InsightV2",
+              "status": "Succeeded",
+              "insights": [
+                {
+                  "id": "perfinsights-available-linux",
+                  "title": "Windows Unable to Boot Test hardcoded string for unknown resource (Demo Insight)",
+                  "results": "\u003C!--issueDescription--\u003E\n\u003Cp\u003EWe have detected that PerfInsights is already installed on your VM. You can run PerfInsights on-demand through the Portal and view reports for your analysis.\u003C/p\u003E\n\u003C!--/issueDescription--\u003E\n\u003Cp\u003EPerfInsights is a diagnostics tool that can help you analyze operating system level metrics such as:\u003C/p\u003E\n\u003Cul\u003E\n\u003Cli\u003EBest Practices recommendations for Linux\u003C/li\u003E\n\u003Cli\u003ETop CPU consumers\u003C/li\u003E\n\u003Cli\u003ETop Memory consumers\u003C/li\u003E\n\u003Cli\u003EStorage/RAID/LVM layout\u003C/li\u003E\n\u003C/ul\u003E\n\u003Ch2\u003E\u003Cstrong\u003ERecommended Steps\u003C/strong\u003E\u003C/h2\u003E\n\u003Cp\u003E\u003Ca data-blade=\u0022Microsoft_Azure_Compute.PerformanceDiagnosticsBlade.resourceId.$resourceId\u0022 button-data-blade=\u0022button-data-blade\u0022\u003ERun PerfInsights\u003C/a\u003E\u003C/p\u003E\n\u003Cp\u003EFor the machine \u003C!--$vmname--\u003E[vmname]\u003C!--/$vmname--\u003E, you can \u003Ca href=\u0022https://portal.azure.com/#@microsoft.onmicrosoft.com/resource/{$resourceIdDecoded}/performanceDiagnostics\u0022\u003Eaccess PerfInsights here\u003C/a\u003E and review results directly in the Azure portal.\u003C/p\u003E\n\u003Cp\u003EYou may also \u003Ca href=\u0022https://docs.microsoft.com/azure/virtual-machines/troubleshooting/performance-diagnostics#install-and-run-performance-diagnostics-on-your-vm\u0022\u003Edownload PerfInsights\u003C/a\u003E and run it on your virtual machine.\u003C/p\u003E\n\u003Cp\u003EIf you open a support case, attach the PerfInsights report for the Support Engineer to analyze.\u003C/p\u003E\n\u003Ch2\u003E\u003Cstrong\u003ERecommended Documents\u003C/strong\u003E\u003C/h2\u003E\n\u003Cul\u003E\n\u003Cli\u003E\u003Ca href=\u0022https://docs.microsoft.com/azure/virtual-machines/troubleshooting/how-to-use-perfinsights\u0022\u003EHow to use PerfInsights\u003C/a\u003E\u003C/li\u003E\n\u003Cli\u003E\u003Ca href=\u0022https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-performance-bottlenecks-linux\u0022\u003ETroubleshoot performance and isolate bottlenecks in Linux\u003C/a\u003E\u003C/li\u003E\n\u003C/ul\u003E\n",
+                  "importanceLevel": "Warning"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1027507658",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba"
+  }
+}

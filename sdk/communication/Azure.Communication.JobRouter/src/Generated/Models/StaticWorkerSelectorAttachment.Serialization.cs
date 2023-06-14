@@ -24,6 +24,10 @@ namespace Azure.Communication.JobRouter
 
         internal static StaticWorkerSelectorAttachment DeserializeStaticWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WorkerSelector labelSelector = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

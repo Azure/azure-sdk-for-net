@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryDatasetData DeserializeFactoryDatasetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryDatasetDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

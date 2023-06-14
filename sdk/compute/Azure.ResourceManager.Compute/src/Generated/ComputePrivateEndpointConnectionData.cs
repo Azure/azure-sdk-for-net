@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the ComputePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ComputePrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class ComputePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionData. </summary>

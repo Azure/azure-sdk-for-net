@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceEncryptionConfig DeserializeBackupResourceEncryptionConfig(JsonElement element)
         {
-            Optional<EncryptionAtRestType> encryptionAtRestType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
             Optional<Uri> keyUri = default;
             Optional<string> subscriptionId = default;
             Optional<LastUpdateStatus> lastUpdateStatus = default;
@@ -57,17 +61,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionAtRestType = new EncryptionAtRestType(property.Value.GetString());
+                    encryptionAtRestType = new BackupEncryptionAtRestType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUri = null;
                         continue;
                     }
                     keyUri = new Uri(property.Value.GetString());
@@ -82,7 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdateStatus = new LastUpdateStatus(property.Value.GetString());
@@ -92,7 +93,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     infrastructureEncryptionState = new InfrastructureEncryptionState(property.Value.GetString());

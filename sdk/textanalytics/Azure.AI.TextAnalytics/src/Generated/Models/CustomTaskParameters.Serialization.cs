@@ -29,6 +29,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomTaskParameters DeserializeCustomTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string projectName = default;
             string deploymentName = default;
             Optional<bool> loggingOptOut = default;
@@ -48,7 +52,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();

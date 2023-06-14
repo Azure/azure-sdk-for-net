@@ -21,8 +21,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// Azure subscription.
     /// </remarks>
     [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
-    [ClientTestFixture(
-     DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31)]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -39,6 +37,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35243")]
         public async Task AnalyzeDocumentPopulatesExtractedBusinessCardJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -228,7 +227,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             if (useStream)
             {
@@ -278,7 +277,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.SelectionMarks);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.SelectionMarks);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
@@ -316,7 +315,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.MultipageFiles);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -372,7 +371,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             if (useStream)
             {
@@ -423,7 +422,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Use Form_<id>.<ext> files for building model.
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             // Attempt to recognize a different type of document: Invoice_1.pdf. This document does not contain all the labels
             // the newly built model expects.
@@ -451,7 +450,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.TableVariableRows);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableVariableRows);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
             using (Recording.DisableRequestBodyRecording())
@@ -475,7 +474,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.TableFixedRows);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableFixedRows);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
             using (Recording.DisableRequestBodyRecording())
@@ -500,7 +499,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
@@ -538,7 +537,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
@@ -555,7 +554,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var invalidUri = new Uri("https://idont.ex.ist");
 
@@ -814,7 +813,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("VendorAddressRecipient"));
             Assert.True(document.Fields.ContainsKey("VendorName"));
 
-            ValidateCurrencyValue(document.Fields["AmountDue"].Value.AsCurrency(), 610.00, "$");
+            ValidateCurrencyValue(document.Fields["AmountDue"].Value.AsCurrency(), 610.00, "$", "USD");
 
             AddressValue billingAddress = document.Fields["BillingAddress"].Value.AsAddress();
             Assert.AreEqual("Redmond", billingAddress.City);
@@ -852,8 +851,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(2019, invoiceDate.Year);
 
             Assert.AreEqual("INV-100", document.Fields["InvoiceId"].Value.AsString());
-            ValidateCurrencyValue(document.Fields["InvoiceTotal"].Value.AsCurrency(), 110.00, "$");
-            ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].Value.AsCurrency(), 500.00, "$");
+            ValidateCurrencyValue(document.Fields["InvoiceTotal"].Value.AsCurrency(), 110.00, "$", "USD");
+            ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].Value.AsCurrency(), 500.00, "$", "USD");
             Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].Value.AsString());
 
             AddressValue remittanceAddress = document.Fields["RemittanceAddress"].Value.AsAddress();
@@ -901,8 +900,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("123 Ship St", shippingAddress.StreetAddress);
 
             Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].Value.AsString());
-            ValidateCurrencyValue(document.Fields["SubTotal"].Value.AsCurrency(), 100.00, "$");
-            ValidateCurrencyValue(document.Fields["TotalTax"].Value.AsCurrency(), 10.00, "$");
+            ValidateCurrencyValue(document.Fields["SubTotal"].Value.AsCurrency(), 100.00, "$", "USD");
+            ValidateCurrencyValue(document.Fields["TotalTax"].Value.AsCurrency(), 10.00, "$", "USD");
 
             AddressValue vendorAddress = document.Fields["VendorAddress"].Value.AsAddress();
             Assert.AreEqual("New York", vendorAddress.City);
@@ -954,19 +953,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 var expectedItem = expectedItems[itemIndex];
 
-                ValidateCurrencyValue(amount, expectedItem.Amount, "$", $"Amount mismatch in item with index {itemIndex}.");
+                ValidateCurrencyValue(amount, expectedItem.Amount, "$", "USD", $"Amount mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Date, date, $"Date mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.ProductCode, productCode, $"ProductCode mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Unit, unit, $"Unit mismatch in item with index {itemIndex}.");
                 Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
-                ValidateCurrencyValue(unitPrice, expectedItem.UnitPrice, "$", $"UnitPrice mismatch in item with index {itemIndex}.");
+                ValidateCurrencyValue(unitPrice, expectedItem.UnitPrice, "$", "USD", $"UnitPrice mismatch in item with index {itemIndex}.");
             }
         }
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35243")]
         public async Task AnalyzeDocumentCanParseMultipageInvoice(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1720,6 +1720,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                         ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                     }
                 }
+
+                if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+                {
+                    if (kvp.CommonName != null)
+                    {
+                        Assert.IsNotEmpty(kvp.CommonName);
+                    }
+                }
+                else
+                {
+                    Assert.Null(kvp.CommonName);
+                }
             }
 
             // Check Document Pages.
@@ -1914,10 +1926,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateCurrencyValue(CurrencyValue value, double expectedAmount, string expectedSymbol, string message = null)
+        private void ValidateCurrencyValue(CurrencyValue value, double expectedAmount, string expectedSymbol, string expectedCode, string message = null)
         {
             Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
             Assert.AreEqual(expectedSymbol, value.Symbol, message);
+
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                Assert.AreEqual(expectedCode, value.Code, message);
+            }
+            else
+            {
+                Assert.Null(value.Code, message);
+            }
         }
     }
 }

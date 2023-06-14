@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleHttpVersionCondition DeserializeDeliveryRuleHttpVersionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HttpVersionMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())

@@ -125,7 +125,7 @@ Description = "The results of the security audit.",
 SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b814011"),
 }
 },
-                AssessmentOn = DateTimeOffset.Parse("2021-06-10T00:00:00Z"),
+                AssessOn = DateTimeOffset.Parse("2021-06-10T00:00:00Z"),
                 Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     ["departmentId"] = "NYC-MARKETING-1"

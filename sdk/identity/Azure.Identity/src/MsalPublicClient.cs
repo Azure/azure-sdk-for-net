@@ -38,8 +38,7 @@ namespace Azure.Identity
 
         protected virtual ValueTask<IPublicClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
         {
-            var authorityHost = Pipeline.AuthorityHost;
-            var authorityUri = new UriBuilder(authorityHost.Scheme, authorityHost.Host, authorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
+            var authorityUri = new UriBuilder(AuthorityHost.Scheme, AuthorityHost.Host, AuthorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
 
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
                 .Create(ClientId)
@@ -96,7 +95,7 @@ namespace Azure.Identity
 
             if (tenantId != null)
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
 
             return await builder
@@ -119,7 +118,7 @@ namespace Azure.Identity
             // otherwise we should authenticate with the tenant specified by the authentication record since that's the tenant the
             // user authenticated to originally.
             return await client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
-                .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId)
+                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId)
                 .WithClaims(claims)
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -127,11 +126,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool async, CancellationToken cancellationToken)
         {
-#pragma warning disable AZC0109 // Misuse of 'async' parameter.
-            if (!async && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
-#pragma warning restore AZC0109 // Misuse of 'async' parameter.
+            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
             {
-                // In the synchronous case we need to use Task.Run to execute on the call to MSAL on the threadpool.
+                // In the case we are called in an STA apartment thread, we need to use Task.Run to execute on the call to MSAL on the threadpool.
                 // On certain platforms MSAL will use the embedded browser instead of launching the browser as a separate
                 // process. Executing with Task.Run prevents possibly deadlocking the UI thread in these cases.
                 // This workaround can be disabled by using the "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution" app switch
@@ -170,7 +167,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -192,7 +189,7 @@ namespace Azure.Identity
                 .WithClaims(claims);
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);

@@ -25,27 +25,30 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterOidcIssuerProfile DeserializeManagedClusterOidcIssuerProfile(JsonElement element)
         {
-            Optional<string> issuerURL = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> issuerUrl = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issuerURL"u8))
                 {
-                    issuerURL = property.Value.GetString();
+                    issuerUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ManagedClusterOidcIssuerProfile(issuerURL.Value, Optional.ToNullable(enabled));
+            return new ManagedClusterOidcIssuerProfile(issuerUrl.Value, Optional.ToNullable(enabled));
         }
     }
 }

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static PrivateEndpointAcl DeserializePrivateEndpointAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IList<WebPubSubRequestType>> allow = default;
             Optional<IList<WebPubSubRequestType>> deny = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebPubSubRequestType> array = new List<WebPubSubRequestType>();
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebPubSubRequestType> array = new List<WebPubSubRequestType>();

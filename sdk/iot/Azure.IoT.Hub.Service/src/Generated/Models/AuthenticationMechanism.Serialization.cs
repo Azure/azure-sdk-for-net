@@ -35,6 +35,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static AuthenticationMechanism DeserializeAuthenticationMechanism(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SymmetricKey> symmetricKey = default;
             Optional<X509Thumbprint> x509Thumbprint = default;
             Optional<AuthenticationMechanismType> type = default;
@@ -44,7 +48,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     symmetricKey = SymmetricKey.DeserializeSymmetricKey(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509Thumbprint = X509Thumbprint.DeserializeX509Thumbprint(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new AuthenticationMechanismType(property.Value.GetString());

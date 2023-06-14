@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkTableRequestTargetDistributionOptions DeserializeLinkTableRequestTargetDistributionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> distributionColumn = default;
             foreach (var property in element.EnumerateObject())

@@ -153,89 +153,35 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
-        #region Dynamic Classify
-
-        public virtual Response<ClassificationCategoryCollection> DynamicClassify(
-            string document,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassify)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
-
-        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            IEnumerable<string> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
-
-        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            IEnumerable<TextDocumentInput> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
-
-        public virtual Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
-            string document,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
-
-        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            IEnumerable<string> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
-
-        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            IEnumerable<TextDocumentInput> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
-
-        #endregion
-
         #region Extractive Summarize
 
         public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         public virtual Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         public virtual Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         #endregion
 
         #region Abstractive Summarize
 
         public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2023_04_01, ServiceVersion);
 
         #endregion
 

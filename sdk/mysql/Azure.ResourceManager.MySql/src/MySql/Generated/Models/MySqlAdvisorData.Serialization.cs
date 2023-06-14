@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlAdvisorData DeserializeMySqlAdvisorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.MySql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.MySql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

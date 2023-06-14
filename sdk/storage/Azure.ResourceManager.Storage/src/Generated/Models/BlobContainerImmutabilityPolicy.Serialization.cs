@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static BlobContainerImmutabilityPolicy DeserializeBlobContainerImmutabilityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UpdateHistoryEntry> array = new List<UpdateHistoryEntry>();
@@ -62,7 +64,6 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
@@ -72,7 +73,6 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new ImmutabilityPolicyState(property0.Value.GetString());
@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWritesAll = property0.Value.GetBoolean();

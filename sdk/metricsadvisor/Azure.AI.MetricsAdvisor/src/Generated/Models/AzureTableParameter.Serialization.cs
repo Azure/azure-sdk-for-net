@@ -50,6 +50,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureTableParameter DeserializeAzureTableParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             string table = default;
             string query = default;

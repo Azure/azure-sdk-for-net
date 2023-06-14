@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Plugins;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
@@ -123,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 });
 
                 await sender.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                await using ServiceBusReceiver receiver = await client.AccextNextSessionPluginAsync(queueName, new List<Func<ServiceBusReceivedMessage, Task>>()
+                await using ServiceBusReceiver receiver = await client.AcceptNextSessionPluginAsync(queueName, new List<Func<ServiceBusReceivedMessage, Task>>()
                 {
                     message =>
                     {

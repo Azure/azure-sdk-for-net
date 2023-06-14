@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerInstanceAzureFileVolume DeserializeContainerInstanceAzureFileVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string shareName = default;
             Optional<bool> readOnly = default;
             string storageAccountName = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readOnly = property.Value.GetBoolean();

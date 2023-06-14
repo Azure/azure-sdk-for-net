@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the DataNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the DataNetwork data model.
+    /// Data network resource. Must be created in the same location as its parent mobile network.
+    /// </summary>
     public partial class DataNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataNetworkData. </summary>

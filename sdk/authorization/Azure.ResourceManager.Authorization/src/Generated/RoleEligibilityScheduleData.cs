@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the RoleEligibilitySchedule data model. </summary>
+    /// <summary>
+    /// A class representing the RoleEligibilitySchedule data model.
+    /// Role eligibility schedule
+    /// </summary>
     public partial class RoleEligibilityScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleData. </summary>
@@ -34,8 +37,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="status"> The status of the role eligibility schedule. </param>
         /// <param name="startOn"> Start DateTime when role eligibility schedule. </param>
         /// <param name="endOn"> End DateTime when role eligibility schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role eligibility schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
@@ -75,9 +78,9 @@ namespace Azure.ResourceManager.Authorization
         public DateTimeOffset? StartOn { get; }
         /// <summary> End DateTime when role eligibility schedule. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         public string Condition { get; }
-        /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
+        /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
         public string ConditionVersion { get; }
         /// <summary> DateTime when role eligibility schedule was created. </summary>
         public DateTimeOffset? CreatedOn { get; }

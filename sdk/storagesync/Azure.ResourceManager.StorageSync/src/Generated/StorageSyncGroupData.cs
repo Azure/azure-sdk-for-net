@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the StorageSyncGroup data model. </summary>
+    /// <summary>
+    /// A class representing the StorageSyncGroup data model.
+    /// Sync Group object.
+    /// </summary>
     public partial class StorageSyncGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageSyncGroupData. </summary>

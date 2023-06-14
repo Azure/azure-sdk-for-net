@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBFinishCommand DeserializeMongoDBFinishCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBFinishCommandInput> input = default;
             CommandType commandType = default;
             Optional<IReadOnlyList<ODataError>> errors = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     input = MongoDBFinishCommandInput.DeserializeMongoDBFinishCommandInput(property.Value);
@@ -53,7 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
@@ -68,7 +70,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new CommandState(property.Value.GetString());

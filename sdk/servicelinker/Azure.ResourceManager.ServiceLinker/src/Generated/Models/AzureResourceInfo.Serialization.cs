@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<AzureResourceBaseProperties> resourceProperties = default;
             TargetServiceType type = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());

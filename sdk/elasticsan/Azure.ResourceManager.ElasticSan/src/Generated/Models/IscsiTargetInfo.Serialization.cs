@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static IscsiTargetInfo DeserializeIscsiTargetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetIqn = default;
             Optional<string> targetPortalHostname = default;
             Optional<int> targetPortalPort = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetPortalPort = property.Value.GetInt32();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ElasticSanProvisioningState(property.Value.GetString());
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ResourceOperationalStatus(property.Value.GetString());

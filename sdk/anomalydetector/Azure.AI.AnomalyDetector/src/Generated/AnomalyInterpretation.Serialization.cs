@@ -15,8 +15,12 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyInterpretation DeserializeAnomalyInterpretation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
-            Optional<float?> contributionScore = default;
+            Optional<float> contributionScore = default;
             Optional<CorrelationChanges> correlationChanges = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,7 +33,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        contributionScore = null;
                         continue;
                     }
                     contributionScore = property.Value.GetSingle();
@@ -39,14 +42,13 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value);
                     continue;
                 }
             }
-            return new AnomalyInterpretation(variable, Optional.ToNullable(contributionScore), correlationChanges);
+            return new AnomalyInterpretation(variable.Value, Optional.ToNullable(contributionScore), correlationChanges.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

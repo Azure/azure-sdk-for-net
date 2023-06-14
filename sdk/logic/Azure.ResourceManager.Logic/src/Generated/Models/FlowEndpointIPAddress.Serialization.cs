@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpointIPAddress DeserializeFlowEndpointIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {

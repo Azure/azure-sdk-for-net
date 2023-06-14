@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestHealthCheckStepAttributes DeserializeRestHealthCheckStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<TimeSpan> waitDuration = default;
             Optional<TimeSpan> maxElasticDuration = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitDuration = property.Value.GetTimeSpan("P");
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxElasticDuration = property.Value.GetTimeSpan("P");
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RestHealthCheck> array = new List<RestHealthCheck>();

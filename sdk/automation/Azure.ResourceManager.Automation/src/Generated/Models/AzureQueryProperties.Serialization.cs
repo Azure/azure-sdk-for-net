@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AzureQueryProperties DeserializeAzureQueryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scope = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<QueryTagSettingsProperties> tagSettings = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -85,7 +87,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);

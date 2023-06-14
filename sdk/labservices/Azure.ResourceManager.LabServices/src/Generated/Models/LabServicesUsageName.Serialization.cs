@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabServicesUsageName DeserializeLabServicesUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localizedValue = default;
             Optional<IReadOnlyList<string>> skuInstances = default;
             Optional<string> value = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

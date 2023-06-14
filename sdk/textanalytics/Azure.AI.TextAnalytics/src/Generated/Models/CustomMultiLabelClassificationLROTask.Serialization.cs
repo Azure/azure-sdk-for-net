@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomMultiLabelClassificationLROTask DeserializeCustomMultiLabelClassificationLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CustomMultiLabelClassificationTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;
@@ -41,7 +45,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parameters = CustomMultiLabelClassificationTaskParameters.DeserializeCustomMultiLabelClassificationTaskParameters(property.Value);

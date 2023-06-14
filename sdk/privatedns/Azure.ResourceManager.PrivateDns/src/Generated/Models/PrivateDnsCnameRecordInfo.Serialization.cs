@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsCnameRecordInfo DeserializePrivateDnsCnameRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
             {

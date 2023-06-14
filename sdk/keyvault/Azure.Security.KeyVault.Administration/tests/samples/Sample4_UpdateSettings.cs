@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             client.UpdateSetting(updated);
 #else
             updated = client.UpdateSetting(updated);
-            Assert.IsTrue(updated.AsBoolean());
+            Assert.IsTrue(updated.Value.AsBoolean());
 #endif
             #endregion
         }
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             await client.UpdateSettingAsync(updated);
 #else
             updated = await client.UpdateSettingAsync(updated);
-            Assert.IsTrue(updated.AsBoolean());
+            Assert.IsTrue(updated.Value.AsBoolean());
 #endif
             #endregion
         }

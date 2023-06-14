@@ -41,7 +41,7 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following code:
 
-```C# Snippet:Readme_AuthClient
+```C# Snippet:Readme_AuthClient_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -49,9 +49,8 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
-
-// Code omitted for brevity
-
+```
+```C# Snippet:Readme_AuthClient
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -134,7 +133,7 @@ await foreach (VirtualMachineResource virtualMachine in virtualMachines)
 ```
 
 ## Structured Resource Identifier
-Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifer("myid");`.
+Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifier("myid");`.
 
 ### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
@@ -305,6 +304,130 @@ ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 string resourceGroupName = "myRgName";
 ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
 await resourceGroup.DeleteAsync(WaitUntil.Completed);
+```
+### Get GenericResource List
+```C# Snippet:Get_GenericResource_List
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource sub = client.GetDefaultSubscription();
+AsyncPageable<GenericResource> networkAndVmWithTestInName = sub.GetGenericResourcesAsync(
+    // Set filter to only return virtual network and virtual machine resource with 'test' in the name
+    filter: "(resourceType eq 'Microsoft.Network/virtualNetworks' or resourceType eq 'Microsoft.Compute/virtualMachines') and substringof('test', name)",
+    // Include 'createdTime' and 'changeTime' properties in the returned data
+    expand: "createdTime,changedTime"
+    );
+
+int count = 0;
+await foreach (var res in networkAndVmWithTestInName)
+{
+    Console.WriteLine($"{res.Id.Name} in resource group {res.Id.ResourceGroupName} created at {res.Data.CreatedOn} and changed at {res.Data.ChangedOn}");
+    count++;
+}
+Console.WriteLine($"{count} resources found");
+```
+### Create GenericResource
+```C# Snippet:Create_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+var subnetName = "samplesubnet";
+var addressSpaces = new Dictionary<string, object>()
+{
+    { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
+};
+var subnet = new Dictionary<string, object>()
+{
+    { "name", subnetName },
+    { "properties", new Dictionary<string, object>()
+        {
+            { "addressPrefix", "10.0.1.0/24" }
+        }
+    }
+};
+var subnets = new List<object>() { subnet };
+var data = new GenericResourceData(AzureLocation.EastUS)
+{
+    Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+    {
+        { "addressSpace", addressSpaces },
+        { "subnets", subnets }
+    })
+};
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+var createResult = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {createResult.Value.Id.ResourceGroupName} created");
+```
+### Update GenericResource
+```C# Snippet:Update_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+var subnetName = "samplesubnet";
+var addressSpaces = new Dictionary<string, object>()
+{
+    { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
+};
+var subnet = new Dictionary<string, object>()
+{
+    { "name", subnetName },
+    { "properties", new Dictionary<string, object>()
+        {
+            { "addressPrefix", "10.0.1.0/24" }
+        }
+    }
+};
+var subnets = new List<object>() { subnet };
+var data = new GenericResourceData(AzureLocation.EastUS)
+{
+    Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+    {
+        { "addressSpace", addressSpaces },
+        { "subnets", subnets }
+    })
+};
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+var createResult = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {createResult.Value.Id.ResourceGroupName} updated");
+```
+### Update GenericResourc Tags
+```C# Snippet:Update_GenericResourc_Tags
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+GenericResource resource = client.GetGenericResources().Get(id).Value;
+
+GenericResourceData updateTag = new GenericResourceData(AzureLocation.EastUS);
+updateTag.Tags.Add("tag1", "sample-for-genericresource");
+ArmOperation<GenericResource> updateTagResult = await resource.UpdateAsync(WaitUntil.Completed, updateTag);
+
+Console.WriteLine($"Resource {updateTagResult.Value.Id.Name} in resource group {updateTagResult.Value.Id.ResourceGroupName} updated");
+```
+### Get GenericResource
+```C# Snippet:Get_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+Response<GenericResource> getResultFromGenericResourceCollection = await client.GetGenericResources().GetAsync(id);
+Console.WriteLine($"Resource {getResultFromGenericResourceCollection.Value.Id.Name} in resource group {getResultFromGenericResourceCollection.Value.Id.ResourceGroupName} got");
+
+GenericResource resource = getResultFromGenericResourceCollection.Value;
+Response<GenericResource> getResultFromGenericResource = await resource.GetAsync();
+Console.WriteLine($"Resource {getResultFromGenericResource.Value.Id.Name} in resource group {getResultFromGenericResource.Value.Id.ResourceGroupName} got");
+```
+### Check whether GenericResource exists
+```C# Snippet:Is_GenericResource_Exist
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+
+bool existResult = await client.GetGenericResources().ExistsAsync(id);
+Console.WriteLine($"Resource exists: {existResult}");
+```
+### Delete GenericResource
+```C# Snippet:Delete_GenericResource
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+GenericResource resource = client.GetGenericResources().Get(id).Value;
+
+var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
+Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.

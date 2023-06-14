@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointChangeEnumerationStatus DeserializeCloudEndpointChangeEnumerationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<CloudEndpointLastChangeEnumerationStatus> lastEnumerationStatus = default;
             Optional<CloudEndpointChangeEnumerationActivity> activity = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEnumerationStatus = CloudEndpointLastChangeEnumerationStatus.DeserializeCloudEndpointLastChangeEnumerationStatus(property.Value);
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activity = CloudEndpointChangeEnumerationActivity.DeserializeCloudEndpointChangeEnumerationActivity(property.Value);

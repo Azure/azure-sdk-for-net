@@ -81,6 +81,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SplitSkill DeserializeSplitSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SplitSkillLanguage?> defaultLanguageCode = default;
             Optional<TextSplitMode> textSplitMode = default;
             Optional<int?> maximumPageLength = default;
@@ -106,7 +110,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     textSplitMode = new TextSplitMode(property.Value.GetString());

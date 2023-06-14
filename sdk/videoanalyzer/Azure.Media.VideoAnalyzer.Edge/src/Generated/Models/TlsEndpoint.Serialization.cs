@@ -39,6 +39,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static TlsEndpoint DeserializeTlsEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CertificateSource> trustedCertificates = default;
             Optional<TlsValidationOptions> validationOptions = default;
             string type = default;
@@ -50,7 +54,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trustedCertificates = CertificateSource.DeserializeCertificateSource(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationOptions = TlsValidationOptions.DeserializeTlsValidationOptions(property.Value);
@@ -75,7 +77,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);

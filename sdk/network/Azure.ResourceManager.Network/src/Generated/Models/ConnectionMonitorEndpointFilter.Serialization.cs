@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointFilter DeserializeConnectionMonitorEndpointFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionMonitorEndpointFilterType> type = default;
             Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ConnectionMonitorEndpointFilterType(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();

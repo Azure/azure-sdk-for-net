@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferConfiguration DeserializeTransferConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TransferConfigurationType transferConfigurationType = default;
             Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
             Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);

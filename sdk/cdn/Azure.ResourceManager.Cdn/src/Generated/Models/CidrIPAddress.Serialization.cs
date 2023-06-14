@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CidrIPAddress DeserializeCidrIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> baseIPAddress = default;
             Optional<int> prefixLength = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     prefixLength = property.Value.GetInt32();

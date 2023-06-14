@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkConfigurationResource DeserializeSparkConfigurationResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SparkConfiguration properties = default;
             Optional<string> etag = default;
             Optional<string> id = default;

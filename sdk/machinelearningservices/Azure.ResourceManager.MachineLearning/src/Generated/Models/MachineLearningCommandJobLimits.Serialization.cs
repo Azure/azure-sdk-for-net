@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCommandJobLimits DeserializeMachineLearningCommandJobLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             JobLimitsType jobLimitsType = default;
             Optional<TimeSpan?> timeout = default;
             foreach (var property in element.EnumerateObject())

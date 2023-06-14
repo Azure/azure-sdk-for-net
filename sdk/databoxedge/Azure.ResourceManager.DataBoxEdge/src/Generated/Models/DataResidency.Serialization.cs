@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataResidency DeserializeDataResidency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeDataResidencyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new DataBoxEdgeDataResidencyType(property.Value.GetString());

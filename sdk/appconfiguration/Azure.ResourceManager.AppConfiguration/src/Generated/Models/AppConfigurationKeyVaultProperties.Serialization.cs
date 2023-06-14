@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationKeyVaultProperties DeserializeAppConfigurationKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyIdentifier = default;
             Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource" /> object. </returns>
         public virtual SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfiguration()
         {
-            return new SynapseMetadataSyncConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/metadataSync/config"));
+            return new SynapseMetadataSyncConfigurationResource(Client, Id.AppendChildResource("metadataSync", "config"));
         }
 
         /// <summary> Gets a collection of SynapseGeoBackupPolicyResources in the SynapseSqlPool. </summary>
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource" /> object. </returns>
         public virtual SynapseMaintenanceWindowResource GetSynapseMaintenanceWindow()
         {
-            return new SynapseMaintenanceWindowResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenancewindows/current"));
+            return new SynapseMaintenanceWindowResource(Client, Id.AppendChildResource("maintenancewindows", "current"));
         }
 
         /// <summary> Gets an object representing a SynapseMaintenanceWindowOptionResource along with the instance operations that can be performed on it in the SynapseSqlPool. </summary>
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource" /> object. </returns>
         public virtual SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOption()
         {
-            return new SynapseMaintenanceWindowOptionResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
+            return new SynapseMaintenanceWindowOptionResource(Client, Id.AppendChildResource("maintenanceWindowOptions", "current"));
         }
 
         /// <summary> Gets a collection of SynapseTransparentDataEncryptionResources in the SynapseSqlPool. </summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s transparent data encryption configuration.
+        /// Get a SQL pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s transparent data encryption configuration.
+        /// Get a SQL pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> object. </returns>
         public virtual SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicy()
         {
-            return new SynapseSqlPoolBlobAuditingPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/auditingSettings/default"));
+            return new SynapseSqlPoolBlobAuditingPolicyResource(Client, Id.AppendChildResource("auditingSettings", "default"));
         }
 
         /// <summary> Gets a collection of SynapseSqlPoolSchemaResources in the SynapseSqlPool. </summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s connection policy, which is used with table auditing.
+        /// Get a Sql pool's connection policy, which is used with table auditing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s connection policy, which is used with table auditing.
+        /// Get a Sql pool's connection policy, which is used with table auditing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Gets the Sql pool&apos;s vulnerability assessment.
+        /// Gets the Sql pool's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Gets the Sql pool&apos;s vulnerability assessment.
+        /// Gets the Sql pool's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -591,14 +591,14 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
         public virtual SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicy()
         {
-            return new SynapseExtendedSqlPoolBlobAuditingPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/extendedAuditingSettings/default"));
+            return new SynapseExtendedSqlPoolBlobAuditingPolicyResource(Client, Id.AppendChildResource("extendedAuditingSettings", "default"));
         }
 
         /// <summary> Gets an object representing a SynapseDataMaskingPolicyResource along with the instance operations that can be performed on it in the SynapseSqlPool. </summary>
         /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource" /> object. </returns>
         public virtual SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicy()
         {
-            return new SynapseDataMaskingPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
+            return new SynapseDataMaskingPolicyResource(Client, Id.AppendChildResource("dataMaskingPolicies", "Default"));
         }
 
         /// <summary> Gets a collection of SynapseWorkloadGroupResources in the SynapseSqlPool. </summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s workload group.
+        /// Get a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s workload group.
+        /// Get a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

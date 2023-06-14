@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CloudServiceOSFamily data model. </summary>
+    /// <summary>
+    /// A class representing the CloudServiceOSFamily data model.
+    /// Describes a cloud service OS family.
+    /// </summary>
     public partial class CloudServiceOSFamilyData : ResourceData
     {
         /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>

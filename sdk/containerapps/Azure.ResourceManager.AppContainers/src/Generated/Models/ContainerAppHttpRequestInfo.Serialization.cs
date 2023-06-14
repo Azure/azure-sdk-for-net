@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpRequestInfo DeserializeContainerAppHttpRequestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> host = default;
             Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
             Optional<string> path = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppHttpHeaderInfo> array = new List<ContainerAppHttpHeaderInfo>();
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheme = new ContainerAppHttpScheme(property.Value.GetString());

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyTagFilter DeserializeManagementPolicyTagFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string op = default;
             string value = default;

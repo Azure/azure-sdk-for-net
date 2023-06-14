@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SensitivityLabelSource ToSensitivityLabelSource(this string value)
         {
-            if (string.Equals(value, "current", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelSource.Current;
-            if (string.Equals(value, "recommended", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelSource.Recommended;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "current")) return SensitivityLabelSource.Current;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recommended")) return SensitivityLabelSource.Recommended;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelSource value.");
         }
     }

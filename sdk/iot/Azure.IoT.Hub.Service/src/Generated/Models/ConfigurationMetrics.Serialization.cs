@@ -43,6 +43,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static ConfigurationMetrics DeserializeConfigurationMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, long>> results = default;
             Optional<IDictionary<string, string>> queries = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +55,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, long> dictionary = new Dictionary<string, long>();
@@ -66,7 +69,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

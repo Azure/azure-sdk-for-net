@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CbcsDrmConfiguration DeserializeCbcsDrmConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingPolicyFairPlayConfiguration> fairPlay = default;
             Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
             Optional<StreamingPolicyWidevineConfiguration> widevine = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fairPlay = StreamingPolicyFairPlayConfiguration.DeserializeStreamingPolicyFairPlayConfiguration(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value);

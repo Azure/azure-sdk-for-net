@@ -15,14 +15,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializeMySqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
+            Optional<string> subscriptionId = default;
             Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    subscriptionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("delegatedSubnetsUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlFlexibleServerDelegatedSubnetUsage> array = new List<MySqlFlexibleServerDelegatedSubnetUsage>();
@@ -34,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToList(delegatedSubnetsUsage));
+            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToNullable(location), subscriptionId.Value, Optional.ToList(delegatedSubnetsUsage));
         }
     }
 }

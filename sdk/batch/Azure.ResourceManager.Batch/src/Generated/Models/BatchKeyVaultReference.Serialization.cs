@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchKeyVaultReference DeserializeBatchKeyVaultReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Uri url = default;
             foreach (var property in element.EnumerateObject())

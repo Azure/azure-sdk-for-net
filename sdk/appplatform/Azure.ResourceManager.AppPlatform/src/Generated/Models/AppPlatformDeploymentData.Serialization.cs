@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformDeploymentData DeserializeAppPlatformDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformDeploymentProperties> properties = default;
             Optional<AppPlatformSku> sku = default;
             ResourceIdentifier id = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AppPlatformDeploymentProperties.DeserializeAppPlatformDeploymentProperties(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value);
@@ -79,7 +81,6 @@ namespace Azure.ResourceManager.AppPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

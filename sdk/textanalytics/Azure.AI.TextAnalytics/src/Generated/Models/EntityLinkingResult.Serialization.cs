@@ -43,28 +43,32 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntityLinkingResult DeserializeEntityLinkingResult(JsonElement element)
         {
-            IList<EntityLinkingResultWithDetectedLanguage> documents = default;
-            IList<InputError> errors = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<EntityLinkingResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"u8))
                 {
-                    List<EntityLinkingResultWithDetectedLanguage> array = new List<EntityLinkingResultWithDetectedLanguage>();
+                    List<EntityLinkingResultDocumentsItem> array = new List<EntityLinkingResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityLinkingResultWithDetectedLanguage.DeserializeEntityLinkingResultWithDetectedLanguage(item));
+                        array.Add(EntityLinkingResultDocumentsItem.DeserializeEntityLinkingResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
                 {
-                    List<InputError> array = new List<InputError>();
+                    List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputError.DeserializeInputError(item));
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
@@ -73,7 +77,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);

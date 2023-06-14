@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ContainerAppCollection DeserializeContainerAppCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

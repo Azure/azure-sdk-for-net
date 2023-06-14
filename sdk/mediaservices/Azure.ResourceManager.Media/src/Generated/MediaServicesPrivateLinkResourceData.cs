@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaServicesPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the MediaServicesPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class MediaServicesPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaServicesPrivateLinkResourceData. </summary>

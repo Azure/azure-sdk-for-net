@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConsumptionAmount> estimatedBalance = default;
             Optional<ConsumptionAmount> currentBalance = default;
             Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);

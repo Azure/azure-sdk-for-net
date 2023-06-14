@@ -13,7 +13,10 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalSpacecraft data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalSpacecraft data model.
+    /// Customer creates a spacecraft resource to schedule a contact.
+    /// </summary>
     public partial class OrbitalSpacecraftData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The current state of the resource&apos;s creation, deletion, or modification. </param>
+        /// <param name="provisioningState"> The current state of the resource's creation, deletion, or modification. </param>
         /// <param name="noradId"> NORAD ID of the spacecraft. </param>
         /// <param name="titleLine"> Title line of the two-line element set (TLE). </param>
         /// <param name="tleLine1"> Line 1 of the two-line element set (TLE). </param>
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary> The current state of the resource&apos;s creation, deletion, or modification. </summary>
+        /// <summary> The current state of the resource's creation, deletion, or modification. </summary>
         public OrbitalProvisioningState? ProvisioningState { get; set; }
         /// <summary> NORAD ID of the spacecraft. </summary>
         public string NoradId { get; set; }

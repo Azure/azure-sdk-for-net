@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validation = default;
             Optional<string> validationKey = default;
             Optional<string> decryption = default;

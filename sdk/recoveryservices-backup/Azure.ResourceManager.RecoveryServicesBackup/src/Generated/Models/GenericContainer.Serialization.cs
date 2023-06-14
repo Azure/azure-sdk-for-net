@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericContainer DeserializeGenericContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricName = default;
             Optional<GenericContainerExtendedInfo> extendedInformation = default;
             Optional<string> friendlyName = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedInformation = GenericContainerExtendedInfo.DeserializeGenericContainerExtendedInfo(property.Value);
@@ -91,7 +94,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupManagementType = new BackupManagementType(property.Value.GetString());

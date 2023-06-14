@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
         public DailyRetentionFormat()
         {
-            DaysOfTheMonth = new ChangeTrackingList<Day>();
+            DaysOfTheMonth = new ChangeTrackingList<BackupDay>();
         }
 
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
         /// <param name="daysOfTheMonth"> List of days of the month. </param>
-        internal DailyRetentionFormat(IList<Day> daysOfTheMonth)
+        internal DailyRetentionFormat(IList<BackupDay> daysOfTheMonth)
         {
             DaysOfTheMonth = daysOfTheMonth;
         }
 
         /// <summary> List of days of the month. </summary>
-        public IList<Day> DaysOfTheMonth { get; }
+        public IList<BackupDay> DaysOfTheMonth { get; }
     }
 }

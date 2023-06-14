@@ -106,11 +106,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
             }
+            if (Optional.IsCollectionDefined(VngClientConnectionConfigurations))
+            {
+                writer.WritePropertyName("vngClientConnectionConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in VngClientConnectionConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
         internal static VpnClientConfiguration DeserializeVpnClientConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AddressSpace> vpnClientAddressPool = default;
             Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
             Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
@@ -123,13 +137,13 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> aadTenant = default;
             Optional<string> aadAudience = default;
             Optional<string> aadIssuer = default;
+            Optional<IList<VngClientConnectionConfiguration>> vngClientConnectionConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnClientAddressPool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value);
@@ -139,7 +153,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnClientRootCertificate> array = new List<VpnClientRootCertificate>();
@@ -154,7 +167,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnClientRevokedCertificate> array = new List<VpnClientRevokedCertificate>();
@@ -169,7 +181,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnClientProtocol> array = new List<VpnClientProtocol>();
@@ -184,7 +195,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnAuthenticationType> array = new List<VpnAuthenticationType>();
@@ -199,7 +209,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPsecPolicy> array = new List<IPsecPolicy>();
@@ -224,7 +233,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RadiusServer> array = new List<RadiusServer>();
@@ -250,8 +258,22 @@ namespace Azure.ResourceManager.Network.Models
                     aadIssuer = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vngClientConnectionConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VngClientConnectionConfiguration> array = new List<VngClientConnectionConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VngClientConnectionConfiguration.DeserializeVngClientConnectionConfiguration(item));
+                    }
+                    vngClientConnectionConfigurations = array;
+                    continue;
+                }
             }
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
+            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value, Optional.ToList(vngClientConnectionConfigurations));
         }
     }
 }

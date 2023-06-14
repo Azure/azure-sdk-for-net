@@ -26,6 +26,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static ShortCodeCost DeserializeShortCodeCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double amount = default;
             string currencyCode = default;
             BillingFrequency billingFrequency = default;

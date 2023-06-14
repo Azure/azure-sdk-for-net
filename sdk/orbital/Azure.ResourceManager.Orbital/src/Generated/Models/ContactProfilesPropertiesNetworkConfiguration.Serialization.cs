@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static ContactProfilesPropertiesNetworkConfiguration DeserializeContactProfilesPropertiesNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier subnetId = default;
             foreach (var property in element.EnumerateObject())
             {

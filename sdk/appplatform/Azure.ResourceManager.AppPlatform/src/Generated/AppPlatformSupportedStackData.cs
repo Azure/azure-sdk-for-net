@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformSupportedStack data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformSupportedStack data model.
+    /// Supported stack resource payload
+    /// </summary>
     public partial class AppPlatformSupportedStackData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformSupportedStackData. </summary>

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactOneWayAgreement DeserializeEdifactOneWayAgreement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             EdifactProtocolSettings protocolSettings = default;

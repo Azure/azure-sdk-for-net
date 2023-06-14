@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> A class representing the ElasticSan data model. </summary>
+    /// <summary>
+    /// A class representing the ElasticSan data model.
+    /// Response for ElasticSan request.
+    /// </summary>
     public partial class ElasticSanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ElasticSanData. </summary>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> resource sku. </param>
-        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: ["1"]. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> resource sku. </summary>
         public ElasticSanSku Sku { get; set; }
-        /// <summary> Logical zone for Elastic San resource; example: [&quot;1&quot;]. </summary>
+        /// <summary> Logical zone for Elastic San resource; example: ["1"]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState { get; }

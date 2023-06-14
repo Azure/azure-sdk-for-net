@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
+            var mediaServiceName = Recording.GenerateAssetName(MediaServiceAccountPrefix);
             var liveEventName = Recording.GenerateAssetName("liveEvent");
             _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
             _liveEvent = await CreateLiveEvent(_mediaService, liveEventName);

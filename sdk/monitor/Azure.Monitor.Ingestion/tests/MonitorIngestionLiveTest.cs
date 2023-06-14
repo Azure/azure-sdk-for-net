@@ -38,6 +38,7 @@ namespace Azure.Monitor.Ingestion.Tests
         public void CleanUp()
         {
             LogsIngestionClient.SingleUploadThreshold = Mb;
+            LogsIngestionClient.Compression = null;
         }
 
         private LogsIngestionClient CreateClient(HttpPipelinePolicy policy = null)
@@ -107,13 +108,13 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = new List<Object>();
             for (int i = 0; i < numEntries; i++)
             {
-                entries.Add(new Object[] {
+                entries.Add(
                     new {
                         Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                );
             }
             return entries;
         }
@@ -142,23 +143,6 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.IsNotNull(response);
-            Assert.AreEqual(204, response.Status);
-            Assert.IsFalse(response.IsError);
-        }
-
-        [AsyncOnly]
-        [Test]
-        public async Task ConcurrencyMultiThread()
-        {
-            var policy = new ConcurrencyCounterPolicy(10);
-            LogsIngestionClient client = CreateClient(policy);
-
-            // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
-            options.MaxConcurrency = 10;
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
-            //Check the response
             Assert.IsNotNull(response);
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);
@@ -242,12 +226,12 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = GenerateEntries(200, Recording.Now.DateTime);
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
+            LogsUploadOptions options = new LogsUploadOptions();
             bool isTriggered = false;
-            options.UploadFailedEventHandler += Options_UploadFailed;
+            options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsFalse(isTriggered);
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
                 return Task.CompletedTask;

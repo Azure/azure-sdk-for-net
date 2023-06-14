@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -56,12 +55,12 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationResponse> GetQuotaOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -78,12 +77,12 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationResponse> GetQuotaOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaOperationResult> GetQuotaOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

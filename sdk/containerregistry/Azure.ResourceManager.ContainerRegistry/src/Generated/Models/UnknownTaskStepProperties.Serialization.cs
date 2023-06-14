@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static UnknownTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistryTaskStepType type = "Unknown";
             Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
             Optional<string> contextPath = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxSkuCapacity DeserializeDataBoxSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> usable = default;
             Optional<string> maximum = default;
             foreach (var property in element.EnumerateObject())

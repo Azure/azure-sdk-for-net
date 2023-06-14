@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FirewallPolicyRuleCollectionType ruleCollectionType = "Unknown";
             Optional<string> name = default;
             Optional<int> priority = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseLibrary data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseLibrary data model.
+    /// Library response details
+    /// </summary>
     public partial class SynapseLibraryData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseLibraryData. </summary>

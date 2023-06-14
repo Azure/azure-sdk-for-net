@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         internal static FluidRelayServerList DeserializeFluidRelayServerList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FluidRelayServerData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

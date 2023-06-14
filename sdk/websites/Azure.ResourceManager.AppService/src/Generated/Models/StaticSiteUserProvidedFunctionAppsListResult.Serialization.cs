@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static StaticSiteUserProvidedFunctionAppsListResult DeserializeStaticSiteUserProvidedFunctionAppsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

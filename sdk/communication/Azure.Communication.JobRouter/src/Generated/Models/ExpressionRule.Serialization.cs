@@ -26,6 +26,10 @@ namespace Azure.Communication.JobRouter
 
         internal static ExpressionRule DeserializeExpressionRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string language = default;
             string expression = default;
             string kind = default;

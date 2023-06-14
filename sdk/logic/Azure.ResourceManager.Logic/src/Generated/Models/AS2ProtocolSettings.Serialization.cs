@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2ProtocolSettings DeserializeAS2ProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AS2MessageConnectionSettings messageConnectionSettings = default;
             AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings = default;
             AS2MdnSettings mdnSettings = default;

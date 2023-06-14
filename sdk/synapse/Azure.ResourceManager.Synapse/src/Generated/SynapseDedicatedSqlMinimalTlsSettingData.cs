@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseDedicatedSqlMinimalTlsSetting data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseDedicatedSqlMinimalTlsSetting data model.
+    /// Dedicated Sql Minimal Tls Settings Info
+    /// </summary>
     public partial class SynapseDedicatedSqlMinimalTlsSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingData. </summary>

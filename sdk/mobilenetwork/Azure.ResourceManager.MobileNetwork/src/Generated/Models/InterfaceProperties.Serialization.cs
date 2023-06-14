@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static InterfaceProperties DeserializeInterfaceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> ipv4Address = default;
             Optional<string> ipv4Subnet = default;

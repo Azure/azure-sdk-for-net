@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseMigrationSqlVmProperties DeserializeDatabaseMigrationSqlVmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrationStatusDetails> migrationStatusDetails = default;
             Optional<BackupConfiguration> backupConfiguration = default;
             Optional<OfflineConfiguration> offlineConfiguration = default;
@@ -91,7 +95,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value);
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value);
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value);
@@ -141,7 +142,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startedOn = property.Value.GetDateTimeOffset("O");
@@ -151,7 +151,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedOn = property.Value.GetDateTimeOffset("O");
@@ -161,7 +160,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
@@ -191,7 +189,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);

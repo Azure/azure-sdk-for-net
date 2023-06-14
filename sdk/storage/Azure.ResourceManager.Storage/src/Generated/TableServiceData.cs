@@ -12,7 +12,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the TableService data model. </summary>
+    /// <summary>
+    /// A class representing the TableService data model.
+    /// The properties of a storage account’s Table service.
+    /// </summary>
     public partial class TableServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of TableServiceData. </summary>

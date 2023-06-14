@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static ProviderPropertiesAad DeserializeProviderPropertiesAad(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

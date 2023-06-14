@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformBuildServiceAgentPool data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformBuildServiceAgentPool data model.
+    /// The build service agent pool resource
+    /// </summary>
     public partial class AppPlatformBuildServiceAgentPoolData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolData. </summary>

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static IdentityManagementProperties DeserializeIdentityManagementProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IdentityManagementType> type = default;
             Optional<string> applicationId = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new IdentityManagementType(property.Value.GetString());

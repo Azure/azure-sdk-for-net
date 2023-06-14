@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TeradataPartitionSettings DeserializeTeradataPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> partitionColumnName = default;
             Optional<BinaryData> partitionUpperBound = default;
             Optional<BinaryData> partitionLowerBound = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
@@ -77,7 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());

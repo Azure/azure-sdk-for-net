@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DayDetails DeserializeDayDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> time = default;
             foreach (var property in element.EnumerateObject())
             {

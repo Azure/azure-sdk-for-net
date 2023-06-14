@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSelfHostedIntegrationRuntime DeserializeSynapseSelfHostedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = default;
             Optional<string> description = default;
             Optional<SynapseLinkedIntegrationRuntimeType> linkedInfo = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linkedInfo = SynapseLinkedIntegrationRuntimeType.DeserializeSynapseLinkedIntegrationRuntimeType(property0.Value);

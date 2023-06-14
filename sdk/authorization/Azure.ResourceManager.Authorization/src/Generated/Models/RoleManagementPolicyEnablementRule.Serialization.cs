@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyEnablementRule DeserializeRoleManagementPolicyEnablementRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleAssignmentEnablementRuleType> array = new List<RoleAssignmentEnablementRuleType>();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);

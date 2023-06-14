@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static ListApplicationPackagesResult DeserializeListApplicationPackagesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchApplicationPackageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchApplicationPackageData> array = new List<BatchApplicationPackageData>();

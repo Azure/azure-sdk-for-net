@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactorySecretString DeserializeFactorySecretString(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             string type = default;
             foreach (var property in element.EnumerateObject())

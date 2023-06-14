@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCustomImagePlan DeserializeDevTestLabCustomImagePlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> publisher = default;
             Optional<string> offer = default;

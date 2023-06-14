@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabState ToLabState(this string value)
         {
-            if (string.Equals(value, "Draft", StringComparison.InvariantCultureIgnoreCase)) return LabState.Draft;
-            if (string.Equals(value, "Publishing", StringComparison.InvariantCultureIgnoreCase)) return LabState.Publishing;
-            if (string.Equals(value, "Scaling", StringComparison.InvariantCultureIgnoreCase)) return LabState.Scaling;
-            if (string.Equals(value, "Syncing", StringComparison.InvariantCultureIgnoreCase)) return LabState.Syncing;
-            if (string.Equals(value, "Published", StringComparison.InvariantCultureIgnoreCase)) return LabState.Published;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Draft")) return LabState.Draft;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Publishing")) return LabState.Publishing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scaling")) return LabState.Scaling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Syncing")) return LabState.Syncing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Published")) return LabState.Published;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabState value.");
         }
     }

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static SshProfile DeserializeSshProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<HDInsightSshPublicKey>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightSshPublicKey> array = new List<HDInsightSshPublicKey>();

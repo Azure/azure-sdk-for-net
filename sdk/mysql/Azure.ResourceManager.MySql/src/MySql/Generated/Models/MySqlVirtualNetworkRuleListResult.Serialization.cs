@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlVirtualNetworkRuleListResult DeserializeMySqlVirtualNetworkRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlVirtualNetworkRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlVirtualNetworkRuleData> array = new List<MySqlVirtualNetworkRuleData>();

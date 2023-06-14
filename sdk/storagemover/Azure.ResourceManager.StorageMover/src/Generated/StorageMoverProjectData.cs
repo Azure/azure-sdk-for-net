@@ -11,7 +11,10 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the StorageMoverProject data model. </summary>
+    /// <summary>
+    /// A class representing the StorageMoverProject data model.
+    /// The Project resource.
+    /// </summary>
     public partial class StorageMoverProjectData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>

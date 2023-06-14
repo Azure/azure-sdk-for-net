@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LinkedAccessCheck DeserializeLinkedAccessCheck(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionName = default;
             Optional<string> linkedProperty = default;
             Optional<string> linkedAction = default;

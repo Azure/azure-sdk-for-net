@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ProvisionedClustersCommonPropertiesStatus DeserializeProvisionedClustersCommonPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisionedClustersCommonPropertiesStatusFeaturesStatus> featuresStatus = default;
             Optional<IReadOnlyDictionary<string, AddonStatus>> addonStatus = default;
             Optional<string> errorMessage = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     featuresStatus = ProvisionedClustersCommonPropertiesStatusFeaturesStatus.DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(property.Value);
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, AddonStatus> dictionary = new Dictionary<string, AddonStatus>();
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningStatus = ProvisionedClustersCommonPropertiesStatusProvisioningStatus.DeserializeProvisionedClustersCommonPropertiesStatusProvisioningStatus(property.Value);

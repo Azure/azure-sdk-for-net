@@ -10,6 +10,20 @@
 
 ### Other Changes
 
+## 1.0.2 (2023-05-31)
+
+### Feature Added
+
+- Upgraded API version to 2023-02-01.
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+## 1.0.1 (2023-02-16)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-08-29)
 
 This release is the first stable release of the Azure Stack HCI Management client library.

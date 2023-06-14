@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,68 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificateData.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkData.CertThumbprint` has been hidden but is still available.
+- Added `HostNameBindingData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameBindingData.Thumbprint` has been hidden but is still available.
+- Added `AppCertificatePatch.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificatePatch.Thumbprint` has been hidden but is still available.
+- Added `AppServiceAadRegistration.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceAadRegistration.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `AppServiceCertificateDetails.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceCertificateDetails.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkProperties.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkProperties.CertThumbprint` has been hidden but is still available.
+- Added `HostNameSslState.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameSslState.Thumbprint` has been hidden but is still available.
+- Added `SiteAuthSettings.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `PublicCertificateData.Thumbprint` has been hidden but is still available.
+  
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.2 (2023-04-27)
+
+### Bugs Fixed
+
+- Fixed issue #34745. Introduced new property `RelayArmId` in `HybridConnectionData` class to replace the property `RelayArmUri` with a wrong type `Uri`.
+- Fixed issue #35146. BadRequest when calling CreateOrUpdateFunctionSecretAsync
+
+### Other Changes in API
+
+Added property 'ResourceIdentifier RelayArmId' in type Azure.ResourceManager.AppService.HybridConnectionData
+Added property 'WebAppKeyInfoProperties Properties' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Added type 'Azure.ResourceManager.AppService.Models.WebAppKeyInfoProperties'
+Obsoleted property 'Uri RelayArmUri' in type Azure.ResourceManager.AppService.HybridConnectionData
+Obsoleted property 'String Name' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Obsoleted property 'String Value' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+
+### Azure SDK Dependency Changes
+
+Upgraded Azure.Core from 1.28.0 to 1.31.0
+
+## 1.0.1 (2023-02-20)
+
+### Bugs Fixed
+
+- Fixed serialization issue when service returns empty string for `KeyVaultId` in `AppCertificateData` and `AppCertificatePatch`.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-29)
 

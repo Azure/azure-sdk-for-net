@@ -22,6 +22,10 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownJobExceptionTrigger DeserializeUnknownJobExceptionTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

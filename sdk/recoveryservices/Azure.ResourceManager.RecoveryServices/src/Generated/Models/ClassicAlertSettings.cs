@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of ClassicAlertSettings. </summary>
         /// <param name="alertsForCriticalOperations"></param>
-        internal ClassicAlertSettings(AlertsState? alertsForCriticalOperations)
+        internal ClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations)
         {
             AlertsForCriticalOperations = alertsForCriticalOperations;
         }
 
         /// <summary> Gets or sets the alerts for critical operations. </summary>
-        public AlertsState? AlertsForCriticalOperations { get; set; }
+        public RecoveryServicesAlertsState? AlertsForCriticalOperations { get; set; }
     }
 }

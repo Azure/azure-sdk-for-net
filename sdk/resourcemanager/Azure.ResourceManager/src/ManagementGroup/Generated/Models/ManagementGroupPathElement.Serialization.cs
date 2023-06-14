@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal static ManagementGroupPathElement DeserializeManagementGroupPathElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())

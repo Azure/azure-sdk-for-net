@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AddonVrProperties DeserializeAddonVrProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int vrsCount = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AddonProvisioningState(property.Value.GetString());

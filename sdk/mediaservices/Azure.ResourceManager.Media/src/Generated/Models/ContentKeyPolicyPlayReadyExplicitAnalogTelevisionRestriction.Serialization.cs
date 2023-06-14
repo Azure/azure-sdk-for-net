@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool bestEffort = default;
             int configurationData = default;
             foreach (var property in element.EnumerateObject())

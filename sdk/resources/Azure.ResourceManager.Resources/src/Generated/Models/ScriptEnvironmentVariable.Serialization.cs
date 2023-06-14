@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ScriptEnvironmentVariable DeserializeScriptEnvironmentVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> value = default;
             Optional<string> secureValue = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagementLockOwner DeserializeManagementLockOwner(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {

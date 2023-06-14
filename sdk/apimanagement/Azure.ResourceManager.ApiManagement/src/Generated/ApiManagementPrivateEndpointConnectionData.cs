@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class ApiManagementPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionData. </summary>

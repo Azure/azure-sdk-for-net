@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static RawOutputDatasource DeserializeRawOutputDatasource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<Uri> payloadUri = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                payloadUri = null;
                                 continue;
                             }
                             payloadUri = new Uri(property0.Value.GetString());

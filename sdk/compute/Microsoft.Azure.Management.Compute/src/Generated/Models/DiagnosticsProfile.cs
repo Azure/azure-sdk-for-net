@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the boot diagnostic settings state.
-    /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15.
+    /// Specifies the boot diagnostic settings state. Minimum api-version:
+    /// 2015-06-15.
     /// </summary>
     public partial class DiagnosticsProfile
     {
@@ -32,12 +32,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="bootDiagnostics">Boot Diagnostics is a debugging
         /// feature which allows you to view Console Output and Screenshot to
-        /// diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being
-        /// specified then ensure that the storage account is in the same
-        /// region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can
-        /// easily view the output of your console log. &lt;br&gt;&lt;br&gt;
-        /// Azure also enables you to see a screenshot of the VM from the
-        /// hypervisor.</param>
+        /// diagnose VM status. **NOTE**: If storageUri is being specified then
+        /// ensure that the storage account is in the same region and
+        /// subscription as the VM. You can easily view the output of your
+        /// console log. Azure also enables you to see a screenshot of the VM
+        /// from the hypervisor.</param>
         public DiagnosticsProfile(BootDiagnostics bootDiagnostics = default(BootDiagnostics))
         {
             BootDiagnostics = bootDiagnostics;
@@ -52,12 +51,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets boot Diagnostics is a debugging feature which allows
         /// you to view Console Output and Screenshot to diagnose VM status.
-        /// &amp;lt;br&amp;gt;**NOTE**: If storageUri is being specified then
-        /// ensure that the storage account is in the same region and
-        /// subscription as the VM. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; You
-        /// can easily view the output of your console log.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Azure also enables you to see
-        /// a screenshot of the VM from the hypervisor.
+        /// **NOTE**: If storageUri is being specified then ensure that the
+        /// storage account is in the same region and subscription as the VM.
+        /// You can easily view the output of your console log. Azure also
+        /// enables you to see a screenshot of the VM from the hypervisor.
         /// </summary>
         [JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnostics BootDiagnostics { get; set; }

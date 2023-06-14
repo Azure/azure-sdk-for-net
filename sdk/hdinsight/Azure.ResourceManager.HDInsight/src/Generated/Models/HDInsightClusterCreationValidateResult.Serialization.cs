@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterCreationValidateResult DeserializeHDInsightClusterCreationValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationErrors = default;
             Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationWarnings = default;
             Optional<TimeSpan> estimatedCreationDuration = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedCreationDuration = property.Value.GetTimeSpan("P");
@@ -66,7 +67,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightClusterAaddsDetail> array = new List<HDInsightClusterAaddsDetail>();

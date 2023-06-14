@@ -15,7 +15,11 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary> A class representing the ServiceFabricManagedCluster data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricManagedCluster data model.
+    /// The manged cluster resource
+    /// 
+    /// </summary>
     public partial class ServiceFabricManagedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
@@ -58,14 +62,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterUpgradeMode">
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
         /// 
         /// </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to &apos;Automatic&apos;. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
-        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version &apos;latest&apos;. The default value for this setting is false. </param>
+        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version 'latest'. The default value for this setting is false. </param>
         /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
         /// <param name="applicationTypeVersionsCleanupPolicy"> The policy used to clean up unused versions. </param>
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
@@ -188,18 +192,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<ClusterFabricSettingsSection> FabricSettings { get; }
         /// <summary> The provisioning state of the managed cluster resource. </summary>
         public ServiceFabricManagedResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
         public string ClusterCodeVersion { get; set; }
         /// <summary>
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
         /// 
         /// </summary>
         public ManagedClusterUpgradeMode? ClusterUpgradeMode { get; set; }
-        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to &apos;Automatic&apos;. </summary>
+        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </summary>
         public ManagedClusterUpgradeCadence? ClusterUpgradeCadence { get; set; }
         /// <summary> List of add-on features to enable on the cluster. </summary>
         public IList<ManagedClusterAddOnFeature> AddOnFeatures { get; }
-        /// <summary> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version &apos;latest&apos;. The default value for this setting is false. </summary>
+        /// <summary> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version 'latest'. The default value for this setting is false. </summary>
         public bool? IsAutoOSUpgradeEnabled { get; set; }
         /// <summary> Indicates if the cluster has zone resiliency. </summary>
         public bool? HasZoneResiliency { get; set; }

@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpeditedRollout))
-            {
-                writer.WritePropertyName("expeditedRollout"u8);
-                writer.WriteObjectValue(ExpeditedRollout);
-            }
             if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
@@ -72,102 +67,87 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element)
         {
-            Optional<DefaultRolloutSpecificationExpeditedRollout> expeditedRollout = default;
-            Optional<DefaultRolloutSpecificationCanary> canary = default;
-            Optional<DefaultRolloutSpecificationLowTraffic> lowTraffic = default;
-            Optional<DefaultRolloutSpecificationMediumTraffic> mediumTraffic = default;
-            Optional<DefaultRolloutSpecificationHighTraffic> highTraffic = default;
-            Optional<DefaultRolloutSpecificationRestOfTheWorldGroupOne> restOfTheWorldGroupOne = default;
-            Optional<DefaultRolloutSpecificationRestOfTheWorldGroupTwo> restOfTheWorldGroupTwo = default;
-            Optional<DefaultRolloutSpecificationProviderRegistration> providerRegistration = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CanaryTrafficRegionRolloutConfiguration> canary = default;
+            Optional<TrafficRegionRolloutConfiguration> lowTraffic = default;
+            Optional<TrafficRegionRolloutConfiguration> mediumTraffic = default;
+            Optional<TrafficRegionRolloutConfiguration> highTraffic = default;
+            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
+            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
+            Optional<ProviderRegistrationData> providerRegistration = default;
             Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expeditedRollout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("canary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    canary = DefaultRolloutSpecificationCanary.DeserializeDefaultRolloutSpecificationCanary(property.Value);
+                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lowTraffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lowTraffic = DefaultRolloutSpecificationLowTraffic.DeserializeDefaultRolloutSpecificationLowTraffic(property.Value);
+                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mediumTraffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mediumTraffic = DefaultRolloutSpecificationMediumTraffic.DeserializeDefaultRolloutSpecificationMediumTraffic(property.Value);
+                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("highTraffic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    highTraffic = DefaultRolloutSpecificationHighTraffic.DeserializeDefaultRolloutSpecificationHighTraffic(property.Value);
+                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupOne"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restOfTheWorldGroupOne = DefaultRolloutSpecificationRestOfTheWorldGroupOne.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupOne(property.Value);
+                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupTwo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restOfTheWorldGroupTwo = DefaultRolloutSpecificationRestOfTheWorldGroupTwo.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupTwo(property.Value);
+                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerRegistration = DefaultRolloutSpecificationProviderRegistration.DeserializeDefaultRolloutSpecificationProviderRegistration(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
@@ -179,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new DefaultRolloutSpecification(expeditedRollout.Value, canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
+            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
         }
     }
 }

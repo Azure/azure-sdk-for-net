@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionSourceDatabaseTypeProperties DeserializeLinkConnectionSourceDatabaseTypeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             Optional<string> principalId = default;
             foreach (var property in element.EnumerateObject())

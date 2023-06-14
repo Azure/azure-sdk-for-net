@@ -196,8 +196,10 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource> Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact? cleanupConnectionArtifacts = default(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact? cleanupConnectionArtifacts = default(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -206,17 +208,55 @@ namespace Azure.ResourceManager.DigitalTwins
 }
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
+    public static partial class ArmDigitalTwinsModelFactory
+    {
+        public static Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties DataExplorerConnectionProperties(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, Azure.Core.ResourceIdentifier adxResourceId = null, System.Uri adxEndpointUri = null, string adxDatabaseName = null, string adxTableName = null, string adxTwinLifecycleEventsTableName = null, string adxRelationshipLifecycleEventsTableName = null, System.Uri eventHubEndpointUri = null, string eventHubEntityPath = null, Azure.Core.ResourceIdentifier eventHubNamespaceResourceId = null, string eventHubConsumerGroup = null, Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals = default(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval?)) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData DigitalTwinsDescriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState?), string hostName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData DigitalTwinsEndpointResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = "Unknown", Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties DigitalTwinsEventGridProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, string topicEndpoint = null, string accessKey1 = null, string accessKey2 = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties DigitalTwinsEventHubProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, string connectionStringPrimaryKey = null, string connectionStringSecondaryKey = null, System.Uri endpointUri = null, string entityPath = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult DigitalTwinsNameResult(bool? isNameAvailable = default(bool?), string message = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason? reason = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason?)) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData DigitalTwinsPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties DigitalTwinsPrivateEndpointConnectionProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData DigitalTwinsPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties DigitalTwinsPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties DigitalTwinsServiceBusProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, string primaryConnectionString = null, string secondaryConnectionString = null, System.Uri endpointUri = null, string entityPath = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData TimeSeriesDatabaseConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties TimeSeriesDatabaseConnectionProperties(string connectionType = "Unknown", Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CleanupConnectionArtifact : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CleanupConnectionArtifact(string value) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact False { get { throw null; } }
+        public static Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact left, Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact left, Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DataExplorerConnectionProperties : Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties
     {
         public DataExplorerConnectionProperties(Azure.Core.ResourceIdentifier adxResourceId, System.Uri adxEndpointUri, string adxDatabaseName, System.Uri eventHubEndpointUri, string eventHubEntityPath, Azure.Core.ResourceIdentifier eventHubNamespaceResourceId) { }
         public string AdxDatabaseName { get { throw null; } set { } }
         public System.Uri AdxEndpointUri { get { throw null; } set { } }
+        public string AdxRelationshipLifecycleEventsTableName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AdxResourceId { get { throw null; } set { } }
         public string AdxTableName { get { throw null; } set { } }
+        public string AdxTwinLifecycleEventsTableName { get { throw null; } set { } }
         public string EventHubConsumerGroup { get { throw null; } set { } }
         public System.Uri EventHubEndpointUri { get { throw null; } set { } }
         public string EventHubEntityPath { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier EventHubNamespaceResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval? RecordPropertyAndItemRemovals { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsAuthenticationType : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType>
@@ -482,6 +522,24 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string EntityPath { get { throw null; } set { } }
         public string PrimaryConnectionString { get { throw null; } set { } }
         public string SecondaryConnectionString { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecordPropertyAndItemRemoval : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecordPropertyAndItemRemoval(string value) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval False { get { throw null; } }
+        public static Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval left, Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval left, Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class TimeSeriesDatabaseConnectionProperties
     {

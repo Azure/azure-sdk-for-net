@@ -13,7 +13,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalRCustomDomain data model. </summary>
+    /// <summary>
+    /// A class representing the SignalRCustomDomain data model.
+    /// A custom domain
+    /// </summary>
     public partial class SignalRCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>

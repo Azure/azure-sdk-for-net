@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageRetentionInDays))
-            {
-                writer.WritePropertyName("messageRetentionInDays"u8);
-                writer.WriteNumberValue(MessageRetentionInDays.Value);
-            }
             if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
@@ -41,12 +36,21 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("captureDescription"u8);
                 writer.WriteObjectValue(CaptureDescription);
             }
+            if (Optional.IsDefined(RetentionDescription))
+            {
+                writer.WritePropertyName("retentionDescription"u8);
+                writer.WriteObjectValue(RetentionDescription);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static EventHubData DeserializeEventHubData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -55,17 +59,16 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IReadOnlyList<string>> partitionIds = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
-            Optional<long> messageRetentionInDays = default;
             Optional<long> partitionCount = default;
             Optional<EventHubEntityStatus> status = default;
             Optional<CaptureDescription> captureDescription = default;
+            Optional<RetentionDescription> retentionDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -90,7 +93,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -109,7 +111,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -124,7 +125,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -134,27 +134,15 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("messageRetentionInDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            messageRetentionInDays = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("partitionCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partitionCount = property0.Value.GetInt64();
@@ -164,7 +152,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = property0.Value.GetString().ToEventHubEntityStatus();
@@ -174,17 +161,25 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("retentionDescription"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, Optional.ToNullable(location));
+            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Optional.ToNullable(location));
         }
     }
 }

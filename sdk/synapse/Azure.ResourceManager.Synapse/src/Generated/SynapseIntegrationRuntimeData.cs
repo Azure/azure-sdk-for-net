@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseIntegrationRuntime data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseIntegrationRuntime data model.
+    /// Integration runtime resource type.
+    /// </summary>
     public partial class SynapseIntegrationRuntimeData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeData. </summary>

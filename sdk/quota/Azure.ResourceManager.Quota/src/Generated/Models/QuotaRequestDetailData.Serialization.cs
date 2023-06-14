@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Quota
     {
         internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.Quota
             Optional<string> message = default;
             Optional<ServiceErrorDetail> error = default;
             Optional<DateTimeOffset> requestSubmitTime = default;
-            Optional<IReadOnlyList<SubRequest>> value = default;
+            Optional<IReadOnlyList<QuotaSubRequestDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.Quota
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new QuotaRequestState(property0.Value.GetString());
@@ -82,7 +84,6 @@ namespace Azure.ResourceManager.Quota
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = ServiceErrorDetail.DeserializeServiceErrorDetail(property0.Value);
@@ -92,7 +93,6 @@ namespace Azure.ResourceManager.Quota
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestSubmitTime = property0.Value.GetDateTimeOffset("O");
@@ -102,13 +102,12 @@ namespace Azure.ResourceManager.Quota
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubRequest> array = new List<SubRequest>();
+                            List<QuotaSubRequestDetail> array = new List<QuotaSubRequestDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubRequest.DeserializeSubRequest(item));
+                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item));
                             }
                             value = array;
                             continue;

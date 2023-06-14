@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobRefreshConfiguration DeserializeStreamingJobRefreshConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pathPattern = default;
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshType = new DataRefreshType(property.Value.GetString());

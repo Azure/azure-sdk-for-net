@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static HybridComputePrivateEndpointConnectionListResult DeserializeHybridComputePrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HybridComputePrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridComputePrivateEndpointConnectionData> array = new List<HybridComputePrivateEndpointConnectionData>();

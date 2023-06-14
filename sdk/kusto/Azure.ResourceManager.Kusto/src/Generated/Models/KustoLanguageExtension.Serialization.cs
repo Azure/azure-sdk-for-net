@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoLanguageExtension DeserializeKustoLanguageExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KustoLanguageExtensionName> languageExtensionName = default;
             Optional<KustoLanguageExtensionImageName> languageExtensionImageName = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageExtensionName = new KustoLanguageExtensionName(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageExtensionImageName = new KustoLanguageExtensionImageName(property.Value.GetString());

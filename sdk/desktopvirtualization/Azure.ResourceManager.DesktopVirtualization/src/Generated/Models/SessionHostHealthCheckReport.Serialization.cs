@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SessionHostHealthCheckName> healthCheckName = default;
             Optional<SessionHostHealthCheckResult> healthCheckResult = default;
             Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthCheckName = new SessionHostHealthCheckName(property.Value.GetString());
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthCheckResult = new SessionHostHealthCheckResult(property.Value.GetString());
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value);

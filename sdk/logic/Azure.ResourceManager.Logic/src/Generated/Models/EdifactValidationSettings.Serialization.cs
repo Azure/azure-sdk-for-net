@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactValidationSettings DeserializeEdifactValidationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool validateCharacterSet = default;
             bool checkDuplicateInterchangeControlNumber = default;
             int interchangeControlNumberValidityDays = default;

@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesAzureBlobManagedIdentity DeserializeKubernetesAzureBlobManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid?> clientId = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchNodeFillType ToBatchNodeFillType(this string value)
         {
-            if (string.Equals(value, "Spread", StringComparison.InvariantCultureIgnoreCase)) return BatchNodeFillType.Spread;
-            if (string.Equals(value, "Pack", StringComparison.InvariantCultureIgnoreCase)) return BatchNodeFillType.Pack;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Spread")) return BatchNodeFillType.Spread;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pack")) return BatchNodeFillType.Pack;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodeFillType value.");
         }
     }

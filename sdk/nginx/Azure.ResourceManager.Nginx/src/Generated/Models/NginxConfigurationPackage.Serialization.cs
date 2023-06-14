@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxConfigurationPackage DeserializeNginxConfigurationPackage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are &apos;Subscription&apos;, &apos;Server&apos;, &apos;ElasticPool&apos;, &apos;Database&apos; and &apos;Default&apos; (when status is not explicitly set on any level). </summary>
+    /// <summary> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </summary>
     public enum AutoExecuteStatusInheritedFrom
     {
         /// <summary> Default. </summary>

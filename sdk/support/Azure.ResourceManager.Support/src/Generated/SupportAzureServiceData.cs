@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    /// <summary> A class representing the SupportAzureService data model. </summary>
+    /// <summary>
+    /// A class representing the SupportAzureService data model.
+    /// Object that represents a Service resource.
+    /// </summary>
     public partial class SupportAzureServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>

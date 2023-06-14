@@ -39,6 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SwitchCase DeserializeSwitchCase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<IList<Activity>> activities = default;
             foreach (var property in element.EnumerateObject())
@@ -52,7 +56,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Activity> array = new List<Activity>();

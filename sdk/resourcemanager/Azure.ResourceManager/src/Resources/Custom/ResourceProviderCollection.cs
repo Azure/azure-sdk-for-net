@@ -42,14 +42,17 @@ namespace Azure.ResourceManager.Resources
         {
             string version;
             Dictionary<string, string> resourceVersions;
-            if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
+            if (!Client.ApiVersionOverrides.TryGetValue(resourceType, out version))
             {
-                resourceVersions = LoadResourceVersionsFromApi(resourceType.Namespace, cancellationToken);
-                Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
-            }
-            if (!resourceVersions.TryGetValue(resourceType.Type, out version))
-            {
-                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
+                {
+                    resourceVersions = LoadResourceVersionsFromApi(resourceType.Namespace, cancellationToken);
+                    Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
+                }
+                if (!resourceVersions.TryGetValue(resourceType.Type, out version))
+                {
+                    throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                }
             }
             return version;
         }
@@ -59,14 +62,17 @@ namespace Azure.ResourceManager.Resources
         {
             string version;
             Dictionary<string, string> resourceVersions;
-            if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
+            if (!Client.ApiVersionOverrides.TryGetValue(resourceType, out version))
             {
-                resourceVersions = await LoadResourceVersionsFromApiAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
-                Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
-            }
-            if (!resourceVersions.TryGetValue(resourceType.Type, out version))
-            {
-                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
+                {
+                    resourceVersions = await LoadResourceVersionsFromApiAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
+                    Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
+                }
+                if (!resourceVersions.TryGetValue(resourceType.Type, out version))
+                {
+                    throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                }
             }
             return version;
         }
@@ -97,8 +103,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets all resource providers for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers
-        /// Operation Id: Providers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -113,8 +127,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets all resource providers for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers
-        /// Operation Id: Providers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static EncryptionSchemeDefaultKey DeserializeEncryptionSchemeDefaultKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> label = default;
             Optional<string> policyName = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static UserIdentityContract DeserializeUserIdentityContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provider = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())

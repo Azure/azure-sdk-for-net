@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> Represent the term of Reservation. </summary>
+    /// <summary> Represent the term of reservation. </summary>
     public readonly partial struct ReservationTerm : IEquatable<ReservationTerm>
     {
         private readonly string _value;

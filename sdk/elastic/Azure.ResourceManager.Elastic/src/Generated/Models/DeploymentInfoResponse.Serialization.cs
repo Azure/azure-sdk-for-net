@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal static DeploymentInfoResponse DeserializeDeploymentInfoResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ElasticDeploymentStatus> status = default;
             Optional<string> version = default;
             Optional<string> memoryCapacity = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ElasticDeploymentStatus(property.Value.GetString());

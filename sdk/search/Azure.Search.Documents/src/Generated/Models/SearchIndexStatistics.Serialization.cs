@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexStatistics DeserializeSearchIndexStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long documentCount = default;
             long storageSize = default;
             foreach (var property in element.EnumerateObject())

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertEssentials> essentials = default;
             Optional<BinaryData> context = default;
             Optional<BinaryData> egressConfig = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value);
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     context = BinaryData.FromString(property.Value.GetRawText());
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressConfig = BinaryData.FromString(property.Value.GetRawText());

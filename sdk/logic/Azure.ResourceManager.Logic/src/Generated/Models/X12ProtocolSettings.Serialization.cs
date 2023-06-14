@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             X12ValidationSettings validationSettings = default;
             X12FramingSettings framingSettings = default;
             X12EnvelopeSettings envelopeSettings = default;
@@ -135,7 +139,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<X12EnvelopeOverride> array = new List<X12EnvelopeOverride>();
@@ -150,7 +153,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<X12ValidationOverride> array = new List<X12ValidationOverride>();
@@ -165,7 +167,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<X12MessageIdentifier> array = new List<X12MessageIdentifier>();
@@ -190,7 +191,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<X12DelimiterOverrides> array = new List<X12DelimiterOverrides>();

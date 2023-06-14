@@ -40,6 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> value = default;
             Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new StoredProcedureParameterType(property.Value.GetString());

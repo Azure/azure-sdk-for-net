@@ -88,12 +88,12 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 rolePermissions |= RolePermissions.Execute;
             }
-            else if (allowStickyBit && (s[2] == 'T'))
+            else if (allowStickyBit && (s[2] == 't'))
             {
                 // This means both sticky bit and execute is enabled.
                 rolePermissions |= RolePermissions.Execute;
             }
-            else if ((s[2] != '-') && (s[2] != 't'))
+            else if ((s[2] != '-') && (s[2] != 'T'))
             {
                 throw argumentException;
             }
@@ -159,11 +159,11 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             else if (stickyBit && !executeFlag)
             {
-                stringBuilder.Append('t');
+                stringBuilder.Append('T');
             }
             else if (stickyBit && executeFlag)
             {
-                stringBuilder.Append('T');
+                stringBuilder.Append('t');
             }
             else
             {

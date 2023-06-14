@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsPrice DeserializeBillingBenefitsPrice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amount = property.Value.GetDouble();

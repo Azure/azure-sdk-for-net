@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseWorkloadClassifier data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseWorkloadClassifier data model.
+    /// Workload classifier operations for a data warehouse
+    /// </summary>
     public partial class SynapseWorkloadClassifierData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseWorkloadClassifierData. </summary>

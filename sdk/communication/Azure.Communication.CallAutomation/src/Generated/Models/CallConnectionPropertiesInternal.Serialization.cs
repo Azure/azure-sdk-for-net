@@ -16,13 +16,21 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
-            Optional<CallSourceInternal> source = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> callbackUri = default;
             Optional<string> mediaSubscriptionId = default;
+            Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
+            Optional<string> sourceDisplayName = default;
+            Optional<CommunicationIdentifierModel> sourceIdentity = default;
+            Optional<string> correlationId = default;
+            Optional<CommunicationUserIdentifierModel> answeredByIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -35,21 +43,10 @@ namespace Azure.Communication.CallAutomation
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    source = CallSourceInternal.DeserializeCallSourceInternal(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
@@ -64,7 +61,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callConnectionState = new CallConnectionState(property.Value.GetString());
@@ -80,8 +76,45 @@ namespace Azure.Communication.CallAutomation
                     mediaSubscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sourceCallerIdNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sourceDisplayName"u8))
+                {
+                    sourceDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIdentity = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("answeredByIdentifier"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    answeredByIdentifier = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    continue;
+                }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
         }
     }
 }

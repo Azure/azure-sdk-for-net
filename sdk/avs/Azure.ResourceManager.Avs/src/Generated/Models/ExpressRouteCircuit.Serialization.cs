@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static ExpressRouteCircuit DeserializeExpressRouteCircuit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primarySubnet = default;
             Optional<string> secondarySubnet = default;
             Optional<ResourceIdentifier> expressRouteId = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expressRouteId = new ResourceIdentifier(property.Value.GetString());
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expressRoutePrivatePeeringId = new ResourceIdentifier(property.Value.GetString());

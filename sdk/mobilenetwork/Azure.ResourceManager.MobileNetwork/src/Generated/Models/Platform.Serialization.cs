@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static Platform DeserializePlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PlatformType> platformType = default;
             Optional<VersionState> versionState = default;
             Optional<string> minimumPlatformSoftwareVersion = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     platformType = new PlatformType(property.Value.GetString());
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     versionState = new VersionState(property.Value.GetString());
@@ -92,7 +94,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recommendedVersion = new RecommendedVersion(property.Value.GetString());
@@ -102,7 +103,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     obsoleteVersion = new ObsoleteVersion(property.Value.GetString());

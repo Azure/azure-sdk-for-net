@@ -1,13 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization;
 using OpenTelemetry;
 using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Resources;
@@ -20,15 +17,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
 
-        private readonly TracerProvider _tracerProvider;
+        private readonly TracerProvider? _tracerProvider;
 
-        public TraceDemo(string connectionString, TokenCredential credential = null)
+        public TraceDemo(string connectionString, TokenCredential? credential = null)
         {
             var resourceAttributes = new Dictionary<string, object>
             {
                 { "service.name", "my-service" },
                 { "service.namespace", "my-namespace" },
                 { "service.instance.id", "my-instance" },
+                { "foo", "bar" }
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
@@ -38,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .AddSource(ActivitySourceName)
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
-                            .SetSampler(new ApplicationInsightsSampler(1.0F))
+                            .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 1.0F }))
                             .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString, credential)
                             .Build();
         }
@@ -85,7 +83,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
         public void Dispose()
         {
-            _tracerProvider.Dispose();
+            _tracerProvider?.Dispose();
+        }
+
+        private class ActivityFilteringProcessor : BaseProcessor<Activity>
+        {
+            public override void OnStart(Activity activity)
+            {
+                // prevents all exporters from exporting activities with activity.Kind == ActivityKind.Producer
+                if (activity.Kind == ActivityKind.Producer)
+                {
+                    activity.IsAllDataRequested = false;
+                }
+            }
+        }
+
+        private class ActivityEnrichingProcessor : BaseProcessor<Activity>
+        {
+            public override void OnEnd(Activity activity)
+            {
+                // The updated activity will be available to all processors which are called after this processor.
+                activity.DisplayName = "Enriched-" + activity.DisplayName;
+                activity.SetTag("CustomDimension1", "Value1");
+                activity.SetTag("CustomDimension2", "Value2");
+                activity.SetTag("ActivityKind", activity.Kind);
+            }
         }
     }
 }

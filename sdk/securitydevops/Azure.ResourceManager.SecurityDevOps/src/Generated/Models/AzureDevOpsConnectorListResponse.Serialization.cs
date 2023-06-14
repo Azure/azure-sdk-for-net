@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         internal static AzureDevOpsConnectorListResponse DeserializeAzureDevOpsConnectorListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AzureDevOpsConnectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureDevOpsConnectorData> array = new List<AzureDevOpsConnectorData>();

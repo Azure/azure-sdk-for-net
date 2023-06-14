@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static RecoveryServicesSku DeserializeRecoveryServicesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecoveryServicesSkuName name = default;
             Optional<string> tier = default;
             Optional<string> family = default;

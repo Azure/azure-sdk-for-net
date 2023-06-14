@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyRuleApplicationProtocol DeserializeFirewallPolicyRuleApplicationProtocol(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FirewallPolicyRuleApplicationProtocolType> protocolType = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocolType = new FirewallPolicyRuleApplicationProtocolType(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

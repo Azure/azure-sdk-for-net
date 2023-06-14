@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SubscriptionQuotaItemList DeserializeSubscriptionQuotaItemList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetAppSubscriptionQuotaItem> array = new List<NetAppSubscriptionQuotaItem>();

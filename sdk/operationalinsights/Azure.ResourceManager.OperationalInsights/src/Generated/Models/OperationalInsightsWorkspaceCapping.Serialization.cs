@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceCapping DeserializeOperationalInsightsWorkspaceCapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> dailyQuotaGb = default;
             Optional<string> quotaNextResetTime = default;
             Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dailyQuotaGb = property.Value.GetDouble();
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataIngestionStatus = new OperationalInsightsDataIngestionStatus(property.Value.GetString());

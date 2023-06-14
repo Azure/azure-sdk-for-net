@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebAnonymousAuthentication DeserializeWebAnonymousAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())

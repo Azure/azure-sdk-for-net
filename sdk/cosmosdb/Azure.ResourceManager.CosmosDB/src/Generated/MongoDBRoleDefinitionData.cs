@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the MongoDBRoleDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the MongoDBRoleDefinition data model.
+    /// An Azure Cosmos DB Mongo Role Definition.
+    /// </summary>
     public partial class MongoDBRoleDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionData. </summary>

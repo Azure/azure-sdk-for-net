@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ChangeDirectoryContent. </summary>
+    /// <summary> Request body for change directory of a reservation. </summary>
     public partial class ChangeDirectoryContent
     {
         /// <summary> Initializes a new instance of ChangeDirectoryContent. </summary>

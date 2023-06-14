@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationPrivateLinkServiceConnectionState DeserializeAppConfigurationPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppConfigurationPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<AppConfigurationActionsRequired> actionsRequired = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new AppConfigurationPrivateLinkServiceConnectionStatus(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionsRequired = new AppConfigurationActionsRequired(property.Value.GetString());

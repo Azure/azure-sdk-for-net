@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ScriptActivityScriptBlock DeserializeScriptActivityScriptBlock(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData text = default;
             ScriptType type = default;
             Optional<IList<ScriptActivityParameter>> parameters = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScriptActivityParameter> array = new List<ScriptActivityParameter>();

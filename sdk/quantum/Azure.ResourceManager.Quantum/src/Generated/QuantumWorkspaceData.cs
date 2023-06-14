@@ -13,7 +13,10 @@ using Azure.ResourceManager.Quantum.Models;
 
 namespace Azure.ResourceManager.Quantum
 {
-    /// <summary> A class representing the QuantumWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the QuantumWorkspace data model.
+    /// The resource proxy definition object for quantum workspace.
+    /// </summary>
     public partial class QuantumWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>

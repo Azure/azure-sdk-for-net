@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static NetCoreZipUploadedUserSourceInfo DeserializeNetCoreZipUploadedUserSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> netCoreMainEntryPath = default;
             Optional<string> runtimeVersion = default;
             Optional<string> relativePath = default;

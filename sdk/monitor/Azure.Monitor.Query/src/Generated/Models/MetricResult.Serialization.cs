@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricResult DeserializeMetricResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string type = default;
             LocalizableString name = default;

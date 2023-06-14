@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CronTrigger DeserializeCronTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string expression = default;
             Optional<string> endTime = default;
             Optional<string> startTime = default;

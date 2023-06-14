@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PlmnId DeserializePlmnId(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string mcc = default;
             string mnc = default;
             foreach (var property in element.EnumerateObject())

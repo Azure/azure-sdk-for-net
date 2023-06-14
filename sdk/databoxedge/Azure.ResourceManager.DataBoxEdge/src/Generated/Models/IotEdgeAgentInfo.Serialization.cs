@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static IotEdgeAgentInfo DeserializeIotEdgeAgentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string imageName = default;
             string tag = default;
             Optional<ImageRepositoryCredential> imageRepository = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value);

@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToSerialString());
+            writer.WriteStringValue(LabelOperator.ToString());
             if (Optional.IsDefined(_ttlSeconds))
             {
                 writer.WritePropertyName("ttlSeconds"u8);
@@ -31,6 +31,10 @@ namespace Azure.Communication.JobRouter
 
         internal static PassThroughWorkerSelectorAttachment DeserializePassThroughWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             Optional<double> ttlSeconds = default;
@@ -44,14 +48,13 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("labelOperator"u8))
                 {
-                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    labelOperator = new LabelOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ttlSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttlSeconds = property.Value.GetDouble();

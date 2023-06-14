@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ImmutableStorageWithVersioning DeserializeImmutableStorageWithVersioning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> timeStamp = default;
             Optional<ImmutableStorageWithVersioningMigrationState> migrationState = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeStamp = property.Value.GetDateTimeOffset("O");
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = new ImmutableStorageWithVersioningMigrationState(property.Value.GetString());

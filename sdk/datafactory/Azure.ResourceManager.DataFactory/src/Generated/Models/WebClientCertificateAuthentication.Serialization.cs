@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebClientCertificateAuthentication DeserializeWebClientCertificateAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactorySecretBaseDefinition pfx = default;
             FactorySecretBaseDefinition password = default;
             BinaryData url = default;

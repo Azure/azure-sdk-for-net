@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="planId"> Gets or sets Plan Id. </param>
         /// <param name="status"> Gets the plan status. </param>
         /// <param name="requestDate"> Gets request date. </param>
-        /// <param name="justification"> Gets or sets user&apos;s justification for the plan&apos;s request. </param>
+        /// <param name="justification"> Gets or sets user's justification for the plan's request. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription id that the user is requesting to add the plan to. </param>
         /// <param name="subscriptionName"> Gets or sets the subscription name that the user is requesting to add the plan to. </param>
         internal PrivateStorePlanDetails(string planId, PrivateStorePlanStatus? status, BinaryData requestDate, string justification, string subscriptionId, string subscriptionName)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// </para>
         /// </summary>
         public BinaryData RequestDate { get; }
-        /// <summary> Gets or sets user&apos;s justification for the plan&apos;s request. </summary>
+        /// <summary> Gets or sets user's justification for the plan's request. </summary>
         public string Justification { get; set; }
         /// <summary> Gets or sets the subscription id that the user is requesting to add the plan to. </summary>
         public string SubscriptionId { get; set; }

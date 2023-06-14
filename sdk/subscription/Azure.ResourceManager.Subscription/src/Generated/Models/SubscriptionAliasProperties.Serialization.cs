@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<string> displayName = default;
             Optional<SubscriptionProvisioningState> provisioningState = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new SubscriptionProvisioningState(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        acceptOwnershipUrl = null;
                         continue;
                     }
                     acceptOwnershipUrl = new Uri(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     acceptOwnershipState = new AcceptOwnershipState(property.Value.GetString());
@@ -79,7 +80,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workload = new SubscriptionWorkload(property.Value.GetString());
@@ -104,7 +104,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

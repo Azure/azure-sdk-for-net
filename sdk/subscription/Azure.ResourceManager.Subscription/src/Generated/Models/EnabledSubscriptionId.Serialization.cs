@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static EnabledSubscriptionId DeserializeEnabledSubscriptionId(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {

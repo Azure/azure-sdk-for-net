@@ -32,6 +32,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PipelineReference DeserializePipelineReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PipelineReferenceType type = default;
             string referenceName = default;
             Optional<string> name = default;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseSensitivityLabelSource ToSynapseSensitivityLabelSource(this string value)
         {
-            if (string.Equals(value, "current", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelSource.Current;
-            if (string.Equals(value, "recommended", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelSource.Recommended;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "current")) return SynapseSensitivityLabelSource.Current;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recommended")) return SynapseSensitivityLabelSource.Recommended;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseSensitivityLabelSource value.");
         }
     }

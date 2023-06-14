@@ -8,32 +8,34 @@ using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("MonitorScaleCapacity")]
-
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorScaleCapacity : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minimum");
+            writer.WritePropertyName("minimum"u8);
             writer.WriteStringValue(Minimum.ToString(CultureInfo.InvariantCulture));
-            writer.WritePropertyName("maximum");
+            writer.WritePropertyName("maximum"u8);
             writer.WriteStringValue(Maximum.ToString(CultureInfo.InvariantCulture));
-            writer.WritePropertyName("default");
+            writer.WritePropertyName("default"u8);
             writer.WriteStringValue(Default.ToString(CultureInfo.InvariantCulture));
             writer.WriteEndObject();
         }
 
         internal static MonitorScaleCapacity DeserializeMonitorScaleCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minimum = default;
             int maximum = default;
             int @default = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (!int.TryParse(property.Value.GetString(), out minimum))
                     {
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     }
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (!int.TryParse(property.Value.GetString(), out maximum))
                     {
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     }
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (!int.TryParse(property.Value.GetString(), out @default))
                     {

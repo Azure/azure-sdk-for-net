@@ -10,6 +10,8 @@ using System.Threading;
 using Azure.Core.TestFramework.Models;
 using System;
 using Azure.Communication.Tests;
+using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -34,39 +36,40 @@ namespace Azure.Communication.Identity.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
-        private CommunicationIdentityClient CreateClientWithConnectionString()
+        private CommunicationIdentityClient CreateClientWithConnectionString(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
-                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
-        private CommunicationIdentityClient CreateClientWithAzureKeyCredential()
+        private CommunicationIdentityClient CreateClientWithAzureKeyCredential(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
                     new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
-                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
-        private CommunicationIdentityClient CreateClientWithTokenCredential()
+        private CommunicationIdentityClient CreateClientWithTokenCredential(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
-        private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs()
+        private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs(ServiceVersion? version)
         {
-            CommunicationIdentityClientOptions communicationIdentityClientOptions = new CommunicationIdentityClientOptions();
+            CommunicationIdentityClientOptions communicationIdentityClientOptions = (version == null) ? new CommunicationIdentityClientOptions()
+                : new CommunicationIdentityClientOptions((ServiceVersion)version);
             communicationIdentityClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
-        protected CommunicationIdentityClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString)
+        protected CommunicationIdentityClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, ServiceVersion? version = default)
             => authMethod switch
             {
-                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
-                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
-                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(version),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(version),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(version),
                 _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
             };
 

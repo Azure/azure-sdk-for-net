@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AkamaiSignatureHeaderAuthenticationKey DeserializeAkamaiSignatureHeaderAuthenticationKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> identifier = default;
             Optional<string> base64Key = default;
             Optional<DateTimeOffset> expiration = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiration = property.Value.GetDateTimeOffset("O");

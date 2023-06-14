@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchSupportedSku DeserializeBatchSupportedSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> familyName = default;
             Optional<IReadOnlyList<BatchSkuCapability>> capabilities = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchSkuCapability> array = new List<BatchSkuCapability>();

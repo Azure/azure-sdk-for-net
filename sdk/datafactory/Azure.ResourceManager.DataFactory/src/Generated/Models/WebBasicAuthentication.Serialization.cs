@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData username = default;
             FactorySecretBaseDefinition password = default;
             BinaryData url = default;

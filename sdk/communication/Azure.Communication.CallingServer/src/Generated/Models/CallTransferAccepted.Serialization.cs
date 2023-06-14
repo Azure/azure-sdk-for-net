@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallTransferAccepted DeserializeCallTransferAccepted(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
@@ -38,7 +42,6 @@ namespace Azure.Communication.CallingServer
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);

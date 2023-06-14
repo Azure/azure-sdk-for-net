@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the IotHubDescription data model. </summary>
+    /// <summary>
+    /// A class representing the IotHubDescription data model.
+    /// The description of the IoT hub.
+    /// </summary>
     public partial class IotHubDescriptionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>

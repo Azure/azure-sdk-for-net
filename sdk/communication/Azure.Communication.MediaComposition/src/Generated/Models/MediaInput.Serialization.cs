@@ -28,6 +28,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static MediaInput DeserializeMediaInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

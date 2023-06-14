@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppReplicaContainer DeserializeContainerAppReplicaContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> containerId = default;
             Optional<bool> ready = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ready = property.Value.GetBoolean();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     started = property.Value.GetBoolean();
@@ -88,7 +90,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restartCount = property.Value.GetInt32();

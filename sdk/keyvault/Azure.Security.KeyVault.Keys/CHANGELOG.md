@@ -1,20 +1,35 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
+## 4.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+
 ### Breaking Changes
 
+### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+
+### Other Changes
+
+## 4.5.0 (2023-03-14)
+
+### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 4.4.0 when those types and members did not exist.
+
+- Service version "7.4-preview.1" is not supported.
 - Removed `CreateOkpKeyOptions`.
 - Removed `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync`.
 - Removed `KeyType.Okp` and `KeyType.OkpHsm` from `JsonWebKey`.
 - Removed `KeyCurveName.Ed25519`.
 - Removed `SignatureAlgorithm.EdDsa`.
 
-### Bugs Fixed
-
 ### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.5.0-beta.1 (2022-11-09)
 

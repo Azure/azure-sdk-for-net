@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyslogDataSourceStream>> streams = default;
             Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
             Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyslogDataSourceStream> array = new List<SyslogDataSourceStream>();
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyslogDataSourceFacilityName> array = new List<SyslogDataSourceFacilityName>();
@@ -96,7 +98,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyslogDataSourceLogLevel> array = new List<SyslogDataSourceLogLevel>();

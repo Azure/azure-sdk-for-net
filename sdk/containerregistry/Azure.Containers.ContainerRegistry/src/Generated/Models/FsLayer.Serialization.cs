@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static FsLayer DeserializeFsLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> blobSum = default;
             foreach (var property in element.EnumerateObject())
             {

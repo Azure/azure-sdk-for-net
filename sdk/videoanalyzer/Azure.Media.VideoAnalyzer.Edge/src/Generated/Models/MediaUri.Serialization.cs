@@ -25,6 +25,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MediaUri DeserializeMediaUri(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uri = default;
             foreach (var property in element.EnumerateObject())
             {

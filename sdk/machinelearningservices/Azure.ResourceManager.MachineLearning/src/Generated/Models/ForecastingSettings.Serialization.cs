@@ -140,6 +140,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> countryOrRegionForHolidays = default;
             Optional<int?> cvStepSize = default;
             Optional<MachineLearningFeatureLag> featureLags = default;
@@ -179,7 +183,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     featureLags = new MachineLearningFeatureLag(property.Value.GetString());
@@ -189,7 +192,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value);
@@ -209,7 +211,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value);
@@ -219,7 +220,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
@@ -229,7 +229,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetAggregateFunction = new TargetAggregationFunction(property.Value.GetString());
@@ -284,7 +283,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useStl = new MachineLearningUseStl(property.Value.GetString());

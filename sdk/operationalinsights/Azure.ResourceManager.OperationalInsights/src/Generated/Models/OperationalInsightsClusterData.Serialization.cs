@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsClusterData DeserializeOperationalInsightsClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<OperationalInsightsClusterSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -109,7 +113,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -119,7 +122,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value);
@@ -129,7 +131,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -164,7 +165,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -183,7 +183,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterId = property0.Value.GetGuid();
@@ -193,7 +192,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new OperationalInsightsClusterEntityStatus(property0.Value.GetString());
@@ -203,7 +201,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDoubleEncryptionEnabled = property0.Value.GetBoolean();
@@ -213,7 +210,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isAvailabilityZonesEnabled = property0.Value.GetBoolean();
@@ -223,7 +219,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingType = new OperationalInsightsBillingType(property0.Value.GetString());
@@ -233,7 +228,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value);
@@ -243,7 +237,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedDate = property0.Value.GetDateTimeOffset("R");
@@ -253,7 +246,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("R");
@@ -263,7 +255,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<OperationalInsightsClusterAssociatedWorkspace> array = new List<OperationalInsightsClusterAssociatedWorkspace>();
@@ -278,7 +269,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacityReservationProperties = OperationalInsightsCapacityReservationProperties.DeserializeOperationalInsightsCapacityReservationProperties(property0.Value);

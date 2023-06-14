@@ -65,6 +65,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonDistanceOperation DeserializeSpatialAnalysisPersonDistanceOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<SpatialAnalysisPersonDistanceZoneEvents> zones = default;
             Optional<string> debug = default;
             Optional<string> calibrationConfiguration = default;

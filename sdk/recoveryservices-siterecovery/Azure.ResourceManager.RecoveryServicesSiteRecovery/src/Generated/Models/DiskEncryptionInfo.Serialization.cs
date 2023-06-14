@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static DiskEncryptionInfo DeserializeDiskEncryptionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
             Optional<KeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionKeyInfo = DiskEncryptionKeyInfo.DeserializeDiskEncryptionKeyInfo(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyEncryptionKeyInfo = KeyEncryptionKeyInfo.DeserializeKeyEncryptionKeyInfo(property.Value);

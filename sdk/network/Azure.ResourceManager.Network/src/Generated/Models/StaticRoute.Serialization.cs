@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static StaticRoute DeserializeStaticRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<string>> addressPrefixes = default;
             Optional<string> nextHopIPAddress = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

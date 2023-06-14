@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.BotService
 
         internal static BotChannelData DeserializeBotChannelData(JsonElement element)
         {
-            Optional<Channel> properties = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BotChannelProperties> properties = default;
             Optional<BotServiceSku> sku = default;
             Optional<BotServiceKind?> kind = default;
             Optional<ETag> etag = default;
@@ -81,17 +85,15 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = Channel.DeserializeChannel(property.Value);
+                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = BotServiceSku.DeserializeBotServiceSku(property.Value);
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -121,7 +122,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -136,7 +136,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -171,7 +170,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

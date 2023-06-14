@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Dynatrace
 
         internal static DynatraceSingleSignOnData DeserializeDynatraceSingleSignOnData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             singleSignOnState = new DynatraceSingleSignOnState(property0.Value.GetString());
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enterpriseAppId = property0.Value.GetGuid();
@@ -121,7 +122,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                singleSignOnUrl = null;
                                 continue;
                             }
                             singleSignOnUrl = new Uri(property0.Value.GetString());
@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -146,7 +145,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DynatraceProvisioningState(property0.Value.GetString());

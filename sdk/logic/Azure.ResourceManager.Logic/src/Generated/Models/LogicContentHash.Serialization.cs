@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicContentHash DeserializeLogicContentHash(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> algorithm = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

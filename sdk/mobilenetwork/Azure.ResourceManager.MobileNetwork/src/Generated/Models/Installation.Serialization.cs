@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static Installation DeserializeInstallation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InstallationState> state = default;
             Optional<SubResource> operation = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new InstallationState(property.Value.GetString());
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operation = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());

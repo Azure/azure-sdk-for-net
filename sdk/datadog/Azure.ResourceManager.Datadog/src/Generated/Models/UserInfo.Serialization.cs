@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static UserInfo DeserializeUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> emailAddress = default;
             Optional<string> phoneNumber = default;

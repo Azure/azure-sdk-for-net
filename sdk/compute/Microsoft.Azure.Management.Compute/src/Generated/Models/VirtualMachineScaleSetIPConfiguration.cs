@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// configuration.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetIPConfiguration : SubResource
+    public partial class VirtualMachineScaleSetIPConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -38,7 +38,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineScaleSetIPConfiguration class.
         /// </summary>
         /// <param name="name">The IP configuration name.</param>
-        /// <param name="id">Resource Id</param>
         /// <param name="subnet">Specifies the identifier of the
         /// subnet.</param>
         /// <param name="primary">Specifies the primary network interface in
@@ -67,8 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// can reference inbound nat pools of one public and one internal load
         /// balancer. Multiple scale sets cannot use the same basic sku load
         /// balancer.</param>
-        public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> applicationSecurityGroups = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
-            : base(id)
+        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> applicationSecurityGroups = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
         {
             Name = name;
             Subnet = subnet;

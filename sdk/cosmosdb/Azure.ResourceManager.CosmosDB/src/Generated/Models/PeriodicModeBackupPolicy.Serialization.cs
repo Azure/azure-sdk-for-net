@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeBackupPolicy DeserializePeriodicModeBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeriodicModeProperties> periodicModeProperties = default;
             BackupPolicyType type = default;
             Optional<BackupPolicyMigrationState> migrationState = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     periodicModeProperties = PeriodicModeProperties.DeserializePeriodicModeProperties(property.Value);
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);

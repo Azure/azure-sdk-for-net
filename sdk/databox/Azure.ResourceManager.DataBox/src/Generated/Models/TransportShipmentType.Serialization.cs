@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static TransportShipmentType ToTransportShipmentType(this string value)
         {
-            if (string.Equals(value, "CustomerManaged", StringComparison.InvariantCultureIgnoreCase)) return TransportShipmentType.CustomerManaged;
-            if (string.Equals(value, "MicrosoftManaged", StringComparison.InvariantCultureIgnoreCase)) return TransportShipmentType.MicrosoftManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerManaged")) return TransportShipmentType.CustomerManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftManaged")) return TransportShipmentType.MicrosoftManaged;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransportShipmentType value.");
         }
     }

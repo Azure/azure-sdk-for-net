@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricTimeSeriesElement DeserializeMetricTimeSeriesElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MetadataValue>> metadatavalues = default;
             Optional<IReadOnlyList<MetricValue>> data = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetadataValue> array = new List<MetadataValue>();
@@ -38,7 +41,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricValue> array = new List<MetricValue>();

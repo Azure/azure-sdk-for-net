@@ -12,7 +12,10 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    /// <summary> A class representing the RedisEnterpriseDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the RedisEnterpriseDatabase data model.
+    /// Describes a database on the RedisEnterprise cluster
+    /// </summary>
     public partial class RedisEnterpriseDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseData. </summary>

@@ -24,6 +24,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static TeamsMeetingOutput DeserializeTeamsMeetingOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string teamsJoinUrl = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())

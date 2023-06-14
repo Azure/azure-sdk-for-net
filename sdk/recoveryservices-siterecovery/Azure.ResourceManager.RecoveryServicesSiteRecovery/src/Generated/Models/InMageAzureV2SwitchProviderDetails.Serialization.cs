@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageAzureV2SwitchProviderDetails DeserializeInMageAzureV2SwitchProviderDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetVaultId = default;
             Optional<string> targetResourceId = default;
             Optional<string> targetFabricId = default;

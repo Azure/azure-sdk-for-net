@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         public static NetworkAclBypass ToNetworkAclBypass(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return NetworkAclBypass.None;
-            if (string.Equals(value, "AzureServices", StringComparison.InvariantCultureIgnoreCase)) return NetworkAclBypass.AzureServices;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return NetworkAclBypass.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureServices")) return NetworkAclBypass.AzureServices;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NetworkAclBypass value.");
         }
     }

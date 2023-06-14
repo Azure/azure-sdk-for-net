@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryTriggerRunsQueryResult DeserializeFactoryTriggerRunsQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FactoryTriggerRun> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())

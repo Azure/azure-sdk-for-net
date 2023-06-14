@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactAgreementContent DeserializeEdifactAgreementContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EdifactOneWayAgreement receiveAgreement = default;
             EdifactOneWayAgreement sendAgreement = default;
             foreach (var property in element.EnumerateObject())

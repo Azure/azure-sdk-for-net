@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static PrimingJob DeserializePrimingJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string primingJobName = default;
             Uri primingManifestUrl = default;
             Optional<string> primingJobId = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primingJobState = new PrimingJobState(property.Value.GetString());
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primingJobPercentComplete = property.Value.GetDouble();

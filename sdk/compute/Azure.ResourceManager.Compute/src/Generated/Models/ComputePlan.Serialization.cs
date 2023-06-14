@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputePlan DeserializeComputePlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> publisher = default;
             Optional<string> product = default;

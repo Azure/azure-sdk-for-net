@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static ResourceGuardResourceList DeserializeResourceGuardResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ResourceGuardData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceGuardData> array = new List<ResourceGuardData>();

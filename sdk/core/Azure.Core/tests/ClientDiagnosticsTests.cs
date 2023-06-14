@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
-[assembly:AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
+[assembly: AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
 
 namespace Azure.Core.Tests
 {
@@ -94,6 +94,7 @@ namespace Azure.Core.Tests
         public void ParentIdCanBeSet()
         {
             string parentId = "parentId";
+            string tracestate = "state";
             using var testListener = new TestDiagnosticListener("Azure.Clients");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
@@ -103,10 +104,11 @@ namespace Azure.Core.Tests
                 false);
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
-            scope.SetTraceparent(parentId);
+            scope.SetTraceContext(parentId, tracestate);
             scope.Start();
 
             Assert.AreEqual(parentId, Activity.Current.ParentId);
+            Assert.AreEqual(tracestate, Activity.Current.TraceStateString);
         }
 
         [Test]
@@ -123,7 +125,7 @@ namespace Azure.Core.Tests
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
-            Assert.Throws<InvalidOperationException>(() => scope.SetTraceparent(parentId));
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceContext(parentId));
         }
 
         [Test]
@@ -158,6 +160,8 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
+            scope.SetDisplayName("Custom Display Name");
+
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null);
             scope.Start();
@@ -176,6 +180,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
             Assert.AreEqual("ActivityName", isEnabledCall.Name);
+            Assert.AreEqual("Custom Display Name", activity.DisplayName);
 
             var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity[] activitiesArray = activities.ToArray();
@@ -312,14 +317,19 @@ namespace Azure.Core.Tests
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (DiagnosticScope.ActivityKind)kind);
+            scope.SetDisplayName("Activity Display Name");
             scope.Start();
 
             DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (DiagnosticScope.ActivityKind)kind);
+            nestedScope.SetDisplayName("Nested Activity Display Name");
             nestedScope.Start();
+
             Assert.IsTrue(nestedScope.IsEnabled);
             Assert.AreEqual("ClientName.NestedActivityName", Activity.Current.OperationName);
+            Assert.AreEqual("Nested Activity Display Name", Activity.Current.DisplayName);
             nestedScope.Dispose();
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
+            Assert.AreEqual("Activity Display Name", Activity.Current.DisplayName);
         }
 
         [Test]

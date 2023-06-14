@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSecuritySolutionsList DeserializeIotSecuritySolutionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<IotSecuritySolutionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

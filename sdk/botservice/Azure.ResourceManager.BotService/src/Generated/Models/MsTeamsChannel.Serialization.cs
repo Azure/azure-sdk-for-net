@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static MsTeamsChannel DeserializeMsTeamsChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MsTeamsChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MsTeamsChannelProperties.DeserializeMsTeamsChannelProperties(property.Value);
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());

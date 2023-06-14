@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSparkConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSparkConfiguration data model.
+    /// SparkConfiguration response details
+    /// </summary>
     public partial class SynapseSparkConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSparkConfigurationData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static JobRunError DeserializeJobRunError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;

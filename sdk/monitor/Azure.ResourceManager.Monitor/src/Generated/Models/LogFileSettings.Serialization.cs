@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogFileSettings DeserializeLogFileSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogFileSettingsText> text = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value);

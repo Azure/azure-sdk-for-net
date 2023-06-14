@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     {
         internal static SkuEnumerationForNewResourceResult DeserializeSkuEnumerationForNewResourceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CapacitySku>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CapacitySku> array = new List<CapacitySku>();

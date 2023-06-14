@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         internal static FluidRelayContainerList DeserializeFluidRelayContainerList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FluidRelayContainerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FluidRelayContainerData> array = new List<FluidRelayContainerData>();

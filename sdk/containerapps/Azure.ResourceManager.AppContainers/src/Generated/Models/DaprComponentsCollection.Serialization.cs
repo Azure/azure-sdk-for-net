@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static DaprComponentsCollection DeserializeDaprComponentsCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppDaprComponentData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

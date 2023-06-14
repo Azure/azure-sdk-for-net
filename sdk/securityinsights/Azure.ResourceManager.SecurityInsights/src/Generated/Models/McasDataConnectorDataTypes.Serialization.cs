@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiscoveryLogs))
             {
-                writer.WritePropertyName("discoveryLogs");
+                writer.WritePropertyName("discoveryLogs"u8);
                 writer.WriteObjectValue(DiscoveryLogs);
             }
             if (Optional.IsDefined(Alerts))
             {
-                writer.WritePropertyName("alerts");
+                writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static McasDataConnectorDataTypes DeserializeMcasDataConnectorDataTypes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
             Optional<DataConnectorDataTypeCommon> alerts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("discoveryLogs"))
+                if (property.NameEquals("discoveryLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
                     continue;
                 }
-                if (property.NameEquals("alerts"))
+                if (property.NameEquals("alerts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);

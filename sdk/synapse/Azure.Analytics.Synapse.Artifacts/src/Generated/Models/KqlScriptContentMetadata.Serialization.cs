@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static KqlScriptContentMetadata DeserializeKqlScriptContentMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> language = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource" /> object. </returns>
         public virtual SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtension()
         {
-            return new SiteSlotInstanceExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+            return new SiteSlotInstanceExtensionResource(Client, Id.AppendChildResource("extensions", "MSDeploy"));
         }
 
         /// <summary> Gets a collection of SiteSlotInstanceProcessResources in the SiteSlotInstance. </summary>

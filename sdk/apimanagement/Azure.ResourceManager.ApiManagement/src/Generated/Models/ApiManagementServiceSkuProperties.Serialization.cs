@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementServiceSkuProperties DeserializeApiManagementServiceSkuProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ApiManagementServiceSkuType name = default;
             int capacity = default;
             foreach (var property in element.EnumerateObject())

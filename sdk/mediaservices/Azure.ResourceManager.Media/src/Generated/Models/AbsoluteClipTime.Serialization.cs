@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AbsoluteClipTime DeserializeAbsoluteClipTime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan time = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

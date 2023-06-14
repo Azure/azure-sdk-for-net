@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Quota
 
         internal static CurrentQuotaLimitBaseData DeserializeCurrentQuotaLimitBaseData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<QuotaProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = QuotaProperties.DeserializeQuotaProperties(property.Value);
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

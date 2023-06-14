@@ -24,6 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ClassificationResult DeserializeClassificationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string category = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())

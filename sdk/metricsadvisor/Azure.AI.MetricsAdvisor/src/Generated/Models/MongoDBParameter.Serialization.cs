@@ -53,6 +53,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MongoDBParameter DeserializeMongoDBParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             Optional<string> database = default;
             string command = default;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -16,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyState
     {
         /// <summary> Initializes a new instance of AnomalyState. </summary>
-        /// <param name="timestamp"> The timestamp for this anomaly. </param>
+        /// <param name="timestamp"> Time stamp for this anomaly. </param>
         internal AnomalyState(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
@@ -24,21 +23,21 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of AnomalyState. </summary>
-        /// <param name="timestamp"> The timestamp for this anomaly. </param>
-        /// <param name="value"> The detailed value of this anomalous timestamp. </param>
-        /// <param name="errors"> Error message for the current timestamp. </param>
+        /// <param name="timestamp"> Time stamp for this anomaly. </param>
+        /// <param name="value"> Detailed value of this anomalous time stamp. </param>
+        /// <param name="errors"> Error message for the current time stamp. </param>
         internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IReadOnlyList<ErrorResponse> errors)
         {
             Timestamp = timestamp;
             Value = value;
-            Errors = errors.ToList();
+            Errors = errors;
         }
 
-        /// <summary> The timestamp for this anomaly. </summary>
+        /// <summary> Time stamp for this anomaly. </summary>
         public DateTimeOffset Timestamp { get; }
-        /// <summary> The detailed value of this anomalous timestamp. </summary>
+        /// <summary> Detailed value of this anomalous time stamp. </summary>
         public AnomalyValue Value { get; }
-        /// <summary> Error message for the current timestamp. </summary>
+        /// <summary> Error message for the current time stamp. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
     }
 }

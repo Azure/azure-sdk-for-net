@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
@@ -161,7 +162,7 @@ namespace Azure.Messaging.EventHubs
             batchOptions.MaximumSizeInBytes ??= long.MaxValue;
 
             var transportBatch = new ListTransportBatch(batchOptions.MaximumSizeInBytes.Value, batchSizeBytes, batchEventStore, tryAddCallback);
-            return new EventDataBatch(transportBatch, "Mock", "Mock", batchOptions);
+            return new EventDataBatch(transportBatch, "Mock", "Mock", batchOptions, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
         }
 
         /// <summary>

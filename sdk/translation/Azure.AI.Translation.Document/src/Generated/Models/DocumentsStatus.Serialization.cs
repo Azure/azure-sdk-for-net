@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static DocumentsStatus DeserializeDocumentsStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DocumentStatusResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static TimeSeriesDatabaseConnectionProperties DeserializeTimeSeriesDatabaseConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("connectionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

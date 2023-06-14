@@ -35,39 +35,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutProperties DeserializeDefaultRolloutProperties(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<DefaultRolloutPropertiesSpecification> specification = default;
-            Optional<DefaultRolloutPropertiesStatus> status = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Optional<DefaultRolloutSpecification> specification = default;
+            Optional<DefaultRolloutStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("specification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    specification = DefaultRolloutPropertiesSpecification.DeserializeDefaultRolloutPropertiesSpecification(property.Value);
+                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = DefaultRolloutPropertiesStatus.DeserializeDefaultRolloutPropertiesStatus(property.Value);
+                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value);
                     continue;
                 }
             }

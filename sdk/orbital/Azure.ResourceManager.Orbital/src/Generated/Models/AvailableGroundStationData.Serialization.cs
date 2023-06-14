@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Orbital
     {
         internal static AvailableGroundStationData DeserializeAvailableGroundStationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -87,7 +89,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             longitudeDegrees = property0.Value.GetSingle();
@@ -97,7 +98,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             latitudeDegrees = property0.Value.GetSingle();
@@ -107,7 +107,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             altitudeMeters = property0.Value.GetSingle();
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             releaseMode = new GroundStationReleaseMode(property0.Value.GetString());

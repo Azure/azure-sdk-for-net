@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ManagementResourcePreferences DeserializeManagementResourcePreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> preferredManagementResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

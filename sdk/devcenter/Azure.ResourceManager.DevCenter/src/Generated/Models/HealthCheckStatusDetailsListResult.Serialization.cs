@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static HealthCheckStatusDetailsListResult DeserializeHealthCheckStatusDetailsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HealthCheckStatusDetailData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthCheckStatusDetailData> array = new List<HealthCheckStatusDetailData>();

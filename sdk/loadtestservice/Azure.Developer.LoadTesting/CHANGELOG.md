@@ -1,6 +1,21 @@
 # Release History
 
-## 1.0.0 (2023-01-26)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.1 (2023-03-11)
+
+### Other Changes
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.0.0 (2023-03-07)
 
 ### Breaking Changes
 - Made `Azure.Developer.LoadTesting.LoadTestAdministrationClient.UploadTestFileAsync` internal

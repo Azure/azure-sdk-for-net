@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static LoadBalancingSettings DeserializeLoadBalancingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sampleSize = default;
             Optional<int> successfulSamplesRequired = default;
             Optional<int> additionalLatencyInMilliseconds = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sampleSize = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successfulSamplesRequired = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalLatencyInMilliseconds = property.Value.GetInt32();

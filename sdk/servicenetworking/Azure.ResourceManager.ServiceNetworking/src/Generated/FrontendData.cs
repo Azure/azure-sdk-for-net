@@ -8,12 +8,14 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary> A class representing the Frontend data model. </summary>
+    /// <summary>
+    /// A class representing the Frontend data model.
+    /// Frontend Subresource of Traffic Controller.
+    /// </summary>
     public partial class FrontendData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FrontendData. </summary>
@@ -29,37 +31,17 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="mode"> Frontend Mode (Optional). </param>
-        /// <param name="ipAddressVersion"> Frontend IP Address Version (Optional). </param>
-        /// <param name="publicIPAddress"> Frontend Public IP Address (Optional). </param>
-        /// <param name="provisioningState"> test doc. </param>
-        internal FrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FrontendMode? mode, FrontendIPAddressVersion? ipAddressVersion, WritableSubResource publicIPAddress, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
+        internal FrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
-            Mode = mode;
-            IPAddressVersion = ipAddressVersion;
-            PublicIPAddress = publicIPAddress;
+            Fqdn = fqdn;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Frontend Mode (Optional). </summary>
-        public FrontendMode? Mode { get; set; }
-        /// <summary> Frontend IP Address Version (Optional). </summary>
-        public FrontendIPAddressVersion? IPAddressVersion { get; set; }
-        /// <summary> Frontend Public IP Address (Optional). </summary>
-        internal WritableSubResource PublicIPAddress { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PublicIPAddressId
-        {
-            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
-            set
-            {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
-            }
-        }
-
-        /// <summary> test doc. </summary>
+        /// <summary> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </summary>
+        public string Fqdn { get; }
+        /// <summary> Provisioning State of Traffic Controller Frontend Resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }
 }

@@ -12,13 +12,13 @@ using Azure.Communication.JobRouter;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class RouterModelFactory
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
+        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
         /// <param name="queueSelectors">
         /// The queue selectors to resolve a queue for a given job.
         /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -31,8 +31,9 @@ namespace Azure.Communication.JobRouter.Models
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
         /// </param>
         /// <param name="workerSelectors">
         /// The worker label selectors to attach to a given job.

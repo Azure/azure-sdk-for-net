@@ -51,8 +51,8 @@ namespace Azure.Identity.Tests
             var options = new OnBehalfOfCredentialOptions
             {
                 Transport = config.Transport,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
@@ -140,7 +140,10 @@ namespace Azure.Identity.Tests
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
-            options = new OnBehalfOfCredentialOptions();
+            options = new OnBehalfOfCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost")
+            };
             ((OnBehalfOfCredentialOptions)options).SendCertificateChain = sendCertChain;
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
@@ -149,7 +152,7 @@ namespace Azure.Identity.Tests
                     mockCert,
                     expectedUserAssertion,
                     options as OnBehalfOfCredentialOptions,
-                    new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)),
+                    new CredentialPipeline(_pipeline, new ClientDiagnostics(options)),
                     null));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);

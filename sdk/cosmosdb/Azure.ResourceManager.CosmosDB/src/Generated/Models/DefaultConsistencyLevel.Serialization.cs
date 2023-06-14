@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         public static DefaultConsistencyLevel ToDefaultConsistencyLevel(this string value)
         {
-            if (string.Equals(value, "Eventual", StringComparison.InvariantCultureIgnoreCase)) return DefaultConsistencyLevel.Eventual;
-            if (string.Equals(value, "Session", StringComparison.InvariantCultureIgnoreCase)) return DefaultConsistencyLevel.Session;
-            if (string.Equals(value, "BoundedStaleness", StringComparison.InvariantCultureIgnoreCase)) return DefaultConsistencyLevel.BoundedStaleness;
-            if (string.Equals(value, "Strong", StringComparison.InvariantCultureIgnoreCase)) return DefaultConsistencyLevel.Strong;
-            if (string.Equals(value, "ConsistentPrefix", StringComparison.InvariantCultureIgnoreCase)) return DefaultConsistencyLevel.ConsistentPrefix;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Eventual")) return DefaultConsistencyLevel.Eventual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Session")) return DefaultConsistencyLevel.Session;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BoundedStaleness")) return DefaultConsistencyLevel.BoundedStaleness;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Strong")) return DefaultConsistencyLevel.Strong;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConsistentPrefix")) return DefaultConsistencyLevel.ConsistentPrefix;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DefaultConsistencyLevel value.");
         }
     }

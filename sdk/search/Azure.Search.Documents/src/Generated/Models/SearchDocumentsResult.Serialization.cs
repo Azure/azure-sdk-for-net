@@ -16,11 +16,17 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
             Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
+            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
+            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +35,6 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     odataCount = property.Value.GetInt64();
@@ -39,7 +44,6 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchCoverage = property.Value.GetDouble();
@@ -49,18 +53,24 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<FacetResult> array = new List<FacetResult>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(FacetResult.DeserializeFacetResult(item));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<FacetResult> array = new List<FacetResult>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FacetResult.DeserializeFacetResult(item));
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     searchFacets = dictionary;
                     continue;
@@ -84,10 +94,27 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("@search.semanticPartialResponseReason"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSemanticPartialResponseReason = new SemanticPartialResponseReason(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("@search.semanticPartialResponseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSemanticPartialResponseType = new SemanticPartialResponseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -106,7 +133,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value);
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType), value, odataNextLink.Value);
         }
     }
 }

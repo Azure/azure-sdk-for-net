@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<string> categoryGroup = default;
             bool enabled = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);

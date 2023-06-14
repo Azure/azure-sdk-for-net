@@ -169,11 +169,31 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(BackendSettingsCollection))
+            {
+                writer.WritePropertyName("backendSettingsCollection"u8);
+                writer.WriteStartArray();
+                foreach (var item in BackendSettingsCollection)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(HttpListeners))
             {
                 writer.WritePropertyName("httpListeners"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpListeners)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Listeners))
+            {
+                writer.WritePropertyName("listeners"u8);
+                writer.WriteStartArray();
+                foreach (var item in Listeners)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -204,6 +224,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("requestRoutingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestRoutingRules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RoutingRules))
+            {
+                writer.WritePropertyName("routingRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in RoutingRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -279,12 +309,31 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("forceFirewallPolicyAssociation"u8);
                 writer.WriteBooleanValue(ForceFirewallPolicyAssociation.Value);
             }
+            if (Optional.IsCollectionDefined(LoadDistributionPolicies))
+            {
+                writer.WritePropertyName("loadDistributionPolicies"u8);
+                writer.WriteStartArray();
+                foreach (var item in LoadDistributionPolicies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(GlobalConfiguration))
+            {
+                writer.WritePropertyName("globalConfiguration"u8);
+                writer.WriteObjectValue(GlobalConfiguration);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -306,10 +355,13 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ApplicationGatewayProbe>> probes = default;
             Optional<IList<ApplicationGatewayBackendAddressPool>> backendAddressPools = default;
             Optional<IList<ApplicationGatewayBackendHttpSettings>> backendHttpSettingsCollection = default;
+            Optional<IList<ApplicationGatewayBackendSettings>> backendSettingsCollection = default;
             Optional<IList<ApplicationGatewayHttpListener>> httpListeners = default;
+            Optional<IList<ApplicationGatewayListener>> listeners = default;
             Optional<IList<ApplicationGatewaySslProfile>> sslProfiles = default;
             Optional<IList<ApplicationGatewayUrlPathMap>> urlPathMaps = default;
             Optional<IList<ApplicationGatewayRequestRoutingRule>> requestRoutingRules = default;
+            Optional<IList<ApplicationGatewayRoutingRule>> routingRules = default;
             Optional<IList<ApplicationGatewayRewriteRuleSet>> rewriteRuleSets = default;
             Optional<IList<ApplicationGatewayRedirectConfiguration>> redirectConfigurations = default;
             Optional<ApplicationGatewayWebApplicationFirewallConfiguration> webApplicationFirewallConfiguration = default;
@@ -323,13 +375,14 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
             Optional<bool> forceFirewallPolicyAssociation = default;
+            Optional<IList<ApplicationGatewayLoadDistributionPolicy>> loadDistributionPolicies = default;
+            Optional<ApplicationGatewayGlobalConfiguration> globalConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -339,7 +392,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -354,7 +406,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -364,7 +415,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -379,7 +429,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -389,7 +438,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -399,7 +447,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -423,7 +470,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku = ApplicationGatewaySku.DeserializeApplicationGatewaySku(property0.Value);
@@ -433,7 +479,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value);
@@ -443,7 +488,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationalState = new ApplicationGatewayOperationalState(property0.Value.GetString());
@@ -453,7 +497,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayIPConfiguration> array = new List<ApplicationGatewayIPConfiguration>();
@@ -468,7 +511,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayAuthenticationCertificate> array = new List<ApplicationGatewayAuthenticationCertificate>();
@@ -483,7 +525,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayTrustedRootCertificate> array = new List<ApplicationGatewayTrustedRootCertificate>();
@@ -498,7 +539,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayTrustedClientCertificate> array = new List<ApplicationGatewayTrustedClientCertificate>();
@@ -513,7 +553,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewaySslCertificate> array = new List<ApplicationGatewaySslCertificate>();
@@ -528,7 +567,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayFrontendIPConfiguration> array = new List<ApplicationGatewayFrontendIPConfiguration>();
@@ -543,7 +581,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayFrontendPort> array = new List<ApplicationGatewayFrontendPort>();
@@ -558,7 +595,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayProbe> array = new List<ApplicationGatewayProbe>();
@@ -573,7 +609,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayBackendAddressPool> array = new List<ApplicationGatewayBackendAddressPool>();
@@ -588,7 +623,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayBackendHttpSettings> array = new List<ApplicationGatewayBackendHttpSettings>();
@@ -599,11 +633,24 @@ namespace Azure.ResourceManager.Network
                             backendHttpSettingsCollection = array;
                             continue;
                         }
+                        if (property0.NameEquals("backendSettingsCollection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ApplicationGatewayBackendSettings> array = new List<ApplicationGatewayBackendSettings>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationGatewayBackendSettings.DeserializeApplicationGatewayBackendSettings(item));
+                            }
+                            backendSettingsCollection = array;
+                            continue;
+                        }
                         if (property0.NameEquals("httpListeners"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayHttpListener> array = new List<ApplicationGatewayHttpListener>();
@@ -614,11 +661,24 @@ namespace Azure.ResourceManager.Network
                             httpListeners = array;
                             continue;
                         }
+                        if (property0.NameEquals("listeners"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ApplicationGatewayListener> array = new List<ApplicationGatewayListener>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationGatewayListener.DeserializeApplicationGatewayListener(item));
+                            }
+                            listeners = array;
+                            continue;
+                        }
                         if (property0.NameEquals("sslProfiles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewaySslProfile> array = new List<ApplicationGatewaySslProfile>();
@@ -633,7 +693,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayUrlPathMap> array = new List<ApplicationGatewayUrlPathMap>();
@@ -648,7 +707,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayRequestRoutingRule> array = new List<ApplicationGatewayRequestRoutingRule>();
@@ -659,11 +717,24 @@ namespace Azure.ResourceManager.Network
                             requestRoutingRules = array;
                             continue;
                         }
+                        if (property0.NameEquals("routingRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ApplicationGatewayRoutingRule> array = new List<ApplicationGatewayRoutingRule>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationGatewayRoutingRule.DeserializeApplicationGatewayRoutingRule(item));
+                            }
+                            routingRules = array;
+                            continue;
+                        }
                         if (property0.NameEquals("rewriteRuleSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayRewriteRuleSet> array = new List<ApplicationGatewayRewriteRuleSet>();
@@ -678,7 +749,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayRedirectConfiguration> array = new List<ApplicationGatewayRedirectConfiguration>();
@@ -693,7 +763,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             webApplicationFirewallConfiguration = ApplicationGatewayWebApplicationFirewallConfiguration.DeserializeApplicationGatewayWebApplicationFirewallConfiguration(property0.Value);
@@ -703,7 +772,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -713,7 +781,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableHttp2 = property0.Value.GetBoolean();
@@ -723,7 +790,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableFips = property0.Value.GetBoolean();
@@ -733,7 +799,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoscaleConfiguration = ApplicationGatewayAutoscaleConfiguration.DeserializeApplicationGatewayAutoscaleConfiguration(property0.Value);
@@ -743,7 +808,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayPrivateLinkConfiguration> array = new List<ApplicationGatewayPrivateLinkConfiguration>();
@@ -758,7 +822,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayPrivateEndpointConnectionData> array = new List<ApplicationGatewayPrivateEndpointConnectionData>();
@@ -773,7 +836,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceGuid = property0.Value.GetGuid();
@@ -783,7 +845,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -793,7 +854,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayCustomError> array = new List<ApplicationGatewayCustomError>();
@@ -808,17 +868,39 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             forceFirewallPolicyAssociation = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("loadDistributionPolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ApplicationGatewayLoadDistributionPolicy> array = new List<ApplicationGatewayLoadDistributionPolicy>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationGatewayLoadDistributionPolicy.DeserializeApplicationGatewayLoadDistributionPolicy(item));
+                            }
+                            loadDistributionPolicies = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("globalConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            globalConfiguration = ApplicationGatewayGlobalConfiguration.DeserializeApplicationGatewayGlobalConfiguration(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
+            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value);
         }
     }
 }

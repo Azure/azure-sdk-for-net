@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> categoryName = default;
             Optional<string> controlId = default;
             Optional<string> controlName = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     controlType = new ControlType(property.Value.GetString());
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceState = new ComplianceState(property.Value.GetString());

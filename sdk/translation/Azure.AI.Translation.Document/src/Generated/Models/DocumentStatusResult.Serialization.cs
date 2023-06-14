@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Document
     {
         internal static DocumentStatusResult DeserializeDocumentStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> path = default;
             Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
@@ -31,7 +35,6 @@ namespace Azure.AI.Translation.Document
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     path = new Uri(property.Value.GetString());
@@ -81,7 +84,6 @@ namespace Azure.AI.Translation.Document
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     characterCharged = property.Value.GetInt64();

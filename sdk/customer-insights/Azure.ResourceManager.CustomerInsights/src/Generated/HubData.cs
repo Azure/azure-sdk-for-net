@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the Hub data model. </summary>
+    /// <summary>
+    /// A class representing the Hub data model.
+    /// Hub resource.
+    /// </summary>
     public partial class HubData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HubData. </summary>

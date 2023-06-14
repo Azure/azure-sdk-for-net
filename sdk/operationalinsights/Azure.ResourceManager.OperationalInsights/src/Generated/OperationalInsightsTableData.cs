@@ -11,7 +11,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsTable data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsTable data model.
+    /// Workspace data table definition.
+    /// </summary>
     public partial class OperationalInsightsTableData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsTableData. </summary>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
-        /// <param name="provisioningState"> Table&apos;s current provisioning state. If set to &apos;updating&apos;, indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
+        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
         /// <param name="retentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
         /// <param name="totalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, RetentionInDaysAsDefaultState? retentionInDaysAsDefault, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault) : base(id, name, resourceType, systemData)
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public string LastPlanModifiedDate { get; }
         /// <summary> Table schema. </summary>
         public OperationalInsightsSchema Schema { get; set; }
-        /// <summary> Table&apos;s current provisioning state. If set to &apos;updating&apos;, indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
+        /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
         public OperationalInsightsTableProvisioningState? ProvisioningState { get; }
         /// <summary> True - Value originates from workspace retention in days, False - Customer specific. </summary>
         public RetentionInDaysAsDefaultState? RetentionInDaysAsDefault { get; }

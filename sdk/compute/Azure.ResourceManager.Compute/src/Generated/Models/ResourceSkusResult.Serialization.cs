@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkusResult DeserializeResourceSkusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ComputeResourceSku> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

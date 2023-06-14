@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomRule DeserializeCustomRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<CustomRuleEnabledState> enabledState = default;
             int priority = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new CustomRuleEnabledState(property.Value.GetString());

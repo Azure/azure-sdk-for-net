@@ -19,16 +19,12 @@ namespace Azure.ResourceManager.Workloads
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _phpWorkloadResourcePhpWorkloadsClientDiagnostics;
-        private PhpWorkloadsRestOperations _phpWorkloadResourcePhpWorkloadsRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private WorkloadsRestOperations _defaultRestClient;
         private ClientDiagnostics _sapVirtualInstanceSapVirtualInstancesClientDiagnostics;
         private SAPVirtualInstancesRestOperations _sapVirtualInstanceSapVirtualInstancesRestClient;
         private ClientDiagnostics _sapMonitormonitorsClientDiagnostics;
         private MonitorsRestOperations _sapMonitormonitorsRestClient;
-        private ClientDiagnostics _skusClientDiagnostics;
-        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -42,16 +38,12 @@ namespace Azure.ResourceManager.Workloads
         {
         }
 
-        private ClientDiagnostics PhpWorkloadResourcePhpWorkloadsClientDiagnostics => _phpWorkloadResourcePhpWorkloadsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", PhpWorkloadResource.ResourceType.Namespace, Diagnostics);
-        private PhpWorkloadsRestOperations PhpWorkloadResourcePhpWorkloadsRestClient => _phpWorkloadResourcePhpWorkloadsRestClient ??= new PhpWorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PhpWorkloadResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private WorkloadsRestOperations DefaultRestClient => _defaultRestClient ??= new WorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SapVirtualInstanceSAPVirtualInstancesClientDiagnostics => _sapVirtualInstanceSapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
         private SAPVirtualInstancesRestOperations SapVirtualInstanceSAPVirtualInstancesRestClient => _sapVirtualInstanceSapVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
         private ClientDiagnostics SapMonitormonitorsClientDiagnostics => _sapMonitormonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapMonitorResource.ResourceType.Namespace, Diagnostics);
         private MonitorsRestOperations SapMonitormonitorsRestClient => _sapMonitormonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapMonitorResource.ResourceType));
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -60,51 +52,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Lists PHP workload resources for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PhpWorkloads_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PhpWorkloadResource> GetPhpWorkloadResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), PhpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPhpWorkloadResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists PHP workload resources for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PhpWorkloads_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PhpWorkloadResource> GetPhpWorkloadResources(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), PhpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPhpWorkloadResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get SAP sizing recommendations.
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -136,7 +84,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP sizing recommendations.
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,7 +116,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -200,7 +148,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP supported SKUs.
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -232,7 +180,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -264,7 +212,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Disk Configurations.
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -296,7 +244,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -328,7 +276,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Get SAP Availability Zone Details.
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -360,7 +308,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -382,7 +330,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets all Virtual Instances for SAP in the subscription.
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -445,50 +393,6 @@ namespace Azure.ResourceManager.Workloads
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available SKUs under this PR
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuDefinition> GetSkusAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SkuDefinition.DeserializeSkuDefinition, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available SKUs under this PR
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuDefinition> GetSkus(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SkuDefinition.DeserializeSkuDefinition, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

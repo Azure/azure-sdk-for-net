@@ -10,8 +10,13 @@ namespace Azure.Communication.CallAutomation
     /// The Play Failed event.
     /// </summary>
     [CodeGenModel("PlayFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class PlayFailed : CallAutomationEventWithReasonCodeName
+    public partial class PlayFailed : CallAutomationEventBase
     {
+        /// <summary>
+        /// Reason code.
+        /// </summary>
+        public MediaEventReasonCode ReasonCode { get; internal set; }
+
         /// <summary> Initializes a new instance of PlayFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -25,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            ReasonCode = new ReasonCode(resultInformation.SubCode.ToString());
+            ReasonCode = new MediaEventReasonCode(resultInformation.SubCode.ToString());
         }
 
         /// <summary>

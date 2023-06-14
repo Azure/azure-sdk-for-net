@@ -45,33 +45,33 @@ namespace Azure.ResourceManager.HybridData.Models
 
         public static HybridDataJobRunLocation ToHybridDataJobRunLocation(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.None;
-            if (string.Equals(value, "australiaeast", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.AustraliaEast;
-            if (string.Equals(value, "australiasoutheast", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.AustraliaSoutheast;
-            if (string.Equals(value, "brazilsouth", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.BrazilSouth;
-            if (string.Equals(value, "canadacentral", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.CanadaCentral;
-            if (string.Equals(value, "canadaeast", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.CanadaEast;
-            if (string.Equals(value, "centralindia", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.CentralIndia;
-            if (string.Equals(value, "centralus", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.CentralUS;
-            if (string.Equals(value, "eastasia", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.EastAsia;
-            if (string.Equals(value, "eastus", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.EastUS;
-            if (string.Equals(value, "eastus2", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.EastUS2;
-            if (string.Equals(value, "japaneast", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.JapanEast;
-            if (string.Equals(value, "japanwest", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.JapanWest;
-            if (string.Equals(value, "koreacentral", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.KoreaCentral;
-            if (string.Equals(value, "koreasouth", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.KoreaSouth;
-            if (string.Equals(value, "southeastasia", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.SoutheastAsia;
-            if (string.Equals(value, "southcentralus", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.SouthCentralUS;
-            if (string.Equals(value, "southindia", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.SouthIndia;
-            if (string.Equals(value, "northcentralus", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.NorthCentralUS;
-            if (string.Equals(value, "northeurope", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.NorthEurope;
-            if (string.Equals(value, "uksouth", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.UKSouth;
-            if (string.Equals(value, "ukwest", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.UKWest;
-            if (string.Equals(value, "westcentralus", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.WestCentralUS;
-            if (string.Equals(value, "westeurope", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.WestEurope;
-            if (string.Equals(value, "westindia", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.WestIndia;
-            if (string.Equals(value, "westus", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.WestUS;
-            if (string.Equals(value, "westus2", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobRunLocation.WestUS2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return HybridDataJobRunLocation.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "australiaeast")) return HybridDataJobRunLocation.AustraliaEast;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "australiasoutheast")) return HybridDataJobRunLocation.AustraliaSoutheast;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "brazilsouth")) return HybridDataJobRunLocation.BrazilSouth;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "canadacentral")) return HybridDataJobRunLocation.CanadaCentral;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "canadaeast")) return HybridDataJobRunLocation.CanadaEast;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "centralindia")) return HybridDataJobRunLocation.CentralIndia;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "centralus")) return HybridDataJobRunLocation.CentralUS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "eastasia")) return HybridDataJobRunLocation.EastAsia;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "eastus")) return HybridDataJobRunLocation.EastUS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "eastus2")) return HybridDataJobRunLocation.EastUS2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "japaneast")) return HybridDataJobRunLocation.JapanEast;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "japanwest")) return HybridDataJobRunLocation.JapanWest;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "koreacentral")) return HybridDataJobRunLocation.KoreaCentral;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "koreasouth")) return HybridDataJobRunLocation.KoreaSouth;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "southeastasia")) return HybridDataJobRunLocation.SoutheastAsia;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "southcentralus")) return HybridDataJobRunLocation.SouthCentralUS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "southindia")) return HybridDataJobRunLocation.SouthIndia;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "northcentralus")) return HybridDataJobRunLocation.NorthCentralUS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "northeurope")) return HybridDataJobRunLocation.NorthEurope;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uksouth")) return HybridDataJobRunLocation.UKSouth;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ukwest")) return HybridDataJobRunLocation.UKWest;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "westcentralus")) return HybridDataJobRunLocation.WestCentralUS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "westeurope")) return HybridDataJobRunLocation.WestEurope;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "westindia")) return HybridDataJobRunLocation.WestIndia;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "westus")) return HybridDataJobRunLocation.WestUS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "westus2")) return HybridDataJobRunLocation.WestUS2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HybridDataJobRunLocation value.");
         }
     }

@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubPrivateLinkServiceConnectionState DeserializeIotHubPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IotHubPrivateLinkServiceConnectionStatus status = default;
             string description = default;
             Optional<string> actionsRequired = default;

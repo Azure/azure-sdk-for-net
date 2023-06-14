@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaTransform data model. </summary>
+    /// <summary>
+    /// A class representing the MediaTransform data model.
+    /// A Transform encapsulates the rules or instructions for generating desired outputs from input media, such as by transcoding or by extracting insights. After the Transform is created, it can be applied to input media by creating Jobs.
+    /// </summary>
     public partial class MediaTransformData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaTransformData. </summary>
@@ -27,9 +30,9 @@ namespace Azure.ResourceManager.Media
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> The UTC date and time when the Transform was created, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="createdOn"> The UTC date and time when the Transform was created, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="description"> An optional verbose description of the Transform. </param>
-        /// <param name="lastModifiedOn"> The UTC date and time when the Transform was last updated, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="lastModifiedOn"> The UTC date and time when the Transform was last updated, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs"> An array of one or more TransformOutputs that the Transform should generate. </param>
         internal MediaTransformData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DateTimeOffset? lastModifiedOn, IList<MediaTransformOutput> outputs) : base(id, name, resourceType, systemData)
         {
@@ -39,11 +42,11 @@ namespace Azure.ResourceManager.Media
             Outputs = outputs;
         }
 
-        /// <summary> The UTC date and time when the Transform was created, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
+        /// <summary> The UTC date and time when the Transform was created, in 'YYYY-MM-DDThh:mm:ssZ' format. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> An optional verbose description of the Transform. </summary>
         public string Description { get; set; }
-        /// <summary> The UTC date and time when the Transform was last updated, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
+        /// <summary> The UTC date and time when the Transform was last updated, in 'YYYY-MM-DDThh:mm:ssZ' format. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> An array of one or more TransformOutputs that the Transform should generate. </summary>
         public IList<MediaTransformOutput> Outputs { get; }

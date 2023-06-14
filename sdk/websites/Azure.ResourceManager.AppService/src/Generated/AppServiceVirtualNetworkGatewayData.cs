@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceVirtualNetworkGateway data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceVirtualNetworkGateway data model.
+    /// The Virtual Network gateway contract. This is used to give the Virtual Network gateway access to the VPN package.
+    /// </summary>
     public partial class AppServiceVirtualNetworkGatewayData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkGatewayData. </summary>

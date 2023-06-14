@@ -28,6 +28,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         internal static SubscriptionValidationResponse DeserializeSubscriptionValidationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validationResponse = default;
             foreach (var property in element.EnumerateObject())
             {

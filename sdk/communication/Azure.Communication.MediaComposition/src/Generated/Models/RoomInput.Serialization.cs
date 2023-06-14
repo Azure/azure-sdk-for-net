@@ -29,6 +29,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static RoomInput DeserializeRoomInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;

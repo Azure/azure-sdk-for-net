@@ -143,6 +143,13 @@ namespace Azure.ResourceManager.Workloads
             return GetSapProviderInstances().Get(providerInstanceName, cancellationToken);
         }
 
+        /// <summary> Gets an object representing a SapLandscapeMonitorResource along with the instance operations that can be performed on it in the SapMonitor. </summary>
+        /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
+        public virtual SapLandscapeMonitorResource GetSapLandscapeMonitor()
+        {
+            return new SapLandscapeMonitorResource(Client, Id.AppendChildResource("sapLandscapeMonitor", "default"));
+        }
+
         /// <summary>
         /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
         /// <list type="bullet">
@@ -229,7 +236,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapMonitormonitorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,7 +270,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapMonitormonitorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Request body that only contains the new Tags field. </param>
+        /// <param name="patch"> The Update SAP workload monitor request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SapMonitorResource>> UpdateAsync(SapMonitorPatch patch, CancellationToken cancellationToken = default)
@@ -322,7 +329,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Request body that only contains the new Tags field. </param>
+        /// <param name="patch"> The Update SAP workload monitor request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SapMonitorResource> Update(SapMonitorPatch patch, CancellationToken cancellationToken = default)

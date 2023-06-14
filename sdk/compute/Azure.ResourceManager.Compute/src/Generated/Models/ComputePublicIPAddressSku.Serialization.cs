@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputePublicIPAddressSku DeserializeComputePublicIPAddressSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputePublicIPAddressSkuName> name = default;
             Optional<ComputePublicIPAddressSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new ComputePublicIPAddressSkuName(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new ComputePublicIPAddressSkuTier(property.Value.GetString());

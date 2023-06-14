@@ -15,10 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static IncidentBookmarkList DeserializeIncidentBookmarkList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityInsightsHuntingBookmark> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SecurityInsightsHuntingBookmark> array = new List<SecurityInsightsHuntingBookmark>();
                     foreach (var item in property.Value.EnumerateArray())

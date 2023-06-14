@@ -54,6 +54,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static WebhookHookParameter DeserializeWebhookHookParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string endpoint = default;
             Optional<string> username = default;
             Optional<string> password = default;
@@ -81,7 +85,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

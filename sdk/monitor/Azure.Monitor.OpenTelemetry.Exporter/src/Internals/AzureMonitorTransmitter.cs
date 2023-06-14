@@ -5,16 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.FileSystem;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -23,11 +24,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class AzureMonitorTransmitter : ITransmitter
     {
-        private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
+        internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
+        private readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;
+        internal readonly TransmissionStateManager _transmissionStateManager;
+        internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
+        private bool _disposed;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options == null)
             {
@@ -35,20 +40,57 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             options.Retry.MaxRetries = 0;
-            _connectionVars = ConnectionStringParser.GetValues(options.ConnectionString);
 
-            HttpPipeline pipeline;
-            if (credential != null)
+            _connectionVars = InitializeConnectionVars(options, platform);
+
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
+
+            _transmissionStateManager = new TransmissionStateManager();
+
+            _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
+
+            if (_fileBlobProvider != null)
             {
-                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
+            }
+
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+        }
+
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+        {
+            if (options.ConnectionString == null)
+            {
+                var connectionString = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+                if (!string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return ConnectionStringParser.GetValues(connectionString!);
+                }
+            }
+            else
+            {
+                return ConnectionStringParser.GetValues(options.ConnectionString);
+            }
+
+            throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
+        }
+
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        {
+            HttpPipeline pipeline;
+
+            if (options.Credential != null)
+            {
+                var scope = AadHelper.GetScope(connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                 {
-                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new BearerTokenAuthenticationPolicy(options.Credential, scope),
                     new IngestionRedirectPolicy()
                 };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {options.Credential.GetType().Name} Scope: {scope}");
             }
             else
             {
@@ -56,18 +98,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
-            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: _connectionVars.IngestionEndpoint);
+            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
+        }
 
-            if (!options.DisableOfflineStorage)
+        private static PersistentBlobProvider? InitializeOfflineStorage(IPlatform platform, ConnectionVars connectionVars, bool disableOfflineStorage, string? configuredStorageDirectory)
+        {
+            if (!disableOfflineStorage)
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory() ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+                    var storageDirectory = StorageHelper.GetStorageDirectory(
+                        platform: platform,
+                        configuredStorageDirectory: configuredStorageDirectory,
+                        instrumentationKey: connectionVars.InstrumentationKey);
 
-                    // TODO: Fallback to default location if location provided via options does not work.
-                    _fileBlobProvider = new FileBlobProvider(storageDirectory);
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{connectionVars.InstrumentationKey}' will be stored at: {storageDirectory}");
 
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
+                    return new FileBlobProvider(storageDirectory);
                 }
                 catch (Exception ex)
                 {
@@ -76,8 +123,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
                     AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
+
+                    return null;
                 }
             }
+
+            return null;
+        }
+
+        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform)
+        {
+            if (options.EnableStatsbeat && connectionVars != null)
+            {
+                try
+                {
+                    var disableStatsbeat = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
+
+                        return null;
+                    }
+
+                    return new AzureMonitorStatsbeat(connectionVars, platform);
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
+                }
+            }
+
+            return null;
         }
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
@@ -96,14 +172,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                result = IsSuccess(httpMessage);
+                result = HttpPipelineHelper.IsSuccess(httpMessage);
 
                 if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
-                    result = HandleFailures(httpMessage);
+                    _transmissionStateManager.EnableBackOff(httpMessage.Response);
+                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
                 }
                 else
                 {
+                    _transmissionStateManager.ResetConsecutiveErrors();
+                    _transmissionStateManager.CloseTransmission();
                     AzureMonitorExporterEventSource.Log.WriteInformational("TransmissionSuccess", "Successfully transmitted a batch of telemetry Items.");
                 }
             }
@@ -115,205 +194,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return result;
         }
 
-        public async ValueTask TransmitFromStorage(long maxFilesToTransmit, bool async, CancellationToken cancellationToken)
+        protected virtual void Dispose(bool disposing)
         {
-            if (cancellationToken.IsCancellationRequested)
+            if (!_disposed)
             {
-                return;
-            }
-
-            if (_fileBlobProvider == null)
-            {
-                return;
-            }
-
-            long files = maxFilesToTransmit;
-            while (files > 0)
-            {
-                try
+                if (disposing)
                 {
-                    // TODO: Do we need more lease time?
-                    if (_fileBlobProvider.TryGetBlob(out var blob) && blob.TryLease(1000))
+                    AzureMonitorExporterEventSource.Log.WriteVerbose(name: nameof(AzureMonitorTransmitter), message: $"{nameof(AzureMonitorTransmitter)} has been disposed.");
+                    _statsbeat?.Dispose();
+                    var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
+                    if (fileBlobProvider != null)
                     {
-                        blob.TryRead(out var data);
-                        using var httpMessage = async ?
-                            await _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).ConfigureAwait(false) :
-                            _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).Result;
-
-                        var result = IsSuccess(httpMessage);
-
-                        if (result == ExportResult.Success)
-                        {
-                            AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
-
-                            // In case if the delete fails, there is a possibility
-                            // that the current batch will be transmitted more than once resulting in duplicates.
-                            blob.TryDelete();
-                        }
-                        else
-                        {
-                            HandleFailures(httpMessage, blob);
-                        }
-                    }
-                    else
-                    {
-                        // no files to process
-                        return;
+                        fileBlobProvider.Dispose();
                     }
                 }
-                catch (Exception ex)
-                {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmitFromStorage", ex);
-                }
 
-                files--;
+                _disposed = true;
             }
         }
 
-        private static ExportResult IsSuccess(HttpMessage httpMessage)
+        public void Dispose()
         {
-            if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
-            {
-                return ExportResult.Success;
-            }
-
-            return ExportResult.Failure;
-        }
-
-        private ExportResult HandleFailures(HttpMessage httpMessage)
-        {
-            if (_fileBlobProvider == null)
-            {
-                return ExportResult.Failure;
-            }
-
-            ExportResult result = ExportResult.Failure;
-            int statusCode = 0;
-            byte[] content;
-            int retryInterval;
-
-            if (!httpMessage.HasResponse)
-            {
-                // HttpRequestException
-                content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-            }
-            else
-            {
-                statusCode = httpMessage.Response.Status;
-                switch (statusCode)
-                {
-                    case ResponseStatusCodes.PartialSuccess:
-                        // Parse retry-after header
-                        // Send Failed Messages To Storage
-                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
-                        content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                        if (content != null)
-                        {
-                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
-                        }
-                        break;
-                    case ResponseStatusCodes.RequestTimeout:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                        // Parse retry-after header
-                        // Send Messages To Storage
-                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
-                        break;
-                    case ResponseStatusCodes.Unauthorized:
-                    case ResponseStatusCodes.Forbidden:
-                    case ResponseStatusCodes.InternalServerError:
-                    case ResponseStatusCodes.BadGateway:
-                    case ResponseStatusCodes.ServiceUnavailable:
-                    case ResponseStatusCodes.GatewayTimeout:
-                        // Send Messages To Storage
-                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-                        break;
-                    default:
-                        // Log Non-Retriable Status and don't retry or store;
-                        break;
-                }
-            }
-
-            if (result == ExportResult.Success)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry");
-            }
-            else
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped");
-            }
-
-            return result;
-        }
-
-        private void HandleFailures(HttpMessage httpMessage, PersistentBlob blob)
-        {
-            int retryInterval;
-            int statusCode = 0;
-            bool shouldRetry = true;
-
-            if (!httpMessage.HasResponse)
-            {
-                // HttpRequestException
-                // Extend lease time so that it is not picked again for retry.
-                blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
-            }
-            else
-            {
-                statusCode = httpMessage.Response.Status;
-                switch (statusCode)
-                {
-                    case ResponseStatusCodes.PartialSuccess:
-                        // Parse retry-after header
-                        // Send Failed Messages To Storage
-                        // Delete existing file
-                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
-                        var content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                        if (content != null)
-                        {
-                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            blob.TryDelete();
-                            _fileBlobProvider?.SaveTelemetry(content, retryInterval);
-                        }
-                        break;
-                    case ResponseStatusCodes.RequestTimeout:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                        // Extend lease time using retry interval period
-                        // so that it is not picked up again before that.
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        blob.TryLease(retryInterval);
-                        break;
-                    case ResponseStatusCodes.Unauthorized:
-                    case ResponseStatusCodes.Forbidden:
-                    case ResponseStatusCodes.InternalServerError:
-                    case ResponseStatusCodes.BadGateway:
-                    case ResponseStatusCodes.ServiceUnavailable:
-                    case ResponseStatusCodes.GatewayTimeout:
-                        // Extend lease time so that it is not picked up again
-                        blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
-                        break;
-                    default:
-                        // Log Non-Retriable Status and don't retry or store;
-                        // File will be cleared by maintenance job
-                        shouldRetry = false;
-                        break;
-                }
-            }
-
-            if (shouldRetry)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry");
-            }
-            else
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
-            }
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static MonitorWorkspaceIntegration DeserializeMonitorWorkspaceIntegration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> azureMonitorWorkspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureMonitorWorkspaceResourceId = new ResourceIdentifier(property.Value.GetString());

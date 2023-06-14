@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static GuestCredential DeserializeGuestCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())

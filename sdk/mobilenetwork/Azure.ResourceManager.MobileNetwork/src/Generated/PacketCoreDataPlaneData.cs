@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the PacketCoreDataPlane data model. </summary>
+    /// <summary>
+    /// A class representing the PacketCoreDataPlane data model.
+    /// Packet core data plane resource. Must be created in the same location as its parent packet core control plane.
+    /// </summary>
     public partial class PacketCoreDataPlaneData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>

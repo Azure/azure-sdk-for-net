@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static DedicatedHostLicenseType ToDedicatedHostLicenseType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return DedicatedHostLicenseType.None;
-            if (string.Equals(value, "Windows_Server_Hybrid", StringComparison.InvariantCultureIgnoreCase)) return DedicatedHostLicenseType.WindowsServerHybrid;
-            if (string.Equals(value, "Windows_Server_Perpetual", StringComparison.InvariantCultureIgnoreCase)) return DedicatedHostLicenseType.WindowsServerPerpetual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DedicatedHostLicenseType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows_Server_Hybrid")) return DedicatedHostLicenseType.WindowsServerHybrid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows_Server_Perpetual")) return DedicatedHostLicenseType.WindowsServerPerpetual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DedicatedHostLicenseType value.");
         }
     }

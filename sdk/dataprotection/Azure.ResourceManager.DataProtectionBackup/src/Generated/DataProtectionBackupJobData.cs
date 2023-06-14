@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary> A class representing the DataProtectionBackupJob data model. </summary>
+    /// <summary>
+    /// A class representing the DataProtectionBackupJob data model.
+    /// AzureBackup Job Resource Class
+    /// </summary>
     public partial class DataProtectionBackupJobData : ResourceData
     {
         /// <summary> Initializes a new instance of DataProtectionBackupJobData. </summary>

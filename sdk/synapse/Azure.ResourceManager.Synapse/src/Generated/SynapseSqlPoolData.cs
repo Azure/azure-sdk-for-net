@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSqlPool data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSqlPool data model.
+    /// A SQL Analytics pool
+    /// </summary>
     public partial class SynapseSqlPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolData. </summary>
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.Synapse
         /// 
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
-        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </param>
         /// <param name="createdOn"> Date the SQL pool was created. </param>
         /// <param name="storageAccountType"> The storage account type used to store backups for this sql pool. </param>
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// 
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
-        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </summary>
         public SqlPoolCreateMode? CreateMode { get; set; }
         /// <summary> Date the SQL pool was created. </summary>

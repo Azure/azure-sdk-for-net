@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(SubscriptionGetAccountsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeStoreAccountBasicData> GetAccounts(SubscriptionGetAccountsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeStoreAccountBasicData> GetAccounts(SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);

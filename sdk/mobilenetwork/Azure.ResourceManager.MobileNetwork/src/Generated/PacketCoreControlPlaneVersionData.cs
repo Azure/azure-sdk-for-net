@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the PacketCoreControlPlaneVersion data model. </summary>
+    /// <summary>
+    /// A class representing the PacketCoreControlPlaneVersion data model.
+    /// Packet core control plane version resource.
+    /// </summary>
     public partial class PacketCoreControlPlaneVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>

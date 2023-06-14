@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRTlsSettings DeserializeSignalRTlsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientCertEnabled = property.Value.GetBoolean();

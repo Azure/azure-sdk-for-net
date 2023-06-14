@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabPlanSupportInfo DeserializeLabPlanSupportInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<string> email = default;
             Optional<string> phone = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlInstanceSettings DeserializeSqlInstanceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> collation = default;
             Optional<int> maxDop = default;
             Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDop = property.Value.GetInt32();
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOptimizeForAdHocWorkloadsEnabled = property.Value.GetBoolean();
@@ -93,7 +95,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minServerMemoryMB = property.Value.GetInt32();
@@ -103,7 +104,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxServerMemoryMB = property.Value.GetInt32();
@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isLpimEnabled = property.Value.GetBoolean();
@@ -123,7 +122,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isIfiEnabled = property.Value.GetBoolean();

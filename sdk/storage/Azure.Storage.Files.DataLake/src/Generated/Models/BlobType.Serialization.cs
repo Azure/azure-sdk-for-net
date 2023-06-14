@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static BlobType ToBlobType(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return BlobType.None;
-            if (string.Equals(value, "appendblob", StringComparison.InvariantCultureIgnoreCase)) return BlobType.Appendblob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return BlobType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "appendblob")) return BlobType.Appendblob;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.");
         }
     }

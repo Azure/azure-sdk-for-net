@@ -23,6 +23,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureEntityResource DeserializeAzureEntityResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;

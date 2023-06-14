@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The managed instance&apos;s service principal configuration for a resource. </summary>
+    /// <summary> The managed instance's service principal configuration for a resource. </summary>
     public partial class SqlServicePrincipal
     {
         /// <summary> Initializes a new instance of SqlServicePrincipal. </summary>

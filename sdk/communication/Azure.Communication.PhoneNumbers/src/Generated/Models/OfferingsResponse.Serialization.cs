@@ -15,6 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static OfferingsResponse DeserializeOfferingsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PhoneNumberOffering>> phoneNumberOfferings = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PhoneNumberOffering> array = new List<PhoneNumberOffering>();

@@ -148,34 +148,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void DynamicClassifyArgumentValidation()
-        {
-            string document1 = "The WHO is issuing a warning about Monkey Pox.";
-            string document2 = "Mo Salah plays in Liverpool FC in England.";
-            List<string> batchConvenienceDocuments = new() { document1, document2 };
-            List<TextDocumentInput> batchDocuments = new() {
-                new TextDocumentInput("1", document1),
-                new TextDocumentInput("2", document2)
-            };
-            List<string> categories = new() { "Health", "Politics", "Music", "Sports" };
-
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyAsync(null, categories));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyAsync(string.Empty, categories));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyAsync(document1, null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyAsync(document1, Array.Empty<string>()));
-
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync((string[])null, categories));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(Array.Empty<string>(), categories));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync(batchConvenienceDocuments, null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(batchConvenienceDocuments, Array.Empty<string>()));
-
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync((TextDocumentInput[])null, categories));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(Array.Empty<TextDocumentInput>(), categories));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DynamicClassifyBatchAsync(batchDocuments, null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DynamicClassifyBatchAsync(batchDocuments, Array.Empty<string>()));
-        }
-
-        [Test]
         public void ExtractiveSummarizeArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractiveSummarizeAsync((string[])null));

@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s git repo information. </summary>
+    /// <summary> Factory's git repo information. </summary>
     public partial class FactoryRepoUpdate
     {
         /// <summary> Initializes a new instance of FactoryRepoUpdate. </summary>

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static TargetLocation DeserializeTargetLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageAccountResourceId = default;
             Optional<string> accountKey = default;
             foreach (var property in element.EnumerateObject())

@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static WorkerSizeOption ToWorkerSizeOption(this string value)
         {
-            if (string.Equals(value, "Small", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.Small;
-            if (string.Equals(value, "Medium", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.Medium;
-            if (string.Equals(value, "Large", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.Large;
-            if (string.Equals(value, "D1", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.D1;
-            if (string.Equals(value, "D2", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.D2;
-            if (string.Equals(value, "D3", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.D3;
-            if (string.Equals(value, "SmallV3", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.SmallV3;
-            if (string.Equals(value, "MediumV3", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.MediumV3;
-            if (string.Equals(value, "LargeV3", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.LargeV3;
-            if (string.Equals(value, "NestedSmall", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.NestedSmall;
-            if (string.Equals(value, "NestedSmallLinux", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.NestedSmallLinux;
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return WorkerSizeOption.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Small")) return WorkerSizeOption.Small;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium")) return WorkerSizeOption.Medium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Large")) return WorkerSizeOption.Large;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D1")) return WorkerSizeOption.D1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D2")) return WorkerSizeOption.D2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D3")) return WorkerSizeOption.D3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SmallV3")) return WorkerSizeOption.SmallV3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MediumV3")) return WorkerSizeOption.MediumV3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LargeV3")) return WorkerSizeOption.LargeV3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NestedSmall")) return WorkerSizeOption.NestedSmall;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NestedSmallLinux")) return WorkerSizeOption.NestedSmallLinux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return WorkerSizeOption.Default;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkerSizeOption value.");
         }
     }

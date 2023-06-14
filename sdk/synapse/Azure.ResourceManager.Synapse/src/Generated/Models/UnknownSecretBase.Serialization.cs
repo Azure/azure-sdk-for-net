@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static UnknownSecretBase DeserializeUnknownSecretBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

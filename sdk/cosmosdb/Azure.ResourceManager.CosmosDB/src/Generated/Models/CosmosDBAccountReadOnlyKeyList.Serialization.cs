@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBAccountReadOnlyKeyList DeserializeCosmosDBAccountReadOnlyKeyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryReadonlyMasterKey = default;
             Optional<string> secondaryReadonlyMasterKey = default;
             foreach (var property in element.EnumerateObject())

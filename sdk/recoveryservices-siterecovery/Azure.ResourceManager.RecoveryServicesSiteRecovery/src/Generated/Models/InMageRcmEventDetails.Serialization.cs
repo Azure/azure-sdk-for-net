@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmEventDetails DeserializeInMageRcmEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protectedItemName = default;
             Optional<string> vmName = default;
             Optional<string> latestAgentVersion = default;

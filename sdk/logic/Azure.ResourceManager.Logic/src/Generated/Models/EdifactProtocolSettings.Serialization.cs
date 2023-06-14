@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactProtocolSettings DeserializeEdifactProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EdifactValidationSettings validationSettings = default;
             EdifactFramingSettings framingSettings = default;
             EdifactEnvelopeSettings envelopeSettings = default;
@@ -127,7 +131,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdifactEnvelopeOverride> array = new List<EdifactEnvelopeOverride>();
@@ -142,7 +145,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdifactMessageIdentifier> array = new List<EdifactMessageIdentifier>();
@@ -167,7 +169,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdifactValidationOverride> array = new List<EdifactValidationOverride>();
@@ -182,7 +183,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdifactDelimiterOverride> array = new List<EdifactDelimiterOverride>();

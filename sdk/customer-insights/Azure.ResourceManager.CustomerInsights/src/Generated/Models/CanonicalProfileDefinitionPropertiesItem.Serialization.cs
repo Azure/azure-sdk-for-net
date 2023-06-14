@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static CanonicalProfileDefinitionPropertiesItem DeserializeCanonicalProfileDefinitionPropertiesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> profileName = default;
             Optional<string> profilePropertyName = default;
             Optional<int> rank = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rank = property.Value.GetInt32();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new CanonicalPropertyValueType(property.Value.GetString());

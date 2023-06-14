@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ListCustomAlertRule DeserializeListCustomAlertRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("ruleType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueType = new SecurityValueType(property.Value.GetString());

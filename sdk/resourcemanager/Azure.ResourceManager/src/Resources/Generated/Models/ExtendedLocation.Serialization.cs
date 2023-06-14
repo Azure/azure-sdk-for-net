@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocationType> type = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ExtendedLocationType(property.Value.GetString());

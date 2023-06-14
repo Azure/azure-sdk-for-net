@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateBot()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/UpdateBot.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/UpdateBot.json
             // this example is just showing the usage of "Bots_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.BotService.Samples
             // invoke the operation
             BotData data = new BotData(new AzureLocation("West US"))
             {
-                Properties = new BotProperties("The Name of the bot", "http://mybot.coffee", "msaappid")
+                Properties = new BotProperties("The Name of the bot", new Uri("http://mybot.coffee"), "msaappid")
                 {
                     Description = "The description of the bot",
                     IconUri = new Uri("http://myicon"),
-                    MsaAppType = MsaAppType.UserAssignedMSI,
+                    MsaAppType = BotMsaAppType.UserAssignedMSI,
                     MsaAppTenantId = "msaapptenantid",
-                    MsaAppMSIResourceId = "/subscriptions/foo/resourcegroups/bar/providers/microsoft.managedidentity/userassignedidentities/sampleId",
+                    MsaAppMSIResourceId = new ResourceIdentifier("/subscriptions/foo/resourcegroups/bar/providers/microsoft.managedidentity/userassignedidentities/sampleId"),
                     DeveloperAppInsightKey = "appinsightskey",
                     DeveloperAppInsightsApiKey = "appinsightsapikey",
                     DeveloperAppInsightsApplicationId = "appinsightsappid",
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.BotService.Samples
                     LuisKey = "luiskey",
                     IsCmekEnabled = true,
                     CmekKeyVaultUri = new Uri("https://myCmekKey"),
-                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
-                    DisableLocalAuth = true,
+                    PublicNetworkAccess = BotServicePublicNetworkAccess.Enabled,
+                    IsLocalAuthDisabled = true,
                     SchemaTransformationVersion = "1.0",
                 },
                 Sku = new BotServiceSku(BotServiceSkuName.S1),
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteBot()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/DeleteBot.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/DeleteBot.json
             // this example is just showing the usage of "Bots_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetBot()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetBot.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetBot.json
             // this example is just showing the usage of "Bots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBots_ListBotsBySubscription()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/ListBotsBySubscription.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListBotsBySubscription.json
             // this example is just showing the usage of "Bots_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.BotService.Samples
         // check Name Availability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCheckNameAvailabilityBot_CheckNameAvailability()
+        public async Task CheckBotServiceNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/CheckNameAvailability.json
             // this example is just showing the usage of "Bots_GetCheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.BotService.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody = new CheckNameAvailabilityRequestBody()
+            BotServiceNameAvailabilityContent content = new BotServiceNameAvailabilityContent()
             {
                 Name = "testbotname",
-                ResourceType = "string",
+                ResourceType = new ResourceType("string"),
             };
-            CheckNameAvailabilityResponseBody result = await tenantResource.GetCheckNameAvailabilityBotAsync(checkNameAvailabilityRequestBody);
+            BotServiceNameAvailabilityResult result = await tenantResource.CheckBotServiceNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.BotService.Samples
         // Regenerate Keys for DirectLine Channel Site
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RegenerateKeysDirectLine_RegenerateKeysForDirectLineChannelSite()
+        public async Task GetBotChannelWithRegenerateKeys_RegenerateKeysForDirectLineChannelSite()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/DirectlineRegenerateKeys.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/DirectlineRegenerateKeys.json
             // this example is just showing the usage of "DirectLine_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.BotService.Samples
             BotResource bot = client.GetBotResource(botResourceId);
 
             // invoke the operation
-            RegenerateKeysChannelName channelName = RegenerateKeysChannelName.DirectLineChannel;
-            SiteContent content = new SiteContent("testSiteName", Key.Key1);
-            BotChannelResource result = await bot.RegenerateKeysDirectLineAsync(channelName, content);
+            RegenerateKeysBotChannelName channelName = RegenerateKeysBotChannelName.DirectLineChannel;
+            BotChannelRegenerateKeysContent content = new BotChannelRegenerateKeysContent("testSiteName", BotServiceKey.Key1);
+            BotChannelResource result = await bot.GetBotChannelWithRegenerateKeysAsync(channelName, content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.BotService.Samples
         // Regenerate Keys for WebChat Channel Site
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RegenerateKeysDirectLine_RegenerateKeysForWebChatChannelSite()
+        public async Task GetBotChannelWithRegenerateKeys_RegenerateKeysForWebChatChannelSite()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/WebChatRegenerateKeys.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/WebChatRegenerateKeys.json
             // this example is just showing the usage of "DirectLine_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.BotService.Samples
             BotResource bot = client.GetBotResource(botResourceId);
 
             // invoke the operation
-            RegenerateKeysChannelName channelName = RegenerateKeysChannelName.WebChatChannel;
-            SiteContent content = new SiteContent("testSiteName", Key.Key1);
-            BotChannelResource result = await bot.RegenerateKeysDirectLineAsync(channelName, content);
+            RegenerateKeysBotChannelName channelName = RegenerateKeysBotChannelName.WebChatChannel;
+            BotChannelRegenerateKeysContent content = new BotChannelRegenerateKeysContent("testSiteName", BotServiceKey.Key1);
+            BotChannelResource result = await bot.GetBotChannelWithRegenerateKeysAsync(channelName, content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.BotService.Samples
         // Create Url
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateSignInUrlEmail_CreateUrl()
+        public async Task CreateEmailSignInUri_CreateUrl()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/CreateEmailSignInUrl.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/CreateEmailSignInUrl.json
             // this example is just showing the usage of "Email_CreateSignInUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotResource bot = client.GetBotResource(botResourceId);
 
             // invoke the operation
-            CreateEmailSignInUrlResponse result = await bot.CreateSignInUrlEmailAsync();
+            BotCreateEmailSignInUriResult result = await bot.CreateEmailSignInUriAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrivateLinkResourcesByBotResource_ListPrivateLinkResources()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/ListPrivateLinkResources.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_ListByBotResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.BotService.Samples
             BotResource bot = client.GetBotResource(botResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BotServicePrivateLinkResource item in bot.GetPrivateLinkResourcesByBotResourceAsync())
+            await foreach (BotServicePrivateLinkResourceData item in bot.GetPrivateLinkResourcesByBotResourceAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

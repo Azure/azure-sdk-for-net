@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static GlobalServiceConfiguration DeserializeGlobalServiceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<SslConfiguration> ssl = default;
             Optional<ServiceAuthConfiguration> serviceAuth = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -74,7 +77,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssl = SslConfiguration.DeserializeSslConfiguration(property.Value);
@@ -84,7 +86,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
@@ -94,7 +95,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value);

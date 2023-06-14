@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         /// <summary>
         ///   Performs the tasks needed to initialize the test.  This
-        ///   method runs once for for each test.
+        ///   method runs once for each test.
         /// </summary>
         ///
         [SetUp]

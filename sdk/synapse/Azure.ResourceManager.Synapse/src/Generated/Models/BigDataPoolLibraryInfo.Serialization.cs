@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static BigDataPoolLibraryInfo DeserializeBigDataPoolLibraryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> path = default;
             Optional<string> containerName = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uploadedTimestamp = property.Value.GetDateTimeOffset("O");

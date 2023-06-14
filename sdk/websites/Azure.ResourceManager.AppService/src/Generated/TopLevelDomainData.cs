@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the TopLevelDomain data model. </summary>
+    /// <summary>
+    /// A class representing the TopLevelDomain data model.
+    /// A top level domain object.
+    /// </summary>
     public partial class TopLevelDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of TopLevelDomainData. </summary>

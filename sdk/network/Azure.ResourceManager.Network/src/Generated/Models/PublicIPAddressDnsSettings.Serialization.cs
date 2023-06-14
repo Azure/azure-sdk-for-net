@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PublicIPAddressDnsSettings DeserializePublicIPAddressDnsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
             Optional<string> reverseFqdn = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerBackupProperties DeserializeMySqlFlexibleServerBackupProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> backupRetentionDays = default;
             Optional<MySqlFlexibleServerEnableStatusEnum> geoRedundantBackup = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupRetentionDays = property.Value.GetInt32();
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     geoRedundantBackup = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
@@ -60,7 +62,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     earliestRestoreDate = property.Value.GetDateTimeOffset("O");

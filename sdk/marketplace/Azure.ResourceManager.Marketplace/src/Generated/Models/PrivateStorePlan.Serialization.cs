@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skuId = default;
             Optional<string> planId = default;
             Optional<string> planDisplayName = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessibility = new PrivateStorePlanAccessibility(property.Value.GetString());

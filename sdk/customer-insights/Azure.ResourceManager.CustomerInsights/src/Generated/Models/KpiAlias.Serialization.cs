@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static KpiAlias DeserializeKpiAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aliasName = default;
             string expression = default;
             foreach (var property in element.EnumerateObject())

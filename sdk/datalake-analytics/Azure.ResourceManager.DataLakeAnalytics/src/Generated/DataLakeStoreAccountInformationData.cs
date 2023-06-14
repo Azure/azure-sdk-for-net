@@ -10,7 +10,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    /// <summary> A class representing the DataLakeStoreAccountInformation data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeStoreAccountInformation data model.
+    /// Data Lake Store account information.
+    /// Serialized Name: DataLakeStoreAccountInformation
+    /// </summary>
     public partial class DataLakeStoreAccountInformationData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountInformationData. </summary>

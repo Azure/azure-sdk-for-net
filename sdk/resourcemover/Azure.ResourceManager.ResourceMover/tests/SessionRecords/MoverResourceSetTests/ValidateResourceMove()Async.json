@@ -49,8 +49,8 @@
         "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
         "state": "Enabled",
         "subscriptionPolicies": {
-          "locationPlacementId": "Internal_2014-09-01",
-          "quotaId": "Internal_2014-09-01",
+          "locationPlacementId": "Internal_2568-09-01",
+          "quotaId": "Internal_2568-09-01",
           "spendingLimit": "Off"
         }
       }
@@ -152,7 +152,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -174,7 +174,7 @@
           },
           "subnets": [
             {
-              "name": "Subnet-2014",
+              "name": "Subnet-2568",
               "properties": {
                 "addressPrefix": "10.0.0.0/24"
               }
@@ -185,7 +185,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/86057617-6e68-4e06-818b-c5461c165999?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/86057617-6e68-4e06-818b-c5461c165999?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "1253",
         "Content-Type": "application/json; charset=utf-8",
@@ -222,8 +222,8 @@
           },
           "subnets": [
             {
-              "name": "Subnet-2014",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810/subnets/Subnet-2014",
+              "name": "Subnet-2568",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810/subnets/Subnet-2568",
               "etag": "W/\u00222497d241-36be-4b97-9aca-5cae5332c046\u0022",
               "properties": {
                 "provisioningState": "Updating",
@@ -241,7 +241,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/86057617-6e68-4e06-818b-c5461c165999?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/86057617-6e68-4e06-818b-c5461c165999?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -277,7 +277,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -325,8 +325,8 @@
           },
           "subnets": [
             {
-              "name": "Subnet-2014",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810/subnets/Subnet-2014",
+              "name": "Subnet-2568",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810/subnets/Subnet-2568",
               "etag": "W/\u00226457ca3a-bc77-49b2-a8b8-28ab2fdd50e1\u0022",
               "properties": {
                 "provisioningState": "Succeeded",
@@ -344,7 +344,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-831?api-version=2021-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-2014?api-version=2021-08-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -361,7 +361,7 @@
           "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-843/providers/Microsoft.Network/virtualNetworks/Vnet-3810",
           "resourceSettings": {
             "resourceType": "Microsoft.Network/virtualNetworks",
-            "targetResourceName": "targetVnet-7992"
+            "targetResourceName": "targetVnet-1058"
           }
         }
       },
@@ -459,7 +459,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-831?api-version=2021-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-2014?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -485,8 +485,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220907T084127Z:9a171ff5-32e7-495d-97c0-ac5408b3bd12"
       },
       "ResponseBody": {
-        "name": "MoverResource-831",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-831",
+        "name": "MoverResource-2014",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-2014",
         "type": null,
         "properties": {
           "provisioningState": "Succeeded",
@@ -501,7 +501,7 @@
             "dnsServers": null,
             "subnets": null,
             "tags": null,
-            "targetResourceName": "targetVnet-7992"
+            "targetResourceName": "targetVnet-1058"
           },
           "moveStatus": {
             "moveState": "PreparePending",
@@ -526,7 +526,7 @@
             "dnsServers": [],
             "subnets": [
               {
-                "name": "Subnet-2014",
+                "name": "Subnet-2568",
                 "addressPrefix": "10.0.0.0/24",
                 "networkSecurityGroup": null
               }
@@ -699,7 +699,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-ResourceMover-Target-1162?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-ResourceMover-Target-8001?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -730,8 +730,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220907T084147Z:7ee78cd7-c77a-462a-b373-4d8374c82d94"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-Target-1162",
-        "name": "testRg-ResourceMover-Target-1162",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-Target-8001",
+        "name": "testRg-ResourceMover-Target-8001",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2",
         "properties": {
@@ -740,7 +740,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-445?api-version=2021-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-9680?api-version=2021-08-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -755,7 +755,7 @@
       "RequestBody": {
         "properties": {
           "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-ResourceMover-843",
-          "existingTargetId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-Target-1162",
+          "existingTargetId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-Target-8001",
           "resourceSettings": {
             "resourceType": "resourceGroups",
             "targetResourceName": "testRg-ResourceMover-843"
@@ -856,7 +856,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-445?api-version=2021-08-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-9680?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -882,15 +882,15 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220907T084204Z:7148bebe-d18c-4aac-a2ad-6e2b927b3cec"
       },
       "ResponseBody": {
-        "name": "MoverResource-445",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-445",
+        "name": "MoverResource-9680",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-9680",
         "type": null,
         "properties": {
           "provisioningState": "Succeeded",
           "isResolveRequired": true,
           "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-ResourceMover-843",
           "targetId": null,
-          "existingTargetId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-Target-1162",
+          "existingTargetId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-ResourceMover-Target-8001",
           "resourceSettings": {
             "resourceType": "resourceGroups",
             "targetResourceName": "testRg-ResourceMover-843"
@@ -1852,7 +1852,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-25079e6cf8bfa441a5910f594a4540ac-013a3e101a17c04d-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "efcc67d3489124c3dbc37320293445dd",
+        "x-ms-client-request-id": "efcc67d3489124c3dbc373202939680dd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1869,7 +1869,7 @@
         "x-ms-correlation-request-id": "930cda25-2c49-4c64-a820-b51b89c26bd7",
         "x-ms-ratelimit-remaining-subscription-reads": "11969",
         "x-ms-request-id": "14e075ad-4793-4ef0-8d98-1be800b6b1f7",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220907T084454Z:930cda25-2c49-4c64-a820-b51b89c26bd7"
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220907T0896804Z:930cda25-2c49-4c64-a820-b51b89c26bd7"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/f15e99aa-0ae5-4d0e-9d79-2c39c1c6652e",

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringReceivedRoute DeserializePeeringReceivedRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> prefix = default;
             Optional<string> nextHop = default;
             Optional<string> asPath = default;

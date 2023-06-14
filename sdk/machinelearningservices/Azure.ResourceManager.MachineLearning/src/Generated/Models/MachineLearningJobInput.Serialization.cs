@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobInput DeserializeMachineLearningJobInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobInputType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

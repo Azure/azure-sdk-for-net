@@ -40,6 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CjkBigramTokenFilter DeserializeCjkBigramTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
             Optional<bool> outputUnigrams = default;
             string odataType = default;
@@ -50,7 +54,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CjkBigramTokenFilterScripts> array = new List<CjkBigramTokenFilterScripts>();
@@ -65,7 +68,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputUnigrams = property.Value.GetBoolean();

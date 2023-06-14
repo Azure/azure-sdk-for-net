@@ -36,6 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> preserveZipFileNameAsFolder = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
@@ -46,7 +50,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preserveZipFileNameAsFolder = property.Value.GetObject();

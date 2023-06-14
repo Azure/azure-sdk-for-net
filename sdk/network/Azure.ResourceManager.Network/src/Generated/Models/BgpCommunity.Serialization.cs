@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpCommunity DeserializeBgpCommunity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceSupportedRegion = default;
             Optional<string> communityName = default;
             Optional<string> communityValue = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAuthorizedToUse = property.Value.GetBoolean();

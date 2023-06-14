@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static ConfluentSchemaRegistryInfo DeserializeConfluentSchemaRegistryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpoint = default;
             TargetServiceType type = default;
             foreach (var property in element.EnumerateObject())

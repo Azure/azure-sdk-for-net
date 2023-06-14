@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolUpgradeSettings DeserializeAgentPoolUpgradeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> maxSurge = default;
             foreach (var property in element.EnumerateObject())
             {

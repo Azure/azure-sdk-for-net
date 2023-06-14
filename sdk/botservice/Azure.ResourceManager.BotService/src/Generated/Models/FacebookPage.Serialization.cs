@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static FacebookPage DeserializeFacebookPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())

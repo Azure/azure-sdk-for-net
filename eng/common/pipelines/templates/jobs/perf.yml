@@ -2,18 +2,21 @@ parameters:
 - name: JobName
   type: string
   default: 'Perf'
+- name: TimeoutInMinutes
+  type: number
+  default: '360'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool-mms-ubuntu-2004-perf'
+  default: 'azsdk-pool-mms-ubuntu-2204-perf'
 - name: LinuxVmImage
   type: string
-  default: 'MMSUbuntu20.04'
+  default: 'ubuntu-22.04'
 - name: WindowsPool
   type: string
-  default: 'azsdk-pool-mms-win-2019-perf'
+  default: 'azsdk-pool-mms-win-2022-perf'
 - name: WindowsVmImage
   type: string
-  default: 'MMS2019'
+  default: 'windows-2022'
 - name: Language
   type: string
   default: ''
@@ -65,7 +68,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.JobName }}
-  timeoutInMinutes: 360
+  timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
   strategy:
     matrix:
       ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
@@ -109,7 +112,7 @@ jobs:
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
     parameters:
       AgentImage: $(OSVmImage)
-
+      
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml

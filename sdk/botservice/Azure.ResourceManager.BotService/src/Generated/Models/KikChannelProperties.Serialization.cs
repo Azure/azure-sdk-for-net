@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static KikChannelProperties DeserializeKikChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string userName = default;
             Optional<string> apiKey = default;
             Optional<bool> isValidated = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

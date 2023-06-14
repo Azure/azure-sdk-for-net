@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanGroup DeserializeRecoveryPlanGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecoveryPlanGroupType groupType = default;
             Optional<IList<RecoveryPlanProtectedItem>> replicationProtectedItems = default;
             Optional<IList<RecoveryPlanAction>> startGroupActions = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecoveryPlanProtectedItem> array = new List<RecoveryPlanProtectedItem>();
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecoveryPlanAction> array = new List<RecoveryPlanAction>();
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecoveryPlanAction> array = new List<RecoveryPlanAction>();

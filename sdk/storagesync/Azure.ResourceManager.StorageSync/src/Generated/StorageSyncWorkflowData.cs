@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the StorageSyncWorkflow data model. </summary>
+    /// <summary>
+    /// A class representing the StorageSyncWorkflow data model.
+    /// Workflow resource.
+    /// </summary>
     public partial class StorageSyncWorkflowData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>

@@ -1,16 +1,14 @@
-# Set a default parameter set here so we can call this script without requiring -Login and -Subscription,
-# but if it IS called with either of those, then both parameters need to be required. Not defining a
-# default parameter set makes Login/Subscription required all the time.
+# Not defining a default parameter set makes SkipLogin/Subscription required all the time.
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param(
     [string]$SearchDirectory,
     [hashtable]$Filters,
     [string]$Environment,
     [string]$Repository,
-    [switch]$PushImages,
+    [switch]$SkipPushImages,
     [string]$ClusterGroup,
     [string]$DeployId,
-    [switch]$Login,
+    [switch]$SkipLogin,
     [string]$Subscription,
 
     # Default to true in Azure Pipelines environments
@@ -24,6 +22,8 @@ param(
 
     # Renders chart templates locally without deployment
     [Parameter(Mandatory=$False)][switch]$Template,
+
+    [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
 
     # Matrix generation parameters
     [Parameter(Mandatory=$False)][string]$MatrixFileName,

@@ -43,9 +43,13 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterSkuDetails DeserializeDevCenterSkuDetails(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceType> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<Capability>> capabilities = default;
+            Optional<IReadOnlyList<DevCenterCapability>> capabilities = default;
             string name = default;
             Optional<DevCenterSkuTier> tier = default;
             Optional<string> size = default;
@@ -55,14 +59,17 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -77,13 +84,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<DevCenterCapability> array = new List<DevCenterCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item));
+                        array.Add(DevCenterCapability.DeserializeDevCenterCapability(item));
                     }
                     capabilities = array;
                     continue;
@@ -97,7 +103,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToDevCenterSkuTier();
@@ -117,14 +122,13 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), resourceType.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), Optional.ToNullable(resourceType), Optional.ToList(locations), Optional.ToList(capabilities));
         }
     }
 }

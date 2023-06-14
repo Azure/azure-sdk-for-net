@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineImageOSState ToLabVirtualMachineImageOSState(this string value)
         {
-            if (string.Equals(value, "Generalized", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineImageOSState.Generalized;
-            if (string.Equals(value, "Specialized", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineImageOSState.Specialized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Generalized")) return LabVirtualMachineImageOSState.Generalized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Specialized")) return LabVirtualMachineImageOSState.Specialized;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineImageOSState value.");
         }
     }

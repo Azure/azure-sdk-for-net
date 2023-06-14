@@ -13,7 +13,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsCluster data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsCluster data model.
+    /// The top level Log Analytics cluster resource container.
+    /// </summary>
     public partial class OperationalInsightsClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>
@@ -34,9 +37,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="sku"> The sku properties. </param>
         /// <param name="clusterId"> The ID associated with the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is &apos;true&apos;. </param>
-        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is &apos;true&apos; if region supports Availability Zones. </param>
-        /// <param name="billingType"> The cluster&apos;s billing type. </param>
+        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </param>
+        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
         /// <param name="keyVaultProperties"> The associated key properties. </param>
         /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
         /// <param name="createdOn"> The cluster creation time. </param>
@@ -66,11 +69,11 @@ namespace Azure.ResourceManager.OperationalInsights
         public Guid? ClusterId { get; }
         /// <summary> The provisioning state of the cluster. </summary>
         public OperationalInsightsClusterEntityStatus? ProvisioningState { get; }
-        /// <summary> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is &apos;true&apos;. </summary>
+        /// <summary> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </summary>
         public bool? IsDoubleEncryptionEnabled { get; set; }
-        /// <summary> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is &apos;true&apos; if region supports Availability Zones. </summary>
+        /// <summary> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </summary>
         public bool? IsAvailabilityZonesEnabled { get; set; }
-        /// <summary> The cluster&apos;s billing type. </summary>
+        /// <summary> The cluster's billing type. </summary>
         public OperationalInsightsBillingType? BillingType { get; set; }
         /// <summary> The associated key properties. </summary>
         public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }

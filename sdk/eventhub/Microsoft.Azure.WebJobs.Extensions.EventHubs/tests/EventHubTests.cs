@@ -190,9 +190,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     c.AddInMemoryCollection(new Dictionary<string, string>
                     {
+                        { "AzureWebJobs:extensions:EventHubs:TargetUnprocessedEventThreshold", "300"},
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:MaxBatchSize", "100" },
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:PrefetchCount", "200" },
                         { "AzureWebJobs:extensions:EventHubs:BatchCheckpointFrequency", "5" },
+                        { "AzureWebJobs:extensions:EventHubs:MinEventBatchSize", "90" },
+                        { "AzureWebJobs:extensions:EventHubs:MaxWaitTime", "00:00:01" },
                         { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:LeaseDuration", "00:00:31" },
                         { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:RenewInterval", "00:00:21" },
                         { "AzureWebJobs:extensions:EventHubs:InitialOffsetOptions:Type", "FromEnd" },
@@ -205,9 +208,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
 
             var eventProcessorOptions = options.EventProcessorOptions;
+            Assert.AreEqual(300, options.TargetUnprocessedEventThreshold);
             Assert.AreEqual(200, eventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(100, options.MaxEventBatchSize);
+            Assert.AreEqual(90, options.MinEventBatchSize);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxWaitTime);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
             Assert.AreEqual(EventPosition.Latest, eventProcessorOptions.DefaultStartingPosition);

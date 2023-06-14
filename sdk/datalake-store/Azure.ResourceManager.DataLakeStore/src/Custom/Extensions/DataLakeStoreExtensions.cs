@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionGetAccountsOptions options = new SubscriptionGetAccountsOptions();
+            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions();
             options.Filter = filter;
             options.Top = top;
             options.Skip = skip;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionGetAccountsOptions options = new SubscriptionGetAccountsOptions();
+            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions();
             options.Filter = filter;
             options.Top = top;
             options.Skip = skip;

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchInboundNatPool DeserializeBatchInboundNatPool(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             BatchInboundEndpointProtocol protocol = default;
             int backendPort = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchNetworkSecurityGroupRule> array = new List<BatchNetworkSecurityGroupRule>();

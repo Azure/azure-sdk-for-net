@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticDataset DeserializeDiagnosticDataset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataTableResponseObject> table = default;
             Optional<DiagnosticDataRendering> renderingProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value);

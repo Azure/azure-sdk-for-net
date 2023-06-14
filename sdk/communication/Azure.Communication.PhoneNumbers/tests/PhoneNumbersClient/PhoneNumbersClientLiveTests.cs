@@ -31,7 +31,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPurchasedPhoneNumbersUsingConnectionString")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPurchasedPhoneNumbersUsingKeyCredential")]
-        public async Task GetPurchasedPhoneNumbers(AuthMethod authMethod)
+        [AsyncOnly]
+        public async Task GetPurchasedPhoneNumbersAsync(AuthMethod authMethod)
         {
             var client = CreateClient(authMethod);
 
@@ -41,10 +42,25 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(numbers);
         }
 
+        [TestCase(AuthMethod.ConnectionString, TestName = "GetPurchasedPhoneNumbersUsingConnectionString")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GetPurchasedPhoneNumbersUsingKeyCredential")]
+        [SyncOnly]
+        public void GetPurchasedPhoneNumbers(AuthMethod authMethod)
+        {
+            var client = CreateClient(authMethod);
+
+            var numbersPagable = client.GetPurchasedPhoneNumbers();
+            var numbers = numbersPagable.AsPages().ToList();
+
+            Assert.IsNotNull(numbers);
+        }
+
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumberUsingKeyCredential")]
-        public async Task GetPhoneNumber(AuthMethod authMethod)
+        [AsyncOnly]
+        public async Task GetPhoneNumberAsync(AuthMethod authMethod)
         {
             var number = GetTestPhoneNumber();
 
@@ -56,8 +72,25 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(number, phoneNumber.Value.PhoneNumber);
         }
 
+        [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumberUsingKeyCredential")]
+        [SyncOnly]
+        public void GetPhoneNumber(AuthMethod authMethod)
+        {
+            var number = GetTestPhoneNumber();
+
+            var client = CreateClient(authMethod);
+            var phoneNumber = client.GetPurchasedPhoneNumber(number);
+
+            Assert.IsNotNull(phoneNumber);
+            Assert.IsNotNull(phoneNumber.Value);
+            Assert.AreEqual(number, phoneNumber.Value.PhoneNumber);
+        }
+
         [Test]
-        public async Task GetPhoneNumberWithNullNumber()
+        [AsyncOnly]
+        public async Task GetPhoneNumberWithNullNumberAsync()
         {
             var client = CreateClient();
 
@@ -75,7 +108,27 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task StartUpdateCapabilitiesWithNullNumber()
+        [SyncOnly]
+        public void GetPhoneNumberWithNullNumber()
+        {
+            var client = CreateClient();
+
+            try
+            {
+                var phoneNumber = client.GetPurchasedPhoneNumber(null);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("phoneNumber", ex.ParamName);
+                return;
+            }
+
+            Assert.Fail("GetPurchasedPhoneNumberAsync should have thrown an ArgumentNullException.");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task StartUpdateCapabilitiesWithNullNumberAsync()
         {
             var client = CreateClient();
 
@@ -93,7 +146,27 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task CreateSearchErrorState()
+        [SyncOnly]
+        public void StartUpdateCapabilitiesWithNullNumber()
+        {
+            var client = CreateClient();
+
+            try
+            {
+                var phoneNumber = client.StartUpdateCapabilities(null);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("phoneNumber", ex.ParamName);
+                return;
+            }
+
+            Assert.Fail("GetPurchasedPhoneNumberAsync should have thrown an ArgumentNullException.");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CreateSearchErrorStateAsync()
         {
             var client = CreateClient();
             const string countryCode = "US";
@@ -103,9 +176,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Person,
                     new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None), new PhoneNumberSearchOptions { AreaCode = "212", Quantity = 1 });
             }
-            catch (Azure.RequestFailedException ex)
+            catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -113,12 +186,53 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task CreateSearchWithNullCountryCode()
+        [SyncOnly]
+        public void CreateSearchErrorState()
+        {
+            var client = CreateClient();
+            const string countryCode = "US";
+            try
+            {
+                // User and toll free is an invalid combination
+                var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Person,
+                    new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None), new PhoneNumberSearchOptions { AreaCode = "212", Quantity = 1 });
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                return;
+            }
+
+            Assert.Fail("StartSearchAvailablePhoneNumbersAsync should have thrown an exception.");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CreateSearchWithNullCountryCodeAsync()
         {
             var client = CreateClient();
             try
             {
                 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(null, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                    new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("twoLetterIsoCountryName", ex.ParamName);
+                return;
+            }
+
+            Assert.Fail("StartSearchAvailablePhoneNumbersAsync should have thrown an exception.");
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateSearchWithNullCountryCode()
+        {
+            var client = CreateClient();
+            try
+            {
+                var searchOperation = client.StartSearchAvailablePhoneNumbers(null, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                     new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
             }
             catch (ArgumentNullException ex)
@@ -150,6 +264,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            var response = await client.GetPhoneNumberSearchResultAsync(searchId);
+
+            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
         }
 
         [Test]
@@ -176,6 +300,140 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
             Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            var response = client.GetPhoneNumberSearchResult(searchId);
+
+            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task ReleaseUnauthorizedNumberAsync()
+        {
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void ReleaseUnauthorizedNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = client.StartReleasePhoneNumber(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetPurchasedUnauthorizedNumberAsync()
+        {
+            var client = CreateClient();
+            try
+            {
+                var phoneNumbers = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPurchasedUnauthorizedNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var phoneNumbers = client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task StartPurchaseInvalidSearchIdAsync()
+        {
+            var client = CreateClient();
+            try
+            {
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync("some-invalid-id");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void StartPurchaseInvalidSearchId()
+        {
+            var client = CreateClient();
+            try
+            {
+                var purchaseOperation = client.StartPurchasePhoneNumbers("some-invalid-id");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetPurchasedPhoneNumbersNextPageAsync()
+        {
+            var client = CreateClient();
+            var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
+
+            await foreach (PurchasedPhoneNumber purchasedPhone in purchasedPhoneNumbers)
+            {
+                Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
+            }
+
+            Assert.NotNull(purchasedPhoneNumbers);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPurchasedPhoneNumbersNextPage()
+        {
+            var client = CreateClient();
+            var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
+
+            foreach (PurchasedPhoneNumber purchasedPhone in purchasedPhoneNumbers)
+            {
+                Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
+            }
+
+            Assert.NotNull(purchasedPhoneNumbers);
         }
 
         [Test]
@@ -199,84 +457,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
-        }
-
-        [Test]
-        public async Task ReleaseUnauthorizedNumber()
-        {
-            var client = CreateClient();
-            try
-            {
-                var releaseOperation = await client.StartReleasePhoneNumberAsync(UnauthorizedNumber);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(400, ex.Status);
-                Assert.NotNull(ex.Message);
-            }
-        }
-
-        [Test]
-        public async Task UpdateCapabilitiesUnauthorizedNumber()
-        {
-            var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
-            var client = CreateClient();
-            try
-            {
-                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(UnauthorizedNumber);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(400, ex.Status);
-                Assert.NotNull(ex.Message);
-            }
-        }
-
-        [Test]
-        public async Task GetPurchasedUnauthorizedNumber()
-        {
-            var client = CreateClient();
-            try
-            {
-                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex.Message);
-            }
-        }
-
-        [Test]
-        public async Task StartPurchasedUnauthorizedNumber()
-        {
-            var client = CreateClient();
-            try
-            {
-                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(UnauthorizedNumber);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(404, ex.Status);
-                Assert.NotNull(ex.Message);
-            }
-        }
-
-        [Test]
-        public async Task GetPurchasedPhoneNumbersNextPage()
-        {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
-            var client = CreateClient();
-            var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
-
-            await foreach (PurchasedPhoneNumber purchasedPhone in purchasedPhoneNumbers)
-            {
-                Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
-            }
-
-            Assert.NotNull(purchasedPhoneNumbers);
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
         }
 
         [Test]
@@ -305,15 +486,45 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
         }
 
         [Test]
-        public async Task GetTollFreeAreaCodes()
+        [AsyncOnly]
+        public async Task UpdateCapabilitiesUnauthorizedNumberAsync()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
+            var client = CreateClient();
+            try
+            {
+                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
 
+        [Test]
+        [SyncOnly]
+        public void UpdateCapabilitiesUnauthorizedNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var UpdateCapabilitiesOperation = client.StartUpdateCapabilities(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetTollFreeAreaCodesAsync()
+        {
             string[] expectedAreaCodes = { "888", "877", "866", "855", "844", "800", "833", "88" };
             var client = CreateClient();
 
@@ -326,11 +537,24 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task GetGeographicAreaCodes()
+        [SyncOnly]
+        public void GetTollFreeAreaCodes()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
+            string[] expectedAreaCodes = { "888", "877", "866", "855", "844", "800", "833", "88" };
+            var client = CreateClient();
 
+            var areaCodes = client.GetAvailableAreaCodesTollFree("US");
+            foreach (PhoneNumberAreaCode areaCode in areaCodes)
+            {
+                Assert.Contains(areaCode.AreaCode, expectedAreaCodes);
+            }
+            Assert.IsNotNull(areaCodes);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetGeographicAreaCodesAsync()
+        {
             var client = CreateClient();
             var availableLocalities = client.GetAvailableLocalitiesAsync("US");
             await foreach (PhoneNumberLocality firstLocality in availableLocalities)
@@ -346,11 +570,27 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task GetCountries()
+        [SyncOnly]
+        public void GetGeographicAreaCodes()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalities("US");
+            foreach (PhoneNumberLocality firstLocality in availableLocalities)
+            {
+                var areaCodes = client.GetAvailableAreaCodesGeographic("US", "person", firstLocality.LocalizedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                foreach (PhoneNumberAreaCode areaCode in areaCodes)
+                {
+                    Console.WriteLine("Area Code " + areaCode.AreaCode);
+                }
+                Assert.IsNotNull(areaCodes);
+                break;
+            }
+        }
 
+        [Test]
+        [AsyncOnly]
+        public async Task GetCountriesAsync()
+        {
             List<string> countriesResponse = new List<string>();
             string[] expectedCountries = { "US", "CA" };
             var client = CreateClient();
@@ -369,11 +609,30 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task GetLocalities()
+        [SyncOnly]
+        public void GetCountries()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
+            List<string> countriesResponse = new List<string>();
+            string[] expectedCountries = { "US", "CA" };
+            var client = CreateClient();
 
+            var countries = client.GetAvailableCountries();
+            foreach (PhoneNumberCountry country in countries)
+            {
+                countriesResponse.Add(country.CountryCode);
+            }
+
+            foreach (string country in expectedCountries)
+            {
+                Assert.Contains(country, countriesResponse);
+            }
+            Assert.IsNotNull(countries);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetLocalitiesAsync()
+        {
             var client = CreateClient();
 
             var localities = client.GetAvailableLocalitiesAsync("US");
@@ -385,11 +644,23 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task GetLocalitiesWithAdministrativeDivision()
+        [SyncOnly]
+        public void GetLocalities()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
+            var client = CreateClient();
 
+            var localities = client.GetAvailableLocalities("US");
+            foreach (PhoneNumberLocality locality in localities)
+            {
+                Console.WriteLine("Locality " + locality.LocalizedName);
+            }
+            Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetLocalitiesWithAdministrativeDivisionAsync()
+        {
             var client = CreateClient();
             var availableLocalities = client.GetAvailableLocalitiesAsync("US");
             await foreach (PhoneNumberLocality firstLocality in availableLocalities)
@@ -406,11 +677,28 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task GetOfferings()
+        [SyncOnly]
+        public void GetLocalitiesWithAdministrativeDivision()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalities("US");
+            foreach (PhoneNumberLocality firstLocality in availableLocalities)
+            {
+                var localities = client.GetAvailableLocalities("US", firstLocality.AdministrativeDivision.AbbreviatedName);
+                foreach (PhoneNumberLocality locality in localities)
+                {
+                    Console.WriteLine("Locality " + locality.LocalizedName);
+                    Assert.AreEqual(locality.AdministrativeDivision.AbbreviatedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                }
+                Assert.IsNotNull(localities);
+                break;
+            }
+        }
 
+        [Test]
+        [AsyncOnly]
+        public async Task GetOfferingsAsync()
+        {
             var client = CreateClient();
 
             var offerings = client.GetAvailableOfferingsAsync("US");
@@ -419,6 +707,30 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Offering " + offering.ToString());
             }
             Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetOfferings()
+        {
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferings("US");
+            foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
+        }
+
+        private static bool IsSuccess(int statusCode)
+        {
+            return statusCode >= 200 && statusCode < 300;
+        }
+
+        private static bool IsClientError(int statusCode)
+        {
+            return statusCode >= 400 && statusCode < 500;
         }
     }
 }

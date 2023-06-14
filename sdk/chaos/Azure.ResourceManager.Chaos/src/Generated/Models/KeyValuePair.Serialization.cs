@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static KeyValuePair DeserializeKeyValuePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

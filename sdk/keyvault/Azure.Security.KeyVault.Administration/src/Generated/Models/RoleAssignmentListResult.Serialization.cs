@@ -16,6 +16,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KeyVaultRoleAssignment>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.Security.KeyVault.Administration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultRoleAssignment> array = new List<KeyVaultRoleAssignment>();

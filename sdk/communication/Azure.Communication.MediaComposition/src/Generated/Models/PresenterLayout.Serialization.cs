@@ -52,6 +52,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static PresenterLayout DeserializePresenterLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string presenterId = default;
             string supportId = default;
             Optional<SupportPosition> supportPosition = default;
@@ -76,7 +80,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportPosition = new SupportPosition(property.Value.GetString());
@@ -86,7 +89,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportAspectRatio = property.Value.GetDouble();
@@ -101,7 +103,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
@@ -116,7 +117,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingMode = new ScalingMode(property.Value.GetString());

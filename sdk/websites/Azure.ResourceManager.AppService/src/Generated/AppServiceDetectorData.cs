@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceDetector data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceDetector data model.
+    /// Class representing Response from Detector
+    /// </summary>
     public partial class AppServiceDetectorData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>

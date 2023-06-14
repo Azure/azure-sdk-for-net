@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PurviewConfiguration DeserializePurviewConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

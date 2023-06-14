@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ComponentSetup DeserializeComponentSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string componentName = default;
             Optional<FactorySecretBaseDefinition> licenseKey = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             licenseKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationContentLink DeserializeAutomationContentLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<AutomationContentHash> contentHash = default;
             Optional<string> version = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);

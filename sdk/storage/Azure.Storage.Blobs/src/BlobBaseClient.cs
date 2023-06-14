@@ -1474,7 +1474,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
+        private async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1537,7 +1537,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Cancellation token.
         /// </param>
         /// <returns></returns>
-        internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1623,7 +1623,13 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, response.GetRawResponse());
+                        await ContentHasher.AssertResponseHashMatchInternal(
+                            readDestStream,
+                            validationOptions.ChecksumAlgorithm,
+                            response.GetRawResponse(),
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        ;
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
@@ -1682,7 +1688,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
+        private async ValueTask<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
@@ -2884,14 +2890,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            if (async)
-            {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
-            }
+            return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
 
@@ -3941,11 +3940,11 @@ namespace Azure.Storage.Blobs.Specialized
         #region CopyFromUri
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -3956,7 +3955,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -3995,11 +3994,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -4010,7 +4009,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -4049,11 +4048,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -4064,7 +4063,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="metadata">
@@ -6665,7 +6664,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(builder.BlobVersionId),
                     nameof(BlobSasBuilder));
             }
-            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };

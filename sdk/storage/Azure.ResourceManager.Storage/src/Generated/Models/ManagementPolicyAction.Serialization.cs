@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagementPolicyBaseBlob> baseBlob = default;
             Optional<ManagementPolicySnapShot> snapshot = default;
             Optional<ManagementPolicyVersion> version = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value);

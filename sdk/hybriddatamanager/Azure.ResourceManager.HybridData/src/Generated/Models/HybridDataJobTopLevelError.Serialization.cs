@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobTopLevelError DeserializeHybridDataJobTopLevelError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())

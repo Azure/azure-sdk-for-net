@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CspmMonitorGcpOfferingNativeCloudConnection DeserializeCspmMonitorGcpOfferingNativeCloudConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> workloadIdentityProviderId = default;
             Optional<string> serviceAccountEmailAddress = default;
             foreach (var property in element.EnumerateObject())

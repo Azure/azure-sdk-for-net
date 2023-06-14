@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SmsChannelProperties DeserializeSmsChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string phone = default;
             string accountSID = default;
             Optional<string> authToken = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

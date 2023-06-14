@@ -23,6 +23,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static FreshnessScoringParameters DeserializeFreshnessScoringParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan boostingDuration = default;
             foreach (var property in element.EnumerateObject())
             {

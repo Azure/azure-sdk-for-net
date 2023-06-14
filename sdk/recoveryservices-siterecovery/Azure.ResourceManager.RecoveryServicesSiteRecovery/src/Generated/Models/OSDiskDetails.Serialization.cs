@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static OSDiskDetails DeserializeOSDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> osVhdId = default;
             Optional<string> osType = default;
             Optional<string> vhdName = default;

@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the ComplianceResult data model. </summary>
+    /// <summary>
+    /// A class representing the ComplianceResult data model.
+    /// a compliance result
+    /// </summary>
     public partial class ComplianceResultData : ResourceData
     {
         /// <summary> Initializes a new instance of ComplianceResultData. </summary>

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningScriptsToExecute. </summary>
-        /// <param name="startupScript"> Script that&apos;s run every time the machine starts. </param>
-        /// <param name="creationScript"> Script that&apos;s run only once during provision of the compute. </param>
+        /// <param name="startupScript"> Script that's run every time the machine starts. </param>
+        /// <param name="creationScript"> Script that's run only once during provision of the compute. </param>
         internal MachineLearningScriptsToExecute(MachineLearningScriptReference startupScript, MachineLearningScriptReference creationScript)
         {
             StartupScript = startupScript;
             CreationScript = creationScript;
         }
 
-        /// <summary> Script that&apos;s run every time the machine starts. </summary>
+        /// <summary> Script that's run every time the machine starts. </summary>
         public MachineLearningScriptReference StartupScript { get; set; }
-        /// <summary> Script that&apos;s run only once during provision of the compute. </summary>
+        /// <summary> Script that's run only once during provision of the compute. </summary>
         public MachineLearningScriptReference CreationScript { get; set; }
     }
 }

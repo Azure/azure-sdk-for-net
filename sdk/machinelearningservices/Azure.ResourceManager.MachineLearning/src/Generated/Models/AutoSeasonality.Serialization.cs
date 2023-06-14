@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoSeasonality DeserializeAutoSeasonality(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SeasonalityMode mode = default;
             foreach (var property in element.EnumerateObject())
             {

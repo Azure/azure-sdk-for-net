@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCustomImageVhd DeserializeDevTestLabCustomImageVhd(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> imageName = default;
             Optional<bool> sysPrep = default;
             DevTestLabCustomImageOSType osType = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sysPrep = property.Value.GetBoolean();

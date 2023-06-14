@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ListUsagesResult DeserializeListUsagesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ComputeUsage> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

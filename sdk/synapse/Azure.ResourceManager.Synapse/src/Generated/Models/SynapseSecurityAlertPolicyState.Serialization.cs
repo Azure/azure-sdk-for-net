@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseSecurityAlertPolicyState ToSynapseSecurityAlertPolicyState(this string value)
         {
-            if (string.Equals(value, "New", StringComparison.InvariantCultureIgnoreCase)) return SynapseSecurityAlertPolicyState.New;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseSecurityAlertPolicyState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseSecurityAlertPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "New")) return SynapseSecurityAlertPolicyState.New;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SynapseSecurityAlertPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SynapseSecurityAlertPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseSecurityAlertPolicyState value.");
         }
     }

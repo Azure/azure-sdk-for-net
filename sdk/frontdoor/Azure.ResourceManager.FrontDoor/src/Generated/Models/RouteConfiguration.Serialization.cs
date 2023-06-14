@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RouteConfiguration DeserializeRouteConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

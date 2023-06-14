@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> thresholdId = default;
             Optional<PercentageCostThresholdProperties> percentageThreshold = default;
             Optional<DevTestLabCostThresholdStatus> displayOnChart = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value);
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     displayOnChart = new DevTestLabCostThresholdStatus(property.Value.GetString());
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendNotificationWhenExceeded = new DevTestLabCostThresholdStatus(property.Value.GetString());

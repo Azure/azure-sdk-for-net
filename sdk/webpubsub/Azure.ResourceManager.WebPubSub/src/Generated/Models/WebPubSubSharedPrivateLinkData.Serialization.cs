@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubSharedPrivateLinkData DeserializeWebPubSubSharedPrivateLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -70,7 +74,6 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -104,7 +106,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new WebPubSubProvisioningState(property0.Value.GetString());
@@ -119,7 +120,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new WebPubSubSharedPrivateLinkStatus(property0.Value.GetString());
