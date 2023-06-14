@@ -641,7 +641,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
 
-        protected static TokenCredential GetTokenCredential(BlobBaseClient client) =>
+        protected static Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(BlobBaseClient client) =>
             client.ClientConfiguration.OAuthTokenCredential;
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
