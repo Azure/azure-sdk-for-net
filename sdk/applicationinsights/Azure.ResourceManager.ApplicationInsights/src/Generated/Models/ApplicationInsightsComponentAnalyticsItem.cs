@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="id"> Internally assigned unique id of the item definition. </param>
         /// <param name="name"> The user-defined name of the item. </param>
         /// <param name="content"> The content of this item. </param>
-        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added. </param>
+        /// <param name="version"> This instance's version of the data model. This can change as new features are added. </param>
         /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="itemType"> Enum indicating the type of the Analytics item. </param>
         /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Name { get; set; }
         /// <summary> The content of this item. </summary>
         public string Content { get; set; }
-        /// <summary> This instance&apos;s version of the data model. This can change as new features are added. </summary>
+        /// <summary> This instance's version of the data model. This can change as new features are added. </summary>
         public string Version { get; }
         /// <summary> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </summary>
         public ItemScope? Scope { get; set; }

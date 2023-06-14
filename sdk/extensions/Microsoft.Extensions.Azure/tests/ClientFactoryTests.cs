@@ -410,7 +410,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.That(
                 () => ClientFactory.CreateCredential(configuration),
-                Throws.InstanceOf<ArgumentException>());
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
         }
 
         [Test]

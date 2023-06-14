@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 Kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, PropertyNamingConvention.CamelCase));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, PropertyNameFormat.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);

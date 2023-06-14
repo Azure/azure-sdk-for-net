@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
         /// <param name="volumeName"> This must match the Name of a Volume. </param>
-        /// <param name="mountPath"> Path within the container at which the volume should be mounted.Must not contain &apos;:&apos;. </param>
+        /// <param name="mountPath"> Path within the container at which the volume should be mounted.Must not contain ':'. </param>
         internal ContainerAppVolumeMount(string volumeName, string mountPath)
         {
             VolumeName = volumeName;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> This must match the Name of a Volume. </summary>
         public string VolumeName { get; set; }
-        /// <summary> Path within the container at which the volume should be mounted.Must not contain &apos;:&apos;. </summary>
+        /// <summary> Path within the container at which the volume should be mounted.Must not contain ':'. </summary>
         public string MountPath { get; set; }
     }
 }

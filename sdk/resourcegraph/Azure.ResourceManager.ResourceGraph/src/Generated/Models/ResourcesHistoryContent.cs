@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         public string Query { get; set; }
         /// <summary> The history request evaluation options. </summary>
         public ResourcesHistoryRequestOptions Options { get; set; }
-        /// <summary> Azure management groups against which to execute the query. Example: [ &apos;mg1&apos;, &apos;mg2&apos; ]. </summary>
+        /// <summary> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </summary>
         public IList<string> ManagementGroups { get; }
     }
 }

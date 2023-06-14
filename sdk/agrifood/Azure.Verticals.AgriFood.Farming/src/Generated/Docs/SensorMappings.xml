@@ -33,7 +33,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -85,7 +85,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -112,7 +112,7 @@ This sample shows how to call GetSensorMappingAsync with required parameters and
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorMappingAsync("<sensorMappingId>", new RequestContext());
+Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -139,7 +139,7 @@ This sample shows how to call GetSensorMapping with required parameters and pars
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = client.GetSensorMapping("<sensorMappingId>", new RequestContext());
+Response response = client.GetSensorMapping("<sensorMappingId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -166,7 +166,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorMappingId>", new RequestContext());
+Response response = await client.DeleteAsync("<sensorMappingId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -178,7 +178,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorMappingId>", new RequestContext());
+Response response = client.Delete("<sensorMappingId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -201,7 +201,7 @@ This sample shows how to call GetSensorMappingsAsync with all parameters, and ho
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -240,7 +240,7 @@ This sample shows how to call GetSensorMappings with all parameters, and how to 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());

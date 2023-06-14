@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s vulnerability assessment.
+        /// Gets the managed instance's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s vulnerability assessment.
+        /// Gets the managed instance's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed server&apos;s threat detection policy.
+        /// Get a managed server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed server&apos;s threat detection policy.
+        /// Get a managed server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed instance&apos;s Advanced Threat Protection state.
+        /// Get a managed instance's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed instance&apos;s Advanced Threat Protection state.
+        /// Get a managed instance's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s Start/Stop schedule.
+        /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s Start/Stop schedule.
+        /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

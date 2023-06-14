@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: &apos;calico&apos;, &apos;flannel&apos;. Default is &apos;calico&apos;. </summary>
+    /// <summary> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: 'calico', 'flannel'. Default is 'calico'. </summary>
     public readonly partial struct NetworkPolicy : IEquatable<NetworkPolicy>
     {
         private readonly string _value;
