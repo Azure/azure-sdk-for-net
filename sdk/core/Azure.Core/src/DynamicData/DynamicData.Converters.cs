@@ -142,42 +142,5 @@ namespace Azure.Core.Dynamic
                 writer.WriteStringValue(value);
             }
         }
-
-        internal class AllowListConverterFactory : JsonConverterFactory
-        {
-            public static readonly AllowListConverterFactory Default = new();
-
-            public override bool CanConvert(Type typeToConvert)
-            {
-                return !AllowList.IsAllowedType(typeToConvert);
-            }
-
-            public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-            {
-                JsonConverter converter = (JsonConverter)Activator.CreateInstance(
-                    typeof(UnsupportedTypeConverter<>).MakeGenericType(new Type[] { typeToConvert }),
-                    BindingFlags.Instance | BindingFlags.Public,
-                    binder: null,
-                    args: new object[] { options },
-                    culture: null)!;
-
-                return converter;
-            }
-
-            private class UnsupportedTypeConverter<T> : JsonConverter<T>
-            {
-                public UnsupportedTypeConverter(JsonSerializerOptions options) { }
-
-                public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-                {
-                    throw new NotSupportedException($"Type is not currently supported: '{typeToConvert}'.");
-                }
-
-                public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-                {
-                    AllowList.AssertAllowedType(value);
-                }
-            }
-        }
     }
 }

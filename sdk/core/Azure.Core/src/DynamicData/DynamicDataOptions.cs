@@ -39,7 +39,6 @@ namespace Azure.Core.Dynamic
                     new DynamicData.DynamicTimeSpanConverter(),
                     new DynamicData.DynamicDateTimeConverter(options.DateTimeFormat),
                     new DynamicData.DynamicDateTimeOffsetConverter(options.DateTimeFormat),
-                    DynamicData.AllowListConverterFactory.Default,
                 }
             };
 
