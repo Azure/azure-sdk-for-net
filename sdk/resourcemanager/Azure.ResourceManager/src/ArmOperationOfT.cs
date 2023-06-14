@@ -23,7 +23,7 @@ namespace Azure.ResourceManager
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             var obj = Activator.CreateInstance(typeof(T));
-            var iserializable = obj as ISerializable;
+            var iserializable = obj as IModelSerializable;
             if (iserializable is not null)
             {
                 IOperationSource<T> source = new GenericOperationSource<T>();

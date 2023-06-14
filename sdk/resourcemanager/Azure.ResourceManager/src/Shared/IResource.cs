@@ -8,9 +8,5 @@ namespace Azure.ResourceManager
     /// </summary>
     internal interface IResource
     {
-        /// <summary>
-        /// Represent data for the resrouce.
-        /// </summary>
-        ISerializable DataBag { get; }
     }
 }

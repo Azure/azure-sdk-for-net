@@ -18,17 +18,6 @@ namespace Azure.ResourceManager.Resources.Models
             ((IUtf8JsonSerializable)this).Write(writer);
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="model"></param>
-        protected void CopyModel(ResourceGroupExportResult model)
-        {
-            var that = model as ResourceGroupExportResult;
-            this.Template = that.Template;
-            this.Error = that.Error;
-        }
-
         private void Deserialize(JsonElement element)
         {
             foreach (var property in element.EnumerateObject())
