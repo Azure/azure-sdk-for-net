@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="createdOn"> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="updatedOn"> The time the API Revision were updated. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="description"> Description of the API Revision. </param>
-        /// <param name="privateUri"> Gateway URL for accessing the non-current API Revision. </param>
+        /// <param name="privateUriString"> Gateway URL for accessing the non-current API Revision. </param>
         /// <param name="isOnline"> Indicates if API revision is the current api revision. </param>
         /// <param name="isCurrent"> Indicates if API revision is accessible via the gateway. </param>
         /// <returns> A new <see cref="Models.ApiRevisionContract"/> instance for mocking. </returns>
-        public static ApiRevisionContract ApiRevisionContract(string apiId = null, string apiRevision = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string description = null, Uri privateUri = null, bool? isOnline = null, bool? isCurrent = null)
+        public static ApiRevisionContract ApiRevisionContract(string apiId = null, string apiRevision = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string description = null, string privateUriString = null, bool? isOnline = null, bool? isCurrent = null)
         {
-            return new ApiRevisionContract(apiId, apiRevision, createdOn, updatedOn, description, privateUri, isOnline, isCurrent);
+            return new ApiRevisionContract(apiId, apiRevision, createdOn, updatedOn, description, privateUriString, isOnline, isCurrent);
         }
 
         /// <summary> Initializes a new instance of ApiReleaseData. </summary>
