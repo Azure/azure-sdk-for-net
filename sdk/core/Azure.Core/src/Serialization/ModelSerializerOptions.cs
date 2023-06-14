@@ -9,7 +9,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Provides the client options for serializing models.
     /// </summary>
-    public class SerializableOptions
+    public class ModelSerializerOptions
     {
         /// <summary>
         /// Bool that determines if ReadOnlyProperties will be serialized. Default is false.

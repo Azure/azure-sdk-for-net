@@ -8,7 +8,7 @@ using System.Text;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     public class ExplicitCastTests
     {

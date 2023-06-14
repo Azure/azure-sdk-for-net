@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Reflection;
+using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
@@ -18,7 +20,7 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Stream Serialize<T>(T model, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
             // if options.Serializers is set and the model is in the dictionary, use the serializer
             if (options != null)
@@ -27,14 +29,15 @@ namespace Azure.Core.Serialization
 
                 if (options.Serializers.TryGetValue(typeof(T), out serializer))
                 {
-                    System.BinaryData data = serializer.Serialize(model);
+                    BinaryData data = serializer.Serialize(model);
                     return data.ToStream();
                 }
             }
             // else use default STJ serializer
-            IJsonSerializable serializable = (model ??= new T()) as IJsonSerializable;
             Stream stream = new MemoryStream();
-            serializable.Serialize(stream, options);
+            var writer = new Utf8JsonWriter(stream);
+            model.Serialize(writer, options ?? new ModelSerializerOptions());
+            writer.Flush();
             return stream;
         }
 
@@ -45,7 +48,7 @@ namespace Azure.Core.Serialization
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
             if (options != null)
             {
@@ -61,9 +64,34 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            IJsonSerializable serializable = new T();
-            serializable.Deserialize(stream, options);
-            return (T)serializable;
+            return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
+        }
+
+        private static T DeserializeWithReflection<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IModelSerializable
+        {
+            Type typeToConvert = typeof(T);
+            options ??= new ModelSerializerOptions();
+
+            T? model = DeserializeObject(rootElement, typeToConvert, options) as T;
+            if (model is null)
+                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
+
+            return model;
+        }
+
+        internal static object? DeserializeObject(JsonElement rootElement, Type typeToConvert, ModelSerializerOptions options)
+        {
+            var classNameInMethod = typeToConvert.Name.AsSpan();
+            int backtickIndex = classNameInMethod.IndexOf('`');
+            if (backtickIndex != -1)
+                classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
+            var methodName = $"Deserialize{classNameInMethod.ToString()}";
+
+            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            if (method is null)
+                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
+
+            return method.Invoke(null, new object[] { rootElement, options });
         }
 
         /// <summary>
@@ -73,7 +101,7 @@ namespace Azure.Core.Serialization
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(string json, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
             using Stream stream = new MemoryStream();
             using StreamWriter writer = new StreamWriter(stream);
@@ -93,9 +121,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            IJsonSerializable serializable = new T();
-            serializable.Deserialize(stream, options);
-            return (T)serializable;
+            return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
         }
     }
 }

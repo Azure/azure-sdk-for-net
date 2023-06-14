@@ -7,9 +7,9 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IJsonSerializable, IUtf8JsonSerializable
+    public class CatReadOnlyProperty : Animal, IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -30,7 +30,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)=> ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -55,7 +57,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 {
                     writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+                    writer.WriteRawValue(property.Value);
 #else
                     JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
 #endif
@@ -64,7 +66,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, SerializableOptions options)
+        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options)
         {
             double weight = default;
             string name = "";
@@ -108,61 +110,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 }
             }
             return new CatReadOnlyProperty(weight, latinName, name, isHungry, hasWhiskers, rawData);
-        }
-        #endregion
-
-        #region InterfaceImplementation
-        public new bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
-        {
-            bytesConsumed = 0;
-            try
-            {
-                Deserialize(stream, options);
-                bytesConsumed = stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public new bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
-        {
-            bytesWritten = 0;
-            try
-            {
-                Serialize(stream, options);
-                bytesWritten = (int)stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public new void Deserialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonDocument jsonDocument = JsonDocument.Parse(stream);
-            var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
-            this.Weight = model.Weight;
-            this.IsHungry = model.IsHungry;
-            this.HasWhiskers = model.HasWhiskers;
-            this.IsHungry = model.IsHungry;
-            this.RawData = model.RawData;
-        }
-
-        public new void Serialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-            if (options.PrettyPrint)
-            {
-                jsonWriterOptions.Indented = true;
-            }
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-            writer.Flush();
         }
         #endregion
     }

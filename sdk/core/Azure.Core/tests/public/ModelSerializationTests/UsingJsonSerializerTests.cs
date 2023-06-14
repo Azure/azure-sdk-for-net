@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     public class UsingJsonSerializerTests
     {

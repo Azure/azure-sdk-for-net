@@ -1,60 +1,5 @@
 # Azure.Core public serialization samples
 
-## Using IJsonSerialization Try methods
-
-The following example demonstrates using two Try methods for serialization and deserialization in an Interface called IJsonSerializable. When serializing, the stream position has to be set to 0 to return the json. When deserializing, an empty Model must first be constructed and then deserialized into that instance.
-
-Serialization
-
-```C# Snippet:Try_Serialize
-SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-using Stream stream = new MemoryStream();
-Animal model = new Animal();
-model.TrySerialize(stream, out long bytesWritten, options: options);
-stream.Position = 0;
-string json = new StreamReader(stream).ReadToEnd();
-```
-
-Deserialization
-
-```C# Snippet:Try_Deserialize
-using Stream stream = new MemoryStream();
-bool ignoreReadOnly = false;
-bool ignoreUnknown = false;
-string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
-
-Animal model = new Animal();
-model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
-```
-
-## Using IJsonSerialization Non-Try methods
-The following example demonstrates the NonTry methods for serialization and deserialization. If serialization or deserialization fails, an Exception is bubbled up. When serializing, the stream position has to be set to 0 to return the json. When deserializing, an empty Model must first be constructed and then deserialized into that instance.
-
-Serialization
-
-```C# Snippet:NonTry_Serialize
-SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-using Stream stream = new MemoryStream();
-Animal model = new Animal();
-model.Serialize(stream, options: options);
-stream.Position = 0;
-string roundTrip = new StreamReader(stream).ReadToEnd();
-```
-
-Deserialization
-
-```C# Snippet:NonTry_Deserialize
-using Stream stream = new MemoryStream();
-bool ignoreReadOnly = false;
-bool ignoreUnknown = false;
-string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
-
-Animal model = new Animal();
-model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
-```
-
 ## Using explicit cast
 
 When using protocol methods for advanced handling of RequestContext it is still possible to use the strongly typed models.
@@ -67,6 +12,7 @@ Serialization
 PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
 DogListProperty dog = new DogListProperty("myPet");
 Response response = client.CreatePet("myPet", (RequestContent)dog);
+var response2 = client.CreatePet("myPet", RequestContent.Create(dog));
 ```
 
 Deserialization
@@ -112,18 +58,6 @@ string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"i
 DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json);
 ```
 
-## Using static deserializer
-Serialize would use the Try/Do examples from above. We would use Interface form the Serializable but potentially have static method for Deserialize. 
-When using Static Deserialize, an empty Model does not have to be created first as we can deserialize directly into a new instance.
-
-```C# Snippet:Static_Deserialize
-SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
-string serviceResponse =
-    "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
-
-Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
-```
-
 ## Using ModelSerializer
 
 Serialize would use the Try/Do examples from above. We would use Interface form the Serializable but potentially have static method for Deserialize. 
@@ -161,7 +95,7 @@ DogListProperty dog = new DogListProperty
     Weight = 1.1,
     FoodConsumed = { "kibble", "egg", "peanut butter" },
 };
-SerializableOptions options = new SerializableOptions();
+ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 
 Stream stream = ModelSerializer.Serialize(dog, options);
@@ -170,7 +104,7 @@ Stream stream = ModelSerializer.Serialize(dog, options);
 Deserialization
 
 ```C# Snippet:NewtonSoft_Deserialize
-SerializableOptions options = new SerializableOptions();
+ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
@@ -213,11 +147,13 @@ DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListPropert
 The following examples show a use case where a User brings a model unknown to the Serializer. The serialization used for each model can also be set in the SerializableOptions options property Serializers. 
 
 Model Being Used by User
+```C# Snippet:Example_Model
 private class ModelT
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+```
 
 Serialization
 ```C# Snippet:BYOMWithNewtonsoftSerialize
@@ -225,7 +161,7 @@ Envelope<ModelT> envelope = new Envelope<ModelT>();
 envelope.ModelA = new CatReadOnlyProperty();
 envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
 
-SerializableOptions options = new SerializableOptions();
+ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
 Stream stream = ModelSerializer.Serialize(envelope, options);
@@ -239,7 +175,7 @@ string serviceResponse =
     "\"modelT\":{\"Name\":\"hello\",\"Age\":1}" +
     "}";
 
-SerializableOptions options = new SerializableOptions();
+ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
 Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);

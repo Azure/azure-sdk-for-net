@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -12,19 +13,18 @@ namespace Azure.Core.Serialization
     /// .
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IJsonSerializable>
+    public class ModelJsonConverter : JsonConverter<IModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
         /// .
         /// </summary>
-        public bool IgnoreAdditionalProperties { get; }
+        public bool IgnoreAdditionalProperties { get; set; } = true;
 
         /// <summary>
         /// .
         /// </summary>
-        public ModelJsonConverter()
-            : this(true) { }
+        public ModelJsonConverter() { }
 
         /// <summary>
         /// .
@@ -42,7 +42,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public override bool CanConvert(Type typeToConvert)
         {
-            return (typeToConvert.GetInterfaces().Any(i => i is IJsonSerializable));
+            return !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
         }
 
         /// <summary>
@@ -54,16 +54,14 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IJsonSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            SerializableOptions serializableOptions = ConvertOptions(options);
-            var model = Activator.CreateInstance(typeToConvert, true) as IModelInternalSerializable;
+            var model = ModelSerializer.DeserializeObject(JsonDocument.ParseValue(ref reader).RootElement, typeToConvert, ConvertOptions(options)) as IModelSerializable;
             if (model is null)
-                throw new NotSupportedException($"{typeToConvert.Name} does not have a parameterless constructor");
+                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
 
-            model.Deserialize(ref reader, serializableOptions);
-            return (IJsonSerializable)model;
+            return model;
         }
 
         /// <summary>
@@ -73,16 +71,15 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IJsonSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            SerializableOptions serializableOptions = ConvertOptions(options);
-            ((IModelInternalSerializable)value).Serialize(writer, serializableOptions);
+            value.Serialize(writer, ConvertOptions(options));
         }
 
-        private SerializableOptions ConvertOptions(JsonSerializerOptions options)
+        private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
         {
-            SerializableOptions serializableOptions = new SerializableOptions();
+            ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
             serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
             serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
             return serializableOptions;

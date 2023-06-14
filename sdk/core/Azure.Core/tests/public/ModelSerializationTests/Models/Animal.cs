@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Animal : IJsonSerializable, IUtf8JsonSerializable, IModelInternalSerializable
+    public class Animal : IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -45,7 +46,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -76,7 +79,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Animal DeserializeAnimal(JsonElement element, SerializableOptions options)
+        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options)
         {
             double weight = default;
             string name = "";
@@ -118,42 +121,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
         #endregion
 
         #region InterfaceImplementation
-        public bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
-        {
-            bytesConsumed = 0;
-            try
-            {
-                Deserialize(stream, options);
-                bytesConsumed = stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
-        {
-            bytesWritten = 0;
-            try
-            {
-                Serialize(stream, options);
-                bytesWritten = stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public void Deserialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonDocument jsonDocument = JsonDocument.Parse(stream);
-            var model = DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
-            CopyModel(model);
-        }
 
         private void CopyModel(Animal model)
         {
@@ -164,36 +131,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
             this.RawData = model.RawData;
         }
 
-        public void Serialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-            if (options.PrettyPrint)
-            {
-                jsonWriterOptions.Indented = true;
-            }
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-            writer.Flush();
-        }
-        #endregion
-
-        #region PublicStaticDeserializer
-        public static Animal StaticDeserialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonDocument jsonDocument = JsonDocument.Parse(stream);
-            return DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
-        }
-
-        void IModelInternalSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
-        {
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-        }
-
-        void IModelInternalSerializable.Deserialize(ref Utf8JsonReader reader, SerializableOptions options)
-        {
-            var model = DeserializeAnimal(JsonDocument.ParseValue(ref reader).RootElement, options);
-            CopyModel(model);
-        }
         #endregion
     }
 }

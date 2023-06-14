@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.ModelSerializationTests
+namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Envelope<T> : IJsonSerializable, IUtf8JsonSerializable
+    public class Envelope<T> : IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -37,7 +37,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -47,7 +49,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            ((IUtf8JsonSerializable)ModelA).Write(writer, options);
+            ((IModelSerializable)ModelA).Serialize(writer, options);
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
@@ -67,7 +69,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Envelope<T> DeserializeEnvelope(JsonElement element, SerializableOptions options)
+        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options)
         {
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -101,7 +103,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             return new Envelope<T>(readonlyProperty, modelA, modelC, rawData);
         }
 
-        private void SerializeT(Utf8JsonWriter writer, SerializableOptions options)
+        private void SerializeT(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             ObjectSerializer serializer = GetObjectSerializer(options);
             BinaryData data = serializer.Serialize(ModelT);
@@ -112,7 +114,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 #endif
         }
 
-        private static ObjectSerializer GetObjectSerializer(SerializableOptions options)
+        private static ObjectSerializer GetObjectSerializer(ModelSerializerOptions options)
         {
             ObjectSerializer serializer;
             if (options.Serializers.TryGetValue(typeof(T), out serializer))
@@ -124,7 +126,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             return JsonObjectSerializer.Default;
         }
 
-        private static T DeserializeT(JsonElement element, SerializableOptions options)
+        private static T DeserializeT(JsonElement element, ModelSerializerOptions options)
         {
             ObjectSerializer serializer = GetObjectSerializer(options);
             MemoryStream m = new MemoryStream();
@@ -135,59 +137,5 @@ namespace Azure.Core.Tests.ModelSerializationTests
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
 #endregion
-
-        #region InterfaceImplementation
-        public bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
-        {
-            bytesConsumed = 0;
-            try
-            {
-                Deserialize(stream, options);
-                bytesConsumed = stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
-        {
-            bytesWritten = 0;
-            try
-            {
-                Serialize(stream, options);
-                bytesWritten = stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public void Deserialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonDocument jsonDocument = JsonDocument.Parse(stream);
-            var model = DeserializeEnvelope(jsonDocument.RootElement, options ?? new SerializableOptions());
-            this.ReadOnlyProperty = model.ReadOnlyProperty;
-            this.ModelA = model.ModelA;
-            this.ModelT = model.ModelT;
-            this.RawData = model.RawData;
-        }
-
-        public void Serialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-            if (options.PrettyPrint)
-            {
-                jsonWriterOptions.Indented = true;
-            }
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-            writer.Flush();
-        }
-        #endregion
     }
 }
