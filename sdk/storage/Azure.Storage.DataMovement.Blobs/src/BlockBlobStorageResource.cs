@@ -245,26 +245,9 @@ namespace Azure.Storage.DataMovement.Blobs
             string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
             if (!_blocks.TryAdd(range.Offset, id))
             {
-<<<<<<< HEAD
-                string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
-                if (!_blocks.TryAdd(range.Offset, id))
-                {
-                    throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
-                }
-                await BlobClient.StageBlockFromUriAsync(
-                    sourceResource.Uri,
-                    id,
-                    options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
-=======
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
->>>>>>> d80851c1b8b9621ce0a72ddc1839b2fb3200e350
             }
-            await _blobClient.StageBlockFromUriAsync(
+            await BlobClient.StageBlockFromUriAsync(
                 sourceResource.Uri,
                 id,
                 options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
