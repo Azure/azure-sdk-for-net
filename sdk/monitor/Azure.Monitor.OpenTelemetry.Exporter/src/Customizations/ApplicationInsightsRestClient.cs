@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
