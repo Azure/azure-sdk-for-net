@@ -54,13 +54,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
         }
 
         [Test]
-        //[Ignore("Consistently failing in CI; awaiting investigation")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task ScaleHostEndToEndTest(bool tbsEnabled)
         {
-            TestContext.WriteLine($"Entering ScaleHostEndToEndTest({tbsEnabled})..");
-
             string hostJson =
             @"{
                 ""azureWebJobs"" : {
@@ -170,8 +167,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
             await blobCheckpointStoreInternal1.CreateIfNotExistsAsync(CancellationToken.None);
             var blobCheckpointStoreInternal2 = new BlobCheckpointStoreInternal(blobContainerClient, Function2Name, loggerProvider.CreateLogger("Test"));
             await blobCheckpointStoreInternal2.CreateIfNotExistsAsync(CancellationToken.None);
-
-            TestContext.WriteLine("Starting awaiting scale votes..");
 
             try
             {
