@@ -676,7 +676,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        //[LiveOnly]
+        [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2022_11_02)]
         public async Task AppendAsync_Large()
         {
