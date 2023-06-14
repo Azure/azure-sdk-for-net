@@ -16,7 +16,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Perform custom NER on one or more text documents
 
-To perform custom NER on one or more text documents, call `RecognizeCustomEntitiesAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `RecognizeCustomEntitiesOperation`.
+To perform custom NER on one or more text documents, call `RecognizeCustomEntitiesAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `RecognizeCustomEntitiesOperation`.
 
 ```C# Snippet:Sample8_RecognizeCustomEntitiesAsync
 string documentA =

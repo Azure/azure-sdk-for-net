@@ -4,19 +4,23 @@
 
 ### Features Added
 
-- Introduced modern versions of the existing LRO methods in the `TextAnalyticsClient` that use the modern LRO pattern:
-  - `AnalyzeActions` and `AnalyzeActionsAsync`
-  - `AnalyzeHealthcareEntities` and `AnalyzeHealthcareEntitiesAsync`
-  - `MultiLabelClassify` and `MultiLabelClassifyAsync`
-  - `SingleLabelClassify` and `SingleLabelClassifyAsync`
-  - `RecognizeCustomEntities` and `RecognizeCustomEntitiesAsync`
+- Added the following methods: `TextAnalyticsClient.AnalyzeActions` and `TextAnalyticsClient.AnalyzeActionsAsync`.
+- Hid `TextAnalyticsClient.StartAnalyzeActions` and `TextAnalyticsClient.StartAnalyzeActionsAsync` in favor of `TextAnalyticsClient.AnalyzeActions` and `TextAnalyticsClient.AnalyzeActionsAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.AnalyzeHealthcareEntities` and `TextAnalyticsClient.AnalyzeHealthcareEntitiesAsync`.
+- Hid `TextAnalyticsClient.StartAnalyzeHealthcareEntities` and `TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync` in favor of `TextAnalyticsClient.AnalyzeHealthcareEntities` and `TextAnalyticsClient.AnalyzeHealthcareEntitiesAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.SingleLabelClassify` and `TextAnalyticsClient.SingleLabelClassifyAsync`.
+- Hid `TextAnalyticsClient.StartSingleLabelClassify` and `TextAnalyticsClient.StartSingleLabelClassifyAsync` in favor of `TextAnalyticsClient.SingleLabelClassify` and `TextAnalyticsClient.SingleLabelClassifyAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.MultiLabelClassify` and `TextAnalyticsClient.MultiLabelClassifyAsync`.
+- Hid `TextAnalyticsClient.StartMultiLabelClassify` and `TextAnalyticsClient.StartMultiLabelClassifyAsync` in favor of `TextAnalyticsClient.MultiLabelClassify` and `TextAnalyticsClient.MultiLabelClassifyAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.RecognizeCustomEntities` and `TextAnalyticsClient.RecognizeCustomEntitiesAsync`.
+- Hid `TextAnalyticsClient.StartRecognizeCustomEntities` and `TextAnalyticsClient.StartRecognizeCustomEntitiesAsync` in favor of `TextAnalyticsClient.RecognizeCustomEntities` and `TextAnalyticsClient.RecognizeCustomEntitiesAsync`. These methods can still be used but are not shown in code suggestions.
 
 ### Breaking Changes
 
 > Note: The following breaking changes only apply when upgrading from the previous beta versions (5.3.0-beta.*) and do not impact stable versions.
 
 - Changes to extractive summarization:
-  - Renamed the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to `TextAnalyticsClient.ExtractiveSummarize` and `TextAnalyticsClient.ExtractiveSummarizeAsync` respectively, and updated them to use the modern LRO pattern.
+  - Renamed the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to `TextAnalyticsClient.ExtractiveSummarize` and `TextAnalyticsClient.ExtractiveSummarizeAsync` respectively.
   - Renamed the `TextAnalyticsActions.ExtractSummaryActions` property to `TextAnalyticsActions.ExtractiveSummarizeActions`.
   - Renamed the `AnalyzeActionResult.ExtractSummaryResults` property to `AnalyzeActionResult.ExtractiveSummarizeResults`.
   - Renamed the `ExtractSummaryAction` class to `ExtractiveSummarizeAction`.
@@ -28,7 +32,7 @@
   - Renamed the `SummarySentencesOrder` enum to `ExtractiveSummarySentencesOrder`.
   - Renamed the `SummarySentence` class to `ExtractiveSummarySentence`.
 - Changes to abstractive summarization:
-  - Renamed the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to `TextAnalyticsClient.AbstractiveSummarize` and `TextAnalyticsClient.AbstractiveSummarizeAsync` respectively, and updated them to use the modern LRO pattern.
+  - Renamed the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to `TextAnalyticsClient.AbstractiveSummarize` and `TextAnalyticsClient.AbstractiveSummarizeAsync` respectively.
   - Renamed the `TextAnalyticsActions.AbstractSummaryActions` property to `TextAnalyticsActions.AbstractiveSummarizeActions`.
   - Renamed the `AnalyzeActionResult.AbstractSummaryResults` property to `AnalyzeActionResult.AbstractiveSummarizeResults`.
   - Renamed the `AbstractSummaryAction` class to `AbstractiveSummarizeAction`.

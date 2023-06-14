@@ -16,7 +16,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Perform custom single-label classification on one or more text documents
 
-To perform custom single-label classification one or more text documents, call `SingleLabelClassifyAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `ClassifyDocumentOperation`.
+To perform custom single-label classification one or more text documents, call `SingleLabelClassifyAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `ClassifyDocumentOperation`.
 
 ```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync
 string document =
