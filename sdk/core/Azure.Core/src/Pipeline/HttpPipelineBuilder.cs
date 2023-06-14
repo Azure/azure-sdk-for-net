@@ -161,7 +161,12 @@ namespace Azure.Core.Pipeline
                         DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
                         DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay)));
 
-            policies.Add(RedirectPolicy.Shared);
+            var redirectPolicy = defaultTransportOptions?.IsClientRedirectEnabled switch
+            {
+                true => new RedirectPolicy(true),
+                _ => RedirectPolicy.Shared,
+            };
+            policies.Add(redirectPolicy);
 
             AddNonNullPolicies(buildOptions.PerRetryPolicies.ToArray());
 
@@ -200,7 +205,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.RequestFailedDetailsParser));
+            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.ClientOptions.ProtocolMethods, buildOptions.RequestFailedDetailsParser));
 
             buildOptions.ResponseClassifier ??= ResponseClassifier.Shared;
 

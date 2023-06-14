@@ -4,13 +4,15 @@
 
 ### Features Added
 
-- Added `DynamicData` type to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamicdata](https://aka.ms/azsdk/net/dynamicdata) for further details.
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Client redirects are now disabled by default and can be enabled by setting providing a custom transport in `ClientOptions'. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
 
 ## 1.32.0 (2023-05-09)
 

@@ -38,12 +38,5 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Applies to copy and upload transfers.
         /// </summary>
         public AppendBlobRequestConditions DestinationConditions { get; set; }
-
-        /// <summary>
-        /// Optional. If the destination blob should be sealed.
-        ///
-        /// Applies to copy transfers when <see cref="BlobStorageResourceOptions.CopyMethod"/> is set to <see cref="TransferCopyMethod.AsyncCopy"/>.
-        /// </summary>
-        public bool? ShouldSealDestination { get; set; }
     }
 }
