@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s blob auditing policy.
+        /// Get a workspace managed sql server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s blob auditing policy.
+        /// Get a workspace managed sql server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace SQL server&apos;s extended blob auditing policy.
+        /// Get a workspace SQL server's extended blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace SQL server&apos;s extended blob auditing policy.
+        /// Get a workspace SQL server's extended blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s security alert policy.
+        /// Get a workspace managed sql server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s security alert policy.
+        /// Get a workspace managed sql server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s vulnerability assessment.
+        /// Get workspace managed sql server's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s vulnerability assessment.
+        /// Get workspace managed sql server's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s encryption protector.
+        /// Get workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s encryption protector.
+        /// Get workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s minimal tls settings.
+        /// Get workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s minimal tls settings.
+        /// Get workspace managed sql server's minimal tls settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
