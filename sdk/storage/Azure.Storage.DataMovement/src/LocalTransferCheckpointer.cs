@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
@@ -159,7 +160,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override Task<int> CurrentJobPartCountAsync(
+        public override Task<int> CurrentJobPartCountAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -172,7 +173,8 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override async Task<Stream> ReadableStreamAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override async Task<Stream> ReadableStreamAsync(
             string transferId,
             int partNumber,
             long offset,

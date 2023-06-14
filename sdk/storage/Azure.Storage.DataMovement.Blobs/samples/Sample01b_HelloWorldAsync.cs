@@ -767,16 +767,13 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
 
                 // Create simple transfer single blob download job
-                #region Snippet:TransferManagerTryPause_Async
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: sourceResource,
                     destinationResource: destinationResource);
 
                 // Pause from the Transfer Manager using the DataTransfer object
                 await transferManager.PauseTransferIfRunningAsync(dataTransfer);
-                #endregion Snippet:TransferManagerTryPause_Async
 
-                #region Snippet:TransferManagerResume_Async
                 // Resume from checkpoint id
                 DataTransfer dataTransferResumed = await transferManager.ResumeTransferAsync(
                     transferId: dataTransfer.Id,
@@ -788,8 +785,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     sourceCredential: new StorageTransferCredentials(
                         new StorageSharedKeyCredential("sourceaccount", "sourceaccountkey")),
                     destinationCredential: new StorageTransferCredentials(new DefaultAzureCredential()));
-
-                #endregion Snippet:TransferManagerResume_Async
 
                 // Wait for download to finish
                 await dataTransferResumed.AwaitCompletion();
@@ -881,14 +876,17 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlockBlobClient destinationBlob = new BlockBlobClient(destinationUri);
 
                 // Create transfer manager
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+                LocalTransferCheckpointer checkpointer = new LocalTransferCheckpointer("checkpointerpath");
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+                {
+                    Checkpointer = checkpointer,
+                });
 
                 // Create source and destination resource
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Create simple transfer single blob download job
-                #region Snippet:TransferManagerTryPauseId_Async
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: sourceResource,
                     destinationResource: destinationResource);
@@ -896,7 +894,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Pause from the Transfer Manager using the Transfer Id
                 await transferManager.PauseTransferIfRunningAsync(transferId);
-                #endregion Snippet:TransferManagerTryPauseId_Async
 
                 // Resume from checkpoint id
                 TransferOptions optionsWithResumeTransferId = new TransferOptions()
@@ -904,14 +901,23 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     ResumeFromCheckpointId = dataTransfer.Id
                 };
 
-                // Resuming when you don't have the original source resource
-                //StorageResource rehydratedSourceResource = BlockBlobStorageResource.
+                // Rehydrate from checkpointer
+                StorageResource rehydratedSource = await BlockBlobStorageResource.RehydrateStorageResource(
+                    checkpointer: checkpointer,
+                    transferId: transferId,
+                    isSource: true,
+                    credentials: new StorageTransferCredentials(
+                        new StorageSharedKeyCredential("sourceAccountName", "accountKey"))).ConfigureAwait(false);
+                StorageResource rehydratedDestination = await LocalFileStorageResource.RehydrateStorageResource(
+                    checkpointer: checkpointer,
+                    transferId: transferId,
+                    isSource: false).ConfigureAwait(false);
 
                 // Resuming when you want to add updated credentials (e.g. a new SAS or something)
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
                     transferId: dataTransfer.Id,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
+                    sourceResource: rehydratedSource,
+                    destinationResource: rehydratedDestination,
                     transferOptions: optionsWithResumeTransferId);
 
                 // Wait for download to finish

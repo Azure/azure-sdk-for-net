@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>The number of chunks in the job part.</returns>
-        internal abstract Task<int> CurrentJobPartCountAsync(
+        public abstract Task<int> CurrentJobPartCountAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -97,7 +97,8 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        internal abstract Task<Stream> ReadableStreamAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public abstract Task<Stream> ReadableStreamAsync(
             string transferId,
             int partNumber,
             long offset,

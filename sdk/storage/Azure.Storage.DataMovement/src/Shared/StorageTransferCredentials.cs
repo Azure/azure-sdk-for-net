@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using Azure.Core;
 
@@ -50,11 +51,18 @@ namespace Azure.Storage.DataMovement.Models
             _tokenCredential = credential;
         }
 
-        internal object GetCredential()
+        /// <summary>
+        /// Returns the credential that was originally constructed with.
+        /// </summary>
+        /// <returns>
+        /// The credential that the object was originally constructed with.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public (Type CredentialType, object Value) GetCredential()
         {
-            if (_sharedKeyCredential != null) return _sharedKeyCredential;
-            if (_azureSasCredential != null) return _azureSasCredential;
-            if ( _tokenCredential != null) return _tokenCredential;
+            if (_sharedKeyCredential != null) return (typeof(StorageSharedKeyCredential), _sharedKeyCredential);
+            if (_azureSasCredential != null) return (typeof(AzureSasCredential), _azureSasCredential);
+            if ( _tokenCredential != null) return (typeof(TokenCredential), _tokenCredential);
             return default;
         }
     }
