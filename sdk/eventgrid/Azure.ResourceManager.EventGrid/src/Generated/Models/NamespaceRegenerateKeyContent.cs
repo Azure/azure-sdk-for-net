@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Topic regenerate share access key request. </summary>
-    public partial class TopicRegenerateKeyContent
+    /// <summary> Namespace regenerate share access key request. </summary>
+    public partial class NamespaceRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of TopicRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of NamespaceRegenerateKeyContent. </summary>
         /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public TopicRegenerateKeyContent(string keyName)
+        public NamespaceRegenerateKeyContent(string keyName)
         {
             Argument.AssertNotNull(keyName, nameof(keyName));
 

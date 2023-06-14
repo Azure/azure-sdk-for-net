@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventGridManagementTestBase : ManagementRecordedTestBase<EventGridManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        public SubscriptionResource DefaultSubscription { get; private set; }
+        public Azure.ResourceManager.Resources.SubscriptionResource DefaultSubscription { get; private set; }
         public AzureLocation DefaultLocation => AzureLocation.EastUS;
         public const string  ResourceGroupNamePrefix = "EventGridRG";
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             return lro.Value;
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(Azure.ResourceManager.Resources.SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);

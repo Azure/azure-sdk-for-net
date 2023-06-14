@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -530,19 +530,19 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request body to regenerate key. </param>
+        /// <param name="regenerateKeyRequest"> Request body to regenerate key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<TopicSharedAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, TopicRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyRequest"/> is null. </exception>
+        public virtual async Task<ArmOperation<TopicSharedAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, TopicRegenerateKeyRequest regenerateKeyRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(regenerateKeyRequest, nameof(regenerateKeyRequest));
 
             using var scope = _eventGridTopicTopicsClientDiagnostics.CreateScope("EventGridTopicResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = await _eventGridTopicTopicsRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<TopicSharedAccessKeys>(new TopicSharedAccessKeysOperationSource(), _eventGridTopicTopicsClientDiagnostics, Pipeline, _eventGridTopicTopicsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventGridTopicTopicsRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateKeyRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<TopicSharedAccessKeys>(new TopicSharedAccessKeysOperationSource(), _eventGridTopicTopicsClientDiagnostics, Pipeline, _eventGridTopicTopicsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateKeyRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -568,19 +568,19 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request body to regenerate key. </param>
+        /// <param name="regenerateKeyRequest"> Request body to regenerate key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<TopicSharedAccessKeys> RegenerateKey(WaitUntil waitUntil, TopicRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyRequest"/> is null. </exception>
+        public virtual ArmOperation<TopicSharedAccessKeys> RegenerateKey(WaitUntil waitUntil, TopicRegenerateKeyRequest regenerateKeyRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(regenerateKeyRequest, nameof(regenerateKeyRequest));
 
             using var scope = _eventGridTopicTopicsClientDiagnostics.CreateScope("EventGridTopicResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = _eventGridTopicTopicsRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new EventGridArmOperation<TopicSharedAccessKeys>(new TopicSharedAccessKeysOperationSource(), _eventGridTopicTopicsClientDiagnostics, Pipeline, _eventGridTopicTopicsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _eventGridTopicTopicsRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateKeyRequest, cancellationToken);
+                var operation = new EventGridArmOperation<TopicSharedAccessKeys>(new TopicSharedAccessKeysOperationSource(), _eventGridTopicTopicsClientDiagnostics, Pipeline, _eventGridTopicTopicsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateKeyRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
