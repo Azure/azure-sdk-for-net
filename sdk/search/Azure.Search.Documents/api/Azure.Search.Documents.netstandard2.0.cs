@@ -3344,6 +3344,7 @@ namespace Azure.Search.Documents.Models
         internal SearchResult() { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.CaptionResult> Captions { get { throw null; } }
         public T Document { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.DocumentDebugInfo> DocumentDebugInfo { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Highlights { get { throw null; } }
         public double? RerankerScore { get { throw null; } }
         public double? Score { get { throw null; } }
