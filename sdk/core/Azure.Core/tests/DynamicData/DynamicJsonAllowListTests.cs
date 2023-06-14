@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Text.Json;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    internal class DynamicJsonSerializationTests
+    internal class DynamicJsonAllowListTests
     {
         [Test]
         public void CannotAssignModelWithBinaryDataProperty()
@@ -521,7 +523,151 @@ namespace Azure.Core.Tests
             Assert.Throws<NotSupportedException>(() => json.Bar = list);
         }
 
+        [Test]
+        public void CannotAssignHeterogenousArrays()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            Uri[] array = new Uri[]
+            {
+                new Uri("https://example.azure.com"),
+                new SubUri("https://example.subtype.com"),
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = array);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = array);
+        }
+
+        [Test]
+        public void CanAssignArrayWithNulls()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            string[] array = new string[]
+            {
+                "a",
+                null,
+                "b",
+            };
+
+            // Existing property
+            Assert.DoesNotThrow(() => json.Foo = array);
+
+            // New property
+            Assert.DoesNotThrow(() => json.Bar = array);
+        }
+
+        [Test]
+        public void CanAssignListWithNulls()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            List<string> list = new()
+            {
+                "a",
+                null,
+                "b",
+            };
+
+            // Existing property
+            Assert.DoesNotThrow(() => json.Foo = list);
+
+            // New property
+            Assert.DoesNotThrow(() => json.Bar = list);
+        }
+
+        [Test]
+        public void CannotAssignHeterogenousLists()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            List<Uri> list = new List<Uri>()
+            {
+                new Uri("https://example.azure.com"),
+                new SubUri("https://example.subtype.com"),
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = list);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = list);
+        }
+
+        [Test]
+        public void CanAssignDictionaryWithNulls()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            Dictionary<string, string> dictionary = new()
+            {
+                {"a", "a" },
+                {"b", null },
+                {"c", "c" }
+            };
+
+            // Existing property
+            Assert.DoesNotThrow(() => json.Foo = dictionary);
+
+            // New property
+            Assert.DoesNotThrow(() => json.Bar = dictionary);
+        }
+
+        [Test]
+        public void CannotAssignHeterogenousDictionary()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            Dictionary<string, Uri> dictionary = new()
+            {
+                {"a", new Uri("https://example.azure.com") },
+                {"b", new SubUri("https://example.subtype.com") },
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = dictionary);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = dictionary);
+        }
+
         #region Helpers
+        public class SubUri : Uri
+        {
+            public SubUri(string uriString) : base(uriString)
+            {
+            }
+
+            [Obsolete]
+            public SubUri(string uriString, bool dontEscape) : base(uriString, dontEscape)
+            {
+            }
+
+            public SubUri(string uriString, UriKind uriKind) : base(uriString, uriKind)
+            {
+            }
+
+            public SubUri(Uri baseUri, string relativeUri) : base(baseUri, relativeUri)
+            {
+            }
+
+            public SubUri(Uri baseUri, Uri relativeUri) : base(baseUri, relativeUri)
+            {
+            }
+
+            [Obsolete]
+            public SubUri(Uri baseUri, string relativeUri, bool dontEscape) : base(baseUri, relativeUri, dontEscape)
+            {
+            }
+
+            protected SubUri(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
+            {
+            }
+        }
+
         public class Foo
         {
             public Bar BarProp { get; set; }

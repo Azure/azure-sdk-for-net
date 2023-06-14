@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -23,33 +24,30 @@ namespace Azure.Core.Dynamic
 
                 Type type = value.GetType();
 
-                if (!IsAllowedType(type))
+                if (!IsAllowedType(type, value))
                 {
                     throw new NotSupportedException($"Type is not currently supported: '{type}'.");
                 }
             }
 
-            public static bool IsAllowedType(Type type)
+            public static bool IsAllowedType<T>(Type type, T value)
             {
-                if (IsAllowedPrimitive(type))
+                if (IsAllowedLeafType(type))
                 {
                     return true;
                 }
 
-                if (IsAllowedCollectionType(type))
+                if (IsAllowedCollectionType(type, value))
                 {
                     return true;
                 }
 
-                return IsAllowedAnonymousType(type, new HashSet<Type>());
+                return IsAllowedAnonymousType(type, value, new HashSet<Type>());
             }
 
-            // Primitive means "not a collection and not a POCO"
-            private static bool IsAllowedPrimitive(Type type)
+            private static bool IsAllowedLeafType(Type type)
             {
-                return
-                    type.IsPrimitive ||
-                    type == typeof(decimal) ||
+                return IsAllowedPrimitive(type) ||
                     type == typeof(string) ||
                     type == typeof(DateTime) ||
                     type == typeof(DateTimeOffset) ||
@@ -66,61 +64,114 @@ namespace Azure.Core.Dynamic
                     type == typeof(DynamicData);
             }
 
-            private static bool IsAllowedCollectionType(Type type)
+            private static bool IsAllowedPrimitive(Type type)
             {
                 return
-                    IsAllowedArrayType(type) ||
-                    IsAllowedListType(type) ||
-                    IsAllowedDictionaryType(type);
+                    type.IsPrimitive ||
+                    type == typeof(decimal);
             }
 
-            private static bool IsAllowedArrayType(Type type)
+            private static bool IsAllowedCollectionType<T>(Type type, T value)
             {
-                if (!type.IsArray)
+                return
+                    IsAllowedArrayType(type, value) ||
+                    IsAllowedListType(type, value) ||
+                    IsAllowedDictionaryType(type, value);
+            }
+
+            private static bool IsAllowedArrayType<T>(Type type, T value)
+            {
+                if (value is not Array array)
                 {
                     return false;
                 }
 
                 Type? elementType = type.GetElementType();
-                return elementType != null && IsAllowedType(elementType);
+                if (elementType == null)
+                {
+                    return false;
+                }
+
+                if (IsAllowedPrimitive(elementType))
+                {
+                    return true;
+                }
+
+                return IsAllowedEnumerableValue(elementType, array);
             }
 
-            private static bool IsAllowedListType(Type type)
+            private static bool IsAllowedListType<T>(Type type, T value)
             {
                 if (!type.IsGenericType)
                 {
                     return false;
                 }
 
-                if (type.GetGenericTypeDefinition() != typeof(List<>))
+                if (value is not IList list)
+                {
+                    return false;
+                }
+
+                Type elementType = type.GetGenericArguments()[0];
+                if (IsAllowedPrimitive(elementType))
+                {
+                    return true;
+                }
+
+                return IsAllowedEnumerableValue(elementType, list);
+            }
+
+            private static bool IsAllowedDictionaryType<T>(Type type, T value)
+            {
+                if (!type.IsGenericType)
+                {
+                    return false;
+                }
+
+                if (value is not IDictionary dictionary)
                 {
                     return false;
                 }
 
                 Type[] types = type.GetGenericArguments();
-                return IsAllowedType(types[0]);
-            }
-
-            private static bool IsAllowedDictionaryType(Type type)
-            {
-                if (!type.IsGenericType)
+                if (types[0] != typeof(string))
                 {
                     return false;
                 }
 
-                if (type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                if (IsAllowedPrimitive(types[1]))
                 {
-                    Type[] types = type.GetGenericArguments();
-                    if (types[0] == typeof(string) && IsAllowedType(types[1]))
+                    return true;
+                }
+
+                return IsAllowedEnumerableValue(types[1], dictionary.Values);
+            }
+
+            private static bool IsAllowedEnumerableValue(Type elementType, IEnumerable enumerable)
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item == null)
                     {
-                        return true;
+                        continue;
+                    }
+
+                    // Don't allow heterogenous arrays
+                    if (item.GetType() != elementType)
+                    {
+                        return false;
+                    }
+
+                    if (!IsAllowedType(elementType, item))
+                    {
+                        return false;
                     }
                 }
 
-                return false;
+                return true;
             }
 
-            private static bool IsAllowedAnonymousType(Type type, HashSet<Type> ancestorTypes)
+            private static bool IsAllowedAnonymousType<T>(Type type, T value, HashSet<Type> ancestorTypes)
             {
                 if (!IsAnonymousType(type))
                 {
@@ -129,12 +180,13 @@ namespace Azure.Core.Dynamic
 
                 foreach (PropertyInfo property in type.GetProperties())
                 {
-                    if (IsAllowedPrimitive(property.PropertyType))
+                    if (IsAllowedLeafType(property.PropertyType))
                     {
                         continue;
                     }
 
-                    if (IsAllowedCollectionType(property.PropertyType))
+                    object? propertyValue = property.GetValue(value);
+                    if (IsAllowedCollectionType(property.PropertyType, propertyValue))
                     {
                         continue;
                     }
@@ -147,7 +199,7 @@ namespace Azure.Core.Dynamic
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedAnonymousType(property.PropertyType, ancestorTypes))
+                    if (!IsAllowedAnonymousType(property.PropertyType, propertyValue, ancestorTypes))
                     {
                         return false;
                     }
