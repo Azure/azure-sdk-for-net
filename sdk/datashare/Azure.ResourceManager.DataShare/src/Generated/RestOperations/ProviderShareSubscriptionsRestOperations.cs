@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataShare
             return message;
         }
 
-        /// <summary> Adjust a share subscription&apos;s expiration date in a provider share. </summary>
+        /// <summary> Adjust a share subscription's expiration date in a provider share. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> The name of the share account. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
-        /// <summary> Adjust a share subscription&apos;s expiration date in a provider share. </summary>
+        /// <summary> Adjust a share subscription's expiration date in a provider share. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> The name of the share account. </param>

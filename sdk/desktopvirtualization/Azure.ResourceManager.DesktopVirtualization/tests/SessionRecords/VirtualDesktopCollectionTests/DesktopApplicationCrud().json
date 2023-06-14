@@ -85,7 +85,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testDesktopApplicationCrudHP?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testDesktopApplicationCrudHP?api-version=2022-09-09",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -182,7 +182,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2022-09-09",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -261,7 +261,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG/desktops?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG/desktops?api-version=2022-09-09",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -327,7 +327,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG/desktops/SessionDesktop?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG/desktops/SessionDesktop?api-version=2022-09-09",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -395,7 +395,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG/desktops/SessionDesktop?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG/desktops/SessionDesktop?api-version=2022-09-09",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -456,7 +456,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2022-09-09",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -526,7 +526,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2022-09-09",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -596,7 +596,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2022-09-09",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -623,7 +623,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/testDesktopApplicationCrudAG?api-version=2022-09-09",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -657,7 +657,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testDesktopApplicationCrudHP?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testDesktopApplicationCrudHP?api-version=2022-09-09",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -786,7 +786,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups?api-version=2022-09-09",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -817,7 +817,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools?api-version=2021-07-12",
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools?api-version=2022-09-09",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

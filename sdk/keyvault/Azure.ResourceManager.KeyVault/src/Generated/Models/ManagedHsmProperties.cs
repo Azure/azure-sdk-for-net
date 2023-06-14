@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
-        /// <param name="enableSoftDelete"> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </param>
+        /// <param name="enableSoftDelete"> Property to specify whether the 'soft delete' functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </param>
         /// <param name="softDeleteRetentionInDays"> Soft deleted data retention days. When you delete an HSM or a key, it will remain recoverable for the configured retention period or for a default period of 90 days. It accepts values between 7 and 90. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. Enabling this functionality is irreversible. </param>
         /// <param name="createMode"> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public IList<string> InitialAdminObjectIds { get; }
         /// <summary> The URI of the managed hsm pool for performing operations on keys. </summary>
         public Uri HsmUri { get; }
-        /// <summary> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </summary>
+        /// <summary> Property to specify whether the 'soft delete' functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </summary>
         public bool? EnableSoftDelete { get; set; }
         /// <summary> Soft deleted data retention days. When you delete an HSM or a key, it will remain recoverable for the configured retention period or for a default period of 90 days. It accepts values between 7 and 90. </summary>
         public int? SoftDeleteRetentionInDays { get; set; }

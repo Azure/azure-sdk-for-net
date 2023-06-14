@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlPool. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SQL pool SKU. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// 
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
-        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </param>
         /// <param name="creationDate"> Date the SQL pool was created. </param>
         internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, CreateMode? createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// 
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
-        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </summary>
         public CreateMode? CreateMode { get; set; }
         /// <summary> Date the SQL pool was created. </summary>

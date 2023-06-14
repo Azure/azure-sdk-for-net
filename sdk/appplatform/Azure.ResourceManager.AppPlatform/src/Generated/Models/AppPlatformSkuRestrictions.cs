@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
-        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </param>
+        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
         /// location. This would be different locations where the SKU is restricted.
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
-        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </param>
+        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </param>
         internal AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, AppPlatformSkuRestrictionInfo restrictionInfo, AppPlatformSkuRestrictionsReasonCode? reasonCode)
         {
             RestrictionsType = restrictionsType;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ReasonCode = reasonCode;
         }
 
-        /// <summary> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </summary>
+        /// <summary> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </summary>
         public AppPlatformSkuRestrictionsType? RestrictionsType { get; }
         /// <summary>
         /// Gets the value of restrictions. If the restriction type is set to
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public IReadOnlyList<string> Values { get; }
         /// <summary> Gets the information about the restriction where the SKU cannot be used. </summary>
         public AppPlatformSkuRestrictionInfo RestrictionInfo { get; }
-        /// <summary> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </summary>
+        /// <summary> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </summary>
         public AppPlatformSkuRestrictionsReasonCode? ReasonCode { get; }
     }
 }

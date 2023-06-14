@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -89,6 +90,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition_Async
 
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
+
+            Response updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
+                RequestContent.Create(new { ChannelReference = (string?)null }));
+
+            Response<RouterJob> queriedJobWithoutChannelReference = await routerClient.GetJobAsync(jobId);
+
+            Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(queriedJobWithoutChannelReference.Value.ChannelReference)}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterJob_Async
 
             Response<RouterJob> updatedJob = await routerClient.UpdateJobAsync(
@@ -157,7 +169,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // A worker can also choose to decline an offer
 
-            Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(worker.Value.Id, issuedOffer.Id);
+            Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.Id));
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
 

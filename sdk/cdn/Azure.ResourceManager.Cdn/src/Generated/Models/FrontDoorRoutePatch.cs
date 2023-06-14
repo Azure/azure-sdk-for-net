@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
         /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
         public HttpsRedirect? HttpsRedirect { get; set; }
-        /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public EnabledState? EnabledState { get; set; }
     }
 }

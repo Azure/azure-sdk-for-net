@@ -16,8 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of ServicePrincipalInKVParam. </summary>
         /// <param name="keyVaultEndpoint"> The Key Vault endpoint that storing the service principal. </param>
         /// <param name="keyVaultClientId"> The Client Id to access the Key Vault. </param>
-        /// <param name="servicePrincipalIdNameInKV"> The secret name of the service principal&apos;s client Id in the Key Vault. </param>
-        /// <param name="servicePrincipalSecretNameInKV"> The secret name of the service principal&apos;s client secret in the Key Vault. </param>
+        /// <param name="servicePrincipalIdNameInKV"> The secret name of the service principal's client Id in the Key Vault. </param>
+        /// <param name="servicePrincipalSecretNameInKV"> The secret name of the service principal's client secret in the Key Vault. </param>
         /// <param name="tenantId"> The tenant id of your service principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultEndpoint"/>, <paramref name="keyVaultClientId"/>, <paramref name="servicePrincipalIdNameInKV"/>, <paramref name="servicePrincipalSecretNameInKV"/> or <paramref name="tenantId"/> is null. </exception>
         public ServicePrincipalInKVParam(string keyVaultEndpoint, string keyVaultClientId, string servicePrincipalIdNameInKV, string servicePrincipalSecretNameInKV, string tenantId)
@@ -39,8 +39,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="keyVaultEndpoint"> The Key Vault endpoint that storing the service principal. </param>
         /// <param name="keyVaultClientId"> The Client Id to access the Key Vault. </param>
         /// <param name="keyVaultClientSecret"> The Client Secret to access the Key Vault. </param>
-        /// <param name="servicePrincipalIdNameInKV"> The secret name of the service principal&apos;s client Id in the Key Vault. </param>
-        /// <param name="servicePrincipalSecretNameInKV"> The secret name of the service principal&apos;s client secret in the Key Vault. </param>
+        /// <param name="servicePrincipalIdNameInKV"> The secret name of the service principal's client Id in the Key Vault. </param>
+        /// <param name="servicePrincipalSecretNameInKV"> The secret name of the service principal's client secret in the Key Vault. </param>
         /// <param name="tenantId"> The tenant id of your service principal. </param>
         internal ServicePrincipalInKVParam(string keyVaultEndpoint, string keyVaultClientId, string keyVaultClientSecret, string servicePrincipalIdNameInKV, string servicePrincipalSecretNameInKV, string tenantId)
         {
@@ -58,9 +58,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string KeyVaultClientId { get; set; }
         /// <summary> The Client Secret to access the Key Vault. </summary>
         public string KeyVaultClientSecret { get; set; }
-        /// <summary> The secret name of the service principal&apos;s client Id in the Key Vault. </summary>
+        /// <summary> The secret name of the service principal's client Id in the Key Vault. </summary>
         public string ServicePrincipalIdNameInKV { get; set; }
-        /// <summary> The secret name of the service principal&apos;s client secret in the Key Vault. </summary>
+        /// <summary> The secret name of the service principal's client secret in the Key Vault. </summary>
         public string ServicePrincipalSecretNameInKV { get; set; }
         /// <summary> The tenant id of your service principal. </summary>
         public string TenantId { get; set; }

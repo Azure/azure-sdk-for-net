@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.IO;
 using Azure.Storage.DataMovement;
@@ -88,5 +89,35 @@ namespace Azure.Storage
             => new ArgumentException($"Mismatch Value to Resume Job: The value to overwrite / create files when they exist does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value in order to prevent overwriting or failing files.\n" +
                 $"Checkpointer Value to overwrite was set to {checkpointerValue.ToString()}.\n" +
                 $"The value passed in was {passedValue.ToString()}");
+
+        public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
+
+        public static ArgumentException InvalidDownloadOffset(long offset, long length)
+            => new ArgumentException($"Cannot find offset returned by Successful Download Range in the expected Range.\n" +
+                $"Offset: \"{offset}\"\n" +
+                $"Length: \"{length}\"");
+
+        public static ArgumentException InvalidExpectedLength(long length)
+            => new ArgumentException($"Expected positive non-zero length, but was given: {length}");
+
+        public static InvalidOperationException FailedDownloadRange(long offset, long bytesTransferred, string transferId)
+            => new InvalidOperationException($"Unexpected error: Experienced failed download range argument. " +
+                    $"Range: {offset} - {bytesTransferred} with Transfer ID: {transferId}");
+
+        public static FileNotFoundException TempChunkFileNotFound(long offset, long length, string filePath)
+            => new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
+                $"\"{offset}\" and Length: \"{length}\"," +
+                $"due to the chunk file missing: \"{filePath}\"");
+
+        public static InvalidOperationException MismatchLengthTransferred(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Amount of bytes transferred exceeds expected length\n" +
+                $"Expected Bytes Transferred Length: {expectedLength}\n" +
+                $"Actual Bytes Transferred Length: {actualLength}.");
+
+        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred)
+            => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
+                    $"Offset: \"{offset}\"\n" +
+                    $"Length: \"{bytesTransferred}\"");
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.VoiceServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckLocalRequest(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckLocalRequest(string subscriptionId, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckLocalAsync(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckLocalAsync(string subscriptionId, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        VoiceServicesCheckNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = VoiceServicesCheckNameAvailabilityResult.DeserializeVoiceServicesCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResponse> CheckLocal(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCheckNameAvailabilityResult> CheckLocal(string subscriptionId, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        VoiceServicesCheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = VoiceServicesCheckNameAvailabilityResult.DeserializeVoiceServicesCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

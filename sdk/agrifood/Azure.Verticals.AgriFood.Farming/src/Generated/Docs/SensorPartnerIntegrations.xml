@@ -30,7 +30,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -78,7 +78,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -104,7 +104,7 @@ This sample shows how to call GetSensorPartnerIntegrationAsync with required par
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorPartnerIntegrationAsync("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = await client.GetSensorPartnerIntegrationAsync("<sensorPartnerId>", "<integrationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -130,7 +130,7 @@ This sample shows how to call GetSensorPartnerIntegration with required paramete
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = client.GetSensorPartnerIntegration("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = client.GetSensorPartnerIntegration("<sensorPartnerId>", "<integrationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -156,7 +156,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -168,7 +168,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -180,7 +180,7 @@ This sample shows how to call CheckConsentAsync with required parameters and par
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = await client.CheckConsentAsync("<sensorPartnerId>", "<integrationId>", "<key>", new RequestContext());
+Response response = await client.CheckConsentAsync("<sensorPartnerId>", "<integrationId>", "<key>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consented").ToString());
@@ -196,7 +196,7 @@ This sample shows how to call CheckConsent with required parameters and parse th
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = client.CheckConsent("<sensorPartnerId>", "<integrationId>", "<key>", new RequestContext());
+Response response = client.CheckConsent("<sensorPartnerId>", "<integrationId>", "<key>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consented").ToString());
@@ -212,7 +212,7 @@ This sample shows how to call GenerateConsentLinkAsync with required parameters 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = await client.GenerateConsentLinkAsync("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = await client.GenerateConsentLinkAsync("<sensorPartnerId>", "<integrationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consentLink").ToString());
@@ -227,7 +227,7 @@ This sample shows how to call GenerateConsentLink with required parameters and p
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-Response response = client.GenerateConsentLink("<sensorPartnerId>", "<integrationId>", new RequestContext());
+Response response = client.GenerateConsentLink("<sensorPartnerId>", "<integrationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("consentLink").ToString());
@@ -253,7 +253,7 @@ This sample shows how to call GetSensorPartnerIntegrationsAsync with all paramet
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<partyIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<partyIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -291,7 +291,7 @@ This sample shows how to call GetSensorPartnerIntegrations with all parameters, 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<partyIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new String[]{"<integrationIds>"}, new String[]{"<partyIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("integrationId").ToString());

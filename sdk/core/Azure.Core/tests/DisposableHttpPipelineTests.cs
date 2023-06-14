@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -48,7 +49,7 @@ namespace Azure.Core.Tests
 
         private class MockPolicy : HttpPipelineTransportPolicy
         {
-            public MockPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer) : base(transport, sanitizer) { }
+            public MockPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer) : base(transport, sanitizer, new ProtocolMethodOptions()) { }
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.Communication.Rooms.Tests
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_06_14));
 
             // We always create the instrumented client to suppress the instrumentation check
             var instrumentedClient = InstrumentClient(client);
@@ -77,9 +77,9 @@ namespace Azure.Communication.Rooms.Tests
         protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new RoomsClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
+                    TestEnvironment.CommunicationRoomsEndpoint,
+                     new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_06_14));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -92,9 +92,9 @@ namespace Azure.Communication.Rooms.Tests
         protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new RoomsClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
+                    TestEnvironment.CommunicationRoomsEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_06_14));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }

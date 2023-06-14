@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Quota
             Optional<string> message = default;
             Optional<ServiceErrorDetail> error = default;
             Optional<DateTimeOffset> requestSubmitTime = default;
-            Optional<IReadOnlyList<SubRequest>> value = default;
+            Optional<IReadOnlyList<QuotaSubRequestDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Quota
                             {
                                 continue;
                             }
-                            List<SubRequest> array = new List<SubRequest>();
+                            List<QuotaSubRequestDetail> array = new List<QuotaSubRequestDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubRequest.DeserializeSubRequest(item));
+                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item));
                             }
                             value = array;
                             continue;

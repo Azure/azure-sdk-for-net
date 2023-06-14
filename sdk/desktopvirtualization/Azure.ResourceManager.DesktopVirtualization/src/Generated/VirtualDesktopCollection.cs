@@ -139,12 +139,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualDesktopResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualDesktopResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualDesktopResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualDesktopDesktopsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,12 +164,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualDesktopResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualDesktopResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualDesktopResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualDesktopDesktopsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

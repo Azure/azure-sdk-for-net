@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Get all the deployments at the given scope. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Get all the deployments at the given scope. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Get all the deployments at the given scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Get all the deployments at the given scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>

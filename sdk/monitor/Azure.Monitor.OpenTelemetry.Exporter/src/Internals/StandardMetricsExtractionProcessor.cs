@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -14,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private bool _disposed;
         private AzureMonitorResource? _resource;
+        internal readonly MeterProvider? _meterProvider;
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
         private readonly Histogram<double> _dependencyDuration;
@@ -26,8 +28,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal StandardMetricsExtractionProcessor()
+        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
         {
+            _meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(StandardMetricConstants.StandardMetricMeterName)
+                .AddReader(new PeriodicExportingMetricReader(metricExporter)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
             _dependencyDuration = _meter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
@@ -58,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private void ReportRequestDurationMetric(Activity activity, string statusCodeAttribute)
         {
             string? statusCodeAttributeValue = null;
-            foreach (var tag in activity.EnumerateTagObjects())
+            foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
                 if (tag.Key == statusCodeAttribute)
                 {
@@ -68,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             TagList tags = default;
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestResultCodeKey, statusCodeAttributeValue));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestResultCodeKey, statusCodeAttributeValue ?? "0"));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.RequestDurationMetricIdValue));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
@@ -85,13 +92,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
 
-            var statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode);
+            var statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString();
 
             var dependencyType = activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
 
             TagList tags = default;
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyResultCodeKey, statusCode));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyResultCodeKey, statusCode ?? "0"));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
@@ -111,6 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
+                        _meterProvider?.Dispose();
                         _meter?.Dispose();
                     }
                     catch (Exception)

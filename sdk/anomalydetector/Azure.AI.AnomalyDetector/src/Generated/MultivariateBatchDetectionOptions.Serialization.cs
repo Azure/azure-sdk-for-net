@@ -18,18 +18,11 @@ namespace Azure.AI.AnomalyDetector
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
-            writer.WriteStringValue(DataSource);
+            writer.WriteStringValue(DataSource.AbsoluteUri);
             if (Optional.IsDefined(TopContributorCount))
             {
-                if (TopContributorCount != null)
-                {
-                    writer.WritePropertyName("topContributorCount"u8);
-                    writer.WriteNumberValue(TopContributorCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("topContributorCount");
-                }
+                writer.WritePropertyName("topContributorCount"u8);
+                writer.WriteNumberValue(TopContributorCount.Value);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
@@ -44,22 +37,21 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            string dataSource = default;
-            Optional<int?> topContributorCount = default;
+            Uri dataSource = default;
+            Optional<int> topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
                 {
-                    dataSource = property.Value.GetString();
+                    dataSource = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topContributorCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        topContributorCount = null;
                         continue;
                     }
                     topContributorCount = property.Value.GetInt32();
