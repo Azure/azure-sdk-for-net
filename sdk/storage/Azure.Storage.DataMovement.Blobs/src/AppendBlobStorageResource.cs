@@ -79,14 +79,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
         /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         internal AppendBlobStorageResource(
             AppendBlobClient blobClient,
             long? length,
+            ETag? etagLock,
             AppendBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         /// <summary>
