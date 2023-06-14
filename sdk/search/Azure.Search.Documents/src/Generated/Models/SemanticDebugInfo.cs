@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="contentFields"> The content fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="keywordFields"> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="rerankerInput"> The raw concatenated strings that were sent to the semantic enrichment process. </param>
-        internal SemanticDebugInfo(QueryResultDocumentSemanticField titleField, IReadOnlyList<QueryResultDocumentSemanticField> contentFields, IReadOnlyList<QueryResultDocumentSemanticField> keywordFields, QueryResultDocumentRerankerInput rerankerInput)
+        internal SemanticDebugInfo(QueryResultDocumentSemanticField titleField, IReadOnlyList<QueryResultDocumentSemanticField> contentFields, IReadOnlyList<QueryResultDocumentSemanticField> keywordFields, QueryResultDocumentRerankerOptions rerankerInput)
         {
             TitleField = titleField;
             ContentFields = contentFields;
@@ -40,6 +40,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </summary>
         public IReadOnlyList<QueryResultDocumentSemanticField> KeywordFields { get; }
         /// <summary> The raw concatenated strings that were sent to the semantic enrichment process. </summary>
-        public QueryResultDocumentRerankerInput RerankerInput { get; }
+        public QueryResultDocumentRerankerOptions RerankerInput { get; }
     }
 }
