@@ -8,4 +8,10 @@ input-file:
 generation1-convenience-client: true
 payload-flattening-threshold: 3
 model-namespace: false
+
+directive:
+  from: swagger-document
+  where: "$.definitions.EmailAttachment.properties.contentInBase64"
+  transform: >
+    $["x-ms-client-name"] = "content";
 ```
