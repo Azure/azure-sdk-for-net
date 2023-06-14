@@ -174,5 +174,54 @@ namespace Azure.Core.Tests
                 expected++;
             }
         }
+
+        [Test]
+        public void PropertyEnumeratorIncludesAddedProperties()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("""
+                {
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            json.Object.Three = 3;
+            int expected = 0;
+            string[] expectedNames = new string[] { "zero", "one", "two", "three" };
+
+            foreach (dynamic property in json.Object)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.IsTrue(expected == property.Value);
+                expected++;
+            }
+        }
+
+        [Test]
+        public void PropertyEnumeratorExcludesRemovedProperties()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("""
+                {
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            json.Object = new { one = 1, two = 2 };
+            int expected = 0;
+            string[] expectedNames = new string[] { "one", "two" };
+
+            foreach (dynamic property in json.Object)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.IsTrue(++expected == property.Value);
+            }
+        }
     }
 }
