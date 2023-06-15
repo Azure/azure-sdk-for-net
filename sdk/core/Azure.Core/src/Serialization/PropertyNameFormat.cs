@@ -4,17 +4,17 @@
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// The format of property names in dynamic and serialized JSON content.
+    /// The format of property names in dynamic and serialized content.
     /// </summary>
-    public enum JsonPropertyNames
+    public enum PropertyNameFormat
     {
         /// <summary>
-        /// Unspecified format for JSON property names.
+        /// No specified format for property names.
         /// </summary>
-        Strict = 0,
+        None = 0,
 
         /// <summary>
-        /// Indicates that JSON content uses a camel-case format for property names.
+        /// Indicates that content uses a camel-case format for property names.
         /// </summary>
         CamelCase = 1
     }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests
