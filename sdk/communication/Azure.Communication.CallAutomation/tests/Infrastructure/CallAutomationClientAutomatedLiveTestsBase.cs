@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Communication.CallAutomation.Tests.EventCatcher;
 using Azure.Communication.Identity;
+using Azure.Communication.PhoneNumbers;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
