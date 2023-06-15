@@ -102,12 +102,17 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedListType<T>(Type type, T value)
             {
+                if (value == null)
+                {
+                    return true;
+                }
+
                 if (!type.IsGenericType)
                 {
                     return false;
                 }
 
-                if (value is not IList list)
+                if (type.GetGenericTypeDefinition() != typeof(List<>))
                 {
                     return false;
                 }
@@ -118,17 +123,22 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                return IsAllowedEnumerableValue(elementType, list);
+                return IsAllowedEnumerableValue(elementType, (IEnumerable)value);
             }
 
             private static bool IsAllowedDictionaryType<T>(Type type, T value)
             {
+                if (value == null)
+                {
+                    return true;
+                }
+
                 if (!type.IsGenericType)
                 {
                     return false;
                 }
 
-                if (value is not IDictionary dictionary)
+                if (type.GetGenericTypeDefinition() != typeof(Dictionary<,>))
                 {
                     return false;
                 }
@@ -144,7 +154,7 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                return IsAllowedEnumerableValue(types[1], dictionary.Values);
+                return IsAllowedEnumerableValue(types[1], ((IDictionary)value).Values);
             }
 
             private static bool IsAllowedEnumerableValue(Type elementType, IEnumerable enumerable)
