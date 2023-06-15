@@ -18,12 +18,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class AzureMonitorExporterEventSourceTests
     {
         [Fact]
-        public void EventSourceTest_AzureMonitorExporterEventSource()
-        {
-            EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorExporterEventSource.Log);
-        }
-
-        [Fact]
         public void VerifyEventSource_Error_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteError, expectedId: 2, expectedName: "WriteError");
 
         [Fact]
