@@ -40,7 +40,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Initializes a new instance of FarmBeatsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="endpoint"> server parameter. The default is "". </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
         public FarmBeatsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
@@ -56,7 +56,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of ApplicationData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ApplicationData GetApplicationDataClient(string apiVersion = "2022-11-01-preview")
         {
@@ -66,7 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Attachments. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Attachments GetAttachmentsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -76,7 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Boundaries. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Boundaries GetBoundariesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -86,7 +86,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of CropProducts. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual CropProducts GetCropProductsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -96,7 +96,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Crops. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Crops GetCropsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -106,7 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of DeviceDataModels. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual DeviceDataModels GetDeviceDataModelsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -116,7 +116,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Devices. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Devices GetDevicesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -126,7 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of FarmOperationsDataIngestion. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient(string apiVersion = "2022-11-01-preview")
         {
@@ -136,7 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Farms. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Farms GetFarmsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Fields. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Fields GetFieldsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -156,7 +156,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of HarvestData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual HarvestData GetHarvestDataClient(string apiVersion = "2022-11-01-preview")
         {
@@ -166,7 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of ImageProcessing. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ImageProcessing GetImageProcessingClient(string apiVersion = "2022-11-01-preview")
         {
@@ -176,7 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of InsightAttachments. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual InsightAttachments GetInsightAttachmentsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -186,7 +186,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Insights. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Insights GetInsightsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -196,7 +196,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of ManagementZones. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ManagementZones GetManagementZonesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -206,7 +206,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of ModelInference. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ModelInference GetModelInferenceClient(string apiVersion = "2022-11-01-preview")
         {
@@ -216,7 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of NutrientAnalyses. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual NutrientAnalyses GetNutrientAnalysesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -226,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of OAuthProviders. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual OAuthProviders GetOAuthProvidersClient(string apiVersion = "2022-11-01-preview")
         {
@@ -236,7 +236,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of FarmerOAuthTokens. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual FarmerOAuthTokens GetFarmerOAuthTokensClient(string apiVersion = "2022-11-01-preview")
         {
@@ -246,7 +246,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Parties. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Parties GetPartiesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -256,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of PlantingData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual PlantingData GetPlantingDataClient(string apiVersion = "2022-11-01-preview")
         {
@@ -266,7 +266,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of PlantTissueAnalyses. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual PlantTissueAnalyses GetPlantTissueAnalysesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -276,7 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of PrescriptionMaps. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual PrescriptionMaps GetPrescriptionMapsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -286,7 +286,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Prescriptions. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Prescriptions GetPrescriptionsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -296,7 +296,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Scenes. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Scenes GetScenesClient(string apiVersion = "2022-11-01-preview")
         {
@@ -306,7 +306,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of SeasonalFields. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SeasonalFields GetSeasonalFieldsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -316,7 +316,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Seasons. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Seasons GetSeasonsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -326,7 +326,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of SensorDataModels. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorDataModels GetSensorDataModelsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -336,7 +336,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of SensorEvents. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorEvents GetSensorEventsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -346,7 +346,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of SensorMappings. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorMappings GetSensorMappingsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -356,7 +356,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of SensorPartnerIntegrations. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorPartnerIntegrations GetSensorPartnerIntegrationsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -366,7 +366,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Sensors. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Sensors GetSensorsClient(string apiVersion = "2022-11-01-preview")
         {
@@ -376,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of SolutionInference. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SolutionInference GetSolutionInferenceClient(string apiVersion = "2022-11-01-preview")
         {
@@ -386,7 +386,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of TillageData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual TillageData GetTillageDataClient(string apiVersion = "2022-11-01-preview")
         {
@@ -396,7 +396,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Weather. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Weather GetWeatherClient(string apiVersion = "2022-11-01-preview")
         {
@@ -406,7 +406,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of WeatherData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual WeatherData GetWeatherDataClient(string apiVersion = "2022-11-01-preview")
         {
@@ -416,7 +416,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Initializes a new instance of Zones. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Zones GetZonesClient(string apiVersion = "2022-11-01-preview")
         {

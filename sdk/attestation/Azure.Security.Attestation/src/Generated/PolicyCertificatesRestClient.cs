@@ -28,7 +28,7 @@ namespace Azure.Security.Attestation
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="instanceUrl"> The attestation instance base URI, for example https://mytenant.attest.azure.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2020-10-01". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public PolicyCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl, string apiVersion = "2020-10-01")
         {
