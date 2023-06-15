@@ -224,7 +224,7 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAnonymousType(Type type)
             {
-                return type.Namespace == null && type.Name.StartsWith("<>f__AnonymousType");
+                return type.Name.StartsWith("<>f__AnonymousType");
             }
         }
     }
