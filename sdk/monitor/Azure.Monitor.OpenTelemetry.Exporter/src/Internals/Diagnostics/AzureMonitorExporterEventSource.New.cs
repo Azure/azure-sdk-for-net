@@ -49,5 +49,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(8, Message = "{0} {1} {2}")]
         public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
+
+        [Event(9, Message = "{0} has been disposed. ThreadId: {1}", Level = EventLevel.Verbose)]
+        public void DisposedObject(string name, int threadId = 0)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                WriteEvent(9, name, Environment.CurrentManagedThreadId);
+            }
+        }
     }
 }
