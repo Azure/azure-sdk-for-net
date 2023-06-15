@@ -215,7 +215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                     return scaledOut;
                 }, pollingInterval: 2000, timeout: 180000, throwWhenDebugging: true);
             }
-            catch (Exception)
+            catch (ApplicationException)
             {
                 // Write scale logs to the output:
                 var logMessages = loggerProvider.GetAllLogMessages().Where(x => x.Category.Contains("Scale")).Select(p => p.FormattedMessage).ToArray();
