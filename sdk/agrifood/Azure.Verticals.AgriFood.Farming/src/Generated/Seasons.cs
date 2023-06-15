@@ -39,8 +39,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> server parameter. The default is "". </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-11-01-preview". </param>
         internal Seasons(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
@@ -356,6 +356,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/seasons", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (minStartDateTime != null)
             {
                 uri.AppendQuery("minStartDateTime", minStartDateTime.Value, "O", true);
@@ -431,7 +432,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
