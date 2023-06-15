@@ -9,7 +9,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Columns that define the structure of the dataset. </summary>
+    /// <summary>
+    /// Columns that define the structure of the dataset.
+    /// Serialized Name: DatasetDataElement
+    /// </summary>
     public partial class DatasetDataElement
     {
         /// <summary> Initializes a new instance of DatasetDataElement. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetDataElement. </summary>
-        /// <param name="columnName"> Name of the column. Type: string (or Expression with resultType string). </param>
-        /// <param name="columnType"> Type of the column. Type: string (or Expression with resultType string). </param>
+        /// <param name="columnName">
+        /// Name of the column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetDataElement.name
+        /// </param>
+        /// <param name="columnType">
+        /// Type of the column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetDataElement.type
+        /// </param>
         internal DatasetDataElement(DataFactoryElement<string> columnName, DataFactoryElement<string> columnType)
         {
             ColumnName = columnName;
             ColumnType = columnType;
         }
 
-        /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Name of the column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetDataElement.name
+        /// </summary>
         public DataFactoryElement<string> ColumnName { get; set; }
-        /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Type of the column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetDataElement.type
+        /// </summary>
         public DataFactoryElement<string> ColumnType { get; set; }
     }
 }

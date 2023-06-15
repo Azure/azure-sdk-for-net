@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="destinationAddressPrefixes"> The destination address prefixes. CIDR or destination IP ranges. </param>
         /// <param name="sourcePortRanges"> The source port ranges. </param>
         /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. If this is an ingress rule, specifies where network traffic originates from. </param>
-        /// <param name="destinationAddressPrefix"> The destination address prefix. CIDR or destination IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. </param>
-        /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
-        /// <param name="destinationPortRange"> he destination port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
+        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from. </param>
+        /// <param name="destinationAddressPrefix"> The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. </param>
+        /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </param>
+        /// <param name="destinationPortRange"> he destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </param>
         /// <param name="access"> The network traffic is allowed or denied. </param>
         /// <param name="priority"> The priority of the rule. The value can be in the range 1000 to 3000. Values outside this range are reserved for Service Fabric ManagerCluster Resource Provider. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> Network security rule direction. </param>
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public IList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. </summary>
         public IList<string> DestinationPortRanges { get; }
-        /// <summary> The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
+        /// <summary> The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
         public string SourceAddressPrefix { get; set; }
-        /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. </summary>
+        /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. </summary>
         public string DestinationAddressPrefix { get; set; }
-        /// <summary> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </summary>
+        /// <summary> The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public string SourcePortRange { get; set; }
-        /// <summary> he destination port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </summary>
+        /// <summary> he destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public string DestinationPortRange { get; set; }
         /// <summary> The network traffic is allowed or denied. </summary>
         public ServiceFabricManagedNetworkTrafficAccess Access { get; set; }

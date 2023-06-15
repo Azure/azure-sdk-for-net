@@ -13,16 +13,37 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> HDInsight streaming activity type. </summary>
+    /// <summary>
+    /// HDInsight streaming activity type.
+    /// Serialized Name: HDInsightStreamingActivity
+    /// </summary>
     public partial class HDInsightStreamingActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of HDInsightStreamingActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="mapper"> Mapper executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="reducer"> Reducer executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
-        /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
-        /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="mapper">
+        /// Mapper executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.mapper
+        /// </param>
+        /// <param name="reducer">
+        /// Reducer executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.reducer
+        /// </param>
+        /// <param name="input">
+        /// Input blob path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.input
+        /// </param>
+        /// <param name="output">
+        /// Output blob path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.output
+        /// </param>
+        /// <param name="filePaths">
+        /// Paths to streaming job files. Can be directories.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.filePaths
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
         public HDInsightStreamingActivity(string name, DataFactoryElement<string> mapper, DataFactoryElement<string> reducer, DataFactoryElement<string> input, DataFactoryElement<string> output, IEnumerable<BinaryData> filePaths) : base(name)
         {
@@ -46,28 +67,91 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightStreamingActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="storageLinkedServices"> Storage linked service references. </param>
-        /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
-        /// <param name="getDebugInfo"> Debug info option. </param>
-        /// <param name="mapper"> Mapper executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="reducer"> Reducer executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
-        /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
-        /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
-        /// <param name="fileLinkedService"> Linked service reference where the files are located. </param>
-        /// <param name="combiner"> Combiner executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="commandEnvironment"> Command line environment values. </param>
-        /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="storageLinkedServices">
+        /// Storage linked service references.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.storageLinkedServices
+        /// </param>
+        /// <param name="arguments">
+        /// User specified arguments to HDInsightActivity.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.arguments
+        /// </param>
+        /// <param name="getDebugInfo">
+        /// Debug info option.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.getDebugInfo
+        /// </param>
+        /// <param name="mapper">
+        /// Mapper executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.mapper
+        /// </param>
+        /// <param name="reducer">
+        /// Reducer executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.reducer
+        /// </param>
+        /// <param name="input">
+        /// Input blob path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.input
+        /// </param>
+        /// <param name="output">
+        /// Output blob path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.output
+        /// </param>
+        /// <param name="filePaths">
+        /// Paths to streaming job files. Can be directories.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.filePaths
+        /// </param>
+        /// <param name="fileLinkedService">
+        /// Linked service reference where the files are located.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.fileLinkedService
+        /// </param>
+        /// <param name="combiner">
+        /// Combiner executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.combiner
+        /// </param>
+        /// <param name="commandEnvironment">
+        /// Command line environment values.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.commandEnvironment
+        /// </param>
+        /// <param name="defines">
+        /// Allows user to specify defines for streaming job request.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.defines
+        /// </param>
         internal HDInsightStreamingActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> mapper, DataFactoryElement<string> reducer, DataFactoryElement<string> input, DataFactoryElement<string> output, IList<BinaryData> filePaths, FactoryLinkedServiceReference fileLinkedService, DataFactoryElement<string> combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
@@ -85,10 +169,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightStreaming";
         }
 
-        /// <summary> Storage linked service references. </summary>
+        /// <summary>
+        /// Storage linked service references.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.storageLinkedServices
+        /// </summary>
         public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.arguments
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -118,18 +206,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Arguments { get; }
-        /// <summary> Debug info option. </summary>
+        /// <summary>
+        /// Debug info option.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.getDebugInfo
+        /// </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary> Mapper executable name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Mapper executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.mapper
+        /// </summary>
         public DataFactoryElement<string> Mapper { get; set; }
-        /// <summary> Reducer executable name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Reducer executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.reducer
+        /// </summary>
         public DataFactoryElement<string> Reducer { get; set; }
-        /// <summary> Input blob path. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Input blob path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.input
+        /// </summary>
         public DataFactoryElement<string> Input { get; set; }
-        /// <summary> Output blob path. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Output blob path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.output
+        /// </summary>
         public DataFactoryElement<string> Output { get; set; }
         /// <summary>
         /// Paths to streaming job files. Can be directories.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.filePaths
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -159,12 +263,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> FilePaths { get; }
-        /// <summary> Linked service reference where the files are located. </summary>
+        /// <summary>
+        /// Linked service reference where the files are located.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.fileLinkedService
+        /// </summary>
         public FactoryLinkedServiceReference FileLinkedService { get; set; }
-        /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Combiner executable name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.combiner
+        /// </summary>
         public DataFactoryElement<string> Combiner { get; set; }
         /// <summary>
         /// Command line environment values.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.commandEnvironment
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -196,6 +307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IList<BinaryData> CommandEnvironment { get; }
         /// <summary>
         /// Allows user to specify defines for streaming job request.
+        /// Serialized Name: HDInsightStreamingActivity.typeProperties.defines
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

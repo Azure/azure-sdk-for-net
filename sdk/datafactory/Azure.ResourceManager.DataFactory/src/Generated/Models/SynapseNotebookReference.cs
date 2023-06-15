@@ -11,12 +11,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Synapse notebook reference type. </summary>
+    /// <summary>
+    /// Synapse notebook reference type.
+    /// Serialized Name: SynapseNotebookReference
+    /// </summary>
     public partial class SynapseNotebookReference
     {
         /// <summary> Initializes a new instance of SynapseNotebookReference. </summary>
-        /// <param name="notebookReferenceType"> Synapse notebook reference type. </param>
-        /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
+        /// <param name="notebookReferenceType">
+        /// Synapse notebook reference type.
+        /// Serialized Name: SynapseNotebookReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference notebook name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseNotebookReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public SynapseNotebookReference(NotebookReferenceType notebookReferenceType, DataFactoryElement<string> referenceName)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Synapse notebook reference type. </summary>
+        /// <summary>
+        /// Synapse notebook reference type.
+        /// Serialized Name: SynapseNotebookReference.type
+        /// </summary>
         public NotebookReferenceType NotebookReferenceType { get; set; }
-        /// <summary> Reference notebook name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Reference notebook name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseNotebookReference.referenceName
+        /// </summary>
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

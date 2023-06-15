@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The type of integration runtime. </summary>
+    /// <summary>
+    /// The type of integration runtime.
+    /// Serialized Name: IntegrationRuntimeType
+    /// </summary>
     internal readonly partial struct IntegrationRuntimeType : IEquatable<IntegrationRuntimeType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ManagedValue = "Managed";
         private const string SelfHostedValue = "SelfHosted";
 
-        /// <summary> Managed. </summary>
+        /// <summary>
+        /// Managed
+        /// Serialized Name: IntegrationRuntimeType.Managed
+        /// </summary>
         public static IntegrationRuntimeType Managed { get; } = new IntegrationRuntimeType(ManagedValue);
-        /// <summary> SelfHosted. </summary>
+        /// <summary>
+        /// SelfHosted
+        /// Serialized Name: IntegrationRuntimeType.SelfHosted
+        /// </summary>
         public static IntegrationRuntimeType SelfHosted { get; } = new IntegrationRuntimeType(SelfHostedValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeType left, IntegrationRuntimeType right) => left.Equals(right);

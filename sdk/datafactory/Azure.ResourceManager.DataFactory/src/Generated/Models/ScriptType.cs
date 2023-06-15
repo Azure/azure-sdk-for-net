@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The type of the query. Type: string. </summary>
+    /// <summary>
+    /// The type of the query. Type: string.
+    /// Serialized Name: ScriptType
+    /// </summary>
     public readonly partial struct ScriptType : IEquatable<ScriptType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string QueryValue = "Query";
         private const string NonQueryValue = "NonQuery";
 
-        /// <summary> Query. </summary>
+        /// <summary>
+        /// Query
+        /// Serialized Name: ScriptType.Query
+        /// </summary>
         public static ScriptType Query { get; } = new ScriptType(QueryValue);
-        /// <summary> NonQuery. </summary>
+        /// <summary>
+        /// NonQuery
+        /// Serialized Name: ScriptType.NonQuery
+        /// </summary>
         public static ScriptType NonQuery { get; } = new ScriptType(NonQueryValue);
         /// <summary> Determines if two <see cref="ScriptType"/> values are the same. </summary>
         public static bool operator ==(ScriptType left, ScriptType right) => left.Equals(right);

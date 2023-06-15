@@ -231,9 +231,16 @@ namespace Azure.Storage.DataMovement
             await QueueChunk(
                 async () =>
                 {
-                    await Task.Run(chunkTask).ConfigureAwait(false);
-                    chunkCompleted.SetResult(true);
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await Task.Run(chunkTask).ConfigureAwait(false);
+                        chunkCompleted.SetResult(true);
+                        await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        await InvokeFailedArg(ex).ConfigureAwait(false);
+                    }
                 }).ConfigureAwait(false);
         }
 
@@ -371,7 +378,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (ex is not OperationCanceledException)
+            if (ex is not OperationCanceledException
+                && ex is not TaskCanceledException)
             {
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)

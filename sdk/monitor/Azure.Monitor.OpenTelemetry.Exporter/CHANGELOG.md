@@ -4,11 +4,17 @@
 
 ### Features Added
 
+* Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+* Remove metric namespace mapping.
+  ([#36968](https://github.com/Azure/azure-sdk-for-net/pull/36968))
 
 ## 1.0.0-beta.12 (2023-06-06)
 

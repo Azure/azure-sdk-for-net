@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication method used to access the Hive server. </summary>
+    /// <summary>
+    /// The authentication method used to access the Hive server.
+    /// Serialized Name: HiveAuthenticationType
+    /// </summary>
     public readonly partial struct HiveAuthenticationType : IEquatable<HiveAuthenticationType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string UsernameAndPasswordValue = "UsernameAndPassword";
         private const string WindowsAzureHDInsightServiceValue = "WindowsAzureHDInsightService";
 
-        /// <summary> Anonymous. </summary>
+        /// <summary>
+        /// Anonymous
+        /// Serialized Name: HiveAuthenticationType.Anonymous
+        /// </summary>
         public static HiveAuthenticationType Anonymous { get; } = new HiveAuthenticationType(AnonymousValue);
-        /// <summary> Username. </summary>
+        /// <summary>
+        /// Username
+        /// Serialized Name: HiveAuthenticationType.Username
+        /// </summary>
         public static HiveAuthenticationType Username { get; } = new HiveAuthenticationType(UsernameValue);
-        /// <summary> UsernameAndPassword. </summary>
+        /// <summary>
+        /// UsernameAndPassword
+        /// Serialized Name: HiveAuthenticationType.UsernameAndPassword
+        /// </summary>
         public static HiveAuthenticationType UsernameAndPassword { get; } = new HiveAuthenticationType(UsernameAndPasswordValue);
-        /// <summary> WindowsAzureHDInsightService. </summary>
+        /// <summary>
+        /// WindowsAzureHDInsightService
+        /// Serialized Name: HiveAuthenticationType.WindowsAzureHDInsightService
+        /// </summary>
         public static HiveAuthenticationType WindowsAzureHDInsightService { get; } = new HiveAuthenticationType(WindowsAzureHDInsightServiceValue);
         /// <summary> Determines if two <see cref="HiveAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(HiveAuthenticationType left, HiveAuthenticationType right) => left.Equals(right);

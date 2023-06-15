@@ -10,12 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data flow debug resource. </summary>
+    /// <summary>
+    /// Data flow debug resource.
+    /// Serialized Name: DataFlowDebugResource
+    /// </summary>
     public partial class FactoryDataFlowDebugInfo : FactoryDebugInfo
     {
         /// <summary> Initializes a new instance of FactoryDataFlowDebugInfo. </summary>
         /// <param name="properties">
         /// Data flow properties.
+        /// Serialized Name: DataFlowDebugResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </param>
@@ -29,6 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Data flow properties.
+        /// Serialized Name: DataFlowDebugResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </summary>

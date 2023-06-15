@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Json write settings. </summary>
+    /// <summary>
+    /// Json write settings.
+    /// Serialized Name: JsonWriteSettings
+    /// </summary>
     public partial class JsonWriteSettings : FormatWriteSettings
     {
         /// <summary> Initializes a new instance of JsonWriteSettings. </summary>
@@ -20,9 +23,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of JsonWriteSettings. </summary>
-        /// <param name="formatWriteSettingsType"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType">
+        /// The write setting type.
+        /// Serialized Name: FormatWriteSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="filePattern"> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </param>
+        /// <param name="filePattern">
+        /// File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive.
+        /// Serialized Name: JsonWriteSettings.filePattern
+        /// </param>
         internal JsonWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData filePattern) : base(formatWriteSettingsType, additionalProperties)
         {
             FilePattern = filePattern;
@@ -30,7 +39,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is &apos;setOfObjects&apos;. It is case-sensitive.
+        /// File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive.
+        /// Serialized Name: JsonWriteSettings.filePattern
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

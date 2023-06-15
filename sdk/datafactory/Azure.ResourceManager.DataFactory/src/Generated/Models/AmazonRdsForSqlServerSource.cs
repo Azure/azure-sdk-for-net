@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Amazon RDS for SQL Server source. </summary>
+    /// <summary>
+    /// A copy activity Amazon RDS for SQL Server source.
+    /// Serialized Name: AmazonRdsForSqlServerSource
+    /// </summary>
     public partial class AmazonRdsForSqlServerSource : TabularSource
     {
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerSource. </summary>
@@ -21,21 +24,63 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        /// <param name="sqlReaderQuery"> SQL reader query. Type: string (or Expression with resultType string). </param>
-        /// <param name="sqlReaderStoredProcedureName"> Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string). </param>
-        /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
-        /// <param name="isolationLevel"> Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string). </param>
-        /// <param name="produceAdditionalTypes"> Which additional types to produce. </param>
-        /// <param name="partitionOption"> The partition mechanism that will be used for Sql read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;. </param>
-        /// <param name="partitionSettings"> The settings that will be leveraged for Sql source partitioning. </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: TabularSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: TabularSource.additionalColumns
+        /// </param>
+        /// <param name="sqlReaderQuery">
+        /// SQL reader query. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForSqlServerSource.sqlReaderQuery
+        /// </param>
+        /// <param name="sqlReaderStoredProcedureName">
+        /// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForSqlServerSource.sqlReaderStoredProcedureName
+        /// </param>
+        /// <param name="storedProcedureParameters">
+        /// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+        /// Serialized Name: AmazonRdsForSqlServerSource.storedProcedureParameters
+        /// </param>
+        /// <param name="isolationLevel">
+        /// Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForSqlServerSource.isolationLevel
+        /// </param>
+        /// <param name="produceAdditionalTypes">
+        /// Which additional types to produce.
+        /// Serialized Name: AmazonRdsForSqlServerSource.produceAdditionalTypes
+        /// </param>
+        /// <param name="partitionOption">
+        /// The partition mechanism that will be used for Sql read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "DynamicRange".
+        /// Serialized Name: AmazonRdsForSqlServerSource.partitionOption
+        /// </param>
+        /// <param name="partitionSettings">
+        /// The settings that will be leveraged for Sql source partitioning.
+        /// Serialized Name: AmazonRdsForSqlServerSource.partitionSettings
+        /// </param>
         internal AmazonRdsForSqlServerSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> sqlReaderQuery, DataFactoryElement<string> sqlReaderStoredProcedureName, BinaryData storedProcedureParameters, DataFactoryElement<string> isolationLevel, BinaryData produceAdditionalTypes, BinaryData partitionOption, SqlPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             SqlReaderQuery = sqlReaderQuery;
@@ -48,12 +93,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "AmazonRdsForSqlServerSource";
         }
 
-        /// <summary> SQL reader query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// SQL reader query. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForSqlServerSource.sqlReaderQuery
+        /// </summary>
         public DataFactoryElement<string> SqlReaderQuery { get; set; }
-        /// <summary> Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForSqlServerSource.sqlReaderStoredProcedureName
+        /// </summary>
         public DataFactoryElement<string> SqlReaderStoredProcedureName { get; set; }
         /// <summary>
-        /// Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;.
+        /// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+        /// Serialized Name: AmazonRdsForSqlServerSource.storedProcedureParameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -83,10 +135,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData StoredProcedureParameters { get; set; }
-        /// <summary> Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForSqlServerSource.isolationLevel
+        /// </summary>
         public DataFactoryElement<string> IsolationLevel { get; set; }
         /// <summary>
         /// Which additional types to produce.
+        /// Serialized Name: AmazonRdsForSqlServerSource.produceAdditionalTypes
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -117,7 +173,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ProduceAdditionalTypes { get; set; }
         /// <summary>
-        /// The partition mechanism that will be used for Sql read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;.
+        /// The partition mechanism that will be used for Sql read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "DynamicRange".
+        /// Serialized Name: AmazonRdsForSqlServerSource.partitionOption
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -147,7 +204,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData PartitionOption { get; set; }
-        /// <summary> The settings that will be leveraged for Sql source partitioning. </summary>
+        /// <summary>
+        /// The settings that will be leveraged for Sql source partitioning.
+        /// Serialized Name: AmazonRdsForSqlServerSource.partitionSettings
+        /// </summary>
         public SqlPartitionSettings PartitionSettings { get; set; }
     }
 }

@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list pipeline runs. </summary>
+    /// <summary>
+    /// A list pipeline runs.
+    /// Serialized Name: PipelineRunsQueryResponse
+    /// </summary>
     internal partial class FactoryPipelineRunsQueryResult
     {
         /// <summary> Initializes a new instance of FactoryPipelineRunsQueryResult. </summary>
-        /// <param name="value"> List of pipeline runs. </param>
+        /// <param name="value">
+        /// List of pipeline runs.
+        /// Serialized Name: PipelineRunsQueryResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FactoryPipelineRunsQueryResult(IEnumerable<FactoryPipelineRunInfo> value)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryPipelineRunsQueryResult. </summary>
-        /// <param name="value"> List of pipeline runs. </param>
-        /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
+        /// <param name="value">
+        /// List of pipeline runs.
+        /// Serialized Name: PipelineRunsQueryResponse.value
+        /// </param>
+        /// <param name="continuationToken">
+        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        /// Serialized Name: PipelineRunsQueryResponse.continuationToken
+        /// </param>
         internal FactoryPipelineRunsQueryResult(IReadOnlyList<FactoryPipelineRunInfo> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> List of pipeline runs. </summary>
+        /// <summary>
+        /// List of pipeline runs.
+        /// Serialized Name: PipelineRunsQueryResponse.value
+        /// </summary>
         public IReadOnlyList<FactoryPipelineRunInfo> Value { get; }
-        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
+        /// <summary>
+        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        /// Serialized Name: PipelineRunsQueryResponse.continuationToken
+        /// </summary>
         public string ContinuationToken { get; }
     }
 }

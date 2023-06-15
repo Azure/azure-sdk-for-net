@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The columns to be read out from the Office 365 table. </summary>
+    /// <summary>
+    /// The columns to be read out from the Office 365 table.
+    /// Serialized Name: OutputColumn
+    /// </summary>
     public partial class OutputColumn
     {
         /// <summary> Initializes a new instance of OutputColumn. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of OutputColumn. </summary>
-        /// <param name="name"> Name of the table column. Type: string. </param>
+        /// <param name="name">
+        /// Name of the table column. Type: string.
+        /// Serialized Name: OutputColumn.name
+        /// </param>
         internal OutputColumn(string name)
         {
             Name = name;
         }
 
-        /// <summary> Name of the table column. Type: string. </summary>
+        /// <summary>
+        /// Name of the table column. Type: string.
+        /// Serialized Name: OutputColumn.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

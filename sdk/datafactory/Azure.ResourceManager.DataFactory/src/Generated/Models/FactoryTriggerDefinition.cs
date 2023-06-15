@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Azure data factory nested object which contains information about creating pipeline run
+    /// Serialized Name: Trigger
     /// Please note <see cref="FactoryTriggerDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBlobEventsTrigger"/>, <see cref="AzureBlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
@@ -26,10 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryTriggerDefinition. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
-        /// <param name="description"> Trigger description. </param>
-        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="triggerType">
+        /// Trigger type.
+        /// Serialized Name: Trigger.type
+        /// </param>
+        /// <param name="description">
+        /// Trigger description.
+        /// Serialized Name: Trigger.description
+        /// </param>
+        /// <param name="runtimeState">
+        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+        /// Serialized Name: Trigger.runtimeState
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the trigger.
+        /// Serialized Name: Trigger.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FactoryTriggerDefinition(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -40,14 +53,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Trigger type. </summary>
+        /// <summary>
+        /// Trigger type.
+        /// Serialized Name: Trigger.type
+        /// </summary>
         internal string TriggerType { get; set; }
-        /// <summary> Trigger description. </summary>
+        /// <summary>
+        /// Trigger description.
+        /// Serialized Name: Trigger.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </summary>
+        /// <summary>
+        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+        /// Serialized Name: Trigger.runtimeState
+        /// </summary>
         public FactoryTriggerRuntimeState? RuntimeState { get; }
         /// <summary>
         /// List of tags that can be used for describing the trigger.
+        /// Serialized Name: Trigger.annotations
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

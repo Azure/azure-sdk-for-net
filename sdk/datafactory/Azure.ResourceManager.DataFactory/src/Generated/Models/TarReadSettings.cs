@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The Tar compression read settings. </summary>
+    /// <summary>
+    /// The Tar compression read settings.
+    /// Serialized Name: TarReadSettings
+    /// </summary>
     public partial class TarReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of TarReadSettings. </summary>
@@ -21,16 +24,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TarReadSettings. </summary>
-        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
+        /// <param name="compressionReadSettingsType">
+        /// The Compression setting type.
+        /// Serialized Name: CompressionReadSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="preserveCompressionFileNameAsFolder">
+        /// Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: TarReadSettings.preserveCompressionFileNameAsFolder
+        /// </param>
         internal TarReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
             CompressionReadSettingsType = compressionReadSettingsType ?? "TarReadSettings";
         }
 
-        /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: TarReadSettings.preserveCompressionFileNameAsFolder
+        /// </summary>
         public DataFactoryElement<bool> PreserveCompressionFileNameAsFolder { get; set; }
     }
 }

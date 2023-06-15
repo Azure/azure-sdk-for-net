@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The location of http server. </summary>
+    /// <summary>
+    /// The location of http server.
+    /// Serialized Name: HttpServerLocation
+    /// </summary>
     public partial class HttpServerLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of HttpServerLocation. </summary>
@@ -21,18 +24,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HttpServerLocation. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
-        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetLocationType">
+        /// Type of dataset storage location.
+        /// Serialized Name: DatasetLocation.type
+        /// </param>
+        /// <param name="folderPath">
+        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
+        /// Serialized Name: DatasetLocation.folderPath
+        /// </param>
+        /// <param name="fileName">
+        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetLocation.fileName
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="relativeUri"> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </param>
+        /// <param name="relativeUri">
+        /// Specify the relativeUrl of http server. Type: string (or Expression with resultType string)
+        /// Serialized Name: HttpServerLocation.relativeUrl
+        /// </param>
         internal HttpServerLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> relativeUri) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             RelativeUri = relativeUri;
             DatasetLocationType = datasetLocationType ?? "HttpServerLocation";
         }
 
-        /// <summary> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the relativeUrl of http server. Type: string (or Expression with resultType string)
+        /// Serialized Name: HttpServerLocation.relativeUrl
+        /// </summary>
         public DataFactoryElement<string> RelativeUri { get; set; }
     }
 }

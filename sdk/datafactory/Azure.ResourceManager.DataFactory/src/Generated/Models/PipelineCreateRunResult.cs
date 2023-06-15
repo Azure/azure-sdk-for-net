@@ -9,17 +9,26 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Response body with a run identifier. </summary>
+    /// <summary>
+    /// Response body with a run identifier.
+    /// Serialized Name: CreateRunResponse
+    /// </summary>
     public partial class PipelineCreateRunResult
     {
         /// <summary> Initializes a new instance of PipelineCreateRunResult. </summary>
-        /// <param name="runId"> Identifier of a run. </param>
+        /// <param name="runId">
+        /// Identifier of a run.
+        /// Serialized Name: CreateRunResponse.runId
+        /// </param>
         internal PipelineCreateRunResult(Guid runId)
         {
             RunId = runId;
         }
 
-        /// <summary> Identifier of a run. </summary>
+        /// <summary>
+        /// Identifier of a run.
+        /// Serialized Name: CreateRunResponse.runId
+        /// </summary>
         public Guid RunId { get; }
     }
 }

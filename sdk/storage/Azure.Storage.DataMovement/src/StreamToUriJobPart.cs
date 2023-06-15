@@ -147,68 +147,66 @@ namespace Azure.Storage.DataMovement
             {
                 StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ContentLength;
+
+                if (fileLength.HasValue)
+                {
+                    long length = fileLength.Value;
+                    if (_initialTransferSize >= length)
+                    {
+                        // If we can create the destination in one call
+                        await QueueChunkToChannelAsync(
+                            async () =>
+                            await CreateDestinationResource(
+                                blockSize: length,
+                                length: length,
+                                singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
+                        return;
+                    }
+                    long blockSize = CalculateBlockSize(length);
+
+                    _commitBlockHandler = GetCommitController(
+                        expectedLength: length,
+                        blockSize: blockSize,
+                        this,
+                        _destinationResource.TransferType);
+
+                    bool destinationCreated = await CreateDestinationResource(blockSize, length, false).ConfigureAwait(false);
+                    if (destinationCreated)
+                    {
+                        // If we cannot upload in one shot, initiate the parallel block uploader
+                        List<(long Offset, long Length)> rangeList = GetRangeList(blockSize, length);
+                        if (_destinationResource.TransferType == TransferType.Concurrent)
+                        {
+                            await QueueStageBlockRequests(rangeList, length).ConfigureAwait(false);
+                        }
+                        else // Sequential
+                        {
+                            // Queue paritioned block task
+                            await QueueChunkToChannelAsync(
+                                async () =>
+                                await StageBlockInternal(
+                                    rangeList[0].Offset,
+                                    rangeList[0].Length,
+                                    length).ConfigureAwait(false)).ConfigureAwait(false);
+                        }
+                    }
+                }
+                else
+                {
+                    // TODO: logging when given the event handler
+                    await InvokeFailedArg(Errors.UnableToGetLength()).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
-                // TODO: logging when given the event handler
                 await InvokeFailedArg(ex).ConfigureAwait(false);
-                return;
-            }
-
-            if (fileLength.HasValue)
-            {
-                long length = fileLength.Value;
-                if (_initialTransferSize >= length)
-                {
-                    // If we can create the destination in one call
-                    await QueueChunkToChannelAsync(
-                        async () =>
-                        await CreateDestinationResource(
-                            blockSize: length,
-                            length: length,
-                            singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
-                    return;
-                }
-                long blockSize = CalculateBlockSize(length);
-
-                _commitBlockHandler = GetCommitController(
-                    expectedLength: length,
-                    blockSize: blockSize,
-                    this,
-                    _destinationResource.TransferType);
-
-                bool destinationCreated = await CreateDestinationResource(blockSize, length, false).ConfigureAwait(false);
-                if (destinationCreated)
-                {
-                    // If we cannot upload in one shot, initiate the parallel block uploader
-                    List<(long Offset, long Length)> rangeList = GetRangeList(blockSize, length);
-                    if (_destinationResource.TransferType == TransferType.Concurrent)
-                    {
-                        await QueueStageBlockRequests(rangeList, length).ConfigureAwait(false);
-                    }
-                    else // Sequential
-                    {
-                        // Queue paritioned block task
-                        await QueueChunkToChannelAsync(
-                            async () =>
-                            await StageBlockInternal(
-                                rangeList[0].Offset,
-                                rangeList[0].Length,
-                                length).ConfigureAwait(false)).ConfigureAwait(false);
-                    }
-                }
-            }
-            else
-            {
-                // TODO: logging when given the event handler
-                await InvokeFailedArg(Errors.UnableToGetLength()).ConfigureAwait(false);
             }
         }
 
         /// <summary>
         /// Return whether we need to do more after creating the destination resource
         /// </summary>
-        internal async Task<bool> CreateDestinationResource(long blockSize, long length, bool singleCall)
+        private async Task<bool> CreateDestinationResource(long blockSize, long length, bool singleCall)
         {
             try
             {
@@ -222,10 +220,6 @@ namespace Azure.Storage.DataMovement
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
             // Do not continue if we need to skip or there was an error.
             return false;
         }
@@ -234,7 +228,7 @@ namespace Azure.Storage.DataMovement
         /// Made to do the initial creation of the blob (if needed). And also
         /// to make an write if necessary.
         /// </summary>
-        internal async Task InitialUploadCall(long blockSize, long expectedLength, bool singleCall)
+        private async Task InitialUploadCall(long blockSize, long expectedLength, bool singleCall)
         {
             try
             {
@@ -270,8 +264,8 @@ namespace Azure.Storage.DataMovement
                     {
                         slicedStream = await GetOffsetPartitionInternal(
                             stream,
-                            (int)0,
-                            (int)blockSize,
+                            0L,
+                            blockSize,
                             UploadArrayPool,
                             _cancellationToken).ConfigureAwait(false);
                         await _destinationResource.WriteFromStreamAsync(
@@ -299,7 +293,7 @@ namespace Azure.Storage.DataMovement
         }
 
         #region CommitChunkController
-        internal static CommitChunkHandler GetCommitController(
+        internal CommitChunkHandler GetCommitController(
             long expectedLength,
             long blockSize,
             StreamToUriJobPart jobPart,
@@ -308,7 +302,8 @@ namespace Azure.Storage.DataMovement
             expectedLength,
             blockSize,
             GetBlockListCommitHandlerBehaviors(jobPart),
-            transferType);
+            transferType,
+            _cancellationToken);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
             StreamToUriJobPart jobPart)
@@ -340,8 +335,8 @@ namespace Azure.Storage.DataMovement
                 {
                     slicedStream = await GetOffsetPartitionInternal(
                         stream,
-                        (int)offset,
-                        (int)blockLength,
+                        offset,
+                        blockLength,
                         UploadArrayPool,
                         _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
@@ -356,37 +351,51 @@ namespace Azure.Storage.DataMovement
                 // Invoke event handler to keep track of all the stage blocks
                 await _commitBlockHandler.InvokeEvent(
                     new StageChunkEventArgs(
-                        _dataTransfer.Id,
-                        true,
-                        offset,
-                        blockLength,
-                        true,
-                        _cancellationToken)).ConfigureAwait(false);
+                        transferId: _dataTransfer.Id,
+                        success: true,
+                        offset: offset,
+                        bytesTransferred: blockLength,
+                        exception: default,
+                        isRunningSynchronously: true,
+                        cancellationToken: _cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                if (_commitBlockHandler != null)
+                {
+                    await _commitBlockHandler.InvokeEvent(
+                        new StageChunkEventArgs(
+                            transferId: _dataTransfer.Id,
+                            success: false,
+                            offset: offset,
+                            bytesTransferred: blockLength,
+                            exception: ex,
+                            isRunningSynchronously: true,
+                            cancellationToken: _cancellationToken)).ConfigureAwait(false);
+                }
+                else
+                {
+                    // If the _commitBlockHandler has been disposed before we call to it
+                    // we should at least filter the exception to error handling just in case.
+                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                }
             }
         }
 
         internal async Task CompleteTransferAsync()
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
-            try
-            {
-                // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
 
-                // Dispose the handlers
-                await DisposeHandlers().ConfigureAwait(false);
+            // Apply necessary transfer completions on the destination.
+            await _destinationResource.CompleteTransferAsync(
+                overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                // Set completion status to completed
-                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
+            // Dispose the handlers
+            await DisposeHandlers().ConfigureAwait(false);
+
+            // Set completion status to completed
+            await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
         }
 
         private async Task QueueStageBlockRequests(List<(long Offset, long Size)> rangeList, long completeLength)
@@ -427,8 +436,8 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         private static async Task<Stream> GetOffsetPartitionInternal(
             Stream stream,
-            int offset,
-            int length,
+            long offset,
+            long length,
             ArrayPool<byte> arrayPool,
             CancellationToken cancellationToken)
         {

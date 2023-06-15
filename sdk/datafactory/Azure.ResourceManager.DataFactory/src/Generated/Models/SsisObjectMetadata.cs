@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// SSIS object metadata.
+    /// Serialized Name: SsisObjectMetadata
     /// Please note <see cref="SsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SsisEnvironment"/>, <see cref="SsisFolder"/>, <see cref="SsisPackage"/> and <see cref="SsisProject"/>.
     /// </summary>
@@ -20,10 +21,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisObjectMetadata. </summary>
-        /// <param name="metadataType"> Type of metadata. </param>
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
+        /// <param name="metadataType">
+        /// Type of metadata.
+        /// Serialized Name: SsisObjectMetadata.type
+        /// </param>
+        /// <param name="id">
+        /// Metadata id.
+        /// Serialized Name: SsisObjectMetadata.id
+        /// </param>
+        /// <param name="name">
+        /// Metadata name.
+        /// Serialized Name: SsisObjectMetadata.name
+        /// </param>
+        /// <param name="description">
+        /// Metadata description.
+        /// Serialized Name: SsisObjectMetadata.description
+        /// </param>
         internal SsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description)
         {
             MetadataType = metadataType;
@@ -32,13 +45,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             Description = description;
         }
 
-        /// <summary> Type of metadata. </summary>
+        /// <summary>
+        /// Type of metadata.
+        /// Serialized Name: SsisObjectMetadata.type
+        /// </summary>
         internal SsisObjectMetadataType MetadataType { get; set; }
-        /// <summary> Metadata id. </summary>
+        /// <summary>
+        /// Metadata id.
+        /// Serialized Name: SsisObjectMetadata.id
+        /// </summary>
         public long? Id { get; }
-        /// <summary> Metadata name. </summary>
+        /// <summary>
+        /// Metadata name.
+        /// Serialized Name: SsisObjectMetadata.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Metadata description. </summary>
+        /// <summary>
+        /// Metadata description.
+        /// Serialized Name: SsisObjectMetadata.description
+        /// </summary>
         public string Description { get; }
     }
 }

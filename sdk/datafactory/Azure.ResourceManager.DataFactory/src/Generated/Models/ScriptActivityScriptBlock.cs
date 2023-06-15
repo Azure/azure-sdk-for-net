@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Script block of scripts. </summary>
+    /// <summary>
+    /// Script block of scripts.
+    /// Serialized Name: ScriptActivityScriptBlock
+    /// </summary>
     public partial class ScriptActivityScriptBlock
     {
         /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
-        /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptType"> The type of the query. Type: string. </param>
+        /// <param name="text">
+        /// The query text. Type: string (or Expression with resultType string).
+        /// Serialized Name: ScriptActivityScriptBlock.text
+        /// </param>
+        /// <param name="scriptType">
+        /// The type of the query. Type: string.
+        /// Serialized Name: ScriptActivityScriptBlock.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public ScriptActivityScriptBlock(DataFactoryElement<string> text, ScriptType scriptType)
         {
@@ -29,9 +38,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
-        /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptType"> The type of the query. Type: string. </param>
-        /// <param name="parameters"> Array of script parameters. Type: array. </param>
+        /// <param name="text">
+        /// The query text. Type: string (or Expression with resultType string).
+        /// Serialized Name: ScriptActivityScriptBlock.text
+        /// </param>
+        /// <param name="scriptType">
+        /// The type of the query. Type: string.
+        /// Serialized Name: ScriptActivityScriptBlock.type
+        /// </param>
+        /// <param name="parameters">
+        /// Array of script parameters. Type: array.
+        /// Serialized Name: ScriptActivityScriptBlock.parameters
+        /// </param>
         internal ScriptActivityScriptBlock(DataFactoryElement<string> text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
         {
             Text = text;
@@ -39,11 +57,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
         }
 
-        /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The query text. Type: string (or Expression with resultType string).
+        /// Serialized Name: ScriptActivityScriptBlock.text
+        /// </summary>
         public DataFactoryElement<string> Text { get; set; }
-        /// <summary> The type of the query. Type: string. </summary>
+        /// <summary>
+        /// The type of the query. Type: string.
+        /// Serialized Name: ScriptActivityScriptBlock.type
+        /// </summary>
         public ScriptType ScriptType { get; set; }
-        /// <summary> Array of script parameters. Type: array. </summary>
+        /// <summary>
+        /// Array of script parameters. Type: array.
+        /// Serialized Name: ScriptActivityScriptBlock.parameters
+        /// </summary>
         public IList<ScriptActivityParameter> Parameters { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Service principal credential. </summary>
+    /// <summary>
+    /// Service principal credential.
+    /// Serialized Name: ServicePrincipalCredential
+    /// </summary>
     public partial class ServicePrincipalCredential : Credential
     {
         /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
@@ -20,13 +23,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
-        /// <param name="credentialType"> Type of credential. </param>
-        /// <param name="description"> Credential description. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
+        /// <param name="credentialType">
+        /// Type of credential.
+        /// Serialized Name: Credential.type
+        /// </param>
+        /// <param name="description">
+        /// Credential description.
+        /// Serialized Name: Credential.description
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the Credential.
+        /// Serialized Name: Credential.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="servicePrincipalId"> The app ID of the service principal used to authenticate. </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate. </param>
-        /// <param name="tenant"> The ID of the tenant to which the service principal belongs. </param>
+        /// <param name="servicePrincipalId">
+        /// The app ID of the service principal used to authenticate
+        /// Serialized Name: ServicePrincipalCredential.typeProperties.servicePrincipalId
+        /// </param>
+        /// <param name="servicePrincipalKey">
+        /// The key of the service principal used to authenticate.
+        /// Serialized Name: ServicePrincipalCredential.typeProperties.servicePrincipalKey
+        /// </param>
+        /// <param name="tenant">
+        /// The ID of the tenant to which the service principal belongs
+        /// Serialized Name: ServicePrincipalCredential.typeProperties.tenant
+        /// </param>
         internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData servicePrincipalId, AzureKeyVaultSecretReference servicePrincipalKey, BinaryData tenant) : base(credentialType, description, annotations, additionalProperties)
         {
             ServicePrincipalId = servicePrincipalId;
@@ -37,6 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// The app ID of the service principal used to authenticate
+        /// Serialized Name: ServicePrincipalCredential.typeProperties.servicePrincipalId
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -66,10 +88,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
-        /// <summary> The key of the service principal used to authenticate. </summary>
+        /// <summary>
+        /// The key of the service principal used to authenticate.
+        /// Serialized Name: ServicePrincipalCredential.typeProperties.servicePrincipalKey
+        /// </summary>
         public AzureKeyVaultSecretReference ServicePrincipalKey { get; set; }
         /// <summary>
         /// The ID of the tenant to which the service principal belongs
+        /// Serialized Name: ServicePrincipalCredential.typeProperties.tenant
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

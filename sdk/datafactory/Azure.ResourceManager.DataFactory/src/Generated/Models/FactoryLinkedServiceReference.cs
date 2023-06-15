@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service reference type. </summary>
+    /// <summary>
+    /// Linked service reference type.
+    /// Serialized Name: LinkedServiceReference
+    /// </summary>
     public partial class FactoryLinkedServiceReference
     {
         /// <summary> Initializes a new instance of FactoryLinkedServiceReference. </summary>
-        /// <param name="referenceType"> Linked service reference type. </param>
-        /// <param name="referenceName"> Reference LinkedService name. </param>
+        /// <param name="referenceType">
+        /// Linked service reference type.
+        /// Serialized Name: LinkedServiceReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference LinkedService name.
+        /// Serialized Name: LinkedServiceReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType referenceType, string referenceName)
         {
@@ -28,9 +37,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryLinkedServiceReference. </summary>
-        /// <param name="referenceType"> Linked service reference type. </param>
-        /// <param name="referenceName"> Reference LinkedService name. </param>
-        /// <param name="parameters"> Arguments for LinkedService. </param>
+        /// <param name="referenceType">
+        /// Linked service reference type.
+        /// Serialized Name: LinkedServiceReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference LinkedService name.
+        /// Serialized Name: LinkedServiceReference.referenceName
+        /// </param>
+        /// <param name="parameters">
+        /// Arguments for LinkedService.
+        /// Serialized Name: LinkedServiceReference.parameters
+        /// </param>
         internal FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             ReferenceType = referenceType;
@@ -38,12 +56,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
         }
 
-        /// <summary> Linked service reference type. </summary>
+        /// <summary>
+        /// Linked service reference type.
+        /// Serialized Name: LinkedServiceReference.type
+        /// </summary>
         public FactoryLinkedServiceReferenceType ReferenceType { get; set; }
-        /// <summary> Reference LinkedService name. </summary>
+        /// <summary>
+        /// Reference LinkedService name.
+        /// Serialized Name: LinkedServiceReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
         /// <summary>
         /// Arguments for LinkedService.
+        /// Serialized Name: LinkedServiceReference.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

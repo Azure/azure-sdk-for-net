@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Pipeline Policy. </summary>
+    /// <summary>
+    /// Pipeline Policy.
+    /// Serialized Name: PipelinePolicy
+    /// </summary>
     internal partial class FactoryPipelinePolicy
     {
         /// <summary> Initializes a new instance of FactoryPipelinePolicy. </summary>
@@ -18,16 +21,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryPipelinePolicy. </summary>
-        /// <param name="elapsedTimeMetric"> Pipeline ElapsedTime Metric Policy. </param>
+        /// <param name="elapsedTimeMetric">
+        /// Pipeline ElapsedTime Metric Policy.
+        /// Serialized Name: PipelinePolicy.elapsedTimeMetric
+        /// </param>
         internal FactoryPipelinePolicy(PipelineElapsedTimeMetricPolicy elapsedTimeMetric)
         {
             ElapsedTimeMetric = elapsedTimeMetric;
         }
 
-        /// <summary> Pipeline ElapsedTime Metric Policy. </summary>
+        /// <summary>
+        /// Pipeline ElapsedTime Metric Policy.
+        /// Serialized Name: PipelinePolicy.elapsedTimeMetric
+        /// </summary>
         internal PipelineElapsedTimeMetricPolicy ElapsedTimeMetric { get; set; }
         /// <summary>
         /// TimeSpan value, after which an Azure Monitoring Metric is fired.
+        /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

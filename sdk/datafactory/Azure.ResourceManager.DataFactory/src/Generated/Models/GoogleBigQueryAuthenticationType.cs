@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
+    /// <summary>
+    /// The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR.
+    /// Serialized Name: GoogleBigQueryAuthenticationType
+    /// </summary>
     public readonly partial struct GoogleBigQueryAuthenticationType : IEquatable<GoogleBigQueryAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ServiceAuthenticationValue = "ServiceAuthentication";
         private const string UserAuthenticationValue = "UserAuthentication";
 
-        /// <summary> ServiceAuthentication. </summary>
+        /// <summary>
+        /// ServiceAuthentication
+        /// Serialized Name: GoogleBigQueryAuthenticationType.ServiceAuthentication
+        /// </summary>
         public static GoogleBigQueryAuthenticationType ServiceAuthentication { get; } = new GoogleBigQueryAuthenticationType(ServiceAuthenticationValue);
-        /// <summary> UserAuthentication. </summary>
+        /// <summary>
+        /// UserAuthentication
+        /// Serialized Name: GoogleBigQueryAuthenticationType.UserAuthentication
+        /// </summary>
         public static GoogleBigQueryAuthenticationType UserAuthentication { get; } = new GoogleBigQueryAuthenticationType(UserAuthenticationValue);
         /// <summary> Determines if two <see cref="GoogleBigQueryAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(GoogleBigQueryAuthenticationType left, GoogleBigQueryAuthenticationType right) => left.Equals(right);

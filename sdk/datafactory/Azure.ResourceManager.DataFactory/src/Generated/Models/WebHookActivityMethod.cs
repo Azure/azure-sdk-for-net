@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The list of HTTP methods supported by a WebHook activity. </summary>
+    /// <summary>
+    /// The list of HTTP methods supported by a WebHook activity.
+    /// Serialized Name: WebHookActivityMethod
+    /// </summary>
     public readonly partial struct WebHookActivityMethod : IEquatable<WebHookActivityMethod>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string PostValue = "POST";
 
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: WebHookActivityMethod.POST
+        /// </summary>
         public static WebHookActivityMethod Post { get; } = new WebHookActivityMethod(PostValue);
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are the same. </summary>
         public static bool operator ==(WebHookActivityMethod left, WebHookActivityMethod right) => left.Equals(right);

@@ -7,28 +7,46 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Log settings of script activity. </summary>
+    /// <summary>
+    /// Log settings of script activity.
+    /// Serialized Name: ScriptActivityTypePropertiesLogSettings
+    /// </summary>
     public partial class ScriptActivityTypePropertiesLogSettings
     {
         /// <summary> Initializes a new instance of ScriptActivityTypePropertiesLogSettings. </summary>
-        /// <param name="logDestination"> The destination of logs. Type: string. </param>
+        /// <param name="logDestination">
+        /// The destination of logs. Type: string.
+        /// Serialized Name: ScriptActivityTypePropertiesLogSettings.logDestination
+        /// </param>
         public ScriptActivityTypePropertiesLogSettings(ScriptActivityLogDestination logDestination)
         {
             LogDestination = logDestination;
         }
 
         /// <summary> Initializes a new instance of ScriptActivityTypePropertiesLogSettings. </summary>
-        /// <param name="logDestination"> The destination of logs. Type: string. </param>
-        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
+        /// <param name="logDestination">
+        /// The destination of logs. Type: string.
+        /// Serialized Name: ScriptActivityTypePropertiesLogSettings.logDestination
+        /// </param>
+        /// <param name="logLocationSettings">
+        /// Log location settings customer needs to provide when enabling log.
+        /// Serialized Name: ScriptActivityTypePropertiesLogSettings.logLocationSettings
+        /// </param>
         internal ScriptActivityTypePropertiesLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings)
         {
             LogDestination = logDestination;
             LogLocationSettings = logLocationSettings;
         }
 
-        /// <summary> The destination of logs. Type: string. </summary>
+        /// <summary>
+        /// The destination of logs. Type: string.
+        /// Serialized Name: ScriptActivityTypePropertiesLogSettings.logDestination
+        /// </summary>
         public ScriptActivityLogDestination LogDestination { get; set; }
-        /// <summary> Log location settings customer needs to provide when enabling log. </summary>
+        /// <summary>
+        /// Log location settings customer needs to provide when enabling log.
+        /// Serialized Name: ScriptActivityTypePropertiesLogSettings.logLocationSettings
+        /// </summary>
         public LogLocationSettings LogLocationSettings { get; set; }
     }
 }

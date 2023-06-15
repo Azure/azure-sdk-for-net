@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Mapping data flow. </summary>
+    /// <summary>
+    /// Mapping data flow.
+    /// Serialized Name: MappingDataFlow
+    /// </summary>
     public partial class FactoryMappingDataFlowDefinition : FactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of FactoryMappingDataFlowDefinition. </summary>
@@ -25,15 +28,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryMappingDataFlowDefinition. </summary>
-        /// <param name="dataFlowType"> Type of data flow. </param>
-        /// <param name="description"> The description of the data flow. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
-        /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        /// <param name="sources"> List of sources in data flow. </param>
-        /// <param name="sinks"> List of sinks in data flow. </param>
-        /// <param name="transformations"> List of transformations in data flow. </param>
-        /// <param name="script"> DataFlow script. </param>
-        /// <param name="scriptLines"> Data flow script lines. </param>
+        /// <param name="dataFlowType">
+        /// Type of data flow.
+        /// Serialized Name: DataFlow.type
+        /// </param>
+        /// <param name="description">
+        /// The description of the data flow.
+        /// Serialized Name: DataFlow.description
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the data flow.
+        /// Serialized Name: DataFlow.annotations
+        /// </param>
+        /// <param name="folder">
+        /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+        /// Serialized Name: DataFlow.folder
+        /// </param>
+        /// <param name="sources">
+        /// List of sources in data flow.
+        /// Serialized Name: MappingDataFlow.typeProperties.sources
+        /// </param>
+        /// <param name="sinks">
+        /// List of sinks in data flow.
+        /// Serialized Name: MappingDataFlow.typeProperties.sinks
+        /// </param>
+        /// <param name="transformations">
+        /// List of transformations in data flow.
+        /// Serialized Name: MappingDataFlow.typeProperties.transformations
+        /// </param>
+        /// <param name="script">
+        /// DataFlow script.
+        /// Serialized Name: MappingDataFlow.typeProperties.script
+        /// </param>
+        /// <param name="scriptLines">
+        /// Data flow script lines.
+        /// Serialized Name: MappingDataFlow.typeProperties.scriptLines
+        /// </param>
         internal FactoryMappingDataFlowDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
@@ -44,15 +74,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowType = dataFlowType ?? "MappingDataFlow";
         }
 
-        /// <summary> List of sources in data flow. </summary>
+        /// <summary>
+        /// List of sources in data flow.
+        /// Serialized Name: MappingDataFlow.typeProperties.sources
+        /// </summary>
         public IList<DataFlowSource> Sources { get; }
-        /// <summary> List of sinks in data flow. </summary>
+        /// <summary>
+        /// List of sinks in data flow.
+        /// Serialized Name: MappingDataFlow.typeProperties.sinks
+        /// </summary>
         public IList<DataFlowSink> Sinks { get; }
-        /// <summary> List of transformations in data flow. </summary>
+        /// <summary>
+        /// List of transformations in data flow.
+        /// Serialized Name: MappingDataFlow.typeProperties.transformations
+        /// </summary>
         public IList<DataFlowTransformation> Transformations { get; }
-        /// <summary> DataFlow script. </summary>
+        /// <summary>
+        /// DataFlow script.
+        /// Serialized Name: MappingDataFlow.typeProperties.script
+        /// </summary>
         public string Script { get; set; }
-        /// <summary> Data flow script lines. </summary>
+        /// <summary>
+        /// Data flow script lines.
+        /// Serialized Name: MappingDataFlow.typeProperties.scriptLines
+        /// </summary>
         public IList<string> ScriptLines { get; }
     }
 }

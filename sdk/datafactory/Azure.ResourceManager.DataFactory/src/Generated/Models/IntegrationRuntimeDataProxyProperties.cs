@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
+    /// <summary>
+    /// Data proxy properties for a managed dedicated integration runtime.
+    /// Serialized Name: IntegrationRuntimeDataProxyProperties
+    /// </summary>
     public partial class IntegrationRuntimeDataProxyProperties
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeDataProxyProperties. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDataProxyProperties. </summary>
-        /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
-        /// <param name="stagingLinkedService"> The staging linked service reference. </param>
-        /// <param name="path"> The path to contain the staged data in the Blob storage. </param>
+        /// <param name="connectVia">
+        /// The self-hosted integration runtime reference.
+        /// Serialized Name: IntegrationRuntimeDataProxyProperties.connectVia
+        /// </param>
+        /// <param name="stagingLinkedService">
+        /// The staging linked service reference.
+        /// Serialized Name: IntegrationRuntimeDataProxyProperties.stagingLinkedService
+        /// </param>
+        /// <param name="path">
+        /// The path to contain the staged data in the Blob storage.
+        /// Serialized Name: IntegrationRuntimeDataProxyProperties.path
+        /// </param>
         internal IntegrationRuntimeDataProxyProperties(EntityReference connectVia, EntityReference stagingLinkedService, string path)
         {
             ConnectVia = connectVia;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Path = path;
         }
 
-        /// <summary> The self-hosted integration runtime reference. </summary>
+        /// <summary>
+        /// The self-hosted integration runtime reference.
+        /// Serialized Name: IntegrationRuntimeDataProxyProperties.connectVia
+        /// </summary>
         public EntityReference ConnectVia { get; set; }
-        /// <summary> The staging linked service reference. </summary>
+        /// <summary>
+        /// The staging linked service reference.
+        /// Serialized Name: IntegrationRuntimeDataProxyProperties.stagingLinkedService
+        /// </summary>
         public EntityReference StagingLinkedService { get; set; }
-        /// <summary> The path to contain the staged data in the Blob storage. </summary>
+        /// <summary>
+        /// The path to contain the staged data in the Blob storage.
+        /// Serialized Name: IntegrationRuntimeDataProxyProperties.path
+        /// </summary>
         public string Path { get; set; }
     }
 }

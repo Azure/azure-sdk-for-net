@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Integration runtime reference type. </summary>
+    /// <summary>
+    /// Integration runtime reference type.
+    /// Serialized Name: IntegrationRuntimeReference
+    /// </summary>
     public partial class IntegrationRuntimeReference
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
-        /// <param name="referenceType"> Type of integration runtime. </param>
-        /// <param name="referenceName"> Reference integration runtime name. </param>
+        /// <param name="referenceType">
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference integration runtime name.
+        /// Serialized Name: IntegrationRuntimeReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType, string referenceName)
         {
@@ -28,9 +37,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
-        /// <param name="referenceType"> Type of integration runtime. </param>
-        /// <param name="referenceName"> Reference integration runtime name. </param>
-        /// <param name="parameters"> Arguments for integration runtime. </param>
+        /// <param name="referenceType">
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference integration runtime name.
+        /// Serialized Name: IntegrationRuntimeReference.referenceName
+        /// </param>
+        /// <param name="parameters">
+        /// Arguments for integration runtime.
+        /// Serialized Name: IntegrationRuntimeReference.parameters
+        /// </param>
         internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             ReferenceType = referenceType;
@@ -38,12 +56,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
         }
 
-        /// <summary> Type of integration runtime. </summary>
+        /// <summary>
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeReference.type
+        /// </summary>
         public IntegrationRuntimeReferenceType ReferenceType { get; set; }
-        /// <summary> Reference integration runtime name. </summary>
+        /// <summary>
+        /// Reference integration runtime name.
+        /// Serialized Name: IntegrationRuntimeReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
         /// <summary>
         /// Arguments for integration runtime.
+        /// Serialized Name: IntegrationRuntimeReference.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

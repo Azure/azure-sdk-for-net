@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Dataset reference type. </summary>
+    /// <summary>
+    /// Dataset reference type.
+    /// Serialized Name: DatasetReference
+    /// </summary>
     public partial class DatasetReference
     {
         /// <summary> Initializes a new instance of DatasetReference. </summary>
-        /// <param name="referenceType"> Dataset reference type. </param>
-        /// <param name="referenceName"> Reference dataset name. </param>
+        /// <param name="referenceType">
+        /// Dataset reference type.
+        /// Serialized Name: DatasetReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference dataset name.
+        /// Serialized Name: DatasetReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DatasetReference(DatasetReferenceType referenceType, string referenceName)
         {
@@ -28,9 +37,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetReference. </summary>
-        /// <param name="referenceType"> Dataset reference type. </param>
-        /// <param name="referenceName"> Reference dataset name. </param>
-        /// <param name="parameters"> Arguments for dataset. </param>
+        /// <param name="referenceType">
+        /// Dataset reference type.
+        /// Serialized Name: DatasetReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference dataset name.
+        /// Serialized Name: DatasetReference.referenceName
+        /// </param>
+        /// <param name="parameters">
+        /// Arguments for dataset.
+        /// Serialized Name: DatasetReference.parameters
+        /// </param>
         internal DatasetReference(DatasetReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             ReferenceType = referenceType;
@@ -38,12 +56,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
         }
 
-        /// <summary> Dataset reference type. </summary>
+        /// <summary>
+        /// Dataset reference type.
+        /// Serialized Name: DatasetReference.type
+        /// </summary>
         public DatasetReferenceType ReferenceType { get; set; }
-        /// <summary> Reference dataset name. </summary>
+        /// <summary>
+        /// Reference dataset name.
+        /// Serialized Name: DatasetReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
         /// <summary>
         /// Arguments for dataset.
+        /// Serialized Name: DatasetReference.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

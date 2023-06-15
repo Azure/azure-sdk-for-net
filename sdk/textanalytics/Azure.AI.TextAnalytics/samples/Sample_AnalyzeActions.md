@@ -1,6 +1,6 @@
-# Running multiple actions
+# Perform multiple text analysis actions
 
-This sample demonstrates how to run multiple actions in one or more documents. Actions include:
+This sample demonstrates how to perform multiple text analysis actions on one or more documents. These actions can include:
 
 - Named Entities Recognition
 - PII Entities Recognition
@@ -23,9 +23,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Running multiple actions in multiple documents
+## Perform multiple actions on one or more text documents
 
-To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` on the documents.  The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API.
+To perform multiple actions on one or more text documents, call `AnalyzeActionsAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AnalyzeActionsOperation`. Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the text analysis actions, including any errors that might have occurred.
 
 ```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA =
@@ -55,8 +55,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
     };
 
     // Perform the text analysis operation.
-    AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-    await operation.WaitForCompletionAsync();
+    AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchedDocuments, actions);
 
     Console.WriteLine($"Status: {operation.Status}");
     Console.WriteLine($"Created On: {operation.CreatedOn}");

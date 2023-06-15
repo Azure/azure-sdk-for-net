@@ -12,11 +12,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Redirect incompatible row settings. </summary>
+    /// <summary>
+    /// Redirect incompatible row settings
+    /// Serialized Name: RedirectIncompatibleRowSettings
+    /// </summary>
     public partial class RedirectIncompatibleRowSettings
     {
         /// <summary> Initializes a new instance of RedirectIncompatibleRowSettings. </summary>
-        /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName">
+        /// Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string).
+        /// Serialized Name: RedirectIncompatibleRowSettings.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public RedirectIncompatibleRowSettings(DataFactoryElement<string> linkedServiceName)
         {
@@ -27,8 +33,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RedirectIncompatibleRowSettings. </summary>
-        /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
-        /// <param name="path"> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName">
+        /// Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string).
+        /// Serialized Name: RedirectIncompatibleRowSettings.linkedServiceName
+        /// </param>
+        /// <param name="path">
+        /// The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string).
+        /// Serialized Name: RedirectIncompatibleRowSettings.path
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal RedirectIncompatibleRowSettings(DataFactoryElement<string> linkedServiceName, DataFactoryElement<string> path, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -37,9 +49,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string).
+        /// Serialized Name: RedirectIncompatibleRowSettings.linkedServiceName
+        /// </summary>
         public DataFactoryElement<string> LinkedServiceName { get; set; }
-        /// <summary> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string).
+        /// Serialized Name: RedirectIncompatibleRowSettings.path
+        /// </summary>
         public DataFactoryElement<string> Path { get; set; }
         /// <summary>
         /// Additional Properties

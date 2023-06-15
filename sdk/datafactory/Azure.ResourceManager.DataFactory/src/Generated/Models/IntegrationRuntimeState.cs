@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The state of integration runtime. </summary>
+    /// <summary>
+    /// The state of integration runtime.
+    /// Serialized Name: IntegrationRuntimeState
+    /// </summary>
     public readonly partial struct IntegrationRuntimeState : IEquatable<IntegrationRuntimeState>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string OfflineValue = "Offline";
         private const string AccessDeniedValue = "AccessDenied";
 
-        /// <summary> Initial. </summary>
+        /// <summary>
+        /// Initial
+        /// Serialized Name: IntegrationRuntimeState.Initial
+        /// </summary>
         public static IntegrationRuntimeState Initial { get; } = new IntegrationRuntimeState(InitialValue);
-        /// <summary> Stopped. </summary>
+        /// <summary>
+        /// Stopped
+        /// Serialized Name: IntegrationRuntimeState.Stopped
+        /// </summary>
         public static IntegrationRuntimeState Stopped { get; } = new IntegrationRuntimeState(StoppedValue);
-        /// <summary> Started. </summary>
+        /// <summary>
+        /// Started
+        /// Serialized Name: IntegrationRuntimeState.Started
+        /// </summary>
         public static IntegrationRuntimeState Started { get; } = new IntegrationRuntimeState(StartedValue);
-        /// <summary> Starting. </summary>
+        /// <summary>
+        /// Starting
+        /// Serialized Name: IntegrationRuntimeState.Starting
+        /// </summary>
         public static IntegrationRuntimeState Starting { get; } = new IntegrationRuntimeState(StartingValue);
-        /// <summary> Stopping. </summary>
+        /// <summary>
+        /// Stopping
+        /// Serialized Name: IntegrationRuntimeState.Stopping
+        /// </summary>
         public static IntegrationRuntimeState Stopping { get; } = new IntegrationRuntimeState(StoppingValue);
-        /// <summary> NeedRegistration. </summary>
+        /// <summary>
+        /// NeedRegistration
+        /// Serialized Name: IntegrationRuntimeState.NeedRegistration
+        /// </summary>
         public static IntegrationRuntimeState NeedRegistration { get; } = new IntegrationRuntimeState(NeedRegistrationValue);
-        /// <summary> Online. </summary>
+        /// <summary>
+        /// Online
+        /// Serialized Name: IntegrationRuntimeState.Online
+        /// </summary>
         public static IntegrationRuntimeState Online { get; } = new IntegrationRuntimeState(OnlineValue);
-        /// <summary> Limited. </summary>
+        /// <summary>
+        /// Limited
+        /// Serialized Name: IntegrationRuntimeState.Limited
+        /// </summary>
         public static IntegrationRuntimeState Limited { get; } = new IntegrationRuntimeState(LimitedValue);
-        /// <summary> Offline. </summary>
+        /// <summary>
+        /// Offline
+        /// Serialized Name: IntegrationRuntimeState.Offline
+        /// </summary>
         public static IntegrationRuntimeState Offline { get; } = new IntegrationRuntimeState(OfflineValue);
-        /// <summary> AccessDenied. </summary>
+        /// <summary>
+        /// AccessDenied
+        /// Serialized Name: IntegrationRuntimeState.AccessDenied
+        /// </summary>
         public static IntegrationRuntimeState AccessDenied { get; } = new IntegrationRuntimeState(AccessDeniedValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeState"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeState left, IntegrationRuntimeState right) => left.Equals(right);

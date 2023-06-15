@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="id"> The private link configuration id. </param>
         /// <param name="name"> The name of private link configuration. </param>
         /// <param name="resourceType"> The type of the private link configuration. </param>
-        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;. </param>
+        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
         /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
         /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
         /// <returns> A new <see cref="Models.HDInsightPrivateLinkConfiguration"/> instance for mocking. </returns>
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="clusterVersions"> The list of cluster versions affected in Major.Minor format. </param>
         /// <param name="osType"> The OSType affected, Windows or Linux. </param>
         /// <param name="vmSizes"> The list of virtual machine sizes to include or exclude. </param>
-        /// <param name="espApplied"> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </param>
-        /// <param name="isComputeIsolationSupported"> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </param>
+        /// <param name="espApplied"> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </param>
+        /// <param name="isComputeIsolationSupported"> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </param>
         /// <returns> A new <see cref="Models.HDInsightVmSizeCompatibilityFilterV2"/> instance for mocking. </returns>
         public static HDInsightVmSizeCompatibilityFilterV2 HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode = null, IEnumerable<string> regions = null, IEnumerable<string> clusterFlavors = null, IEnumerable<string> nodeTypes = null, IEnumerable<string> clusterVersions = null, IEnumerable<HDInsightOSType> osType = null, IEnumerable<string> vmSizes = null, string espApplied = null, string isComputeIsolationSupported = null)
         {

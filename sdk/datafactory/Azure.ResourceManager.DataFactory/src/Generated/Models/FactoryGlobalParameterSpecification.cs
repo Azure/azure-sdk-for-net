@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Definition of a single parameter for an entity. </summary>
+    /// <summary>
+    /// Definition of a single parameter for an entity.
+    /// Serialized Name: GlobalParameterSpecification
+    /// </summary>
     public partial class FactoryGlobalParameterSpecification
     {
         /// <summary> Initializes a new instance of FactoryGlobalParameterSpecification. </summary>
-        /// <param name="parameterType"> Global Parameter type. </param>
-        /// <param name="value"> Value of parameter. </param>
+        /// <param name="parameterType">
+        /// Global Parameter type.
+        /// Serialized Name: GlobalParameterSpecification.type
+        /// </param>
+        /// <param name="value">
+        /// Value of parameter.
+        /// Serialized Name: GlobalParameterSpecification.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FactoryGlobalParameterSpecification(FactoryGlobalParameterType parameterType, BinaryData value)
         {
@@ -25,10 +34,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
         }
 
-        /// <summary> Global Parameter type. </summary>
+        /// <summary>
+        /// Global Parameter type.
+        /// Serialized Name: GlobalParameterSpecification.type
+        /// </summary>
         public FactoryGlobalParameterType ParameterType { get; set; }
         /// <summary>
         /// Value of parameter.
+        /// Serialized Name: GlobalParameterSpecification.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

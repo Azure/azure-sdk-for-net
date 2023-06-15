@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The format definition of a storage.
+    /// Serialized Name: DatasetStorageFormat
     /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
     /// </summary>
@@ -26,9 +27,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
-        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
-        /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
-        /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetStorageFormatType">
+        /// Type of dataset storage format.
+        /// Serialized Name: DatasetStorageFormat.type
+        /// </param>
+        /// <param name="serializer">
+        /// Serializer. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetStorageFormat.serializer
+        /// </param>
+        /// <param name="deserializer">
+        /// Deserializer. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetStorageFormat.deserializer
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetStorageFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -38,11 +48,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of dataset storage format. </summary>
+        /// <summary>
+        /// Type of dataset storage format.
+        /// Serialized Name: DatasetStorageFormat.type
+        /// </summary>
         internal string DatasetStorageFormatType { get; set; }
-        /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Serializer. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetStorageFormat.serializer
+        /// </summary>
         public DataFactoryElement<string> Serializer { get; set; }
-        /// <summary> Deserializer. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Deserializer. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetStorageFormat.deserializer
+        /// </summary>
         public DataFactoryElement<string> Deserializer { get; set; }
         /// <summary>
         /// Additional Properties

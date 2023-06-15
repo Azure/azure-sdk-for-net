@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Rest Service linked service. </summary>
+    /// <summary>
+    /// Rest Service linked service.
+    /// Serialized Name: RestServiceLinkedService
+    /// </summary>
     public partial class RestServiceLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
-        /// <param name="uri"> The base URL of the REST service. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
+        /// <param name="uri">
+        /// The base URL of the REST service. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.url
+        /// </param>
+        /// <param name="authenticationType">
+        /// Type of authentication used to connect to the REST service.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.authenticationType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public RestServiceLinkedService(DataFactoryElement<string> uri, RestServiceAuthenticationType authenticationType)
         {
@@ -29,42 +38,105 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri"> The base URL of the REST service. Type: string (or Expression with resultType string). </param>
-        /// <param name="enableServerCertificateValidation"> Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
-        /// <param name="userName"> The user name used in Basic authentication type. Type: string (or Expression with resultType string). </param>
+        /// <param name="uri">
+        /// The base URL of the REST service. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.url
+        /// </param>
+        /// <param name="enableServerCertificateValidation">
+        /// Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.enableServerCertificateValidation
+        /// </param>
+        /// <param name="authenticationType">
+        /// Type of authentication used to connect to the REST service.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.authenticationType
+        /// </param>
+        /// <param name="userName">
+        /// The user name used in Basic authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.userName
+        /// </param>
         /// <param name="password">
         /// The password used in Basic authentication type.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
-        /// <param name="servicePrincipalId"> The application&apos;s client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string). </param>
+        /// <param name="authHeaders">
+        /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.authHeaders
+        /// </param>
+        /// <param name="servicePrincipalId">
+        /// The application's client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.servicePrincipalId
+        /// </param>
         /// <param name="servicePrincipalKey">
-        /// The application&apos;s key used in AadServicePrincipal authentication type.
+        /// The application's key used in AadServicePrincipal authentication type.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant"> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="aadResourceId"> The resource you are requesting authorization to use. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="clientId"> The client ID associated with your application. Type: string (or Expression with resultType string). </param>
+        /// <param name="tenant">
+        /// The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.tenant
+        /// </param>
+        /// <param name="azureCloudType">
+        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.azureCloudType
+        /// </param>
+        /// <param name="aadResourceId">
+        /// The resource you are requesting authorization to use. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.aadResourceId
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.encryptedCredential
+        /// </param>
+        /// <param name="credential">
+        /// The credential reference containing authentication information.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.credential
+        /// </param>
+        /// <param name="clientId">
+        /// The client ID associated with your application. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.clientId
+        /// </param>
         /// <param name="clientSecret">
         /// The client secret associated with your application.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.clientSecret
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tokenEndpoint"> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </param>
-        /// <param name="resource"> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </param>
-        /// <param name="scope"> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </param>
+        /// <param name="tokenEndpoint">
+        /// The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.tokenEndpoint
+        /// </param>
+        /// <param name="resource">
+        /// The target service or resource to which the access will be requested. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.resource
+        /// </param>
+        /// <param name="scope">
+        /// The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.scope
+        /// </param>
         internal RestServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactoryElement<bool> enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, DataFactoryElement<string> userName, FactorySecretBaseDefinition password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, BinaryData encryptedCredential, FactoryCredentialReference credential, DataFactoryElement<string> clientId, FactorySecretBaseDefinition clientSecret, DataFactoryElement<string> tokenEndpoint, DataFactoryElement<string> resource, DataFactoryElement<string> scope) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
@@ -88,38 +160,68 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "RestService";
         }
 
-        /// <summary> The base URL of the REST service. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The base URL of the REST service. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.url
+        /// </summary>
         public DataFactoryElement<string> Uri { get; set; }
-        /// <summary> Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.enableServerCertificateValidation
+        /// </summary>
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
-        /// <summary> Type of authentication used to connect to the REST service. </summary>
+        /// <summary>
+        /// Type of authentication used to connect to the REST service.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.authenticationType
+        /// </summary>
         public RestServiceAuthenticationType AuthenticationType { get; set; }
-        /// <summary> The user name used in Basic authentication type. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The user name used in Basic authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.userName
+        /// </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary>
         /// The password used in Basic authentication type.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
+        /// <summary>
+        /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.authHeaders
+        /// </summary>
         public DataFactoryElement<BinaryData> AuthHeaders { get; set; }
-        /// <summary> The application&apos;s client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The application's client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.servicePrincipalId
+        /// </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary>
-        /// The application&apos;s key used in AadServicePrincipal authentication type.
+        /// The application's key used in AadServicePrincipal authentication type.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.tenant
+        /// </summary>
         public DataFactoryElement<string> Tenant { get; set; }
-        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.azureCloudType
+        /// </summary>
         public DataFactoryElement<string> AzureCloudType { get; set; }
-        /// <summary> The resource you are requesting authorization to use. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The resource you are requesting authorization to use. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.aadResourceId
+        /// </summary>
         public DataFactoryElement<string> AadResourceId { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -149,21 +251,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary> The credential reference containing authentication information. </summary>
+        /// <summary>
+        /// The credential reference containing authentication information.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.credential
+        /// </summary>
         public FactoryCredentialReference Credential { get; set; }
-        /// <summary> The client ID associated with your application. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The client ID associated with your application. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.clientId
+        /// </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary>
         /// The client secret associated with your application.
+        /// Serialized Name: RestServiceLinkedService.typeProperties.clientSecret
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ClientSecret { get; set; }
-        /// <summary> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.tokenEndpoint
+        /// </summary>
         public DataFactoryElement<string> TokenEndpoint { get; set; }
-        /// <summary> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The target service or resource to which the access will be requested. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.resource
+        /// </summary>
         public DataFactoryElement<string> Resource { get; set; }
-        /// <summary> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestServiceLinkedService.typeProperties.scope
+        /// </summary>
         public DataFactoryElement<string> Scope { get; set; }
     }
 }

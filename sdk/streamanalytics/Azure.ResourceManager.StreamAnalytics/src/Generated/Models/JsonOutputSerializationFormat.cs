@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. </summary>
+    /// <summary> Specifies the format of the JSON the output will be written in. The currently supported values are 'lineSeparated' indicating the output will be formatted by having each JSON object separated by a new line and 'array' indicating the output will be formatted as an array of JSON objects. </summary>
     public readonly partial struct JsonOutputSerializationFormat : IEquatable<JsonOutputSerializationFormat>
     {
         private readonly string _value;

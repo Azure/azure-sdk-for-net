@@ -11,12 +11,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Spark configuration reference. </summary>
+    /// <summary>
+    /// Spark configuration reference.
+    /// Serialized Name: SparkConfigurationParametrizationReference
+    /// </summary>
     public partial class SparkConfigurationParametrizationReference
     {
         /// <summary> Initializes a new instance of SparkConfigurationParametrizationReference. </summary>
-        /// <param name="referenceType"> Spark configuration reference type. </param>
-        /// <param name="referenceName"> Reference spark configuration name. Type: string (or Expression with resultType string). </param>
+        /// <param name="referenceType">
+        /// Spark configuration reference type.
+        /// Serialized Name: SparkConfigurationParametrizationReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference spark configuration name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SparkConfigurationParametrizationReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public SparkConfigurationParametrizationReference(SparkConfigurationReferenceType referenceType, DataFactoryElement<string> referenceName)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Spark configuration reference type. </summary>
+        /// <summary>
+        /// Spark configuration reference type.
+        /// Serialized Name: SparkConfigurationParametrizationReference.type
+        /// </summary>
         public SparkConfigurationReferenceType ReferenceType { get; set; }
-        /// <summary> Reference spark configuration name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Reference spark configuration name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SparkConfigurationParametrizationReference.referenceName
+        /// </summary>
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

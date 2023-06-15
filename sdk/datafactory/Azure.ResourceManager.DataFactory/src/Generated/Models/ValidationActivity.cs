@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> This activity verifies that an external resource exists. </summary>
+    /// <summary>
+    /// This activity verifies that an external resource exists.
+    /// Serialized Name: ValidationActivity
+    /// </summary>
     public partial class ValidationActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of ValidationActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="dataset"> Validation activity dataset reference. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="dataset">
+        /// Validation activity dataset reference.
+        /// Serialized Name: ValidationActivity.typeProperties.dataset
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public ValidationActivity(string name, DatasetReference dataset) : base(name)
         {
@@ -29,19 +38,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ValidationActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="timeout"> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="sleep"> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="minimumSize"> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="childItems"> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="dataset"> Validation activity dataset reference. </param>
+        /// <param name="timeout">
+        /// Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: ValidationActivity.typeProperties.timeout
+        /// </param>
+        /// <param name="sleep">
+        /// A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: ValidationActivity.typeProperties.sleep
+        /// </param>
+        /// <param name="minimumSize">
+        /// Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: ValidationActivity.typeProperties.minimumSize
+        /// </param>
+        /// <param name="childItems">
+        /// Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: ValidationActivity.typeProperties.childItems
+        /// </param>
+        /// <param name="dataset">
+        /// Validation activity dataset reference.
+        /// Serialized Name: ValidationActivity.typeProperties.dataset
+        /// </param>
         internal ValidationActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> timeout, DataFactoryElement<int> sleep, DataFactoryElement<int> minimumSize, DataFactoryElement<bool> childItems, DatasetReference dataset) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Timeout = timeout;
@@ -52,15 +97,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Validation";
         }
 
-        /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: ValidationActivity.typeProperties.timeout
+        /// </summary>
         public DataFactoryElement<string> Timeout { get; set; }
-        /// <summary> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: ValidationActivity.typeProperties.sleep
+        /// </summary>
         public DataFactoryElement<int> Sleep { get; set; }
-        /// <summary> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: ValidationActivity.typeProperties.minimumSize
+        /// </summary>
         public DataFactoryElement<int> MinimumSize { get; set; }
-        /// <summary> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: ValidationActivity.typeProperties.childItems
+        /// </summary>
         public DataFactoryElement<bool> ChildItems { get; set; }
-        /// <summary> Validation activity dataset reference. </summary>
+        /// <summary>
+        /// Validation activity dataset reference.
+        /// Serialized Name: ValidationActivity.typeProperties.dataset
+        /// </summary>
         public DatasetReference Dataset { get; set; }
     }
 }

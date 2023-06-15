@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Custom script action to run on HDI ondemand cluster once it&apos;s up. </summary>
+    /// <summary>
+    /// Custom script action to run on HDI ondemand cluster once it's up.
+    /// Serialized Name: ScriptAction
+    /// </summary>
     public partial class ScriptAction
     {
         /// <summary> Initializes a new instance of ScriptAction. </summary>
-        /// <param name="name"> The user provided name of the script action. </param>
-        /// <param name="uri"> The URI for the script action. </param>
-        /// <param name="roles"> The node types on which the script action should be executed. </param>
+        /// <param name="name">
+        /// The user provided name of the script action.
+        /// Serialized Name: ScriptAction.name
+        /// </param>
+        /// <param name="uri">
+        /// The URI for the script action.
+        /// Serialized Name: ScriptAction.uri
+        /// </param>
+        /// <param name="roles">
+        /// The node types on which the script action should be executed.
+        /// Serialized Name: ScriptAction.roles
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public ScriptAction(string name, Uri uri, BinaryData roles)
         {
@@ -30,10 +42,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScriptAction. </summary>
-        /// <param name="name"> The user provided name of the script action. </param>
-        /// <param name="uri"> The URI for the script action. </param>
-        /// <param name="roles"> The node types on which the script action should be executed. </param>
-        /// <param name="parameters"> The parameters for the script action. </param>
+        /// <param name="name">
+        /// The user provided name of the script action.
+        /// Serialized Name: ScriptAction.name
+        /// </param>
+        /// <param name="uri">
+        /// The URI for the script action.
+        /// Serialized Name: ScriptAction.uri
+        /// </param>
+        /// <param name="roles">
+        /// The node types on which the script action should be executed.
+        /// Serialized Name: ScriptAction.roles
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters for the script action.
+        /// Serialized Name: ScriptAction.parameters
+        /// </param>
         internal ScriptAction(string name, Uri uri, BinaryData roles, string parameters)
         {
             Name = name;
@@ -42,12 +66,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
         }
 
-        /// <summary> The user provided name of the script action. </summary>
+        /// <summary>
+        /// The user provided name of the script action.
+        /// Serialized Name: ScriptAction.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The URI for the script action. </summary>
+        /// <summary>
+        /// The URI for the script action.
+        /// Serialized Name: ScriptAction.uri
+        /// </summary>
         public Uri Uri { get; set; }
         /// <summary>
         /// The node types on which the script action should be executed.
+        /// Serialized Name: ScriptAction.roles
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,7 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Roles { get; set; }
-        /// <summary> The parameters for the script action. </summary>
+        /// <summary>
+        /// The parameters for the script action.
+        /// Serialized Name: ScriptAction.parameters
+        /// </summary>
         public string Parameters { get; set; }
     }
 }

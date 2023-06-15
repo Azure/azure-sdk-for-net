@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of SSIS object metadata. </summary>
+    /// <summary>
+    /// A list of SSIS object metadata.
+    /// Serialized Name: SsisObjectMetadataListResponse
+    /// </summary>
     internal partial class SsisObjectMetadataListResponse
     {
         /// <summary> Initializes a new instance of SsisObjectMetadataListResponse. </summary>
@@ -22,10 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisObjectMetadataListResponse. </summary>
         /// <param name="value">
         /// List of SSIS object metadata.
+        /// Serialized Name: SsisObjectMetadataListResponse.value
         /// Please note <see cref="SsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SsisEnvironment"/>, <see cref="SsisFolder"/>, <see cref="SsisPackage"/> and <see cref="SsisProject"/>.
         /// </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: SsisObjectMetadataListResponse.nextLink
+        /// </param>
         internal SsisObjectMetadataListResponse(IReadOnlyList<SsisObjectMetadata> value, string nextLink)
         {
             Value = value;
@@ -34,11 +41,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// List of SSIS object metadata.
+        /// Serialized Name: SsisObjectMetadataListResponse.value
         /// Please note <see cref="SsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SsisEnvironment"/>, <see cref="SsisFolder"/>, <see cref="SsisPackage"/> and <see cref="SsisProject"/>.
         /// </summary>
         public IReadOnlyList<SsisObjectMetadata> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: SsisObjectMetadataListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

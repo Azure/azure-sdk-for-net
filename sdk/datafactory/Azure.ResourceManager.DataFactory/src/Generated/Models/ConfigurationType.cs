@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The type of the spark config. </summary>
+    /// <summary>
+    /// The type of the spark config.
+    /// Serialized Name: ConfigurationType
+    /// </summary>
     public readonly partial struct ConfigurationType : IEquatable<ConfigurationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string CustomizedValue = "Customized";
         private const string ArtifactValue = "Artifact";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: ConfigurationType.Default
+        /// </summary>
         public static ConfigurationType Default { get; } = new ConfigurationType(DefaultValue);
-        /// <summary> Customized. </summary>
+        /// <summary>
+        /// Customized
+        /// Serialized Name: ConfigurationType.Customized
+        /// </summary>
         public static ConfigurationType Customized { get; } = new ConfigurationType(CustomizedValue);
-        /// <summary> Artifact. </summary>
+        /// <summary>
+        /// Artifact
+        /// Serialized Name: ConfigurationType.Artifact
+        /// </summary>
         public static ConfigurationType Artifact { get; } = new ConfigurationType(ArtifactValue);
         /// <summary> Determines if two <see cref="ConfigurationType"/> values are the same. </summary>
         public static bool operator ==(ConfigurationType left, ConfigurationType right) => left.Equals(right);

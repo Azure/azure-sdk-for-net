@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Managed identity credential. </summary>
+    /// <summary>
+    /// Managed identity credential.
+    /// Serialized Name: ManagedIdentityCredential
+    /// </summary>
     public partial class ManagedIdentityCredential : Credential
     {
         /// <summary> Initializes a new instance of ManagedIdentityCredential. </summary>
@@ -20,18 +23,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIdentityCredential. </summary>
-        /// <param name="credentialType"> Type of credential. </param>
-        /// <param name="description"> Credential description. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
+        /// <param name="credentialType">
+        /// Type of credential.
+        /// Serialized Name: Credential.type
+        /// </param>
+        /// <param name="description">
+        /// Credential description.
+        /// Serialized Name: Credential.description
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the Credential.
+        /// Serialized Name: Credential.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="resourceId"> The resource id of user assigned managed identity. </param>
+        /// <param name="resourceId">
+        /// The resource id of user assigned managed identity
+        /// Serialized Name: ManagedIdentityCredential.typeProperties.resourceId
+        /// </param>
         internal ManagedIdentityCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, string resourceId) : base(credentialType, description, annotations, additionalProperties)
         {
             ResourceId = resourceId;
             CredentialType = credentialType ?? "ManagedIdentity";
         }
 
-        /// <summary> The resource id of user assigned managed identity. </summary>
+        /// <summary>
+        /// The resource id of user assigned managed identity
+        /// Serialized Name: ManagedIdentityCredential.typeProperties.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
     }
 }

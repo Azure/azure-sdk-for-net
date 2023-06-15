@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Databricks Delta Lake export command settings. </summary>
+    /// <summary>
+    /// Azure Databricks Delta Lake export command settings.
+    /// Serialized Name: AzureDatabricksDeltaLakeExportCommand
+    /// </summary>
     public partial class AzureDatabricksDeltaLakeExportCommand : ExportSettings
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeExportCommand. </summary>
@@ -21,10 +24,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeExportCommand. </summary>
-        /// <param name="exportSettingsType"> The export setting type. </param>
+        /// <param name="exportSettingsType">
+        /// The export setting type.
+        /// Serialized Name: ExportSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="dateFormat"> Specify the date format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
-        /// <param name="timestampFormat"> Specify the timestamp format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
+        /// <param name="dateFormat">
+        /// Specify the date format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDatabricksDeltaLakeExportCommand.dateFormat
+        /// </param>
+        /// <param name="timestampFormat">
+        /// Specify the timestamp format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDatabricksDeltaLakeExportCommand.timestampFormat
+        /// </param>
         internal AzureDatabricksDeltaLakeExportCommand(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> dateFormat, DataFactoryElement<string> timestampFormat) : base(exportSettingsType, additionalProperties)
         {
             DateFormat = dateFormat;
@@ -32,9 +44,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExportSettingsType = exportSettingsType ?? "AzureDatabricksDeltaLakeExportCommand";
         }
 
-        /// <summary> Specify the date format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the date format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDatabricksDeltaLakeExportCommand.dateFormat
+        /// </summary>
         public DataFactoryElement<string> DateFormat { get; set; }
-        /// <summary> Specify the timestamp format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the timestamp format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDatabricksDeltaLakeExportCommand.timestampFormat
+        /// </summary>
         public DataFactoryElement<string> TimestampFormat { get; set; }
     }
 }

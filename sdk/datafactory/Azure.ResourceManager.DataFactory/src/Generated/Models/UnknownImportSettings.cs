@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownImportSettings. </summary>
+    /// <summary>
+    /// The UnknownImportSettings.
+    /// Serialized Name: UnknownImportSettings
+    /// </summary>
     internal partial class UnknownImportSettings : ImportSettings
     {
         /// <summary> Initializes a new instance of UnknownImportSettings. </summary>
-        /// <param name="importSettingsType"> The import setting type. </param>
+        /// <param name="importSettingsType">
+        /// The import setting type.
+        /// Serialized Name: ImportSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownImportSettings(string importSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(importSettingsType, additionalProperties)
         {

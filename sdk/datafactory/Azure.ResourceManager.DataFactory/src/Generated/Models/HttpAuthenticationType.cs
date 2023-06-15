@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication type to be used to connect to the HTTP server. </summary>
+    /// <summary>
+    /// The authentication type to be used to connect to the HTTP server.
+    /// Serialized Name: HttpAuthenticationType
+    /// </summary>
     public readonly partial struct HttpAuthenticationType : IEquatable<HttpAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string WindowsValue = "Windows";
         private const string ClientCertificateValue = "ClientCertificate";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: HttpAuthenticationType.Basic
+        /// </summary>
         public static HttpAuthenticationType Basic { get; } = new HttpAuthenticationType(BasicValue);
-        /// <summary> Anonymous. </summary>
+        /// <summary>
+        /// Anonymous
+        /// Serialized Name: HttpAuthenticationType.Anonymous
+        /// </summary>
         public static HttpAuthenticationType Anonymous { get; } = new HttpAuthenticationType(AnonymousValue);
-        /// <summary> Digest. </summary>
+        /// <summary>
+        /// Digest
+        /// Serialized Name: HttpAuthenticationType.Digest
+        /// </summary>
         public static HttpAuthenticationType Digest { get; } = new HttpAuthenticationType(DigestValue);
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: HttpAuthenticationType.Windows
+        /// </summary>
         public static HttpAuthenticationType Windows { get; } = new HttpAuthenticationType(WindowsValue);
-        /// <summary> ClientCertificate. </summary>
+        /// <summary>
+        /// ClientCertificate
+        /// Serialized Name: HttpAuthenticationType.ClientCertificate
+        /// </summary>
         public static HttpAuthenticationType ClientCertificate { get; } = new HttpAuthenticationType(ClientCertificateValue);
         /// <summary> Determines if two <see cref="HttpAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(HttpAuthenticationType left, HttpAuthenticationType right) => left.Equals(right);

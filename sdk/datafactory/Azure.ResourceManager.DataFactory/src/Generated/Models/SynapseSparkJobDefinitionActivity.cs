@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Execute spark job activity. </summary>
+    /// <summary>
+    /// Execute spark job activity.
+    /// Serialized Name: SynapseSparkJobDefinitionActivity
+    /// </summary>
     public partial class SynapseSparkJobDefinitionActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="sparkJob"> Synapse spark job reference. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="sparkJob">
+        /// Synapse spark job reference.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.sparkJob
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
         public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob) : base(name)
         {
@@ -34,32 +43,107 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="sparkJob"> Synapse spark job reference. </param>
-        /// <param name="arguments"> User specified arguments to SynapseSparkJobDefinitionActivity. </param>
-        /// <param name="file"> The main file used for the job, which will override the &apos;file&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="scanFolder"> Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named &apos;jars&apos;, &apos;pyFiles&apos;, &apos;files&apos; or &apos;archives&apos; will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="className"> The fully-qualified identifier or the main class that is in the main definition file, which will override the &apos;className&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="files"> (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the &apos;files&apos; of the spark job definition you provide. </param>
-        /// <param name="pythonCodeReference"> Additional python code files used for reference in the main definition file, which will override the &apos;pyFiles&apos; of the spark job definition you provide. </param>
-        /// <param name="filesV2"> Additional files used for reference in the main definition file, which will override the &apos;jars&apos; and &apos;files&apos; of the spark job definition you provide. </param>
-        /// <param name="targetBigDataPool"> The name of the big data pool which will be used to execute the spark batch job, which will override the &apos;targetBigDataPool&apos; of the spark job definition you provide. </param>
-        /// <param name="executorSize"> Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding &apos;executorCores&apos; and &apos;executorMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="conf"> Spark configuration properties, which will override the &apos;conf&apos; of the spark job definition you provide. </param>
-        /// <param name="driverSize"> Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding &apos;driverCores&apos; and &apos;driverMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="numExecutors"> Number of executors to launch for this job, which will override the &apos;numExecutors&apos; of the spark job definition you provide. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="configurationType"> The type of the spark config. </param>
-        /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
-        /// <param name="sparkConfig"> Spark configuration property. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="sparkJob">
+        /// Synapse spark job reference.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.sparkJob
+        /// </param>
+        /// <param name="arguments">
+        /// User specified arguments to SynapseSparkJobDefinitionActivity.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.args
+        /// </param>
+        /// <param name="file">
+        /// The main file used for the job, which will override the 'file' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.file
+        /// </param>
+        /// <param name="scanFolder">
+        /// Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named 'jars', 'pyFiles', 'files' or 'archives' will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.scanFolder
+        /// </param>
+        /// <param name="className">
+        /// The fully-qualified identifier or the main class that is in the main definition file, which will override the 'className' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.className
+        /// </param>
+        /// <param name="files">
+        /// (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the 'files' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.files
+        /// </param>
+        /// <param name="pythonCodeReference">
+        /// Additional python code files used for reference in the main definition file, which will override the 'pyFiles' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.pythonCodeReference
+        /// </param>
+        /// <param name="filesV2">
+        /// Additional files used for reference in the main definition file, which will override the 'jars' and 'files' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.filesV2
+        /// </param>
+        /// <param name="targetBigDataPool">
+        /// The name of the big data pool which will be used to execute the spark batch job, which will override the 'targetBigDataPool' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.targetBigDataPool
+        /// </param>
+        /// <param name="executorSize">
+        /// Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding 'executorCores' and 'executorMemory' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.executorSize
+        /// </param>
+        /// <param name="conf">
+        /// Spark configuration properties, which will override the 'conf' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.conf
+        /// </param>
+        /// <param name="driverSize">
+        /// Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding 'driverCores' and 'driverMemory' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.driverSize
+        /// </param>
+        /// <param name="numExecutors">
+        /// Number of executors to launch for this job, which will override the 'numExecutors' of the spark job definition you provide. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.numExecutors
+        /// </param>
+        /// <param name="configurationType">
+        /// The type of the spark config.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.configurationType
+        /// </param>
+        /// <param name="targetSparkConfiguration">
+        /// The spark configuration of the spark job.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.targetSparkConfiguration
+        /// </param>
+        /// <param name="sparkConfig">
+        /// Spark configuration property.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.sparkConfig
+        /// </param>
         internal SynapseSparkJobDefinitionActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<BinaryData> arguments, DataFactoryElement<string> file, DataFactoryElement<bool> scanFolder, DataFactoryElement<string> className, IList<BinaryData> files, IList<BinaryData> pythonCodeReference, IList<BinaryData> filesV2, BigDataPoolParametrizationReference targetBigDataPool, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
@@ -81,10 +165,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SparkJob";
         }
 
-        /// <summary> Synapse spark job reference. </summary>
+        /// <summary>
+        /// Synapse spark job reference.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.sparkJob
+        /// </summary>
         public SynapseSparkJobReference SparkJob { get; set; }
         /// <summary>
         /// User specified arguments to SynapseSparkJobDefinitionActivity.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.args
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -114,14 +202,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Arguments { get; }
-        /// <summary> The main file used for the job, which will override the &apos;file&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The main file used for the job, which will override the 'file' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.file
+        /// </summary>
         public DataFactoryElement<string> File { get; set; }
-        /// <summary> Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named &apos;jars&apos;, &apos;pyFiles&apos;, &apos;files&apos; or &apos;archives&apos; will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named 'jars', 'pyFiles', 'files' or 'archives' will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.scanFolder
+        /// </summary>
         public DataFactoryElement<bool> ScanFolder { get; set; }
-        /// <summary> The fully-qualified identifier or the main class that is in the main definition file, which will override the &apos;className&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The fully-qualified identifier or the main class that is in the main definition file, which will override the 'className' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.className
+        /// </summary>
         public DataFactoryElement<string> ClassName { get; set; }
         /// <summary>
-        /// (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the &apos;files&apos; of the spark job definition you provide.
+        /// (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the 'files' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.files
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -152,7 +250,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public IList<BinaryData> Files { get; }
         /// <summary>
-        /// Additional python code files used for reference in the main definition file, which will override the &apos;pyFiles&apos; of the spark job definition you provide.
+        /// Additional python code files used for reference in the main definition file, which will override the 'pyFiles' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.pythonCodeReference
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -183,7 +282,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public IList<BinaryData> PythonCodeReference { get; }
         /// <summary>
-        /// Additional files used for reference in the main definition file, which will override the &apos;jars&apos; and &apos;files&apos; of the spark job definition you provide.
+        /// Additional files used for reference in the main definition file, which will override the 'jars' and 'files' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.filesV2
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -213,12 +313,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> FilesV2 { get; }
-        /// <summary> The name of the big data pool which will be used to execute the spark batch job, which will override the &apos;targetBigDataPool&apos; of the spark job definition you provide. </summary>
+        /// <summary>
+        /// The name of the big data pool which will be used to execute the spark batch job, which will override the 'targetBigDataPool' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.targetBigDataPool
+        /// </summary>
         public BigDataPoolParametrizationReference TargetBigDataPool { get; set; }
-        /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding &apos;executorCores&apos; and &apos;executorMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding 'executorCores' and 'executorMemory' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.executorSize
+        /// </summary>
         public DataFactoryElement<string> ExecutorSize { get; set; }
         /// <summary>
-        /// Spark configuration properties, which will override the &apos;conf&apos; of the spark job definition you provide.
+        /// Spark configuration properties, which will override the 'conf' of the spark job definition you provide.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.conf
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -248,16 +355,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Conf { get; set; }
-        /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding &apos;driverCores&apos; and &apos;driverMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding 'driverCores' and 'driverMemory' of the spark job definition you provide. Type: string (or Expression with resultType string).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.driverSize
+        /// </summary>
         public DataFactoryElement<string> DriverSize { get; set; }
-        /// <summary> Number of executors to launch for this job, which will override the &apos;numExecutors&apos; of the spark job definition you provide. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// Number of executors to launch for this job, which will override the 'numExecutors' of the spark job definition you provide. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.numExecutors
+        /// </summary>
         public DataFactoryElement<int> NumExecutors { get; set; }
-        /// <summary> The type of the spark config. </summary>
+        /// <summary>
+        /// The type of the spark config.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.configurationType
+        /// </summary>
         public ConfigurationType? ConfigurationType { get; set; }
-        /// <summary> The spark configuration of the spark job. </summary>
+        /// <summary>
+        /// The spark configuration of the spark job.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.targetSparkConfiguration
+        /// </summary>
         public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
         /// <summary>
         /// Spark configuration property.
+        /// Serialized Name: SynapseSparkJobDefinitionActivity.typeProperties.sparkConfig
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

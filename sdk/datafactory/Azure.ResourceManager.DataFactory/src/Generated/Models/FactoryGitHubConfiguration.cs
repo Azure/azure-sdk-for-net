@@ -10,14 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s GitHub repo information. </summary>
+    /// <summary>
+    /// Factory's GitHub repo information.
+    /// Serialized Name: FactoryGitHubConfiguration
+    /// </summary>
     public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="collaborationBranch"> Collaboration branch. </param>
-        /// <param name="rootFolder"> Root folder. </param>
+        /// <param name="accountName">
+        /// Account name.
+        /// Serialized Name: FactoryRepoConfiguration.accountName
+        /// </param>
+        /// <param name="repositoryName">
+        /// Repository name.
+        /// Serialized Name: FactoryRepoConfiguration.repositoryName
+        /// </param>
+        /// <param name="collaborationBranch">
+        /// Collaboration branch.
+        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
+        /// </param>
+        /// <param name="rootFolder">
+        /// Root folder.
+        /// Serialized Name: FactoryRepoConfiguration.rootFolder
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/> or <paramref name="rootFolder"/> is null. </exception>
         public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) : base(accountName, repositoryName, collaborationBranch, rootFolder)
         {
@@ -30,16 +45,46 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
-        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="collaborationBranch"> Collaboration branch. </param>
-        /// <param name="rootFolder"> Root folder. </param>
-        /// <param name="lastCommitId"> Last commit id. </param>
-        /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
-        /// <param name="hostName"> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </param>
-        /// <param name="clientId"> GitHub bring your own app client id. </param>
-        /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
+        /// <param name="factoryRepoConfigurationType">
+        /// Type of repo configuration.
+        /// Serialized Name: FactoryRepoConfiguration.type
+        /// </param>
+        /// <param name="accountName">
+        /// Account name.
+        /// Serialized Name: FactoryRepoConfiguration.accountName
+        /// </param>
+        /// <param name="repositoryName">
+        /// Repository name.
+        /// Serialized Name: FactoryRepoConfiguration.repositoryName
+        /// </param>
+        /// <param name="collaborationBranch">
+        /// Collaboration branch.
+        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
+        /// </param>
+        /// <param name="rootFolder">
+        /// Root folder.
+        /// Serialized Name: FactoryRepoConfiguration.rootFolder
+        /// </param>
+        /// <param name="lastCommitId">
+        /// Last commit id.
+        /// Serialized Name: FactoryRepoConfiguration.lastCommitId
+        /// </param>
+        /// <param name="disablePublish">
+        /// Disable manual publish operation in ADF studio to favor automated publish.
+        /// Serialized Name: FactoryRepoConfiguration.disablePublish
+        /// </param>
+        /// <param name="hostName">
+        /// GitHub Enterprise host name. For example: `https://github.mydomain.com`
+        /// Serialized Name: FactoryGitHubConfiguration.hostName
+        /// </param>
+        /// <param name="clientId">
+        /// GitHub bring your own app client id.
+        /// Serialized Name: FactoryGitHubConfiguration.clientId
+        /// </param>
+        /// <param name="clientSecret">
+        /// GitHub bring your own app client secret information.
+        /// Serialized Name: FactoryGitHubConfiguration.clientSecret
+        /// </param>
         internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string hostName, string clientId, GitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             HostName = hostName;
@@ -48,11 +93,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryRepoConfigurationType = factoryRepoConfigurationType ?? "FactoryGitHubConfiguration";
         }
 
-        /// <summary> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </summary>
+        /// <summary>
+        /// GitHub Enterprise host name. For example: `https://github.mydomain.com`
+        /// Serialized Name: FactoryGitHubConfiguration.hostName
+        /// </summary>
         public string HostName { get; set; }
-        /// <summary> GitHub bring your own app client id. </summary>
+        /// <summary>
+        /// GitHub bring your own app client id.
+        /// Serialized Name: FactoryGitHubConfiguration.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> GitHub bring your own app client secret information. </summary>
+        /// <summary>
+        /// GitHub bring your own app client secret information.
+        /// Serialized Name: FactoryGitHubConfiguration.clientSecret
+        /// </summary>
         public GitHubClientSecret ClientSecret { get; set; }
     }
 }

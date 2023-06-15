@@ -10,7 +10,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The settings that will be leveraged for Oracle source partitioning. </summary>
+    /// <summary>
+    /// The settings that will be leveraged for Oracle source partitioning.
+    /// Serialized Name: OraclePartitionSettings
+    /// </summary>
     public partial class OraclePartitionSettings
     {
         /// <summary> Initializes a new instance of OraclePartitionSettings. </summary>
@@ -19,10 +22,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of OraclePartitionSettings. </summary>
-        /// <param name="partitionNames"> Names of the physical partitions of Oracle table. </param>
-        /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionNames">
+        /// Names of the physical partitions of Oracle table. 
+        /// Serialized Name: OraclePartitionSettings.partitionNames
+        /// </param>
+        /// <param name="partitionColumnName">
+        /// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: OraclePartitionSettings.partitionColumnName
+        /// </param>
+        /// <param name="partitionUpperBound">
+        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: OraclePartitionSettings.partitionUpperBound
+        /// </param>
+        /// <param name="partitionLowerBound">
+        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: OraclePartitionSettings.partitionLowerBound
+        /// </param>
         internal OraclePartitionSettings(BinaryData partitionNames, DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound)
         {
             PartitionNames = partitionNames;
@@ -33,6 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Names of the physical partitions of Oracle table. 
+        /// Serialized Name: OraclePartitionSettings.partitionNames
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -62,11 +78,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData PartitionNames { get; set; }
-        /// <summary> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: OraclePartitionSettings.partitionColumnName
+        /// </summary>
         public DataFactoryElement<string> PartitionColumnName { get; set; }
-        /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: OraclePartitionSettings.partitionUpperBound
+        /// </summary>
         public DataFactoryElement<string> PartitionUpperBound { get; set; }
-        /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: OraclePartitionSettings.partitionLowerBound
+        /// </summary>
         public DataFactoryElement<string> PartitionLowerBound { get; set; }
     }
 }

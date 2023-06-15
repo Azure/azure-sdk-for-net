@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </summary>
+    /// <summary>
+    /// It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).
+    /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode
+    /// </summary>
     public readonly partial struct IntegrationRuntimeInternalChannelEncryptionMode : IEquatable<IntegrationRuntimeInternalChannelEncryptionMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SslEncryptedValue = "SslEncrypted";
         private const string NotEncryptedValue = "NotEncrypted";
 
-        /// <summary> NotSet. </summary>
+        /// <summary>
+        /// NotSet
+        /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode.NotSet
+        /// </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode NotSet { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(NotSetValue);
-        /// <summary> SslEncrypted. </summary>
+        /// <summary>
+        /// SslEncrypted
+        /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode.SslEncrypted
+        /// </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(SslEncryptedValue);
-        /// <summary> NotEncrypted. </summary>
+        /// <summary>
+        /// NotEncrypted
+        /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode.NotEncrypted
+        /// </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode NotEncrypted { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(NotEncryptedValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeInternalChannelEncryptionMode left, IntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);

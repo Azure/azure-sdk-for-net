@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure File Storage write settings. </summary>
+    /// <summary>
+    /// Azure File Storage write settings.
+    /// Serialized Name: AzureFileStorageWriteSettings
+    /// </summary>
     public partial class AzureFileStorageWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of AzureFileStorageWriteSettings. </summary>
@@ -21,10 +24,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureFileStorageWriteSettings. </summary>
-        /// <param name="storeWriteSettingsType"> The write setting type. </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="storeWriteSettingsType">
+        /// The write setting type.
+        /// Serialized Name: StoreWriteSettings.type
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: StoreWriteSettings.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: StoreWriteSettings.disableMetricsCollection
+        /// </param>
+        /// <param name="copyBehavior">
+        /// The type of copy behavior for copy sink.
+        /// Serialized Name: StoreWriteSettings.copyBehavior
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal AzureFileStorageWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {

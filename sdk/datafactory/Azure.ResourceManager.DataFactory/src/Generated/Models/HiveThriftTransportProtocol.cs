@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The transport protocol to use in the Thrift layer. </summary>
+    /// <summary>
+    /// The transport protocol to use in the Thrift layer.
+    /// Serialized Name: HiveThriftTransportProtocol
+    /// </summary>
     public readonly partial struct HiveThriftTransportProtocol : IEquatable<HiveThriftTransportProtocol>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SaslValue = "SASL";
         private const string HttpValue = "HTTP ";
 
-        /// <summary> Binary. </summary>
+        /// <summary>
+        /// Binary
+        /// Serialized Name: HiveThriftTransportProtocol.Binary
+        /// </summary>
         public static HiveThriftTransportProtocol Binary { get; } = new HiveThriftTransportProtocol(BinaryValue);
-        /// <summary> SASL. </summary>
+        /// <summary>
+        /// SASL
+        /// Serialized Name: HiveThriftTransportProtocol.SASL
+        /// </summary>
         public static HiveThriftTransportProtocol Sasl { get; } = new HiveThriftTransportProtocol(SaslValue);
-        /// <summary> HTTP. </summary>
+        /// <summary>
+        /// HTTP 
+        /// Serialized Name: HiveThriftTransportProtocol.HTTP 
+        /// </summary>
         public static HiveThriftTransportProtocol Http { get; } = new HiveThriftTransportProtocol(HttpValue);
         /// <summary> Determines if two <see cref="HiveThriftTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(HiveThriftTransportProtocol left, HiveThriftTransportProtocol right) => left.Equals(right);

@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Execute pipeline activity. </summary>
+    /// <summary>
+    /// Execute pipeline activity.
+    /// Serialized Name: ExecutePipelineActivity
+    /// </summary>
     public partial class ExecutePipelineActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="pipeline"> Pipeline reference. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="pipeline">
+        /// Pipeline reference.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.pipeline
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
         public ExecutePipelineActivity(string name, FactoryPipelineReference pipeline) : base(name)
         {
@@ -29,18 +38,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="policy"> Execute pipeline activity policy. </param>
-        /// <param name="pipeline"> Pipeline reference. </param>
-        /// <param name="parameters"> Pipeline parameters. </param>
-        /// <param name="waitOnCompletion"> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </param>
+        /// <param name="policy">
+        /// Execute pipeline activity policy.
+        /// Serialized Name: ExecutePipelineActivity.policy
+        /// </param>
+        /// <param name="pipeline">
+        /// Pipeline reference.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.pipeline
+        /// </param>
+        /// <param name="parameters">
+        /// Pipeline parameters.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.parameters
+        /// </param>
+        /// <param name="waitOnCompletion">
+        /// Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.waitOnCompletion
+        /// </param>
         internal ExecutePipelineActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePipelineActivityPolicy policy, FactoryPipelineReference pipeline, IDictionary<string, BinaryData> parameters, bool? waitOnCompletion) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
@@ -50,12 +92,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecutePipeline";
         }
 
-        /// <summary> Execute pipeline activity policy. </summary>
+        /// <summary>
+        /// Execute pipeline activity policy.
+        /// Serialized Name: ExecutePipelineActivity.policy
+        /// </summary>
         public ExecutePipelineActivityPolicy Policy { get; set; }
-        /// <summary> Pipeline reference. </summary>
+        /// <summary>
+        /// Pipeline reference.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.pipeline
+        /// </summary>
         public FactoryPipelineReference Pipeline { get; set; }
         /// <summary>
         /// Pipeline parameters.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +134,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
-        /// <summary> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </summary>
+        /// <summary>
+        /// Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false.
+        /// Serialized Name: ExecutePipelineActivity.typeProperties.waitOnCompletion
+        /// </summary>
         public bool? WaitOnCompletion { get; set; }
     }
 }

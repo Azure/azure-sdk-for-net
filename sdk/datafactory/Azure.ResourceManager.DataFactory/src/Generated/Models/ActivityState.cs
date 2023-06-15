@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Activity state. This is an optional property and if not provided, the state will be Active by default. </summary>
+    /// <summary>
+    /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+    /// Serialized Name: ActivityState
+    /// </summary>
     public readonly partial struct ActivityState : IEquatable<ActivityState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ActiveValue = "Active";
         private const string InactiveValue = "Inactive";
 
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: ActivityState.Active
+        /// </summary>
         public static ActivityState Active { get; } = new ActivityState(ActiveValue);
-        /// <summary> Inactive. </summary>
+        /// <summary>
+        /// Inactive
+        /// Serialized Name: ActivityState.Inactive
+        /// </summary>
         public static ActivityState Inactive { get; } = new ActivityState(InactiveValue);
         /// <summary> Determines if two <see cref="ActivityState"/> values are the same. </summary>
         public static bool operator ==(ActivityState left, ActivityState right) => left.Equals(right);

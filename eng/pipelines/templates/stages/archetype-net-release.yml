@@ -12,7 +12,7 @@ stages:
     dependsOn: ${{parameters.DependsOn}}
     jobs:
       - deployment: SignPackage
-        environment: ${{parameters.Environment}}
+        environment: esrp
         pool:
           name: azsdk-pool-mms-win-2022-general
           vmImage: windows-2022

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Provides entity name and id that started the pipeline run. </summary>
+    /// <summary>
+    /// Provides entity name and id that started the pipeline run.
+    /// Serialized Name: PipelineRunInvokedBy
+    /// </summary>
     public partial class FactoryPipelineRunInvokedByInfo
     {
         /// <summary> Initializes a new instance of FactoryPipelineRunInvokedByInfo. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryPipelineRunInvokedByInfo. </summary>
-        /// <param name="name"> Name of the entity that started the pipeline run. </param>
-        /// <param name="id"> The ID of the entity that started the run. </param>
-        /// <param name="invokedByType"> The type of the entity that started the run. </param>
-        /// <param name="pipelineName"> The name of the pipeline that triggered the run, if any. </param>
-        /// <param name="pipelineRunId"> The run id of the pipeline that triggered the run, if any. </param>
+        /// <param name="name">
+        /// Name of the entity that started the pipeline run.
+        /// Serialized Name: PipelineRunInvokedBy.name
+        /// </param>
+        /// <param name="id">
+        /// The ID of the entity that started the run.
+        /// Serialized Name: PipelineRunInvokedBy.id
+        /// </param>
+        /// <param name="invokedByType">
+        /// The type of the entity that started the run.
+        /// Serialized Name: PipelineRunInvokedBy.invokedByType
+        /// </param>
+        /// <param name="pipelineName">
+        /// The name of the pipeline that triggered the run, if any.
+        /// Serialized Name: PipelineRunInvokedBy.pipelineName
+        /// </param>
+        /// <param name="pipelineRunId">
+        /// The run id of the pipeline that triggered the run, if any.
+        /// Serialized Name: PipelineRunInvokedBy.pipelineRunId
+        /// </param>
         internal FactoryPipelineRunInvokedByInfo(string name, string id, string invokedByType, string pipelineName, Guid? pipelineRunId)
         {
             Name = name;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             PipelineRunId = pipelineRunId;
         }
 
-        /// <summary> Name of the entity that started the pipeline run. </summary>
+        /// <summary>
+        /// Name of the entity that started the pipeline run.
+        /// Serialized Name: PipelineRunInvokedBy.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The ID of the entity that started the run. </summary>
+        /// <summary>
+        /// The ID of the entity that started the run.
+        /// Serialized Name: PipelineRunInvokedBy.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The type of the entity that started the run. </summary>
+        /// <summary>
+        /// The type of the entity that started the run.
+        /// Serialized Name: PipelineRunInvokedBy.invokedByType
+        /// </summary>
         public string InvokedByType { get; }
-        /// <summary> The name of the pipeline that triggered the run, if any. </summary>
+        /// <summary>
+        /// The name of the pipeline that triggered the run, if any.
+        /// Serialized Name: PipelineRunInvokedBy.pipelineName
+        /// </summary>
         public string PipelineName { get; }
-        /// <summary> The run id of the pipeline that triggered the run, if any. </summary>
+        /// <summary>
+        /// The run id of the pipeline that triggered the run, if any.
+        /// Serialized Name: PipelineRunInvokedBy.pipelineRunId
+        /// </summary>
         public Guid? PipelineRunId { get; }
     }
 }

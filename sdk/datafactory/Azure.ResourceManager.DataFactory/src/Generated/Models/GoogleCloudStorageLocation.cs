@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The location of Google Cloud Storage dataset. </summary>
+    /// <summary>
+    /// The location of Google Cloud Storage dataset.
+    /// Serialized Name: GoogleCloudStorageLocation
+    /// </summary>
     public partial class GoogleCloudStorageLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of GoogleCloudStorageLocation. </summary>
@@ -21,12 +24,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GoogleCloudStorageLocation. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
-        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetLocationType">
+        /// Type of dataset storage location.
+        /// Serialized Name: DatasetLocation.type
+        /// </param>
+        /// <param name="folderPath">
+        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
+        /// Serialized Name: DatasetLocation.folderPath
+        /// </param>
+        /// <param name="fileName">
+        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetLocation.fileName
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="bucketName"> Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string). </param>
+        /// <param name="bucketName">
+        /// Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)
+        /// Serialized Name: GoogleCloudStorageLocation.bucketName
+        /// </param>
+        /// <param name="version">
+        /// Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleCloudStorageLocation.version
+        /// </param>
         internal GoogleCloudStorageLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
@@ -34,9 +52,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetLocationType = datasetLocationType ?? "GoogleCloudStorageLocation";
         }
 
-        /// <summary> Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)
+        /// Serialized Name: GoogleCloudStorageLocation.bucketName
+        /// </summary>
         public DataFactoryElement<string> BucketName { get; set; }
-        /// <summary> Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleCloudStorageLocation.version
+        /// </summary>
         public DataFactoryElement<string> Version { get; set; }
     }
 }

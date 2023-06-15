@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Couchbase server linked service. </summary>
+    /// <summary>
+    /// Couchbase server linked service.
+    /// Serialized Name: CouchbaseLinkedService
+    /// </summary>
     public partial class CouchbaseLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CouchbaseLinkedService. </summary>
@@ -21,15 +24,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CouchbaseLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="credString"> The Azure key vault secret reference of credString in connection string. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <param name="connectionString">
+        /// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: CouchbaseLinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="credString">
+        /// The Azure key vault secret reference of credString in connection string.
+        /// Serialized Name: CouchbaseLinkedService.typeProperties.credString
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
+        /// Serialized Name: CouchbaseLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal CouchbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, AzureKeyVaultSecretReference credString, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -38,12 +65,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Couchbase";
         }
 
-        /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary>
+        /// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: CouchbaseLinkedService.typeProperties.connectionString
+        /// </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
-        /// <summary> The Azure key vault secret reference of credString in connection string. </summary>
+        /// <summary>
+        /// The Azure key vault secret reference of credString in connection string.
+        /// Serialized Name: CouchbaseLinkedService.typeProperties.credString
+        /// </summary>
         public AzureKeyVaultSecretReference CredString { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
+        /// Serialized Name: CouchbaseLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

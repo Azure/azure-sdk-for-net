@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Parameter type. </summary>
+    /// <summary>
+    /// Parameter type.
+    /// Serialized Name: ParameterType
+    /// </summary>
     public readonly partial struct EntityParameterType : IEquatable<EntityParameterType>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ArrayValue = "Array";
         private const string SecureStringValue = "SecureString";
 
-        /// <summary> Object. </summary>
+        /// <summary>
+        /// Object
+        /// Serialized Name: ParameterType.Object
+        /// </summary>
         public static EntityParameterType Object { get; } = new EntityParameterType(ObjectValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: ParameterType.String
+        /// </summary>
         public static EntityParameterType String { get; } = new EntityParameterType(StringValue);
-        /// <summary> Int. </summary>
+        /// <summary>
+        /// Int
+        /// Serialized Name: ParameterType.Int
+        /// </summary>
         public static EntityParameterType Int { get; } = new EntityParameterType(IntValue);
-        /// <summary> Float. </summary>
+        /// <summary>
+        /// Float
+        /// Serialized Name: ParameterType.Float
+        /// </summary>
         public static EntityParameterType Float { get; } = new EntityParameterType(FloatValue);
-        /// <summary> Bool. </summary>
+        /// <summary>
+        /// Bool
+        /// Serialized Name: ParameterType.Bool
+        /// </summary>
         public static EntityParameterType Bool { get; } = new EntityParameterType(BoolValue);
-        /// <summary> Array. </summary>
+        /// <summary>
+        /// Array
+        /// Serialized Name: ParameterType.Array
+        /// </summary>
         public static EntityParameterType Array { get; } = new EntityParameterType(ArrayValue);
-        /// <summary> SecureString. </summary>
+        /// <summary>
+        /// SecureString
+        /// Serialized Name: ParameterType.SecureString
+        /// </summary>
         public static EntityParameterType SecureString { get; } = new EntityParameterType(SecureStringValue);
         /// <summary> Determines if two <see cref="EntityParameterType"/> values are the same. </summary>
         public static bool operator ==(EntityParameterType left, EntityParameterType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Enumerates possible frequency option for the schedule trigger. </summary>
+    /// <summary>
+    /// Enumerates possible frequency option for the schedule trigger.
+    /// Serialized Name: RecurrenceFrequency
+    /// </summary>
     public readonly partial struct RecurrenceFrequency : IEquatable<RecurrenceFrequency>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string MonthValue = "Month";
         private const string YearValue = "Year";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: RecurrenceFrequency.NotSpecified
+        /// </summary>
         public static RecurrenceFrequency NotSpecified { get; } = new RecurrenceFrequency(NotSpecifiedValue);
-        /// <summary> Minute. </summary>
+        /// <summary>
+        /// Minute
+        /// Serialized Name: RecurrenceFrequency.Minute
+        /// </summary>
         public static RecurrenceFrequency Minute { get; } = new RecurrenceFrequency(MinuteValue);
-        /// <summary> Hour. </summary>
+        /// <summary>
+        /// Hour
+        /// Serialized Name: RecurrenceFrequency.Hour
+        /// </summary>
         public static RecurrenceFrequency Hour { get; } = new RecurrenceFrequency(HourValue);
-        /// <summary> Day. </summary>
+        /// <summary>
+        /// Day
+        /// Serialized Name: RecurrenceFrequency.Day
+        /// </summary>
         public static RecurrenceFrequency Day { get; } = new RecurrenceFrequency(DayValue);
-        /// <summary> Week. </summary>
+        /// <summary>
+        /// Week
+        /// Serialized Name: RecurrenceFrequency.Week
+        /// </summary>
         public static RecurrenceFrequency Week { get; } = new RecurrenceFrequency(WeekValue);
-        /// <summary> Month. </summary>
+        /// <summary>
+        /// Month
+        /// Serialized Name: RecurrenceFrequency.Month
+        /// </summary>
         public static RecurrenceFrequency Month { get; } = new RecurrenceFrequency(MonthValue);
-        /// <summary> Year. </summary>
+        /// <summary>
+        /// Year
+        /// Serialized Name: RecurrenceFrequency.Year
+        /// </summary>
         public static RecurrenceFrequency Year { get; } = new RecurrenceFrequency(YearValue);
         /// <summary> Determines if two <see cref="RecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(RecurrenceFrequency left, RecurrenceFrequency right) => left.Equals(right);

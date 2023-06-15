@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Create or update a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="data"> Blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Create or update a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="data"> Blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Delete a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Delete a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> List blueprint definitions. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<BlueprintList>> ListAsync(string resourceScope, CancellationToken cancellationToken = default)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> List blueprint definitions. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public Response<BlueprintList> List(string resourceScope, CancellationToken cancellationToken = default)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary> List blueprint definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<BlueprintList>> ListNextPageAsync(string nextLink, string resourceScope, CancellationToken cancellationToken = default)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary> List blueprint definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public Response<BlueprintList> ListNextPage(string nextLink, string resourceScope, CancellationToken cancellationToken = default)

@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCompressionReadSettings. </summary>
+    /// <summary>
+    /// The UnknownCompressionReadSettings.
+    /// Serialized Name: UnknownCompressionReadSettings
+    /// </summary>
     internal partial class UnknownCompressionReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of UnknownCompressionReadSettings. </summary>
-        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
+        /// <param name="compressionReadSettingsType">
+        /// The Compression setting type.
+        /// Serialized Name: CompressionReadSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownCompressionReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(compressionReadSettingsType, additionalProperties)
         {

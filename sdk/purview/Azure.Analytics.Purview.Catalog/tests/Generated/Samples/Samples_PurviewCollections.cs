@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -648,7 +648,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -877,7 +877,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -976,7 +976,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1075,7 +1075,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());

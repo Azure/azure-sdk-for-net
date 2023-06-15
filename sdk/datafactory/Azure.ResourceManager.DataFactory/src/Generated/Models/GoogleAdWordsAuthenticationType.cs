@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
+    /// <summary>
+    /// The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR.
+    /// Serialized Name: GoogleAdWordsAuthenticationType
+    /// </summary>
     public readonly partial struct GoogleAdWordsAuthenticationType : IEquatable<GoogleAdWordsAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ServiceAuthenticationValue = "ServiceAuthentication";
         private const string UserAuthenticationValue = "UserAuthentication";
 
-        /// <summary> ServiceAuthentication. </summary>
+        /// <summary>
+        /// ServiceAuthentication
+        /// Serialized Name: GoogleAdWordsAuthenticationType.ServiceAuthentication
+        /// </summary>
         public static GoogleAdWordsAuthenticationType ServiceAuthentication { get; } = new GoogleAdWordsAuthenticationType(ServiceAuthenticationValue);
-        /// <summary> UserAuthentication. </summary>
+        /// <summary>
+        /// UserAuthentication
+        /// Serialized Name: GoogleAdWordsAuthenticationType.UserAuthentication
+        /// </summary>
         public static GoogleAdWordsAuthenticationType UserAuthentication { get; } = new GoogleAdWordsAuthenticationType(UserAuthenticationValue);
         /// <summary> Determines if two <see cref="GoogleAdWordsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(GoogleAdWordsAuthenticationType left, GoogleAdWordsAuthenticationType right) => left.Equals(right);

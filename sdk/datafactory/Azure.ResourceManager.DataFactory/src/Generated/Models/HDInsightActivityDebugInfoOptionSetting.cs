@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The HDInsightActivityDebugInfoOption settings to use. </summary>
+    /// <summary>
+    /// The HDInsightActivityDebugInfoOption settings to use.
+    /// Serialized Name: HDInsightActivityDebugInfoOption
+    /// </summary>
     public readonly partial struct HDInsightActivityDebugInfoOptionSetting : IEquatable<HDInsightActivityDebugInfoOptionSetting>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string AlwaysValue = "Always";
         private const string FailureValue = "Failure";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: HDInsightActivityDebugInfoOption.None
+        /// </summary>
         public static HDInsightActivityDebugInfoOptionSetting None { get; } = new HDInsightActivityDebugInfoOptionSetting(NoneValue);
-        /// <summary> Always. </summary>
+        /// <summary>
+        /// Always
+        /// Serialized Name: HDInsightActivityDebugInfoOption.Always
+        /// </summary>
         public static HDInsightActivityDebugInfoOptionSetting Always { get; } = new HDInsightActivityDebugInfoOptionSetting(AlwaysValue);
-        /// <summary> Failure. </summary>
+        /// <summary>
+        /// Failure
+        /// Serialized Name: HDInsightActivityDebugInfoOption.Failure
+        /// </summary>
         public static HDInsightActivityDebugInfoOptionSetting Failure { get; } = new HDInsightActivityDebugInfoOptionSetting(FailureValue);
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOptionSetting"/> values are the same. </summary>
         public static bool operator ==(HDInsightActivityDebugInfoOptionSetting left, HDInsightActivityDebugInfoOptionSetting right) => left.Equals(right);

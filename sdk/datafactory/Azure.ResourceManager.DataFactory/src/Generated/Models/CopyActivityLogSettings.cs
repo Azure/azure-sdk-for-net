@@ -9,7 +9,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Settings for copy activity log. </summary>
+    /// <summary>
+    /// Settings for copy activity log.
+    /// Serialized Name: CopyActivityLogSettings
+    /// </summary>
     public partial class CopyActivityLogSettings
     {
         /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
-        /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
-        /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="logLevel">
+        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
+        /// Serialized Name: CopyActivityLogSettings.logLevel
+        /// </param>
+        /// <param name="enableReliableLogging">
+        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopyActivityLogSettings.enableReliableLogging
+        /// </param>
         internal CopyActivityLogSettings(DataFactoryElement<string> logLevel, DataFactoryElement<bool> enableReliableLogging)
         {
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;
         }
 
-        /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
+        /// Serialized Name: CopyActivityLogSettings.logLevel
+        /// </summary>
         public DataFactoryElement<string> LogLevel { get; set; }
-        /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopyActivityLogSettings.enableReliableLogging
+        /// </summary>
         public DataFactoryElement<bool> EnableReliableLogging { get; set; }
     }
 }

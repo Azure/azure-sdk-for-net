@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Filter and return results from input array based on the conditions. </summary>
+    /// <summary>
+    /// Filter and return results from input array based on the conditions.
+    /// Serialized Name: FilterActivity
+    /// </summary>
     public partial class FilterActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of FilterActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="items"> Input array on which filter should be applied. </param>
-        /// <param name="condition"> Condition to be used for filtering the input. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="items">
+        /// Input array on which filter should be applied.
+        /// Serialized Name: FilterActivity.typeProperties.items
+        /// </param>
+        /// <param name="condition">
+        /// Condition to be used for filtering the input.
+        /// Serialized Name: FilterActivity.typeProperties.condition
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
         public FilterActivity(string name, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name)
         {
@@ -31,16 +43,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FilterActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="items"> Input array on which filter should be applied. </param>
-        /// <param name="condition"> Condition to be used for filtering the input. </param>
+        /// <param name="items">
+        /// Input array on which filter should be applied.
+        /// Serialized Name: FilterActivity.typeProperties.items
+        /// </param>
+        /// <param name="condition">
+        /// Condition to be used for filtering the input.
+        /// Serialized Name: FilterActivity.typeProperties.condition
+        /// </param>
         internal FilterActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Items = items;
@@ -48,9 +87,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Filter";
         }
 
-        /// <summary> Input array on which filter should be applied. </summary>
+        /// <summary>
+        /// Input array on which filter should be applied.
+        /// Serialized Name: FilterActivity.typeProperties.items
+        /// </summary>
         public FactoryExpressionDefinition Items { get; set; }
-        /// <summary> Condition to be used for filtering the input. </summary>
+        /// <summary>
+        /// Condition to be used for filtering the input.
+        /// Serialized Name: FilterActivity.typeProperties.condition
+        /// </summary>
         public FactoryExpressionDefinition Condition { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Operator to be used for filter. </summary>
+    /// <summary>
+    /// Operator to be used for filter.
+    /// Serialized Name: RunQueryFilterOperator
+    /// </summary>
     public readonly partial struct RunQueryFilterOperator : IEquatable<RunQueryFilterOperator>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string InValue = "In";
         private const string NotInValue = "NotIn";
 
-        /// <summary> Equals. </summary>
+        /// <summary>
+        /// Equals
+        /// Serialized Name: RunQueryFilterOperator.Equals
+        /// </summary>
         public static RunQueryFilterOperator EqualsValue { get; } = new RunQueryFilterOperator(EqualsValueValue);
-        /// <summary> NotEquals. </summary>
+        /// <summary>
+        /// NotEquals
+        /// Serialized Name: RunQueryFilterOperator.NotEquals
+        /// </summary>
         public static RunQueryFilterOperator NotEquals { get; } = new RunQueryFilterOperator(NotEqualsValue);
-        /// <summary> In. </summary>
+        /// <summary>
+        /// In
+        /// Serialized Name: RunQueryFilterOperator.In
+        /// </summary>
         public static RunQueryFilterOperator In { get; } = new RunQueryFilterOperator(InValue);
-        /// <summary> NotIn. </summary>
+        /// <summary>
+        /// NotIn
+        /// Serialized Name: RunQueryFilterOperator.NotIn
+        /// </summary>
         public static RunQueryFilterOperator NotIn { get; } = new RunQueryFilterOperator(NotInValue);
         /// <summary> Determines if two <see cref="RunQueryFilterOperator"/> values are the same. </summary>
         public static bool operator ==(RunQueryFilterOperator left, RunQueryFilterOperator right) => left.Equals(right);

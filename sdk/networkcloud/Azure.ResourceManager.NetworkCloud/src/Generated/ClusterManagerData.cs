@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="fabricControllerId"> The resource ID of the fabric controller that has one to one mapping with the cluster manager. </param>
         /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
-        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager&apos;s control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
+        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
         /// <param name="vmSize"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
         internal ClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, string fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize) : base(id, name, resourceType, systemData, tags, location)
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public string FabricControllerId { get; set; }
         /// <summary> The configuration of the managed resource group associated with the resource. </summary>
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
-        /// <summary> The extended location (custom location) that represents the cluster manager&apos;s control plane location. This extended location is used when creating cluster and rack manifest resources. </summary>
+        /// <summary> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </summary>
         public ExtendedLocation ManagerExtendedLocation { get; }
         /// <summary> The provisioning state of the cluster manager. </summary>
         public ClusterManagerProvisioningState? ProvisioningState { get; }

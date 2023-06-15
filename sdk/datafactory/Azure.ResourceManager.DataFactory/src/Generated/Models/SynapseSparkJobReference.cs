@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Synapse spark job reference type. </summary>
+    /// <summary>
+    /// Synapse spark job reference type.
+    /// Serialized Name: SynapseSparkJobReference
+    /// </summary>
     public partial class SynapseSparkJobReference
     {
         /// <summary> Initializes a new instance of SynapseSparkJobReference. </summary>
-        /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
-        /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
+        /// <param name="sparkJobReferenceType">
+        /// Synapse spark job reference type.
+        /// Serialized Name: SynapseSparkJobReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference spark job name. Expression with resultType string.
+        /// Serialized Name: SynapseSparkJobReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, BinaryData referenceName)
         {
@@ -25,10 +34,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Synapse spark job reference type. </summary>
+        /// <summary>
+        /// Synapse spark job reference type.
+        /// Serialized Name: SynapseSparkJobReference.type
+        /// </summary>
         public SparkJobReferenceType SparkJobReferenceType { get; set; }
         /// <summary>
         /// Reference spark job name. Expression with resultType string.
+        /// Serialized Name: SynapseSparkJobReference.referenceName
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Document Database Collection source. </summary>
+    /// <summary>
+    /// A copy activity Document Database Collection source.
+    /// Serialized Name: DocumentDbCollectionSource
+    /// </summary>
     public partial class DocumentDBCollectionSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of DocumentDBCollectionSource. </summary>
@@ -21,16 +24,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DocumentDBCollectionSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="query"> Documents query. Type: string (or Expression with resultType string). </param>
-        /// <param name="nestingSeparator"> Nested properties separator. Type: string (or Expression with resultType string). </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="query">
+        /// Documents query. Type: string (or Expression with resultType string).
+        /// Serialized Name: DocumentDbCollectionSource.query
+        /// </param>
+        /// <param name="nestingSeparator">
+        /// Nested properties separator. Type: string (or Expression with resultType string).
+        /// Serialized Name: DocumentDbCollectionSource.nestingSeparator
+        /// </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: DocumentDbCollectionSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: DocumentDbCollectionSource.additionalColumns
+        /// </param>
         internal DocumentDBCollectionSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> query, DataFactoryElement<string> nestingSeparator, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
@@ -40,14 +70,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "DocumentDbCollectionSource";
         }
 
-        /// <summary> Documents query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Documents query. Type: string (or Expression with resultType string).
+        /// Serialized Name: DocumentDbCollectionSource.query
+        /// </summary>
         public DataFactoryElement<string> Query { get; set; }
-        /// <summary> Nested properties separator. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Nested properties separator. Type: string (or Expression with resultType string).
+        /// Serialized Name: DocumentDbCollectionSource.nestingSeparator
+        /// </summary>
         public DataFactoryElement<string> NestingSeparator { get; set; }
-        /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: DocumentDbCollectionSource.queryTimeout
+        /// </summary>
         public DataFactoryElement<string> QueryTimeout { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: DocumentDbCollectionSource.additionalColumns
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

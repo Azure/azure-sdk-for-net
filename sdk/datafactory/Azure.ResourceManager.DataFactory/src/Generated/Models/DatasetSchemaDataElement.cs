@@ -12,7 +12,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Columns that define the physical type schema of the dataset. </summary>
+    /// <summary>
+    /// Columns that define the physical type schema of the dataset.
+    /// Serialized Name: DatasetSchemaDataElement
+    /// </summary>
     public partial class DatasetSchemaDataElement
     {
         /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
@@ -22,8 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
-        /// <param name="schemaColumnName"> Name of the schema column. Type: string (or Expression with resultType string). </param>
-        /// <param name="schemaColumnType"> Type of the schema column. Type: string (or Expression with resultType string). </param>
+        /// <param name="schemaColumnName">
+        /// Name of the schema column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetSchemaDataElement.name
+        /// </param>
+        /// <param name="schemaColumnType">
+        /// Type of the schema column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetSchemaDataElement.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetSchemaDataElement(DataFactoryElement<string> schemaColumnName, DataFactoryElement<string> schemaColumnType, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -32,9 +41,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Name of the schema column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetSchemaDataElement.name
+        /// </summary>
         public DataFactoryElement<string> SchemaColumnName { get; set; }
-        /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Type of the schema column. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetSchemaDataElement.type
+        /// </summary>
         public DataFactoryElement<string> SchemaColumnType { get; set; }
         /// <summary>
         /// Additional Properties

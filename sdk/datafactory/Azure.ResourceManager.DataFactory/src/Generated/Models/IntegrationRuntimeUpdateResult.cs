@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The result of the last integration runtime node update. </summary>
+    /// <summary>
+    /// The result of the last integration runtime node update.
+    /// Serialized Name: IntegrationRuntimeUpdateResult
+    /// </summary>
     public readonly partial struct IntegrationRuntimeUpdateResult : IEquatable<IntegrationRuntimeUpdateResult>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SucceedValue = "Succeed";
         private const string FailValue = "Fail";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: IntegrationRuntimeUpdateResult.None
+        /// </summary>
         public static IntegrationRuntimeUpdateResult None { get; } = new IntegrationRuntimeUpdateResult(NoneValue);
-        /// <summary> Succeed. </summary>
+        /// <summary>
+        /// Succeed
+        /// Serialized Name: IntegrationRuntimeUpdateResult.Succeed
+        /// </summary>
         public static IntegrationRuntimeUpdateResult Succeed { get; } = new IntegrationRuntimeUpdateResult(SucceedValue);
-        /// <summary> Fail. </summary>
+        /// <summary>
+        /// Fail
+        /// Serialized Name: IntegrationRuntimeUpdateResult.Fail
+        /// </summary>
         public static IntegrationRuntimeUpdateResult Fail { get; } = new IntegrationRuntimeUpdateResult(FailValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeUpdateResult"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeUpdateResult left, IntegrationRuntimeUpdateResult right) => left.Equals(right);

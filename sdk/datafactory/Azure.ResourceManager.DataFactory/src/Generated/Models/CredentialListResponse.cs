@@ -13,11 +13,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of credential resources. </summary>
+    /// <summary>
+    /// A list of credential resources.
+    /// Serialized Name: CredentialListResponse
+    /// </summary>
     internal partial class CredentialListResponse
     {
         /// <summary> Initializes a new instance of CredentialListResponse. </summary>
-        /// <param name="value"> List of credentials. </param>
+        /// <param name="value">
+        /// List of credentials.
+        /// Serialized Name: CredentialListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CredentialListResponse(IEnumerable<ManagedIdentityCredentialResourceData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CredentialListResponse. </summary>
-        /// <param name="value"> List of credentials. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of credentials.
+        /// Serialized Name: CredentialListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: CredentialListResponse.nextLink
+        /// </param>
         internal CredentialListResponse(IReadOnlyList<ManagedIdentityCredentialResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of credentials. </summary>
+        /// <summary>
+        /// List of credentials.
+        /// Serialized Name: CredentialListResponse.value
+        /// </summary>
         public IReadOnlyList<ManagedIdentityCredentialResourceData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: CredentialListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

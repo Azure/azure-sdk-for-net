@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service for MongoDB data source. </summary>
+    /// <summary>
+    /// Linked service for MongoDB data source.
+    /// Serialized Name: MongoDbV2LinkedService
+    /// </summary>
     public partial class MongoDBV2LinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MongoDBV2LinkedService. </summary>
-        /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="database"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString">
+        /// The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: MongoDbV2LinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="database">
+        /// The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbV2LinkedService.typeProperties.database
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         public MongoDBV2LinkedService(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
         {
@@ -30,14 +39,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of MongoDBV2LinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="database"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString">
+        /// The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: MongoDbV2LinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="database">
+        /// The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbV2LinkedService.typeProperties.database
+        /// </param>
         internal MongoDBV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -45,9 +75,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MongoDbV2";
         }
 
-        /// <summary> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary>
+        /// The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: MongoDbV2LinkedService.typeProperties.connectionString
+        /// </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
-        /// <summary> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbV2LinkedService.typeProperties.database
+        /// </summary>
         public DataFactoryElement<string> Database { get; set; }
     }
 }

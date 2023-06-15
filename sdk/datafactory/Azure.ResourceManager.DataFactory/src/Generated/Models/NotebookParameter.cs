@@ -9,7 +9,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Notebook parameter. </summary>
+    /// <summary>
+    /// Notebook parameter.
+    /// Serialized Name: NotebookParameter
+    /// </summary>
     public partial class NotebookParameter
     {
         /// <summary> Initializes a new instance of NotebookParameter. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of NotebookParameter. </summary>
-        /// <param name="value"> Notebook parameter value. Type: string (or Expression with resultType string). </param>
-        /// <param name="parameterType"> Notebook parameter type. </param>
+        /// <param name="value">
+        /// Notebook parameter value. Type: string (or Expression with resultType string).
+        /// Serialized Name: NotebookParameter.value
+        /// </param>
+        /// <param name="parameterType">
+        /// Notebook parameter type.
+        /// Serialized Name: NotebookParameter.type
+        /// </param>
         internal NotebookParameter(DataFactoryElement<string> value, NotebookParameterType? parameterType)
         {
             Value = value;
             ParameterType = parameterType;
         }
 
-        /// <summary> Notebook parameter value. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Notebook parameter value. Type: string (or Expression with resultType string).
+        /// Serialized Name: NotebookParameter.value
+        /// </summary>
         public DataFactoryElement<string> Value { get; set; }
-        /// <summary> Notebook parameter type. </summary>
+        /// <summary>
+        /// Notebook parameter type.
+        /// Serialized Name: NotebookParameter.type
+        /// </summary>
         public NotebookParameterType? ParameterType { get; set; }
     }
 }

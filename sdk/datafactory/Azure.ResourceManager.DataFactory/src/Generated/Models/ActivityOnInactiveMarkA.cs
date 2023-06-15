@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </summary>
+    /// <summary>
+    /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+    /// Serialized Name: ActivityOnInactiveMarkAs
+    /// </summary>
     public readonly partial struct ActivityOnInactiveMarkA : IEquatable<ActivityOnInactiveMarkA>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string FailedValue = "Failed";
         private const string SkippedValue = "Skipped";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ActivityOnInactiveMarkAs.Succeeded
+        /// </summary>
         public static ActivityOnInactiveMarkA Succeeded { get; } = new ActivityOnInactiveMarkA(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ActivityOnInactiveMarkAs.Failed
+        /// </summary>
         public static ActivityOnInactiveMarkA Failed { get; } = new ActivityOnInactiveMarkA(FailedValue);
-        /// <summary> Skipped. </summary>
+        /// <summary>
+        /// Skipped
+        /// Serialized Name: ActivityOnInactiveMarkAs.Skipped
+        /// </summary>
         public static ActivityOnInactiveMarkA Skipped { get; } = new ActivityOnInactiveMarkA(SkippedValue);
         /// <summary> Determines if two <see cref="ActivityOnInactiveMarkA"/> values are the same. </summary>
         public static bool operator ==(ActivityOnInactiveMarkA left, ActivityOnInactiveMarkA right) => left.Equals(right);

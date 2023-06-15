@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The definition and properties of virtual network to which Azure-SSIS integration runtime will join. </summary>
+    /// <summary>
+    /// The definition and properties of virtual network to which Azure-SSIS integration runtime will join.
+    /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork
+    /// </summary>
     internal partial class IntegrationRuntimeCustomerVirtualNetwork
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeCustomerVirtualNetwork. </summary>
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeCustomerVirtualNetwork. </summary>
-        /// <param name="subnetId"> The ID of subnet to which Azure-SSIS integration runtime will join. </param>
+        /// <param name="subnetId">
+        /// The ID of subnet to which Azure-SSIS integration runtime will join.
+        /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork.subnetId
+        /// </param>
         internal IntegrationRuntimeCustomerVirtualNetwork(ResourceIdentifier subnetId)
         {
             SubnetId = subnetId;
         }
 
-        /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
+        /// <summary>
+        /// The ID of subnet to which Azure-SSIS integration runtime will join.
+        /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork.subnetId
+        /// </summary>
         public ResourceIdentifier SubnetId { get; set; }
     }
 }

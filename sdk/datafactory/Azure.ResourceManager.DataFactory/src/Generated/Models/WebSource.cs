@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for web page table. </summary>
+    /// <summary>
+    /// A copy activity source for web page table.
+    /// Serialized Name: WebSource
+    /// </summary>
     public partial class WebSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of WebSource. </summary>
@@ -21,13 +24,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of WebSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: WebSource.additionalColumns
+        /// </param>
         internal WebSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AdditionalColumns = additionalColumns;
@@ -36,6 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: WebSource.additionalColumns
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

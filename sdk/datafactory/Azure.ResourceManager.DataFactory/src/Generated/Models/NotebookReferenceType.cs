@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Synapse notebook reference type. </summary>
+    /// <summary>
+    /// Synapse notebook reference type.
+    /// Serialized Name: NotebookReferenceType
+    /// </summary>
     public readonly partial struct NotebookReferenceType : IEquatable<NotebookReferenceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string NotebookReferenceValue = "NotebookReference";
 
-        /// <summary> NotebookReference. </summary>
+        /// <summary>
+        /// NotebookReference
+        /// Serialized Name: NotebookReferenceType.NotebookReference
+        /// </summary>
         public static NotebookReferenceType NotebookReference { get; } = new NotebookReferenceType(NotebookReferenceValue);
         /// <summary> Determines if two <see cref="NotebookReferenceType"/> values are the same. </summary>
         public static bool operator ==(NotebookReferenceType left, NotebookReferenceType right) => left.Equals(right);

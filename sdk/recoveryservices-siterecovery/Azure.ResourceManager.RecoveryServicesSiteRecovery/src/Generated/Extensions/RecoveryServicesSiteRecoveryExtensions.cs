@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>

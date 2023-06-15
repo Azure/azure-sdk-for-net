@@ -12,13 +12,25 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> HDInsight MapReduce activity type. </summary>
+    /// <summary>
+    /// HDInsight MapReduce activity type.
+    /// Serialized Name: HDInsightMapReduceActivity
+    /// </summary>
     public partial class HDInsightMapReduceActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of HDInsightMapReduceActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
-        /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="className">
+        /// Class name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.className
+        /// </param>
+        /// <param name="jarFilePath">
+        /// Jar path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarFilePath
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
         public HDInsightMapReduceActivity(string name, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath) : base(name)
         {
@@ -36,24 +48,75 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightMapReduceActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="storageLinkedServices"> Storage linked service references. </param>
-        /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
-        /// <param name="getDebugInfo"> Debug info option. </param>
-        /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
-        /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
-        /// <param name="jarLinkedService"> Jar linked service reference. </param>
-        /// <param name="jarLibs"> Jar libs. </param>
-        /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="storageLinkedServices">
+        /// Storage linked service references.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.storageLinkedServices
+        /// </param>
+        /// <param name="arguments">
+        /// User specified arguments to HDInsightActivity.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.arguments
+        /// </param>
+        /// <param name="getDebugInfo">
+        /// Debug info option.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.getDebugInfo
+        /// </param>
+        /// <param name="className">
+        /// Class name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.className
+        /// </param>
+        /// <param name="jarFilePath">
+        /// Jar path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarFilePath
+        /// </param>
+        /// <param name="jarLinkedService">
+        /// Jar linked service reference.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarLinkedService
+        /// </param>
+        /// <param name="jarLibs">
+        /// Jar libs.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarLibs
+        /// </param>
+        /// <param name="defines">
+        /// Allows user to specify defines for the MapReduce job request.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.defines
+        /// </param>
         internal HDInsightMapReduceActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, FactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
@@ -67,10 +130,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightMapReduce";
         }
 
-        /// <summary> Storage linked service references. </summary>
+        /// <summary>
+        /// Storage linked service references.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.storageLinkedServices
+        /// </summary>
         public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.arguments
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -100,16 +167,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Arguments { get; }
-        /// <summary> Debug info option. </summary>
+        /// <summary>
+        /// Debug info option.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.getDebugInfo
+        /// </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary> Class name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Class name. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.className
+        /// </summary>
         public DataFactoryElement<string> ClassName { get; set; }
-        /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Jar path. Type: string (or Expression with resultType string).
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarFilePath
+        /// </summary>
         public DataFactoryElement<string> JarFilePath { get; set; }
-        /// <summary> Jar linked service reference. </summary>
+        /// <summary>
+        /// Jar linked service reference.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarLinkedService
+        /// </summary>
         public FactoryLinkedServiceReference JarLinkedService { get; set; }
         /// <summary>
         /// Jar libs.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.jarLibs
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -141,6 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IList<BinaryData> JarLibs { get; }
         /// <summary>
         /// Allows user to specify defines for the MapReduce job request.
+        /// Serialized Name: HDInsightMapReduceActivity.typeProperties.defines
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

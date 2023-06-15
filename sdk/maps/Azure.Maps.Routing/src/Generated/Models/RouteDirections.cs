@@ -28,13 +28,13 @@ namespace Azure.Maps.Routing.Models
         /// 
         /// ```
         /// &lt;optimizedWaypoints&gt;
-        /// &lt;waypoint providedIndex=&quot;0&quot; optimizedIndex=&quot;1&quot;/&gt;
-        /// &lt;waypoint providedIndex=&quot;1&quot; optimizedIndex=&quot;2&quot;/&gt;
-        /// &lt;waypoint providedIndex=&quot;2&quot; optimizedIndex=&quot;0&quot;/&gt;
+        /// &lt;waypoint providedIndex="0" optimizedIndex="1"/&gt;
+        /// &lt;waypoint providedIndex="1" optimizedIndex="2"/&gt;
+        /// &lt;waypoint providedIndex="2" optimizedIndex="0"/&gt;
         /// &lt;/optimizedWaypoints&gt;
         /// ```
         /// 
-        /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is &quot;first, second, third&quot; while the optimized is &quot;second, third, first&quot;.
+        /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is "first, second, third" while the optimized is "second, third, first".
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
         internal RouteDirections(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report)
@@ -54,13 +54,13 @@ namespace Azure.Maps.Routing.Models
         /// 
         /// ```
         /// &lt;optimizedWaypoints&gt;
-        /// &lt;waypoint providedIndex=&quot;0&quot; optimizedIndex=&quot;1&quot;/&gt;
-        /// &lt;waypoint providedIndex=&quot;1&quot; optimizedIndex=&quot;2&quot;/&gt;
-        /// &lt;waypoint providedIndex=&quot;2&quot; optimizedIndex=&quot;0&quot;/&gt;
+        /// &lt;waypoint providedIndex="0" optimizedIndex="1"/&gt;
+        /// &lt;waypoint providedIndex="1" optimizedIndex="2"/&gt;
+        /// &lt;waypoint providedIndex="2" optimizedIndex="0"/&gt;
         /// &lt;/optimizedWaypoints&gt;
         /// ```
         /// 
-        /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is &quot;first, second, third&quot; while the optimized is &quot;second, third, first&quot;.
+        /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is "first, second, third" while the optimized is "second, third, first".
         /// </summary>
         public IReadOnlyList<RouteOptimizedWaypoint> OptimizedWaypoints { get; }
         /// <summary> Reports the effective settings used in the current call. </summary>

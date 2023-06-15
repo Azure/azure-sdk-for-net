@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Spark configuration reference type. </summary>
+    /// <summary>
+    /// Spark configuration reference type.
+    /// Serialized Name: SparkConfigurationReferenceType
+    /// </summary>
     public readonly partial struct SparkConfigurationReferenceType : IEquatable<SparkConfigurationReferenceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string SparkConfigurationReferenceValue = "SparkConfigurationReference";
 
-        /// <summary> SparkConfigurationReference. </summary>
+        /// <summary>
+        /// SparkConfigurationReference
+        /// Serialized Name: SparkConfigurationReferenceType.SparkConfigurationReference
+        /// </summary>
         public static SparkConfigurationReferenceType SparkConfigurationReference { get; } = new SparkConfigurationReferenceType(SparkConfigurationReferenceValue);
         /// <summary> Determines if two <see cref="SparkConfigurationReferenceType"/> values are the same. </summary>
         public static bool operator ==(SparkConfigurationReferenceType left, SparkConfigurationReferenceType right) => left.Equals(right);

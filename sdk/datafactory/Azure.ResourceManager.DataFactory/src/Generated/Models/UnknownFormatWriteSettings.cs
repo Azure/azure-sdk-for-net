@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownFormatWriteSettings. </summary>
+    /// <summary>
+    /// The UnknownFormatWriteSettings.
+    /// Serialized Name: UnknownFormatWriteSettings
+    /// </summary>
     internal partial class UnknownFormatWriteSettings : FormatWriteSettings
     {
         /// <summary> Initializes a new instance of UnknownFormatWriteSettings. </summary>
-        /// <param name="formatWriteSettingsType"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType">
+        /// The write setting type.
+        /// Serialized Name: FormatWriteSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownFormatWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(formatWriteSettingsType, additionalProperties)
         {

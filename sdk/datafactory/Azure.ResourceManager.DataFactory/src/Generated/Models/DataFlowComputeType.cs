@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Compute type of the cluster which will execute data flow job. </summary>
+    /// <summary>
+    /// Compute type of the cluster which will execute data flow job.
+    /// Serialized Name: DataFlowComputeType
+    /// </summary>
     public readonly partial struct DataFlowComputeType : IEquatable<DataFlowComputeType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string MemoryOptimizedValue = "MemoryOptimized";
         private const string ComputeOptimizedValue = "ComputeOptimized";
 
-        /// <summary> General. </summary>
+        /// <summary>
+        /// General
+        /// Serialized Name: DataFlowComputeType.General
+        /// </summary>
         public static DataFlowComputeType General { get; } = new DataFlowComputeType(GeneralValue);
-        /// <summary> MemoryOptimized. </summary>
+        /// <summary>
+        /// MemoryOptimized
+        /// Serialized Name: DataFlowComputeType.MemoryOptimized
+        /// </summary>
         public static DataFlowComputeType MemoryOptimized { get; } = new DataFlowComputeType(MemoryOptimizedValue);
-        /// <summary> ComputeOptimized. </summary>
+        /// <summary>
+        /// ComputeOptimized
+        /// Serialized Name: DataFlowComputeType.ComputeOptimized
+        /// </summary>
         public static DataFlowComputeType ComputeOptimized { get; } = new DataFlowComputeType(ComputeOptimizedValue);
         /// <summary> Determines if two <see cref="DataFlowComputeType"/> values are the same. </summary>
         public static bool operator ==(DataFlowComputeType left, DataFlowComputeType right) => left.Equals(right);

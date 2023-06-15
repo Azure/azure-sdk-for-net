@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Delete activity. </summary>
+    /// <summary>
+    /// Delete activity.
+    /// Serialized Name: DeleteActivity
+    /// </summary>
     public partial class DeleteActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of DeleteActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="dataset"> Delete activity dataset reference. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="dataset">
+        /// Delete activity dataset reference.
+        /// Serialized Name: DeleteActivity.typeProperties.dataset
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public DeleteActivity(string name, DatasetReference dataset) : base(name)
         {
@@ -29,23 +38,66 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DeleteActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
-        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="state">
+        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
+        /// Serialized Name: Activity.state
+        /// </param>
+        /// <param name="onInactiveMarkAs">
+        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        /// Serialized Name: Activity.onInactiveMarkAs
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="recursive"> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="maxConcurrentConnections"> The max concurrent connections to connect data source at the same time. </param>
-        /// <param name="enableLogging"> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="logStorageSettings"> Log storage settings customer need to provide when enableLogging is true. </param>
-        /// <param name="dataset"> Delete activity dataset reference. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="recursive">
+        /// If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: DeleteActivity.typeProperties.recursive
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The max concurrent connections to connect data source at the same time.
+        /// Serialized Name: DeleteActivity.typeProperties.maxConcurrentConnections
+        /// </param>
+        /// <param name="enableLogging">
+        /// Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: DeleteActivity.typeProperties.enableLogging
+        /// </param>
+        /// <param name="logStorageSettings">
+        /// Log storage settings customer need to provide when enableLogging is true.
+        /// Serialized Name: DeleteActivity.typeProperties.logStorageSettings
+        /// </param>
+        /// <param name="dataset">
+        /// Delete activity dataset reference.
+        /// Serialized Name: DeleteActivity.typeProperties.dataset
+        /// </param>
         /// <param name="storeSettings">
         /// Delete activity store settings.
+        /// Serialized Name: DeleteActivity.typeProperties.storeSettings
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </param>
@@ -60,18 +112,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Delete";
         }
 
-        /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: DeleteActivity.typeProperties.recursive
+        /// </summary>
         public DataFactoryElement<bool> Recursive { get; set; }
-        /// <summary> The max concurrent connections to connect data source at the same time. </summary>
+        /// <summary>
+        /// The max concurrent connections to connect data source at the same time.
+        /// Serialized Name: DeleteActivity.typeProperties.maxConcurrentConnections
+        /// </summary>
         public int? MaxConcurrentConnections { get; set; }
-        /// <summary> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: DeleteActivity.typeProperties.enableLogging
+        /// </summary>
         public DataFactoryElement<bool> EnableLogging { get; set; }
-        /// <summary> Log storage settings customer need to provide when enableLogging is true. </summary>
+        /// <summary>
+        /// Log storage settings customer need to provide when enableLogging is true.
+        /// Serialized Name: DeleteActivity.typeProperties.logStorageSettings
+        /// </summary>
         public LogStorageSettings LogStorageSettings { get; set; }
-        /// <summary> Delete activity dataset reference. </summary>
+        /// <summary>
+        /// Delete activity dataset reference.
+        /// Serialized Name: DeleteActivity.typeProperties.dataset
+        /// </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary>
         /// Delete activity store settings.
+        /// Serialized Name: DeleteActivity.typeProperties.storeSettings
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </summary>

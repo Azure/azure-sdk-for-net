@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The request payload of get SSIS object metadata. </summary>
+    /// <summary>
+    /// The request payload of get SSIS object metadata.
+    /// Serialized Name: GetSsisObjectMetadataRequest
+    /// </summary>
     public partial class GetSsisObjectMetadataContent
     {
         /// <summary> Initializes a new instance of GetSsisObjectMetadataContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary> Metadata path. </summary>
+        /// <summary>
+        /// Metadata path.
+        /// Serialized Name: GetSsisObjectMetadataRequest.metadataPath
+        /// </summary>
         public string MetadataPath { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication type to use. </summary>
+    /// <summary>
+    /// The authentication type to use.
+    /// Serialized Name: ImpalaAuthenticationType
+    /// </summary>
     public readonly partial struct ImpalaAuthenticationType : IEquatable<ImpalaAuthenticationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SaslUsernameValue = "SASLUsername";
         private const string UsernameAndPasswordValue = "UsernameAndPassword";
 
-        /// <summary> Anonymous. </summary>
+        /// <summary>
+        /// Anonymous
+        /// Serialized Name: ImpalaAuthenticationType.Anonymous
+        /// </summary>
         public static ImpalaAuthenticationType Anonymous { get; } = new ImpalaAuthenticationType(AnonymousValue);
-        /// <summary> SASLUsername. </summary>
+        /// <summary>
+        /// SASLUsername
+        /// Serialized Name: ImpalaAuthenticationType.SASLUsername
+        /// </summary>
         public static ImpalaAuthenticationType SaslUsername { get; } = new ImpalaAuthenticationType(SaslUsernameValue);
-        /// <summary> UsernameAndPassword. </summary>
+        /// <summary>
+        /// UsernameAndPassword
+        /// Serialized Name: ImpalaAuthenticationType.UsernameAndPassword
+        /// </summary>
         public static ImpalaAuthenticationType UsernameAndPassword { get; } = new ImpalaAuthenticationType(UsernameAndPasswordValue);
         /// <summary> Determines if two <see cref="ImpalaAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ImpalaAuthenticationType left, ImpalaAuthenticationType right) => left.Equals(right);

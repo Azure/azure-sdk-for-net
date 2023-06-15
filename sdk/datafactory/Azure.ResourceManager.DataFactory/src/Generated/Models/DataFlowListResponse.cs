@@ -13,11 +13,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of data flow resources. </summary>
+    /// <summary>
+    /// A list of data flow resources.
+    /// Serialized Name: DataFlowListResponse
+    /// </summary>
     internal partial class DataFlowListResponse
     {
         /// <summary> Initializes a new instance of DataFlowListResponse. </summary>
-        /// <param name="value"> List of data flows. </param>
+        /// <param name="value">
+        /// List of data flows.
+        /// Serialized Name: DataFlowListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFlowListResponse(IEnumerable<FactoryDataFlowData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowListResponse. </summary>
-        /// <param name="value"> List of data flows. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of data flows.
+        /// Serialized Name: DataFlowListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: DataFlowListResponse.nextLink
+        /// </param>
         internal DataFlowListResponse(IReadOnlyList<FactoryDataFlowData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of data flows. </summary>
+        /// <summary>
+        /// List of data flows.
+        /// Serialized Name: DataFlowListResponse.value
+        /// </summary>
         public IReadOnlyList<FactoryDataFlowData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: DataFlowListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

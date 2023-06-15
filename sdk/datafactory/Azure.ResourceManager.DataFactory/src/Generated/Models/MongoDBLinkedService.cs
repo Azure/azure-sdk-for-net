@@ -12,12 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service for MongoDb data source. </summary>
+    /// <summary>
+    /// Linked service for MongoDb data source.
+    /// Serialized Name: MongoDbLinkedService
+    /// </summary>
     public partial class MongoDBLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MongoDBLinkedService. </summary>
-        /// <param name="server"> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </param>
-        /// <param name="databaseName"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
+        /// <param name="server">
+        /// The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.server
+        /// </param>
+        /// <param name="databaseName">
+        /// The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.databaseName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="databaseName"/> is null. </exception>
         public MongoDBLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> databaseName)
         {
@@ -30,26 +39,69 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of MongoDBLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The authentication type to be used to connect to the MongoDB database. </param>
-        /// <param name="databaseName"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="server">
+        /// The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.server
+        /// </param>
+        /// <param name="authenticationType">
+        /// The authentication type to be used to connect to the MongoDB database.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.authenticationType
+        /// </param>
+        /// <param name="databaseName">
+        /// The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.databaseName
+        /// </param>
+        /// <param name="username">
+        /// Username for authentication. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.username
+        /// </param>
         /// <param name="password">
         /// Password for authentication.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="authSource"> Database to verify the username and password. Type: string (or Expression with resultType string). </param>
-        /// <param name="port"> The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <param name="authSource">
+        /// Database to verify the username and password. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.authSource
+        /// </param>
+        /// <param name="port">
+        /// The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.port
+        /// </param>
+        /// <param name="enableSsl">
+        /// Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.enableSsl
+        /// </param>
+        /// <param name="allowSelfSignedServerCert">
+        /// Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.allowSelfSignedServerCert
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal MongoDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, MongoDBAuthenticationType? authenticationType, DataFactoryElement<string> databaseName, DataFactoryElement<string> username, FactorySecretBaseDefinition password, DataFactoryElement<string> authSource, DataFactoryElement<int> port, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
@@ -65,30 +117,56 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MongoDb";
         }
 
-        /// <summary> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.server
+        /// </summary>
         public DataFactoryElement<string> Server { get; set; }
-        /// <summary> The authentication type to be used to connect to the MongoDB database. </summary>
+        /// <summary>
+        /// The authentication type to be used to connect to the MongoDB database.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.authenticationType
+        /// </summary>
         public MongoDBAuthenticationType? AuthenticationType { get; set; }
-        /// <summary> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.databaseName
+        /// </summary>
         public DataFactoryElement<string> DatabaseName { get; set; }
-        /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Username for authentication. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.username
+        /// </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary>
         /// Password for authentication.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary> Database to verify the username and password. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Database to verify the username and password. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.authSource
+        /// </summary>
         public DataFactoryElement<string> AuthSource { get; set; }
-        /// <summary> The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        /// <summary>
+        /// The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.port
+        /// </summary>
         public DataFactoryElement<int> Port { get; set; }
-        /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.enableSsl
+        /// </summary>
         public DataFactoryElement<bool> EnableSsl { get; set; }
-        /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: MongoDbLinkedService.typeProperties.allowSelfSignedServerCert
+        /// </summary>
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
+        /// Serialized Name: MongoDbLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

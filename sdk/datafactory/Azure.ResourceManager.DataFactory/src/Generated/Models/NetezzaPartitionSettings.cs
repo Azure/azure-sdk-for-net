@@ -9,7 +9,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The settings that will be leveraged for Netezza source partitioning. </summary>
+    /// <summary>
+    /// The settings that will be leveraged for Netezza source partitioning.
+    /// Serialized Name: NetezzaPartitionSettings
+    /// </summary>
     public partial class NetezzaPartitionSettings
     {
         /// <summary> Initializes a new instance of NetezzaPartitionSettings. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of NetezzaPartitionSettings. </summary>
-        /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionColumnName">
+        /// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: NetezzaPartitionSettings.partitionColumnName
+        /// </param>
+        /// <param name="partitionUpperBound">
+        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: NetezzaPartitionSettings.partitionUpperBound
+        /// </param>
+        /// <param name="partitionLowerBound">
+        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: NetezzaPartitionSettings.partitionLowerBound
+        /// </param>
         internal NetezzaPartitionSettings(DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound)
         {
             PartitionColumnName = partitionColumnName;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             PartitionLowerBound = partitionLowerBound;
         }
 
-        /// <summary> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: NetezzaPartitionSettings.partitionColumnName
+        /// </summary>
         public DataFactoryElement<string> PartitionColumnName { get; set; }
-        /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: NetezzaPartitionSettings.partitionUpperBound
+        /// </summary>
         public DataFactoryElement<string> PartitionUpperBound { get; set; }
-        /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: NetezzaPartitionSettings.partitionLowerBound
+        /// </summary>
         public DataFactoryElement<string> PartitionLowerBound { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data flow reference type. </summary>
+    /// <summary>
+    /// Data flow reference type.
+    /// Serialized Name: DataFlowReferenceType
+    /// </summary>
     public readonly partial struct DataFlowReferenceType : IEquatable<DataFlowReferenceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string DataFlowReferenceValue = "DataFlowReference";
 
-        /// <summary> DataFlowReference. </summary>
+        /// <summary>
+        /// DataFlowReference
+        /// Serialized Name: DataFlowReferenceType.DataFlowReference
+        /// </summary>
         public static DataFlowReferenceType DataFlowReference { get; } = new DataFlowReferenceType(DataFlowReferenceValue);
         /// <summary> Determines if two <see cref="DataFlowReferenceType"/> values are the same. </summary>
         public static bool operator ==(DataFlowReferenceType left, DataFlowReferenceType right) => left.Equals(right);

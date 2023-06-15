@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Azure Data Explorer sink. </summary>
+    /// <summary>
+    /// A copy activity Azure Data Explorer sink.
+    /// Serialized Name: AzureDataExplorerSink
+    /// </summary>
     public partial class AzureDataExplorerSink : CopySink
     {
         /// <summary> Initializes a new instance of AzureDataExplorerSink. </summary>
@@ -21,17 +24,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataExplorerSink. </summary>
-        /// <param name="copySinkType"> Copy sink type. </param>
-        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySinkType">
+        /// Copy sink type.
+        /// Serialized Name: CopySink.type
+        /// </param>
+        /// <param name="writeBatchSize">
+        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: CopySink.writeBatchSize
+        /// </param>
+        /// <param name="writeBatchTimeout">
+        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySink.writeBatchTimeout
+        /// </param>
+        /// <param name="sinkRetryCount">
+        /// Sink retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySink.sinkRetryCount
+        /// </param>
+        /// <param name="sinkRetryWait">
+        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySink.sinkRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySink.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySink.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="ingestionMappingName"> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </param>
-        /// <param name="ingestionMappingAsJson"> An explicit column mapping description provided in a json format. Type: string. </param>
-        /// <param name="flushImmediately"> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </param>
+        /// <param name="ingestionMappingName">
+        /// A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string.
+        /// Serialized Name: AzureDataExplorerSink.ingestionMappingName
+        /// </param>
+        /// <param name="ingestionMappingAsJson">
+        /// An explicit column mapping description provided in a json format. Type: string.
+        /// Serialized Name: AzureDataExplorerSink.ingestionMappingAsJson
+        /// </param>
+        /// <param name="flushImmediately">
+        /// If set to true, any aggregation will be skipped. Default is false. Type: boolean.
+        /// Serialized Name: AzureDataExplorerSink.flushImmediately
+        /// </param>
         internal AzureDataExplorerSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> ingestionMappingName, DataFactoryElement<string> ingestionMappingAsJson, DataFactoryElement<bool> flushImmediately) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             IngestionMappingName = ingestionMappingName;
@@ -40,11 +73,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "AzureDataExplorerSink";
         }
 
-        /// <summary> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </summary>
+        /// <summary>
+        /// A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string.
+        /// Serialized Name: AzureDataExplorerSink.ingestionMappingName
+        /// </summary>
         public DataFactoryElement<string> IngestionMappingName { get; set; }
-        /// <summary> An explicit column mapping description provided in a json format. Type: string. </summary>
+        /// <summary>
+        /// An explicit column mapping description provided in a json format. Type: string.
+        /// Serialized Name: AzureDataExplorerSink.ingestionMappingAsJson
+        /// </summary>
         public DataFactoryElement<string> IngestionMappingAsJson { get; set; }
-        /// <summary> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </summary>
+        /// <summary>
+        /// If set to true, any aggregation will be skipped. Default is false. Type: boolean.
+        /// Serialized Name: AzureDataExplorerSink.flushImmediately
+        /// </summary>
         public DataFactoryElement<bool> FlushImmediately { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The write behavior for the operation. Default is Insert. </summary>
+    /// <summary>
+    /// The write behavior for the operation. Default is Insert.
+    /// Serialized Name: SalesforceSinkWriteBehavior
+    /// </summary>
     public readonly partial struct SalesforceSinkWriteBehavior : IEquatable<SalesforceSinkWriteBehavior>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string InsertValue = "Insert";
         private const string UpsertValue = "Upsert";
 
-        /// <summary> Insert. </summary>
+        /// <summary>
+        /// Insert
+        /// Serialized Name: SalesforceSinkWriteBehavior.Insert
+        /// </summary>
         public static SalesforceSinkWriteBehavior Insert { get; } = new SalesforceSinkWriteBehavior(InsertValue);
-        /// <summary> Upsert. </summary>
+        /// <summary>
+        /// Upsert
+        /// Serialized Name: SalesforceSinkWriteBehavior.Upsert
+        /// </summary>
         public static SalesforceSinkWriteBehavior Upsert { get; } = new SalesforceSinkWriteBehavior(UpsertValue);
         /// <summary> Determines if two <see cref="SalesforceSinkWriteBehavior"/> values are the same. </summary>
         public static bool operator ==(SalesforceSinkWriteBehavior left, SalesforceSinkWriteBehavior right) => left.Equals(right);

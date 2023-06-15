@@ -11,12 +11,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Key Vault secret reference. </summary>
+    /// <summary>
+    /// Azure Key Vault secret reference.
+    /// Serialized Name: AzureKeyVaultSecretReference
+    /// </summary>
     public partial class AzureKeyVaultSecretReference : FactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
-        /// <param name="store"> The Azure Key Vault linked service reference. </param>
-        /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
+        /// <param name="store">
+        /// The Azure Key Vault linked service reference.
+        /// Serialized Name: AzureKeyVaultSecretReference.store
+        /// </param>
+        /// <param name="secretName">
+        /// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureKeyVaultSecretReference.secretName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
         public AzureKeyVaultSecretReference(FactoryLinkedServiceReference store, DataFactoryElement<string> secretName)
         {
@@ -29,10 +38,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
-        /// <param name="secretBaseType"> Type of the secret. </param>
-        /// <param name="store"> The Azure Key Vault linked service reference. </param>
-        /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
-        /// <param name="secretVersion"> The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string). </param>
+        /// <param name="secretBaseType">
+        /// Type of the secret.
+        /// Serialized Name: SecretBase.type
+        /// </param>
+        /// <param name="store">
+        /// The Azure Key Vault linked service reference.
+        /// Serialized Name: AzureKeyVaultSecretReference.store
+        /// </param>
+        /// <param name="secretName">
+        /// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureKeyVaultSecretReference.secretName
+        /// </param>
+        /// <param name="secretVersion">
+        /// The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureKeyVaultSecretReference.secretVersion
+        /// </param>
         internal AzureKeyVaultSecretReference(string secretBaseType, FactoryLinkedServiceReference store, DataFactoryElement<string> secretName, DataFactoryElement<string> secretVersion) : base(secretBaseType)
         {
             Store = store;
@@ -41,11 +62,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             SecretBaseType = secretBaseType ?? "AzureKeyVaultSecret";
         }
 
-        /// <summary> The Azure Key Vault linked service reference. </summary>
+        /// <summary>
+        /// The Azure Key Vault linked service reference.
+        /// Serialized Name: AzureKeyVaultSecretReference.store
+        /// </summary>
         public FactoryLinkedServiceReference Store { get; set; }
-        /// <summary> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureKeyVaultSecretReference.secretName
+        /// </summary>
         public DataFactoryElement<string> SecretName { get; set; }
-        /// <summary> The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureKeyVaultSecretReference.secretVersion
+        /// </summary>
         public DataFactoryElement<string> SecretVersion { get; set; }
     }
 }

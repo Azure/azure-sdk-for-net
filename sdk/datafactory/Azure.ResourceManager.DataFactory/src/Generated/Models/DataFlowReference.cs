@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data flow reference type. </summary>
+    /// <summary>
+    /// Data flow reference type.
+    /// Serialized Name: DataFlowReference
+    /// </summary>
     public partial class DataFlowReference
     {
         /// <summary> Initializes a new instance of DataFlowReference. </summary>
-        /// <param name="referenceType"> Data flow reference type. </param>
-        /// <param name="referenceName"> Reference data flow name. </param>
+        /// <param name="referenceType">
+        /// Data flow reference type.
+        /// Serialized Name: DataFlowReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference data flow name.
+        /// Serialized Name: DataFlowReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DataFlowReference(DataFlowReferenceType referenceType, string referenceName)
         {
@@ -29,10 +38,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowReference. </summary>
-        /// <param name="referenceType"> Data flow reference type. </param>
-        /// <param name="referenceName"> Reference data flow name. </param>
-        /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
-        /// <param name="parameters"> Data flow parameters. </param>
+        /// <param name="referenceType">
+        /// Data flow reference type.
+        /// Serialized Name: DataFlowReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference data flow name.
+        /// Serialized Name: DataFlowReference.referenceName
+        /// </param>
+        /// <param name="datasetParameters">
+        /// Reference data flow parameters from dataset.
+        /// Serialized Name: DataFlowReference.datasetParameters
+        /// </param>
+        /// <param name="parameters">
+        /// Data flow parameters
+        /// Serialized Name: DataFlowReference.parameters
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DataFlowReference(DataFlowReferenceType referenceType, string referenceName, BinaryData datasetParameters, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -43,12 +64,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Data flow reference type. </summary>
+        /// <summary>
+        /// Data flow reference type.
+        /// Serialized Name: DataFlowReference.type
+        /// </summary>
         public DataFlowReferenceType ReferenceType { get; set; }
-        /// <summary> Reference data flow name. </summary>
+        /// <summary>
+        /// Reference data flow name.
+        /// Serialized Name: DataFlowReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
         /// <summary>
         /// Reference data flow parameters from dataset.
+        /// Serialized Name: DataFlowReference.datasetParameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -80,6 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData DatasetParameters { get; set; }
         /// <summary>
         /// Data flow parameters
+        /// Serialized Name: DataFlowReference.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

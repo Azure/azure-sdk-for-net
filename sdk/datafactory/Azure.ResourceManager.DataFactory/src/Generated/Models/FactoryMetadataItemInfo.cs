@@ -9,7 +9,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Specify the name and value of custom metadata item. </summary>
+    /// <summary>
+    /// Specify the name and value of custom metadata item.
+    /// Serialized Name: MetadataItem
+    /// </summary>
     public partial class FactoryMetadataItemInfo
     {
         /// <summary> Initializes a new instance of FactoryMetadataItemInfo. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryMetadataItemInfo. </summary>
-        /// <param name="name"> Metadata item key name. Type: string (or Expression with resultType string). </param>
-        /// <param name="value"> Metadata item value. Type: string (or Expression with resultType string). </param>
+        /// <param name="name">
+        /// Metadata item key name. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.name
+        /// </param>
+        /// <param name="value">
+        /// Metadata item value. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.value
+        /// </param>
         internal FactoryMetadataItemInfo(DataFactoryElement<string> name, DataFactoryElement<string> value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> Metadata item key name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Metadata item key name. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.name
+        /// </summary>
         public DataFactoryElement<string> Name { get; set; }
-        /// <summary> Metadata item value. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Metadata item value. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.value
+        /// </summary>
         public DataFactoryElement<string> Value { get; set; }
     }
 }

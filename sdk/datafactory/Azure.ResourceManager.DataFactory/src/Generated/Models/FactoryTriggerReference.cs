@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Trigger reference type. </summary>
+    /// <summary>
+    /// Trigger reference type.
+    /// Serialized Name: TriggerReference
+    /// </summary>
     public partial class FactoryTriggerReference
     {
         /// <summary> Initializes a new instance of FactoryTriggerReference. </summary>
-        /// <param name="referenceType"> Trigger reference type. </param>
-        /// <param name="referenceName"> Reference trigger name. </param>
+        /// <param name="referenceType">
+        /// Trigger reference type.
+        /// Serialized Name: TriggerReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference trigger name.
+        /// Serialized Name: TriggerReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public FactoryTriggerReference(FactoryTriggerReferenceType referenceType, string referenceName)
         {
@@ -25,9 +34,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Trigger reference type. </summary>
+        /// <summary>
+        /// Trigger reference type.
+        /// Serialized Name: TriggerReference.type
+        /// </summary>
         public FactoryTriggerReferenceType ReferenceType { get; set; }
-        /// <summary> Reference trigger name. </summary>
+        /// <summary>
+        /// Reference trigger name.
+        /// Serialized Name: TriggerReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
     }
 }

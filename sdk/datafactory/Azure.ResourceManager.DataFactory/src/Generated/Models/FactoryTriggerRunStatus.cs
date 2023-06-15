@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Trigger run status. </summary>
+    /// <summary>
+    /// Trigger run status.
+    /// Serialized Name: TriggerRunStatus
+    /// </summary>
     public readonly partial struct FactoryTriggerRunStatus : IEquatable<FactoryTriggerRunStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string FailedValue = "Failed";
         private const string InprogressValue = "Inprogress";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: TriggerRunStatus.Succeeded
+        /// </summary>
         public static FactoryTriggerRunStatus Succeeded { get; } = new FactoryTriggerRunStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: TriggerRunStatus.Failed
+        /// </summary>
         public static FactoryTriggerRunStatus Failed { get; } = new FactoryTriggerRunStatus(FailedValue);
-        /// <summary> Inprogress. </summary>
+        /// <summary>
+        /// Inprogress
+        /// Serialized Name: TriggerRunStatus.Inprogress
+        /// </summary>
         public static FactoryTriggerRunStatus Inprogress { get; } = new FactoryTriggerRunStatus(InprogressValue);
         /// <summary> Determines if two <see cref="FactoryTriggerRunStatus"/> values are the same. </summary>
         public static bool operator ==(FactoryTriggerRunStatus left, FactoryTriggerRunStatus right) => left.Equals(right);

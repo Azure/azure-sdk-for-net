@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> File server read settings. </summary>
+    /// <summary>
+    /// File server read settings.
+    /// Serialized Name: FileServerReadSettings
+    /// </summary>
     public partial class FileServerReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of FileServerReadSettings. </summary>
@@ -21,20 +24,59 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FileServerReadSettings. </summary>
-        /// <param name="storeReadSettingsType"> The read setting type. </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="storeReadSettingsType">
+        /// The read setting type.
+        /// Serialized Name: StoreReadSettings.type
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: StoreReadSettings.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="wildcardFolderPath"> FileServer wildcardFolderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="wildcardFileName"> FileServer wildcardFileName. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
-        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
-        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileFilter"> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </param>
+        /// <param name="recursive">
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: FileServerReadSettings.recursive
+        /// </param>
+        /// <param name="wildcardFolderPath">
+        /// FileServer wildcardFolderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.wildcardFolderPath
+        /// </param>
+        /// <param name="wildcardFileName">
+        /// FileServer wildcardFileName. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.wildcardFileName
+        /// </param>
+        /// <param name="fileListPath">
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.fileListPath
+        /// </param>
+        /// <param name="enablePartitionDiscovery">
+        /// Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: FileServerReadSettings.enablePartitionDiscovery
+        /// </param>
+        /// <param name="partitionRootPath">
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.partitionRootPath
+        /// </param>
+        /// <param name="deleteFilesAfterCompletion">
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: FileServerReadSettings.deleteFilesAfterCompletion
+        /// </param>
+        /// <param name="modifiedDatetimeStart">
+        /// The start of file's modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.modifiedDatetimeStart
+        /// </param>
+        /// <param name="modifiedDatetimeEnd">
+        /// The end of file's modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.modifiedDatetimeEnd
+        /// </param>
+        /// <param name="fileFilter">
+        /// Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.fileFilter
+        /// </param>
         internal FileServerReadSettings(string storeReadSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> recursive, DataFactoryElement<string> wildcardFolderPath, DataFactoryElement<string> wildcardFileName, DataFactoryElement<string> fileListPath, DataFactoryElement<bool> enablePartitionDiscovery, DataFactoryElement<string> partitionRootPath, DataFactoryElement<bool> deleteFilesAfterCompletion, DataFactoryElement<string> modifiedDatetimeStart, DataFactoryElement<string> modifiedDatetimeEnd, DataFactoryElement<string> fileFilter) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -50,25 +92,55 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "FileServerReadSettings";
         }
 
-        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: FileServerReadSettings.recursive
+        /// </summary>
         public DataFactoryElement<bool> Recursive { get; set; }
-        /// <summary> FileServer wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// FileServer wildcardFolderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.wildcardFolderPath
+        /// </summary>
         public DataFactoryElement<string> WildcardFolderPath { get; set; }
-        /// <summary> FileServer wildcardFileName. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// FileServer wildcardFileName. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.wildcardFileName
+        /// </summary>
         public DataFactoryElement<string> WildcardFileName { get; set; }
-        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.fileListPath
+        /// </summary>
         public DataFactoryElement<string> FileListPath { get; set; }
-        /// <summary> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: FileServerReadSettings.enablePartitionDiscovery
+        /// </summary>
         public DataFactoryElement<bool> EnablePartitionDiscovery { get; set; }
-        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.partitionRootPath
+        /// </summary>
         public DataFactoryElement<string> PartitionRootPath { get; set; }
-        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: FileServerReadSettings.deleteFilesAfterCompletion
+        /// </summary>
         public DataFactoryElement<bool> DeleteFilesAfterCompletion { get; set; }
-        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The start of file's modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.modifiedDatetimeStart
+        /// </summary>
         public DataFactoryElement<string> ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The end of file's modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.modifiedDatetimeEnd
+        /// </summary>
         public DataFactoryElement<string> ModifiedDatetimeEnd { get; set; }
-        /// <summary> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string).
+        /// Serialized Name: FileServerReadSettings.fileFilter
+        /// </summary>
         public DataFactoryElement<string> FileFilter { get; set; }
     }
 }

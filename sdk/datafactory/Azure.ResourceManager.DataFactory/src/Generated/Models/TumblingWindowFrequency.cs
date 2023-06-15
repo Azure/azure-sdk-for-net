@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Enumerates possible frequency option for the tumbling window trigger. </summary>
+    /// <summary>
+    /// Enumerates possible frequency option for the tumbling window trigger.
+    /// Serialized Name: TumblingWindowFrequency
+    /// </summary>
     public readonly partial struct TumblingWindowFrequency : IEquatable<TumblingWindowFrequency>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string HourValue = "Hour";
         private const string MonthValue = "Month";
 
-        /// <summary> Minute. </summary>
+        /// <summary>
+        /// Minute
+        /// Serialized Name: TumblingWindowFrequency.Minute
+        /// </summary>
         public static TumblingWindowFrequency Minute { get; } = new TumblingWindowFrequency(MinuteValue);
-        /// <summary> Hour. </summary>
+        /// <summary>
+        /// Hour
+        /// Serialized Name: TumblingWindowFrequency.Hour
+        /// </summary>
         public static TumblingWindowFrequency Hour { get; } = new TumblingWindowFrequency(HourValue);
-        /// <summary> Month. </summary>
+        /// <summary>
+        /// Month
+        /// Serialized Name: TumblingWindowFrequency.Month
+        /// </summary>
         public static TumblingWindowFrequency Month { get; } = new TumblingWindowFrequency(MonthValue);
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are the same. </summary>
         public static bool operator ==(TumblingWindowFrequency left, TumblingWindowFrequency right) => left.Equals(right);

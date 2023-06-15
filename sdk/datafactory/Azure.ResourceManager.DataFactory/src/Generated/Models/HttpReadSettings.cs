@@ -11,7 +11,10 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Http read settings. </summary>
+    /// <summary>
+    /// Http read settings.
+    /// Serialized Name: HttpReadSettings
+    /// </summary>
     public partial class HttpReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of HttpReadSettings. </summary>
@@ -21,15 +24,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HttpReadSettings. </summary>
-        /// <param name="storeReadSettingsType"> The read setting type. </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="storeReadSettingsType">
+        /// The read setting type.
+        /// Serialized Name: StoreReadSettings.type
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: StoreReadSettings.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="requestMethod"> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </param>
-        /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
-        /// <param name="requestTimeout"> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="requestMethod">
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.requestMethod
+        /// </param>
+        /// <param name="requestBody">
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.requestBody
+        /// </param>
+        /// <param name="additionalHeaders">
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.additionalHeaders
+        /// </param>
+        /// <param name="requestTimeout">
+        /// Specifies the timeout for a HTTP client to get HTTP response from HTTP server. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.requestTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: HttpReadSettings.additionalColumns
+        /// </param>
         internal HttpReadSettings(string storeReadSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> requestMethod, DataFactoryElement<string> requestBody, DataFactoryElement<string> additionalHeaders, DataFactoryElement<string> requestTimeout, BinaryData additionalColumns) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
@@ -40,16 +67,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "HttpReadSettings";
         }
 
-        /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.requestMethod
+        /// </summary>
         public DataFactoryElement<string> RequestMethod { get; set; }
-        /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.requestBody
+        /// </summary>
         public DataFactoryElement<string> RequestBody { get; set; }
-        /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.additionalHeaders
+        /// </summary>
         public DataFactoryElement<string> AdditionalHeaders { get; set; }
-        /// <summary> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specifies the timeout for a HTTP client to get HTTP response from HTTP server. Type: string (or Expression with resultType string).
+        /// Serialized Name: HttpReadSettings.requestTimeout
+        /// </summary>
         public DataFactoryElement<string> RequestTimeout { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: HttpReadSettings.additionalColumns
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

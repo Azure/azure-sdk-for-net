@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The endpoint for Azure-SSIS integration runtime outbound network dependency. </summary>
+    /// <summary>
+    /// The endpoint for Azure-SSIS integration runtime outbound network dependency.
+    /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint
+    /// </summary>
     public partial class IntegrationRuntimeOutboundNetworkDependenciesEndpoint
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
-        /// <param name="domainName"> The domain name of endpoint. </param>
-        /// <param name="endpointDetails"> The details of endpoint. </param>
+        /// <param name="domainName">
+        /// The domain name of endpoint.
+        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.domainName
+        /// </param>
+        /// <param name="endpointDetails">
+        /// The details of endpoint.
+        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.endpointDetails
+        /// </param>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName, IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails)
         {
             DomainName = domainName;
             EndpointDetails = endpointDetails;
         }
 
-        /// <summary> The domain name of endpoint. </summary>
+        /// <summary>
+        /// The domain name of endpoint.
+        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.domainName
+        /// </summary>
         public string DomainName { get; }
-        /// <summary> The details of endpoint. </summary>
+        /// <summary>
+        /// The details of endpoint.
+        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.endpointDetails
+        /// </summary>
         public IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> EndpointDetails { get; }
     }
 }
