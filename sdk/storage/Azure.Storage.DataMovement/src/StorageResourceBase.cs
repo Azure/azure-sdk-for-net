@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
         /// Internal constructor to accept the authorization Scheme
         /// </summary>
         /// <param name="tokenCredential"></param>
-        protected void SetAuthorizationScheme(TokenCredential tokenCredential)
+        protected void SetAuthorizationScheme(HttpAuthorization tokenCredential)
         {
             _authScheme.SetAuthentication(tokenCredential);
         }

@@ -201,7 +201,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                StorageResourceCopyFromUriOptions options = await GetCopyFromUriOptions().ConfigureAwait(false);
+                StorageResourceCopyFromUriOptions options = GetCopyFromUriOptions();
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
@@ -233,7 +233,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                StorageResourceCopyFromUriOptions options = await GetCopyFromUriOptions().ConfigureAwait(false);
+                StorageResourceCopyFromUriOptions options = GetCopyFromUriOptions();
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
@@ -344,7 +344,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                StorageResourceCopyFromUriOptions options = await GetCopyFromUriOptions().ConfigureAwait(false);
+                StorageResourceCopyFromUriOptions options = GetCopyFromUriOptions();
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
@@ -421,19 +421,12 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptions()
+        private StorageResourceCopyFromUriOptions GetCopyFromUriOptions()
         {
             StorageResourceCopyFromUriOptions options = default;
-            if (_sourceResource._authScheme.CanProduceTokenCredential)
+            if (_sourceResource._authScheme.CanProduceHttpAuthorization)
             {
-                TokenCredential credential = _sourceResource._authScheme.TokenCredential;
-                AccessToken accessToken =
-                    await credential.GetTokenAsync(
-                        new TokenRequestContext(DataMovementConstants.CopyHttpAuthorization.Scopes),
-                        CancellationToken.None).ConfigureAwait(false);
-                HttpAuthorization httpAuthorization = new HttpAuthorization(
-                        scheme: DataMovementConstants.CopyHttpAuthorization.BearerScheme,
-                        parameter: accessToken.Token);
+                HttpAuthorization httpAuthorization = _sourceResource._authScheme.HttpAuthorization;
                 options = new StorageResourceCopyFromUriOptions()
                 {
                     SourceAuthentication = httpAuthorization,

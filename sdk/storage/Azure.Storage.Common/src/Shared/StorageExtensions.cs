@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
+using Azure.Core;
 
 namespace Azure.Storage.Shared
 {
@@ -58,6 +58,19 @@ namespace Azure.Storage.Shared
             byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
             BitConverter.GetBytes(offset).CopyTo(id, 0);
             return Convert.ToBase64String(id);
+        }
+
+        public static HttpAuthorization ToHttpAuthorization(
+            this TokenCredential tokenCredential,
+            CancellationToken cancellationToken = default)
+        {
+            AccessToken accessToken =
+                   tokenCredential.GetToken(
+                       new TokenRequestContext(Constants.CopyHttpAuthorization.Scopes),
+                       cancellationToken);
+            return new HttpAuthorization(
+                    scheme: Constants.CopyHttpAuthorization.BearerScheme,
+                    parameter: accessToken.Token);
         }
     }
 }

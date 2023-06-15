@@ -634,15 +634,23 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region internal static accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
         /// where OAuth is necessary to authenticate the source.
         /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
+        /// <param name="client">
+        /// The storage client which to generate the
+        /// authorization header off of.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-
-        protected static Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(BlobBaseClient client) =>
-            client.ClientConfiguration.OAuthTokenCredential;
+        protected static HttpAuthorization GetCopyAuthorizationHeader(
+            BlobBaseClient client,
+            CancellationToken cancellationToken = default)
+            => client.ClientConfiguration.OAuthTokenCredential?.ToHttpAuthorization(cancellationToken);
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>

@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs
             _options = options;
 
             // Set credential internally if passed one.
-            TokenCredential tokenCredential = BlobBaseClientInternals.GetTokenCredential(blobClient);
+            HttpAuthorization tokenCredential = BlobBaseClientInternals.GetCopyAuthorizationHeader(blobClient, CancellationToken.None);
             if (tokenCredential != null)
             {
                 SetAuthorizationScheme(tokenCredential);

@@ -17,26 +17,26 @@ namespace Azure.Storage.DataMovement.Models
     /// </summary>
     internal class ResourceAuthorization
     {
-        internal bool CanProduceTokenCredential => TokenCredential != null;
+        internal bool CanProduceHttpAuthorization => HttpAuthorization != null;
 
-        internal TokenCredential TokenCredential;
+        internal HttpAuthorization HttpAuthorization;
 
         internal ResourceAuthorization()
         {
-            TokenCredential = null;
+            HttpAuthorization = null;
         }
 
-        internal void SetAuthentication(TokenCredential tokenCredential)
+        internal void SetAuthentication(HttpAuthorization authorization)
         {
-            TokenCredential = tokenCredential;
+            HttpAuthorization = authorization;
         }
 
         // TODO: add back in when AzureSasCredential supports generating SAS's
         //internal bool CanProduceSasCredential => SasCredential != null;
         //internal AzureSasCredential SasCredential;
-        //internal void SetAuthentication(TokenCredential tokenCredential)
+        //internal void SetAuthentication(AzureSasCredential sasCredential)
         //{
-            //TokenCredential = tokenCredential;
+            //SasCredential = sasCredential;
         //}
     }
 }
