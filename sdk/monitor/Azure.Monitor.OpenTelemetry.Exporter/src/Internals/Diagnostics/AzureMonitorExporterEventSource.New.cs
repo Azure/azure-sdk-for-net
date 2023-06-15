@@ -58,5 +58,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 WriteEvent(9, name);
             }
         }
+
+        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. If this is not hosted in an Azure VM this can be ignored. {0}", Level = EventLevel.Informational)]
+        public void VmMetadataFailed(string exceptionMessage) => WriteEvent(10, exceptionMessage);
+
+        [NonEvent]
+        public void VmMetadataFailed(Exception exception)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                VmMetadataFailed(exception.FlattenException().ToInvariantString());
+            }
+        }
     }
 }

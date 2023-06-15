@@ -139,7 +139,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex);
+                AzureMonitorExporterEventSource.Log.VmMetadataFailed(ex);
                 return null;
             }
         }
