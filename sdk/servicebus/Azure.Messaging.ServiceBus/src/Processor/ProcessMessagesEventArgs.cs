@@ -126,7 +126,6 @@ namespace Azure.Messaging.ServiceBus
             Identifier = identifier;
         }
 
-        // TODO probably need a version of Abandon, Complete, and DeadLetter that operate on a list.
         ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,

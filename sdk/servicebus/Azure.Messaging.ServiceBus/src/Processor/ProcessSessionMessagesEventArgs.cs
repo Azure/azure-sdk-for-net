@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> ReceivedActionsMessages => _receiveActions.Messages;
 
-        internal ICollection<ServiceBusReceivedMessage> ProcessedMessages => ReceivedActionsMessages.Keys;
+        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => ReceivedActionsMessages.Keys;
 
         /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
@@ -68,8 +68,6 @@ namespace Azure.Messaging.ServiceBus
         /// The fully qualified Service Bus namespace that the message was received from.
         /// </summary>
         public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
-
-        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => throw new NotImplementedException();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessSessionMessagesEventArgs"/> class.
@@ -141,7 +139,6 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
 
-        // TODO probably need a version of Abandon, Complete, and DeadLetter that operate on a list.
         /// <inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
