@@ -71,27 +71,19 @@ namespace Azure.Core.Json
 
         private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
-            // TODO: Hashmap for lookups
-
-            List<MutableJsonChange> added = Changes.GetAddedProperties(path, highWaterMark);
-            List<MutableJsonChange> removed = Changes.GetRemovedProperties(path, highWaterMark);
-
             writer.WriteStartObject();
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, property.Name);
-
-                // TODO: rewrite for clarity
-                IEnumerable<MutableJsonChange> matches = removed.Where(change => change.Path == propertyPath);
-                bool thisOneWasRemoved = matches.Any();
-                if (!thisOneWasRemoved)
+                if (!Changes.WasRemoved(propertyPath, highWaterMark))
                 {
                     writer.WritePropertyName(property.Name);
                     WriteElement(propertyPath, highWaterMark, property.Value, writer);
                 }
             }
 
+            IEnumerable<MutableJsonChange> added = Changes.GetAddedProperties(path, highWaterMark);
             foreach (MutableJsonChange property in added)
             {
                 string propertyName = property.AddedPropertyName!;
