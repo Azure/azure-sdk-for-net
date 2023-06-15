@@ -77,28 +77,52 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task MockingArmDeploymentCollection()
         {
             var rgMock = new AzureMock<ResourceGroupResource>();
-            var collectionMock = new AzureMock<ArmDeploymentCollection>();
-            var lroMock = new AzureMock<ArmOperation<ArmDeploymentResource>>();
-            var resourceMock = new AzureMock<ArmDeploymentResource>();
-            resourceMock.Setup(resource => resource.GetAsync(default)).ReturnsAsync(Response.FromValue(resourceMock.Object, null));
+            var deploymentCollectionMock = new AzureMock<ArmDeploymentCollection>();
+            var deploymentLroMock = new AzureMock<ArmOperation<ArmDeploymentResource>>();
+            var deploymentMock = new AzureMock<ArmDeploymentResource>();
+            var appCollectionMock = new AzureMock<ArmApplicationCollection>();
+            var appLroMock = new AzureMock<ArmOperation<ArmApplicationResource>>();
+            var appMock = new AzureMock<ArmApplicationResource>();
 
-            var resourceId = ArmDeploymentResource.CreateResourceIdentifier($"/subscriptions/{Guid.NewGuid()}", "myDeployment");
-            var resourceData = ArmResourcesModelFactory.ArmDeploymentData(resourceId);
+            deploymentMock.Setup(resource => resource.GetAsync(default)).ReturnsAsync(Response.FromValue(deploymentMock.Object, null));
 
-            resourceMock.Setup(resource => resource.Data).Returns(resourceData);
-            lroMock.Setup(lro => lro.Value).Returns(resourceMock.Object);
+            var deploymentId = ArmDeploymentResource.CreateResourceIdentifier($"/subscriptions/{Guid.NewGuid()}", "myDeployment");
+            var deploymentData = ArmResourcesModelFactory.ArmDeploymentData(deploymentId);
+
+            deploymentMock.Setup(resource => resource.Data).Returns(deploymentData);
+            deploymentLroMock.Setup(lro => lro.Value).Returns(deploymentMock.Object);
+
+            appMock.Setup(resource => resource.GetAsync(default)).ReturnsAsync(Response.FromValue(appMock.Object, null));
+            var appId = ArmApplicationResource.CreateResourceIdentifier(Guid.NewGuid().ToString(), "myRg", "myApplication");
+            var appData = ArmResourcesModelFactory.ArmApplicationData(appId);
+            appMock.Setup(resource => resource.Id).Returns(appId);
+            appMock.Setup(resource => resource.Data).Returns(appData);
+
+            appLroMock.Setup(lro => lro.Value).Returns(appMock.Object);
+
             var content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental));
-            collectionMock.Setup(deployment => deployment.CreateOrUpdateAsync(WaitUntil.Completed, It.IsAny<string>(), content, default)).ReturnsAsync(lroMock.Object);
+            deploymentCollectionMock.Setup(collection => collection.CreateOrUpdateAsync(WaitUntil.Completed, It.IsAny<string>(), content, default)).ReturnsAsync(deploymentLroMock.Object);
 
-            rgMock.Setup(rg => rg.GetArmDeployments()).Returns(collectionMock.Object);
+            appCollectionMock.Setup(collection => collection.CreateOrUpdateAsync(WaitUntil.Completed, It.IsAny<string>(), appData, default)).ReturnsAsync(appLroMock.Object);
+
+            rgMock.Setup(rg => rg.GetArmDeployments()).Returns(deploymentCollectionMock.Object);
+            rgMock.Setup(rg => rg.GetArmApplications()).Returns(appCollectionMock.Object);
+            // TODO -- cannot directly mock this because we do not have a `GetArmApplicationAsync` method on the extension client
+            //rgMock.Setup(rg => rg.GetArmApplicationAsync(It.IsAny<string>(), default)).ReturnsAsync(Response.FromValue(appMock.Object, null));
 
             var rg = rgMock.Object;
             var deploymentCollection = rg.GetArmDeployments();
             var lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myDeployment", content);
-            var resource = lro.Value;
+            var deployment = lro.Value;
+            var appCollection = rg.GetArmApplications();
+            var appLro = await appCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myApplication", appData);
+            var app = appLro.Value;
 
-            Assert.IsNotNull(resource);
-            Assert.AreEqual(resourceId, resource.Data.Id);
+            Assert.IsNotNull(deployment);
+            Assert.AreEqual(deploymentId, deployment.Data.Id);
+            Assert.IsNotNull(app);
+            Assert.AreEqual(appId, app.Id);
+            Assert.AreEqual(appId, app.Data.Id);
         }
     }
 }

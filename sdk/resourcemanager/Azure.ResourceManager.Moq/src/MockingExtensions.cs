@@ -7,6 +7,7 @@ using Moq;
 using Moq.Language.Flow;
 using System.Reflection;
 using System.Linq;
+using System.Collections.Concurrent;
 
 namespace Azure.ResourceManager.Moq
 {
@@ -85,21 +86,30 @@ namespace Azure.ResourceManager.Moq
             var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType, newDelegateType);
 
             // create an intermediate mock - new Mock<TExtensionClient>()
-            var intermediateMockType = typeof(Mock<>).MakeGenericType(extensionClientType);
-            var intermediateMock = Activator.CreateInstance(intermediateMockType);
+            var intermediateMock = _cache.GetOrAdd(originalMock, mock => ConstructIntermediateMock(originalMock, extensionClientType));
+            //var intermediateMock = ConstructIntermediateMock(originalMock, extensionClientType);
             // find the Setup<TResult>(Expression<Func<T, TResult>>) method on the intermediateMock
-            var setupWithReturn = GetSetupWithReturnMethod(intermediateMockType, typeof(R));
+            var setupWithReturn = GetSetupWithReturnMethod(intermediateMock.GetType(), typeof(R));
 
             // call Setup on the intermediate mock object
             var intermediateSetup = setupWithReturn.Invoke(intermediateMock, new object[] { newExpression });
 
-            // get intermediateMock.Object
-            var intermediateMockObject = intermediateMock.GetType().GetProperty("Object", extensionClientType).GetValue(intermediateMock);
-
-            MockGetCachedClient(originalMock, extensionClientType, intermediateMockObject);
-
             return new AzureNonVoidAdapter<T, R>(intermediateSetup);
         }
+
+        private static object ConstructIntermediateMock<T>(Mock<T> originalMock, Type extensionClientType) where T : class
+        {
+            // create an intermediate mock - new Mock<TExtensionClient>()
+            var intermediateMockType = typeof(Mock<>).MakeGenericType(extensionClientType);
+            var intermediateMock = Activator.CreateInstance(intermediateMockType);
+            // get intermediateMock.Object
+            var intermediateMockObject = intermediateMock.GetType().GetProperty("Object", extensionClientType).GetValue(intermediateMock);
+            MockGetCachedClient(originalMock, extensionClientType, intermediateMockObject);
+
+            return intermediateMock;
+        }
+
+        private static readonly ConcurrentDictionary<object, object> _cache = new ConcurrentDictionary<object, object>();
 
         private static void MockGetCachedClient<T>(Mock<T> originalMock, Type extensionClientType, object intermediateMockObject) where T : class
         {
