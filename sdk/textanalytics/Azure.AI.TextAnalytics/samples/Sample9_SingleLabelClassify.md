@@ -1,6 +1,6 @@
-# Perform Custom Single Label Classification on Documents
+# Perform custom single-label classification
 
-This sample demonstrates how to run a single label classification action in one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
+This sample demonstrates how to perform custom single-label classification on one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
 
 ## Create a `TextAnalyticsClient`
 
@@ -14,9 +14,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Performing Single Label Classify on one or multiple documents
+## Perform custom single-label classification on one or more text documents
 
-To perform Custom Single Label Classification in one or multiple documents, set up a `SingleLabelClassifyAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running Operation of type `AnalyzeActionsOperation` which polls for the results from the API.
+To perform custom single-label classification one or more text documents, call `SingleLabelClassifyAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `ClassifyDocumentOperation`.
 
 ```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync
 string document =
@@ -34,46 +34,34 @@ List<string> batchedDocuments = new()
 // classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
-SingleLabelClassifyAction singleLabelClassifyAction = new(projectName, deploymentName);
-
-TextAnalyticsActions actions = new()
-{
-    SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { singleLabelClassifyAction }
-};
 
 // Perform the text analysis operation.
-AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-await operation.WaitForCompletionAsync();
+ClassifyDocumentOperation operation = await client.SingleLabelClassifyAsync(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 ```
 
-The returned `AnalyzeActionsOperation` contains general information about the status of the operation. It can be requested while the operation is running or when it has completed. For example:
-
-```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewOperationStatus
-// View the operation status.
-Console.WriteLine($"Created On   : {operation.CreatedOn}");
-Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-Console.WriteLine($"Id           : {operation.Id}");
-Console.WriteLine($"Status       : {operation.Status}");
-Console.WriteLine($"Last Modified: {operation.LastModified}");
-Console.WriteLine();
-```
-
-To view the final results of the long-running operation:
+Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the custom single-label classification, including any errors that might have occurred:
 
 ```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewResults
 // View the operation results.
-await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+await foreach (ClassifyDocumentResultCollection documentsInPage in operation.Value)
 {
-    IReadOnlyCollection<SingleLabelClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleLabelClassifyResults;
-
-    foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
+    foreach (ClassifyDocumentResult documentResult in documentsInPage)
     {
-        Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-        foreach (ClassifyDocumentResult documentResult in classificationActionResults.DocumentsResults)
+        if (documentResult.HasError)
         {
-            ClassificationCategory classification = documentResult.ClassificationCategories.First();
+            Console.WriteLine($"  Error!");
+            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+            Console.WriteLine($"  Message: {documentResult.Error.Message}");
+            continue;
+        }
 
-            Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
+        Console.WriteLine($"  Predicted the following class:");
+        Console.WriteLine();
+
+        foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
+        {
+            Console.WriteLine($"  Category: {classification.Category}");
+            Console.WriteLine($"  Confidence score: {classification.ConfidenceScore}");
             Console.WriteLine();
         }
     }

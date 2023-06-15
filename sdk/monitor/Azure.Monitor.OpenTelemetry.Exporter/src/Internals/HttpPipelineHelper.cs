@@ -207,14 +207,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            if (result == ExportResult.Success)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
-            }
-            else
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
-            }
+            AzureMonitorExporterEventSource.Log.TransmissionFailed(fromStorage: false, statusCode: statusCode, connectionVars: connectionVars, requestEndpoint: httpMessage.Request.Uri.Host, willRetry: (result == ExportResult.Success));
 
             return result;
         }
@@ -259,14 +252,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            if (shouldRetry)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
-            }
-            else
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
-            }
+            AzureMonitorExporterEventSource.Log.TransmissionFailed(fromStorage: true, statusCode: statusCode, connectionVars: connectionVars, requestEndpoint: httpMessage.Request.Uri.Host, willRetry: shouldRetry);
         }
     }
 }
