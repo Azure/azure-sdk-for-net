@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
-        /// <param name="aggregates"> The array of aggregates of a savings plan&apos;s utilization. </param>
+        /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
         internal BillingBenefitsSavingsPlanUtilization(string trend, IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates)
         {
             Trend = trend;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> The number of days trend for a savings plan. </summary>
         public string Trend { get; }
-        /// <summary> The array of aggregates of a savings plan&apos;s utilization. </summary>
+        /// <summary> The array of aggregates of a savings plan's utilization. </summary>
         public IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> Aggregates { get; }
     }
 }

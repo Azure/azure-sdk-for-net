@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Get a role assignment by scope and name. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Get a role assignment by scope and name. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Create or update a role assignment by scope and name. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Create or update a role assignment by scope and name. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Delete a role assignment by scope and name. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Delete a role assignment by scope and name. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> List all role assignments that apply to a scope. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> List all role assignments that apply to a scope. </summary>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> List all role assignments that apply to a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> List all role assignments that apply to a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
+        /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>

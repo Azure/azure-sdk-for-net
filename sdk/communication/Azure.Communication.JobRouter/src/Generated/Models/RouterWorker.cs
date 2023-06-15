@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="channelConfigurations"> The channel(s) this worker can handle and their impact on the workers capacity. </param>
         /// <param name="offers"> A list of active offers issued to this worker. </param>
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
-        /// <param name="loadRatio"> A value indicating the workers capacity. A value of &apos;1&apos; means all capacity is consumed. A value of &apos;0&apos; means no capacity is currently consumed. </param>
+        /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
         internal RouterWorker(string id, RouterWorkerState? state, IDictionary<string, object> queueAssignments, int? totalCapacity, IDictionary<string, object> labels, IDictionary<string, object> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<JobOffer> offers, IReadOnlyList<WorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
         {
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter.Models
         public IReadOnlyList<JobOffer> Offers { get; }
         /// <summary> A list of assigned jobs attached to this worker. </summary>
         public IReadOnlyList<WorkerAssignment> AssignedJobs { get; }
-        /// <summary> A value indicating the workers capacity. A value of &apos;1&apos; means all capacity is consumed. A value of &apos;0&apos; means no capacity is currently consumed. </summary>
+        /// <summary> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </summary>
         public double? LoadRatio { get; }
         /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
         public bool? AvailableForOffers { get; set; }

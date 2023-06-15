@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Component container definition.
-    /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
+    /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" /&gt;
     /// </summary>
     public partial class MachineLearningComponentContainerProperties : MachineLearningAssetContainer
     {

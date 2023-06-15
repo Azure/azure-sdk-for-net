@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="query"> SAP HANA Sql query. Type: string (or Expression with resultType string). </param>
         /// <param name="packetSize"> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </param>
-        /// <param name="partitionOption"> The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. </param>
+        /// <param name="partitionOption"> The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "SapHanaDynamicRange". </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP HANA source partitioning. </param>
         internal SapHanaSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, BinaryData packetSize, BinaryData partitionOption, SapHanaPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PacketSize { get; set; }
         /// <summary>
-        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. 
+        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "SapHanaDynamicRange". 
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

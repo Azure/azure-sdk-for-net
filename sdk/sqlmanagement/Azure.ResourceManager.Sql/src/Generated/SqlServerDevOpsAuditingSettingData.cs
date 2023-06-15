@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether DevOps audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure DevOps audit, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should be also created.
+        /// When using REST API to configure DevOps audit, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should be also created.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Specifies whether DevOps audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure DevOps audit, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should be also created.
+        /// When using REST API to configure DevOps audit, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should be also created.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </summary>
         public string StorageAccountAccessKey { get; set; }

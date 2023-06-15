@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a logical database&apos;s transparent data encryption.
+        /// Gets a logical database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a logical database&apos;s transparent data encryption.
+        /// Gets a logical database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a logical database&apos;s transparent data encryption configuration.
+        /// Updates a logical database's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a logical database&apos;s transparent data encryption configuration.
+        /// Updates a logical database's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

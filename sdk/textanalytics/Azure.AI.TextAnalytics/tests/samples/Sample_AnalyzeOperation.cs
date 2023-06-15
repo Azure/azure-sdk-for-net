@@ -49,29 +49,18 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchedDocuments, actions);
+            AnalyzeActionsOperation operation = client.AnalyzeActions(WaitUntil.Completed, batchedDocuments, actions);
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            while (!operation.HasCompleted)
-            {
-                Thread.Sleep(pollingInterval);
-                operation.UpdateStatus();
-
-                Console.WriteLine($"Status: {operation.Status}");
-                //If operation has not started, all other fields are null
-                if (operation.Status != TextAnalyticsOperationStatus.NotStarted)
-                {
-                    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-                    Console.WriteLine($"Last modified: {operation.LastModified}");
-                    if (!string.IsNullOrEmpty(operation.DisplayName))
-                        Console.WriteLine($"Display name: {operation.DisplayName}");
-                    Console.WriteLine($"Total actions: {operation.ActionsTotal}");
-                    Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
-                    Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
-                    Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
-                }
-            }
+            Console.WriteLine($"Status: {operation.Status}");
+            Console.WriteLine($"Created On: {operation.CreatedOn}");
+            Console.WriteLine($"Expires On: {operation.ExpiresOn}");
+            Console.WriteLine($"Last modified: {operation.LastModified}");
+            if (!string.IsNullOrEmpty(operation.DisplayName))
+                Console.WriteLine($"Display name: {operation.DisplayName}");
+            Console.WriteLine($"Total actions: {operation.ActionsTotal}");
+            Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+            Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+            Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
 
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {

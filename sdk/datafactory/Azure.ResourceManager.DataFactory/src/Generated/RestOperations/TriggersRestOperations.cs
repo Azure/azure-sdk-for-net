@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        /// <summary> Get a trigger&apos;s event subscription status. </summary>
+        /// <summary> Get a trigger's event subscription status. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        /// <summary> Get a trigger&apos;s event subscription status. </summary>
+        /// <summary> Get a trigger's event subscription status. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
