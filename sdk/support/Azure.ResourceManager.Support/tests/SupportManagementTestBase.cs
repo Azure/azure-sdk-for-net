@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Support.Tests
     {
         protected ArmClient Client { get; private set; }
         protected TenantResource DefaultTenant { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected SupportManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.Support.Tests
             Client = GetArmClient();
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
             DefaultTenant = tenants.FirstOrDefault();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
