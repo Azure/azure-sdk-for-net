@@ -1024,14 +1024,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2023_08_03)]
         public async Task DeleteAsync_Paginated()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
 
             // Arrange
             var name = GetNewDirectoryName();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(name));
             await directory.CreateIfNotExistsAsync();
 
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 5020; i++)
             {
                 DataLakeFileClient fileClient = directory.GetFileClient(GetNewFileName());
                 await fileClient.CreateIfNotExistsAsync();
