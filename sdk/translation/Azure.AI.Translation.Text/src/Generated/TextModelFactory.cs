@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class TextTranslationModelFactory
+    public static partial class TextModelFactory
     {
         /// <summary> Initializes a new instance of GetLanguagesResult. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
