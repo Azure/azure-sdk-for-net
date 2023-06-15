@@ -15,8 +15,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
 
-        //[Event(1, Message = "{0} - {1}", Level = EventLevel.Critical)]
-        //public void WriteCritical(string name, string message) => Write(EventLevel.Critical, 1, name, message);
+        [Event(1, Message = "{0} - {1}", Level = EventLevel.Critical)]
+        public void WriteCritical(string name, string message) => Write(EventLevel.Critical, 1, name, message);
 
         [Event(2, Message = "{0} - {1}", Level = EventLevel.Error)]
         public void WriteError(string name, string message) => Write(EventLevel.Error, 2, name, message);
@@ -33,11 +33,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(4, Message = "{0} - {1}", Level = EventLevel.Informational)]
         public void WriteInformational(string name, string message) => Write(EventLevel.Informational, 4, name, message);
 
-        //[NonEvent]
-        //public void WriteInformational(string name, Exception exception) => WriteException(EventLevel.Warning, 4, name, exception);
+        [NonEvent]
+        public void WriteInformational(string name, Exception exception) => WriteException(EventLevel.Warning, 4, name, exception);
 
-        //[Event(5, Message = "{0} - {1}", Level = EventLevel.Verbose)]
-        //public void WriteVerbose(string name, string message) => Write(EventLevel.Verbose, 5, name, message);
+        [Event(5, Message = "{0} - {1}", Level = EventLevel.Verbose)]
+        public void WriteVerbose(string name, string message) => Write(EventLevel.Verbose, 5, name, message);
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

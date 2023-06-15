@@ -18,6 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class AzureMonitorExporterEventSourceTests
     {
         [Fact]
+        public void VerifyEventSource_Critical() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteCritical, expectedId: 1, expectedName: "WriteCritical");
+
+        [Fact]
+        public void VerifyEventSource_Error() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteError, expectedId: 2, expectedName: "WriteError");
+
+        [Fact]
         public void VerifyEventSource_Error_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteError, expectedId: 2, expectedName: "WriteError");
 
         [Fact]
@@ -34,6 +40,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Fact]
         public void VerifyEventSource_Informational() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Verbose() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteVerbose, expectedId: 5, expectedName: "WriteVerbose");
 
         private void Test(Action<string, string> writeAction, int expectedId, string expectedName)
         {
