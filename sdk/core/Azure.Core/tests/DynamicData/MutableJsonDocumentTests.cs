@@ -612,7 +612,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [Ignore("TODO: Remove")]
         public void ChangeToDocumentAppearsInElementReference()
         {
             // This tests reference semantics.
@@ -661,12 +660,16 @@ namespace Azure.Core.Tests
             MutableJsonDocument child = MutableJsonDocument.Parse("{}");
 
             mdoc.RootElement.SetProperty("a", child);
+            Assert.AreEqual("""{"a":{}}""", mdoc.RootElement.ToString());
+            Assert.AreEqual("""{}""", child.RootElement.ToString());
+
             child.RootElement.SetProperty("b", 2);
 
-            Assert.AreEqual("""{"b":2}""", child.ToString());
+            Assert.AreEqual("""{"a":{}}""", mdoc.RootElement.ToString());
+            Assert.AreEqual("""{"b":2}""", child.RootElement.ToString());
 
-            string expected = """{ "a" : { "b" : 2 } }""";
-            ValidateWriteTo(expected, mdoc);
+            ValidateWriteTo("""{"a":{}}""", mdoc);
+            ValidateWriteTo("""{"b":2}""", child);
         }
 
         [Test]
