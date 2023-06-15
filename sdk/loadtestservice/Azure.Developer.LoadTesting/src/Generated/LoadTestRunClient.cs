@@ -932,11 +932,11 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (oldTestRunId != null)
             {
                 uri.AppendQuery("oldTestRunId", oldTestRunId, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
@@ -1003,6 +1003,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (orderby != null)
             {
                 uri.AppendQuery("orderby", orderby, true);
@@ -1031,7 +1032,6 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1103,6 +1103,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendQuery("metricname", metricname, true);
             uri.AppendQuery("metricNamespace", metricNamespace, true);
             uri.AppendQuery("timespan", timespan, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (aggregation != null)
             {
                 uri.AppendQuery("aggregation", aggregation, true);
@@ -1111,7 +1112,6 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("interval", interval, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1135,11 +1135,11 @@ namespace Azure.Developer.LoadTesting
             uri.AppendQuery("metricname", metricName, true);
             uri.AppendQuery("metricNamespace", metricNamespace, true);
             uri.AppendQuery("timespan", timeInterval, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (interval != null)
             {
                 uri.AppendQuery("interval", interval, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
