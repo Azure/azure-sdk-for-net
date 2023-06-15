@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9937c7cb7f871e34e7c72164fed0d6e5-c3d705f3a33ed0d1-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.5.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "de418064a9b0f7d2809ad9f428f9ca28",
+        "traceparent": "00-ef3984312d97c5c22f57b04dc17a8658-e7cca128ee8e7f1c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dc6ecb4e8c292c65c0b67d480209de83",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 May 2023 07:12:21 GMT",
+        "Date": "Thu, 15 Jun 2023 08:28:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "febf953c-13b0-403f-87e8-37d3086a583f",
+        "x-ms-correlation-request-id": "e1fb0b4b-40b0-42f4-996e-9d4b11fb93ed",
         "x-ms-ratelimit-remaining-tenant-reads": "11995",
-        "x-ms-request-id": "febf953c-13b0-403f-87e8-37d3086a583f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230516T071221Z:febf953c-13b0-403f-87e8-37d3086a583f"
+        "x-ms-request-id": "e1fb0b4b-40b0-42f4-996e-9d4b11fb93ed",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230615T082806Z:e1fb0b4b-40b0-42f4-996e-9d4b11fb93ed"
       },
       "ResponseBody": {
         "value": [
@@ -38,32 +38,87 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Support/services?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-72fd813faf315521531747b19b137e48-0458a1de9456abcf-00",
-        "User-Agent": "azsdk-net-ResourceManager.Support/1.1.0-alpha.20230516.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ef2ce3a8c384bbf542a09ff7a11e5537",
+        "traceparent": "00-7b0175e0f28512d6635b4c213f71ed0a-2d00a3fe4f49b1d4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4a7412c6c34728842ad8ebdea56f8808",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "94259",
+        "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 May 2023 07:12:22 GMT",
+        "Date": "Thu, 15 Jun 2023 08:28:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f9c1ca1f-cebe-4785-a3a5-96198eccb328",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "f9c1ca1f-cebe-4785-a3a5-96198eccb328",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230615T082806Z:f9c1ca1f-cebe-4785-a3a5-96198eccb328"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Support/services?api-version=2020-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-26b77f4fb9f2d31da6e1d549e560b3dd-a417fffbef2351d6-00",
+        "User-Agent": "azsdk-net-ResourceManager.Support/1.1.0-alpha.20230615.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7a281b26fc7f4072d76f3c44ff98b825",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "96950",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 15 Jun 2023 08:28:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8a1eed1a-b464-4be9-b88f-4aa193df9419",
+        "x-ms-correlation-request-id": "92557159-e7ed-4d03-b502-66e986103d5c",
         "x-ms-ratelimit-remaining-tenant-reads": "11994",
-        "x-ms-request-id": "8a1eed1a-b464-4be9-b88f-4aa193df9419",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230516T071222Z:8a1eed1a-b464-4be9-b88f-4aa193df9419"
+        "x-ms-request-id": "92557159-e7ed-4d03-b502-66e986103d5c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230615T082806Z:92557159-e7ed-4d03-b502-66e986103d5c"
       },
       "ResponseBody": {
         "value": [
@@ -407,17 +462,6 @@
             }
           },
           {
-            "id": "/providers/Microsoft.Support/services/8dfc5d56-9245-222f-19fc-dfafc3fba973",
-            "name": "8dfc5d56-9245-222f-19fc-dfafc3fba973",
-            "type": "Microsoft.Support/services",
-            "properties": {
-              "displayName": "Azure Arc enabled SQL Server",
-              "resourceTypes": [
-                "Microsoft.AzureArcData/sqlServerInstances"
-              ]
-            }
-          },
-          {
             "id": "/providers/Microsoft.Support/services/2d45b14d-73cf-eb4b-0dc3-6ee86904c64b",
             "name": "2d45b14d-73cf-eb4b-0dc3-6ee86904c64b",
             "type": "Microsoft.Support/services",
@@ -434,6 +478,17 @@
               "displayName": "Azure Arc Resource Bridge",
               "resourceTypes": [
                 "Microsoft.ResourceConnector/Appliances"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/8dfc5d56-9245-222f-19fc-dfafc3fba973",
+            "name": "8dfc5d56-9245-222f-19fc-dfafc3fba973",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Azure Arc-enabled SQL Server",
+              "resourceTypes": [
+                "Microsoft.AzureArcData/sqlServerInstances"
               ]
             }
           },
@@ -463,6 +518,17 @@
             }
           },
           {
+            "id": "/providers/Microsoft.Support/services/f26f06d5-c3b1-0372-8c5b-93a371ec434c",
+            "name": "f26f06d5-c3b1-0372-8c5b-93a371ec434c",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Azure Blueprint - Preview",
+              "resourceTypes": [
+                "Microsoft.Blueprint/BLUEPRINTS"
+              ]
+            }
+          },
+          {
             "id": "/providers/Microsoft.Support/services/58cf91d7-3a04-37d3-9818-9bd5c979d9a9",
             "name": "58cf91d7-3a04-37d3-9818-9bd5c979d9a9",
             "type": "Microsoft.Support/services",
@@ -472,6 +538,17 @@
                 "Microsoft.Cdn/profiles",
                 "Microsoft.Cdn/profiles/endpoints",
                 "Microsoft.Cdn/CdnWebApplicationFirewallPolicies"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/9db8a797-7fec-d348-fc3e-c24665973f2c",
+            "name": "9db8a797-7fec-d348-fc3e-c24665973f2c",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Azure Center for SAP solutions",
+              "resourceTypes": [
+                "Microsoft.Workloads/sapvirtualinstances"
               ]
             }
           },
@@ -585,11 +662,20 @@
             "name": "cd1e630f-be69-dde7-f0ee-899b33e765d6",
             "type": "Microsoft.Support/services",
             "properties": {
-              "displayName": "Azure Deployment Environments - Preview",
+              "displayName": "Azure Deployment Environments",
               "resourceTypes": [
                 "Microsoft.DevCenter",
                 "Microsoft.DevCenter/devCenters"
               ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/bd56a816-f56b-dafb-8545-9a5a7dc08b36",
+            "name": "bd56a816-f56b-dafb-8545-9a5a7dc08b36",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Azure Developer CLI (azd)",
+              "resourceTypes": []
             }
           },
           {
@@ -738,7 +824,8 @@
             "properties": {
               "displayName": "Azure Kubernetes Fleet Manager - Preview",
               "resourceTypes": [
-                "Microsoft.ContainerService"
+                "Microsoft.ContainerService",
+                "Microsoft.ContainerService/fleets"
               ]
             }
           },
@@ -758,7 +845,8 @@
             "properties": {
               "displayName": "Azure Load Testing",
               "resourceTypes": [
-                "Microsoft.LoadTestService"
+                "Microsoft.LoadTestService",
+                "Microsoft.LoadTestService/loadtests"
               ]
             }
           },
@@ -810,7 +898,7 @@
             "name": "86490df1-3db5-08c6-1f6b-4138be52adb9",
             "type": "Microsoft.Support/services",
             "properties": {
-              "displayName": "Azure Monitor for SAP Solutions - Preview",
+              "displayName": "Azure Monitor for SAP Solutions",
               "resourceTypes": [
                 "Microsoft.HanaOnAzure/sapMonitors",
                 "Microsoft.Workloads/monitors"
@@ -826,6 +914,15 @@
               "resourceTypes": [
                 "microsoft.insights/privateLinkScopes"
               ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/3dd3fff2-078a-6981-82ed-1c74b363490a",
+            "name": "3dd3fff2-078a-6981-82ed-1c74b363490a",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Azure Native Palo Alto Cloud Next-Generation Firewall - Preview",
+              "resourceTypes": []
             }
           },
           {
@@ -848,15 +945,6 @@
                 "Microsoft.NetApp/netAppAccounts/capacityPools",
                 "Microsoft.NetApp/netAppAccounts/capacityPools/Volumes"
               ]
-            }
-          },
-          {
-            "id": "/providers/Microsoft.Support/services/25aa2af2-9b6e-96b5-ce85-d784a0fea138",
-            "name": "25aa2af2-9b6e-96b5-ce85-d784a0fea138",
-            "type": "Microsoft.Support/services",
-            "properties": {
-              "displayName": "Azure Object Anchors - Preview",
-              "resourceTypes": []
             }
           },
           {
@@ -1218,6 +1306,19 @@
             }
           },
           {
+            "id": "/providers/Microsoft.Support/services/939c13c2-cd69-70fb-0851-c219bca05cb0",
+            "name": "939c13c2-cd69-70fb-0851-c219bca05cb0",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Azure Traffic Controller - Preview",
+              "resourceTypes": [
+                "microsoft.servicenetworking/trafficcontrollers",
+                "microsoft.servicenetworking/trafficcontrollers/frontends",
+                "microsoft.servicenetworking/trafficcontrollers/associations"
+              ]
+            }
+          },
+          {
             "id": "/providers/Microsoft.Support/services/393f9162-a29a-1e9f-1972-d524c7bc7026",
             "name": "393f9162-a29a-1e9f-1972-d524c7bc7026",
             "type": "Microsoft.Support/services",
@@ -1361,17 +1462,6 @@
               "resourceTypes": [
                 "MICROSOFT.CLASSICSTORAGE/STORAGEACCOUNTS",
                 "MICROSOFT.STORAGE/STORAGEACCOUNTS"
-              ]
-            }
-          },
-          {
-            "id": "/providers/Microsoft.Support/services/f26f06d5-c3b1-0372-8c5b-93a371ec434c",
-            "name": "f26f06d5-c3b1-0372-8c5b-93a371ec434c",
-            "type": "Microsoft.Support/services",
-            "properties": {
-              "displayName": "Blueprint - Preview",
-              "resourceTypes": [
-                "Microsoft.Blueprint/BLUEPRINTS"
               ]
             }
           },
@@ -1742,7 +1832,8 @@
               "displayName": "Container Apps",
               "resourceTypes": [
                 "Microsoft.App/containerapps",
-                "Microsoft.App/managedenvironments"
+                "Microsoft.App/managedenvironments",
+                "Microsoft.App/jobs"
               ]
             }
           },
@@ -2093,7 +2184,8 @@
                 "MICROSOFT.EVENTGRID/TOPICS",
                 "Microsoft.EventGrid/domains",
                 "Microsoft.EventGrid/systemTopics",
-                "Microsoft.EventGrid/partnerTopics"
+                "Microsoft.EventGrid/partnerTopics",
+                "Microsoft.EventGrid/namespaces"
               ]
             }
           },
@@ -2163,6 +2255,72 @@
             }
           },
           {
+            "id": "/providers/Microsoft.Support/services/14ec3ea7-c6ee-6f43-0480-1994e19e2b71",
+            "name": "14ec3ea7-c6ee-6f43-0480-1994e19e2b71",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Fabric admin and management (Preview)",
+              "resourceTypes": [
+                "Microsoft.Fabric"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/abe09b55-980d-8005-43d1-3dc68d4e7da2",
+            "name": "abe09b55-980d-8005-43d1-3dc68d4e7da2",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Fabric Data Factory (Preview)",
+              "resourceTypes": [
+                "Microsoft.Fabric"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/84c5d9a0-a381-cbe3-68c4-92d6d031e1d2",
+            "name": "84c5d9a0-a381-cbe3-68c4-92d6d031e1d2",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Fabric Synapse Data Engineering (Preview)",
+              "resourceTypes": [
+                "Microsoft.Fabric"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/5f7c1f86-6c27-9a46-c580-677513de3d8c",
+            "name": "5f7c1f86-6c27-9a46-c580-677513de3d8c",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Fabric Synapse Data Science (Preview)",
+              "resourceTypes": [
+                "Microsoft.Fabric"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/97d4fe08-885c-2713-8a1c-517a8b2874ac",
+            "name": "97d4fe08-885c-2713-8a1c-517a8b2874ac",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Fabric Synapse Data Warehouse (Preview)",
+              "resourceTypes": [
+                "Microsoft.Fabric"
+              ]
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/fac12c7e-6522-1af5-3898-a45a905495d5",
+            "name": "fac12c7e-6522-1af5-3898-a45a905495d5",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Fabric Synapse Real-time Analytics (Preview)",
+              "resourceTypes": [
+                "Microsoft.Fabric"
+              ]
+            }
+          },
+          {
             "id": "/providers/Microsoft.Support/services/30dfd88b-b455-1748-a4a0-e4c5aa795663",
             "name": "30dfd88b-b455-1748-a4a0-e4c5aa795663",
             "type": "Microsoft.Support/services",
@@ -2229,14 +2387,12 @@
             }
           },
           {
-            "id": "/providers/Microsoft.Support/services/e053e63d-7425-0499-485c-4f5ba4b78244",
-            "name": "e053e63d-7425-0499-485c-4f5ba4b78244",
+            "id": "/providers/Microsoft.Support/services/93c1bf6f-2816-3f1f-269d-9ee459d000a6",
+            "name": "93c1bf6f-2816-3f1f-269d-9ee459d000a6",
             "type": "Microsoft.Support/services",
             "properties": {
-              "displayName": "HDInsight on AKS - Preview",
-              "resourceTypes": [
-                "MICROSOFT.HDINSIGHT"
-              ]
+              "displayName": "GitHub Advanced Security for Azure DevOps - Preview",
+              "resourceTypes": []
             }
           },
           {
@@ -2268,15 +2424,6 @@
               "resourceTypes": [
                 "Microsoft.StorageCache/caches"
               ]
-            }
-          },
-          {
-            "id": "/providers/Microsoft.Support/services/a25f6c13-8267-c757-d267-94999f8b395b",
-            "name": "a25f6c13-8267-c757-d267-94999f8b395b",
-            "type": "Microsoft.Support/services",
-            "properties": {
-              "displayName": "Insights for Azure Data Explorer clusters",
-              "resourceTypes": []
             }
           },
           {
@@ -2608,7 +2755,7 @@
             "name": "1b982b2f-8561-caed-b2b3-aed8c249bb07",
             "type": "Microsoft.Support/services",
             "properties": {
-              "displayName": "Managed Prometheus - Preview",
+              "displayName": "Managed Prometheus",
               "resourceTypes": [
                 "Microsoft.Monitor/Accounts"
               ]
@@ -2671,17 +2818,6 @@
               "displayName": "Microsoft Azure Attestation",
               "resourceTypes": [
                 "Microsoft.Attestation/attestationProviders"
-              ]
-            }
-          },
-          {
-            "id": "/providers/Microsoft.Support/services/9db8a797-7fec-d348-fc3e-c24665973f2c",
-            "name": "9db8a797-7fec-d348-fc3e-c24665973f2c",
-            "type": "Microsoft.Support/services",
-            "properties": {
-              "displayName": "Microsoft Azure Center for SAP solutions - Preview",
-              "resourceTypes": [
-                "Microsoft.Workloads/sapvirtualinstances"
               ]
             }
           },
@@ -2815,6 +2951,15 @@
             }
           },
           {
+            "id": "/providers/Microsoft.Support/services/2f0b4593-ca4c-370c-e36c-b90be88a1597",
+            "name": "2f0b4593-ca4c-370c-e36c-b90be88a1597",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Microsoft Entra External ID - Preview",
+              "resourceTypes": []
+            }
+          },
+          {
             "id": "/providers/Microsoft.Support/services/0d9aae13-ff27-8f75-6e18-304247937071",
             "name": "0d9aae13-ff27-8f75-6e18-304247937071",
             "type": "Microsoft.Support/services",
@@ -2837,7 +2982,7 @@
             "name": "de523f2e-d57a-43fc-a83e-753029ef5cf8",
             "type": "Microsoft.Support/services",
             "properties": {
-              "displayName": "Microsoft Entra Workload Identities",
+              "displayName": "Microsoft Entra Workload ID",
               "resourceTypes": []
             }
           },
@@ -3098,6 +3243,18 @@
             "properties": {
               "displayName": "Portal",
               "resourceTypes": []
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Support/services/8c9051b3-9579-a47e-8506-dd80435c8c6f",
+            "name": "8c9051b3-9579-a47e-8506-dd80435c8c6f",
+            "type": "Microsoft.Support/services",
+            "properties": {
+              "displayName": "Power BI",
+              "resourceTypes": [
+                "Microsoft.PowerBIDedicated/Capacities",
+                "Microsoft.Fabric"
+              ]
             }
           },
           {
@@ -3702,7 +3859,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1626573596",
+    "RandomSeed": "1423548651",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
