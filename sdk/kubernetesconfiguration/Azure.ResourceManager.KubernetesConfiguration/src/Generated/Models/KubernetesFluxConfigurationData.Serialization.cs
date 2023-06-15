@@ -245,7 +245,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                kustomizations = null;
                                 continue;
                             }
                             Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
@@ -260,7 +259,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                configurationProtectedSettings = null;
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -275,7 +273,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                statuses = null;
                                 continue;
                             }
                             List<KubernetesObjectStatus> array = new List<KubernetesObjectStatus>();

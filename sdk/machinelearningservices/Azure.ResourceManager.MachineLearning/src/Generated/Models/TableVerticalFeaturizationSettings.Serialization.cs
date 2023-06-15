@@ -122,7 +122,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blockedTransformers = null;
                         continue;
                     }
                     List<BlockedTransformer> array = new List<BlockedTransformer>();
@@ -137,7 +136,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        columnNameAndTypes = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -170,7 +168,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        transformerParams = null;
                         continue;
                     }
                     Dictionary<string, IList<ColumnTransformer>> dictionary = new Dictionary<string, IList<ColumnTransformer>>();
