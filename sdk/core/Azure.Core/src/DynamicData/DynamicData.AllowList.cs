@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core.Json;
 
@@ -22,27 +21,32 @@ namespace Azure.Core.Dynamic
                     return;
                 }
 
-                Type type = value.GetType();
-
-                if (!IsAllowedType(type, value))
+                if (!IsAllowedValue(value))
                 {
-                    throw new NotSupportedException($"Type is not currently supported: '{type}'.");
+                    throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
                 }
             }
 
-            public static bool IsAllowedType<T>(Type type, T value)
+            public static bool IsAllowedValue<T>(T value)
             {
+                if (value == null)
+                {
+                    return true;
+                }
+
+                Type type = value.GetType();
+
                 if (IsAllowedLeafType(type))
                 {
                     return true;
                 }
 
-                if (IsAllowedCollectionType(type, value))
+                if (IsAllowedCollectionValue(type, value))
                 {
                     return true;
                 }
 
-                return IsAllowedAnonymousType(type, value, new HashSet<Type>());
+                return IsAllowedAnonymousValue(type, value, new HashSet<Type>());
             }
 
             private static bool IsAllowedLeafType(Type type)
@@ -71,15 +75,15 @@ namespace Azure.Core.Dynamic
                     type == typeof(decimal);
             }
 
-            private static bool IsAllowedCollectionType<T>(Type type, T value)
+            private static bool IsAllowedCollectionValue<T>(Type type, T value)
             {
                 return
-                    IsAllowedArrayType(type, value) ||
-                    IsAllowedListType(type, value) ||
-                    IsAllowedDictionaryType(type, value);
+                    IsAllowedArrayValue(type, value) ||
+                    IsAllowedListValue(type, value) ||
+                    IsAllowedDictionaryValue(type, value);
             }
 
-            private static bool IsAllowedArrayType<T>(Type type, T value)
+            private static bool IsAllowedArrayValue<T>(Type type, T value)
             {
                 if (value is not Array array)
                 {
@@ -100,7 +104,7 @@ namespace Azure.Core.Dynamic
                 return IsAllowedEnumerableValue(elementType, array);
             }
 
-            private static bool IsAllowedListType<T>(Type type, T value)
+            private static bool IsAllowedListValue<T>(Type type, T value)
             {
                 if (value == null)
                 {
@@ -126,7 +130,7 @@ namespace Azure.Core.Dynamic
                 return IsAllowedEnumerableValue(elementType, (IEnumerable)value);
             }
 
-            private static bool IsAllowedDictionaryType<T>(Type type, T value)
+            private static bool IsAllowedDictionaryValue<T>(Type type, T value)
             {
                 if (value == null)
                 {
@@ -172,7 +176,7 @@ namespace Azure.Core.Dynamic
                         return false;
                     }
 
-                    if (!IsAllowedType(elementType, item))
+                    if (!IsAllowedValue(item))
                     {
                         return false;
                     }
@@ -181,7 +185,7 @@ namespace Azure.Core.Dynamic
                 return true;
             }
 
-            private static bool IsAllowedAnonymousType<T>(Type type, T value, HashSet<Type> ancestorTypes)
+            private static bool IsAllowedAnonymousValue<T>(Type type, T value, HashSet<Type> ancestorTypes)
             {
                 if (!IsAnonymousType(type))
                 {
@@ -196,7 +200,7 @@ namespace Azure.Core.Dynamic
                     }
 
                     object? propertyValue = property.GetValue(value);
-                    if (IsAllowedCollectionType(property.PropertyType, propertyValue))
+                    if (IsAllowedCollectionValue(property.PropertyType, propertyValue))
                     {
                         continue;
                     }
@@ -209,7 +213,7 @@ namespace Azure.Core.Dynamic
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedAnonymousType(property.PropertyType, propertyValue, ancestorTypes))
+                    if (!IsAllowedAnonymousValue(property.PropertyType, propertyValue, ancestorTypes))
                     {
                         return false;
                     }
