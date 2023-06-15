@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkConnectionsGetHealthDetails()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/NetworkConnections_GetHealthDetails.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_GetHealthDetails.json
             // this example is just showing the usage of "NetworkConnections_GetHealthDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this HealthCheckStatusDetailResource created on azure
             // for more information of creating HealthCheckStatusDetailResource, please refer to the document of HealthCheckStatusDetailResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string networkConnectionName = "{networkConnectionName}";
+            string networkConnectionName = "eastusnetwork";
             ResourceIdentifier healthCheckStatusDetailResourceId = HealthCheckStatusDetailResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);
             HealthCheckStatusDetailResource healthCheckStatusDetail = client.GetHealthCheckStatusDetailResource(healthCheckStatusDetailResourceId);
 

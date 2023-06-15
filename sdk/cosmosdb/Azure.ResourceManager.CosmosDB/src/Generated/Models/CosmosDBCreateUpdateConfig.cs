@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> CreateUpdateOptions are a list of key-value pairs that describe the resource. Supported keys are &quot;If-Match&quot;, &quot;If-None-Match&quot;, &quot;Session-Token&quot; and &quot;Throughput&quot;. </summary>
+    /// <summary> CreateUpdateOptions are a list of key-value pairs that describe the resource. Supported keys are "If-Match", "If-None-Match", "Session-Token" and "Throughput". </summary>
     public partial class CosmosDBCreateUpdateConfig
     {
         /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
-        /// <param name="throughput"> Request Units per second. For example, &quot;throughput&quot;: 10000. </param>
+        /// <param name="throughput"> Request Units per second. For example, "throughput": 10000. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal CosmosDBCreateUpdateConfig(int? throughput, AutoscaleSettings autoscaleSettings)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AutoscaleSettings = autoscaleSettings;
         }
 
-        /// <summary> Request Units per second. For example, &quot;throughput&quot;: 10000. </summary>
+        /// <summary> Request Units per second. For example, "throughput": 10000. </summary>
         public int? Throughput { get; set; }
         /// <summary> Specifies the Autoscale settings. </summary>
         internal AutoscaleSettings AutoscaleSettings { get; set; }

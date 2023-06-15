@@ -16,23 +16,22 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Poll a long-running operation automatically
 
-To automatically poll the status of a long-running operation until it has completed, simply call the `WaitForCompletionAsync` method on it.
+To automatically poll the status of a long-running operation until it has completed, pass `WaitUntil.Completed` as a parameter in the initial request.
 
 ```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_WaitForCompletion
 // Perform the text analysis operation.
-AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
-await operation.WaitForCompletionAsync();
+AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Completed, batchedDocuments);
 ```
 
 By default, this will retrieve the latest status of the operation from the service once per second, but a different polling interval can be specified as a parameter. Similarly, the service can return a `Retry-After` header as a way of suggesting a polling interval itself, which is automatically honored by default.
 
 ## Poll a long-running operation manually
 
-This approach is for users who want to retain synchronous behavior and/or who have specific code paths that must run during the polling process. To manually poll the status of a long-running operation until it has completed, call the `UpdateStatus` method on it and then check its `HasCompleted` property. Repeat until `HasCompleted` is `true` while using a moderate polling interval and keeping in mind that the service can suddenly start returning errors (such as `429 Too Many Requests`) to throttle overly aggressive pollers. The service can also return a `Retry-After` header in any of its responses as a way of requesting that the client wait a specific amount of time before polling again and can throttle a client that does not respect this interval.
+This approach is for users who want to retain synchronous behavior and/or who have specific code paths that must run during the polling process. To manually poll the status of a long-running operation until it has completed, first pass `WaitUntil.Started` as a parameter in the initial request. Then, call the `UpdateStatus` method on the operation and check its `HasCompleted` property. Repeat until `HasCompleted` is `true` while using a moderate polling interval and keeping in mind that the service can suddenly start returning errors (such as `429 Too Many Requests`) to throttle overly aggressive pollers. The service can also return a `Retry-After` header in any of its responses as a way of requesting that the client wait a specific amount of time before polling again and can throttle a client that does not respect this interval.
 
 ```C# Snippet:SampleLROPolling_PollOperation
 // Perform the text analysis operation.
-AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
+AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Started, batchedDocuments);
 TimeSpan pollingInterval = new(1000);
 
 while (true)

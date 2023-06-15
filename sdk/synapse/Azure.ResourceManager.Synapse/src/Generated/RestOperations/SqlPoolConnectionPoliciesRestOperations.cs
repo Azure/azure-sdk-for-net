@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a Sql pool&apos;s connection policy, which is used with table auditing. </summary>
+        /// <summary> Get a Sql pool's connection policy, which is used with table auditing. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a Sql pool&apos;s connection policy, which is used with table auditing. </summary>
+        /// <summary> Get a Sql pool's connection policy, which is used with table auditing. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>

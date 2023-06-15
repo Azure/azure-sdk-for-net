@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case TestTypes.Conversion:
                     return (Payloads.TokenIssuanceStart.TokenIssuanceStart.ConversionPayload, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);
                 case TestTypes.InvalidAction:
-                    return (Payloads.TokenIssuanceStart.TokenIssuanceStart.InvalidActionResponse, @"{'errors':['The action \'ProvideClaims\' is invalid, please use one of the following actions: \'microsoft.graph.provideclaimsfortoken\'']}", HttpStatusCode.InternalServerError);
+                    return (Payloads.TokenIssuanceStart.TokenIssuanceStart.InvalidActionResponse, @"{'errors':['The action \'ProvideClaims\' is invalid, please use one of the following actions: \'microsoft.graph.tokenissuancestart.provideclaimsfortoken\'']}", HttpStatusCode.InternalServerError);
                 case TestTypes.NoAction:
                     return (Payloads.TokenIssuanceStart.TokenIssuanceStart.NoActionResponse, @"{'errors':['No Actions Found. Please supply atleast one action.']}", HttpStatusCode.InternalServerError);
                 case TestTypes.Empty:

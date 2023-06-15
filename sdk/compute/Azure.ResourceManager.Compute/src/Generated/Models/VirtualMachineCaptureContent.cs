@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineCaptureContent
     {
         /// <summary> Initializes a new instance of VirtualMachineCaptureContent. </summary>
-        /// <param name="vhdPrefix"> The captured virtual hard disk&apos;s name prefix. </param>
+        /// <param name="vhdPrefix"> The captured virtual hard disk's name prefix. </param>
         /// <param name="destinationContainerName"> The destination container name. </param>
         /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vhdPrefix"/> or <paramref name="destinationContainerName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             OverwriteVhds = overwriteVhds;
         }
 
-        /// <summary> The captured virtual hard disk&apos;s name prefix. </summary>
+        /// <summary> The captured virtual hard disk's name prefix. </summary>
         public string VhdPrefix { get; }
         /// <summary> The destination container name. </summary>
         public string DestinationContainerName { get; }

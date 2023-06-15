@@ -611,7 +611,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             byte[] ttlAfterCompletionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
             DateTimeOffset ttlAfterCompletion = new DateTimeOffset(ttlAfterCompletionBuffer.ToLong(), new TimeSpan(0, 0, 0));
 
-            // FromTo
+            // JobPlanOperation
             byte fromToByte = reader.ReadByte();
             JobPlanOperation fromTo = (JobPlanOperation)fromToByte;
 

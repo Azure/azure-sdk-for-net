@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs
     /// </summary>
     public static class BlobContainerClientExtensions
     {
-        private static Lazy<TransferManager> s_defaultTransferManager = new Lazy<TransferManager>();
+        private static Lazy<TransferManager> s_defaultTransferManager = new Lazy<TransferManager>(() => new TransferManager(default));
 
         /// <summary>
         /// Uploads the entire contents of local directory to the blob container.

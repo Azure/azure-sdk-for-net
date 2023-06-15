@@ -4,8 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 

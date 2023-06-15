@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Initializes a new instance of SearchEncryptionWithCmk. </summary>
         /// <param name="enforcement"> Describes how a search service should enforce having one or more non customer encrypted resources. </param>
-        /// <param name="encryptionComplianceStatus"> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and &apos;Enforcement&apos; is &apos;enabled&apos; then the service will be marked as &apos;nonCompliant&apos;. </param>
+        /// <param name="encryptionComplianceStatus"> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and 'Enforcement' is 'enabled' then the service will be marked as 'nonCompliant'. </param>
         internal SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus)
         {
             Enforcement = enforcement;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Describes how a search service should enforce having one or more non customer encrypted resources. </summary>
         public SearchEncryptionWithCmkEnforcement? Enforcement { get; set; }
-        /// <summary> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and &apos;Enforcement&apos; is &apos;enabled&apos; then the service will be marked as &apos;nonCompliant&apos;. </summary>
+        /// <summary> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and 'Enforcement' is 'enabled' then the service will be marked as 'nonCompliant'. </summary>
         public SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get; }
     }
 }

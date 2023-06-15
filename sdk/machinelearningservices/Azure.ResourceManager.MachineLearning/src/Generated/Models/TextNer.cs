@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="primaryMetric">
         /// Primary metric for Text-NER task.
-        /// Only &apos;Accuracy&apos; is supported for Text-NER, so user need not set this explicitly.
+        /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Primary metric for Text-NER task.
-        /// Only &apos;Accuracy&apos; is supported for Text-NER, so user need not set this explicitly.
+        /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </summary>
         public ClassificationPrimaryMetric? PrimaryMetric { get; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>

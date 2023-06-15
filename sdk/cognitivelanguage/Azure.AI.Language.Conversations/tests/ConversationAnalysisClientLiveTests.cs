@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -22,24 +23,24 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Send an email to Carol about the tomorrow's demo",
-                        id = "1",
-                        participantId = "1",
+                        Text = "Send an email to Carol about the tomorrow's demo",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName = TestEnvironment.ProjectName,
-                    deploymentName = TestEnvironment.DeploymentName,
+                    ProjectName = TestEnvironment.ProjectName,
+                    DeploymentName = TestEnvironment.DeploymentName,
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, PropertyNameFormat.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -319,7 +320,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
             dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
