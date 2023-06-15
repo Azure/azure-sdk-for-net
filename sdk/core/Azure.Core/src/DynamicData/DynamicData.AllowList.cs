@@ -27,7 +27,7 @@ namespace Azure.Core.Dynamic
                 }
             }
 
-            public static bool IsAllowedValue<T>(T value)
+            private static bool IsAllowedValue<T>(T value)
             {
                 if (value == null)
                 {
@@ -51,7 +51,8 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedLeafType(Type type)
             {
-                return IsAllowedPrimitive(type) ||
+                return type.IsPrimitive ||
+                    type == typeof(decimal) ||
                     type == typeof(string) ||
                     type == typeof(DateTime) ||
                     type == typeof(DateTimeOffset) ||
@@ -68,11 +69,10 @@ namespace Azure.Core.Dynamic
                     type == typeof(DynamicData);
             }
 
-            private static bool IsAllowedPrimitive(Type type)
+            private static bool IsAllowedNonInheritableType(Type type)
             {
-                return
-                    type.IsPrimitive ||
-                    type == typeof(decimal);
+                return (type.IsValueType || type.IsSealed) &&
+                    IsAllowedLeafType(type);
             }
 
             private static bool IsAllowedCollectionValue<T>(Type type, T value)
@@ -96,7 +96,7 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                if (IsAllowedPrimitive(elementType))
+                if (IsAllowedNonInheritableType(elementType))
                 {
                     return true;
                 }
@@ -122,7 +122,7 @@ namespace Azure.Core.Dynamic
                 }
 
                 Type elementType = type.GetGenericArguments()[0];
-                if (IsAllowedPrimitive(elementType))
+                if (IsAllowedNonInheritableType(elementType))
                 {
                     return true;
                 }
@@ -153,7 +153,7 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                if (IsAllowedPrimitive(types[1]))
+                if (IsAllowedNonInheritableType(types[1]))
                 {
                     return true;
                 }
