@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Tests
         private TransferManagerOptions GetDefaultManagerOptions(string checkpointerPath) =>
             new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerPath)
+                Checkpointer = new LocalTransferCheckpointer(checkpointerPath)
             };
 
         private void AssertListTransfersEquals(IList<DataTransfer> expected, IList<DataTransfer> actual)
@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(),
             };
             TransferManagerFactory factory =
-                new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
+                new TransferManagerFactory(new TransferManagerOptions(), testDirectory.DirectoryPath);
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(StorageTransferStatus.Completed),
             };
             TransferManagerFactory factory =
-                new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
+                new TransferManagerFactory(new TransferManagerOptions(), testDirectory.DirectoryPath);
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
@@ -143,7 +143,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(StorageTransferStatus.CompletedWithSkippedTransfers)
             };
             TransferManagerFactory factory =
-                new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
+                new TransferManagerFactory(new TransferManagerOptions(), testDirectory.DirectoryPath);
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
@@ -179,7 +179,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(StorageTransferStatus.Completed),
             };
             TransferManagerFactory factory =
-                new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
+                new TransferManagerFactory(new TransferManagerOptions(), testDirectory.DirectoryPath);
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act - With a transfer status not in the above stored transfers
@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(test.DirectoryPath)
+                Checkpointer = new LocalTransferCheckpointer(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 

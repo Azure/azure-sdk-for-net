@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -272,6 +273,83 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination.
+        /// </param>
+        /// <param name="credentials">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        public static async Task<AppendBlobStorageResource> RehydrateStorageResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            StorageTransferCredentials credentials,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            AppendBlobStorageResource resource;
+
+            int offset = isSource ?
+                DataMovementConstants.PlanFile.SourcePathIndex :
+                DataMovementConstants.PlanFile.DestinationPathIndex;
+            int length = isSource ?
+                (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
+                (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
+
+            string storedPath;
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: offset,
+                readSize: length,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                storedPath = stream.ToString();
+            }
+            (Type, object) exCred = credentials.GetCredential();
+            if (exCred.Item1 == typeof(StorageSharedKeyCredential))
+            {
+                resource = new AppendBlobStorageResource(new AppendBlobClient(
+                    new Uri(storedPath),
+                    (StorageSharedKeyCredential)exCred.Item2));
+            }
+            else if (exCred.Item1 == typeof(AzureSasCredential))
+            {
+                resource = new AppendBlobStorageResource(new AppendBlobClient(
+                    new Uri(storedPath),
+                    (AzureSasCredential)exCred.Item2));
+            }
+            else if (exCred.Item1 == typeof(TokenCredential))
+            {
+                resource = new AppendBlobStorageResource(new AppendBlobClient(
+                    new Uri(storedPath),
+                    (TokenCredential)exCred.Item2));
+            }
+            else
+            {
+                resource = new AppendBlobStorageResource(new AppendBlobClient(
+                    new Uri(storedPath)));
+            }
+            return resource;
         }
 
         private void GrabEtag(Response response)

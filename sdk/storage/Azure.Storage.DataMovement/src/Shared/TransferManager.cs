@@ -378,8 +378,6 @@ namespace Azure.Storage.DataMovement
         {
             throw new NotImplementedException();
         }
-
-        public virtual Task<StorageResource> GetStorageResource
         #endregion Transfer Job Management
 
         #region Start Transfer

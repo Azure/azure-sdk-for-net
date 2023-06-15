@@ -303,14 +303,6 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        private void GrabEtag(Response response)
-        {
-            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
-            {
-                _etagDownloadLock = etag;
-            }
-        }
-
         /// <summary>
         /// Rehydrates from Checkpointer.
         /// </summary>
@@ -366,7 +358,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 resource = new BlockBlobStorageResource(new BlockBlobClient(
                     new Uri(storedPath),
-                    (StorageSharedKeyCredential) exCred.Item2));
+                    (StorageSharedKeyCredential)exCred.Item2));
             }
             else if (exCred.Item1 == typeof(AzureSasCredential))
             {
@@ -386,6 +378,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     new Uri(storedPath)));
             }
             return resource;
+        }
+
+        private void GrabEtag(Response response)
+        {
+            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
+            {
+                _etagDownloadLock = etag;
+            }
         }
     }
 }

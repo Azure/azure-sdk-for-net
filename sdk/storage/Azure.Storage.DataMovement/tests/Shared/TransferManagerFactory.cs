@@ -10,12 +10,14 @@ namespace Azure.Storage.DataMovement.Tests
     internal class TransferManagerFactory
     {
         private TransferManagerOptions _options;
+        private string _checkpointerPath;
 
-        public TransferManagerFactory(TransferManagerOptions options)
+        public TransferManagerFactory(TransferManagerOptions options, string checkpointerPath)
         {
             Argument.CheckNotNull(options, nameof(options));
-            Argument.CheckNotNull(options.CheckpointerOptions, nameof(options.CheckpointerOptions));
+            Argument.AssertNotNullOrWhiteSpace(checkpointerPath, nameof(checkpointerPath));
             _options = options;
+            _checkpointerPath = checkpointerPath;
         }
 
         public TransferManager BuildTransferManager(List<DataTransfer> dataTransfers = default)
@@ -23,9 +25,9 @@ namespace Azure.Storage.DataMovement.Tests
             if (dataTransfers != default)
             {
                 // populate checkpointer
-                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointerOptions.checkpointerPath, nameof(dataTransfers));
-                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointerOptions.checkpointerPath);
-                checkpointerFactory.BuildCheckpointer(dataTransfers);
+                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_checkpointerPath);
+                LocalTransferCheckpointer checkpointer = checkpointerFactory.BuildCheckpointer(dataTransfers);
+                _options.Checkpointer = checkpointer;
             }
             TransferManager transferManager = new TransferManager(_options);
 
