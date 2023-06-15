@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SelfHelp
             return message;
         }
 
-        /// <summary> Get the diagnostics using the &apos;diagnosticsResourceName&apos; you chose while creating the diagnostic. </summary>
+        /// <summary> Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic. </summary>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        /// <summary> Get the diagnostics using the &apos;diagnosticsResourceName&apos; you chose while creating the diagnostic. </summary>
+        /// <summary> Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic. </summary>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

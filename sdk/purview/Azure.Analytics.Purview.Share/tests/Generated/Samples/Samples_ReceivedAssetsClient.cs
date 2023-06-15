@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedAssetsClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetReceivedAssets("<receivedShareName>", "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetReceivedAssets("<receivedShareName>", "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedAssetsClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetReceivedAssetsAsync("<receivedShareName>", "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetReceivedAssetsAsync("<receivedShareName>", "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());

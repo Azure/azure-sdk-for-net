@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The operation status. </summary>
     public enum MySqlFlexibleServerBackupAndExportOperationStatus
     {
-        /// <summary> The operation has been accepted but hasn&apos;t started. </summary>
+        /// <summary> The operation has been accepted but hasn't started. </summary>
         Pending,
         /// <summary> The operation is running. </summary>
         InProgress,

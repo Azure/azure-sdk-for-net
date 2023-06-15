@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of the servers in the cluster. </param>
+        /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. Required for creation. </param>
         /// <param name="provisioningState"> Provisioning state of the cluster. </param>
         /// <param name="state"> A state of a cluster/server that is visible to user. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the server. </param>
         /// <param name="isPublicIPAccessEnabled"> If public access is enabled on server. </param>
         /// <param name="isReadOnly"> If server database is set to read-only by system maintenance depending on high disk space usage. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of the servers in the cluster. </param>
+        /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
         /// <param name="role"> The role of server in the cluster. </param>
         /// <param name="state"> A state of a cluster/server that is visible to user. </param>

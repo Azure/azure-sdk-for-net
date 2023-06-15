@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 scope = "<scope>",
             };
 
-            Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream, new RequestContext());
+            Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 scope = "<scope>",
             };
 
-            Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new RequestContext());
+            Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>", new RequestContext());
+            Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("count").ToString());
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>", new RequestContext());
+            Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("count").ToString());
@@ -256,7 +256,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 principalType = "<principalType>",
             };
 
-            Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new RequestContext());
+            Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -303,7 +303,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 principalType = "<principalType>",
             };
 
-            Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new RequestContext());
+            Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -335,7 +335,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.GetRoleAssignmentById("<roleAssignmentId>", new RequestContext());
+            Response response = client.GetRoleAssignmentById("<roleAssignmentId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -367,7 +367,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>", new RequestContext());
+            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -397,7 +397,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", "<scope>", new RequestContext());
+            Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", "<scope>");
             Console.WriteLine(response.Status);
         }
 
@@ -421,7 +421,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", "<scope>", new RequestContext());
+            Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", "<scope>");
             Console.WriteLine(response.Status);
         }
     }

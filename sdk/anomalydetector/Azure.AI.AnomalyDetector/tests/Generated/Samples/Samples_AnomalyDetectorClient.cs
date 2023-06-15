@@ -73,7 +73,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 imputeFixedValue = 123.45f,
             };
 
-            Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data), new RequestContext());
+            Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("period").ToString());
@@ -140,7 +140,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 imputeFixedValue = 123.45f,
             };
 
-            Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("period").ToString());
@@ -208,7 +208,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 imputeFixedValue = 123.45f,
             };
 
-            Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data), new RequestContext());
+            Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("period").ToString());
@@ -277,7 +277,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 imputeFixedValue = 123.45f,
             };
 
-            Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("period").ToString());
@@ -365,7 +365,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 threshold = 123.45f,
             };
 
-            Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data), new RequestContext());
+            Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("period").ToString());
@@ -420,7 +420,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 threshold = 123.45f,
             };
 
-            Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("period").ToString());
@@ -618,7 +618,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 },
             };
 
-            Response response = client.TrainMultivariateModel(RequestContent.Create(data), new RequestContext());
+            Response response = client.TrainMultivariateModel(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -694,7 +694,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 },
             };
 
-            Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -766,7 +766,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new AnomalyDetectorClient(endpoint, credential);
 
-            Response response = client.DeleteMultivariateModel("<modelId>", new RequestContext());
+            Response response = client.DeleteMultivariateModel("<modelId>");
             Console.WriteLine(response.Status);
         }
 
@@ -790,7 +790,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new AnomalyDetectorClient(endpoint, credential);
 
-            Response response = await client.DeleteMultivariateModelAsync("<modelId>", new RequestContext());
+            Response response = await client.DeleteMultivariateModelAsync("<modelId>");
             Console.WriteLine(response.Status);
         }
 
@@ -953,7 +953,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 endTime = "2022-05-10T14:57:31.2311892-04:00",
             };
 
-            Response response = client.DetectMultivariateBatchAnomaly("<modelId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DetectMultivariateBatchAnomaly("<modelId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -1022,7 +1022,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 endTime = "2022-05-10T14:57:31.2311892-04:00",
             };
 
-            Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -1117,7 +1117,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 topContributorCount = 1234,
             };
 
-            Response response = client.DetectMultivariateLastAnomaly("<modelId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.DetectMultivariateLastAnomaly("<modelId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("variable").ToString());
@@ -1189,7 +1189,7 @@ namespace Azure.AI.AnomalyDetector.Samples
                 topContributorCount = 1234,
             };
 
-            Response response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("variable").ToString());

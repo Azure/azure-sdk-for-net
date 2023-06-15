@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: PriceSheetProperties.meterId
         /// </param>
         /// <param name="meterDetails">
-        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// The details about the meter. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: PriceSheetProperties.meterDetails
         /// </param>
         /// <param name="unitOfMeasure">
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public Guid? MeterId { get; }
         /// <summary>
-        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// The details about the meter. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: PriceSheetProperties.meterDetails
         /// </summary>
         public ConsumptionMeterDetails MeterDetails { get; }

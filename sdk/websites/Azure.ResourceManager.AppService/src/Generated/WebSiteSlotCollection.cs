@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s deployment slots.
+        /// Description for Gets an app's deployment slots.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s deployment slots.
+        /// Description for Gets an app's deployment slots.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

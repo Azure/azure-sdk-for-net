@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountEncryptionConfiguration Encryption { get; set; }
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
         public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; set; }
-        /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
+        /// <summary> If not specified, the default value is 'enabled'. </summary>
         public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
         public BatchNetworkProfile NetworkProfile { get; set; }
