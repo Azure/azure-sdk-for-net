@@ -33,13 +33,20 @@ namespace Azure.ResourceManager.Moq
         /// <returns></returns>
         internal static LambdaExpression ChangeType(LambdaExpression expression, Type newType, Type newDelegateType)
         {
+            if (TryChangeType(expression, newType, newDelegateType, out var newExpression))
+                return newExpression;
+
+            throw new InvalidOperationException($"The method in {expression} is not found on type {newType}");
+        }
+
+        internal static bool TryChangeType(LambdaExpression expression, Type newType, Type newDelegateType, out LambdaExpression newExpression)
+        {
+            newExpression = null;
             // we will call this method inside Setup(Expression<Func<T, R>>) or Setup(Expression<Action<T>>)
             // therefore we will always have only one parameter
             var parameter = expression.Parameters.Single();
-            if (expression.Body is not MethodCallExpression methodCallExpression)
-            {
-                throw new InvalidOperationException("We only support methodCallExpression as the body of lambda expression for now");
-            }
+            // we should always ensure the body is methodCallExpression
+            var methodCallExpression = (MethodCallExpression)expression.Body;
             var originalMethod = methodCallExpression.Method;
             var originalParameterTypes = originalMethod.GetParameters().Select(p => p.ParameterType);
             var originalArguments = methodCallExpression.Arguments;
@@ -48,12 +55,13 @@ namespace Azure.ResourceManager.Moq
             var methodOnNewType = newType.GetMethod(originalMethod.Name, originalParameterTypes.Skip(1).ToArray());
             if (methodOnNewType is null)
             {
-                throw new InvalidOperationException($"The method {originalMethod} is not found on type {newType}");
+                return false;
             }
             var instanceExpression = Expression.Parameter(newType);
             var newMethodCallExpression = Expression.Call(instanceExpression, methodOnNewType, originalArguments.Skip(1));
 
-            return Expression.Lambda(newDelegateType, newMethodCallExpression, instanceExpression);
+            newExpression = Expression.Lambda(newDelegateType, newMethodCallExpression, instanceExpression);
+            return true;
         }
     }
 }

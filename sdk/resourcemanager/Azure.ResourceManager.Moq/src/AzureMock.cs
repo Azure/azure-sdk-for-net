@@ -23,12 +23,25 @@ namespace Azure.ResourceManager.Moq
         public new ISetup<T, R> Setup<R>(Expression<Func<T, R>> expression)
         {
             // add this check since we only have extension methods on `ArmResource` and `ArmClient`
-            if (typeof(ArmResource).IsAssignableFrom(typeof(T)) && ExpressionUtilities.IsExtensionMethod(expression, out var extensionMethodInfo))
+            if (ExpressionUtilities.IsExtensionMethod(expression, out var extensionMethodInfo))
             {
-                var extensionClientType = MockingExtensions.FindExtensionType(typeof(T), extensionMethodInfo);
+                // TODO -- some methods are not directly calling the method on extension client with the same signature
+                // instead those are calling another static method in the same extension class
+                // we need to find a way to identify those
+                if (typeof(ArmResource).IsAssignableFrom(typeof(T)))
+                {
+                    var extensionClientType = MockingExtensions.FindExtensionType(typeof(T), extensionMethodInfo);
 
-                return this.RedirectMock(expression, extensionClientType);
-            } // TODO -- add another branch to deal with the methods that extends on `ArmClient`
+                    return this.RedirectMock(expression, extensionClientType);
+                }
+                // TODO -- we need to distinguish two cases: some of them are scope resource calls, others are constructing resource instances
+                if (typeof(ArmClient).IsAssignableFrom(typeof(T)))
+                {
+                    throw new NotImplementedException();
+                }
+
+                throw new NotImplementedException();
+            }
             else
             {
                 return base.Setup(expression);
