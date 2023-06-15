@@ -723,6 +723,34 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(offerings);
         }
 
+        [Test]
+        [AsyncOnly]
+        public async Task GetOfferingsWithPhoneNumberAndAssignmentTypeAsync()
+        {
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferingsAsync("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application);
+            await foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetOfferingsWithPhoneNumberAndAssignmentType()
+        {
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferings("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application);
+            foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
+        }
+
         private static bool IsSuccess(int statusCode)
         {
             return statusCode >= 200 && statusCode < 300;

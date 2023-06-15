@@ -114,6 +114,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClientOptions phoneNumbersClientOptions = new PhoneNumbersClientOptions();
             phoneNumbersClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            phoneNumbersClientOptions.AcceptedLanguage = "en-US";
             return InstrumentClientOptions(phoneNumbersClientOptions);
         }
     }
