@@ -7,6 +7,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Shared;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -16,6 +17,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     /// </summary>
     public class AzureMonitorExporterEventSourceTests
     {
+        [Fact]
+        public void EventSourceTest_AzureMonitorExporterEventSource()
+        {
+            EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorExporterEventSource.Log);
+        }
+
         [Fact]
         public void VerifyEventSource_Critical() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteCritical, expectedId: 1, expectedName: "WriteCritical");
 
