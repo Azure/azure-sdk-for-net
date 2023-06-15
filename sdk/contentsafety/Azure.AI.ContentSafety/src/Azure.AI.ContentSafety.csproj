@@ -6,7 +6,6 @@
     <PackageTags>Azure ContentSafety</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);AZC0002</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
