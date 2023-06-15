@@ -138,7 +138,7 @@ namespace Azure.Core.Dynamic
         private object? SetProperty(string name, object value)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            AllowList.AssertAllowedType(value);
+            AllowList.AssertAllowedValue(value);
 
             if (HasTypeConverter(value))
             {
@@ -175,7 +175,7 @@ namespace Azure.Core.Dynamic
 
         private object? SetViaIndexer(object index, object value)
         {
-            AllowList.AssertAllowedType(value);
+            AllowList.AssertAllowedValue(value);
 
             switch (index)
             {

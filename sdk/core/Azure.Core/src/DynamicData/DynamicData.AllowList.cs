@@ -15,7 +15,7 @@ namespace Azure.Core.Dynamic
     {
         internal class AllowList
         {
-            public static void AssertAllowedType<T>(T value)
+            public static void AssertAllowedValue<T>(T value)
             {
                 if (value == null)
                 {
@@ -24,7 +24,7 @@ namespace Azure.Core.Dynamic
 
                 if (!IsAllowedValue(value))
                 {
-                    throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
+                    throw new NotSupportedException($"Assigning this value is not supported, either because its type '{value.GetType()}' is not allowed, or because it contains unallowed types.");
                 }
             }
 
