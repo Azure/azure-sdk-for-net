@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ReplicationLogicalNetworkResources in the SiteRecoveryFabric. </summary>
-        /// <returns> An object representing collection of ReplicationLogicalNetworkResources and their operations over a ReplicationLogicalNetworkResource. </returns>
-        public virtual ReplicationLogicalNetworkCollection GetReplicationLogicalNetworks()
+        /// <summary> Gets a collection of SiteRecoveryLogicalNetworkResources in the SiteRecoveryFabric. </summary>
+        /// <returns> An object representing collection of SiteRecoveryLogicalNetworkResources and their operations over a SiteRecoveryLogicalNetworkResource. </returns>
+        public virtual SiteRecoveryLogicalNetworkCollection GetSiteRecoveryLogicalNetworks()
         {
-            return GetCachedClient(Client => new ReplicationLogicalNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new SiteRecoveryLogicalNetworkCollection(Client, Id));
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationLogicalNetworkResource>> GetReplicationLogicalNetworkAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryLogicalNetworkResource>> GetSiteRecoveryLogicalNetworkAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetReplicationLogicalNetworks().GetAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryLogicalNetworks().GetAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,39 +136,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicationLogicalNetworkResource> GetReplicationLogicalNetwork(string logicalNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryLogicalNetworkResource> GetSiteRecoveryLogicalNetwork(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetReplicationLogicalNetworks().Get(logicalNetworkName, cancellationToken);
+            return GetSiteRecoveryLogicalNetworks().Get(logicalNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReplicationNetworkResources in the SiteRecoveryFabric. </summary>
-        /// <returns> An object representing collection of ReplicationNetworkResources and their operations over a ReplicationNetworkResource. </returns>
-        public virtual ReplicationNetworkCollection GetReplicationNetworks()
+        /// <summary> Gets a collection of SiteRecoveryNetworkResources in the SiteRecoveryFabric. </summary>
+        /// <returns> An object representing collection of SiteRecoveryNetworkResources and their operations over a SiteRecoveryNetworkResource. </returns>
+        public virtual SiteRecoveryNetworkCollection GetSiteRecoveryNetworks()
         {
-            return GetCachedClient(Client => new ReplicationNetworkCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of a network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationNetworks/{networkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkName"> Primary network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationNetworkResource>> GetReplicationNetworkAsync(string networkName, CancellationToken cancellationToken = default)
-        {
-            return await GetReplicationNetworks().GetAsync(networkName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SiteRecoveryNetworkCollection(Client, Id));
         }
 
         /// <summary>
@@ -189,16 +166,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicationNetworkResource> GetReplicationNetwork(string networkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryNetworkResource>> GetSiteRecoveryNetworkAsync(string networkName, CancellationToken cancellationToken = default)
         {
-            return GetReplicationNetworks().Get(networkName, cancellationToken);
+            return await GetSiteRecoveryNetworks().GetAsync(networkName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ReplicationProtectionContainerResources in the SiteRecoveryFabric. </summary>
-        /// <returns> An object representing collection of ReplicationProtectionContainerResources and their operations over a ReplicationProtectionContainerResource. </returns>
-        public virtual ReplicationProtectionContainerCollection GetReplicationProtectionContainers()
+        /// <summary>
+        /// Gets the details of a network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationNetworks/{networkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkName"> Primary network name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteRecoveryNetworkResource> GetSiteRecoveryNetwork(string networkName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ReplicationProtectionContainerCollection(Client, Id));
+            return GetSiteRecoveryNetworks().Get(networkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteRecoveryProtectionContainerResources in the SiteRecoveryFabric. </summary>
+        /// <returns> An object representing collection of SiteRecoveryProtectionContainerResources and their operations over a SiteRecoveryProtectionContainerResource. </returns>
+        public virtual SiteRecoveryProtectionContainerCollection GetSiteRecoveryProtectionContainers()
+        {
+            return GetCachedClient(Client => new SiteRecoveryProtectionContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationProtectionContainerResource>> GetReplicationProtectionContainerAsync(string protectionContainerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryProtectionContainerResource>> GetSiteRecoveryProtectionContainerAsync(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            return await GetReplicationProtectionContainers().GetAsync(protectionContainerName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryProtectionContainers().GetAsync(protectionContainerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicationProtectionContainerResource> GetReplicationProtectionContainer(string protectionContainerName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryProtectionContainerResource> GetSiteRecoveryProtectionContainer(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            return GetReplicationProtectionContainers().Get(protectionContainerName, cancellationToken);
+            return GetSiteRecoveryProtectionContainers().Get(protectionContainerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteRecoveryServicesProviderResources in the SiteRecoveryFabric. </summary>
@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetSiteRecoveryServicesProviders().Get(providerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReplicationStorageClassificationResources in the SiteRecoveryFabric. </summary>
-        /// <returns> An object representing collection of ReplicationStorageClassificationResources and their operations over a ReplicationStorageClassificationResource. </returns>
-        public virtual ReplicationStorageClassificationCollection GetReplicationStorageClassifications()
+        /// <summary> Gets a collection of SiteRecoveryStorageClassificationResources in the SiteRecoveryFabric. </summary>
+        /// <returns> An object representing collection of SiteRecoveryStorageClassificationResources and their operations over a SiteRecoveryStorageClassificationResource. </returns>
+        public virtual SiteRecoveryStorageClassificationCollection GetSiteRecoveryStorageClassifications()
         {
-            return GetCachedClient(Client => new ReplicationStorageClassificationCollection(Client, Id));
+            return GetCachedClient(Client => new SiteRecoveryStorageClassificationCollection(Client, Id));
         }
 
         /// <summary>
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationStorageClassificationResource>> GetReplicationStorageClassificationAsync(string storageClassificationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryStorageClassificationResource>> GetSiteRecoveryStorageClassificationAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            return await GetReplicationStorageClassifications().GetAsync(storageClassificationName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryStorageClassifications().GetAsync(storageClassificationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,39 +348,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicationStorageClassificationResource> GetReplicationStorageClassification(string storageClassificationName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryStorageClassificationResource> GetSiteRecoveryStorageClassification(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            return GetReplicationStorageClassifications().Get(storageClassificationName, cancellationToken);
+            return GetSiteRecoveryStorageClassifications().Get(storageClassificationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReplicationVCenterResources in the SiteRecoveryFabric. </summary>
-        /// <returns> An object representing collection of ReplicationVCenterResources and their operations over a ReplicationVCenterResource. </returns>
-        public virtual ReplicationVCenterCollection GetReplicationVCenters()
+        /// <summary> Gets a collection of SiteRecoveryVCenterResources in the SiteRecoveryFabric. </summary>
+        /// <returns> An object representing collection of SiteRecoveryVCenterResources and their operations over a SiteRecoveryVCenterResource. </returns>
+        public virtual SiteRecoveryVCenterCollection GetSiteRecoveryVCenters()
         {
-            return GetCachedClient(Client => new ReplicationVCenterCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of a registered vCenter server(Add vCenter server).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationVCenterResource>> GetReplicationVCenterAsync(string vCenterName, CancellationToken cancellationToken = default)
-        {
-            return await GetReplicationVCenters().GetAsync(vCenterName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SiteRecoveryVCenterCollection(Client, Id));
         }
 
         /// <summary>
@@ -401,9 +378,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicationVCenterResource> GetReplicationVCenter(string vCenterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryVCenterResource>> GetSiteRecoveryVCenterAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
-            return GetReplicationVCenters().Get(vCenterName, cancellationToken);
+            return await GetSiteRecoveryVCenters().GetAsync(vCenterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of a registered vCenter server(Add vCenter server).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationvCenters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteRecoveryVCenterResource> GetSiteRecoveryVCenter(string vCenterName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteRecoveryVCenters().Get(vCenterName, cancellationToken);
         }
 
         /// <summary>

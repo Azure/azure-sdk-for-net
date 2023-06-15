@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationStorageClassificationMappingData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryStorageClassificationMappingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ReplicationStorageClassificationMappingData> array = new List<ReplicationStorageClassificationMappingData>();
+                    List<SiteRecoveryStorageClassificationMappingData> array = new List<SiteRecoveryStorageClassificationMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationStorageClassificationMappingData.DeserializeReplicationStorageClassificationMappingData(item));
+                        array.Add(SiteRecoveryStorageClassificationMappingData.DeserializeSiteRecoveryStorageClassificationMappingData(item));
                     }
                     value = array;
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProtectionContainerMappingCollection. </summary>
         internal ProtectionContainerMappingCollection()
         {
-            Value = new ChangeTrackingList<ReplicationProtectionContainerMappingData>();
+            Value = new ChangeTrackingList<SiteRecoveryProtectionContainerMappingData>();
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Link to fetch rest of the data.
         /// Serialized Name: ProtectionContainerMappingCollection.nextLink
         /// </param>
-        internal ProtectionContainerMappingCollection(IReadOnlyList<ReplicationProtectionContainerMappingData> value, string nextLink)
+        internal ProtectionContainerMappingCollection(IReadOnlyList<SiteRecoveryProtectionContainerMappingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// List of container mappings.
         /// Serialized Name: ProtectionContainerMappingCollection.value
         /// </summary>
-        public IReadOnlyList<ReplicationProtectionContainerMappingData> Value { get; }
+        public IReadOnlyList<SiteRecoveryProtectionContainerMappingData> Value { get; }
         /// <summary>
         /// Link to fetch rest of the data.
         /// Serialized Name: ProtectionContainerMappingCollection.nextLink

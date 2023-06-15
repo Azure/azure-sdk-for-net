@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The UnknownApplianceSpecificDetails.
     /// Serialized Name: UnknownApplianceSpecificDetails
     /// </summary>
-    internal partial class UnknownApplianceSpecificDetails : ReplicationApplianceSpecificDetails
+    internal partial class UnknownApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of UnknownApplianceSpecificDetails. </summary>
         /// <param name="instanceType">

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesSiteRecoveryModelFactory
     {
-        /// <summary> Initializes a new instance of ReplicationAlertData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAlertData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationAlertData"/> instance for mocking. </returns>
-        public static ReplicationAlertData ReplicationAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationAlertProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryAlertData"/> instance for mocking. </returns>
+        public static SiteRecoveryAlertData SiteRecoveryAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryAlertProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationAlertData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryAlertData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationAlertProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
         /// <param name="sendToOwners">
         /// A value indicating whether to send email to subscription administrator.
         /// Serialized Name: AlertProperties.sendToOwners
@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The locale for the email notification.
         /// Serialized Name: AlertProperties.locale
         /// </param>
-        /// <returns> A new <see cref="Models.ReplicationAlertProperties"/> instance for mocking. </returns>
-        public static ReplicationAlertProperties ReplicationAlertProperties(string sendToOwners = null, IEnumerable<string> customEmailAddresses = null, string locale = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryAlertProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryAlertProperties SiteRecoveryAlertProperties(string sendToOwners = null, IEnumerable<string> customEmailAddresses = null, string locale = null)
         {
             customEmailAddresses ??= new List<string>();
 
-            return new ReplicationAlertProperties(sendToOwners, customEmailAddresses?.ToList(), locale);
+            return new SiteRecoveryAlertProperties(sendToOwners, customEmailAddresses?.ToList(), locale);
         }
 
-        /// <summary> Initializes a new instance of ReplicationAppliance. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAppliance. </summary>
         /// <param name="replicationApplianceProviderSpecificDetails">
         /// Appliance related data.
         /// Serialized Name: ReplicationAppliance.properties
         /// </param>
-        /// <returns> A new <see cref="Models.ReplicationAppliance"/> instance for mocking. </returns>
-        public static ReplicationAppliance ReplicationAppliance(ReplicationApplianceSpecificDetails replicationApplianceProviderSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryAppliance"/> instance for mocking. </returns>
+        public static SiteRecoveryAppliance SiteRecoveryAppliance(SiteRecoveryApplianceSpecificDetails replicationApplianceProviderSpecificDetails = null)
         {
-            return new ReplicationAppliance(replicationApplianceProviderSpecificDetails != null ? new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails) : null);
+            return new SiteRecoveryAppliance(replicationApplianceProviderSpecificDetails != null ? new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails) : null);
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new EncryptionDetails(kekState, kekCertThumbprint, kekCertExpiryOn);
         }
 
-        /// <summary> Initializes a new instance of ReplicationLogicalNetworkData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -429,10 +429,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationLogicalNetworkData"/> instance for mocking. </returns>
-        public static ReplicationLogicalNetworkData ReplicationLogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LogicalNetworkProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryLogicalNetworkData"/> instance for mocking. </returns>
+        public static SiteRecoveryLogicalNetworkData SiteRecoveryLogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LogicalNetworkProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationLogicalNetworkData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryLogicalNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of LogicalNetworkProperties. </summary>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new LogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus);
         }
 
-        /// <summary> Initializes a new instance of ReplicationNetworkData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -471,13 +471,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationNetworkData"/> instance for mocking. </returns>
-        public static ReplicationNetworkData ReplicationNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationNetworkProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkData"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkData SiteRecoveryNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryNetworkProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationNetworkData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
         /// <param name="fabricType">
         /// The Fabric Type.
         /// Serialized Name: NetworkProperties.fabricType
@@ -494,12 +494,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Network Type.
         /// Serialized Name: NetworkProperties.networkType
         /// </param>
-        /// <returns> A new <see cref="Models.ReplicationNetworkProperties"/> instance for mocking. </returns>
-        public static ReplicationNetworkProperties ReplicationNetworkProperties(string fabricType = null, IEnumerable<Subnet> subnets = null, string friendlyName = null, string networkType = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryNetworkProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkProperties SiteRecoveryNetworkProperties(string fabricType = null, IEnumerable<Subnet> subnets = null, string friendlyName = null, string networkType = null)
         {
             subnets ??= new List<Subnet>();
 
-            return new ReplicationNetworkProperties(fabricType, subnets?.ToList(), friendlyName, networkType);
+            return new SiteRecoveryNetworkProperties(fabricType, subnets?.ToList(), friendlyName, networkType);
         }
 
         /// <summary> Initializes a new instance of Subnet. </summary>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new Subnet(name, friendlyName, addressList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReplicationNetworkMappingData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -536,10 +536,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationNetworkMappingData"/> instance for mocking. </returns>
-        public static ReplicationNetworkMappingData ReplicationNetworkMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkMappingProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkMappingData"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkMappingData SiteRecoveryNetworkMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkMappingProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationNetworkMappingData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryNetworkMappingData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of NetworkMappingProperties. </summary>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new NetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionContainerData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -600,10 +600,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionContainerData"/> instance for mocking. </returns>
-        public static ReplicationProtectionContainerData ReplicationProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerData"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectionContainerData SiteRecoveryProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationProtectionContainerData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryProtectionContainerData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerProperties. </summary>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
         }
 
-        /// <summary> Initializes a new instance of ReplicationMigrationItemData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -654,13 +654,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationMigrationItemData"/> instance for mocking. </returns>
-        public static ReplicationMigrationItemData ReplicationMigrationItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationItemProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationItemData"/> instance for mocking. </returns>
+        public static SiteRecoveryMigrationItemData SiteRecoveryMigrationItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryMigrationItemProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationMigrationItemData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryMigrationItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of MigrationItemProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
         /// <param name="machineName">
         /// The on-premise virtual machine name.
         /// Serialized Name: MigrationItemProperties.machineName
@@ -743,14 +743,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.MigrationItemProperties"/> instance for mocking. </returns>
-        public static MigrationItemProperties MigrationItemProperties(string machineName = null, string policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, MigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryMigrationItemProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryMigrationItemProperties SiteRecoveryMigrationItemProperties(string machineName = null, string policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, MigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
         {
             healthErrors ??= new List<HealthError>();
             allowedOperations ??= new List<MigrationItemOperation>();
             criticalJobHistory ??= new List<CriticalJobHistoryDetails>();
 
-            return new MigrationItemProperties(machineName, policyId, policyFriendlyName, recoveryServicesProviderId, replicationStatus, migrationState, migrationStateDescription, lastTestMigrationOn, lastTestMigrationStatus, lastMigrationOn, lastMigrationStatus, testMigrateState, testMigrateStateDescription, health, healthErrors?.ToList(), allowedOperations?.ToList(), currentJob, criticalJobHistory?.ToList(), eventCorrelationId, providerSpecificDetails);
+            return new SiteRecoveryMigrationItemProperties(machineName, policyId, policyFriendlyName, recoveryServicesProviderId, replicationStatus, migrationState, migrationStateDescription, lastTestMigrationOn, lastTestMigrationStatus, lastMigrationOn, lastMigrationStatus, testMigrateState, testMigrateStateDescription, health, healthErrors?.ToList(), allowedOperations?.ToList(), currentJob, criticalJobHistory?.ToList(), eventCorrelationId, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus);
         }
 
-        /// <summary> Initializes a new instance of MigrationRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationRecoveryPointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -808,10 +808,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.MigrationRecoveryPointData"/> instance for mocking. </returns>
-        public static MigrationRecoveryPointData MigrationRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationRecoveryPointProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationRecoveryPointData"/> instance for mocking. </returns>
+        public static SiteRecoveryMigrationRecoveryPointData SiteRecoveryMigrationRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationRecoveryPointProperties properties = null, AzureLocation? location = null)
         {
-            return new MigrationRecoveryPointData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryMigrationRecoveryPointData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MigrationRecoveryPointProperties(recoveryPointOn, recoveryPointType);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectableItemData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -842,10 +842,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationProtectableItemData"/> instance for mocking. </returns>
-        public static ReplicationProtectableItemData ReplicationProtectableItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectableItemProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectableItemData"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectableItemData SiteRecoveryProtectableItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectableItemProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationProtectableItemData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryProtectableItemData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of ProtectableItemProperties. </summary>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ComputeSizeErrorDetails(message, severity);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionContainerMappingData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerMappingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1191,10 +1191,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionContainerMappingData"/> instance for mocking. </returns>
-        public static ReplicationProtectionContainerMappingData ReplicationProtectionContainerMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerMappingProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerMappingData"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectionContainerMappingData SiteRecoveryProtectionContainerMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerMappingProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationProtectionContainerMappingData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryProtectionContainerMappingData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VersionDetails(version, expiryOn, status);
         }
 
-        /// <summary> Initializes a new instance of ReplicationStorageClassificationData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryStorageClassificationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1420,13 +1420,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationStorageClassificationData"/> instance for mocking. </returns>
-        public static ReplicationStorageClassificationData ReplicationStorageClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageClassificationFriendlyName = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryStorageClassificationData"/> instance for mocking. </returns>
+        public static SiteRecoveryStorageClassificationData SiteRecoveryStorageClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageClassificationFriendlyName = null, AzureLocation? location = null)
         {
-            return new ReplicationStorageClassificationData(id, name, resourceType, systemData, storageClassificationFriendlyName != null ? new StorageClassificationProperties(storageClassificationFriendlyName) : null, location);
+            return new SiteRecoveryStorageClassificationData(id, name, resourceType, systemData, storageClassificationFriendlyName != null ? new StorageClassificationProperties(storageClassificationFriendlyName) : null, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationStorageClassificationMappingData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryStorageClassificationMappingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1439,13 +1439,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationStorageClassificationMappingData"/> instance for mocking. </returns>
-        public static ReplicationStorageClassificationMappingData ReplicationStorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetStorageClassificationId = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryStorageClassificationMappingData"/> instance for mocking. </returns>
+        public static SiteRecoveryStorageClassificationMappingData SiteRecoveryStorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetStorageClassificationId = null, AzureLocation? location = null)
         {
-            return new ReplicationStorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
+            return new SiteRecoveryStorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationVCenterData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVCenterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1458,10 +1458,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationVCenterData"/> instance for mocking. </returns>
-        public static ReplicationVCenterData ReplicationVCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VCenterProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVCenterData"/> instance for mocking. </returns>
+        public static SiteRecoveryVCenterData SiteRecoveryVCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VCenterProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationVCenterData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryVCenterData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of VCenterProperties. </summary>
@@ -1782,7 +1782,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new UnknownJobDetails(instanceType, affectedObjectDetails);
         }
 
-        /// <summary> Initializes a new instance of ReplicationPolicyData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1795,13 +1795,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationPolicyData"/> instance for mocking. </returns>
-        public static ReplicationPolicyData ReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationPolicyProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPolicyData"/> instance for mocking. </returns>
+        public static SiteRecoveryPolicyData SiteRecoveryPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryPolicyProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationPolicyData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryPolicyData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
         /// <param name="friendlyName">
         /// The FriendlyName.
         /// Serialized Name: PolicyProperties.friendlyName
@@ -1812,10 +1812,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ReplicationPolicyProperties"/> instance for mocking. </returns>
-        public static ReplicationPolicyProperties ReplicationPolicyProperties(string friendlyName = null, PolicyProviderSpecificDetails providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryPolicyProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryPolicyProperties SiteRecoveryPolicyProperties(string friendlyName = null, PolicyProviderSpecificDetails providerSpecificDetails = null)
         {
-            return new ReplicationPolicyProperties(friendlyName, providerSpecificDetails);
+            return new SiteRecoveryPolicyProperties(friendlyName, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectionIntentData. </summary>
@@ -1870,7 +1870,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, creationTimeUTC, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of ReplicationRecoveryPlanData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1883,10 +1883,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationRecoveryPlanData"/> instance for mocking. </returns>
-        public static ReplicationRecoveryPlanData ReplicationRecoveryPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPlanProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryRecoveryPlanData"/> instance for mocking. </returns>
+        public static SiteRecoveryRecoveryPlanData SiteRecoveryRecoveryPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPlanProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationRecoveryPlanData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryRecoveryPlanData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanProperties. </summary>
@@ -2144,7 +2144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HealthErrorSummary(summaryCode, category, severity, summaryMessage, affectedResourceType, affectedResourceSubtype, affectedResourceCorrelationIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReplicationVaultSettingData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2157,10 +2157,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationVaultSettingData"/> instance for mocking. </returns>
-        public static ReplicationVaultSettingData ReplicationVaultSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VaultSettingProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVaultSettingData"/> instance for mocking. </returns>
+        public static SiteRecoveryVaultSettingData SiteRecoveryVaultSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VaultSettingProperties properties = null, AzureLocation? location = null)
         {
-            return new ReplicationVaultSettingData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryVaultSettingData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of VaultSettingProperties. </summary>

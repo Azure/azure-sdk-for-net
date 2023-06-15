@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationLogicalNetworkData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryLogicalNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ReplicationLogicalNetworkData> array = new List<ReplicationLogicalNetworkData>();
+                    List<SiteRecoveryLogicalNetworkData> array = new List<SiteRecoveryLogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationLogicalNetworkData.DeserializeReplicationLogicalNetworkData(item));
+                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item));
                     }
                     value = array;
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of LogicalNetworkCollection. </summary>
         internal LogicalNetworkCollection()
         {
-            Value = new ChangeTrackingList<ReplicationLogicalNetworkData>();
+            Value = new ChangeTrackingList<SiteRecoveryLogicalNetworkData>();
         }
 
         /// <summary> Initializes a new instance of LogicalNetworkCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: LogicalNetworkCollection.nextLink
         /// </param>
-        internal LogicalNetworkCollection(IReadOnlyList<ReplicationLogicalNetworkData> value, string nextLink)
+        internal LogicalNetworkCollection(IReadOnlyList<SiteRecoveryLogicalNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Logical Networks list details.
         /// Serialized Name: LogicalNetworkCollection.value
         /// </summary>
-        public IReadOnlyList<ReplicationLogicalNetworkData> Value { get; }
+        public IReadOnlyList<SiteRecoveryLogicalNetworkData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: LogicalNetworkCollection.nextLink

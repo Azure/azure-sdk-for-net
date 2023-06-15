@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReplicationStorageClassificationData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteRecoveryStorageClassificationData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        ReplicationStorageClassificationData value = default;
+                        SiteRecoveryStorageClassificationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReplicationStorageClassificationData.DeserializeReplicationStorageClassificationData(document.RootElement);
+                        value = SiteRecoveryStorageClassificationData.DeserializeSiteRecoveryStorageClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReplicationStorageClassificationData)null, message.Response);
+                    return Response.FromValue((SiteRecoveryStorageClassificationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReplicationStorageClassificationData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
+        public Response<SiteRecoveryStorageClassificationData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,13 +204,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        ReplicationStorageClassificationData value = default;
+                        SiteRecoveryStorageClassificationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReplicationStorageClassificationData.DeserializeReplicationStorageClassificationData(document.RootElement);
+                        value = SiteRecoveryStorageClassificationData.DeserializeSiteRecoveryStorageClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReplicationStorageClassificationData)null, message.Response);
+                    return Response.FromValue((SiteRecoveryStorageClassificationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

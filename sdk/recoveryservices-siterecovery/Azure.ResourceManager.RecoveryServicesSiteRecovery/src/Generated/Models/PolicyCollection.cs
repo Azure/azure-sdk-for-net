@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of PolicyCollection. </summary>
         internal PolicyCollection()
         {
-            Value = new ChangeTrackingList<ReplicationPolicyData>();
+            Value = new ChangeTrackingList<SiteRecoveryPolicyData>();
         }
 
         /// <summary> Initializes a new instance of PolicyCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: PolicyCollection.nextLink
         /// </param>
-        internal PolicyCollection(IReadOnlyList<ReplicationPolicyData> value, string nextLink)
+        internal PolicyCollection(IReadOnlyList<SiteRecoveryPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The policy details.
         /// Serialized Name: PolicyCollection.value
         /// </summary>
-        public IReadOnlyList<ReplicationPolicyData> Value { get; }
+        public IReadOnlyList<SiteRecoveryPolicyData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: PolicyCollection.nextLink

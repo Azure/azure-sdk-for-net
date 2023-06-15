@@ -19,42 +19,46 @@ mgmt-debug:
   show-serialized-names: true
 
 rename-mapping:
-  Alert: ReplicationAlert
-  AlertProperties: ReplicationAlertProperties
-  AlertCollection: ReplicationAlertListResult
+  Alert: SiteRecoveryAlert
+  AlertProperties: SiteRecoveryAlertProperties
+  AlertCollection: SiteRecoveryAlertListResult
   Event: SiteRecoveryEvent
   Fabric: SiteRecoveryFabric
   Job: SiteRecoveryJob
-  LogicalNetwork: ReplicationLogicalNetwork
-  MigrationItem: ReplicationMigrationItem
-  MigrationRecoveryPointCollection: MigrationRecoveryPointListResult
-  Network: ReplicationNetwork
-  NetworkProperties: ReplicationNetworkProperties
-  NetworkMapping: ReplicationNetworkMapping
-  Policy: ReplicationPolicy
-  PolicyProperties: ReplicationPolicyProperties
-  ProtectableItem: ReplicationProtectableItem
-  ProtectionContainer: ReplicationProtectionContainer
-  ProtectionContainerMapping: ReplicationProtectionContainerMapping
-  RecoveryPlan: ReplicationRecoveryPlan
+  LogicalNetwork: SiteRecoveryLogicalNetwork
+  MigrationItem: SiteRecoveryMigrationItem
+  MigrationItemCollection: SiteRecoveryMigrationItemListResult
+  MigrationItemProperties: SiteRecoveryMigrationItemProperties
+  MigrationRecoveryPoint: SiteRecoveryMigrationRecoveryPoint
+  MigrationRecoveryPointCollection: SiteRecoveryMigrationRecoveryPointListResult
+  Network: SiteRecoveryNetwork
+  NetworkProperties: SiteRecoveryNetworkProperties
+  NetworkCollection: SiteRecoveryNetworkListResult
+  NetworkMapping: SiteRecoveryNetworkMapping
+  Policy: SiteRecoveryPolicy
+  PolicyProperties: SiteRecoveryPolicyProperties
+  ProtectableItem: SiteRecoveryProtectableItem
+  ProtectionContainer: SiteRecoveryProtectionContainer
+  ProtectionContainerMapping: SiteRecoveryProtectionContainerMapping
+  RecoveryPlan: SiteRecoveryRecoveryPlan
   RecoveryPoint: SiteRecoveryPoint
   RecoveryServicesProvider: SiteRecoveryServicesProvider
-  StorageClassification: ReplicationStorageClassification
-  StorageClassificationMapping: ReplicationStorageClassificationMapping
-  VaultSetting: ReplicationVaultSetting
-  VCenter: ReplicationVCenter
+  StorageClassification: SiteRecoveryStorageClassification
+  StorageClassificationMapping: SiteRecoveryStorageClassificationMapping
+  VaultSetting: SiteRecoveryVaultSetting
+  VCenter: SiteRecoveryVCenter
   AddDisksInput: AddDisksContent
   AddRecoveryServicesProviderInputProperties: AddSiteRecoveryServicesProviderProperties
-  AddVCenterRequestProperties: AddReplicationVCenterRequestProperties
-  ApplianceCollection: ReplicationApplianceListResult
-  ApplianceSpecificDetails: ReplicationApplianceSpecificDetails
+  ReplicationAppliance: SiteRecoveryAppliance
+  ApplianceCollection: SiteRecoveryApplianceListResult
+  ApplianceSpecificDetails: SiteRecoveryApplianceSpecificDetails
   ApplyRecoveryPointInput: ApplySiteRecoveryPointContent
   ApplyRecoveryPointInputProperties: ApplySiteRecoveryPointProperties
   ApplyRecoveryPointProviderSpecificInput: ApplySiteRecoveryPointProviderSpecificContent
   ASRTask: AsrTask
-  ConfigureAlertRequestProperties: ConfigureReplicationAlertCreationProperties
-  ConfigurationSettings: ReplicationProviderSettings
-  CreateNetworkMappingInputProperties: ReplicationNetworkMappingCreationProperties
+  ConfigurationSettings: SiteRecoveryReplicationProviderSettings
+  CreateNetworkMappingInput: SiteRecoveryNetworkMappingCreationContent
+  CreateNetworkMappingInputProperties: SiteRecoveryReplicationNetworkMappingCreationProperties
   CreateProtectionContainerInputProperties: ReplicationProtectionContainerCreationProperties
   CreateProtectionContainerMappingInputProperties: ReplicationProtectionContainerMappingProperties
   ReplicationProviderSpecificContainerCreationInput: ReplicationProviderSpecificContainerCreationContent

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of StorageClassificationMappingCollection. </summary>
         internal StorageClassificationMappingCollection()
         {
-            Value = new ChangeTrackingList<ReplicationStorageClassificationMappingData>();
+            Value = new ChangeTrackingList<SiteRecoveryStorageClassificationMappingData>();
         }
 
         /// <summary> Initializes a new instance of StorageClassificationMappingCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: StorageClassificationMappingCollection.nextLink
         /// </param>
-        internal StorageClassificationMappingCollection(IReadOnlyList<ReplicationStorageClassificationMappingData> value, string nextLink)
+        internal StorageClassificationMappingCollection(IReadOnlyList<SiteRecoveryStorageClassificationMappingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The storage details.
         /// Serialized Name: StorageClassificationMappingCollection.value
         /// </summary>
-        public IReadOnlyList<ReplicationStorageClassificationMappingData> Value { get; }
+        public IReadOnlyList<SiteRecoveryStorageClassificationMappingData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: StorageClassificationMappingCollection.nextLink

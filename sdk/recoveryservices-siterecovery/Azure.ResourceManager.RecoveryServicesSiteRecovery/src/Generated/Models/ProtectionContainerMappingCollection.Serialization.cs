@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationProtectionContainerMappingData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryProtectionContainerMappingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ReplicationProtectionContainerMappingData> array = new List<ReplicationProtectionContainerMappingData>();
+                    List<SiteRecoveryProtectionContainerMappingData> array = new List<SiteRecoveryProtectionContainerMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProtectionContainerMappingData.DeserializeReplicationProtectionContainerMappingData(item));
+                        array.Add(SiteRecoveryProtectionContainerMappingData.DeserializeSiteRecoveryProtectionContainerMappingData(item));
                     }
                     value = array;
                     continue;

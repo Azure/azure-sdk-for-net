@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ReplicationApplianceSpecificDetails> providerSpecificDetails = default;
+            Optional<SiteRecoveryApplianceSpecificDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerSpecificDetails"u8))
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationApplianceSpecificDetails.DeserializeReplicationApplianceSpecificDetails(property.Value);
+                    providerSpecificDetails = SiteRecoveryApplianceSpecificDetails.DeserializeSiteRecoveryApplianceSpecificDetails(property.Value);
                     continue;
                 }
             }
