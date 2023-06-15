@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement
         public abstract bool IsContainer { get; }
         public abstract string Path { get; }
         public abstract System.Uri Uri { get; }
-        protected void SetAuthorizationScheme(Azure.HttpAuthorization tokenCredential) { }
+        protected void SetAuthorizationScheme(Azure.HttpAuthorization authorization) { }
     }
     public abstract partial class StorageResourceContainer : Azure.Storage.DataMovement.StorageResourceBase
     {
