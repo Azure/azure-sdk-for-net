@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class QuantumModelFactory
+    public static partial class JobsModelFactory
     {
         /// <summary> Initializes a new instance of JobDetails. </summary>
         /// <param name="id"> The job id. </param>

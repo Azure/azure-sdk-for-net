@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="PurviewWorkflowServiceClient"/> to client builder. </summary>
-    public static partial class PurviewWorkflowServiceClientBuilderExtensions
+    public static partial class WorkflowsClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="PurviewWorkflowServiceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
