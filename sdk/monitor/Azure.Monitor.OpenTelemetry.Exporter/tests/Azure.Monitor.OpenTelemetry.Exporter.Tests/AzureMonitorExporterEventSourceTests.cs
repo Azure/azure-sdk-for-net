@@ -7,7 +7,6 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Shared;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
