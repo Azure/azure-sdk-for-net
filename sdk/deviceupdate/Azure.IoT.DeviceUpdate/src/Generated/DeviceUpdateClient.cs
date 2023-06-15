@@ -951,6 +951,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
@@ -959,7 +960,6 @@ namespace Azure.IoT.DeviceUpdate
             {
                 uri.AppendQuery("top", top.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
