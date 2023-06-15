@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The list of purchased phone numbers. </summary>
-    internal partial class PurchasedPhoneNumbers
+    public partial class PurchasedPhoneNumbers
     {
     }
 }

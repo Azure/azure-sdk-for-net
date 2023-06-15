@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The list of available area codes. </summary>
-    internal partial class PhoneNumberAreaCodes
+    public partial class PhoneNumberAreaCodes
     {
     }
 }

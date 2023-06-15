@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class OfferingsResponse
+    public partial class OfferingsResponse
     {
     }
 }

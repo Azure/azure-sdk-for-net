@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class CommunicationErrorResponse
+    public partial class CommunicationErrorResponse
     {
     }
 }

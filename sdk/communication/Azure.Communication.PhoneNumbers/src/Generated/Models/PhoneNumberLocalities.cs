@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents a wrapper around a list of cities or towns. </summary>
-    internal partial class PhoneNumberLocalities
+    public partial class PhoneNumberLocalities
     {
     }
 }
