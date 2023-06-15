@@ -82,7 +82,7 @@ namespace Azure.Core.Pipeline
             {
                 clientName += "." + name.Substring(0, indexOfDot);
             }
-            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
+            return ActivitySources.GetOrAdd(clientName, static n => new ActivitySource(n));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
         private const string RequestIdHeaderName = "Request-Id";
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
-        private static readonly ActivitySource s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Core.Http");
+        private static readonly ActivitySource s_activitySource = new ActivitySource("Azure.Core.Http");
 
         public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace, HttpMessageSanitizer httpMessageSanitizer)
         {
@@ -136,12 +136,12 @@ namespace Azure.Core.Pipeline
             {
                 var currentActivityId = currentActivity.Id ?? string.Empty;
 
-                if (currentActivity.IsW3CFormat())
+                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
-                        if (currentActivity.GetTraceState() is string traceStateString)
+                        if (currentActivity.TraceStateString is string traceStateString)
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
@@ -169,8 +169,8 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldCreateActivity =>
             _isDistributedTracingEnabled &&
-            (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
+            (s_diagnosticSource.IsEnabled() || s_activitySource.HasListeners());
 
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
     }
 }

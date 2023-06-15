@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
             _suppressNestedClientActivities = (kind == System.Diagnostics.ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+            IsEnabled = source.IsEnabled() || activitySource.HasListeners();
 
             if (_suppressNestedClientActivities)
             {
@@ -330,6 +330,7 @@ namespace Azure.Core.Pipeline
                     _currentActivity.Start();
                 }
 
+                // TODO: work around this method here - is this for the "diagnostic source route?"
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
                 if (_displayName != null)
@@ -365,13 +366,13 @@ namespace Azure.Core.Pipeline
             {
                 if (exception != null)
                 {
+                    // TODO: work around this method
                     _diagnosticSource?.Write(_activityName + ".Exception", exception);
                 }
 
-                if (ActivityExtensions.SupportsActivitySource())
-                {
-                    _currentActivity?.Set(exception?.ToString());
-                }
+#if NET6_0_OR_GREATER
+                _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
+#endif
             }
 
             public void SetTraceContext(string traceparent, string? tracestate)
@@ -395,6 +396,7 @@ namespace Azure.Core.Pipeline
                 if (activity.Duration == TimeSpan.Zero)
                     activity.SetEndTime(DateTime.UtcNow);
 
+                // TODO: work around this method
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
                 if (!activity.TryDispose())
