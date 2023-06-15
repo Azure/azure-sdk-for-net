@@ -7,7 +7,7 @@ namespace Azure.Communication.Chat
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class UpdateChatThreadOptions
     {
-        public string Topic { get; }
+        public string Topic { get; set; }
 
         public IDictionary<string, string> Metadata { get; set; }
     }
