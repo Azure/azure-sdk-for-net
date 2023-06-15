@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("DeserializeOfferingsResponse", typeof(JsonElement))]
     [CodeGenSuppress("PhoneNumberOfferings", typeof(IReadOnlyList<PhoneNumberOffering>))]
     [CodeGenSuppress("NextLink", typeof(string))]
-    public partial class OfferingsResponse
+    internal partial class OfferingsResponse
     {
     }
 }

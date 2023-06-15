@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("AreaCodes", typeof(IReadOnlyList<PhoneNumberAreaCode>))]
     [CodeGenSuppress("NextLink", typeof(string))]
     [CodeGenSuppress("DeserializePhoneNumberAreaCodes", typeof(JsonElement))]
-    public partial class PhoneNumberAreaCodes
+    internal partial class PhoneNumberAreaCodes
     {
     }
 }
