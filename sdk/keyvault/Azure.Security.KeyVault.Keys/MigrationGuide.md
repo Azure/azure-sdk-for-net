@@ -349,7 +349,7 @@ Synchronous methods are also available on `CryptographyClient`, though we recomm
 
 ## Support
 
-If you have migrated your code base and are experiencing errors, see our [troubleshooting guide](https://github.com/heaths/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/TROUBLESHOOTING.md).
+If you have migrated your code base and are experiencing errors, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/TROUBLESHOOTING.md).
 For additional support, please search our [existing issues](https://github.com/Azure/azure-sdk-for-net/issues) or [open a new issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
 You may also find existing answers on community sites like [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-keyvault+.net).
 
