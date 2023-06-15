@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="collectionName"> The String to use. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2019-11-01-preview". </param>
         internal PurviewCollection(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;

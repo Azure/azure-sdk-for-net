@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-03-01-preview". </param>
         internal PurviewGlossaries(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
@@ -3267,11 +3267,11 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (includeTermHierarchy != null)
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
@@ -3290,11 +3290,11 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/glossary/name/", false);
             uri.AppendPath(glossaryName, true);
             uri.AppendPath("/terms/import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (includeTermHierarchy != null)
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
@@ -3329,11 +3329,11 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/export", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (includeTermHierarchy != null)
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "text/csv");
             request.Headers.Add("Content-Type", "application/json");
@@ -3352,6 +3352,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/glossary/name/", false);
             uri.AppendPath(glossaryName, true);
             uri.AppendPath("/terms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);
@@ -3364,7 +3365,6 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

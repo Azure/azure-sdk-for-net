@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="apiVersion"> Api Version. The default is "2022-03-01-preview". </param>
         internal PurviewLineages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
@@ -349,6 +349,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             uri.AppendPath("/next/", false);
             uri.AppendQuery("direction", direction, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (getDerivedLineage != null)
             {
                 uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
@@ -361,7 +362,6 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("limit", limit.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

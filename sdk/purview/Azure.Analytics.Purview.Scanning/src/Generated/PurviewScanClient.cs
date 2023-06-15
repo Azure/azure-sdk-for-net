@@ -858,11 +858,11 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendPath(_scanName, true);
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (scanLevel != null)
             {
                 uri.AppendQuery("scanLevel", scanLevel, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
