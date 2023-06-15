@@ -47,6 +47,7 @@ namespace Azure.Core.Samples
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            // Retrieves `name` value from JSON `{ "name" : "Widget" }`
             string name = widget.Name;
             #endregion
 
@@ -203,22 +204,6 @@ namespace Azure.Core.Samples
             Assert.IsTrue(id == "123");
         }
 
-        [Test]
-        public void SetPropertyWithoutCaseMappingPerInstance()
-        {
-            WidgetsClient client = GetMockClient();
-
-            #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
-            Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.Strict);
-
-            widget.details.IPAddress = "127.0.0.1";
-            // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
-            #endregion
-
-            Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
-            Assert.IsTrue(widget.details["IPAddress"] == "127.0.0.1");
-        }
         [Test]
         public void SetPropertyWithoutCaseMappingPerProperty()
         {

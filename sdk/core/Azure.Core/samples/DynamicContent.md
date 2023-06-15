@@ -28,13 +28,13 @@ string name = widget.name;
 By default, properties on dynamic content use exact name matches to lookup and set new properties in the content data.
 
 To use [C# naming conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions#naming-conventions) with dynamic content,
-pass a value of `JsonPropertyNames` to `ToDynamicFromJson()` to indicate the format of property names in the JSON content.
-This will allow using PascalCase C# property names to get and set JSON members that use the specified format.  For example, if the JSON content uses camelCase propertyNames,
-you would pass `JsonPropertyNames.CamelCase` as shown below.
+pass a value for `propertyNameFormat` to `ToDynamicFromJson()` to indicate the format of property names in the JSON content.
+This will allow you to use PascalCase C# property names to get and set JSON members that use the format you specify, and set any new members you add using the designated convention.  For example, if the JSON content uses camelCase property names, you could pass `JsonPropertyNames.CamelCase` as shown below.
 
 ```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+// Retrieves `name` value from JSON `{ "name" : "Widget" }`
 string name = widget.Name;
 ```
 
@@ -147,7 +147,7 @@ When working with JSON from Azure services, you can learn what properties are av
 
 Note that most Azure services name JSON fields [with camelCase names](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing) to [treat them with case-sensitivity](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-names-case-sensitivity).  Not every Azure service adheres to this convention; please consult the service REST API documentation.
 
-If you are passing a value for `propertyNameFormat` and there is a need to bypass the resulting name mapping in the dynamic binder, JSON members can be accessed with exact strings using property indexers.
+If you are passing a value for `propertyNameFormat` and need to bypass the resulting name mapping in the dynamic binder, JSON members can be accessed with exact strings using property indexers.
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
 Response response = client.GetWidget();
