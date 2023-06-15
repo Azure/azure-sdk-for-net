@@ -1430,6 +1430,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:closeConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (excluded != null && Optional.IsCollectionDefined(excluded))
             {
                 foreach (var param in excluded)
@@ -1441,7 +1442,6 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1457,6 +1457,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:generateToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (userId != null)
             {
                 uri.AppendQuery("userId", userId, true);
@@ -1472,7 +1473,6 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (group != null && Optional.IsCollectionDefined(group))
             {
                 foreach (var param in group)
@@ -1495,6 +1495,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (excluded != null && Optional.IsCollectionDefined(excluded))
             {
                 foreach (var param in excluded)
@@ -1502,7 +1503,6 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
@@ -1525,11 +1525,11 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (reason != null)
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1617,6 +1617,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:closeConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (excluded != null && Optional.IsCollectionDefined(excluded))
             {
                 foreach (var param in excluded)
@@ -1628,7 +1629,6 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1646,6 +1646,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (excluded != null && Optional.IsCollectionDefined(excluded))
             {
                 foreach (var param in excluded)
@@ -1653,7 +1654,6 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
@@ -1716,11 +1716,11 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (targetName != null)
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1739,11 +1739,11 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (targetName != null)
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -1761,11 +1761,11 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (targetName != null)
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1799,6 +1799,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:closeConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (excluded != null && Optional.IsCollectionDefined(excluded))
             {
                 foreach (var param in excluded)
@@ -1810,7 +1811,6 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
