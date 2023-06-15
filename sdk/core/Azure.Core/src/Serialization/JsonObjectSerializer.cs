@@ -78,9 +78,6 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("JSON serialization and deserialization might require types that cannot be statically analyzed.")]
-#endif
         public override BinaryData Serialize(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
             SerializeToBinaryDataInternal(value, inputType);
 
@@ -88,9 +85,6 @@ namespace Azure.Core.Serialization
         public override ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
              new ValueTask<BinaryData>(SerializeToBinaryDataInternal(value, inputType));
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("JSON serialization and deserialization might require types that cannot be statically analyzed.")]
-#endif
         private BinaryData SerializeToBinaryDataInternal(object? value, Type? inputType)
         {
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, inputType ?? value?.GetType() ?? typeof(object), _options);
