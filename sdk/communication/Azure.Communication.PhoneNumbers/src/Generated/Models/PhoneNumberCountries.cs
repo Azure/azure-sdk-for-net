@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents a wrapper around a list of countries. </summary>
-    public partial class PhoneNumberCountries
+    internal partial class PhoneNumberCountries
     {
     }
 }

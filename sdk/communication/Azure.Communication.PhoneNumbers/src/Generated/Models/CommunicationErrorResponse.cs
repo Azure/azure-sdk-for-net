@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The Communication Services error. </summary>
-    public partial class CommunicationErrorResponse
+    internal partial class CommunicationErrorResponse
     {
     }
 }

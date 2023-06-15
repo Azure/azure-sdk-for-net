@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberLocalities
+    internal partial class PhoneNumberLocalities
     {
     }
 }

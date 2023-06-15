@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents a wrapper around a list of offerings. </summary>
-    public partial class OfferingsResponse
+    internal partial class OfferingsResponse
     {
     }
 }
