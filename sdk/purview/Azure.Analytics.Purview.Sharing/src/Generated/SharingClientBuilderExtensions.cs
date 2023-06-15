@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="ReceivedSharesClient"/>, <see cref="SentSharesClient"/>, <see cref="ShareResourcesClient"/> to client builder. </summary>
-    public static partial class PurviewShareClientBuilderExtensions
+    public static partial class SharingClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ReceivedSharesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
