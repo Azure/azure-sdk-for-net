@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string SasKey { get; set; }
         /// <summary> The file share name. </summary>
         public string Fileshare { get; set; }
-        /// <summary> Enable secure channel or not, it&apos;s an optional field. Default value is false when cluster version &lt; 5.1 and true when cluster version &gt;= 5.1 ,. </summary>
+        /// <summary> Enable secure channel or not, it's an optional field. Default value is false when cluster version &lt; 5.1 and true when cluster version &gt;= 5.1 ,. </summary>
         public bool? EnableSecureChannel { get; set; }
     }
 }
