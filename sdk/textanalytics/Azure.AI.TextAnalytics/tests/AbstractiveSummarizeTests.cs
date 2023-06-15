@@ -85,7 +85,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task AbstractiveSummarizeWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -116,6 +115,21 @@ namespace Azure.AI.TextAnalytics.Tests
             // Take the first page.
             AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateBatchResult(resultCollection);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task AbstractiveSummarizeBatchCancellationTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AbstractiveSummarizeOperation operation = await client.AbstractiveSummarizeAsync(WaitUntil.Started, s_batchDocuments);
+            await operation.CancelAsync();
+            await operation.UpdateStatusAsync();
+
+            // In practice, the operation completes so quickly that in most cases its cancellation will be interrupted
+            // and its final state will be "Succeeded" instead of "Cancelled". This is why we only assert for "Cancelling".
+            Assert.AreEqual(TextAnalyticsOperationStatus.Cancelling, operation.Status);
         }
 
         [RecordedTest]
