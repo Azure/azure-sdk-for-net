@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="query"> The OData query to filter the data in SharePoint Online list. For example, &quot;$top=1&quot;. Type: string (or Expression with resultType string). </param>
+        /// <param name="query"> The OData query to filter the data in SharePoint Online list. For example, "$top=1". Type: string (or Expression with resultType string). </param>
         /// <param name="httpRequestTimeout"> The wait time to get a response from SharePoint Online. Default value is 5 minutes (00:05:00). Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         internal SharePointOnlineListSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData httpRequestTimeout) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The OData query to filter the data in SharePoint Online list. For example, &quot;$top=1&quot;. Type: string (or Expression with resultType string).
+        /// The OData query to filter the data in SharePoint Online list. For example, "$top=1". Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

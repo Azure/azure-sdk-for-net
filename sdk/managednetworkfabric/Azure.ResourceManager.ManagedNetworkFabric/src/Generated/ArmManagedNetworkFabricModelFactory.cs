@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: &quot;True&quot; | &quot;False&quot;. </param>
-        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: &quot;True&quot; | &quot;False&quot;. </param>
+        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
+        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
         /// <param name="aggregateRouteConfiguration"> List of Ipv4 and Ipv6 route configurations. </param>
         /// <param name="description"> L3 Isolation Domain description. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of InternalNetworkPatchablePropertiesBgpConfiguration. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: &quot;True&quot; | &quot;False&quot;. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
         /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
         /// <param name="allowASOverride"> Enable Or Disable state. </param>
         /// <param name="fabricASN"> ASN of Network Fabric. Example: 65048. </param>

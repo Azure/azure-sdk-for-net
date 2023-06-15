@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of AwsOrganizationalInfo. </summary>
-        /// <param name="organizationMembershipType"> The multi cloud account&apos;s membership type in the organization. </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         internal AwsOrganizationalInfo(OrganizationMembershipType organizationMembershipType)
         {
             OrganizationMembershipType = organizationMembershipType;
         }
 
-        /// <summary> The multi cloud account&apos;s membership type in the organization. </summary>
+        /// <summary> The multi cloud account's membership type in the organization. </summary>
         internal OrganizationMembershipType OrganizationMembershipType { get; set; }
     }
 }

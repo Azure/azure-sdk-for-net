@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Sharing
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <param name="endpoint"> The sharing endpoint of your purview account. Example: https://{accountName}.purview.azure.com/share. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ReceivedSharesClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewShareClientOptions())
+        public ReceivedSharesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewShareClientOptions())
         {
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ReceivedSharesClient(string endpoint, TokenCredential credential, PurviewShareClientOptions options)
+        public ReceivedSharesClient(Uri endpoint, TokenCredential credential, PurviewShareClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -273,20 +273,19 @@ namespace Azure.Analytics.Purview.Sharing
         /// </list>
         /// </summary>
         /// <param name="referenceName"> A name that references a data store. </param>
-        /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(string,string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
@@ -301,20 +300,19 @@ namespace Azure.Analytics.Purview.Sharing
         /// </list>
         /// </summary>
         /// <param name="referenceName"> A name that references a data store. </param>
-        /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllAttachedReceivedShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(string,string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllAttachedReceivedShares(string referenceName, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
@@ -328,17 +326,16 @@ namespace Azure.Analytics.Purview.Sharing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedSharesAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllDetachedReceivedSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedSharesAsync(string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllDetachedReceivedSharesAsync(string filter = null, string orderby = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, filter, orderby, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
@@ -352,17 +349,16 @@ namespace Azure.Analytics.Purview.Sharing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedShares(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllDetachedReceivedShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedShares(string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllDetachedReceivedShares(string filter = null, string orderby = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, filter, orderby, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
@@ -520,7 +516,7 @@ namespace Azure.Analytics.Purview.Sharing
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/receivedShares/", false);
             uri.AppendPath(receivedShareId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -535,7 +531,7 @@ namespace Azure.Analytics.Purview.Sharing
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/receivedShares/", false);
             uri.AppendPath(receivedShareId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -552,7 +548,7 @@ namespace Azure.Analytics.Purview.Sharing
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/receivedShares/", false);
             uri.AppendPath(receivedShareId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -561,20 +557,16 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
-        internal HttpMessage CreateGetAllAttachedReceivedSharesRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllAttachedReceivedSharesRequest(string referenceName, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/receivedShares/attached", false);
             uri.AppendQuery("referenceName", referenceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("skipToken", skipToken, true);
-            }
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
@@ -588,19 +580,15 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
-        internal HttpMessage CreateGetAllDetachedReceivedSharesRequest(string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllDetachedReceivedSharesRequest(string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/receivedShares/detached", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("skipToken", skipToken, true);
-            }
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
@@ -620,7 +608,7 @@ namespace Azure.Analytics.Purview.Sharing
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/emails:activate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -640,7 +628,7 @@ namespace Azure.Analytics.Purview.Sharing
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/emails:register", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -652,26 +640,26 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
-        internal HttpMessage CreateGetAllAttachedReceivedSharesNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllAttachedReceivedSharesNextPageRequest(string nextLink, string referenceName, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetAllDetachedReceivedSharesNextPageRequest(string nextLink, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllDetachedReceivedSharesNextPageRequest(string nextLink, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

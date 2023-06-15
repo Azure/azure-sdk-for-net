@@ -67,9 +67,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsClient clientWithAzureKeyCredential = new(endpoint, azureKeyCredential, options);
                 await clientWithAzureKeyCredential.DetectLanguageAsync("Ready!");
 
-                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/36799
-                // TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
-                // await clientWithTokenCredential.DetectLanguageAsync("Ready!");
+                TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
+                await clientWithTokenCredential.DetectLanguageAsync("Ready!");
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {

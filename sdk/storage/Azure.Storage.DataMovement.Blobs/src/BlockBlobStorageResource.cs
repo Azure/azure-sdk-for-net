@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlockBlobStorageResource : StorageResource
     {
-        private BlockBlobClient _blobClient;
+        internal BlockBlobClient BlobClient { get; set; }
         /// <summary>
         /// In order to ensure the block list is sent in the correct order
         /// we will order them by the offset (i.e. {offset, block_id}).
@@ -33,24 +33,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Gets the path of the storage resource.
         /// </summary>
-        public override string Path => _blobClient.Name;
+        public override string Path => BlobClient.Name;
 
         /// <summary>
         /// Defines whether the storage resource type can produce a URL.
         /// </summary>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
-
-        /// <summary>
-        /// Returns the preferred method of how to perform service to service
-        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="BlobStorageResourceOptions.CopyMethod"/>.
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
@@ -85,7 +78,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlockBlobClient blobClient,
             BlockBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
         }
@@ -95,14 +88,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
         /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
         /// <param name="options">Options for the storage resource. See <see cref="BlockBlobStorageResourceOptions"/>.</param>
         internal BlockBlobStorageResource(
             BlockBlobClient blobClient,
             long? length,
+            ETag? etagLock,
             BlockBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         /// <summary>
@@ -125,7 +121,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<BlobDownloadStreamingResult> response =
-                await _blobClient.DownloadStreamingAsync(
+                await BlobClient.DownloadStreamingAsync(
                     _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                     cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
@@ -165,7 +161,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if ((streamLength == completeLength) && position == 0)
             {
                 // Default to Upload
-                await _blobClient.UploadAsync(
+                await BlobClient.UploadAsync(
                     stream,
                     _options.ToBlobUploadOptions(overwrite, _maxInitialSize),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -177,7 +173,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
             }
-            await _blobClient.StageBlockAsync(
+            await BlobClient.StageBlockAsync(
                 id,
                 stream,
                 _options.ToBlobStageBlockOptions(),
@@ -210,22 +206,12 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
-            {
-                await _blobClient.StartCopyFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
-            {
-                // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
-                // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncUploadFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
+            // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
+            // TODO: subject to change as we scale to support resource types outside of blobs.
+            await BlobClient.SyncUploadFromUriAsync(
+                sourceResource.Uri,
+                _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,23 +242,16 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
+            if (!_blocks.TryAdd(range.Offset, id))
             {
-                string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
-                if (!_blocks.TryAdd(range.Offset, id))
-                {
-                    throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
-                }
-                await _blobClient.StageBlockFromUriAsync(
-                    sourceResource.Uri,
-                    id,
-                    options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
             }
-            else
-            {
-                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
-            }
+            await BlobClient.StageBlockFromUriAsync(
+                sourceResource.Uri,
+                id,
+                options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,7 +263,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
         }
@@ -300,7 +279,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if (_blocks != null && !_blocks.IsEmpty)
             {
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
-                await _blobClient.CommitBlockListAsync(
+                await BlobClient.CommitBlockListAsync(
                     blockIds,
                     _options.ToCommitBlockOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
@@ -321,7 +300,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private void GrabEtag(Response response)

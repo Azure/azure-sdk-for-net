@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
         /// <param name="sshPort"> Describes the port for connecting through SSH. </param>
-        /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs. </param>
+        /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use "ssh-keygen -t rsa -b 2048" to generate your SSH key pairs. </param>
         internal MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess, string adminUserName, int? sshPort, string adminPublicKey)
         {
             SshPublicAccess = sshPublicAccess;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string AdminUserName { get; }
         /// <summary> Describes the port for connecting through SSH. </summary>
         public int? SshPort { get; }
-        /// <summary> Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs. </summary>
+        /// <summary> Specifies the SSH rsa public key file as a string. Use "ssh-keygen -t rsa -b 2048" to generate your SSH key pairs. </summary>
         public string AdminPublicKey { get; set; }
     }
 }

@@ -482,8 +482,7 @@ List<string> batchedDocuments = new()
 };
 
 // Perform the text analysis operation.
-AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
-await operation.WaitForCompletionAsync();
+AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Completed, batchedDocuments);
 
 Console.WriteLine($"The operation has completed.");
 Console.WriteLine();
@@ -621,25 +620,33 @@ This functionality allows running multiple actions in one or more documents. Act
 
     TextAnalyticsActions actions = new()
     {
-        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
-        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { ActionName = "ExtractKeyPhrasesSample" } },
+        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { ActionName = "RecognizeEntitiesSample" } },
         DisplayName = "AnalyzeOperationSample"
     };
 
     // Perform the text analysis operation.
-    AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-    await operation.WaitForCompletionAsync();
+    AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchedDocuments, actions);
 
-    Console.WriteLine($"Status: {operation.Status}");
-    Console.WriteLine($"Created On: {operation.CreatedOn}");
-    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-    Console.WriteLine($"Last modified: {operation.LastModified}");
+    // View the operation status.
+    Console.WriteLine($"Created On   : {operation.CreatedOn}");
+    Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+    Console.WriteLine($"Id           : {operation.Id}");
+    Console.WriteLine($"Status       : {operation.Status}");
+    Console.WriteLine($"Last Modified: {operation.LastModified}");
+    Console.WriteLine();
+
     if (!string.IsNullOrEmpty(operation.DisplayName))
+    {
         Console.WriteLine($"Display name: {operation.DisplayName}");
+        Console.WriteLine();
+    }
+
     Console.WriteLine($"Total actions: {operation.ActionsTotal}");
     Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
     Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
     Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+    Console.WriteLine();
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
@@ -651,6 +658,7 @@ This functionality allows running multiple actions in one or more documents. Act
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
             Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
+            Console.WriteLine();
             foreach (RecognizeEntitiesResult documentResult in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -658,21 +666,24 @@ This functionality allows running multiple actions in one or more documents. Act
 
                 foreach (CategorizedEntity entity in documentResult.Entities)
                 {
-                    Console.WriteLine($"  Entity: {entity.Text}");
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    Console.WriteLine();
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
                 }
                 Console.WriteLine();
             }
         }
 
-        Console.WriteLine("Key Phrases");
+        Console.WriteLine("Extracted Key Phrases");
         docNumber = 1;
         foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
+            Console.WriteLine($" Action name: {keyPhrasesActionResult.ActionName}");
+            Console.WriteLine();
             foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -680,7 +691,7 @@ This functionality allows running multiple actions in one or more documents. Act
 
                 foreach (string keyphrase in documentResults.KeyPhrases)
                 {
-                    Console.WriteLine($"  {keyphrase}");
+                    Console.WriteLine($"    {keyphrase}");
                 }
                 Console.WriteLine();
             }

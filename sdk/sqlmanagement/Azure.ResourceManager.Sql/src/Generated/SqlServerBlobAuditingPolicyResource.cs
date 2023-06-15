@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server&apos;s blob auditing policy.
+        /// Gets a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server&apos;s blob auditing policy.
+        /// Gets a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a server&apos;s blob auditing policy.
+        /// Creates or updates a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a server&apos;s blob auditing policy.
+        /// Creates or updates a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

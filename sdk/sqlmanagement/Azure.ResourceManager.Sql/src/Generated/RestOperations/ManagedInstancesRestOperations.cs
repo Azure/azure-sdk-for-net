@@ -935,13 +935,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
-        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="numberOfQueries"> How many 'top queries' to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB's are included if this parameter is not specified. </param>
         /// <param name="startTime"> Start time for observed period. </param>
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
-        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
-        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is 'sum'. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is 'cpu'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -971,13 +971,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
-        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="numberOfQueries"> How many 'top queries' to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB's are included if this parameter is not specified. </param>
         /// <param name="startTime"> Start time for observed period. </param>
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
-        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
-        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is 'sum'. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is 'cpu'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1320,13 +1320,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
-        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="numberOfQueries"> How many 'top queries' to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB's are included if this parameter is not specified. </param>
         /// <param name="startTime"> Start time for observed period. </param>
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
-        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
-        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is 'sum'. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is 'cpu'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1358,13 +1358,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
-        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="numberOfQueries"> How many 'top queries' to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB's are included if this parameter is not specified. </param>
         /// <param name="startTime"> Start time for observed period. </param>
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
-        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
-        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is 'sum'. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is 'cpu'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>

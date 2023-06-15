@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterResource> GetAll(int? top = null, CancellationToken cancellationToken = default)

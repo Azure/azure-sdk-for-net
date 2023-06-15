@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Get a trigger&apos;s event subscription status.
+        /// Get a trigger's event subscription status.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Get a trigger&apos;s event subscription status.
+        /// Get a trigger's event subscription status.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

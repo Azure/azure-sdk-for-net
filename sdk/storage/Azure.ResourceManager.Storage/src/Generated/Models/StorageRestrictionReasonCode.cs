@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The &quot;NotAvailableForSubscription&quot; is related to capacity at DC. </summary>
+    /// <summary> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </summary>
     public readonly partial struct StorageRestrictionReasonCode : IEquatable<StorageRestrictionReasonCode>
     {
         private readonly string _value;
