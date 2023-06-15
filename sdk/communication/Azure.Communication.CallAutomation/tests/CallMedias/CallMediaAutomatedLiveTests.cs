@@ -39,8 +39,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             // create caller and receiver
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
 
-            CommunicationIdentifier sourcePhone, target;/* = CommunicationIdentifier.FromRawId("4:+18662315126");
-            CommunicationIdentifier target = CommunicationIdentifier.FromRawId("4:+18447649276");*/
+            CommunicationIdentifier sourcePhone;
+            CommunicationIdentifier target;
 
             // when in playback, use Sanatized values
             if (Mode == RecordedTestMode.Playback)
