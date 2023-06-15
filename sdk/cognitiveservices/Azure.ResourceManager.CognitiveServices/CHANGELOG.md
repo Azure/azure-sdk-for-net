@@ -2,12 +2,6 @@
 
 ## 1.4.0 (2023-06-15)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded API version to `2023-05-01`.
