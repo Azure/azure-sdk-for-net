@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
             Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

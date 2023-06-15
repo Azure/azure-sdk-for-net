@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> connectionProperties = default;
             Optional<DataFactoryElement<string>> clientCustomerId = default;
-            Optional<FactorySecretBaseDefinition> developerToken = default;
+            Optional<DataFactorySecretBaseDefinition> developerToken = default;
             Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
-            Optional<FactorySecretBaseDefinition> refreshToken = default;
+            Optional<DataFactorySecretBaseDefinition> refreshToken = default;
             Optional<DataFactoryElement<string>> clientId = default;
-            Optional<FactorySecretBaseDefinition> clientSecret = default;
+            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
             Optional<DataFactoryElement<string>> email = default;
             Optional<DataFactoryElement<string>> keyFilePath = default;
             Optional<DataFactoryElement<string>> trustedCertPath = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            developerToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            developerToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            refreshToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            clientSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("email"u8))

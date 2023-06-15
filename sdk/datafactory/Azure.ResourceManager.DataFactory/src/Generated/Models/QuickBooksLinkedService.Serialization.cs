@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> endpoint = default;
             Optional<DataFactoryElement<string>> companyId = default;
             Optional<DataFactoryElement<string>> consumerKey = default;
-            Optional<FactorySecretBaseDefinition> consumerSecret = default;
-            Optional<FactorySecretBaseDefinition> accessToken = default;
-            Optional<FactorySecretBaseDefinition> accessTokenSecret = default;
+            Optional<DataFactorySecretBaseDefinition> consumerSecret = default;
+            Optional<DataFactorySecretBaseDefinition> accessToken = default;
+            Optional<DataFactorySecretBaseDefinition> accessTokenSecret = default;
             Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            consumerSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessTokenSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessTokenSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

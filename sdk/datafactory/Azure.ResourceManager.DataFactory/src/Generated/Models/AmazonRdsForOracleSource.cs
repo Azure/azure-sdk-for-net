@@ -11,10 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity AmazonRdsForOracle source.
-    /// Serialized Name: AmazonRdsForOracleSource
-    /// </summary>
+    /// <summary> A copy activity AmazonRdsForOracle source. </summary>
     public partial class AmazonRdsForOracleSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AmazonRdsForOracleSource. </summary>
@@ -24,47 +21,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AmazonRdsForOracleSource. </summary>
-        /// <param name="copySourceType">
-        /// Copy source type.
-        /// Serialized Name: CopySource.type
-        /// </param>
-        /// <param name="sourceRetryCount">
-        /// Source retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.sourceRetryCount
-        /// </param>
-        /// <param name="sourceRetryWait">
-        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySource.sourceRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySource.disableMetricsCollection
-        /// </param>
+        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="oracleReaderQuery">
-        /// AmazonRdsForOracle reader query. Type: string (or Expression with resultType string).
-        /// Serialized Name: AmazonRdsForOracleSource.oracleReaderQuery
-        /// </param>
-        /// <param name="queryTimeout">
-        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: AmazonRdsForOracleSource.queryTimeout
-        /// </param>
-        /// <param name="partitionOption">
-        /// The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string).
-        /// Serialized Name: AmazonRdsForOracleSource.partitionOption
-        /// </param>
-        /// <param name="partitionSettings">
-        /// The settings that will be leveraged for AmazonRdsForOracle source partitioning.
-        /// Serialized Name: AmazonRdsForOracleSource.partitionSettings
-        /// </param>
-        /// <param name="additionalColumns">
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: AmazonRdsForOracleSource.additionalColumns
-        /// </param>
+        /// <param name="oracleReaderQuery"> AmazonRdsForOracle reader query. Type: string (or Expression with resultType string). </param>
+        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="partitionOption"> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionSettings"> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         internal AmazonRdsForOracleSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> oracleReaderQuery, DataFactoryElement<string> queryTimeout, DataFactoryElement<string> partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             OracleReaderQuery = oracleReaderQuery;
@@ -75,29 +42,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "AmazonRdsForOracleSource";
         }
 
-        /// <summary>
-        /// AmazonRdsForOracle reader query. Type: string (or Expression with resultType string).
-        /// Serialized Name: AmazonRdsForOracleSource.oracleReaderQuery
-        /// </summary>
+        /// <summary> AmazonRdsForOracle reader query. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> OracleReaderQuery { get; set; }
-        /// <summary>
-        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: AmazonRdsForOracleSource.queryTimeout
-        /// </summary>
+        /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> QueryTimeout { get; set; }
-        /// <summary>
-        /// The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string).
-        /// Serialized Name: AmazonRdsForOracleSource.partitionOption
-        /// </summary>
+        /// <summary> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PartitionOption { get; set; }
-        /// <summary>
-        /// The settings that will be leveraged for AmazonRdsForOracle source partitioning.
-        /// Serialized Name: AmazonRdsForOracleSource.partitionSettings
-        /// </summary>
+        /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
         public AmazonRdsForOraclePartitionSettings PartitionSettings { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: AmazonRdsForOracleSource.additionalColumns
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

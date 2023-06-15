@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure-SSIS integration runtime outbound network dependency endpoints for one category.
-    /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
-    /// </summary>
+    /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints for one category. </summary>
     public partial class IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint. </summary>
-        /// <param name="category">
-        /// The category of outbound network dependency.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.category
-        /// </param>
-        /// <param name="endpoints">
-        /// The endpoints for outbound network dependency.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.endpoints
-        /// </param>
+        /// <param name="category"> The category of outbound network dependency. </param>
+        /// <param name="endpoints"> The endpoints for outbound network dependency. </param>
         internal IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(string category, IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints)
         {
             Category = category;
             Endpoints = endpoints;
         }
 
-        /// <summary>
-        /// The category of outbound network dependency.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.category
-        /// </summary>
+        /// <summary> The category of outbound network dependency. </summary>
         public string Category { get; }
-        /// <summary>
-        /// The endpoints for outbound network dependency.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.endpoints
-        /// </summary>
+        /// <summary> The endpoints for outbound network dependency. </summary>
         public IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> Endpoints { get; }
     }
 }

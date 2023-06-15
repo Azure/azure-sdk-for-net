@@ -153,15 +153,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> url = default;
             Optional<DataFactoryElement<string>> accountKey = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             Optional<DataFactoryElement<string>> servicePrincipalCredentialType = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalCredential = default;
             Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<FactorySecretBaseDefinition> sasToken = default;
+            Optional<DataFactorySecretBaseDefinition> sasToken = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredentialType"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalCredential = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            sasToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

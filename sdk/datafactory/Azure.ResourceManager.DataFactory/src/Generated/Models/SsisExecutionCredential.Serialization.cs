@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> domain = default;
             DataFactoryElement<string> userName = default;
-            FactorySecretString password = default;
+            DataFactorySecretString password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    password = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
                     continue;
                 }
             }

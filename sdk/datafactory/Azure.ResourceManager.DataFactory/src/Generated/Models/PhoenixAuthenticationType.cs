@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The authentication mechanism used to connect to the Phoenix server.
-    /// Serialized Name: PhoenixAuthenticationType
-    /// </summary>
+    /// <summary> The authentication mechanism used to connect to the Phoenix server. </summary>
     public readonly partial struct PhoenixAuthenticationType : IEquatable<PhoenixAuthenticationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string UsernameAndPasswordValue = "UsernameAndPassword";
         private const string WindowsAzureHDInsightServiceValue = "WindowsAzureHDInsightService";
 
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: PhoenixAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static PhoenixAuthenticationType Anonymous { get; } = new PhoenixAuthenticationType(AnonymousValue);
-        /// <summary>
-        /// UsernameAndPassword
-        /// Serialized Name: PhoenixAuthenticationType.UsernameAndPassword
-        /// </summary>
+        /// <summary> UsernameAndPassword. </summary>
         public static PhoenixAuthenticationType UsernameAndPassword { get; } = new PhoenixAuthenticationType(UsernameAndPasswordValue);
-        /// <summary>
-        /// WindowsAzureHDInsightService
-        /// Serialized Name: PhoenixAuthenticationType.WindowsAzureHDInsightService
-        /// </summary>
+        /// <summary> WindowsAzureHDInsightService. </summary>
         public static PhoenixAuthenticationType WindowsAzureHDInsightService { get; } = new PhoenixAuthenticationType(WindowsAzureHDInsightServiceValue);
         /// <summary> Determines if two <see cref="PhoenixAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(PhoenixAuthenticationType left, PhoenixAuthenticationType right) => left.Equals(right);

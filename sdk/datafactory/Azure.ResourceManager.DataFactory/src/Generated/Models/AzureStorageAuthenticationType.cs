@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The type used for authentication. Type: string.
-    /// Serialized Name: AzureStorageAuthenticationType
-    /// </summary>
+    /// <summary> The type used for authentication. Type: string. </summary>
     public readonly partial struct AzureStorageAuthenticationType : IEquatable<AzureStorageAuthenticationType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ServicePrincipalValue = "ServicePrincipal";
         private const string MsiValue = "Msi";
 
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: AzureStorageAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static AzureStorageAuthenticationType Anonymous { get; } = new AzureStorageAuthenticationType(AnonymousValue);
-        /// <summary>
-        /// AccountKey
-        /// Serialized Name: AzureStorageAuthenticationType.AccountKey
-        /// </summary>
+        /// <summary> AccountKey. </summary>
         public static AzureStorageAuthenticationType AccountKey { get; } = new AzureStorageAuthenticationType(AccountKeyValue);
-        /// <summary>
-        /// SasUri
-        /// Serialized Name: AzureStorageAuthenticationType.SasUri
-        /// </summary>
+        /// <summary> SasUri. </summary>
         public static AzureStorageAuthenticationType SasUri { get; } = new AzureStorageAuthenticationType(SasUriValue);
-        /// <summary>
-        /// ServicePrincipal
-        /// Serialized Name: AzureStorageAuthenticationType.ServicePrincipal
-        /// </summary>
+        /// <summary> ServicePrincipal. </summary>
         public static AzureStorageAuthenticationType ServicePrincipal { get; } = new AzureStorageAuthenticationType(ServicePrincipalValue);
-        /// <summary>
-        /// Msi
-        /// Serialized Name: AzureStorageAuthenticationType.Msi
-        /// </summary>
+        /// <summary> Msi. </summary>
         public static AzureStorageAuthenticationType Msi { get; } = new AzureStorageAuthenticationType(MsiValue);
         /// <summary> Determines if two <see cref="AzureStorageAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AzureStorageAuthenticationType left, AzureStorageAuthenticationType right) => left.Equals(right);

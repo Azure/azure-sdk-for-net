@@ -12,10 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Cursor methods for Mongodb query
-    /// Serialized Name: MongoDbCursorMethodsProperties
-    /// </summary>
+    /// <summary> Cursor methods for Mongodb query. </summary>
     public partial class MongoDBCursorMethodsProperties
     {
         /// <summary> Initializes a new instance of MongoDBCursorMethodsProperties. </summary>
@@ -25,22 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of MongoDBCursorMethodsProperties. </summary>
-        /// <param name="project">
-        /// Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string).
-        /// Serialized Name: MongoDbCursorMethodsProperties.project
-        /// </param>
-        /// <param name="sort">
-        /// Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string).
-        /// Serialized Name: MongoDbCursorMethodsProperties.sort
-        /// </param>
-        /// <param name="skip">
-        /// Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: MongoDbCursorMethodsProperties.skip
-        /// </param>
-        /// <param name="limit">
-        /// Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: MongoDbCursorMethodsProperties.limit
-        /// </param>
+        /// <param name="project"> Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string). </param>
+        /// <param name="sort"> Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
+        /// <param name="skip"> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="limit"> Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal MongoDBCursorMethodsProperties(DataFactoryElement<string> project, DataFactoryElement<string> sort, DataFactoryElement<int> skip, DataFactoryElement<int> limit, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -51,25 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string).
-        /// Serialized Name: MongoDbCursorMethodsProperties.project
-        /// </summary>
+        /// <summary> Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Project { get; set; }
-        /// <summary>
-        /// Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string).
-        /// Serialized Name: MongoDbCursorMethodsProperties.sort
-        /// </summary>
+        /// <summary> Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Sort { get; set; }
-        /// <summary>
-        /// Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: MongoDbCursorMethodsProperties.skip
-        /// </summary>
+        /// <summary> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> Skip { get; set; }
-        /// <summary>
-        /// Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: MongoDbCursorMethodsProperties.limit
-        /// </summary>
+        /// <summary> Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> Limit { get; set; }
         /// <summary>
         /// Additional Properties

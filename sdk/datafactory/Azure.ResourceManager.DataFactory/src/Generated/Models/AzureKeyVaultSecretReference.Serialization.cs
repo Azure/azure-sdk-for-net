@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactoryLinkedServiceReference store = default;
+            DataFactoryLinkedServiceReference store = default;
             DataFactoryElement<string> secretName = default;
             Optional<DataFactoryElement<string>> secretVersion = default;
             string type = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("store"u8))
                 {
-                    store = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    store = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))

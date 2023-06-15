@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Snowflake linked service.
-    /// Serialized Name: SnowflakeLinkedService
-    /// </summary>
-    public partial class SnowflakeLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> Snowflake linked service. </summary>
+    public partial class SnowflakeLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SnowflakeLinkedService. </summary>
-        /// <param name="connectionString">
-        /// The connection string of snowflake. Type: string, SecureString.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.connectionString
-        /// </param>
+        /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public SnowflakeLinkedService(BinaryData connectionString)
         {
@@ -32,39 +26,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SnowflakeLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString">
-        /// The connection string of snowflake. Type: string, SecureString.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.connectionString
-        /// </param>
-        /// <param name="password">
-        /// The Azure key vault secret reference of password in connection string.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.password
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         internal SnowflakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -75,7 +45,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// The connection string of snowflake. Type: string, SecureString.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.connectionString
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -105,14 +74,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary>
-        /// The Azure key vault secret reference of password in connection string.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.password
-        /// </summary>
+        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: SnowflakeLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

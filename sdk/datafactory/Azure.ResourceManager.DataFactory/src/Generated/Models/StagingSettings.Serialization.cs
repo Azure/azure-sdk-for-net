@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<DataFactoryElement<string>> path = default;
             Optional<DataFactoryElement<bool>> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

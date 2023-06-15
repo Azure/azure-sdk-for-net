@@ -12,21 +12,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Execute Synapse notebook activity.
-    /// Serialized Name: SynapseNotebookActivity
-    /// </summary>
+    /// <summary> Execute Synapse notebook activity. </summary>
     public partial class SynapseNotebookActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of SynapseNotebookActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="notebook">
-        /// Synapse notebook reference.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.notebook
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="notebook"> Synapse notebook reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebook"/> is null. </exception>
         public SynapseNotebookActivity(string name, SynapseNotebookReference notebook) : base(name)
         {
@@ -40,84 +31,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SynapseNotebookActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="state">
-        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
-        /// Serialized Name: Activity.state
-        /// </param>
-        /// <param name="onInactiveMarkAs">
-        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
-        /// Serialized Name: Activity.onInactiveMarkAs
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="notebook">
-        /// Synapse notebook reference.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.notebook
-        /// </param>
-        /// <param name="sparkPool">
-        /// The name of the big data pool which will be used to execute the notebook.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.sparkPool
-        /// </param>
-        /// <param name="parameters">
-        /// Notebook parameters.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.parameters
-        /// </param>
-        /// <param name="executorSize">
-        /// Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string).
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.executorSize
-        /// </param>
-        /// <param name="conf">
-        /// Spark configuration properties, which will override the 'conf' of the notebook you provide.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.conf
-        /// </param>
-        /// <param name="driverSize">
-        /// Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string).
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.driverSize
-        /// </param>
-        /// <param name="numExecutors">
-        /// Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.numExecutors
-        /// </param>
-        /// <param name="configurationType">
-        /// The type of the spark config.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.configurationType
-        /// </param>
-        /// <param name="targetSparkConfiguration">
-        /// The spark configuration of the spark job.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.targetSparkConfiguration
-        /// </param>
-        /// <param name="sparkConfig">
-        /// Spark configuration property.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.sparkConfig
-        /// </param>
-        internal SynapseNotebookActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="notebook"> Synapse notebook reference. </param>
+        /// <param name="sparkPool"> The name of the big data pool which will be used to execute the notebook. </param>
+        /// <param name="parameters"> Notebook parameters. </param>
+        /// <param name="executorSize"> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string). </param>
+        /// <param name="conf"> Spark configuration properties, which will override the 'conf' of the notebook you provide. </param>
+        /// <param name="driverSize"> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string). </param>
+        /// <param name="numExecutors"> Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="configurationType"> The type of the spark config. </param>
+        /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
+        /// <param name="sparkConfig"> Spark configuration property. </param>
+        internal SynapseNotebookActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Notebook = notebook;
             SparkPool = sparkPool;
@@ -132,29 +66,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SynapseNotebook";
         }
 
-        /// <summary>
-        /// Synapse notebook reference.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.notebook
-        /// </summary>
+        /// <summary> Synapse notebook reference. </summary>
         public SynapseNotebookReference Notebook { get; set; }
-        /// <summary>
-        /// The name of the big data pool which will be used to execute the notebook.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.sparkPool
-        /// </summary>
+        /// <summary> The name of the big data pool which will be used to execute the notebook. </summary>
         public BigDataPoolParametrizationReference SparkPool { get; set; }
-        /// <summary>
-        /// Notebook parameters.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.parameters
-        /// </summary>
+        /// <summary> Notebook parameters. </summary>
         public IDictionary<string, NotebookParameter> Parameters { get; }
-        /// <summary>
-        /// Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string).
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.executorSize
-        /// </summary>
+        /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ExecutorSize { get; set; }
         /// <summary>
         /// Spark configuration properties, which will override the 'conf' of the notebook you provide.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.conf
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -184,29 +105,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Conf { get; set; }
-        /// <summary>
-        /// Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string).
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.driverSize
-        /// </summary>
+        /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DriverSize { get; set; }
-        /// <summary>
-        /// Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.numExecutors
-        /// </summary>
+        /// <summary> Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> NumExecutors { get; set; }
-        /// <summary>
-        /// The type of the spark config.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.configurationType
-        /// </summary>
+        /// <summary> The type of the spark config. </summary>
         public ConfigurationType? ConfigurationType { get; set; }
-        /// <summary>
-        /// The spark configuration of the spark job.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.targetSparkConfiguration
-        /// </summary>
+        /// <summary> The spark configuration of the spark job. </summary>
         public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
         /// <summary>
         /// Spark configuration property.
-        /// Serialized Name: SynapseNotebookActivity.typeProperties.sparkConfig
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

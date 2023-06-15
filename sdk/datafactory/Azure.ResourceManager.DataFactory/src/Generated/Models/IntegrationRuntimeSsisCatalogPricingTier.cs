@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
-    /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier
-    /// </summary>
+    /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
     public readonly partial struct IntegrationRuntimeSsisCatalogPricingTier : IEquatable<IntegrationRuntimeSsisCatalogPricingTier>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string PremiumValue = "Premium";
         private const string PremiumRSValue = "PremiumRS";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier Basic { get; } = new IntegrationRuntimeSsisCatalogPricingTier(BasicValue);
-        /// <summary>
-        /// Standard
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier Standard { get; } = new IntegrationRuntimeSsisCatalogPricingTier(StandardValue);
-        /// <summary>
-        /// Premium
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier Premium { get; } = new IntegrationRuntimeSsisCatalogPricingTier(PremiumValue);
-        /// <summary>
-        /// PremiumRS
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.PremiumRS
-        /// </summary>
+        /// <summary> PremiumRS. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier PremiumRS { get; } = new IntegrationRuntimeSsisCatalogPricingTier(PremiumRSValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeSsisCatalogPricingTier"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeSsisCatalogPricingTier left, IntegrationRuntimeSsisCatalogPricingTier right) => left.Equals(right);

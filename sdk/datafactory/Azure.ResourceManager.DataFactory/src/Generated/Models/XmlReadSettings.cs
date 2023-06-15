@@ -11,10 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Xml read settings.
-    /// Serialized Name: XmlReadSettings
-    /// </summary>
+    /// <summary> Xml read settings. </summary>
     public partial class XmlReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of XmlReadSettings. </summary>
@@ -24,33 +21,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of XmlReadSettings. </summary>
-        /// <param name="formatReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: FormatReadSettings.type
-        /// </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">
         /// Compression settings.
-        /// Serialized Name: XmlReadSettings.compressionProperties
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </param>
-        /// <param name="validationMode">
-        /// Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string).
-        /// Serialized Name: XmlReadSettings.validationMode
-        /// </param>
-        /// <param name="detectDataType">
-        /// Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: XmlReadSettings.detectDataType
-        /// </param>
-        /// <param name="namespaces">
-        /// Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: XmlReadSettings.namespaces
-        /// </param>
-        /// <param name="namespacePrefixes">
-        /// Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object).
-        /// Serialized Name: XmlReadSettings.namespacePrefixes
-        /// </param>
+        /// <param name="validationMode"> Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string). </param>
+        /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="namespaces"> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="namespacePrefixes"> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object). </param>
         internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, DataFactoryElement<string> validationMode, DataFactoryElement<bool> detectDataType, DataFactoryElement<bool> namespaces, BinaryData namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
@@ -63,29 +44,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Compression settings.
-        /// Serialized Name: XmlReadSettings.compressionProperties
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
-        /// <summary>
-        /// Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string).
-        /// Serialized Name: XmlReadSettings.validationMode
-        /// </summary>
+        /// <summary> Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ValidationMode { get; set; }
-        /// <summary>
-        /// Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: XmlReadSettings.detectDataType
-        /// </summary>
+        /// <summary> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> DetectDataType { get; set; }
-        /// <summary>
-        /// Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: XmlReadSettings.namespaces
-        /// </summary>
+        /// <summary> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> Namespaces { get; set; }
         /// <summary>
         /// Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object).
-        /// Serialized Name: XmlReadSettings.namespacePrefixes
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

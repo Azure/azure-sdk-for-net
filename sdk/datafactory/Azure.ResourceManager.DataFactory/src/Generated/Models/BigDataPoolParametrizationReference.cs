@@ -11,21 +11,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Big data pool reference type.
-    /// Serialized Name: BigDataPoolParametrizationReference
-    /// </summary>
+    /// <summary> Big data pool reference type. </summary>
     public partial class BigDataPoolParametrizationReference
     {
         /// <summary> Initializes a new instance of BigDataPoolParametrizationReference. </summary>
-        /// <param name="referenceType">
-        /// Big data pool reference type.
-        /// Serialized Name: BigDataPoolParametrizationReference.type
-        /// </param>
-        /// <param name="referenceName">
-        /// Reference big data pool name. Type: string (or Expression with resultType string).
-        /// Serialized Name: BigDataPoolParametrizationReference.referenceName
-        /// </param>
+        /// <param name="referenceType"> Big data pool reference type. </param>
+        /// <param name="referenceName"> Reference big data pool name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public BigDataPoolParametrizationReference(BigDataPoolReferenceType referenceType, DataFactoryElement<string> referenceName)
         {
@@ -35,15 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary>
-        /// Big data pool reference type.
-        /// Serialized Name: BigDataPoolParametrizationReference.type
-        /// </summary>
+        /// <summary> Big data pool reference type. </summary>
         public BigDataPoolReferenceType ReferenceType { get; set; }
-        /// <summary>
-        /// Reference big data pool name. Type: string (or Expression with resultType string).
-        /// Serialized Name: BigDataPoolParametrizationReference.referenceName
-        /// </summary>
+        /// <summary> Reference big data pool name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

@@ -12,21 +12,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// This activity suspends pipeline execution for the specified interval.
-    /// Serialized Name: WaitActivity
-    /// </summary>
+    /// <summary> This activity suspends pipeline execution for the specified interval. </summary>
     public partial class WaitActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of WaitActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="waitTimeInSeconds">
-        /// Duration in seconds. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: WaitActivity.typeProperties.waitTimeInSeconds
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
         public WaitActivity(string name, DataFactoryElement<int> waitTimeInSeconds) : base(name)
         {
@@ -38,49 +29,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of WaitActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="state">
-        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
-        /// Serialized Name: Activity.state
-        /// </param>
-        /// <param name="onInactiveMarkAs">
-        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
-        /// Serialized Name: Activity.onInactiveMarkAs
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="waitTimeInSeconds">
-        /// Duration in seconds. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: WaitActivity.typeProperties.waitTimeInSeconds
-        /// </param>
+        /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
         internal WaitActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> waitTimeInSeconds) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = activityType ?? "Wait";
         }
 
-        /// <summary>
-        /// Duration in seconds. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: WaitActivity.typeProperties.waitTimeInSeconds
-        /// </summary>
+        /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> WaitTimeInSeconds { get; set; }
     }
 }

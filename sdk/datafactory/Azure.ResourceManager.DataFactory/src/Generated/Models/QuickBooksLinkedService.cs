@@ -11,11 +11,8 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// QuickBooks server linked service.
-    /// Serialized Name: QuickBooksLinkedService
-    /// </summary>
-    public partial class QuickBooksLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> QuickBooks server linked service. </summary>
+    public partial class QuickBooksLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of QuickBooksLinkedService. </summary>
         public QuickBooksLinkedService()
@@ -24,70 +21,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of QuickBooksLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties">
-        /// Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.connectionProperties
-        /// </param>
-        /// <param name="endpoint">
-        /// The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com)
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.endpoint
-        /// </param>
-        /// <param name="companyId">
-        /// The company ID of the QuickBooks company to authorize.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.companyId
-        /// </param>
-        /// <param name="consumerKey">
-        /// The consumer key for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.consumerKey
-        /// </param>
+        /// <param name="connectionProperties"> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
+        /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
+        /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
+        /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
         /// <param name="consumerSecret">
         /// The consumer secret for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.consumerSecret
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="accessToken">
         /// The access token for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.accessToken
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="accessTokenSecret">
         /// The access token secret for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.accessTokenSecret
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="useEncryptedEndpoints">
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.useEncryptedEndpoints
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, FactorySecretBaseDefinition consumerSecret, FactorySecretBaseDefinition accessToken, FactorySecretBaseDefinition accessTokenSecret, DataFactoryElement<bool> useEncryptedEndpoints, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecretBaseDefinition consumerSecret, DataFactorySecretBaseDefinition accessToken, DataFactorySecretBaseDefinition accessTokenSecret, DataFactoryElement<bool> useEncryptedEndpoints, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -103,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.connectionProperties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -133,50 +93,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData ConnectionProperties { get; set; }
-        /// <summary>
-        /// The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com)
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.endpoint
-        /// </summary>
+        /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
-        /// <summary>
-        /// The company ID of the QuickBooks company to authorize.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.companyId
-        /// </summary>
+        /// <summary> The company ID of the QuickBooks company to authorize. </summary>
         public DataFactoryElement<string> CompanyId { get; set; }
-        /// <summary>
-        /// The consumer key for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.consumerKey
-        /// </summary>
+        /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
         public DataFactoryElement<string> ConsumerKey { get; set; }
         /// <summary>
         /// The consumer secret for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.consumerSecret
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition ConsumerSecret { get; set; }
+        public DataFactorySecretBaseDefinition ConsumerSecret { get; set; }
         /// <summary>
         /// The access token for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.accessToken
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition AccessToken { get; set; }
+        public DataFactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary>
         /// The access token secret for OAuth 1.0 authentication.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.accessTokenSecret
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition AccessTokenSecret { get; set; }
-        /// <summary>
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.useEncryptedEndpoints
-        /// </summary>
+        public DataFactorySecretBaseDefinition AccessTokenSecret { get; set; }
+        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: QuickBooksLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

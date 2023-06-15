@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<int>> port = default;
             Optional<SftpAuthenticationType> authenticationType = default;
             Optional<DataFactoryElement<string>> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<DataFactoryElement<string>> privateKeyPath = default;
-            Optional<FactorySecretBaseDefinition> privateKeyContent = default;
-            Optional<FactorySecretBaseDefinition> passPhrase = default;
+            Optional<DataFactorySecretBaseDefinition> privateKeyContent = default;
+            Optional<DataFactorySecretBaseDefinition> passPhrase = default;
             Optional<DataFactoryElement<bool>> skipHostKeyValidation = default;
             Optional<DataFactoryElement<string>> hostKeyFingerprint = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKeyContent = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            privateKeyContent = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("passPhrase"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            passPhrase = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            passPhrase = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("skipHostKeyValidation"u8))

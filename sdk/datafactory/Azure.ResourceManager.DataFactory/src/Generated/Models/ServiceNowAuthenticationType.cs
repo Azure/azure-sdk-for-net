@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The authentication type to use.
-    /// Serialized Name: ServiceNowAuthenticationType
-    /// </summary>
+    /// <summary> The authentication type to use. </summary>
     public readonly partial struct ServiceNowAuthenticationType : IEquatable<ServiceNowAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string OAuth2Value = "OAuth2";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: ServiceNowAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static ServiceNowAuthenticationType Basic { get; } = new ServiceNowAuthenticationType(BasicValue);
-        /// <summary>
-        /// OAuth2
-        /// Serialized Name: ServiceNowAuthenticationType.OAuth2
-        /// </summary>
+        /// <summary> OAuth2. </summary>
         public static ServiceNowAuthenticationType OAuth2 { get; } = new ServiceNowAuthenticationType(OAuth2Value);
         /// <summary> Determines if two <see cref="ServiceNowAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ServiceNowAuthenticationType left, ServiceNowAuthenticationType right) => left.Equals(right);

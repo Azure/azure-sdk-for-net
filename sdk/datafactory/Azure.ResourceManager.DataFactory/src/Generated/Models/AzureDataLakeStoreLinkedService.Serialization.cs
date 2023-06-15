@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> dataLakeStoreUri = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
             Optional<DataFactoryElement<string>> accountName = default;
             Optional<DataFactoryElement<string>> subscriptionId = default;
             Optional<DataFactoryElement<string>> resourceGroupName = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                     }

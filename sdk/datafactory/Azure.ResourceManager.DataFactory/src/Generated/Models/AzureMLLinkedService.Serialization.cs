@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> mlEndpoint = default;
-            FactorySecretBaseDefinition apiKey = default;
+            DataFactorySecretBaseDefinition apiKey = default;
             Optional<DataFactoryElement<string>> updateResourceEndpoint = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<DataFactoryElement<string>> authentication = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("apiKey"u8))
                         {
-                            apiKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            apiKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updateResourceEndpoint"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

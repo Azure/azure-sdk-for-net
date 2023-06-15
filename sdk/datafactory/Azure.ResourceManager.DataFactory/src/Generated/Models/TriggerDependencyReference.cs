@@ -12,19 +12,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Trigger referenced dependency.
-    /// Serialized Name: TriggerDependencyReference
     /// Please note <see cref="TriggerDependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TumblingWindowTriggerDependencyReference"/>.
     /// </summary>
     public partial class TriggerDependencyReference : DependencyReference
     {
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
-        /// <param name="referenceTrigger">
-        /// Referenced trigger.
-        /// Serialized Name: TriggerDependencyReference.referenceTrigger
-        /// </param>
+        /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
-        public TriggerDependencyReference(FactoryTriggerReference referenceTrigger)
+        public TriggerDependencyReference(DataFactoryTriggerReference referenceTrigger)
         {
             Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
@@ -33,24 +29,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
-        /// <param name="dependencyReferenceType">
-        /// The type of dependency reference.
-        /// Serialized Name: DependencyReference.type
-        /// </param>
-        /// <param name="referenceTrigger">
-        /// Referenced trigger.
-        /// Serialized Name: TriggerDependencyReference.referenceTrigger
-        /// </param>
-        internal TriggerDependencyReference(string dependencyReferenceType, FactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        /// <param name="referenceTrigger"> Referenced trigger. </param>
+        internal TriggerDependencyReference(string dependencyReferenceType, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)
         {
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = dependencyReferenceType ?? "TriggerDependencyReference";
         }
 
-        /// <summary>
-        /// Referenced trigger.
-        /// Serialized Name: TriggerDependencyReference.referenceTrigger
-        /// </summary>
-        public FactoryTriggerReference ReferenceTrigger { get; set; }
+        /// <summary> Referenced trigger. </summary>
+        public DataFactoryTriggerReference ReferenceTrigger { get; set; }
     }
 }

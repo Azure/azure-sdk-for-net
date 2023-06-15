@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureSqlSource": return AzureSqlSource.DeserializeAzureSqlSource(element);
                     case "AzureTableSource": return AzureTableSource.DeserializeAzureTableSource(element);
                     case "BinarySource": return BinarySource.DeserializeBinarySource(element);
-                    case "BlobSource": return AzureBlobSource.DeserializeAzureBlobSource(element);
+                    case "BlobSource": return DataFactoryBlobSource.DeserializeDataFactoryBlobSource(element);
                     case "CassandraSource": return CassandraSource.DeserializeCassandraSource(element);
                     case "CommonDataServiceForAppsSource": return CommonDataServiceForAppsSource.DeserializeCommonDataServiceForAppsSource(element);
                     case "ConcurSource": return ConcurSource.DeserializeConcurSource(element);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HBaseSource": return HBaseSource.DeserializeHBaseSource(element);
                     case "HdfsSource": return HdfsSource.DeserializeHdfsSource(element);
                     case "HiveSource": return HiveSource.DeserializeHiveSource(element);
-                    case "HttpSource": return HttpFileSource.DeserializeHttpFileSource(element);
+                    case "HttpSource": return DataFactoryHttpFileSource.DeserializeDataFactoryHttpFileSource(element);
                     case "HubspotSource": return HubspotSource.DeserializeHubspotSource(element);
                     case "ImpalaSource": return ImpalaSource.DeserializeImpalaSource(element);
                     case "InformixSource": return InformixSource.DeserializeInformixSource(element);

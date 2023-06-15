@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The type of this referenced entity.
-    /// Serialized Name: IntegrationRuntimeEntityReferenceType
-    /// </summary>
+    /// <summary> The type of this referenced entity. </summary>
     public readonly partial struct IntegrationRuntimeEntityReferenceType : IEquatable<IntegrationRuntimeEntityReferenceType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string IntegrationRuntimeReferenceValue = "IntegrationRuntimeReference";
         private const string LinkedServiceReferenceValue = "LinkedServiceReference";
 
-        /// <summary>
-        /// IntegrationRuntimeReference
-        /// Serialized Name: IntegrationRuntimeEntityReferenceType.IntegrationRuntimeReference
-        /// </summary>
+        /// <summary> IntegrationRuntimeReference. </summary>
         public static IntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get; } = new IntegrationRuntimeEntityReferenceType(IntegrationRuntimeReferenceValue);
-        /// <summary>
-        /// LinkedServiceReference
-        /// Serialized Name: IntegrationRuntimeEntityReferenceType.LinkedServiceReference
-        /// </summary>
+        /// <summary> LinkedServiceReference. </summary>
         public static IntegrationRuntimeEntityReferenceType LinkedServiceReference { get; } = new IntegrationRuntimeEntityReferenceType(LinkedServiceReferenceValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeEntityReferenceType left, IntegrationRuntimeEntityReferenceType right) => left.Equals(right);

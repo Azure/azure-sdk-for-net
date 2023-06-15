@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> domain = default;
-            Optional<FactorySecretBaseDefinition> accessToken = default;
+            Optional<DataFactorySecretBaseDefinition> accessToken = default;
             Optional<DataFactoryElement<string>> clusterId = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             Optional<DataFactoryElement<string>> workspaceResourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceResourceId"u8))

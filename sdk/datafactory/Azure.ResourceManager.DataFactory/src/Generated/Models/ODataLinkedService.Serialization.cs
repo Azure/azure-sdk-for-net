@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> url = default;
             Optional<ODataAuthenticationType> authenticationType = default;
             Optional<DataFactoryElement<string>> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<BinaryData>> authHeaders = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
             Optional<DataFactoryElement<string>> aadResourceId = default;
             Optional<ODataAadServicePrincipalCredentialType> aadServicePrincipalCredentialType = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalEmbeddedCert = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalEmbeddedCertPassword = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalEmbeddedCert = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalEmbeddedCertPassword = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalEmbeddedCert"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalEmbeddedCert = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalEmbeddedCert = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalEmbeddedCertPassword"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalEmbeddedCertPassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalEmbeddedCertPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

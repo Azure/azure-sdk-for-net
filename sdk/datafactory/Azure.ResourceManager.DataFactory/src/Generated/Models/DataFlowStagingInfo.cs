@@ -9,10 +9,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Staging info for execute data flow activity.
-    /// Serialized Name: DataFlowStagingInfo
-    /// </summary>
+    /// <summary> Staging info for execute data flow activity. </summary>
     public partial class DataFlowStagingInfo
     {
         /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
-        /// <param name="linkedService">
-        /// Staging linked service reference.
-        /// Serialized Name: DataFlowStagingInfo.linkedService
-        /// </param>
-        /// <param name="folderPath">
-        /// Folder path for staging blob. Type: string (or Expression with resultType string)
-        /// Serialized Name: DataFlowStagingInfo.folderPath
-        /// </param>
-        internal DataFlowStagingInfo(FactoryLinkedServiceReference linkedService, DataFactoryElement<string> folderPath)
+        /// <param name="linkedService"> Staging linked service reference. </param>
+        /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
+        internal DataFlowStagingInfo(DataFactoryLinkedServiceReference linkedService, DataFactoryElement<string> folderPath)
         {
             LinkedService = linkedService;
             FolderPath = folderPath;
         }
 
-        /// <summary>
-        /// Staging linked service reference.
-        /// Serialized Name: DataFlowStagingInfo.linkedService
-        /// </summary>
-        public FactoryLinkedServiceReference LinkedService { get; set; }
-        /// <summary>
-        /// Folder path for staging blob. Type: string (or Expression with resultType string)
-        /// Serialized Name: DataFlowStagingInfo.folderPath
-        /// </summary>
+        /// <summary> Staging linked service reference. </summary>
+        public DataFactoryLinkedServiceReference LinkedService { get; set; }
+        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FolderPath { get; set; }
     }
 }

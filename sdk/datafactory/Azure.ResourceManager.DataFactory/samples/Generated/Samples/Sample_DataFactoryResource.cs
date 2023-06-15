@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation
-            FactoryDataPlaneUserAccessPolicy policy = new FactoryDataPlaneUserAccessPolicy()
+            DataFactoryDataPlaneUserAccessPolicy policy = new DataFactoryDataPlaneUserAccessPolicy()
             {
                 Permissions = "r",
                 AccessResourcePath = "",
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 StartTime = "2018-11-10T02:46:20.2659347Z",
                 ExpireTime = "2018-11-10T09:46:20.2659347Z",
             };
-            FactoryDataPlaneAccessPolicyResult result = await dataFactory.GetDataPlaneAccessAsync(policy);
+            DataFactoryDataPlaneAccessPolicyResult result = await dataFactory.GetDataPlaneAccessAsync(policy);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -355,7 +355,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 })
 },
             };
-            await foreach (FactoryPipelineRunInfo item in dataFactory.GetPipelineRunsAsync(content))
+            await foreach (DataFactoryPipelineRunInfo item in dataFactory.GetPipelineRunsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -386,7 +386,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // invoke the operation
             string runId = "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b";
-            FactoryPipelineRunInfo result = await dataFactory.GetPipelineRunAsync(runId);
+            DataFactoryPipelineRunInfo result = await dataFactory.GetPipelineRunAsync(runId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -443,7 +443,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             // invoke the operation and iterate over the result
             string runId = "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b";
             RunFilterContent content = new RunFilterContent(DateTimeOffset.Parse("2018-06-16T00:36:44.3345758Z"), DateTimeOffset.Parse("2018-06-16T00:49:48.3686473Z"));
-            await foreach (ActivityRunInfo item in dataFactory.GetActivityRunAsync(runId, content))
+            await foreach (DataFactoryActivityRunInfo item in dataFactory.GetActivityRunAsync(runId, content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -477,11 +477,11 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             {
                 ParentTriggerName = "exampleTrigger",
             };
-            await foreach (FactoryTriggerResource item in dataFactory.GetTriggersAsync(content))
+            await foreach (DataFactoryTriggerResource item in dataFactory.GetTriggersAsync(content))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FactoryTriggerData resourceData = item.Data;
+                DataFactoryTriggerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -521,7 +521,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
 })
 },
             };
-            await foreach (FactoryTriggerRun item in dataFactory.GetTriggerRunsAsync(content))
+            await foreach (DataFactoryTriggerRun item in dataFactory.GetTriggerRunsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -551,10 +551,10 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation
-            FactoryDataFlowDebugSessionContent content = new FactoryDataFlowDebugSessionContent()
+            DataFactoryDataFlowDebugSessionContent content = new DataFactoryDataFlowDebugSessionContent()
             {
                 TimeToLiveInMinutes = 60,
-                IntegrationRuntime = new FactoryIntegrationRuntimeDebugInfo(new ManagedIntegrationRuntime()
+                IntegrationRuntime = new DataFactoryIntegrationRuntimeDebugInfo(new ManagedIntegrationRuntime()
                 {
                     ComputeProperties = new IntegrationRuntimeComputeProperties()
                     {
@@ -571,8 +571,8 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
                     Name = "ir1",
                 },
             };
-            ArmOperation<FactoryDataFlowCreateDebugSessionResult> lro = await dataFactory.CreateDataFlowDebugSessionAsync(WaitUntil.Completed, content);
-            FactoryDataFlowCreateDebugSessionResult result = lro.Value;
+            ArmOperation<DataFactoryDataFlowCreateDebugSessionResult> lro = await dataFactory.CreateDataFlowDebugSessionAsync(WaitUntil.Completed, content);
+            DataFactoryDataFlowCreateDebugSessionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -669,8 +669,8 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
                     RowLimits = 100,
                 },
             };
-            ArmOperation<FactoryDataFlowDebugCommandResult> lro = await dataFactory.ExecuteDataFlowDebugSessionCommandAsync(WaitUntil.Completed, content);
-            FactoryDataFlowDebugCommandResult result = lro.Value;
+            ArmOperation<DataFactoryDataFlowDebugCommandResult> lro = await dataFactory.ExecuteDataFlowDebugSessionCommandAsync(WaitUntil.Completed, content);
+            DataFactoryDataFlowDebugCommandResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -697,7 +697,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FactoryPrivateLinkResource item in dataFactory.GetPrivateLinkResourcesAsync())
+            await foreach (DataFactoryPrivateLinkResource item in dataFactory.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

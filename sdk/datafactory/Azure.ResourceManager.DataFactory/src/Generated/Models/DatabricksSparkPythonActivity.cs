@@ -12,21 +12,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// DatabricksSparkPython activity.
-    /// Serialized Name: DatabricksSparkPythonActivity
-    /// </summary>
+    /// <summary> DatabricksSparkPython activity. </summary>
     public partial class DatabricksSparkPythonActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="pythonFile">
-        /// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.pythonFile
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
         public DatabricksSparkPythonActivity(string name, DataFactoryElement<string> pythonFile) : base(name)
         {
@@ -40,56 +31,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="state">
-        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
-        /// Serialized Name: Activity.state
-        /// </param>
-        /// <param name="onInactiveMarkAs">
-        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
-        /// Serialized Name: Activity.onInactiveMarkAs
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="pythonFile">
-        /// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.pythonFile
-        /// </param>
-        /// <param name="parameters">
-        /// Command line parameters that will be passed to the Python file.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.parameters
-        /// </param>
-        /// <param name="libraries">
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.libraries
-        /// </param>
-        internal DatabricksSparkPythonActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> pythonFile, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
+        /// <param name="parameters"> Command line parameters that will be passed to the Python file. </param>
+        /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
+        internal DatabricksSparkPythonActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> pythonFile, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PythonFile = pythonFile;
             Parameters = parameters;
@@ -97,14 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DatabricksSparkPython";
         }
 
-        /// <summary>
-        /// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.pythonFile
-        /// </summary>
+        /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PythonFile { get; set; }
         /// <summary>
         /// Command line parameters that will be passed to the Python file.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.parameters
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -134,10 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Parameters { get; }
-        /// <summary>
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.libraries
-        /// </summary>
+        /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

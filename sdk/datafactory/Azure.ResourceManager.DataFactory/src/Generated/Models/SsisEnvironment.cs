@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Ssis environment.
-    /// Serialized Name: SsisEnvironment
-    /// </summary>
+    /// <summary> Ssis environment. </summary>
     public partial class SsisEnvironment : SsisObjectMetadata
     {
         /// <summary> Initializes a new instance of SsisEnvironment. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisEnvironment. </summary>
-        /// <param name="metadataType">
-        /// Type of metadata.
-        /// Serialized Name: SsisObjectMetadata.type
-        /// </param>
-        /// <param name="id">
-        /// Metadata id.
-        /// Serialized Name: SsisObjectMetadata.id
-        /// </param>
-        /// <param name="name">
-        /// Metadata name.
-        /// Serialized Name: SsisObjectMetadata.name
-        /// </param>
-        /// <param name="description">
-        /// Metadata description.
-        /// Serialized Name: SsisObjectMetadata.description
-        /// </param>
-        /// <param name="folderId">
-        /// Folder id which contains environment.
-        /// Serialized Name: SsisEnvironment.folderId
-        /// </param>
-        /// <param name="variables">
-        /// Variable in environment
-        /// Serialized Name: SsisEnvironment.variables
-        /// </param>
+        /// <param name="metadataType"> Type of metadata. </param>
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <param name="folderId"> Folder id which contains environment. </param>
+        /// <param name="variables"> Variable in environment. </param>
         internal SsisEnvironment(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, IReadOnlyList<SsisVariable> variables) : base(metadataType, id, name, description)
         {
             FolderId = folderId;
@@ -55,15 +34,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             MetadataType = metadataType;
         }
 
-        /// <summary>
-        /// Folder id which contains environment.
-        /// Serialized Name: SsisEnvironment.folderId
-        /// </summary>
+        /// <summary> Folder id which contains environment. </summary>
         public long? FolderId { get; }
-        /// <summary>
-        /// Variable in environment
-        /// Serialized Name: SsisEnvironment.variables
-        /// </summary>
+        /// <summary> Variable in environment. </summary>
         public IReadOnlyList<SsisVariable> Variables { get; }
     }
 }

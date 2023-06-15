@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Specify the write behavior when upserting documents into Azure Search Index.
-    /// Serialized Name: AzureSearchIndexWriteBehaviorType
-    /// </summary>
+    /// <summary> Specify the write behavior when upserting documents into Azure Search Index. </summary>
     public readonly partial struct AzureSearchIndexWriteBehaviorType : IEquatable<AzureSearchIndexWriteBehaviorType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string MergeValue = "Merge";
         private const string UploadValue = "Upload";
 
-        /// <summary>
-        /// Merge
-        /// Serialized Name: AzureSearchIndexWriteBehaviorType.Merge
-        /// </summary>
+        /// <summary> Merge. </summary>
         public static AzureSearchIndexWriteBehaviorType Merge { get; } = new AzureSearchIndexWriteBehaviorType(MergeValue);
-        /// <summary>
-        /// Upload
-        /// Serialized Name: AzureSearchIndexWriteBehaviorType.Upload
-        /// </summary>
+        /// <summary> Upload. </summary>
         public static AzureSearchIndexWriteBehaviorType Upload { get; } = new AzureSearchIndexWriteBehaviorType(UploadValue);
         /// <summary> Determines if two <see cref="AzureSearchIndexWriteBehaviorType"/> values are the same. </summary>
         public static bool operator ==(AzureSearchIndexWriteBehaviorType left, AzureSearchIndexWriteBehaviorType right) => left.Equals(right);

@@ -11,27 +11,15 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SSIS package execution credential.
-    /// Serialized Name: SsisExecutionCredential
-    /// </summary>
+    /// <summary> SSIS package execution credential. </summary>
     public partial class SsisExecutionCredential
     {
         /// <summary> Initializes a new instance of SsisExecutionCredential. </summary>
-        /// <param name="domain">
-        /// Domain for windows authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisExecutionCredential.domain
-        /// </param>
-        /// <param name="userName">
-        /// UseName for windows authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisExecutionCredential.userName
-        /// </param>
-        /// <param name="password">
-        /// Password for windows authentication.
-        /// Serialized Name: SsisExecutionCredential.password
-        /// </param>
+        /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for windows authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisExecutionCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, FactorySecretString password)
+        public SsisExecutionCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretString password)
         {
             Argument.AssertNotNull(domain, nameof(domain));
             Argument.AssertNotNull(userName, nameof(userName));
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
-        /// <summary>
-        /// Domain for windows authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisExecutionCredential.domain
-        /// </summary>
+        /// <summary> Domain for windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Domain { get; set; }
-        /// <summary>
-        /// UseName for windows authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisExecutionCredential.userName
-        /// </summary>
+        /// <summary> UseName for windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
-        /// <summary>
-        /// Password for windows authentication.
-        /// Serialized Name: SsisExecutionCredential.password
-        /// </summary>
-        public FactorySecretString Password { get; set; }
+        /// <summary> Password for windows authentication. </summary>
+        public DataFactorySecretString Password { get; set; }
     }
 }

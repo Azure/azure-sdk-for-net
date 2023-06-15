@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The connection state of a managed private endpoint
-    /// Serialized Name: ConnectionStateProperties
-    /// </summary>
+    /// <summary> The connection state of a managed private endpoint. </summary>
     public partial class ConnectionStateProperties
     {
         /// <summary> Initializes a new instance of ConnectionStateProperties. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionStateProperties. </summary>
-        /// <param name="actionsRequired">
-        /// The actions required on the managed private endpoint
-        /// Serialized Name: ConnectionStateProperties.actionsRequired
-        /// </param>
-        /// <param name="description">
-        /// The managed private endpoint description
-        /// Serialized Name: ConnectionStateProperties.description
-        /// </param>
-        /// <param name="status">
-        /// The approval status
-        /// Serialized Name: ConnectionStateProperties.status
-        /// </param>
+        /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
+        /// <param name="description"> The managed private endpoint description. </param>
+        /// <param name="status"> The approval status. </param>
         internal ConnectionStateProperties(string actionsRequired, string description, string status)
         {
             ActionsRequired = actionsRequired;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Status = status;
         }
 
-        /// <summary>
-        /// The actions required on the managed private endpoint
-        /// Serialized Name: ConnectionStateProperties.actionsRequired
-        /// </summary>
+        /// <summary> The actions required on the managed private endpoint. </summary>
         public string ActionsRequired { get; }
-        /// <summary>
-        /// The managed private endpoint description
-        /// Serialized Name: ConnectionStateProperties.description
-        /// </summary>
+        /// <summary> The managed private endpoint description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The approval status
-        /// Serialized Name: ConnectionStateProperties.status
-        /// </summary>
+        /// <summary> The approval status. </summary>
         public string Status { get; }
     }
 }

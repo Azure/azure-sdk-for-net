@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Data flow properties for managed integration runtime.
-    /// Serialized Name: IntegrationRuntimeDataFlowProperties
-    /// </summary>
+    /// <summary> Data flow properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeDataFlowProperties
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
@@ -25,26 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
-        /// <param name="computeType">
-        /// Compute type of the cluster which will execute data flow job.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.computeType
-        /// </param>
-        /// <param name="coreCount">
-        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.coreCount
-        /// </param>
-        /// <param name="timeToLiveInMinutes">
-        /// Time to live (in minutes) setting of the cluster which will execute data flow job.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.timeToLive
-        /// </param>
-        /// <param name="shouldCleanupAfterTtl">
-        /// Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
-        /// </param>
-        /// <param name="customProperties">
-        /// Custom properties are used to tune the data flow runtime performance.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.customProperties
-        /// </param>
+        /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
+        /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
+        /// <param name="timeToLiveInMinutes"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
+        /// <param name="shouldCleanupAfterTtl"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
+        /// <param name="customProperties"> Custom properties are used to tune the data flow runtime performance. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLiveInMinutes, bool? shouldCleanupAfterTtl, IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> customProperties, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -56,30 +38,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Compute type of the cluster which will execute data flow job.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.computeType
-        /// </summary>
+        /// <summary> Compute type of the cluster which will execute data flow job. </summary>
         public DataFlowComputeType? ComputeType { get; set; }
-        /// <summary>
-        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.coreCount
-        /// </summary>
+        /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </summary>
         public int? CoreCount { get; set; }
-        /// <summary>
-        /// Time to live (in minutes) setting of the cluster which will execute data flow job.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.timeToLive
-        /// </summary>
+        /// <summary> Time to live (in minutes) setting of the cluster which will execute data flow job. </summary>
         public int? TimeToLiveInMinutes { get; set; }
-        /// <summary>
-        /// Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
-        /// </summary>
+        /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
         public bool? ShouldCleanupAfterTtl { get; set; }
-        /// <summary>
-        /// Custom properties are used to tune the data flow runtime performance.
-        /// Serialized Name: IntegrationRuntimeDataFlowProperties.customProperties
-        /// </summary>
+        /// <summary> Custom properties are used to tune the data flow runtime performance. </summary>
         public IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> CustomProperties { get; }
         /// <summary>
         /// Additional Properties

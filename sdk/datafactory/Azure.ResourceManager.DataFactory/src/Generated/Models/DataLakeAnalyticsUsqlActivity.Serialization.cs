@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
             DataFactoryElement<string> scriptPath = default;
-            FactoryLinkedServiceReference scriptLinkedService = default;
+            DataFactoryLinkedServiceReference scriptLinkedService = default;
             Optional<DataFactoryElement<int>> degreeOfParallelism = default;
             Optional<DataFactoryElement<int>> priority = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("scriptLinkedService"u8))
                         {
-                            scriptLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            scriptLinkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("degreeOfParallelism"u8))

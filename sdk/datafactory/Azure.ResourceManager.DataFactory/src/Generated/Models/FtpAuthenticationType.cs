@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The authentication type to be used to connect to the FTP server.
-    /// Serialized Name: FtpAuthenticationType
-    /// </summary>
+    /// <summary> The authentication type to be used to connect to the FTP server. </summary>
     public readonly partial struct FtpAuthenticationType : IEquatable<FtpAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string AnonymousValue = "Anonymous";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: FtpAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static FtpAuthenticationType Basic { get; } = new FtpAuthenticationType(BasicValue);
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: FtpAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static FtpAuthenticationType Anonymous { get; } = new FtpAuthenticationType(AnonymousValue);
         /// <summary> Determines if two <see cref="FtpAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(FtpAuthenticationType left, FtpAuthenticationType right) => left.Equals(right);

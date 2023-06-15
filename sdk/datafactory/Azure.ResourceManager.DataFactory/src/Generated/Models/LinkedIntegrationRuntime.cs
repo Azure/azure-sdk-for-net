@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The linked integration runtime information.
-    /// Serialized Name: LinkedIntegrationRuntime
-    /// </summary>
+    /// <summary> The linked integration runtime information. </summary>
     public partial class LinkedIntegrationRuntime
     {
         /// <summary> Initializes a new instance of LinkedIntegrationRuntime. </summary>
@@ -22,26 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of LinkedIntegrationRuntime. </summary>
-        /// <param name="name">
-        /// The name of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.name
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.subscriptionId
-        /// </param>
-        /// <param name="dataFactoryName">
-        /// The name of the data factory for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryName
-        /// </param>
-        /// <param name="dataFactoryLocation">
-        /// The location of the data factory for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryLocation
-        /// </param>
-        /// <param name="createdOn">
-        /// The creating time of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.createTime
-        /// </param>
+        /// <param name="name"> The name of the linked integration runtime. </param>
+        /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
+        /// <param name="dataFactoryName"> The name of the data factory for which the linked integration runtime belong to. </param>
+        /// <param name="dataFactoryLocation"> The location of the data factory for which the linked integration runtime belong to. </param>
+        /// <param name="createdOn"> The creating time of the linked integration runtime. </param>
         internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, AzureLocation? dataFactoryLocation, DateTimeOffset? createdOn)
         {
             Name = name;
@@ -51,30 +33,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             CreatedOn = createdOn;
         }
 
-        /// <summary>
-        /// The name of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.name
-        /// </summary>
+        /// <summary> The name of the linked integration runtime. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The subscription ID for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.subscriptionId
-        /// </summary>
+        /// <summary> The subscription ID for which the linked integration runtime belong to. </summary>
         public string SubscriptionId { get; }
-        /// <summary>
-        /// The name of the data factory for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryName
-        /// </summary>
+        /// <summary> The name of the data factory for which the linked integration runtime belong to. </summary>
         public string DataFactoryName { get; }
-        /// <summary>
-        /// The location of the data factory for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryLocation
-        /// </summary>
+        /// <summary> The location of the data factory for which the linked integration runtime belong to. </summary>
         public AzureLocation? DataFactoryLocation { get; }
-        /// <summary>
-        /// The creating time of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.createTime
-        /// </summary>
+        /// <summary> The creating time of the linked integration runtime. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

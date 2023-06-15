@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> accountName = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             Optional<DataFactoryElement<string>> subscriptionId = default;
             Optional<DataFactoryElement<string>> resourceGroupName = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

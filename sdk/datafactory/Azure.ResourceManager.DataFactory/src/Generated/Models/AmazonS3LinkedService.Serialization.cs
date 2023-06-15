@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             Optional<DataFactoryElement<string>> authenticationType = default;
             Optional<DataFactoryElement<string>> accessKeyId = default;
-            Optional<FactorySecretBaseDefinition> secretAccessKey = default;
+            Optional<DataFactorySecretBaseDefinition> secretAccessKey = default;
             Optional<DataFactoryElement<string>> serviceUrl = default;
-            Optional<FactorySecretBaseDefinition> sessionToken = default;
+            Optional<DataFactorySecretBaseDefinition> sessionToken = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            secretAccessKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sessionToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            sessionToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

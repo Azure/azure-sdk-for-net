@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> clientId = default;
-            Optional<FactorySecretBaseDefinition> clientSecret = default;
+            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
             Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
             Optional<DataFactoryElement<bool>> useHostVerification = default;
             Optional<DataFactoryElement<bool>> usePeerVerification = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            clientSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

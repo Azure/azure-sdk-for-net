@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<DataFactoryElement<string>> packagePath = default;
             Optional<SsisPackageLocationType> type = default;
-            Optional<FactorySecretBaseDefinition> packagePassword = default;
+            Optional<DataFactorySecretBaseDefinition> packagePassword = default;
             Optional<SsisAccessCredential> accessCredential = default;
             Optional<DataFactoryElement<string>> configurationPath = default;
             Optional<SsisAccessCredential> configurationAccessCredential = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packagePassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            packagePassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Query parameters for triggers.
-    /// Serialized Name: TriggerFilterParameters
-    /// </summary>
+    /// <summary> Query parameters for triggers. </summary>
     public partial class TriggerFilterContent
     {
         /// <summary> Initializes a new instance of TriggerFilterContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// The continuation token for getting the next page of results. Null for first page.
-        /// Serialized Name: TriggerFilterParameters.continuationToken
-        /// </summary>
+        /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
         public string ContinuationToken { get; set; }
-        /// <summary>
-        /// The name of the parent TumblingWindowTrigger to get the child rerun triggers
-        /// Serialized Name: TriggerFilterParameters.parentTriggerName
-        /// </summary>
+        /// <summary> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </summary>
         public string ParentTriggerName { get; set; }
     }
 }

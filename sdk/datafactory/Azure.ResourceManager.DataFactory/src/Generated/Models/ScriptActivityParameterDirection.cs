@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The direction of the parameter.
-    /// Serialized Name: ScriptActivityParameterDirection
-    /// </summary>
+    /// <summary> The direction of the parameter. </summary>
     public readonly partial struct ScriptActivityParameterDirection : IEquatable<ScriptActivityParameterDirection>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string OutputValue = "Output";
         private const string InputOutputValue = "InputOutput";
 
-        /// <summary>
-        /// Input
-        /// Serialized Name: ScriptActivityParameterDirection.Input
-        /// </summary>
+        /// <summary> Input. </summary>
         public static ScriptActivityParameterDirection Input { get; } = new ScriptActivityParameterDirection(InputValue);
-        /// <summary>
-        /// Output
-        /// Serialized Name: ScriptActivityParameterDirection.Output
-        /// </summary>
+        /// <summary> Output. </summary>
         public static ScriptActivityParameterDirection Output { get; } = new ScriptActivityParameterDirection(OutputValue);
-        /// <summary>
-        /// InputOutput
-        /// Serialized Name: ScriptActivityParameterDirection.InputOutput
-        /// </summary>
+        /// <summary> InputOutput. </summary>
         public static ScriptActivityParameterDirection InputOutput { get; } = new ScriptActivityParameterDirection(InputOutputValue);
         /// <summary> Determines if two <see cref="ScriptActivityParameterDirection"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityParameterDirection left, ScriptActivityParameterDirection right) => left.Equals(right);

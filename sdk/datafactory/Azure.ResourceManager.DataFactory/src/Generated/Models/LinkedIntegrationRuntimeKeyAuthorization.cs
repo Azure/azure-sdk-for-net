@@ -10,19 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The key authorization type integration runtime.
-    /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization
-    /// </summary>
+    /// <summary> The key authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegrationRuntimeType
     {
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
-        /// <param name="key">
-        /// The key used for authorization.
-        /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization.key
-        /// </param>
+        /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public LinkedIntegrationRuntimeKeyAuthorization(FactorySecretString key)
+        public LinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -31,24 +25,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
-        /// <param name="authorizationType">
-        /// The authorization type for integration runtime sharing.
-        /// Serialized Name: LinkedIntegrationRuntimeType.authorizationType
-        /// </param>
-        /// <param name="key">
-        /// The key used for authorization.
-        /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization.key
-        /// </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, FactorySecretString key) : base(authorizationType)
+        /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
+        /// <param name="key"> The key used for authorization. </param>
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, DataFactorySecretString key) : base(authorizationType)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
         }
 
-        /// <summary>
-        /// The key used for authorization.
-        /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization.key
-        /// </summary>
-        public FactorySecretString Key { get; set; }
+        /// <summary> The key used for authorization. </summary>
+        public DataFactorySecretString Key { get; set; }
     }
 }

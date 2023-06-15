@@ -12,17 +12,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Linked service for an HTTP source.
-    /// Serialized Name: HttpLinkedService
-    /// </summary>
-    public partial class HttpLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> Linked service for an HTTP source. </summary>
+    public partial class HttpLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HttpLinkedService. </summary>
-        /// <param name="uri">
-        /// The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.url
-        /// </param>
+        /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HttpLinkedService(DataFactoryElement<string> uri)
         {
@@ -33,66 +27,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HttpLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri">
-        /// The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.url
-        /// </param>
-        /// <param name="authenticationType">
-        /// The authentication type to be used to connect to the HTTP server.
-        /// Serialized Name: HttpLinkedService.typeProperties.authenticationType
-        /// </param>
-        /// <param name="userName">
-        /// User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
+        /// <param name="authenticationType"> The authentication type to be used to connect to the HTTP server. </param>
+        /// <param name="userName"> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
-        /// Serialized Name: HttpLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="authHeaders">
-        /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
-        /// Serialized Name: HttpLinkedService.typeProperties.authHeaders
-        /// </param>
-        /// <param name="embeddedCertData">
-        /// Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.embeddedCertData
-        /// </param>
-        /// <param name="certThumbprint">
-        /// Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.certThumbprint
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: HttpLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="enableServerCertificateValidation">
-        /// If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: HttpLinkedService.typeProperties.enableServerCertificateValidation
-        /// </param>
-        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, FactorySecretBaseDefinition password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, BinaryData encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
+        /// <param name="embeddedCertData"> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
+        /// <param name="certThumbprint"> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <param name="enableServerCertificateValidation"> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, BinaryData encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
@@ -106,46 +60,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "HttpServer";
         }
 
-        /// <summary>
-        /// The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.url
-        /// </summary>
+        /// <summary> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
-        /// <summary>
-        /// The authentication type to be used to connect to the HTTP server.
-        /// Serialized Name: HttpLinkedService.typeProperties.authenticationType
-        /// </summary>
+        /// <summary> The authentication type to be used to connect to the HTTP server. </summary>
         public HttpAuthenticationType? AuthenticationType { get; set; }
-        /// <summary>
-        /// User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.userName
-        /// </summary>
+        /// <summary> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary>
         /// Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
-        /// Serialized Name: HttpLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
-        /// Serialized Name: HttpLinkedService.typeProperties.authHeaders
-        /// </summary>
+        public DataFactorySecretBaseDefinition Password { get; set; }
+        /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
         public DataFactoryElement<BinaryData> AuthHeaders { get; set; }
-        /// <summary>
-        /// Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.embeddedCertData
-        /// </summary>
+        /// <summary> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> EmbeddedCertData { get; set; }
-        /// <summary>
-        /// Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpLinkedService.typeProperties.certThumbprint
-        /// </summary>
+        /// <summary> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CertThumbprint { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: HttpLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -175,10 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: HttpLinkedService.typeProperties.enableServerCertificateValidation
-        /// </summary>
+        /// <summary> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
     }
 }

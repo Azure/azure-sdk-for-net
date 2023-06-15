@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
             DataFactoryElement<string> trainedModelName = default;
-            FactoryLinkedServiceReference trainedModelLinkedServiceName = default;
+            DataFactoryLinkedServiceReference trainedModelLinkedServiceName = default;
             DataFactoryElement<string> trainedModelFilePath = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("trainedModelLinkedServiceName"u8))
                         {
-                            trainedModelLinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            trainedModelLinkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trainedModelFilePath"u8))

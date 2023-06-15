@@ -296,19 +296,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> clusterSize = default;
             DataFactoryElement<string> timeToLive = default;
             DataFactoryElement<string> version = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> hostSubscriptionId = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> clusterResourceGroup = default;
             Optional<DataFactoryElement<string>> clusterNamePrefix = default;
             Optional<DataFactoryElement<string>> clusterUserName = default;
-            Optional<FactorySecretBaseDefinition> clusterPassword = default;
+            Optional<DataFactorySecretBaseDefinition> clusterPassword = default;
             Optional<DataFactoryElement<string>> clusterSshUserName = default;
-            Optional<FactorySecretBaseDefinition> clusterSshPassword = default;
-            Optional<IList<FactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
-            Optional<FactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
+            Optional<DataFactorySecretBaseDefinition> clusterSshPassword = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
+            Optional<DataFactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
             Optional<DataFactoryElement<string>> clusterType = default;
             Optional<DataFactoryElement<string>> sparkVersion = default;
             Optional<BinaryData> coreConfiguration = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ScriptAction>> scriptActions = default;
             Optional<DataFactoryElement<string>> virtualNetworkId = default;
             Optional<DataFactoryElement<string>> subnetName = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostSubscriptionId"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterPassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            clusterPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterSshUserName"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterSshPassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            clusterSshPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalLinkedServiceNames"u8))
@@ -498,10 +498,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
+                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
+                                array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
                             }
                             additionalLinkedServiceNames = array;
                             continue;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hcatalogLinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            hcatalogLinkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                     }

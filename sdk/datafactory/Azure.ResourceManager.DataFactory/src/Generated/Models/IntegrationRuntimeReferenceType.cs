@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Type of integration runtime.
-    /// Serialized Name: IntegrationRuntimeReferenceType
-    /// </summary>
+    /// <summary> Type of integration runtime. </summary>
     public readonly partial struct IntegrationRuntimeReferenceType : IEquatable<IntegrationRuntimeReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string IntegrationRuntimeReferenceValue = "IntegrationRuntimeReference";
 
-        /// <summary>
-        /// IntegrationRuntimeReference
-        /// Serialized Name: IntegrationRuntimeReferenceType.IntegrationRuntimeReference
-        /// </summary>
+        /// <summary> IntegrationRuntimeReference. </summary>
         public static IntegrationRuntimeReferenceType IntegrationRuntimeReference { get; } = new IntegrationRuntimeReferenceType(IntegrationRuntimeReferenceValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeReferenceType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeReferenceType left, IntegrationRuntimeReferenceType right) => left.Equals(right);

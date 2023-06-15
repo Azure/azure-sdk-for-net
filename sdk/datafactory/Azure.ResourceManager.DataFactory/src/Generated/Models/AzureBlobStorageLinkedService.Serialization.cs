@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<AzureKeyVaultSecretReference> sasToken = default;
             Optional<DataFactoryElement<string>> serviceEndpoint = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
             Optional<DataFactoryElement<string>> accountKind = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             Optional<AzureStorageAuthenticationType> authenticationType = default;
             Optional<DataFactoryElement<string>> containerUri = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Specify the credential type (key or cert) is used for service principal.
-    /// Serialized Name: ODataAadServicePrincipalCredentialType
-    /// </summary>
+    /// <summary> Specify the credential type (key or cert) is used for service principal. </summary>
     public readonly partial struct ODataAadServicePrincipalCredentialType : IEquatable<ODataAadServicePrincipalCredentialType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ServicePrincipalKeyValue = "ServicePrincipalKey";
         private const string ServicePrincipalCertValue = "ServicePrincipalCert";
 
-        /// <summary>
-        /// ServicePrincipalKey
-        /// Serialized Name: ODataAadServicePrincipalCredentialType.ServicePrincipalKey
-        /// </summary>
+        /// <summary> ServicePrincipalKey. </summary>
         public static ODataAadServicePrincipalCredentialType ServicePrincipalKey { get; } = new ODataAadServicePrincipalCredentialType(ServicePrincipalKeyValue);
-        /// <summary>
-        /// ServicePrincipalCert
-        /// Serialized Name: ODataAadServicePrincipalCredentialType.ServicePrincipalCert
-        /// </summary>
+        /// <summary> ServicePrincipalCert. </summary>
         public static ODataAadServicePrincipalCredentialType ServicePrincipalCert { get; } = new ODataAadServicePrincipalCredentialType(ServicePrincipalCertValue);
         /// <summary> Determines if two <see cref="ODataAadServicePrincipalCredentialType"/> values are the same. </summary>
         public static bool operator ==(ODataAadServicePrincipalCredentialType left, ODataAadServicePrincipalCredentialType right) => left.Equals(right);

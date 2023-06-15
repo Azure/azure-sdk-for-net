@@ -13,19 +13,13 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of dataset resources.
-    /// Serialized Name: DatasetListResponse
-    /// </summary>
+    /// <summary> A list of dataset resources. </summary>
     internal partial class DatasetListResponse
     {
         /// <summary> Initializes a new instance of DatasetListResponse. </summary>
-        /// <param name="value">
-        /// List of datasets.
-        /// Serialized Name: DatasetListResponse.value
-        /// </param>
+        /// <param name="value"> List of datasets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DatasetListResponse(IEnumerable<FactoryDatasetData> value)
+        internal DatasetListResponse(IEnumerable<DataFactoryDatasetData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetListResponse. </summary>
-        /// <param name="value">
-        /// List of datasets.
-        /// Serialized Name: DatasetListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: DatasetListResponse.nextLink
-        /// </param>
-        internal DatasetListResponse(IReadOnlyList<FactoryDatasetData> value, string nextLink)
+        /// <param name="value"> List of datasets. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        internal DatasetListResponse(IReadOnlyList<DataFactoryDatasetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of datasets.
-        /// Serialized Name: DatasetListResponse.value
-        /// </summary>
-        public IReadOnlyList<FactoryDatasetData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: DatasetListResponse.nextLink
-        /// </summary>
+        /// <summary> List of datasets. </summary>
+        public IReadOnlyList<DataFactoryDatasetData> Value { get; }
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> office365TenantId = default;
             DataFactoryElement<string> servicePrincipalTenantId = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            FactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

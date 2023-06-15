@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// PipelineExternalComputeScale properties for managed integration runtime.
-    /// Serialized Name: PipelineExternalComputeScaleProperties
-    /// </summary>
+    /// <summary> PipelineExternalComputeScale properties for managed integration runtime. </summary>
     public partial class PipelineExternalComputeScaleProperties
     {
         /// <summary> Initializes a new instance of PipelineExternalComputeScaleProperties. </summary>
@@ -24,10 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineExternalComputeScaleProperties. </summary>
-        /// <param name="timeToLive">
-        /// Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity.
-        /// Serialized Name: PipelineExternalComputeScaleProperties.timeToLive
-        /// </param>
+        /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal PipelineExternalComputeScaleProperties(int? timeToLive, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,10 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity.
-        /// Serialized Name: PipelineExternalComputeScaleProperties.timeToLive
-        /// </summary>
+        /// <summary> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </summary>
         public int? TimeToLive { get; set; }
         /// <summary>
         /// Additional Properties

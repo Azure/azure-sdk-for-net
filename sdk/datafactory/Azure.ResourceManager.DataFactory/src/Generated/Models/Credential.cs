@@ -13,9 +13,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The Azure Data Factory nested object which contains the information and credential which can be used to connect with related store or compute resource.
-    /// Serialized Name: Credential
     /// Please note <see cref="Credential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ServicePrincipalCredential"/> and <see cref="ManagedIdentityCredential"/>.
+    /// The available derived classes include <see cref="ServicePrincipalCredential"/> and <see cref="DataFactoryManagedIdentityCredentialDefinition"/>.
     /// </summary>
     public partial class Credential
     {
@@ -27,18 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of Credential. </summary>
-        /// <param name="credentialType">
-        /// Type of credential.
-        /// Serialized Name: Credential.type
-        /// </param>
-        /// <param name="description">
-        /// Credential description.
-        /// Serialized Name: Credential.description
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Credential.
-        /// Serialized Name: Credential.annotations
-        /// </param>
+        /// <param name="credentialType"> Type of credential. </param>
+        /// <param name="description"> Credential description. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal Credential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -48,19 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Type of credential.
-        /// Serialized Name: Credential.type
-        /// </summary>
+        /// <summary> Type of credential. </summary>
         internal string CredentialType { get; set; }
-        /// <summary>
-        /// Credential description.
-        /// Serialized Name: Credential.description
-        /// </summary>
+        /// <summary> Credential description. </summary>
         public string Description { get; set; }
         /// <summary>
         /// List of tags that can be used for describing the Credential.
-        /// Serialized Name: Credential.annotations
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

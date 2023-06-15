@@ -10,43 +10,32 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Self-hosted integration runtime.
-    /// Serialized Name: SelfHostedIntegrationRuntime
-    /// </summary>
-    public partial class SelfHostedIntegrationRuntime : IntegrationRuntimeDefinition
+    /// <summary> Self-hosted integration runtime. </summary>
+    public partial class SelfHostedIntegrationRuntime : DataFactoryIntegrationRuntimeDefinition
     {
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
         public SelfHostedIntegrationRuntime()
         {
-            RuntimeType = IntegrationRuntimeType.SelfHosted;
+            IntegrationRuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
-        /// <param name="runtimeType">
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntime.type
-        /// </param>
-        /// <param name="description">
-        /// Integration runtime description.
-        /// Serialized Name: IntegrationRuntime.description
-        /// </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedInfo">
         /// The base definition of a linked integration runtime.
-        /// Serialized Name: SelfHostedIntegrationRuntime.typeProperties.linkedInfo
         /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(runtimeType, description, additionalProperties)
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(integrationRuntimeType, description, additionalProperties)
         {
             LinkedInfo = linkedInfo;
-            RuntimeType = runtimeType;
+            IntegrationRuntimeType = integrationRuntimeType;
         }
 
         /// <summary>
         /// The base definition of a linked integration runtime.
-        /// Serialized Name: SelfHostedIntegrationRuntime.typeProperties.linkedInfo
         /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </summary>

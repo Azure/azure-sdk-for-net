@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> organizationName = default;
             DataFactoryElement<string> authenticationType = default;
             Optional<DataFactoryElement<string>> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactoryElement<string>> servicePrincipalCredentialType = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalCredential = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalCredential = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

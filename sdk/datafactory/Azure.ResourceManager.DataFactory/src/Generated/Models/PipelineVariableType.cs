@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Variable type.
-    /// Serialized Name: VariableType
-    /// </summary>
+    /// <summary> Variable type. </summary>
     public readonly partial struct PipelineVariableType : IEquatable<PipelineVariableType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BoolValue = "Bool";
         private const string ArrayValue = "Array";
 
-        /// <summary>
-        /// String
-        /// Serialized Name: VariableType.String
-        /// </summary>
+        /// <summary> String. </summary>
         public static PipelineVariableType String { get; } = new PipelineVariableType(StringValue);
-        /// <summary>
-        /// Bool
-        /// Serialized Name: VariableType.Bool
-        /// </summary>
+        /// <summary> Bool. </summary>
         public static PipelineVariableType Bool { get; } = new PipelineVariableType(BoolValue);
-        /// <summary>
-        /// Array
-        /// Serialized Name: VariableType.Array
-        /// </summary>
+        /// <summary> Array. </summary>
         public static PipelineVariableType Array { get; } = new PipelineVariableType(ArrayValue);
         /// <summary> Determines if two <see cref="PipelineVariableType"/> values are the same. </summary>
         public static bool operator ==(PipelineVariableType left, PipelineVariableType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Notebook parameter type.
-    /// Serialized Name: NotebookParameterType
-    /// </summary>
+    /// <summary> Notebook parameter type. </summary>
     public readonly partial struct NotebookParameterType : IEquatable<NotebookParameterType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string FloatValue = "float";
         private const string BoolValue = "bool";
 
-        /// <summary>
-        /// string
-        /// Serialized Name: NotebookParameterType.string
-        /// </summary>
+        /// <summary> string. </summary>
         public static NotebookParameterType String { get; } = new NotebookParameterType(StringValue);
-        /// <summary>
-        /// int
-        /// Serialized Name: NotebookParameterType.int
-        /// </summary>
+        /// <summary> int. </summary>
         public static NotebookParameterType Int { get; } = new NotebookParameterType(IntValue);
-        /// <summary>
-        /// float
-        /// Serialized Name: NotebookParameterType.float
-        /// </summary>
+        /// <summary> float. </summary>
         public static NotebookParameterType Float { get; } = new NotebookParameterType(FloatValue);
-        /// <summary>
-        /// bool
-        /// Serialized Name: NotebookParameterType.bool
-        /// </summary>
+        /// <summary> bool. </summary>
         public static NotebookParameterType Bool { get; } = new NotebookParameterType(BoolValue);
         /// <summary> Determines if two <see cref="NotebookParameterType"/> values are the same. </summary>
         public static bool operator ==(NotebookParameterType left, NotebookParameterType right) => left.Equals(right);

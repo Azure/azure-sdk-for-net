@@ -12,21 +12,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Jira Service linked service.
-    /// Serialized Name: JiraLinkedService
-    /// </summary>
-    public partial class JiraLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> Jira Service linked service. </summary>
+    public partial class JiraLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of JiraLinkedService. </summary>
-        /// <param name="host">
-        /// The IP address or host name of the Jira service. (e.g. jira.example.com)
-        /// Serialized Name: JiraLinkedService.typeProperties.host
-        /// </param>
-        /// <param name="username">
-        /// The user name that you use to access Jira Service.
-        /// Serialized Name: JiraLinkedService.typeProperties.username
-        /// </param>
+        /// <param name="host"> The IP address or host name of the Jira service. (e.g. jira.example.com). </param>
+        /// <param name="username"> The user name that you use to access Jira Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="username"/> is null. </exception>
         public JiraLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> username)
         {
@@ -39,62 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of JiraLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host">
-        /// The IP address or host name of the Jira service. (e.g. jira.example.com)
-        /// Serialized Name: JiraLinkedService.typeProperties.host
-        /// </param>
-        /// <param name="port">
-        /// The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP.
-        /// Serialized Name: JiraLinkedService.typeProperties.port
-        /// </param>
-        /// <param name="username">
-        /// The user name that you use to access Jira Service.
-        /// Serialized Name: JiraLinkedService.typeProperties.username
-        /// </param>
+        /// <param name="host"> The IP address or host name of the Jira service. (e.g. jira.example.com). </param>
+        /// <param name="port"> The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP. </param>
+        /// <param name="username"> The user name that you use to access Jira Service. </param>
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username field.
-        /// Serialized Name: JiraLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="useEncryptedEndpoints">
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
-        /// Serialized Name: JiraLinkedService.typeProperties.useEncryptedEndpoints
-        /// </param>
-        /// <param name="useHostVerification">
-        /// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true.
-        /// Serialized Name: JiraLinkedService.typeProperties.useHostVerification
-        /// </param>
-        /// <param name="usePeerVerification">
-        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
-        /// Serialized Name: JiraLinkedService.typeProperties.usePeerVerification
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: JiraLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        internal JiraLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, FactorySecretBaseDefinition password, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
+        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
+        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        internal JiraLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -107,46 +61,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Jira";
         }
 
-        /// <summary>
-        /// The IP address or host name of the Jira service. (e.g. jira.example.com)
-        /// Serialized Name: JiraLinkedService.typeProperties.host
-        /// </summary>
+        /// <summary> The IP address or host name of the Jira service. (e.g. jira.example.com). </summary>
         public DataFactoryElement<string> Host { get; set; }
-        /// <summary>
-        /// The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP.
-        /// Serialized Name: JiraLinkedService.typeProperties.port
-        /// </summary>
+        /// <summary> The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP. </summary>
         public DataFactoryElement<int> Port { get; set; }
-        /// <summary>
-        /// The user name that you use to access Jira Service.
-        /// Serialized Name: JiraLinkedService.typeProperties.username
-        /// </summary>
+        /// <summary> The user name that you use to access Jira Service. </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name that you provided in the username field.
-        /// Serialized Name: JiraLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
-        /// Serialized Name: JiraLinkedService.typeProperties.useEncryptedEndpoints
-        /// </summary>
+        public DataFactorySecretBaseDefinition Password { get; set; }
+        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
-        /// <summary>
-        /// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true.
-        /// Serialized Name: JiraLinkedService.typeProperties.useHostVerification
-        /// </summary>
+        /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
         public DataFactoryElement<bool> UseHostVerification { get; set; }
-        /// <summary>
-        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
-        /// Serialized Name: JiraLinkedService.typeProperties.usePeerVerification
-        /// </summary>
+        /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
         public DataFactoryElement<bool> UsePeerVerification { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: JiraLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.
-    /// Serialized Name: IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem
-    /// </summary>
+    /// <summary> The IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem. </summary>
     public partial class IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem. </summary>
-        /// <param name="name">
-        /// Name of custom property.
-        /// Serialized Name: IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.name
-        /// </param>
-        /// <param name="value">
-        /// Value of custom property.
-        /// Serialized Name: IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.value
-        /// </param>
+        /// <param name="name"> Name of custom property. </param>
+        /// <param name="value"> Value of custom property. </param>
         internal IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// Name of custom property.
-        /// Serialized Name: IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.name
-        /// </summary>
+        /// <summary> Name of custom property. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Value of custom property.
-        /// Serialized Name: IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.value
-        /// </summary>
+        /// <summary> Value of custom property. </summary>
         public string Value { get; set; }
     }
 }

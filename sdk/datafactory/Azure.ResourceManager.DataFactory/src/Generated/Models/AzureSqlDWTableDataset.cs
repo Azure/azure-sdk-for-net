@@ -12,19 +12,13 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The Azure SQL Data Warehouse dataset.
-    /// Serialized Name: AzureSqlDWTableDataset
-    /// </summary>
-    public partial class AzureSqlDWTableDataset : FactoryDatasetDefinition
+    /// <summary> The Azure SQL Data Warehouse dataset. </summary>
+    public partial class AzureSqlDWTableDataset : DataFactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureSqlDWTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AzureSqlDWTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
@@ -32,52 +26,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName">
-        /// This property will be retired. Please consider using schema + table properties instead.
-        /// Serialized Name: AzureSqlDWTableDataset.typeProperties.tableName
-        /// </param>
-        /// <param name="schemaTypePropertiesSchema">
-        /// The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlDWTableDataset.typeProperties.schema
-        /// </param>
-        /// <param name="table">
-        /// The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlDWTableDataset.typeProperties.table
-        /// </param>
-        internal AzureSqlDWTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, DataFactoryElement<string> schemaTypePropertiesSchema, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
+        /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="table"> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
+        internal AzureSqlDWTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, DataFactoryElement<string> schemaTypePropertiesSchema, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
@@ -87,7 +48,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
-        /// Serialized Name: AzureSqlDWTableDataset.typeProperties.tableName
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -117,15 +77,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData TableName { get; set; }
-        /// <summary>
-        /// The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlDWTableDataset.typeProperties.schema
-        /// </summary>
+        /// <summary> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
-        /// <summary>
-        /// The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlDWTableDataset.typeProperties.table
-        /// </summary>
+        /// <summary> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Table { get; set; }
     }
 }

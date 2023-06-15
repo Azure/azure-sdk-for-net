@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Data flow debug settings.
-    /// Serialized Name: DataFlowDebugPackageDebugSettings
-    /// </summary>
+    /// <summary> Data flow debug settings. </summary>
     public partial class DataFlowDebugPackageDebugSettings
     {
         /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
@@ -24,14 +21,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary>
-        /// Source setting for data flow debug.
-        /// Serialized Name: DataFlowDebugPackageDebugSettings.sourceSettings
-        /// </summary>
+        /// <summary> Source setting for data flow debug. </summary>
         public IList<DataFlowSourceSetting> SourceSettings { get; }
         /// <summary>
         /// Data flow parameters.
-        /// Serialized Name: DataFlowDebugPackageDebugSettings.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -63,7 +56,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary>
         /// Parameters for dataset.
-        /// Serialized Name: DataFlowDebugPackageDebugSettings.datasetParameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

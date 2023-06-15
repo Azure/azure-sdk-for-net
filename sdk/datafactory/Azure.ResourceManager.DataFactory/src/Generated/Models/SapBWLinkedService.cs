@@ -12,25 +12,13 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SAP Business Warehouse Linked Service.
-    /// Serialized Name: SapBWLinkedService
-    /// </summary>
-    public partial class SapBWLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> SAP Business Warehouse Linked Service. </summary>
+    public partial class SapBWLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
-        /// <param name="server">
-        /// Host name of the SAP BW instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.server
-        /// </param>
-        /// <param name="systemNumber">
-        /// System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.systemNumber
-        /// </param>
-        /// <param name="clientId">
-        /// Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.clientId
-        /// </param>
+        /// <param name="server"> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
+        /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="systemNumber"/> or <paramref name="clientId"/> is null. </exception>
         public SapBWLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId)
         {
@@ -45,54 +33,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server">
-        /// Host name of the SAP BW instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.server
-        /// </param>
-        /// <param name="systemNumber">
-        /// System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.systemNumber
-        /// </param>
-        /// <param name="clientId">
-        /// Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.clientId
-        /// </param>
-        /// <param name="userName">
-        /// Username to access the SAP BW server. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="server"> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
+        /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> Username to access the SAP BW server. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// Password to access the SAP BW server.
-        /// Serialized Name: SapBWLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: SapBWLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        internal SapBWLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> userName, FactorySecretBaseDefinition password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        internal SapBWLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -103,36 +60,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SapBW";
         }
 
-        /// <summary>
-        /// Host name of the SAP BW instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.server
-        /// </summary>
+        /// <summary> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Server { get; set; }
-        /// <summary>
-        /// System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.systemNumber
-        /// </summary>
+        /// <summary> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SystemNumber { get; set; }
-        /// <summary>
-        /// Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.clientId
-        /// </summary>
+        /// <summary> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary>
-        /// Username to access the SAP BW server. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapBWLinkedService.typeProperties.userName
-        /// </summary>
+        /// <summary> Username to access the SAP BW server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary>
         /// Password to access the SAP BW server.
-        /// Serialized Name: SapBWLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: SapBWLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

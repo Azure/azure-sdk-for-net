@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// CopyComputeScale properties for managed integration runtime.
-    /// Serialized Name: CopyComputeScaleProperties
-    /// </summary>
+    /// <summary> CopyComputeScale properties for managed integration runtime. </summary>
     public partial class CopyComputeScaleProperties
     {
         /// <summary> Initializes a new instance of CopyComputeScaleProperties. </summary>
@@ -24,14 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CopyComputeScaleProperties. </summary>
-        /// <param name="dataIntegrationUnit">
-        /// DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256.
-        /// Serialized Name: CopyComputeScaleProperties.dataIntegrationUnit
-        /// </param>
-        /// <param name="timeToLive">
-        /// Time to live (in minutes) setting of integration runtime which will execute copy activity.
-        /// Serialized Name: CopyComputeScaleProperties.timeToLive
-        /// </param>
+        /// <param name="dataIntegrationUnit"> DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256. </param>
+        /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute copy activity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopyComputeScaleProperties(int? dataIntegrationUnit, int? timeToLive, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -40,15 +31,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256.
-        /// Serialized Name: CopyComputeScaleProperties.dataIntegrationUnit
-        /// </summary>
+        /// <summary> DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256. </summary>
         public int? DataIntegrationUnit { get; set; }
-        /// <summary>
-        /// Time to live (in minutes) setting of integration runtime which will execute copy activity.
-        /// Serialized Name: CopyComputeScaleProperties.timeToLive
-        /// </summary>
+        /// <summary> Time to live (in minutes) setting of integration runtime which will execute copy activity. </summary>
         public int? TimeToLive { get; set; }
         /// <summary>
         /// Additional Properties

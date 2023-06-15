@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<DataFactoryElement<string>> path = default;
             Optional<DataFactoryElement<string>> logLevel = default;
             Optional<DataFactoryElement<bool>> enableReliableLogging = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

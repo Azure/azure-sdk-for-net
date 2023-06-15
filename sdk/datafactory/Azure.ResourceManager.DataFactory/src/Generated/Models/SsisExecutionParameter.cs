@@ -11,17 +11,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SSIS execution parameter.
-    /// Serialized Name: SsisExecutionParameter
-    /// </summary>
+    /// <summary> SSIS execution parameter. </summary>
     public partial class SsisExecutionParameter
     {
         /// <summary> Initializes a new instance of SsisExecutionParameter. </summary>
-        /// <param name="value">
-        /// SSIS package execution parameter value. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisExecutionParameter.value
-        /// </param>
+        /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisExecutionParameter(DataFactoryElement<string> value)
         {
@@ -30,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
         }
 
-        /// <summary>
-        /// SSIS package execution parameter value. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisExecutionParameter.value
-        /// </summary>
+        /// <summary> SSIS package execution parameter value. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Value { get; set; }
     }
 }

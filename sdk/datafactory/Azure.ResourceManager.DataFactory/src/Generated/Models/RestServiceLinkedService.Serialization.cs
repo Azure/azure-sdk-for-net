@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<bool>> enableServerCertificateValidation = default;
             RestServiceAuthenticationType authenticationType = default;
             Optional<DataFactoryElement<string>> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<BinaryData>> authHeaders = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
             Optional<DataFactoryElement<string>> aadResourceId = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             Optional<DataFactoryElement<string>> clientId = default;
-            Optional<FactorySecretBaseDefinition> clientSecret = default;
+            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
             Optional<DataFactoryElement<string>> tokenEndpoint = default;
             Optional<DataFactoryElement<string>> resource = default;
             Optional<DataFactoryElement<string>> scope = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            clientSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tokenEndpoint"u8))

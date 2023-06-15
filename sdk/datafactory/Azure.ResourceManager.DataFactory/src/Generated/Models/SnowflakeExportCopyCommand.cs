@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Snowflake export command settings.
-    /// Serialized Name: SnowflakeExportCopyCommand
-    /// </summary>
+    /// <summary> Snowflake export command settings. </summary>
     public partial class SnowflakeExportCopyCommand : ExportSettings
     {
         /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
@@ -26,19 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
-        /// <param name="exportSettingsType">
-        /// The export setting type.
-        /// Serialized Name: ExportSettings.type
-        /// </param>
+        /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="additionalCopyOptions">
-        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }
-        /// Serialized Name: SnowflakeExportCopyCommand.additionalCopyOptions
-        /// </param>
-        /// <param name="additionalFormatOptions">
-        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }
-        /// Serialized Name: SnowflakeExportCopyCommand.additionalFormatOptions
-        /// </param>
+        /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }. </param>
+        /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }. </param>
         internal SnowflakeExportCopyCommand(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions) : base(exportSettingsType, additionalProperties)
         {
             AdditionalCopyOptions = additionalCopyOptions;
@@ -48,7 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }
-        /// Serialized Name: SnowflakeExportCopyCommand.additionalCopyOptions
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -80,7 +67,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IDictionary<string, BinaryData> AdditionalCopyOptions { get; }
         /// <summary>
         /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }
-        /// Serialized Name: SnowflakeExportCopyCommand.additionalFormatOptions
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

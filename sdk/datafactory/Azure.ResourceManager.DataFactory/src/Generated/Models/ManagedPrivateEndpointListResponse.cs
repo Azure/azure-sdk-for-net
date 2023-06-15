@@ -13,19 +13,13 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of managed private endpoint resources.
-    /// Serialized Name: ManagedPrivateEndpointListResponse
-    /// </summary>
+    /// <summary> A list of managed private endpoint resources. </summary>
     internal partial class ManagedPrivateEndpointListResponse
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
-        /// <param name="value">
-        /// List of managed private endpoints.
-        /// Serialized Name: ManagedPrivateEndpointListResponse.value
-        /// </param>
+        /// <param name="value"> List of managed private endpoints. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedPrivateEndpointListResponse(IEnumerable<FactoryPrivateEndpointData> value)
+        internal ManagedPrivateEndpointListResponse(IEnumerable<DataFactoryPrivateEndpointData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
-        /// <param name="value">
-        /// List of managed private endpoints.
-        /// Serialized Name: ManagedPrivateEndpointListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: ManagedPrivateEndpointListResponse.nextLink
-        /// </param>
-        internal ManagedPrivateEndpointListResponse(IReadOnlyList<FactoryPrivateEndpointData> value, string nextLink)
+        /// <param name="value"> List of managed private endpoints. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        internal ManagedPrivateEndpointListResponse(IReadOnlyList<DataFactoryPrivateEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of managed private endpoints.
-        /// Serialized Name: ManagedPrivateEndpointListResponse.value
-        /// </summary>
-        public IReadOnlyList<FactoryPrivateEndpointData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: ManagedPrivateEndpointListResponse.nextLink
-        /// </summary>
+        /// <summary> List of managed private endpoints. </summary>
+        public IReadOnlyList<DataFactoryPrivateEndpointData> Value { get; }
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

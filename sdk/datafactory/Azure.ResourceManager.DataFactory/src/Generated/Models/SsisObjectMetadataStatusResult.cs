@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The status of the operation.
-    /// Serialized Name: SsisObjectMetadataStatusResponse
-    /// </summary>
+    /// <summary> The status of the operation. </summary>
     public partial class SsisObjectMetadataStatusResult
     {
         /// <summary> Initializes a new instance of SsisObjectMetadataStatusResult. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisObjectMetadataStatusResult. </summary>
-        /// <param name="status">
-        /// The status of the operation.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.status
-        /// </param>
-        /// <param name="name">
-        /// The operation name.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.name
-        /// </param>
-        /// <param name="properties">
-        /// The operation properties.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.properties
-        /// </param>
-        /// <param name="error">
-        /// The operation error message.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.error
-        /// </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="name"> The operation name. </param>
+        /// <param name="properties"> The operation properties. </param>
+        /// <param name="error"> The operation error message. </param>
         internal SsisObjectMetadataStatusResult(string status, string name, string properties, string error)
         {
             Status = status;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Error = error;
         }
 
-        /// <summary>
-        /// The status of the operation.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.status
-        /// </summary>
+        /// <summary> The status of the operation. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The operation name.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.name
-        /// </summary>
+        /// <summary> The operation name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The operation properties.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.properties
-        /// </summary>
+        /// <summary> The operation properties. </summary>
         public string Properties { get; }
-        /// <summary>
-        /// The operation error message.
-        /// Serialized Name: SsisObjectMetadataStatusResponse.error
-        /// </summary>
+        /// <summary> The operation error message. </summary>
         public string Error { get; }
     }
 }

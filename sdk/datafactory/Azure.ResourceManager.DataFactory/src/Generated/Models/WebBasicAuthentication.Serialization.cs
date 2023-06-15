@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> username = default;
-            FactorySecretBaseDefinition password = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))

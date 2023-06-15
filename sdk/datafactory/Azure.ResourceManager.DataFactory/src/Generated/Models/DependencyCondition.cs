@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The DependencyCondition.
-    /// Serialized Name: DependencyCondition
-    /// </summary>
+    /// <summary> The DependencyCondition. </summary>
     public readonly partial struct DependencyCondition : IEquatable<DependencyCondition>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SkippedValue = "Skipped";
         private const string CompletedValue = "Completed";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: DependencyCondition.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static DependencyCondition Succeeded { get; } = new DependencyCondition(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: DependencyCondition.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static DependencyCondition Failed { get; } = new DependencyCondition(FailedValue);
-        /// <summary>
-        /// Skipped
-        /// Serialized Name: DependencyCondition.Skipped
-        /// </summary>
+        /// <summary> Skipped. </summary>
         public static DependencyCondition Skipped { get; } = new DependencyCondition(SkippedValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: DependencyCondition.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static DependencyCondition Completed { get; } = new DependencyCondition(CompletedValue);
         /// <summary> Determines if two <see cref="DependencyCondition"/> values are the same. </summary>
         public static bool operator ==(DependencyCondition left, DependencyCondition right) => left.Equals(right);

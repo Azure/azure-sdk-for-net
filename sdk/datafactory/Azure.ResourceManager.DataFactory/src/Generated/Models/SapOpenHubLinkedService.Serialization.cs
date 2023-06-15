@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> language = default;
             Optional<DataFactoryElement<string>> systemId = default;
             Optional<DataFactoryElement<string>> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<string>> messageServer = default;
             Optional<DataFactoryElement<string>> messageServerService = default;
             Optional<DataFactoryElement<string>> logonGroup = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))

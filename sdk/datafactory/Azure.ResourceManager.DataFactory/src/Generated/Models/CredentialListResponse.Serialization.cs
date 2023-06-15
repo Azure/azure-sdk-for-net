@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IReadOnlyList<ManagedIdentityCredentialResourceData> value = default;
+            IReadOnlyList<DataFactoryManagedIdentityCredentialData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ManagedIdentityCredentialResourceData> array = new List<ManagedIdentityCredentialResourceData>();
+                    List<DataFactoryManagedIdentityCredentialData> array = new List<DataFactoryManagedIdentityCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedIdentityCredentialResourceData.DeserializeManagedIdentityCredentialResourceData(item));
+                        array.Add(DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(item));
                     }
                     value = array;
                     continue;

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> httpPath = default;
             PhoenixAuthenticationType authenticationType = default;
             Optional<DataFactoryElement<string>> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<bool>> enableSsl = default;
             Optional<DataFactoryElement<string>> trustedCertPath = default;
             Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"u8))

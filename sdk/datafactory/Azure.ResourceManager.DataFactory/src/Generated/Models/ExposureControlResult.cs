@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The exposure control response.
-    /// Serialized Name: ExposureControlResponse
-    /// </summary>
+    /// <summary> The exposure control response. </summary>
     public partial class ExposureControlResult
     {
         /// <summary> Initializes a new instance of ExposureControlResult. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExposureControlResult. </summary>
-        /// <param name="featureName">
-        /// The feature name.
-        /// Serialized Name: ExposureControlResponse.featureName
-        /// </param>
-        /// <param name="value">
-        /// The feature value.
-        /// Serialized Name: ExposureControlResponse.value
-        /// </param>
+        /// <param name="featureName"> The feature name. </param>
+        /// <param name="value"> The feature value. </param>
         internal ExposureControlResult(string featureName, string value)
         {
             FeatureName = featureName;
             Value = value;
         }
 
-        /// <summary>
-        /// The feature name.
-        /// Serialized Name: ExposureControlResponse.featureName
-        /// </summary>
+        /// <summary> The feature name. </summary>
         public string FeatureName { get; }
-        /// <summary>
-        /// The feature value.
-        /// Serialized Name: ExposureControlResponse.value
-        /// </summary>
+        /// <summary> The feature value. </summary>
         public string Value { get; }
     }
 }

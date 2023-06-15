@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 switch (discriminator.GetString())
                 {
                     case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element);
-                    case "ManagedIdentity": return ManagedIdentityCredential.DeserializeManagedIdentityCredential(element);
+                    case "ManagedIdentity": return DataFactoryManagedIdentityCredentialDefinition.DeserializeDataFactoryManagedIdentityCredentialDefinition(element);
                 }
             }
             return UnknownCredential.DeserializeUnknownCredential(element);

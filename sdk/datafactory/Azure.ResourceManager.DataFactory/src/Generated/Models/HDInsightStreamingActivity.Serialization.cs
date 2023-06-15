@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            Optional<IList<FactoryLinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
             Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             DataFactoryElement<string> mapper = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> input = default;
             DataFactoryElement<string> output = default;
             IList<BinaryData> filePaths = default;
-            Optional<FactoryLinkedServiceReference> fileLinkedService = default;
+            Optional<DataFactoryLinkedServiceReference> fileLinkedService = default;
             Optional<DataFactoryElement<string>> combiner = default;
             Optional<IList<BinaryData>> commandEnvironment = default;
             Optional<IDictionary<string, BinaryData>> defines = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
+                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
+                                array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            fileLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            fileLinkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("combiner"u8))

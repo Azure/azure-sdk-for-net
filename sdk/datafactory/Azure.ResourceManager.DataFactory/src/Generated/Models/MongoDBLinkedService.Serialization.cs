@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<MongoDBAuthenticationType> authenticationType = default;
             DataFactoryElement<string> databaseName = default;
             Optional<DataFactoryElement<string>> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<string>> authSource = default;
             Optional<DataFactoryElement<int>> port = default;
             Optional<DataFactoryElement<bool>> enableSsl = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authSource"u8))

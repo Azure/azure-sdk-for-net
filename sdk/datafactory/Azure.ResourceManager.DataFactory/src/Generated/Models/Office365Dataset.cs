@@ -12,23 +12,14 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The Office365 account.
-    /// Serialized Name: Office365Dataset
-    /// </summary>
-    public partial class Office365Dataset : FactoryDatasetDefinition
+    /// <summary> The Office365 account. </summary>
+    public partial class Office365Dataset : DataFactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="tableName">
-        /// Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365Dataset.typeProperties.tableName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
-        public Office365Dataset(FactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
+        public Office365Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -38,63 +29,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName">
-        /// Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365Dataset.typeProperties.tableName
-        /// </param>
-        /// <param name="predicate">
-        /// A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365Dataset.typeProperties.predicate
-        /// </param>
-        internal Office365Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
+        /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
+        internal Office365Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Predicate = predicate;
             DatasetType = datasetType ?? "Office365Table";
         }
 
-        /// <summary>
-        /// Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365Dataset.typeProperties.tableName
-        /// </summary>
+        /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
-        /// <summary>
-        /// A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365Dataset.typeProperties.predicate
-        /// </summary>
+        /// <summary> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Predicate { get; set; }
     }
 }

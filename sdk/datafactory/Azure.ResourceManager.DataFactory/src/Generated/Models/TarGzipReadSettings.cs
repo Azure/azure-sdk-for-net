@@ -11,10 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The TarGZip compression read settings.
-    /// Serialized Name: TarGZipReadSettings
-    /// </summary>
+    /// <summary> The TarGZip compression read settings. </summary>
     public partial class TarGzipReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of TarGzipReadSettings. </summary>
@@ -24,25 +21,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TarGzipReadSettings. </summary>
-        /// <param name="compressionReadSettingsType">
-        /// The Compression setting type.
-        /// Serialized Name: CompressionReadSettings.type
-        /// </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="preserveCompressionFileNameAsFolder">
-        /// Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: TarGZipReadSettings.preserveCompressionFileNameAsFolder
-        /// </param>
+        /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         internal TarGzipReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
             CompressionReadSettingsType = compressionReadSettingsType ?? "TarGZipReadSettings";
         }
 
-        /// <summary>
-        /// Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: TarGZipReadSettings.preserveCompressionFileNameAsFolder
-        /// </summary>
+        /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> PreserveCompressionFileNameAsFolder { get; set; }
     }
 }

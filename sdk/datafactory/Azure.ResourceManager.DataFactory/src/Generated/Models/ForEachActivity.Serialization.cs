@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityUserProperty>> userProperties = default;
             Optional<bool> isSequential = default;
             Optional<int> batchCount = default;
-            FactoryExpressionDefinition items = default;
-            IList<PipelineActivity> activities = default;
+            DataFactoryExpressionDefinition items = default;
+            IList<DataFactoryActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,15 +201,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("items"u8))
                         {
-                            items = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
+                            items = DataFactoryExpressionDefinition.DeserializeDataFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("activities"u8))
                         {
-                            List<PipelineActivity> array = new List<PipelineActivity>();
+                            List<DataFactoryActivity> array = new List<DataFactoryActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializeDataFactoryActivity(item));
                             }
                             activities = array;
                             continue;

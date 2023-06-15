@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Big data pool reference type.
-    /// Serialized Name: BigDataPoolReferenceType
-    /// </summary>
+    /// <summary> Big data pool reference type. </summary>
     public readonly partial struct BigDataPoolReferenceType : IEquatable<BigDataPoolReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string BigDataPoolReferenceValue = "BigDataPoolReference";
 
-        /// <summary>
-        /// BigDataPoolReference
-        /// Serialized Name: BigDataPoolReferenceType.BigDataPoolReference
-        /// </summary>
+        /// <summary> BigDataPoolReference. </summary>
         public static BigDataPoolReferenceType BigDataPoolReference { get; } = new BigDataPoolReferenceType(BigDataPoolReferenceValue);
         /// <summary> Determines if two <see cref="BigDataPoolReferenceType"/> values are the same. </summary>
         public static bool operator ==(BigDataPoolReferenceType left, BigDataPoolReferenceType right) => left.Equals(right);

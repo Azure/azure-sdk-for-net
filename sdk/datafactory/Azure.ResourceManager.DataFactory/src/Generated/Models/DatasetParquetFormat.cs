@@ -11,10 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The data stored in Parquet format.
-    /// Serialized Name: ParquetFormat
-    /// </summary>
+    /// <summary> The data stored in Parquet format. </summary>
     public partial class DatasetParquetFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of DatasetParquetFormat. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetParquetFormat. </summary>
-        /// <param name="datasetStorageFormatType">
-        /// Type of dataset storage format.
-        /// Serialized Name: DatasetStorageFormat.type
-        /// </param>
-        /// <param name="serializer">
-        /// Serializer. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetStorageFormat.serializer
-        /// </param>
-        /// <param name="deserializer">
-        /// Deserializer. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetStorageFormat.deserializer
-        /// </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
+        /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetParquetFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {

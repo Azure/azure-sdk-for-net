@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            FactoryExpressionDefinition expression = default;
+            DataFactoryExpressionDefinition expression = default;
             Optional<DataFactoryElement<string>> timeout = default;
-            IList<PipelineActivity> activities = default;
+            IList<DataFactoryActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
+                            expression = DataFactoryExpressionDefinition.DeserializeDataFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeout"u8))
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("activities"u8))
                         {
-                            List<PipelineActivity> array = new List<PipelineActivity>();
+                            List<DataFactoryActivity> array = new List<DataFactoryActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializeDataFactoryActivity(item));
                             }
                             activities = array;
                             continue;

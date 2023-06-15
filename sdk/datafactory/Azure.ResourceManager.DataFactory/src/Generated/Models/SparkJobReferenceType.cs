@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Synapse spark job reference type.
-    /// Serialized Name: SparkJobReferenceType
-    /// </summary>
+    /// <summary> Synapse spark job reference type. </summary>
     public readonly partial struct SparkJobReferenceType : IEquatable<SparkJobReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string SparkJobDefinitionReferenceValue = "SparkJobDefinitionReference";
 
-        /// <summary>
-        /// SparkJobDefinitionReference
-        /// Serialized Name: SparkJobReferenceType.SparkJobDefinitionReference
-        /// </summary>
+        /// <summary> SparkJobDefinitionReference. </summary>
         public static SparkJobReferenceType SparkJobDefinitionReference { get; } = new SparkJobReferenceType(SparkJobDefinitionReferenceValue);
         /// <summary> Determines if two <see cref="SparkJobReferenceType"/> values are the same. </summary>
         public static bool operator ==(SparkJobReferenceType left, SparkJobReferenceType right) => left.Equals(right);

@@ -12,17 +12,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The compression method used on a dataset.
-    /// Serialized Name: DatasetCompression
-    /// </summary>
+    /// <summary> The compression method used on a dataset. </summary>
     public partial class DatasetCompression
     {
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
-        /// <param name="datasetCompressionType">
-        /// Type of dataset compression. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetCompression.type
-        /// </param>
+        /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetCompressionType"/> is null. </exception>
         public DatasetCompression(DataFactoryElement<string> datasetCompressionType)
         {
@@ -33,14 +27,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
-        /// <param name="datasetCompressionType">
-        /// Type of dataset compression. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetCompression.type
-        /// </param>
-        /// <param name="level">
-        /// The dataset compression level. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetCompression.level
-        /// </param>
+        /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
+        /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetCompression(DataFactoryElement<string> datasetCompressionType, DataFactoryElement<string> level, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -49,15 +37,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Type of dataset compression. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetCompression.type
-        /// </summary>
+        /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DatasetCompressionType { get; set; }
-        /// <summary>
-        /// The dataset compression level. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetCompression.level
-        /// </summary>
+        /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Level { get; set; }
         /// <summary>
         /// Additional Properties

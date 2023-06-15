@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            FactoryExpressionDefinition items = default;
-            FactoryExpressionDefinition condition = default;
+            DataFactoryExpressionDefinition items = default;
+            DataFactoryExpressionDefinition condition = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("items"u8))
                         {
-                            items = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
+                            items = DataFactoryExpressionDefinition.DeserializeDataFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("condition"u8))
                         {
-                            condition = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
+                            condition = DataFactoryExpressionDefinition.DeserializeDataFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                     }

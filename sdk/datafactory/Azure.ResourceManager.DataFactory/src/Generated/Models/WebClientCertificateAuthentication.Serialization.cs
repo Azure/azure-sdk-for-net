@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactorySecretBaseDefinition pfx = default;
-            FactorySecretBaseDefinition password = default;
+            DataFactorySecretBaseDefinition pfx = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pfx"u8))
                 {
-                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    pfx = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Pipeline that needs to be triggered with the given parameters.
-    /// Serialized Name: TriggerPipelineReference
-    /// </summary>
+    /// <summary> Pipeline that needs to be triggered with the given parameters. </summary>
     public partial class TriggerPipelineReference
     {
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
@@ -24,28 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
-        /// <param name="pipelineReference">
-        /// Pipeline reference.
-        /// Serialized Name: TriggerPipelineReference.pipelineReference
-        /// </param>
-        /// <param name="parameters">
-        /// Pipeline parameters.
-        /// Serialized Name: TriggerPipelineReference.parameters
-        /// </param>
-        internal TriggerPipelineReference(FactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
+        /// <param name="pipelineReference"> Pipeline reference. </param>
+        /// <param name="parameters"> Pipeline parameters. </param>
+        internal TriggerPipelineReference(DataFactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
         {
             PipelineReference = pipelineReference;
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// Pipeline reference.
-        /// Serialized Name: TriggerPipelineReference.pipelineReference
-        /// </summary>
-        public FactoryPipelineReference PipelineReference { get; set; }
+        /// <summary> Pipeline reference. </summary>
+        public DataFactoryPipelineReference PipelineReference { get; set; }
         /// <summary>
         /// Pipeline parameters.
-        /// Serialized Name: TriggerPipelineReference.parameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

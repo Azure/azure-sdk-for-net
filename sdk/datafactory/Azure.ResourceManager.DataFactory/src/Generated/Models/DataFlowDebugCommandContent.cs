@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Request body structure for data flow debug command.
-    /// Serialized Name: DataFlowDebugCommandRequest
-    /// </summary>
+    /// <summary> Request body structure for data flow debug command. </summary>
     public partial class DataFlowDebugCommandContent
     {
         /// <summary> Initializes a new instance of DataFlowDebugCommandContent. </summary>
@@ -20,20 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// The ID of data flow debug session.
-        /// Serialized Name: DataFlowDebugCommandRequest.sessionId
-        /// </summary>
+        /// <summary> The ID of data flow debug session. </summary>
         public Guid? SessionId { get; set; }
-        /// <summary>
-        /// The command type.
-        /// Serialized Name: DataFlowDebugCommandRequest.command
-        /// </summary>
+        /// <summary> The command type. </summary>
         public DataFlowDebugCommandType? Command { get; set; }
-        /// <summary>
-        /// The command payload object.
-        /// Serialized Name: DataFlowDebugCommandRequest.commandPayload
-        /// </summary>
+        /// <summary> The command payload object. </summary>
         public DataFlowDebugCommandPayload CommandPayload { get; set; }
     }
 }

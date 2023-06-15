@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> filePath = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePath"u8))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
             }

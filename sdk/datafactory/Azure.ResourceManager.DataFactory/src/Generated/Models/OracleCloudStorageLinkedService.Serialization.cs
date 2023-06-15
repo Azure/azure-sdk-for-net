@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DataFactoryElement<string>> accessKeyId = default;
-            Optional<FactorySecretBaseDefinition> secretAccessKey = default;
+            Optional<DataFactorySecretBaseDefinition> secretAccessKey = default;
             Optional<DataFactoryElement<string>> serviceUrl = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            secretAccessKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))

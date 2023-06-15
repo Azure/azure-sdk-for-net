@@ -12,23 +12,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// HDInsight Hive activity type.
-    /// Serialized Name: HDInsightHiveActivity
-    /// </summary>
+    /// <summary> HDInsight Hive activity type. </summary>
     public partial class HDInsightHiveActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of HDInsightHiveActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
+        /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightHiveActivity(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            StorageLinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             Defines = new ChangeTrackingDictionary<string, BinaryData>();
             Variables = new ChangeTrackingDictionary<string, BinaryData>();
@@ -36,76 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightHiveActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="state">
-        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
-        /// Serialized Name: Activity.state
-        /// </param>
-        /// <param name="onInactiveMarkAs">
-        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
-        /// Serialized Name: Activity.onInactiveMarkAs
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="storageLinkedServices">
-        /// Storage linked service references.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.storageLinkedServices
-        /// </param>
-        /// <param name="arguments">
-        /// User specified arguments to HDInsightActivity.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.arguments
-        /// </param>
-        /// <param name="getDebugInfo">
-        /// Debug info option.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.getDebugInfo
-        /// </param>
-        /// <param name="scriptPath">
-        /// Script path. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.scriptPath
-        /// </param>
-        /// <param name="scriptLinkedService">
-        /// Script linked service reference.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.scriptLinkedService
-        /// </param>
-        /// <param name="defines">
-        /// Allows user to specify defines for Hive job request.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.defines
-        /// </param>
-        /// <param name="variables">
-        /// User specified arguments under hivevar namespace.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.variables
-        /// </param>
-        /// <param name="queryTimeout">
-        /// Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.queryTimeout
-        /// </param>
-        internal HDInsightHiveActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> variables, int? queryTimeout) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
+        /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
+        /// <param name="getDebugInfo"> Debug info option. </param>
+        /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
+        /// <param name="defines"> Allows user to specify defines for Hive job request. </param>
+        /// <param name="variables"> User specified arguments under hivevar namespace. </param>
+        /// <param name="queryTimeout"> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </param>
+        internal HDInsightHiveActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> variables, int? queryTimeout) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -118,14 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightHive";
         }
 
-        /// <summary>
-        /// Storage linked service references.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.storageLinkedServices
-        /// </summary>
-        public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
+        /// <summary> Storage linked service references. </summary>
+        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.arguments
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -155,24 +94,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Arguments { get; }
-        /// <summary>
-        /// Debug info option.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.getDebugInfo
-        /// </summary>
+        /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary>
-        /// Script path. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.scriptPath
-        /// </summary>
+        /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath { get; set; }
-        /// <summary>
-        /// Script linked service reference.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.scriptLinkedService
-        /// </summary>
-        public FactoryLinkedServiceReference ScriptLinkedService { get; set; }
+        /// <summary> Script linked service reference. </summary>
+        public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// Allows user to specify defines for Hive job request.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.defines
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -204,7 +133,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IDictionary<string, BinaryData> Defines { get; }
         /// <summary>
         /// User specified arguments under hivevar namespace.
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.variables
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -234,10 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Variables { get; }
-        /// <summary>
-        /// Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
-        /// Serialized Name: HDInsightHiveActivity.typeProperties.queryTimeout
-        /// </summary>
+        /// <summary> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </summary>
         public int? QueryTimeout { get; set; }
     }
 }

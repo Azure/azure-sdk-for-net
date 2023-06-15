@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of exposure control feature values.
-    /// Serialized Name: ExposureControlBatchResponse
-    /// </summary>
+    /// <summary> A list of exposure control feature values. </summary>
     public partial class ExposureControlBatchResult
     {
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResults">
-        /// List of exposure control feature values.
-        /// Serialized Name: ExposureControlBatchResponse.exposureControlResponses
-        /// </param>
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResults"/> is null. </exception>
         internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults)
         {
@@ -32,19 +26,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResults">
-        /// List of exposure control feature values.
-        /// Serialized Name: ExposureControlBatchResponse.exposureControlResponses
-        /// </param>
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
         internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResults)
         {
             ExposureControlResults = exposureControlResults;
         }
 
-        /// <summary>
-        /// List of exposure control feature values.
-        /// Serialized Name: ExposureControlBatchResponse.exposureControlResponses
-        /// </summary>
+        /// <summary> List of exposure control feature values. </summary>
         public IReadOnlyList<ExposureControlResult> ExposureControlResults { get; }
     }
 }

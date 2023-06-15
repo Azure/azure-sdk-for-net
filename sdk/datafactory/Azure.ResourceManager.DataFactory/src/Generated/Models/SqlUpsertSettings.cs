@@ -10,10 +10,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sql upsert option settings
-    /// Serialized Name: SqlUpsertSettings
-    /// </summary>
+    /// <summary> Sql upsert option settings. </summary>
     public partial class SqlUpsertSettings
     {
         /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
@@ -22,18 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
-        /// <param name="useTempDB">
-        /// Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SqlUpsertSettings.useTempDB
-        /// </param>
-        /// <param name="interimSchemaName">
-        /// Schema name for interim table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SqlUpsertSettings.interimSchemaName
-        /// </param>
-        /// <param name="keys">
-        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
-        /// Serialized Name: SqlUpsertSettings.keys
-        /// </param>
+        /// <param name="useTempDB"> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
+        /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
         internal SqlUpsertSettings(DataFactoryElement<bool> useTempDB, DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys)
         {
             UseTempDB = useTempDB;
@@ -41,20 +29,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Keys = keys;
         }
 
-        /// <summary>
-        /// Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SqlUpsertSettings.useTempDB
-        /// </summary>
+        /// <summary> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> UseTempDB { get; set; }
-        /// <summary>
-        /// Schema name for interim table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SqlUpsertSettings.interimSchemaName
-        /// </summary>
+        /// <summary> Schema name for interim table. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> InterimSchemaName { get; set; }
-        /// <summary>
-        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
-        /// Serialized Name: SqlUpsertSettings.keys
-        /// </summary>
+        /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
         public DataFactoryElement<IList<string>> Keys { get; set; }
     }
 }

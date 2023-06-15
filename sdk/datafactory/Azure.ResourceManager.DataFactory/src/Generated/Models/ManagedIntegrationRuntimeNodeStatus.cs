@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The managed integration runtime node status.
-    /// Serialized Name: ManagedIntegrationRuntimeNodeStatus
-    /// </summary>
+    /// <summary> The managed integration runtime node status. </summary>
     public readonly partial struct ManagedIntegrationRuntimeNodeStatus : IEquatable<ManagedIntegrationRuntimeNodeStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string RecyclingValue = "Recycling";
         private const string UnavailableValue = "Unavailable";
 
-        /// <summary>
-        /// Starting
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Starting { get; } = new ManagedIntegrationRuntimeNodeStatus(StartingValue);
-        /// <summary>
-        /// Available
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Available
-        /// </summary>
+        /// <summary> Available. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Available { get; } = new ManagedIntegrationRuntimeNodeStatus(AvailableValue);
-        /// <summary>
-        /// Recycling
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Recycling
-        /// </summary>
+        /// <summary> Recycling. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Recycling { get; } = new ManagedIntegrationRuntimeNodeStatus(RecyclingValue);
-        /// <summary>
-        /// Unavailable
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Unavailable
-        /// </summary>
+        /// <summary> Unavailable. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Unavailable { get; } = new ManagedIntegrationRuntimeNodeStatus(UnavailableValue);
         /// <summary> Determines if two <see cref="ManagedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(ManagedIntegrationRuntimeNodeStatus left, ManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Default value.
-    /// Serialized Name: DWCopyCommandDefaultValue
-    /// </summary>
+    /// <summary> Default value. </summary>
     public partial class DWCopyCommandDefaultValue
     {
         /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
@@ -21,14 +18,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
-        /// <param name="columnName">
-        /// Column name. Type: object (or Expression with resultType string).
-        /// Serialized Name: DWCopyCommandDefaultValue.columnName
-        /// </param>
-        /// <param name="defaultValue">
-        /// The default value of the column. Type: object (or Expression with resultType string).
-        /// Serialized Name: DWCopyCommandDefaultValue.defaultValue
-        /// </param>
+        /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
+        /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
         internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue)
         {
             ColumnName = columnName;
@@ -37,7 +28,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Column name. Type: object (or Expression with resultType string).
-        /// Serialized Name: DWCopyCommandDefaultValue.columnName
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -69,7 +59,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData ColumnName { get; set; }
         /// <summary>
         /// The default value of the column. Type: object (or Expression with resultType string).
-        /// Serialized Name: DWCopyCommandDefaultValue.defaultValue
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

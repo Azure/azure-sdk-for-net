@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Type of authentication used to connect to the web table source.
-    /// Serialized Name: WebAuthenticationType
-    /// </summary>
+    /// <summary> Type of authentication used to connect to the web table source. </summary>
     internal readonly partial struct WebAuthenticationType : IEquatable<WebAuthenticationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string AnonymousValue = "Anonymous";
         private const string ClientCertificateValue = "ClientCertificate";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: WebAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static WebAuthenticationType Basic { get; } = new WebAuthenticationType(BasicValue);
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: WebAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static WebAuthenticationType Anonymous { get; } = new WebAuthenticationType(AnonymousValue);
-        /// <summary>
-        /// ClientCertificate
-        /// Serialized Name: WebAuthenticationType.ClientCertificate
-        /// </summary>
+        /// <summary> ClientCertificate. </summary>
         public static WebAuthenticationType ClientCertificate { get; } = new WebAuthenticationType(ClientCertificateValue);
         /// <summary> Determines if two <see cref="WebAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(WebAuthenticationType left, WebAuthenticationType right) => left.Equals(right);

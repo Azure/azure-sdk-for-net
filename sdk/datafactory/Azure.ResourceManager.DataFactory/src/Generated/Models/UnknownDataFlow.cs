@@ -10,29 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The UnknownDataFlow.
-    /// Serialized Name: UnknownDataFlow
-    /// </summary>
-    internal partial class UnknownDataFlow : FactoryDataFlowDefinition
+    /// <summary> The UnknownDataFlow. </summary>
+    internal partial class UnknownDataFlow : DataFactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of UnknownDataFlow. </summary>
-        /// <param name="dataFlowType">
-        /// Type of data flow.
-        /// Serialized Name: DataFlow.type
-        /// </param>
-        /// <param name="description">
-        /// The description of the data flow.
-        /// Serialized Name: DataFlow.description
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the data flow.
-        /// Serialized Name: DataFlow.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-        /// Serialized Name: DataFlow.folder
-        /// </param>
+        /// <param name="dataFlowType"> Type of data flow. </param>
+        /// <param name="description"> The description of the data flow. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
+        /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
         internal UnknownDataFlow(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder) : base(dataFlowType, description, annotations, folder)
         {
             DataFlowType = dataFlowType ?? "Unknown";

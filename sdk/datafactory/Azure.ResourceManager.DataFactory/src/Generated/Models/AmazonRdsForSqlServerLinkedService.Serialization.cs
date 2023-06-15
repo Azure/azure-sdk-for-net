@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> connectionString = default;
             Optional<DataFactoryElement<string>> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<SqlAlwaysEncryptedProperties> alwaysEncryptedSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

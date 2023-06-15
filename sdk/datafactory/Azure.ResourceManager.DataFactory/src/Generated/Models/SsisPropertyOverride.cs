@@ -11,17 +11,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SSIS property override.
-    /// Serialized Name: SsisPropertyOverride
-    /// </summary>
+    /// <summary> SSIS property override. </summary>
     public partial class SsisPropertyOverride
     {
         /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
-        /// <param name="value">
-        /// SSIS package property override value. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPropertyOverride.value
-        /// </param>
+        /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisPropertyOverride(DataFactoryElement<string> value)
         {
@@ -31,29 +25,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
-        /// <param name="value">
-        /// SSIS package property override value. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPropertyOverride.value
-        /// </param>
-        /// <param name="isSensitive">
-        /// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
-        /// Serialized Name: SsisPropertyOverride.isSensitive
-        /// </param>
+        /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
+        /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
         internal SsisPropertyOverride(DataFactoryElement<string> value, bool? isSensitive)
         {
             Value = value;
             IsSensitive = isSensitive;
         }
 
-        /// <summary>
-        /// SSIS package property override value. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPropertyOverride.value
-        /// </summary>
+        /// <summary> SSIS package property override value. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Value { get; set; }
-        /// <summary>
-        /// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
-        /// Serialized Name: SsisPropertyOverride.isSensitive
-        /// </summary>
+        /// <summary> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </summary>
         public bool? IsSensitive { get; set; }
     }
 }

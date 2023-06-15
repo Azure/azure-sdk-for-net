@@ -12,25 +12,13 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// HDInsight Spark activity.
-    /// Serialized Name: HDInsightSparkActivity
-    /// </summary>
+    /// <summary> HDInsight Spark activity. </summary>
     public partial class HDInsightSparkActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of HDInsightSparkActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="rootPath">
-        /// The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.rootPath
-        /// </param>
-        /// <param name="entryFilePath">
-        /// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.entryFilePath
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
+        /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
         public HDInsightSparkActivity(string name, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath) : base(name)
         {
@@ -46,76 +34,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightSparkActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="state">
-        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
-        /// Serialized Name: Activity.state
-        /// </param>
-        /// <param name="onInactiveMarkAs">
-        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
-        /// Serialized Name: Activity.onInactiveMarkAs
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="rootPath">
-        /// The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.rootPath
-        /// </param>
-        /// <param name="entryFilePath">
-        /// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.entryFilePath
-        /// </param>
-        /// <param name="arguments">
-        /// The user-specified arguments to HDInsightSparkActivity.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.arguments
-        /// </param>
-        /// <param name="getDebugInfo">
-        /// Debug info option.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.getDebugInfo
-        /// </param>
-        /// <param name="sparkJobLinkedService">
-        /// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.sparkJobLinkedService
-        /// </param>
-        /// <param name="className">
-        /// The application's Java/Spark main class.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.className
-        /// </param>
-        /// <param name="proxyUser">
-        /// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.proxyUser
-        /// </param>
-        /// <param name="sparkConfig">
-        /// Spark configuration property.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.sparkConfig
-        /// </param>
-        internal HDInsightSparkActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, FactoryLinkedServiceReference sparkJobLinkedService, string className, DataFactoryElement<string> proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
+        /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
+        /// <param name="arguments"> The user-specified arguments to HDInsightSparkActivity. </param>
+        /// <param name="getDebugInfo"> Debug info option. </param>
+        /// <param name="sparkJobLinkedService"> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </param>
+        /// <param name="className"> The application's Java/Spark main class. </param>
+        /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
+        /// <param name="sparkConfig"> Spark configuration property. </param>
+        internal HDInsightSparkActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryLinkedServiceReference sparkJobLinkedService, string className, DataFactoryElement<string> proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
@@ -128,19 +65,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightSpark";
         }
 
-        /// <summary>
-        /// The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.rootPath
-        /// </summary>
+        /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> RootPath { get; set; }
-        /// <summary>
-        /// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.entryFilePath
-        /// </summary>
+        /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> EntryFilePath { get; set; }
         /// <summary>
         /// The user-specified arguments to HDInsightSparkActivity.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.arguments
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -170,29 +100,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Arguments { get; }
-        /// <summary>
-        /// Debug info option.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.getDebugInfo
-        /// </summary>
+        /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary>
-        /// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.sparkJobLinkedService
-        /// </summary>
-        public FactoryLinkedServiceReference SparkJobLinkedService { get; set; }
-        /// <summary>
-        /// The application's Java/Spark main class.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.className
-        /// </summary>
+        /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
+        public DataFactoryLinkedServiceReference SparkJobLinkedService { get; set; }
+        /// <summary> The application's Java/Spark main class. </summary>
         public string ClassName { get; set; }
-        /// <summary>
-        /// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.proxyUser
-        /// </summary>
+        /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ProxyUser { get; set; }
         /// <summary>
         /// Spark configuration property.
-        /// Serialized Name: HDInsightSparkActivity.typeProperties.sparkConfig
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

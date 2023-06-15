@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<DataFactoryElement<string>> copyBehavior = default;
-            Optional<IList<FactoryMetadataItemInfo>> metadata = default;
+            Optional<IList<DataFactoryMetadataItemInfo>> metadata = default;
             string type = default;
             Optional<DataFactoryElement<int>> writeBatchSize = default;
             Optional<DataFactoryElement<string>> writeBatchTimeout = default;
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<FactoryMetadataItemInfo> array = new List<FactoryMetadataItemInfo>();
+                    List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FactoryMetadataItemInfo.DeserializeFactoryMetadataItemInfo(item));
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item));
                     }
                     metadata = array;
                     continue;

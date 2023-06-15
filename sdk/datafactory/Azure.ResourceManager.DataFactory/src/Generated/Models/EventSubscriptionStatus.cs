@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Event Subscription Status.
-    /// Serialized Name: EventSubscriptionStatus
-    /// </summary>
+    /// <summary> Event Subscription Status. </summary>
     public readonly partial struct EventSubscriptionStatus : IEquatable<EventSubscriptionStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string DisabledValue = "Disabled";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EventSubscriptionStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static EventSubscriptionStatus Enabled { get; } = new EventSubscriptionStatus(EnabledValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: EventSubscriptionStatus.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static EventSubscriptionStatus Provisioning { get; } = new EventSubscriptionStatus(ProvisioningValue);
-        /// <summary>
-        /// Deprovisioning
-        /// Serialized Name: EventSubscriptionStatus.Deprovisioning
-        /// </summary>
+        /// <summary> Deprovisioning. </summary>
         public static EventSubscriptionStatus Deprovisioning { get; } = new EventSubscriptionStatus(DeprovisioningValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EventSubscriptionStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static EventSubscriptionStatus Disabled { get; } = new EventSubscriptionStatus(DisabledValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: EventSubscriptionStatus.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static EventSubscriptionStatus Unknown { get; } = new EventSubscriptionStatus(UnknownValue);
         /// <summary> Determines if two <see cref="EventSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(EventSubscriptionStatus left, EventSubscriptionStatus right) => left.Equals(right);

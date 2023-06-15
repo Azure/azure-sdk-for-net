@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> type = default;
-            Optional<FactorySecretBaseDefinition> pfx = default;
+            Optional<DataFactorySecretBaseDefinition> pfx = default;
             Optional<DataFactoryElement<string>> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<string>> resource = default;
             Optional<DataFactoryElement<string>> userTenant = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    pfx = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
             }

@@ -12,17 +12,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Script activity type.
-    /// Serialized Name: ScriptActivity
-    /// </summary>
+    /// <summary> Script activity type. </summary>
     public partial class ScriptActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of ScriptActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
+        /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptActivity(string name) : base(name)
         {
@@ -33,56 +27,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="state">
-        /// Activity state. This is an optional property and if not provided, the state will be Active by default.
-        /// Serialized Name: Activity.state
-        /// </param>
-        /// <param name="onInactiveMarkAs">
-        /// Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
-        /// Serialized Name: Activity.onInactiveMarkAs
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="scriptBlockExecutionTimeout">
-        /// ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: ScriptActivity.typeProperties.scriptBlockExecutionTimeout
-        /// </param>
-        /// <param name="scripts">
-        /// Array of script blocks. Type: array.
-        /// Serialized Name: ScriptActivity.typeProperties.scripts
-        /// </param>
-        /// <param name="logSettings">
-        /// Log settings of script activity.
-        /// Serialized Name: ScriptActivity.typeProperties.logSettings
-        /// </param>
-        internal ScriptActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="scriptBlockExecutionTimeout"> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="scripts"> Array of script blocks. Type: array. </param>
+        /// <param name="logSettings"> Log settings of script activity. </param>
+        internal ScriptActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptBlockExecutionTimeout = scriptBlockExecutionTimeout;
             Scripts = scripts;
@@ -90,20 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Script";
         }
 
-        /// <summary>
-        /// ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: ScriptActivity.typeProperties.scriptBlockExecutionTimeout
-        /// </summary>
+        /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> ScriptBlockExecutionTimeout { get; set; }
-        /// <summary>
-        /// Array of script blocks. Type: array.
-        /// Serialized Name: ScriptActivity.typeProperties.scripts
-        /// </summary>
+        /// <summary> Array of script blocks. Type: array. </summary>
         public IList<ScriptActivityScriptBlock> Scripts { get; }
-        /// <summary>
-        /// Log settings of script activity.
-        /// Serialized Name: ScriptActivity.typeProperties.logSettings
-        /// </summary>
+        /// <summary> Log settings of script activity. </summary>
         public ScriptActivityTypePropertiesLogSettings LogSettings { get; set; }
     }
 }

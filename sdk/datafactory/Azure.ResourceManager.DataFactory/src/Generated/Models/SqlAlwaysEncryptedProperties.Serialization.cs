@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alwaysEncryptedAkvAuthType"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("credential"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
             }

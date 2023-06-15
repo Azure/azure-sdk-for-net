@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            FactoryExpressionDefinition expression = default;
-            Optional<IList<PipelineActivity>> ifTrueActivities = default;
-            Optional<IList<PipelineActivity>> ifFalseActivities = default;
+            DataFactoryExpressionDefinition expression = default;
+            Optional<IList<DataFactoryActivity>> ifTrueActivities = default;
+            Optional<IList<DataFactoryActivity>> ifFalseActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
+                            expression = DataFactoryExpressionDefinition.DeserializeDataFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ifTrueActivities"u8))
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<PipelineActivity> array = new List<PipelineActivity>();
+                            List<DataFactoryActivity> array = new List<DataFactoryActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializeDataFactoryActivity(item));
                             }
                             ifTrueActivities = array;
                             continue;
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<PipelineActivity> array = new List<PipelineActivity>();
+                            List<DataFactoryActivity> array = new List<DataFactoryActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializeDataFactoryActivity(item));
                             }
                             ifFalseActivities = array;
                             continue;

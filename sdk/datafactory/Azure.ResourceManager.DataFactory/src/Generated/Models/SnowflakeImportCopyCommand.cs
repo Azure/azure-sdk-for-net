@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Snowflake import command settings.
-    /// Serialized Name: SnowflakeImportCopyCommand
-    /// </summary>
+    /// <summary> Snowflake import command settings. </summary>
     public partial class SnowflakeImportCopyCommand : ImportSettings
     {
         /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
@@ -26,19 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
-        /// <param name="importSettingsType">
-        /// The import setting type.
-        /// Serialized Name: ImportSettings.type
-        /// </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="additionalCopyOptions">
-        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }
-        /// Serialized Name: SnowflakeImportCopyCommand.additionalCopyOptions
-        /// </param>
-        /// <param name="additionalFormatOptions">
-        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "FORCE": "TRUE", "LOAD_UNCERTAIN_FILES": "'FALSE'" }
-        /// Serialized Name: SnowflakeImportCopyCommand.additionalFormatOptions
-        /// </param>
+        /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }. </param>
+        /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "FORCE": "TRUE", "LOAD_UNCERTAIN_FILES": "'FALSE'" }. </param>
         internal SnowflakeImportCopyCommand(string importSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions) : base(importSettingsType, additionalProperties)
         {
             AdditionalCopyOptions = additionalCopyOptions;
@@ -48,7 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }
-        /// Serialized Name: SnowflakeImportCopyCommand.additionalCopyOptions
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -80,7 +67,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IDictionary<string, BinaryData> AdditionalCopyOptions { get; }
         /// <summary>
         /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "FORCE": "TRUE", "LOAD_UNCERTAIN_FILES": "'FALSE'" }
-        /// Serialized Name: SnowflakeImportCopyCommand.additionalFormatOptions
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

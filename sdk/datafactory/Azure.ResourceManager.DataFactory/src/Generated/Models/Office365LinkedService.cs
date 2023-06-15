@@ -12,33 +12,20 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Office365 linked service.
-    /// Serialized Name: Office365LinkedService
-    /// </summary>
-    public partial class Office365LinkedService : FactoryLinkedServiceDefinition
+    /// <summary> Office365 linked service. </summary>
+    public partial class Office365LinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of Office365LinkedService. </summary>
-        /// <param name="office365TenantId">
-        /// Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.office365TenantId
-        /// </param>
-        /// <param name="servicePrincipalTenantId">
-        /// Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalTenantId
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// Specify the application's client ID. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application's key.
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
-        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey)
+        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey)
         {
             Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
             Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
@@ -53,50 +40,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of Office365LinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="office365TenantId">
-        /// Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.office365TenantId
-        /// </param>
-        /// <param name="servicePrincipalTenantId">
-        /// Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalTenantId
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// Specify the application's client ID. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application's key.
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: Office365LinkedService.typeProperties.encryptedCredential
-        /// </param>
-        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;
@@ -106,31 +65,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Office365";
         }
 
-        /// <summary>
-        /// Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.office365TenantId
-        /// </summary>
+        /// <summary> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Office365TenantId { get; set; }
-        /// <summary>
-        /// Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalTenantId
-        /// </summary>
+        /// <summary> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalTenantId { get; set; }
-        /// <summary>
-        /// Specify the application's client ID. Type: string (or Expression with resultType string).
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary>
         /// Specify the application's key.
-        /// Serialized Name: Office365LinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: Office365LinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

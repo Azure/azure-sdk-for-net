@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> clusterUri = default;
             Optional<DataFactoryElement<string>> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<FactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<DataFactoryElement<bool>> isEspEnabled = default;
             Optional<DataFactoryElement<string>> fileSystem = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hcatalogLinkedServiceName"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hcatalogLinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            hcatalogLinkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

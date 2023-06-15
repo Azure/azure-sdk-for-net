@@ -12,25 +12,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Linked service for Quickbase.
-    /// Serialized Name: QuickbaseLinkedService
-    /// </summary>
-    public partial class QuickbaseLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> Linked service for Quickbase. </summary>
+    public partial class QuickbaseLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
-        /// <param name="uri">
-        /// The url to connect Quickbase source. Type: string (or Expression with resultType string).
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.url
-        /// </param>
+        /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
         /// <param name="userToken">
         /// The user token for the Quickbase source.
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.userToken
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="userToken"/> is null. </exception>
-        public QuickbaseLinkedService(DataFactoryElement<string> uri, FactorySecretBaseDefinition userToken)
+        public QuickbaseLinkedService(DataFactoryElement<string> uri, DataFactorySecretBaseDefinition userToken)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(userToken, nameof(userToken));
@@ -41,42 +34,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri">
-        /// The url to connect Quickbase source. Type: string (or Expression with resultType string).
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.url
-        /// </param>
+        /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
         /// <param name="userToken">
         /// The user token for the Quickbase source.
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.userToken
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        internal QuickbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, FactorySecretBaseDefinition userToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        internal QuickbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactorySecretBaseDefinition userToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             UserToken = userToken;
@@ -84,21 +55,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Quickbase";
         }
 
-        /// <summary>
-        /// The url to connect Quickbase source. Type: string (or Expression with resultType string).
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.url
-        /// </summary>
+        /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary>
         /// The user token for the Quickbase source.
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.userToken
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition UserToken { get; set; }
+        public DataFactorySecretBaseDefinition UserToken { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: QuickbaseLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

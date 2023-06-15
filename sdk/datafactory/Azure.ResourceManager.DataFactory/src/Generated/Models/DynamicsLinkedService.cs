@@ -12,21 +12,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Dynamics linked service.
-    /// Serialized Name: DynamicsLinkedService
-    /// </summary>
-    public partial class DynamicsLinkedService : FactoryLinkedServiceDefinition
+    /// <summary> Dynamics linked service. </summary>
+    public partial class DynamicsLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DynamicsLinkedService. </summary>
-        /// <param name="deploymentType">
-        /// The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.deploymentType
-        /// </param>
-        /// <param name="authenticationType">
-        /// The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.authenticationType
-        /// </param>
+        /// <param name="deploymentType"> The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string). </param>
+        /// <param name="authenticationType"> The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
         public DynamicsLinkedService(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType)
         {
@@ -39,84 +30,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DynamicsLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="deploymentType">
-        /// The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.deploymentType
-        /// </param>
-        /// <param name="hostName">
-        /// The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.hostName
-        /// </param>
-        /// <param name="port">
-        /// The port of on-premises Dynamics server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.port
-        /// </param>
-        /// <param name="serviceUri">
-        /// The URL to the Microsoft Dynamics server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.serviceUri
-        /// </param>
-        /// <param name="organizationName">
-        /// The organization name of the Dynamics instance. The property is required for on-prem and required for online when there are more than one Dynamics instances associated with the user. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.organizationName
-        /// </param>
-        /// <param name="authenticationType">
-        /// The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.authenticationType
-        /// </param>
-        /// <param name="username">
-        /// User name to access the Dynamics instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.username
-        /// </param>
+        /// <param name="deploymentType"> The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string). </param>
+        /// <param name="hostName"> The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </param>
+        /// <param name="port"> The port of on-premises Dynamics server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="serviceUri"> The URL to the Microsoft Dynamics server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string). </param>
+        /// <param name="organizationName"> The organization name of the Dynamics instance. The property is required for on-prem and required for online when there are more than one Dynamics instances associated with the user. Type: string (or Expression with resultType string). </param>
+        /// <param name="authenticationType"> The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </param>
+        /// <param name="username"> User name to access the Dynamics instance. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// Password to access the Dynamics instance.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="servicePrincipalId">
-        /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.servicePrincipalId
-        /// </param>
-        /// <param name="servicePrincipalCredentialType">
-        /// The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.servicePrincipalCredentialType
-        /// </param>
+        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalCredential">
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.servicePrincipalCredential
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.credential
-        /// </param>
-        internal DynamicsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> username, FactorySecretBaseDefinition password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, FactorySecretBaseDefinition servicePrincipalCredential, BinaryData encryptedCredential, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal DynamicsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecretBaseDefinition servicePrincipalCredential, BinaryData encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             DeploymentType = deploymentType;
             HostName = hostName;
@@ -134,68 +75,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Dynamics";
         }
 
-        /// <summary>
-        /// The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.deploymentType
-        /// </summary>
+        /// <summary> The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DeploymentType { get; set; }
-        /// <summary>
-        /// The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.hostName
-        /// </summary>
+        /// <summary> The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> HostName { get; set; }
-        /// <summary>
-        /// The port of on-premises Dynamics server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.port
-        /// </summary>
+        /// <summary> The port of on-premises Dynamics server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public DataFactoryElement<int> Port { get; set; }
-        /// <summary>
-        /// The URL to the Microsoft Dynamics server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.serviceUri
-        /// </summary>
+        /// <summary> The URL to the Microsoft Dynamics server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServiceUri { get; set; }
-        /// <summary>
-        /// The organization name of the Dynamics instance. The property is required for on-prem and required for online when there are more than one Dynamics instances associated with the user. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.organizationName
-        /// </summary>
+        /// <summary> The organization name of the Dynamics instance. The property is required for on-prem and required for online when there are more than one Dynamics instances associated with the user. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> OrganizationName { get; set; }
-        /// <summary>
-        /// The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.authenticationType
-        /// </summary>
+        /// <summary> The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AuthenticationType { get; set; }
-        /// <summary>
-        /// User name to access the Dynamics instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.username
-        /// </summary>
+        /// <summary> User name to access the Dynamics instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary>
         /// Password to access the Dynamics instance.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.password
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        public DataFactorySecretBaseDefinition Password { get; set; }
+        /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary>
-        /// The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsLinkedService.typeProperties.servicePrincipalCredentialType
-        /// </summary>
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary>
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.servicePrincipalCredential
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition ServicePrincipalCredential { get; set; }
+        public DataFactorySecretBaseDefinition ServicePrincipalCredential { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.encryptedCredential
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -225,10 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: DynamicsLinkedService.typeProperties.credential
-        /// </summary>
-        public FactoryCredentialReference Credential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

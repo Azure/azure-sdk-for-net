@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> entryFilePath = default;
             Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
-            Optional<FactoryLinkedServiceReference> sparkJobLinkedService = default;
+            Optional<DataFactoryLinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
             Optional<DataFactoryElement<string>> proxyUser = default;
             Optional<IDictionary<string, BinaryData>> sparkConfig = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sparkJobLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            sparkJobLinkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("className"u8))
