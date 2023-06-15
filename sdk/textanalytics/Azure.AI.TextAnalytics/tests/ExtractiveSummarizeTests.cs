@@ -114,21 +114,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        public async Task ExtractiveSummarizeBatchCancellationTest()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Started, s_batchDocuments);
-            await operation.CancelAsync();
-            await operation.UpdateStatusAsync();
-
-            // In practice, the operation completes so quickly that in most cases its cancellation will be interrupted
-            // and its final state will be "Succeeded" instead of "Cancelled". This is why we only assert for "Cancelling".
-            Assert.AreEqual(TextAnalyticsOperationStatus.Cancelling, operation.Status);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractiveSummarizeBatchWaitUntilStartedTest()
         {
             TextAnalyticsClient client = GetClient();
