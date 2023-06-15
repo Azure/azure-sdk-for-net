@@ -47,7 +47,7 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                return IsAllowedAnonymousValue(type, value, null);
+                return IsAllowedAnonymousValue(type, value, null, 0);
             }
 
             private static bool IsAllowedLeafType(Type type)
@@ -186,7 +186,7 @@ namespace Azure.Core.Dynamic
                 return true;
             }
 
-            private static bool IsAllowedAnonymousValue<T>(Type type, T value, Type[]? visited)
+            private static bool IsAllowedAnonymousValue<T>(Type type, T value, Type[]? visited, int depth)
             {
                 if (!IsAnonymousType(type))
                 {
@@ -207,19 +207,23 @@ namespace Azure.Core.Dynamic
                     }
 
                     // Detect cycles: trust but verify
-                    if (ContainsType(visited, property.PropertyType))
+                    if (ContainsType(visited, depth, property.PropertyType))
                     {
                         continue;
                     }
 
                     // Recurse
-                    visited = AddType(visited, type);
-                    if (!IsAllowedAnonymousValue(property.PropertyType, propertyValue, visited))
+                    visited = AddType(visited, depth, type);
+                    if (!IsAllowedAnonymousValue(property.PropertyType, propertyValue, visited, depth + 1))
                     {
                         return false;
                     }
 
-                    ArrayPool<Type>.Shared.Return(visited);
+                    if (depth == 0 && visited != null)
+                    {
+                        // We're back at the top of the stack
+                        ArrayPool<Type>.Shared.Return(visited);
+                    }
                 }
 
                 return true;
@@ -230,14 +234,14 @@ namespace Azure.Core.Dynamic
                 return type.Name.StartsWith("<>f__AnonymousType");
             }
 
-            private static bool ContainsType(Type[]? types, Type type)
+            private static bool ContainsType(Type[]? types, int count, Type type)
             {
                 if (types == null)
                 {
                     return false;
                 }
 
-                for (int i = 0; i < types.Length; i++)
+                for (int i = 0; i < count; i++)
                 {
                     if (types[i] == type)
                     {
@@ -248,16 +252,25 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            private static Type[] AddType(Type[]? types, Type type)
+            private const int _expandIncrement = 16;
+            private static Type[] AddType(Type[]? types, int count, Type type)
             {
-                int length = types == null ? 0 : types.Length;
-                Type[] expanded = ArrayPool<Type>.Shared.Rent(length + 1);
-                if (types is not null)
+                if (count % _expandIncrement == 0)
                 {
-                    Array.Copy(types, expanded, length);
+                    int length = types == null ? 0 : types.Length;
+                    Type[] expanded = ArrayPool<Type>.Shared.Rent(length + _expandIncrement);
+
+                    if (types is not null)
+                    {
+                        Array.Copy(types, expanded, length);
+                        ArrayPool<Type>.Shared.Return(types);
+                    }
+
+                    types = expanded;
                 }
-                expanded[length] = type;
-                return expanded;
+
+                types![count] = type;
+                return types;
             }
         }
     }

@@ -158,6 +158,79 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanAssignDeepAnonymousType()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            var anon = new
+            {
+                One = new
+                {
+                    Two = new
+                    {
+                        Three = new
+                        {
+                            Four = new
+                            {
+                                Five = new
+                                {
+                                    Six = new
+                                    {
+                                        Seven = new
+                                        {
+                                            Eight = new
+                                            {
+                                                Nine = new
+                                                {
+                                                    Ten = new
+                                                    {
+                                                        Eleven = new
+                                                        {
+                                                            Twelve =new
+                                                            {
+                                                                Thirteen = new
+                                                                {
+                                                                    Fourteen = new
+                                                                    {
+                                                                        Fifteen = new
+                                                                        {
+                                                                            Sixteen = new
+                                                                            {
+                                                                                Seventeen = new
+                                                                                {
+                                                                                    Eighteen = new
+                                                                                    {
+                                                                                        Nineteen = new
+                                                                                        {
+                                                                                            Twenty = "twenty"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            Assert.DoesNotThrow(() => json.Foo = anon);
+            Assert.DoesNotThrow(() => json.Bar = anon);
+            Assert.AreEqual("twenty", (string)json.Foo.One.Two.Three.Four.Five.Six.Seven.Eight.Nine.Ten.Eleven.Twelve.Thirteen.Fourteen.Fifteen.Sixteen.Seventeen.Eighteen.Nineteen.Twenty);
+            Assert.AreEqual("twenty", (string)json.Bar.One.Two.Three.Four.Five.Six.Seven.Eight.Nine.Ten.Eleven.Twelve.Thirteen.Fourteen.Fifteen.Sixteen.Seventeen.Eighteen.Nineteen.Twenty);
+        }
+
+        [Test]
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesOneDeep_NewProperty()
         {
