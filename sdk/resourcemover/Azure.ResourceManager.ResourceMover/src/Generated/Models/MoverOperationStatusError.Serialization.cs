@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        additionalInfo = null;
                         continue;
                     }
                     List<MoverOperationErrorAdditionalInfo> array = new List<MoverOperationErrorAdditionalInfo>();

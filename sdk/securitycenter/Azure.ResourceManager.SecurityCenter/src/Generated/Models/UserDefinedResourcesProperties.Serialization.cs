@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null)
+            if (QuerySubscriptions != null && Optional.IsCollectionDefined(QuerySubscriptions))
             {
                 writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        querySubscriptions = null;
+                        querySubscriptions = new ChangeTrackingList<string>();
                         continue;
                     }
                     List<string> array = new List<string>();

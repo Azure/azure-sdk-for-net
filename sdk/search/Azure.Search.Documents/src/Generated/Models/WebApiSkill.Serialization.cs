@@ -167,7 +167,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpHeaders = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

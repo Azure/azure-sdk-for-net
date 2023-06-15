@@ -138,7 +138,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        configuration = null;
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
