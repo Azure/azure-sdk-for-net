@@ -152,6 +152,12 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanAssignAnonymousTypesWithCycles()
+        {
+            // TODO: implement
+        }
+
+        [Test]
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesOneDeep_NewProperty()
         {

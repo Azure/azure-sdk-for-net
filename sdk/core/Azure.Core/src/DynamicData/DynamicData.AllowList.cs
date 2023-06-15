@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -46,7 +47,7 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                return IsAllowedAnonymousValue(type, value, new HashSet<Type>());
+                return IsAllowedAnonymousValue(type, value, null);
             }
 
             private static bool IsAllowedLeafType(Type type)
@@ -185,7 +186,7 @@ namespace Azure.Core.Dynamic
                 return true;
             }
 
-            private static bool IsAllowedAnonymousValue<T>(Type type, T value, HashSet<Type> ancestorTypes)
+            private static bool IsAllowedAnonymousValue<T>(Type type, T value, Type[]? visited)
             {
                 if (!IsAnonymousType(type))
                 {
@@ -206,17 +207,19 @@ namespace Azure.Core.Dynamic
                     }
 
                     // Detect cycles: trust but verify
-                    if (ancestorTypes.Contains(property.PropertyType))
+                    if (ContainsType(visited, property.PropertyType))
                     {
                         continue;
                     }
 
                     // Recurse
-                    ancestorTypes.Add(type);
-                    if (!IsAllowedAnonymousValue(property.PropertyType, propertyValue, ancestorTypes))
+                    visited = AddType(visited, type);
+                    if (!IsAllowedAnonymousValue(property.PropertyType, propertyValue, visited))
                     {
                         return false;
                     }
+
+                    ArrayPool<Type>.Shared.Return(visited);
                 }
 
                 return true;
@@ -225,6 +228,36 @@ namespace Azure.Core.Dynamic
             private static bool IsAnonymousType(Type type)
             {
                 return type.Name.StartsWith("<>f__AnonymousType");
+            }
+
+            private static bool ContainsType(Type[]? types, Type type)
+            {
+                if (types == null)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < types.Length; i++)
+                {
+                    if (types[i] == type)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            private static Type[] AddType(Type[]? types, Type type)
+            {
+                int length = types == null ? 0 : types.Length;
+                Type[] expanded = ArrayPool<Type>.Shared.Rent(length + 1);
+                if (types is not null)
+                {
+                    Array.Copy(types, expanded, length);
+                }
+                expanded[length] = type;
+                return expanded;
             }
         }
     }
