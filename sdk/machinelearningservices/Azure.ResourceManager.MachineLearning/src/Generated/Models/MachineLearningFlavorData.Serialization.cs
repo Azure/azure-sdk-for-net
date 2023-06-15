@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        data = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
