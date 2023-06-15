@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement
         public SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkippedEventHandler { get; internal set; }
 
         /// <summary>
-        /// If a single transfer within the resource contianer gets transferred successfully the event
+        /// If a single transfer within the resource container gets transferred successfully the event
         /// will get added to this handler
         /// </summary>
         public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
@@ -133,6 +133,9 @@ namespace Azure.Storage.DataMovement
         public List<JobPartInternal> _jobParts;
         internal bool _enumerationComplete;
         private int _pendingJobParts;
+        private bool _jobPartPaused;
+        private bool _jobPartFailed;
+        private bool _jobPartSkipped;
 
         public CancellationToken _cancellationToken { get; internal set; }
 
@@ -317,6 +320,20 @@ namespace Azure.Storage.DataMovement
             StorageTransferStatus jobPartStatus = args.StorageTransferStatus;
             StorageTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
 
+            // Keep track of paused, failed, and skipped which we will use to determine final job status
+            if (jobPartStatus == StorageTransferStatus.Paused)
+            {
+                _jobPartPaused = true;
+            }
+            else if (jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+            {
+                _jobPartFailed = true;
+            }
+            else if (jobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers)
+            {
+                _jobPartSkipped = true;
+            }
+
             // Cancel the entire job if one job part fails and StopOnFailure is set
             if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
                 jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers &&
@@ -443,35 +460,15 @@ namespace Azure.Storage.DataMovement
             // If there are no more pending job parts, complete the job
             if (_pendingJobParts == 0)
             {
-                bool hasSkip = false;
-                bool hasFailure = false;
-                // Iterate all the job parts once to see what status we should set
-                foreach (JobPartInternal jobPart in _jobParts)
+                if (_jobPartPaused)
                 {
-                    StorageTransferStatus status = jobPart.JobPartStatus;
-
-                    // If we had any parts pause, we can set job status to pause and exit
-                    if (status == StorageTransferStatus.Paused)
-                    {
-                        await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
-                        return;
-                    }
-
-                    if (status == StorageTransferStatus.CompletedWithFailedTransfers)
-                    {
-                        hasFailure = true;
-                    }
-                    else if (status == StorageTransferStatus.CompletedWithSkippedTransfers)
-                    {
-                        hasSkip = true;
-                    }
+                    await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
                 }
-
-                if (hasFailure)
+                else if (_jobPartFailed)
                 {
                     await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
                 }
-                else if (hasSkip)
+                else if (_jobPartSkipped)
                 {
                     await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
                 }
