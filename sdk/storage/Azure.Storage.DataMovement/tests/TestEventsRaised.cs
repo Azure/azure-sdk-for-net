@@ -95,7 +95,6 @@ namespace Azure.Storage.DataMovement.Tests
 
         private Task AppendSingleTransferCompleted(SingleTransferCompletedEventArgs args)
         {
-            Console.WriteLine("Received single completed event!");
             SingleCompletedEvents.Add(args);
             return Task.CompletedTask;
         }
