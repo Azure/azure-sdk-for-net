@@ -135,7 +135,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                validationDetail = null;
                                 continue;
                             }
                             List<LinkerValidationResultItemInfo> array = new List<LinkerValidationResultItemInfo>();

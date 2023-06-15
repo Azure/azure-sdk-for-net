@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.ManagementGroups
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                children = null;
                                 continue;
                             }
                             List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
