@@ -88,8 +88,6 @@ namespace Azure.Communication.Chat
     }
     public static partial class ChatModelFactory
     {
-        public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
-        public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -167,6 +165,12 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public string Topic { get { throw null; } }
+    }
+    public static partial class CommunicationChatModelFactory
+    {
+        public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
+        public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id = null, string topic = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastMessageReceivedOn = default(System.DateTimeOffset?)) { throw null; }
     }
     public partial class CreateChatThreadResult
     {

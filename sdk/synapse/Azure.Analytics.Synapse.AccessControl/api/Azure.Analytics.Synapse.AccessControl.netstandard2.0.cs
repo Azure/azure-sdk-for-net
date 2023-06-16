@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AccessControlClientBuilderExtensions
+    public static partial class AnalyticsSynapseAccessControlClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Synapse.AccessControl.RoleAssignmentsClient, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions> AddRoleAssignmentsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Synapse.AccessControl.RoleAssignmentsClient, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions> AddRoleAssignmentsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

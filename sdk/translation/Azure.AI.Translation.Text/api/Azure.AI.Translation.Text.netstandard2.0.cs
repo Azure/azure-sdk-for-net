@@ -1,6 +1,6 @@
 namespace Azure.AI.Translation.Text
 {
-    public static partial class AzureAITranslationTextModelFactory
+    public static partial class AITranslationTextModelFactory
     {
         public static Azure.AI.Translation.Text.BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int numExamples = 0, int frequencyCount = 0) { throw null; }
         public static Azure.AI.Translation.Text.BreakSentenceItem BreakSentenceItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<int> sentLen = null) { throw null; }
@@ -280,7 +280,7 @@ namespace Azure.AI.Translation.Text
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliterableScript> Scripts { get { throw null; } }
     }
 }
-namespace Azure.AI.Translation.Text.Custom
+namespace Microsoft.Extensions.Azure
 {
     public static partial class TextTranslationClientBuilderExtensions
     {
