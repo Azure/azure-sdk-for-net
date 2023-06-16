@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetPropertiesWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.AreEqual(1, (int)value.camel);
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.IsNull(value.pascal);
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetExistingPropertiesWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             value.camel = 2;
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests
         [Test]
         public void SetGivesPrecedenceToCasingOfExistingProperties()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             value.Pascal = "new";
             value.parentCamel.NestedPascal = true;
@@ -198,7 +198,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNewPropertiesWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
             value.camel = 1;
@@ -241,7 +241,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
             Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
@@ -284,7 +284,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumeratePropertiesPascalGettersWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                     "a": {
@@ -349,7 +349,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumerateArrayPascalGettersWithCamelCaseNamingConvention()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                     "array": [
@@ -380,7 +380,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanBypassNameMappingWithIndexers()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             // Set PascalCase values without converting to camelCase
@@ -400,7 +400,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CamelCaseMappingWorksForConcerningCases()
         {
-            DynamicDataOptions options = new() { PropertyNameFormat = PropertyNameFormat.CamelCase };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
             value.PIICategories = "categories";
@@ -416,8 +416,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMapToCamelViaResponseContentOptions()
         {
-            ProtocolMethodOptions options = new() { ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase };
-            dynamic value = new ResponseContent("""{"foo": null}""", options).ToDynamicFromJson();
+            dynamic value = new BinaryData("""{"foo": null}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // Existing property
             value.Foo = 1;
@@ -454,8 +453,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotMapToCamelViaDefaultResponseContentOptions()
         {
-            ProtocolMethodOptions options = new();
-            dynamic value = new ResponseContent("""{"foo": "orig"}""", options).ToDynamicFromJson();
+            dynamic value = new BinaryData("""{"foo": "orig"}""").ToDynamicFromJson();
 
             // Existing property
             value.Foo = 1;
@@ -489,6 +487,33 @@ namespace Azure.Core.Tests
             // And that they serialized to PascalCase
             Assert.AreEqual("""{"A":3}""", value.Foo.ToString());
             Assert.AreEqual("""{"B":4}""", value.Bar.ToString());
+        }
+
+        [Test]
+        public void SerializedDynamicDataMaintainsFormatting()
+        {
+            dynamic a = BinaryData.FromString("""{"foo": null}""").ToDynamicFromJson(JsonPropertyNames.CamelCase, "x");
+            dynamic b = BinaryData.FromString("""{"b": "b"}""").ToDynamicFromJson(JsonPropertyNames.CamelCase, "x");
+
+            b.DateTime = new DateTimeOffset(2023, 10, 19, 10, 19, 10, 19, new TimeSpan(0));
+            Assert.AreEqual("b", (string)b.B);
+            Assert.AreEqual(1697710750, (int)b.DateTime);
+
+            a.Foo = b;
+            a.Bar = b;
+
+            Assert.AreEqual("b", (string)a.Foo.B);
+            Assert.AreEqual("b", (string)a.Bar.B);
+            Assert.AreEqual(1697710750, (int)a.Foo.DateTime);
+            Assert.AreEqual(1697710750, (int)a.Bar.DateTime);
+
+            a.Foo.DateTime = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
+            a.Bar.DateTime = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
+            a.Foo.UpdatedOn = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
+
+            Assert.AreEqual(1697797210, (int)a.Foo.DateTime);
+            Assert.AreEqual(1697797210, (int)a.Foo.UpdatedOn);
+            Assert.AreEqual(1697797210, (int)a.Bar.DateTime);
         }
     }
 }

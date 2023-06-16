@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(K))
+            if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
-                writer.WriteNumberValue(K.Value);
+                writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
             if (Optional.IsDefined(Fields))
             {

@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class PageBlobStorageResource : StorageResource
     {
-        private PageBlobClient _blobClient;
+        internal PageBlobClient BlobClient { get; set; }
         private PageBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
@@ -24,12 +24,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public override string Path => _blobClient.Name;
+        public override string Path => BlobClient.Name;
 
         /// <summary>
         /// Defines whether the storage resource type can produce a URL.
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options"></param>
         public PageBlobStorageResource(PageBlobClient blobClient, PageBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _options = options;
         }
 
@@ -70,14 +70,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
         /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
         /// <param name="options">Options for the storage resource. See <see cref="PageBlobStorageResourceOptions"/>.</param>
         internal PageBlobStorageResource(
             PageBlobClient blobClient,
             long? length,
+            ETag? etagLock,
             PageBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         /// <summary>
@@ -99,7 +102,7 @@ namespace Azure.Storage.DataMovement.Blobs
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
+            Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
                 _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
@@ -139,14 +142,14 @@ namespace Azure.Storage.DataMovement.Blobs
             // Create the blob first before uploading the pages
             if (position == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     size: completeLength,
                     options: _options.ToCreateOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
-                await _blobClient.UploadPagesAsync(
+                await BlobClient.UploadPagesAsync(
                     content: stream,
                     offset: position,
                     options: _options.ToUploadPagesOptions(overwrite),
@@ -178,7 +181,7 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            await _blobClient.CreateAsync(
+            await BlobClient.CreateAsync(
                 size: completeLength,
                 options: _options.ToCreateOptions(overwrite),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -188,7 +191,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if (completeLength > 0)
             {
                 HttpRange range = new HttpRange(0, completeLength);
-                await _blobClient.UploadPagesFromUriAsync(
+                await BlobClient.UploadPagesFromUriAsync(
                     sourceResource.Uri,
                     sourceRange: range,
                     range: range,
@@ -231,12 +234,12 @@ namespace Azure.Storage.DataMovement.Blobs
             };
             if (range.Offset == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     size: completeLength,
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
-            await _blobClient.UploadPagesFromUriAsync(
+            await BlobClient.UploadPagesFromUriAsync(
                 sourceResource.Uri,
                 sourceRange: range,
                 range: range,
@@ -252,7 +255,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
         }
@@ -279,7 +282,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private void GrabEtag(Response response)

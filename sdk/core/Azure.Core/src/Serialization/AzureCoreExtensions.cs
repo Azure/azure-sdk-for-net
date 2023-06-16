@@ -65,10 +65,7 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            DynamicDataOptions options = utf8Json is ResponseContent content ?
-                content.ProtocolOptions.GetDynamicOptions() :
-                new DynamicDataOptions();
-
+            DynamicDataOptions options = new DynamicDataOptions();
             return utf8Json.ToDynamicFromJson(options);
         }
 
@@ -80,14 +77,13 @@ namespace Azure
         /// </paramref>
         /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
-            DynamicDataOptions options = utf8Json is ResponseContent content ?
-                new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
-                new DynamicDataOptions();
-
-            options.PropertyNameFormat = propertyNameFormat;
-            options.DateTimeFormat = dateTimeFormat;
+            DynamicDataOptions options = new DynamicDataOptions()
+            {
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
+            };
 
             return utf8Json.ToDynamicFromJson(options);
         }
