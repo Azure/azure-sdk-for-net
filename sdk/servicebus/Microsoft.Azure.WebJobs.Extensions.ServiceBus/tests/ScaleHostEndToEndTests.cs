@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
         }
 
         [Test]
-        [Ignore("Consistently failing in CI; awaiting investigation")]
+        //[Ignore("Consistently failing in CI; awaiting investigation")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task ScaleHostEndToEndTest(bool tbsEnabled)
@@ -68,9 +68,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
     }}
  ]}}";
 
-            IHost host = new HostBuilder().ConfigureServices(services => services.AddAzureClientsCore()).Build();
-            AzureComponentFactory defaultAzureComponentFactory = host.Services.GetService<AzureComponentFactory>();
-            TestComponentFactory factoryWrapper = new TestComponentFactory(defaultAzureComponentFactory, ServiceBusTestEnvironment.Instance.Credential);
+            TestComponentFactory factoryWrapper = null;
+            using (IHost host = new HostBuilder().ConfigureServices(services => services.AddAzureClientsCore()).Build())
+            {
+                AzureComponentFactory defaultAzureComponentFactory = host.Services.GetService<AzureComponentFactory>();
+                factoryWrapper = new TestComponentFactory(defaultAzureComponentFactory, ServiceBusTestEnvironment.Instance.Credential);
+            }
 
             string hostId = "test-host";
             var loggerProvider = new TestLoggerProvider();
