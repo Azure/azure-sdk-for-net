@@ -114,35 +114,5 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.ETag);
         }
-
-        [RecordedTest]
-        public async Task GetParentStorageResourceAsync()
-        {
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
-            await SetUpContainerForListing(test.Container);
-
-            string prefix = "baz/bar";
-            StorageResourceContainer containerResource =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
-
-            StorageResourceContainer resource = containerResource.GetParentStorageResourceContainer();
-
-            Assert.AreEqual("baz", resource.Path);
-        }
-
-        [RecordedTest]
-        public async Task GetParentStorageResourceAsync_Root()
-        {
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
-            await SetUpContainerForListing(test.Container);
-
-            string prefix = "foo";
-            StorageResourceContainer containerResource =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
-
-            StorageResourceContainer resource = containerResource.GetParentStorageResourceContainer();
-
-            Assert.AreEqual(resource.Uri, test.Container.Uri);
-        }
     }
 }

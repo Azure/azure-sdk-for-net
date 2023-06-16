@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a recoverable database, which is a resource representing a database&apos;s geo backup
+        /// Gets a recoverable database, which is a resource representing a database's geo backup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a recoverable database, which is a resource representing a database&apos;s geo backup
+        /// Gets a recoverable database, which is a resource representing a database's geo backup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server&apos;s DevOps audit settings.
+        /// Gets a server's DevOps audit settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server&apos;s DevOps audit settings.
+        /// Gets a server's DevOps audit settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the server&apos;s vulnerability assessment.
+        /// Gets the server's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the server&apos;s vulnerability assessment.
+        /// Gets the server's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1378,7 +1378,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server&apos;s blob auditing policy.
+        /// Gets a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a server&apos;s blob auditing policy.
+        /// Gets a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an extended server&apos;s blob auditing policy.
+        /// Gets an extended server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an extended server&apos;s blob auditing policy.
+        /// Gets an extended server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a server&apos;s Advanced Threat Protection state.
+        /// Get a server's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a server&apos;s Advanced Threat Protection state.
+        /// Get a server's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

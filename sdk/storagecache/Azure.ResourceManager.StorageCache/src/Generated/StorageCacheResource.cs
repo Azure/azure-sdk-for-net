@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Upgrade a cache&apos;s firmware if a new version is available. Otherwise, this operation has no effect.
+        /// Upgrade a Cache's firmware if a new version is available. Otherwise, this operation has no effect.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Upgrade a cache&apos;s firmware if a new version is available. Otherwise, this operation has no effect.
+        /// Upgrade a Cache's firmware if a new version is available. Otherwise, this operation has no effect.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

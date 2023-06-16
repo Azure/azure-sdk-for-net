@@ -91,29 +91,17 @@ namespace Azure.Storage.DataMovement.Tests
         private long[] CalculateExpectedBytesUpdates(
             int fileSize,
             int fileCount,
-            int chunkSize,
-            TransferType transferType)
+            int chunkSize)
         {
             List<long> expectedBytesTransferred = new List<long>();
             int totalBytes = 0;
 
             // Async copy does not use chunks
-            if (transferType == TransferType.AsyncCopy)
+            int numUpdates = (fileSize / chunkSize) * fileCount;
+            for (int i = 0; i <= numUpdates; i++)
             {
-                for (int i = 0; i <= fileCount; i++)
-                {
-                    expectedBytesTransferred.Add(totalBytes);
-                    totalBytes += fileSize;
-                }
-            }
-            else
-            {
-                int numUpdates = (fileSize / chunkSize) * fileCount;
-                for (int i = 0; i <= numUpdates; i++)
-                {
-                    expectedBytesTransferred.Add(totalBytes);
-                    totalBytes += chunkSize;
-                }
+                expectedBytesTransferred.Add(totalBytes);
+                totalBytes += chunkSize;
             }
 
             return expectedBytesTransferred.ToArray();
@@ -204,9 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        [TestCase(TransferCopyMethod.AsyncCopy)]
-        [TestCase(TransferCopyMethod.SyncCopy)]
-        public async Task ProgressHandler_Copy(TransferCopyMethod copyMethod)
+        public async Task ProgressHandler_Copy()
         {
             // Arrange
             await using DisposingBlobContainer source = await GetTestContainerAsync(publicAccessType: PublicAccessType.Blob);
@@ -216,12 +202,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             StorageResourceContainer sourceResource =
                 new BlobStorageResourceContainer(source.Container);
-            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
-                destination.Container,
-                new BlobStorageResourceContainerOptions()
-                {
-                    CopyMethod = copyMethod
-                });
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
 
             // Act / Assert
             await TransferAndAssertProgress(
@@ -267,8 +249,7 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task ProgressHandler_Chunks(TransferType transferType)
         {
             // Arrange
@@ -295,15 +276,11 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceResource = new BlobStorageResourceContainer(sourceContainer.Container);
                 destinationResource = new LocalDirectoryStorageResourceContainer(localDirectory.DirectoryPath);
             }
-            else // TransferType.AsyncCopy or TransferType.SyncCopy
+            else // TransferType.Copy
             {
                 await PopulateTestContainer(sourceContainer.Container, fileSize, fileCount);
                 sourceResource = new BlobStorageResourceContainer(sourceContainer.Container);
-                destinationResource = new BlobStorageResourceContainer(destinationContainer.Container,
-                    new BlobStorageResourceContainerOptions()
-                    {
-                        CopyMethod = transferType == TransferType.AsyncCopy ? TransferCopyMethod.AsyncCopy : TransferCopyMethod.SyncCopy
-                    });
+                destinationResource = new BlobStorageResourceContainer(destinationContainer.Container);
             }
 
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
@@ -321,7 +298,7 @@ namespace Azure.Storage.DataMovement.Tests
             await TransferAndAssertProgress(
                 sourceResource,
                 destinationResource,
-                CalculateExpectedBytesUpdates(fileSize, fileCount, chunkSize, transferType),
+                CalculateExpectedBytesUpdates(fileSize, fileCount, chunkSize),
                 10 /* fileCount */,
                 transferManagerOptions: transferManagerOptions,
                 transferOptions: transferOptions,

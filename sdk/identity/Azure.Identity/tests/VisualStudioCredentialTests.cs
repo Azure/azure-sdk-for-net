@@ -279,5 +279,15 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
             Assert.True(ex.Message.Contains("has failed to get access token in 0 seconds."));
         }
+
+        [Test]
+        public void GenericException_throws_CredentialUnavailableException()
+        {
+            var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new Exception("Test exception") };
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
+        }
     }
 }

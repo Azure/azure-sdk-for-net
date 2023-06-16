@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
+        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
         /// <param name="queueSelectors">
         /// The queue selectors to resolve a queue for a given job.
         /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -246,15 +246,6 @@ namespace Azure.Communication.JobRouter.Models
         public static RouterWorkerItem RouterWorkerItem(RouterWorker routerWorker = null, string etag = null)
         {
             return new RouterWorkerItem(routerWorker, etag);
-        }
-
-        /// <summary> Initializes a new instance of ExpressionRule. </summary>
-        /// <param name="language"> The expression language to compile to and execute. </param>
-        /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
-        /// <returns> A new <see cref="JobRouter.ExpressionRule"/> instance for mocking. </returns>
-        public static ExpressionRule ExpressionRule(string language = null, string expression = null)
-        {
-            return new ExpressionRule("expression-rule", language, expression);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="writeBehavior"> The write behavior for the operation. Default is &apos;Insert&apos;. </param>
+        /// <param name="writeBehavior"> The write behavior for the operation. Default is 'Insert'. </param>
         /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         internal SapCloudForCustomerSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, SapCloudForCustomerSinkWriteBehavior? writeBehavior, object httpRequestTimeout) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapCloudForCustomerSink";
         }
 
-        /// <summary> The write behavior for the operation. Default is &apos;Insert&apos;. </summary>
+        /// <summary> The write behavior for the operation. Default is 'Insert'. </summary>
         public SapCloudForCustomerSinkWriteBehavior? WriteBehavior { get; set; }
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object HttpRequestTimeout { get; set; }

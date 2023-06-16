@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        /// <summary> Updates an existing QueryPack&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing QueryPack's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        /// <summary> Updates an existing QueryPack&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing QueryPack's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>

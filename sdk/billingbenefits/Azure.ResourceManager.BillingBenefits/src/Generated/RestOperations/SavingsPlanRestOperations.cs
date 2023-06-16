@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> List savings plans. </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
         /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> List savings plans. </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
         /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> List savings plans. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
         /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> List savings plans. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
         /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>

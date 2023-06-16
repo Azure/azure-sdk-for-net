@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
-        /// <param name="userAssignedIdentity"> The user assigned managed identity&apos;s ARM ID to use when accessing a resource. </param>
+        /// <param name="userAssignedIdentity"> The user assigned managed identity's ARM ID to use when accessing a resource. </param>
         /// <param name="useSystemAssignedIdentity"> Indicates whether to use System Assigned Managed Identity. Mutual exclusive with User Assigned Managed Identity. </param>
         internal ResourceIdentity(string userAssignedIdentity, bool useSystemAssignedIdentity)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
         }
 
-        /// <summary> The user assigned managed identity&apos;s ARM ID to use when accessing a resource. </summary>
+        /// <summary> The user assigned managed identity's ARM ID to use when accessing a resource. </summary>
         public string UserAssignedIdentity { get; set; }
         /// <summary> Indicates whether to use System Assigned Managed Identity. Mutual exclusive with User Assigned Managed Identity. </summary>
         public bool UseSystemAssignedIdentity { get; set; }

@@ -10,38 +10,35 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Contains configuration options specific to the algorithm used during indexing time. </summary>
-    public partial class VectorSearchAlgorithmConfiguration
+    /// <summary>
+    /// Contains configuration options specific to the algorithm used during indexing time.
+    /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
+    /// </summary>
+    public abstract partial class VectorSearchAlgorithmConfiguration
     {
         /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
-        /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. Only `hnsw` is supported in the current preview. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kind"/> is null. </exception>
-        public VectorSearchAlgorithmConfiguration(string name, string kind)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        protected VectorSearchAlgorithmConfiguration(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(kind, nameof(kind));
 
             Name = name;
-            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. Only `hnsw` is supported in the current preview. </param>
-        /// <param name="hnswParameters"> Contains the parameters specific to hnsw algorithm. </param>
-        internal VectorSearchAlgorithmConfiguration(string name, string kind, HnswParameters hnswParameters)
+        internal VectorSearchAlgorithmConfiguration(string name, string kind)
         {
             Name = name;
             Kind = kind;
-            HnswParameters = hnswParameters;
         }
 
         /// <summary> The name to associate with this particular configuration. </summary>
         public string Name { get; set; }
         /// <summary> The name of the kind of algorithm being configured for use with vector search. Only `hnsw` is supported in the current preview. </summary>
-        public string Kind { get; set; }
-        /// <summary> Contains the parameters specific to hnsw algorithm. </summary>
-        public HnswParameters HnswParameters { get; set; }
+        internal string Kind { get; set; }
     }
 }
