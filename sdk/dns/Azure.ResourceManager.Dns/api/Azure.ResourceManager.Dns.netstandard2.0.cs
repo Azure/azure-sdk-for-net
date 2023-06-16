@@ -596,6 +596,15 @@ namespace Azure.ResourceManager.Dns
 }
 namespace Azure.ResourceManager.Dns.Models
 {
+    public static partial class ArmDnsModelFactory
+    {
+        public static Azure.ResourceManager.Dns.Models.DelegationSignerInfo DelegationSignerInfo(int? digestAlgorithmType = default(int?), string digestValue = null, string record = null) { throw null; }
+        public static Azure.ResourceManager.Dns.Models.DnsResourceReference DnsResourceReference(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResources = null, Azure.Core.ResourceIdentifier targetResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult DnsResourceReferenceResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsResourceReference> dnsResourceReferences = null) { throw null; }
+        public static Azure.ResourceManager.Dns.DnssecConfigData DnssecConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsSigningKey> signingKeys = null) { throw null; }
+        public static Azure.ResourceManager.Dns.Models.DnsSigningKey DnsSigningKey(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DelegationSignerInfo> delegationSignerInfo = null, int? flags = default(int?), int? keyTag = default(int?), int? protocol = default(int?), string publicKey = null, int? securityAlgorithmType = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Dns.DnsZoneData DnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? maxNumberOfRecordsPerRecord = default(long?), long? numberOfRecords = default(long?), System.Collections.Generic.IEnumerable<string> nameServers = null, Azure.ResourceManager.Dns.Models.DnsZoneType? zoneType = default(Azure.ResourceManager.Dns.Models.DnsZoneType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> registrationVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resolutionVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsSigningKey> signingKeys = null) { throw null; }
+    }
     public partial class DelegationSignerInfo
     {
         internal DelegationSignerInfo() { }
