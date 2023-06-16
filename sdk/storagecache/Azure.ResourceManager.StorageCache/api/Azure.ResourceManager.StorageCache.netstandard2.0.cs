@@ -576,6 +576,8 @@ namespace Azure.ResourceManager.StorageCache.Models
     public partial class StorageCacheActiveDirectorySettingsCredentials
     {
         public StorageCacheActiveDirectorySettingsCredentials(string username) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public StorageCacheActiveDirectorySettingsCredentials(string username, string password) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
@@ -666,6 +668,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         private readonly int _dummyPrimitive;
         public StorageCacheProvisioningStateType(string value) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Canceled { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Cancelled { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Creating { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Deleting { get { throw null; } }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType Failed { get { throw null; } }
