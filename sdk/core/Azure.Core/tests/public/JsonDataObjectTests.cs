@@ -25,6 +25,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanConvertObjectToModel()
         {
             dynamic data = BinaryData.FromString(

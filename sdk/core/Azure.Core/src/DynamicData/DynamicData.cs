@@ -21,7 +21,7 @@ namespace Azure.Core.Dynamic
     /// This and related types are not intended to be mocked.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [JsonConverter(typeof(JsonConverter))]
+    [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -138,6 +138,7 @@ namespace Azure.Core.Dynamic
         private object? SetProperty(string name, object value)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            AllowList.AssertAllowedValue(value);
 
             if (HasTypeConverter(value))
             {
@@ -174,6 +175,8 @@ namespace Azure.Core.Dynamic
 
         private object? SetViaIndexer(object index, object value)
         {
+            AllowList.AssertAllowedValue(value);
+
             switch (index)
             {
                 case string propertyName:
@@ -342,7 +345,7 @@ namespace Azure.Core.Dynamic
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
-        private class JsonConverter : JsonConverter<DynamicData>
+        private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
