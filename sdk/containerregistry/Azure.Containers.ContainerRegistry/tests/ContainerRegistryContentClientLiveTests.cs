@@ -777,8 +777,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanUploadAndDownloadLargeBlobStreaming()
         {
             long sizeInGiB = 3;
-            var uneven = 20;
-            long size = (1024 * 1024 * 1024* sizeInGiB) + uneven;
+            int uneven = 20;
+            long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
 
             string repositoryId = Recording.Random.NewGuid().ToString();
             ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
