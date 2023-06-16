@@ -490,5 +490,32 @@ namespace Azure.Core.Tests
             Assert.AreEqual("""{"A":3}""", value.Foo.ToString());
             Assert.AreEqual("""{"B":4}""", value.Bar.ToString());
         }
+
+        [Test]
+        public void SerializedDynamicDataMaintainsFormatting()
+        {
+            dynamic a = BinaryData.FromString("""{"foo": null}""").ToDynamicFromJson(PropertyNameFormat.CamelCase, "x");
+            dynamic b = BinaryData.FromString("""{"b": "b"}""").ToDynamicFromJson(PropertyNameFormat.CamelCase, "x");
+
+            b.DateTime = new DateTimeOffset(2023, 10, 19, 10, 19, 10, 19, new TimeSpan(0));
+            Assert.AreEqual("b", (string)b.B);
+            Assert.AreEqual(1697710750, (int)b.DateTime);
+
+            a.Foo = b;
+            a.Bar = b;
+
+            Assert.AreEqual("b", (string)a.Foo.B);
+            Assert.AreEqual("b", (string)a.Bar.B);
+            Assert.AreEqual(1697710750, (int)a.Foo.DateTime);
+            Assert.AreEqual(1697710750, (int)a.Bar.DateTime);
+
+            a.Foo.DateTime = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
+            a.Bar.DateTime = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
+            a.Foo.UpdatedOn = new DateTimeOffset(2023, 10, 20, 10, 20, 10, 20, new TimeSpan(0));
+
+            Assert.AreEqual(1697797210, (int)a.Foo.DateTime);
+            Assert.AreEqual(1697797210, (int)a.Foo.UpdatedOn);
+            Assert.AreEqual(1697797210, (int)a.Bar.DateTime);
+        }
     }
 }
