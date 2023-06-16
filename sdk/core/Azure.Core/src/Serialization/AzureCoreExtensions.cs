@@ -74,7 +74,9 @@ namespace Azure
         /// This value indicates to the dynamic type that it can convert property names on the returned value to this format in the underlying JSON.
         /// Please see https://aka.ms/azsdk/net/dynamiccontent#use-c-naming-conventions for details.
         /// </paramref>
-        /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
+        /// <paramref name="dateTimeFormat">The format string to pass when serializing DateTime and DateTimeOffset values in the JSON content.
+        /// To serialize to unix time, pass the value <code>"x"</code>.
+        /// </paramref>
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
