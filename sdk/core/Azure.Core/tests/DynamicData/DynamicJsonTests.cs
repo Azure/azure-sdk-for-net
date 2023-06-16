@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
