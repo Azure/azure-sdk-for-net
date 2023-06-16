@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
             MockClientOptions options = new MockClientOptions();
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();
-            dynamic value = response.Content.ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic value = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.AreEqual(1, (int)value.Foo);
             Assert.AreEqual(1, (int)value.foo);

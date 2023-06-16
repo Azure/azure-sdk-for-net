@@ -71,17 +71,17 @@ namespace Azure
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.  Please see https://aka.ms/azsdk/net/dynamiccontent for details.
-        /// <paramref name="jsonPropertyNameFormat">The format of property names in the JSON content.
+        /// <paramref name="propertyNameFormat">The format of property names in the JSON content.
         /// This value indicates to the dynamic type that it can convert property names on the returned value to this format in the underlying JSON.
         /// Please see https://aka.ms/azsdk/net/dynamiccontent#use-c-naming-conventions for details.
         /// </paramref>
         /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat jsonPropertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
             DynamicDataOptions options = new DynamicDataOptions()
             {
-                PropertyNameFormat = jsonPropertyNameFormat,
+                PropertyNameFormat = propertyNameFormat,
                 DateTimeFormat = dateTimeFormat
             };
 
