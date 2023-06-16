@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Tests
             _resourceGroup = await CreateResourceGroup();
             _consumptionBudgetCollection = Client.GetConsumptionBudgets(scope: _resourceGroup.Id);
             _budgetName = Recording.GenerateAssetName("budget");
-            await CreateBudget(_budgetName);
+            _budget = await CreateBudget(_budgetName);
         }
 
         private async Task<ConsumptionBudgetResource> CreateBudget(string budgetName)
