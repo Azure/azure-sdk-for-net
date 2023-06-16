@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s connection policy, which is used with table auditing.
+        /// Get a Sql pool's connection policy, which is used with table auditing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s connection policy, which is used with table auditing.
+        /// Get a Sql pool's connection policy, which is used with table auditing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

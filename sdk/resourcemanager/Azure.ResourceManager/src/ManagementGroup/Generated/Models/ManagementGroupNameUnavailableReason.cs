@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider&apos;s naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
+    /// <summary> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
     public enum ManagementGroupNameUnavailableReason
     {
         /// <summary> Invalid. </summary>

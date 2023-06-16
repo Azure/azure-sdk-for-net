@@ -82,5 +82,6 @@ namespace Microsoft.Extensions.Hosting
     public static partial class StorageQueuesWebJobsBuilderExtensions
     {
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddAzureStorageQueues(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, System.Action<Microsoft.Azure.WebJobs.Host.QueuesOptions> configureQueues = null) { throw null; }
+        public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, Microsoft.Azure.WebJobs.Host.Scale.TriggerMetadata triggerMetadata) { throw null; }
     }
 }

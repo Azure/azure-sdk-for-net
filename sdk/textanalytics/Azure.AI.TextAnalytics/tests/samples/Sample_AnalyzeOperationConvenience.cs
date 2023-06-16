@@ -38,34 +38,32 @@ namespace Azure.AI.TextAnalytics.Samples
 
             TextAnalyticsActions actions = new()
             {
-                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
-                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { ActionName = "ExtractKeyPhrasesSample" } },
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { ActionName = "RecognizeEntitiesSample" } },
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchedDocuments, actions);
+            AnalyzeActionsOperation operation = client.AnalyzeActions(WaitUntil.Completed, batchedDocuments, actions);
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
+            // View the operation status.
+            Console.WriteLine($"Created On   : {operation.CreatedOn}");
+            Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+            Console.WriteLine($"Id           : {operation.Id}");
+            Console.WriteLine($"Status       : {operation.Status}");
+            Console.WriteLine($"Last Modified: {operation.LastModified}");
+            Console.WriteLine();
 
-            while (!operation.HasCompleted)
+            if (!string.IsNullOrEmpty(operation.DisplayName))
             {
-                Thread.Sleep(pollingInterval);
-                operation.UpdateStatus();
-
-                Console.WriteLine($"Status: {operation.Status}");
-                //If operation has not started, all other fields are null
-                if (operation.Status != TextAnalyticsOperationStatus.NotStarted)
-                {
-                    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-                    Console.WriteLine($"Last modified: {operation.LastModified}");
-                    if (!string.IsNullOrEmpty(operation.DisplayName))
-                        Console.WriteLine($"Display name: {operation.DisplayName}");
-                    Console.WriteLine($"Total actions: {operation.ActionsTotal}");
-                    Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
-                    Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
-                    Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
-                }
+                Console.WriteLine($"Display name: {operation.DisplayName}");
+                Console.WriteLine();
             }
+
+            Console.WriteLine($"Total actions: {operation.ActionsTotal}");
+            Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+            Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+            Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+            Console.WriteLine();
 
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
@@ -77,6 +75,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
                     Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
+                    Console.WriteLine();
                     foreach (RecognizeEntitiesResult documentResult in entitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
@@ -84,21 +83,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
                         foreach (CategorizedEntity entity in documentResult.Entities)
                         {
-                            Console.WriteLine($"  Entity: {entity.Text}");
-                            Console.WriteLine($"  Category: {entity.Category}");
-                            Console.WriteLine($"  Offset: {entity.Offset}");
-                            Console.WriteLine($"  Length: {entity.Length}");
-                            Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                            Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                            Console.WriteLine();
+                            Console.WriteLine($"    Entity: {entity.Text}");
+                            Console.WriteLine($"    Category: {entity.Category}");
+                            Console.WriteLine($"    Offset: {entity.Offset}");
+                            Console.WriteLine($"    Length: {entity.Length}");
+                            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
                         }
                         Console.WriteLine();
                     }
                 }
 
-                Console.WriteLine("Key Phrases");
+                Console.WriteLine("Extracted Key Phrases");
                 docNumber = 1;
                 foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
                 {
+                    Console.WriteLine($" Action name: {keyPhrasesActionResult.ActionName}");
+                    Console.WriteLine();
                     foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
@@ -106,7 +108,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                         foreach (string keyphrase in documentResults.KeyPhrases)
                         {
-                            Console.WriteLine($"  {keyphrase}");
+                            Console.WriteLine($"    {keyphrase}");
                         }
                         Console.WriteLine();
                     }

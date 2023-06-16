@@ -63,8 +63,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(batchedDocuments);
-            operation.WaitForCompletion();
+            AbstractiveSummarizeOperation operation = client.AbstractiveSummarize(WaitUntil.Completed, batchedDocuments);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();

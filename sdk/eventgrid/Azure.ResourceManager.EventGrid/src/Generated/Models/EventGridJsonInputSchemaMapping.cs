@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The mapping information for the Id property of the Event Grid Event. </summary>
         internal JsonField Id { get; set; }
-        /// <summary> Name of a field in the input event schema that&apos;s to be used as the source of a mapping. </summary>
+        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
         public string IdSourceField
         {
             get => Id is null ? default : Id.SourceField;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The mapping information for the Topic property of the Event Grid Event. </summary>
         internal JsonField Topic { get; set; }
-        /// <summary> Name of a field in the input event schema that&apos;s to be used as the source of a mapping. </summary>
+        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
         public string TopicSourceField
         {
             get => Topic is null ? default : Topic.SourceField;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The mapping information for the EventTime property of the Event Grid Event. </summary>
         internal JsonField EventTime { get; set; }
-        /// <summary> Name of a field in the input event schema that&apos;s to be used as the source of a mapping. </summary>
+        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
         public string EventTimeSourceField
         {
             get => EventTime is null ? default : EventTime.SourceField;

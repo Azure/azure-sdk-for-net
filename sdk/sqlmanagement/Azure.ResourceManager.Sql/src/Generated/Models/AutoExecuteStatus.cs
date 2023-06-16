@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are &apos;Enabled&apos; and &apos;Disabled&apos;. </summary>
+    /// <summary> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </summary>
     public enum AutoExecuteStatus
     {
         /// <summary> Default. </summary>

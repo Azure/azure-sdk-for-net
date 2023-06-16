@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
-    /// <summary> Request payload used to update an existing resource&apos;s tags. </summary>
+    /// <summary> Request payload used to update an existing resource's tags. </summary>
     public partial class TagUpdate
     {
         /// <summary> Initializes a new instance of TagUpdate. </summary>

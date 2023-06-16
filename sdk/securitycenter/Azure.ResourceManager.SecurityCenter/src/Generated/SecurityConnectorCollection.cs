@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists all the security connectors in the specified resource group. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified resource group.
+        /// Lists all the security connectors in the specified resource group. Use the 'nextLink' property in the response to get the next page of security connectors for the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists all the security connectors in the specified resource group. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified resource group.
+        /// Lists all the security connectors in the specified resource group. Use the 'nextLink' property in the response to get the next page of security connectors for the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

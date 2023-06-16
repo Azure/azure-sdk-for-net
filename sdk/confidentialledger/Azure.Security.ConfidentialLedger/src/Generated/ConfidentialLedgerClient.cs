@@ -635,7 +635,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Adds a user or updates a user&apos;s fields.
+        /// [Protocol Method] Adds a user or updates a user's fields.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -671,7 +671,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Adds a user or updates a user&apos;s fields.
+        /// [Protocol Method] Adds a user or updates a user's fields.
         /// <list type="bullet">
         /// <item>
         /// <description>

@@ -102,7 +102,7 @@ foreach( $file in $inputFilePaths) {
             $inputFileToGen += @($file)
         }
     }
-   
+
 }
 
 if ($inputFileToGen) {
@@ -113,42 +113,25 @@ if ($inputFileToGen) {
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
         $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
-        $newPackageOutput = "newPackageOutput.json"
-
-        $tspConfigYaml = Get-Content -Path (Join-Path "$typespecFolder" "tspconfig.yaml") -Raw
-
-        Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-        $yml = ConvertFrom-YAML $tspConfigYaml
-        $service = ""
-        $namespace = ""
-        if ($yml) {
-            if ($yml["parameters"] -And $yml["parameters"]["service-directory-name"]) {
-                $service = $yml["parameters"]["service-directory-name"]["default"];
-            }
-            if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"] -And $yml["options"]["@azure-tools/typespec-csharp"]["namespace"]) {
-                $namespace = $yml["options"]["@azure-tools/typespec-csharp"]["namespace"]
-            }
-        }
-        if (!$service || !$namespace) {
-            throw "Not provide service name or namespace."
-        }
-        $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
-        New-TypeSpecPackageFolder `
-            -service $service `
-            -namespace $namespace `
-            -sdkPath $sdkPath `
-            -relatedTypeSpecProjectFolder $typespecRelativeFolder `
-            -specRoot $swaggerDir `
-            -outputJsonFile $newpackageoutput
-        $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
-        $relativeSdkPath = $newPackageOutputJson.path
-        GeneratePackage `
-            -projectFolder $projectFolder `
+        $processScript = Resolve-Path (Join-Path "./eng/common/scripts" "TypeSpec-Project-Process.ps1")
+        $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
+        if ($LASTEXITCODE) {
+          # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
+          $generatedSDKPackages.Add(@{
+            result = "failed";
+            path=@("");
+          })
+        } else {
+            $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
+            GeneratePackage `
+            -projectFolder $sdkProjectFolder `
             -sdkRootPath $sdkPath `
             -path $relativeSdkPath `
             -downloadUrlPrefix $downloadUrlPrefix `
             -serviceType "data-plane" `
-            -generatedSDKPackages $generatedSDKPackages
+            -generatedSDKPackages $generatedSDKPackages `
+            -specRepoRoot $swaggerDir
+        }
     }
 }
 $outputJson = [PSCustomObject]@{

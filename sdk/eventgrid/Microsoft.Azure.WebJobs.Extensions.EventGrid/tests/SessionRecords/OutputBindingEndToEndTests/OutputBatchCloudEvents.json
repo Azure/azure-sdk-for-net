@@ -1,0 +1,34 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://t9b55506e142b41d0cloudevent-topic.westus-1.eventgrid.azure.net/api/events?api-version=2018-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "aeg-sas-key": "Sanitized",
+        "Content-Length": "365",
+        "Content-Type": "application/cloudevents-batch\u002Bjson; charset=utf-8",
+        "traceparent": "00-7aeb053380f0f91874aa15f4ae147a0e-022d87ad5b3e0e59-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.14.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "06f604c906a194414ece8c5c9467dece",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u002291871a40-d680-8148-c140-7d00192762ee\u0022,\u0022source\u0022:\u0022source1\u0022,\u0022type\u0022:\u0022type\u0022,\u0022data\u0022:\u0022data\u0022,\u0022time\u0022:\u00222023-06-13T12:04:52.6004304-07:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022traceparent\u0022:\u0022Sanitized\u0022},{\u0022id\u0022:\u00227d3f9676-2e7b-663e-7eba-a3d5d0b3e8b1\u0022,\u0022source\u0022:\u0022source2\u0022,\u0022type\u0022:\u0022type\u0022,\u0022data\u0022:\u0022data\u0022,\u0022time\u0022:\u00222023-06-13T12:04:52.6004304-07:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022traceparent\u0022:\u0022Sanitized\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2018-01-01",
+        "Content-Length": "0",
+        "Date": "Tue, 13 Jun 2023 19:04:53 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-request-id": "83b8c8de-0bba-4649-bb98-62540a5f799e"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2023-06-13T12:04:52.6004304-07:00",
+    "EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT": "https://t9b55506e142b41d0cloudevent-topic.westus-1.eventgrid.azure.net/api/events",
+    "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY": "Kg==",
+    "RandomSeed": "1416508443"
+  }
+}

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources.Models
             Resources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </summary>
+        /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </summary>
         public IList<string> Resources { get; }
-        /// <summary> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </summary>
+        /// <summary> The export template options. A CSV-formatted list containing zero or more of the following: 'IncludeParameterDefaultValue', 'IncludeComments', 'SkipResourceNameParameterization', 'SkipAllParameterization'. </summary>
         public string Options { get; set; }
     }
 }
