@@ -59,16 +59,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        [NonEvent]
+        public void VmMetadataFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                VmMetadataFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
         [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. If not hosted in an Azure VM this can safely be ignored. {0}", Level = EventLevel.Informational)]
         public void VmMetadataFailed(string exceptionMessage) => WriteEvent(10, exceptionMessage);
 
         [NonEvent]
-        public void VmMetadataFailed(Exception exception)
+        public void StatsbeatFailed(Exception ex)
         {
             if (IsEnabled(EventLevel.Informational))
             {
-                VmMetadataFailed(exception.FlattenException().ToInvariantString());
+                StatsbeatFailed(ex.FlattenException().ToInvariantString());
             }
         }
+
+        [Event(11, Message = "Statsbeat failed to collect data due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Informational)]
+        public void StatsbeatFailed(string exceptionMessage) => WriteEvent(11, exceptionMessage);
     }
 }
