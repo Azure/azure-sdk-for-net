@@ -60,7 +60,6 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace { get { throw null; } }
         public string Identifier { get { throw null; } }
         public string SessionId { get { throw null; } }
-        public System.Threading.CancellationToken SessionLockCancellationToken { get { throw null; } }
         public System.DateTimeOffset SessionLockedUntil { get { throw null; } }
         public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual void ReleaseSession() { }

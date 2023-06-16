@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
         /// <param name="apnsCertificate"> The APNS certificate. Specify if using Certificate Authentication Mode. </param>
         /// <param name="certificateKey"> The APNS certificate password if it exists. </param>
-        /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;. </param>
+        /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify 'gateway.sandbox.push.apple.com'. If using Certificate Authentication Mode and Production specify 'gateway.push.apple.com'. If using Token Authentication Mode and Sandbox specify 'https://api.development.push.apple.com:443/3/device'. If using Token Authentication Mode and Production specify 'https://api.push.apple.com:443/3/device'. </param>
         /// <param name="thumbprintString"> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </param>
         /// <param name="keyId"> A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode. </param>
         /// <param name="appName"> The name of the application or BundleId. Specify if using Token Authentication Mode. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public string ApnsCertificate { get; set; }
         /// <summary> The APNS certificate password if it exists. </summary>
         public string CertificateKey { get; set; }
-        /// <summary> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;. </summary>
+        /// <summary> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify 'gateway.sandbox.push.apple.com'. If using Certificate Authentication Mode and Production specify 'gateway.push.apple.com'. If using Token Authentication Mode and Sandbox specify 'https://api.development.push.apple.com:443/3/device'. If using Token Authentication Mode and Production specify 'https://api.push.apple.com:443/3/device'. </summary>
         public Uri Endpoint { get; set; }
         /// <summary> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </summary>
         public string ThumbprintString { get; set; }

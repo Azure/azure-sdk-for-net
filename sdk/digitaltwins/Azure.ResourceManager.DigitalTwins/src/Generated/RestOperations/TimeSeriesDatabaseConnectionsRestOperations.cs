@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupName"> The name of the resource group that contains the DigitalTwinsInstance. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="timeSeriesDatabaseConnectionName"> Name of time series database connection. </param>
-        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to &apos;true&apos; does not delete any recorded data. </param>
+        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to 'true' does not delete any recorded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupName"> The name of the resource group that contains the DigitalTwinsInstance. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="timeSeriesDatabaseConnectionName"> Name of time series database connection. </param>
-        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to &apos;true&apos; does not delete any recorded data. </param>
+        /// <param name="cleanupConnectionArtifacts"> Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to 'true' does not delete any recorded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -18,17 +18,17 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Optional<RouterJob> routerJob = default;
+            Optional<RouterJob> job = default;
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routerJob"u8))
+                if (property.NameEquals("job"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    routerJob = RouterJob.DeserializeRouterJob(property.Value);
+                    job = RouterJob.DeserializeRouterJob(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterJobItem(routerJob.Value, etag.Value);
+            return new RouterJobItem(job.Value, etag.Value);
         }
     }
 }

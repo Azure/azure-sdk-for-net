@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
         /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
         /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
         public HttpsRedirect? HttpsRedirect { get; set; }
-        /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public EnabledState? EnabledState { get; set; }
         /// <summary> Provisioning status. </summary>
         public FrontDoorProvisioningState? ProvisioningState { get; }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="eventHubEntityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
         /// <param name="eventHubNamespaceResourceId"> The resource ID of the EventHub namespace. </param>
         /// <param name="eventHubConsumerGroup"> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </param>
-        /// <param name="recordPropertyAndItemRemovals"> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to &apos;true&apos;. Setting this property to &apos;true&apos; will generate an additional column in the property events table in ADX. </param>
+        /// <param name="recordPropertyAndItemRemovals"> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to 'true'. Setting this property to 'true' will generate an additional column in the property events table in ADX. </param>
         internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, string adxTwinLifecycleEventsTableName, string adxRelationshipLifecycleEventsTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup, RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals) : base(connectionType, provisioningState, identity)
         {
             AdxResourceId = adxResourceId;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public ResourceIdentifier EventHubNamespaceResourceId { get; set; }
         /// <summary> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </summary>
         public string EventHubConsumerGroup { get; set; }
-        /// <summary> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to &apos;true&apos;. Setting this property to &apos;true&apos; will generate an additional column in the property events table in ADX. </summary>
+        /// <summary> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to 'true'. Setting this property to 'true' will generate an additional column in the property events table in ADX. </summary>
         public RecordPropertyAndItemRemoval? RecordPropertyAndItemRemovals { get; set; }
     }
 }

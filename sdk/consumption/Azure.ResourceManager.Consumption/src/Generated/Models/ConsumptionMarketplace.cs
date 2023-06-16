@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: Marketplace.properties.costCenter
         /// </param>
         /// <param name="additionalProperties">
-        /// Additional details of this usage item. By default this is not populated, unless it&apos;s specified in $expand.
+        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: Marketplace.properties.additionalProperties
         /// </param>
         /// <param name="publisherName">
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string CostCenter { get; }
         /// <summary>
-        /// Additional details of this usage item. By default this is not populated, unless it&apos;s specified in $expand.
+        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: Marketplace.properties.additionalProperties
         /// </summary>
         public string AdditionalProperties { get; }

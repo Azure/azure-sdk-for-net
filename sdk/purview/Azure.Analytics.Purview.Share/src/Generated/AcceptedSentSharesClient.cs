@@ -271,7 +271,7 @@ namespace Azure.Analytics.Purview.Share
         }
 
         /// <summary>
-        /// [Protocol Method] Revoke an accepted sent share&apos;s access
+        /// [Protocol Method] Revoke an accepted sent share's access
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.Share
         }
 
         /// <summary>
-        /// [Protocol Method] Revoke an accepted sent share&apos;s access
+        /// [Protocol Method] Revoke an accepted sent share's access
         /// <list type="bullet">
         /// <item>
         /// <description>

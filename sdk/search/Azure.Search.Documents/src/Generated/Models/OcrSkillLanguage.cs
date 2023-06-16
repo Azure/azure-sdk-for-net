@@ -363,7 +363,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static OcrSkillLanguage Klr { get; } = new OcrSkillLanguage(KlrValue);
         /// <summary> Khasi. </summary>
         public static OcrSkillLanguage Kha { get; } = new OcrSkillLanguage(KhaValue);
-        /// <summary> K&apos;iche&apos;. </summary>
+        /// <summary> K'iche'. </summary>
         public static OcrSkillLanguage Quc { get; } = new OcrSkillLanguage(QucValue);
         /// <summary> Korean. </summary>
         public static OcrSkillLanguage Ko { get; } = new OcrSkillLanguage(KoValue);
