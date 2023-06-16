@@ -492,8 +492,8 @@ namespace Azure.Core.Tests
         [Test]
         public void SerializedDynamicDataMaintainsFormatting()
         {
-            dynamic a = BinaryData.FromString("""{"foo": null}""").ToDynamicFromJson(PropertyNameFormat.CamelCase, "x");
-            dynamic b = BinaryData.FromString("""{"b": "b"}""").ToDynamicFromJson(PropertyNameFormat.CamelCase, "x");
+            dynamic a = BinaryData.FromString("""{"foo": null}""").ToDynamicFromJson(JsonPropertyNames.CamelCase, "x");
+            dynamic b = BinaryData.FromString("""{"b": "b"}""").ToDynamicFromJson(JsonPropertyNames.CamelCase, "x");
 
             b.DateTime = new DateTimeOffset(2023, 10, 19, 10, 19, 10, 19, new TimeSpan(0));
             Assert.AreEqual("b", (string)b.B);

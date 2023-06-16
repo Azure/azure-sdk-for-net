@@ -13,7 +13,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignTopDown()
         {
-            dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // Existing property
             json.A = new AModel("a");
@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
             ValidateSetTopDown(json);
 
             // New property
-            json = BinaryData.FromString("""{}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             json.A = new AModel("a");
 
             ValidateSetTopDown(json);
@@ -138,7 +138,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignBottomUp()
         {
-            dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // Existing property
             json.A = new AModel("a");
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
             ValidateSetBottomUp(json);
 
             // New property
-            json = BinaryData.FromString("""{}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             json.A = new AModel("a");
 
             ValidateSetBottomUp(json);
@@ -262,7 +262,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignLeftRight()
         {
-            dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"a":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // Existing property
             json.A = new AModel("a");
@@ -270,7 +270,7 @@ namespace Azure.Core.Tests
             ValidateSetLeftRight(json);
 
             // New property
-            json = BinaryData.FromString("""{}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             json.A = new AModel("a");
 
             ValidateSetLeftRight(json);

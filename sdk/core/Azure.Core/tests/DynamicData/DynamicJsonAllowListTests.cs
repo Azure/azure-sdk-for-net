@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithBinaryDataProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             BinaryDataModel model = new BinaryDataModel();
 
             // Existing property
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithStreamProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             StreamModel model = new StreamModel();
 
             // Existing property
@@ -43,7 +43,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignBinaryData()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             BinaryData data = BinaryData.FromString("no");
 
             // Existing property
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing object support in current version.")]
         public void CanAssignObjectArray()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // Existing property
             Assert.DoesNotThrow(() => json.Foo = new object[] { 1, null, "a" });
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignObjectArrayContainingUnallowedTypes()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // Existing property
             Assert.Throws<NotSupportedException>(() => json.Foo = new object[] { 1, BinaryData.FromString("no"), "a" });
@@ -81,7 +81,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAnonymousType_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             var anon = new
             {
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAnonymousType_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             var anon = new
             {
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignAnonymousTypeWithUnallowedProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             var anon = new
             {
@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesOneDeep_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             NestedModel model = new()
             {
                 StringProperty = "a",
@@ -155,7 +155,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignSubtypesOfAllowedTypes()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             SubUri subUri = new SubUri("https://subtype.azure.com");
 
@@ -169,7 +169,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignDeepAnonymousType()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             var anon = new
             {
@@ -243,7 +243,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesOneDeep_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             NestedModel model = new()
             {
                 StringProperty = "a",
@@ -269,7 +269,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesTwoDeep_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             SkipNestedModel model = new()
             {
                 StringProperty = "a",
@@ -295,7 +295,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignAllowedModelsWithCyclesTwoDeep_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             SkipNestedModel model = new()
             {
                 StringProperty = "a",
@@ -320,7 +320,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignCyclicalModelsWithUnallowedProperties()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             UnallowedNestedModel model = new()
             {
                 StringProperty = "a",
@@ -345,7 +345,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignDictionaryContainingAllowedTypes_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Dictionary<string, string> values = new();
             values["stringValue"] = "a";
@@ -358,7 +358,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignDictionaryContainingAllowedTypes_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Dictionary<string, int> values = new();
             values["stringValue"] = 1;
@@ -371,7 +371,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignDictionaryContainingUnallowedTypes()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Dictionary<string, object> values = new();
             values["stringValue"] = "a";
@@ -388,7 +388,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void CanAssignModelWithValidObjectProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             ObjectPropertyModel model = new()
             {
@@ -413,7 +413,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void ModelAssignmentRespectsValueSemantics()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             ObjectPropertyModel model = new()
             {
@@ -459,7 +459,7 @@ namespace Azure.Core.Tests
         [Ignore("Disallowing POCO support in current version.")]
         public void ModelAssignmentRespectsValueSemanticsAndThrowsWithNewUnallowedValue()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             ObjectPropertyModel model = new()
             {
@@ -501,7 +501,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithInvalidObjectProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             ObjectPropertyModel model = new()
             {
@@ -519,7 +519,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithInvalidObjectPropertyRegardlessOfOrder()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             MultipleObjectPropertyModel model = new()
             {
@@ -561,7 +561,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignNestedGenerics()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             List<List<string>> list = new();
             list.Add(new List<string>() { "a" });
@@ -581,7 +581,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignNestedGenericsWithUnallowedValues()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             List<List<object>> list = new();
             list.Add(new List<object>() { BinaryData.FromString("a") });
@@ -596,7 +596,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignHeterogenousArrays()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Uri[] array = new Uri[]
             {
@@ -614,7 +614,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignArrayWithNulls()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             string[] array = new string[]
             {
@@ -633,7 +633,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignListWithNulls()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             List<string> list = new()
             {
@@ -652,7 +652,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignHeterogenousLists()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             List<Uri> list = new List<Uri>()
             {
@@ -670,7 +670,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignDictionaryWithNulls()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Dictionary<string, string> dictionary = new()
             {
@@ -689,7 +689,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignHeterogenousDictionary()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Dictionary<string, Uri> dictionary = new()
             {
@@ -707,7 +707,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignListsOfUnallowedTypes()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             List<HttpClient> httpClientList = new() { new() };
 
