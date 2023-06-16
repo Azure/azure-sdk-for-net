@@ -4,11 +4,17 @@
 
 ### Features Added
 
+This version adds support to KubernetesCluster resource and its child resource AgentPool.
+
 ### Breaking Changes
+
+This version no longer supports HybridAksCluster and DefaultCniResource. Customers are redirected to use newly created KubernetesCluster resource instead.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+This version upgrades SDK to NetworkCloud 2023-05-01-preview APIs.
 
 ## 1.0.0-beta.1 (2023-05-26)
 
