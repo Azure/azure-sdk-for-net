@@ -8,8 +8,8 @@ using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Messaging.WebPubSub;
 
-//TODO: there is no way to only suppress a single memmber of a static class so we need to have everything custom here.
-[assembly: CodeGenSuppressType("WebPubSubServiceClientBuilderExtensions")]
+//TODO: there is no way to only suppress a single member of a static class so we need to have everything custom here.
+[assembly: CodeGenSuppressType("WebPubSubClientBuilderExtensions")]
 
 namespace Microsoft.Extensions.Azure
 {

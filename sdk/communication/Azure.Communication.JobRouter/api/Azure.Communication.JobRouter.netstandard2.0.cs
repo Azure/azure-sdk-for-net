@@ -226,6 +226,25 @@ namespace Azure.Communication.JobRouter
         internal JobExceptionTrigger() { }
         protected string Kind { get { throw null; } set { } }
     }
+    public static partial class JobRouterModelFactory
+    {
+        public static Azure.Communication.JobRouter.Models.AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.ClassificationPolicy ClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.QueueSelectorAttachment> queueSelectors = null, Azure.Communication.JobRouter.RouterRule prioritizationRule = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.WorkerSelectorAttachment> workerSelectors = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.ClassificationPolicyItem ClassificationPolicyItem(Azure.Communication.JobRouter.Models.ClassificationPolicy classificationPolicy = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.DistributionPolicyItem DistributionPolicyItem(Azure.Communication.JobRouter.Models.DistributionPolicy distributionPolicy = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.ExceptionPolicy ExceptionPolicy(string id = null, string name = null, System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionRule> exceptionRules = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.ExceptionPolicyItem ExceptionPolicyItem(Azure.Communication.JobRouter.Models.ExceptionPolicy exceptionPolicy = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.JobAssignment JobAssignment(string id = null, string workerId = null, System.DateTimeOffset assignTime = default(System.DateTimeOffset), System.DateTimeOffset? completeTime = default(System.DateTimeOffset?), System.DateTimeOffset? closeTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Communication.JobRouter.Models.JobOffer JobOffer(string id = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset? offerTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? expiryTimeUtc = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Communication.JobRouter.Models.JobPositionDetails JobPositionDetails(string jobId = null, int position = 0, string queueId = null, int queueLength = 0, double estimatedWaitTimeMinutes = 0) { throw null; }
+        public static Azure.Communication.JobRouter.Models.JobQueueItem JobQueueItem(Azure.Communication.JobRouter.Models.JobQueue jobQueue = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.JobRouterError JobRouterError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.Models.JobRouterError> details = null, Azure.Communication.JobRouter.Models.JobRouterError innerError = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.QueueStatistics QueueStatistics(string queueId = null, int length = 0, System.Collections.Generic.IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = default(double?)) { throw null; }
+        public static Azure.Communication.JobRouter.Models.RouterJobItem RouterJobItem(Azure.Communication.JobRouter.Models.RouterJob routerJob = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.RouterWorkerItem RouterWorkerItem(Azure.Communication.JobRouter.Models.RouterWorker routerWorker = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.Models.UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = 0) { throw null; }
+        public static Azure.Communication.JobRouter.Models.WorkerAssignment WorkerAssignment(string id = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset assignTime = default(System.DateTimeOffset)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobStateSelector : System.IEquatable<Azure.Communication.JobRouter.JobStateSelector>
     {
@@ -888,25 +907,6 @@ namespace Azure.Communication.JobRouter.Models
         public static implicit operator Azure.Communication.JobRouter.Models.RouterJobStatus (string value) { throw null; }
         public static bool operator !=(Azure.Communication.JobRouter.Models.RouterJobStatus left, Azure.Communication.JobRouter.Models.RouterJobStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class RouterModelFactory
-    {
-        public static Azure.Communication.JobRouter.Models.AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.ClassificationPolicy ClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.QueueSelectorAttachment> queueSelectors = null, Azure.Communication.JobRouter.RouterRule prioritizationRule = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.WorkerSelectorAttachment> workerSelectors = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.ClassificationPolicyItem ClassificationPolicyItem(Azure.Communication.JobRouter.Models.ClassificationPolicy classificationPolicy = null, string etag = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.DistributionPolicyItem DistributionPolicyItem(Azure.Communication.JobRouter.Models.DistributionPolicy distributionPolicy = null, string etag = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.ExceptionPolicy ExceptionPolicy(string id = null, string name = null, System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionRule> exceptionRules = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.ExceptionPolicyItem ExceptionPolicyItem(Azure.Communication.JobRouter.Models.ExceptionPolicy exceptionPolicy = null, string etag = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.JobAssignment JobAssignment(string id = null, string workerId = null, System.DateTimeOffset assignTime = default(System.DateTimeOffset), System.DateTimeOffset? completeTime = default(System.DateTimeOffset?), System.DateTimeOffset? closeTime = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Communication.JobRouter.Models.JobOffer JobOffer(string id = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset? offerTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? expiryTimeUtc = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Communication.JobRouter.Models.JobPositionDetails JobPositionDetails(string jobId = null, int position = 0, string queueId = null, int queueLength = 0, double estimatedWaitTimeMinutes = 0) { throw null; }
-        public static Azure.Communication.JobRouter.Models.JobQueueItem JobQueueItem(Azure.Communication.JobRouter.Models.JobQueue jobQueue = null, string etag = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.JobRouterError JobRouterError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.Models.JobRouterError> details = null, Azure.Communication.JobRouter.Models.JobRouterError innerError = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.QueueStatistics QueueStatistics(string queueId = null, int length = 0, System.Collections.Generic.IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = default(double?)) { throw null; }
-        public static Azure.Communication.JobRouter.Models.RouterJobItem RouterJobItem(Azure.Communication.JobRouter.Models.RouterJob routerJob = null, string etag = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.RouterWorkerItem RouterWorkerItem(Azure.Communication.JobRouter.Models.RouterWorker routerWorker = null, string etag = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = 0) { throw null; }
-        public static Azure.Communication.JobRouter.Models.WorkerAssignment WorkerAssignment(string id = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset assignTime = default(System.DateTimeOffset)) { throw null; }
     }
     public partial class RouterWorker
     {

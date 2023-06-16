@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    [CodeGenType("AzureFileStorageModelFactory")]
+    [CodeGenType("SharesModelFactory")]
     public static partial class ShareModelFactory
     {
         /// <summary>

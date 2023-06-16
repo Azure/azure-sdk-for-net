@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Model factory that enables mocking for the Document Translation Library.
     /// </summary>
-    [CodeGenModel("BatchDocumentTranslationModelFactory")]
+    [CodeGenModel("DocumentModelFactory")]
     public static partial class DocumentTranslationModelFactory
     {
         #region Statuses

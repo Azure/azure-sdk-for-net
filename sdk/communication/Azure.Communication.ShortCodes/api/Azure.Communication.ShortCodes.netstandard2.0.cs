@@ -322,7 +322,7 @@ namespace Azure.Communication.ShortCodes.Models
         public Azure.Communication.ShortCodes.Models.BillingFrequency BillingFrequency { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
     }
-    public static partial class ShortCodesNumbersModelFactory
+    public static partial class ShortCodesModelFactory
     {
         public static Azure.Communication.ShortCodes.Models.ShortCode ShortCode(string number = null, Azure.Communication.ShortCodes.Models.NumberType? numberType = default(Azure.Communication.ShortCodes.Models.NumberType?), string countryCode = null, System.Collections.Generic.IEnumerable<string> programBriefIds = null, System.DateTimeOffset? purchaseDate = default(System.DateTimeOffset?)) { throw null; }
     }

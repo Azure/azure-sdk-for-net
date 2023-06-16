@@ -13,7 +13,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class DocumentsModelFactory
+    public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of SearchQueryVector. </summary>
         /// <param name="value"> The vector representation of a search query. </param>
@@ -25,17 +25,6 @@ namespace Azure.Search.Documents.Models
             value ??= new List<float>();
 
             return new SearchQueryVector(value?.ToList(), kNearestNeighborsCount, fields);
-        }
-
-        /// <summary> Initializes a new instance of FacetResult. </summary>
-        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
-        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, object>();
-
-            return new FacetResult(count, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AnswerResult. </summary>
@@ -105,27 +94,6 @@ namespace Azure.Search.Documents.Models
             return new QueryResultDocumentRerankerInput(title, content, keywords);
         }
 
-        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
-        /// <param name="results"> The list of status information for each document in the indexing request. </param>
-        /// <returns> A new <see cref="Models.IndexDocumentsResult"/> instance for mocking. </returns>
-        public static IndexDocumentsResult IndexDocumentsResult(IEnumerable<IndexingResult> results = null)
-        {
-            results ??= new List<IndexingResult>();
-
-            return new IndexDocumentsResult(results?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of IndexingResult. </summary>
-        /// <param name="key"> The key of a document that was in the indexing request. </param>
-        /// <param name="errorMessage"> The error message explaining why the indexing operation failed for the document identified by the key; null if indexing succeeded. </param>
-        /// <param name="succeeded"> A value indicating whether the indexing operation succeeded for the document identified by the key. </param>
-        /// <param name="status"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
-        /// <returns> A new <see cref="Models.IndexingResult"/> instance for mocking. </returns>
-        public static IndexingResult IndexingResult(string key = null, string errorMessage = null, bool succeeded = default, int status = default)
-        {
-            return new IndexingResult(key, errorMessage, succeeded, status);
-        }
-
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
@@ -135,25 +103,6 @@ namespace Azure.Search.Documents.Models
             results ??= new List<AutocompleteItem>();
 
             return new AutocompleteResults(coverage, results?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AutocompleteItem. </summary>
-        /// <param name="text"> The completed term. </param>
-        /// <param name="queryPlusText"> The query along with the completed term. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryPlusText"/> is null. </exception>
-        /// <returns> A new <see cref="Models.AutocompleteItem"/> instance for mocking. </returns>
-        public static AutocompleteItem AutocompleteItem(string text = null, string queryPlusText = null)
-        {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (queryPlusText == null)
-            {
-                throw new ArgumentNullException(nameof(queryPlusText));
-            }
-
-            return new AutocompleteItem(text, queryPlusText);
         }
 
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
@@ -191,41 +140,6 @@ namespace Azure.Search.Documents.Models
             return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerError. </summary>
-        /// <param name="key"> The key of the item for which indexing failed. </param>
-        /// <param name="errorMessage"> The message describing the error that occurred while processing the item. </param>
-        /// <param name="statusCode"> The status code indicating why the indexing operation failed. Possible values include: 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
-        /// <param name="name"> The name of the source at which the error originated. For example, this could refer to a particular skill in the attached skillset. This may not be always available. </param>
-        /// <param name="details"> Additional, verbose details about the error to assist in debugging the indexer. This may not be always available. </param>
-        /// <param name="documentationLink"> A link to a troubleshooting guide for these classes of errors. This may not be always available. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchIndexerError"/> instance for mocking. </returns>
-        public static SearchIndexerError SearchIndexerError(string key = null, string errorMessage = null, int statusCode = default, string name = null, string details = null, string documentationLink = null)
-        {
-            return new SearchIndexerError(key, errorMessage, statusCode, name, details, documentationLink);
-        }
-
-        /// <summary> Initializes a new instance of SearchIndexerWarning. </summary>
-        /// <param name="key"> The key of the item which generated a warning. </param>
-        /// <param name="message"> The message describing the warning that occurred while processing the item. </param>
-        /// <param name="name"> The name of the source at which the warning originated. For example, this could refer to a particular skill in the attached skillset. This may not be always available. </param>
-        /// <param name="details"> Additional, verbose details about the warning to assist in debugging the indexer. This may not be always available. </param>
-        /// <param name="documentationLink"> A link to a troubleshooting guide for these classes of warnings. This may not be always available. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchIndexerWarning"/> instance for mocking. </returns>
-        public static SearchIndexerWarning SearchIndexerWarning(string key = null, string message = null, string name = null, string details = null, string documentationLink = null)
-        {
-            return new SearchIndexerWarning(key, message, name, details, documentationLink);
-        }
-
-        /// <summary> Initializes a new instance of SearchIndexerLimits. </summary>
-        /// <param name="maxRunTime"> The maximum duration that the indexer is permitted to run for one execution. </param>
-        /// <param name="maxDocumentExtractionSize"> The maximum size of a document, in bytes, which will be considered valid for indexing. </param>
-        /// <param name="maxDocumentContentCharactersToExtract"> The maximum number of characters that will be extracted from a document picked up for indexing. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchIndexerLimits"/> instance for mocking. </returns>
-        public static SearchIndexerLimits SearchIndexerLimits(TimeSpan? maxRunTime = null, long? maxDocumentExtractionSize = null, long? maxDocumentContentCharactersToExtract = null)
-        {
-            return new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
-        }
-
         /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
@@ -234,42 +148,6 @@ namespace Azure.Search.Documents.Models
         public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long? vectorIndexSize = null)
         {
             return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
-        }
-
-        /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
-        /// <param name="token"> The token returned by the analyzer. </param>
-        /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
-        /// <param name="endOffset"> The index of the last character of the token in the input text. </param>
-        /// <param name="position"> The position of the token in the input text relative to other tokens. The first token in the input text has position 0, the next has position 1, and so on. Depending on the analyzer used, some tokens might have the same position, for example if they are synonyms of each other. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        /// <returns> A new <see cref="Indexes.Models.AnalyzedTokenInfo"/> instance for mocking. </returns>
-        public static AnalyzedTokenInfo AnalyzedTokenInfo(string token = null, int startOffset = default, int endOffset = default, int position = default)
-        {
-            if (token == null)
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            return new AnalyzedTokenInfo(token, startOffset, endOffset, position);
-        }
-
-        /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
-        /// <param name="counters"> Service level resource counters. </param>
-        /// <param name="limits"> Service level general limits. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="counters"/> or <paramref name="limits"/> is null. </exception>
-        /// <returns> A new <see cref="Indexes.Models.SearchServiceStatistics"/> instance for mocking. </returns>
-        public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters = null, SearchServiceLimits limits = null)
-        {
-            if (counters == null)
-            {
-                throw new ArgumentNullException(nameof(counters));
-            }
-            if (limits == null)
-            {
-                throw new ArgumentNullException(nameof(limits));
-            }
-
-            return new SearchServiceStatistics(counters, limits);
         }
 
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
@@ -324,26 +202,6 @@ namespace Azure.Search.Documents.Models
             }
 
             return new SearchServiceCounters(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter);
-        }
-
-        /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
-        /// <param name="usage"> The resource usage amount. </param>
-        /// <param name="quota"> The resource amount quota. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchResourceCounter"/> instance for mocking. </returns>
-        public static SearchResourceCounter SearchResourceCounter(long usage = default, long? quota = null)
-        {
-            return new SearchResourceCounter(usage, quota);
-        }
-
-        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
-        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
-        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
-        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
-        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
-        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = null, int? maxFieldNestingDepthPerIndex = null, int? maxComplexCollectionFieldsPerIndex = null, int? maxComplexObjectsInCollectionsPerDocument = null)
-        {
-            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument);
         }
     }
 }
