@@ -681,8 +681,8 @@ namespace Azure.Containers.ContainerRegistry
 
         private static void CheckContentLength(Response response)
         {
-            if (response.Headers.ContentLength == null ||
-                response.Headers.ContentLength <= 0)
+            if (response.Headers.ContentLengthLong() == null ||
+                response.Headers.ContentLengthLong() <= 0)
             {
                 throw new RequestFailedException(response.Status, InvalidContentLengthMessage);
             }
@@ -695,7 +695,7 @@ namespace Azure.Containers.ContainerRegistry
             // it indicates a malicious or faulty service and should not be trusted.
             CheckContentLength(response);
 
-            int? size = response.Headers.ContentLength;
+            long? size = response.Headers.ContentLengthLong();
 
             if (size > MaxManifestSize)
             {
