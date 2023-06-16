@@ -286,6 +286,19 @@
       ]
     },
     {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
+      "filename": "**/sdk/costmanagement/**/*",
+      "words": [
+        "ahub",
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -638,6 +651,14 @@
       ]
     },
     {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -652,7 +673,8 @@
     {
       "filename": "**/sdk/mysql/**/*.cs",
       "words": [
-        "byok"
+        "byok",
+        "gtid"
       ]
     },
     {
@@ -1089,6 +1111,18 @@
         "Probs",
         "Logprobs",
         "Logit"
+      ]
+    },
+    {
+      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
+      "words": [
+        "RELRO",
+        "Relro",
+        "relro",
+        "Rpath",
+        "rpath",
+        "runpath",
+        "Cves"
       ]
     }
   ],

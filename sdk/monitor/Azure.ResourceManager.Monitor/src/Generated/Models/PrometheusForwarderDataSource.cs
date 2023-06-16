@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>
         /// <param name="streams"> List of streams that this data source will be sent to. </param>
         /// <param name="labelIncludeFilter">
-        /// The list of label inclusion filters in the form of label &quot;name-value&quot; pairs.
-        /// Currently only one label is supported: &apos;microsoft_metrics_include_label&apos;.
+        /// The list of label inclusion filters in the form of label "name-value" pairs.
+        /// Currently only one label is supported: 'microsoft_metrics_include_label'.
         /// Label values are matched case-insensitively.
         /// </param>
         /// <param name="name">
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> List of streams that this data source will be sent to. </summary>
         public IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> Streams { get; }
         /// <summary>
-        /// The list of label inclusion filters in the form of label &quot;name-value&quot; pairs.
-        /// Currently only one label is supported: &apos;microsoft_metrics_include_label&apos;.
+        /// The list of label inclusion filters in the form of label "name-value" pairs.
+        /// Currently only one label is supported: 'microsoft_metrics_include_label'.
         /// Label values are matched case-insensitively.
         /// </summary>
         public IDictionary<string, string> LabelIncludeFilter { get; }

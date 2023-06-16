@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
                 },
             };
 
-            var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow, new RequestContext());
+            var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -208,7 +208,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
                 },
             };
 
-            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow, new RequestContext());
+            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Purview.Models
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Gets the creator of the entity. </summary>
         public string CreatedBy { get; }
-        /// <summary> Gets the creators of the entity&apos;s object id. </summary>
+        /// <summary> Gets the creators of the entity's object id. </summary>
         public string CreatedByObjectId { get; }
         /// <summary> The URIs that are the public endpoints of the account. </summary>
         public PurviewAccountEndpoint Endpoints { get; }

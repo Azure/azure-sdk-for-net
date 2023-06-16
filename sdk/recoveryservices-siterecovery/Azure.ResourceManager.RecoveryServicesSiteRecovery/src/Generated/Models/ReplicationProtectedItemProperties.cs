@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="switchProviderState"> The switch provider state. </param>
         /// <param name="switchProviderStateDescription"> The switch provider state description. </param>
         /// <param name="allowedOperations"> The allowed operations on the Replication protected item. </param>
-        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
+        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
         /// <param name="failoverHealth"> The consolidated failover health for the VM. </param>
         /// <param name="healthErrors"> List of health errors. </param>
         /// <param name="policyId"> The ID of Policy governing this PE. </param>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string SwitchProviderStateDescription { get; }
         /// <summary> The allowed operations on the Replication protected item. </summary>
         public IReadOnlyList<string> AllowedOperations { get; }
-        /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
+        /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
         public string ReplicationHealth { get; }
         /// <summary> The consolidated failover health for the VM. </summary>
         public string FailoverHealth { get; }

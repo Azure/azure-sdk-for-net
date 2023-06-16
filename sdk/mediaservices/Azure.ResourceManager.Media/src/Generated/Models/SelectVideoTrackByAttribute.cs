@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>
         /// <param name="filter"> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </param>
-        /// <param name="filterValue"> The value to filter the tracks by.  Only used when AttributeFilter.ValueEquals is specified for the Filter property. For TrackAttribute.Bitrate, this should be an integer value in bits per second (e.g: &apos;1500000&apos;).  The TrackAttribute.Language is not supported for video tracks. </param>
+        /// <param name="filterValue"> The value to filter the tracks by.  Only used when AttributeFilter.ValueEquals is specified for the Filter property. For TrackAttribute.Bitrate, this should be an integer value in bits per second (e.g: '1500000').  The TrackAttribute.Language is not supported for video tracks. </param>
         internal SelectVideoTrackByAttribute(string odataType, TrackAttribute attribute, TrackAttributeFilter filter, string filterValue) : base(odataType)
         {
             Attribute = attribute;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         public TrackAttribute Attribute { get; set; }
         /// <summary> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </summary>
         public TrackAttributeFilter Filter { get; set; }
-        /// <summary> The value to filter the tracks by.  Only used when AttributeFilter.ValueEquals is specified for the Filter property. For TrackAttribute.Bitrate, this should be an integer value in bits per second (e.g: &apos;1500000&apos;).  The TrackAttribute.Language is not supported for video tracks. </summary>
+        /// <summary> The value to filter the tracks by.  Only used when AttributeFilter.ValueEquals is specified for the Filter property. For TrackAttribute.Bitrate, this should be an integer value in bits per second (e.g: '1500000').  The TrackAttribute.Language is not supported for video tracks. </summary>
         public string FilterValue { get; set; }
     }
 }

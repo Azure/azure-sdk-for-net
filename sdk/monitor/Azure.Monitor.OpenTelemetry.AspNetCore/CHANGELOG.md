@@ -4,11 +4,17 @@
 
 ### Features Added
 
+* Added `SamplingRatio` property to customize the sampling rate in Azure Monitor Exporter.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+* Removed reference to `OpenTelemetry.Extensions.AzureMonitor`.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 
 ## 1.0.0-beta.4 (2023-05-09)
 

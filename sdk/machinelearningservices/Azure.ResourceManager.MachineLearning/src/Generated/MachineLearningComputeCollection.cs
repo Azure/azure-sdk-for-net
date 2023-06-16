@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them.
+        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them.
+        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

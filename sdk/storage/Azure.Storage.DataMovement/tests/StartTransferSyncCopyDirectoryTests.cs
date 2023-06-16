@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="container">The source container which will contains the source blobs</param>
@@ -68,7 +68,6 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainer(container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.SyncCopy,
                     DirectoryPrefix = destinationBlobPrefix,
                 });
 
@@ -229,7 +228,6 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource = new BlobStorageResourceContainer(test.Container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy,
                     DirectoryPrefix = dirName2,
                 });
 
@@ -496,7 +494,6 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = new BlobStorageResourceContainer(containerClient,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.SyncCopy,
                     DirectoryPrefix = destBlobPrefix,
                 });
 
@@ -694,6 +691,43 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
+
+            TransferOptions options = new TransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail,
+                InitialTransferSize = 512,
+                MaximumTransferChunkSize = 512
+            };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            // Create transfer to do a AwaitCompletion
+            DataTransfer transfer = await CreateStartTransfer(
+                test.Container,
+                1,
+                createFailedCondition: true,
+                options: options,
+                size: Constants.KB * 4);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            transfer.EnsureCompleted(cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
+            await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
     }

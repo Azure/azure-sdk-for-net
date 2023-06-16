@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             };
 
             var options = new PurviewShareClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new ReceivedSharesClient(TestEnvironment.Endpoint.ToString(), TestEnvironment.Credential, InstrumentClientOptions(options)));
+            return InstrumentClient(new ReceivedSharesClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.Communication.Email
 
         internal void ValidateAttachmentContent()
         {
-            if (string.IsNullOrWhiteSpace(ContentInBase64))
+            if (Content.ToMemory().IsEmpty)
             {
                 throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
             }

@@ -249,8 +249,8 @@ namespace Azure.Data.Tables
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
-        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: &quot;return-no-content&quot; | &quot;return-content&quot;. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: "application/json;odata=nometadata" | "application/json;odata=minimalmetadata" | "application/json;odata=fullmetadata". </param>
+        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: "return-no-content" | "return-content". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -284,8 +284,8 @@ namespace Azure.Data.Tables
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
-        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: &quot;return-no-content&quot; | &quot;return-content&quot;. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: "application/json;odata=nometadata" | "application/json;odata=minimalmetadata" | "application/json;odata=fullmetadata". </param>
+        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: "return-no-content" | "return-content". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>

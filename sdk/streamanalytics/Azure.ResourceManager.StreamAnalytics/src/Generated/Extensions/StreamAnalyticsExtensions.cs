@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamingJobResource> GetStreamingJobs(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary>
-        /// Retrieves the subscription&apos;s current quota information in a particular region.
+        /// Retrieves the subscription's current quota information in a particular region.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary>
-        /// Retrieves the subscription&apos;s current quota information in a particular region.
+        /// Retrieves the subscription's current quota information in a particular region.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
