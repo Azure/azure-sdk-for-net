@@ -66,10 +66,10 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If the dynamic content uses a naming convention, do a second look-up.
-            if (_options.PropertyNameFormat != PropertyNameFormat.None)
+            // If the dynamic content has a specified property name format, do a second look-up.
+            if (_options.PropertyNameFormat != JsonPropertyNames.UseExact)
             {
-                if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
+                if (_element.TryGetProperty(FormatPropertyName(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -84,12 +84,12 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private string ApplyNamingConvention(string value)
+        private string FormatPropertyName(string value)
         {
             return _options.PropertyNameFormat switch
             {
-                PropertyNameFormat.None => value,
-                PropertyNameFormat.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                JsonPropertyNames.UseExact => value,
+                JsonPropertyNames.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
                 _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNameFormat}'."),
             };
         }
@@ -145,15 +145,15 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.PropertyNameFormat == PropertyNameFormat.None ||
+            if (_options.PropertyNameFormat == JsonPropertyNames.UseExact ||
                 _element.TryGetProperty(name, out MutableJsonElement _))
             {
                 _element = _element.SetProperty(name, value);
                 return null;
             }
 
-            // The dynamic content uses a naming convention.  Set with that name.
-            _element = _element.SetProperty(ApplyNamingConvention(name), value);
+            // The dynamic content has a specified property name format.
+            _element = _element.SetProperty(FormatPropertyName(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;

@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(PropertyNameFormat.CamelCase);
+                """).ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
