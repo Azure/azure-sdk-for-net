@@ -82,29 +82,23 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         public async Task CreatePrivateEndpointConnection(string privateEndPointName)
         {
-            if (Mode == RecordedTestMode.Record)
+            //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
+            var privateEndPointData = new PrivateEndpointData()
             {
-                using (Recording.DisableRecording())
+                Subnet = new SubnetData() { Id = new ResourceIdentifier($"{_vnetId}" + "/subnets/subnet02") },
+                Location = "westus2",
+                PrivateLinkServiceConnections =
                 {
-                    //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
-                    var privateEndPointData = new PrivateEndpointData()
+                    new NetworkPrivateLinkServiceConnection()
                     {
-                        Subnet = new SubnetData() { Id = new ResourceIdentifier($"{_vnetId}" + "/subnets/subnet02") },
-                        Location = "westus2",
-                        PrivateLinkServiceConnections =
-                        {
-                            new NetworkPrivateLinkServiceConnection()
-                            {
-                                Name = privateEndPointName,
-                                PrivateLinkServiceId = _webPubSub.Data.Id,
-                                GroupIds = { "webpubsub" },
-                            }
-                        },
-                    };
-                    var privateEndPointContainer = _resourceGroup.GetPrivateEndpoints();
-                    var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(WaitUntil.Completed, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
-                }
-            }
+                        Name = privateEndPointName,
+                        PrivateLinkServiceId = _webPubSub.Data.Id,
+                        GroupIds = { "webpubsub" },
+                    }
+                },
+            };
+            var privateEndPointContainer = _resourceGroup.GetPrivateEndpoints();
+            var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(WaitUntil.Completed, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
         }
 
         [RecordedTest]

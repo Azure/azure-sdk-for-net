@@ -47,7 +47,7 @@ namespace Azure.Monitor.Ingestion.Samples
     new {}
 };
 
-            Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>", new RequestContext());
+            Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
             Console.WriteLine(response.Status);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Monitor.Ingestion.Samples
     new {}
 };
 
-            Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>", new RequestContext());
+            Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
             Console.WriteLine(response.Status);
         }
     }

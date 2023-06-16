@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                       Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -94,6 +94,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticHybridSearch()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
@@ -104,7 +105,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,

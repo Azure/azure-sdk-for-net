@@ -77,7 +77,7 @@ namespace Azure.Communication.Rooms.Tests
         public async Task AcsRoomLifeCycleLiveTest()
         {
             // Arrange
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
@@ -151,7 +151,7 @@ namespace Azure.Communication.Rooms.Tests
         public async Task GetRoomsLiveTest_FirstRoomIsNotNull_Succeed()
         {
             // Arrange
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
             // First create a room to ensure that the list rooms will not be empty.
             CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync();
             CommunicationRoom? firstActiveRoom = null;
@@ -189,7 +189,7 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
 
             RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
             RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter };
@@ -275,7 +275,7 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
 
             RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
             RoomParticipant participant2 = new RoomParticipant(communicationUser2);
@@ -404,7 +404,7 @@ namespace Azure.Communication.Rooms.Tests
         {
             if (Mode != Core.TestFramework.RecordedTestMode.Playback)
             {
-                RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+                RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
 
                 var validFrom = DateTime.UtcNow;
                 var validUntil = validFrom.AddDays(1);

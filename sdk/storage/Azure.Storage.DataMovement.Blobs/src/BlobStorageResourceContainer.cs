@@ -74,11 +74,16 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="blobName">Full path to the blob in flat namespace.</param>
         /// <param name="length">The content length of the blob.</param>
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
+        /// <param name="etagLock">Etag for the resource to lock on.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        private StorageResource GetBlobAsStorageResource(string blobName, long? length = default, BlobType type = BlobType.Block)
+        private StorageResource GetBlobAsStorageResource(
+            string blobName,
+            long? length = default,
+            BlobType type = BlobType.Block,
+            ETag? etagLock = null)
         {
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
@@ -87,8 +92,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new AppendBlobStorageResource(
                     client,
                     length,
+                    etagLock,
                     _options.ToAppendBlobStorageResourceOptions());
-                ;
             }
             else if (type == BlobType.Page)
             {
@@ -96,6 +101,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new PageBlobStorageResource(
                     client,
                     length,
+                    etagLock,
                     _options.ToPageBlobStorageResourceOptions());
             }
             else // (type == BlobType.Block)
@@ -104,41 +110,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new BlockBlobStorageResource(
                     client,
                     length,
+                    etagLock,
                     _options.ToBlockBlobStorageResourceOptions());
-            }
-        }
-
-        /// <summary>
-        /// Gets the parent container resource for this container resource. The parent container
-        /// can represent either a directory prefix or the blob container itself.
-        /// </summary>
-        /// <returns>
-        /// The parent resource container.
-        /// </returns>
-        /// <exception cref="NotSupportedException">
-        /// A container resource that represents the blob container itself has no parent.
-        /// </exception>
-        public override StorageResourceContainer GetParentStorageResourceContainer()
-        {
-            // TODO: should this throw? Perhaps we return null or refactor base class for a try pattern.
-            if (!IsDirectory)
-            {
-                throw new NotSupportedException();
-            }
-
-            // TODO: if there's no parent directory, that means we should return the BlobStorageResourceContainer instead
-            // Recreate the blobName using the existing parent directory path
-            int delimiter = _directoryPrefix.LastIndexOf('/');
-            if (delimiter > -1)
-            {
-                return new BlobStorageResourceContainer(_blobContainerClient, new BlobStorageResourceContainerOptions
-                {
-                    DirectoryPrefix = _directoryPrefix.Substring(0, delimiter)
-                });
-            }
-            else
-            {
-                return new BlobStorageResourceContainer(_blobContainerClient);
             }
         }
 
@@ -159,7 +132,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 yield return GetBlobAsStorageResource(
                     blobItem.Name,
                     blobItem.Properties.ContentLength,
-                    blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block);
+                    blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block,
+                    blobItem.Properties.ETag);
             }
         }
 

@@ -11,7 +11,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> List of network mappings. As with NetworkMapping, it should be possible to reuse a prev version of this class. It doesn&apos;t seem likely this class could be anything more than a slightly bespoke collection of NetworkMapping. Hence it makes sense to override Load with Base.NetworkMapping instead of existing CurrentVersion.NetworkMapping. </summary>
+    /// <summary> List of network mappings. As with NetworkMapping, it should be possible to reuse a prev version of this class. It doesn't seem likely this class could be anything more than a slightly bespoke collection of NetworkMapping. Hence it makes sense to override Load with Base.NetworkMapping instead of existing CurrentVersion.NetworkMapping. </summary>
     internal partial class NetworkMappingCollection
     {
         /// <summary> Initializes a new instance of NetworkMappingCollection. </summary>

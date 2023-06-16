@@ -18,7 +18,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public string UserId { get; set; }
         /// <summary> Minimum threshold score for answers, value ranges from 0 to 1. </summary>
         public double? ConfidenceThreshold { get; set; }
-        /// <summary> Context object with previous QnA&apos;s information. </summary>
+        /// <summary> Context object with previous QnA's information. </summary>
         public KnowledgeBaseAnswerContext AnswerContext { get; set; }
         /// <summary> Type of ranker to be used. </summary>
         public RankerKind? RankerKind { get; set; }

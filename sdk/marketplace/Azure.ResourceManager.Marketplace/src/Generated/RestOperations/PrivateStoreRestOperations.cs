@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        /// <summary> List of user&apos;s approved offers for the provided offers and subscriptions. </summary>
+        /// <summary> List of user's approved offers for the provided offers and subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        /// <summary> List of user&apos;s approved offers for the provided offers and subscriptions. </summary>
+        /// <summary> List of user's approved offers for the provided offers and subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

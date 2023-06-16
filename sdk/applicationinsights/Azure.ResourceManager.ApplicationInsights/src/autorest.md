@@ -5,12 +5,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ApplicationInsights
 namespace: Azure.ResourceManager.ApplicationInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/b3a0c8c84015cc8a1f4bef06ce579ba2f32d4ece/specification/applicationinsights/resource-manager/readme.md
-tag: package-2020-03-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -50,4 +48,47 @@ rename-rules:
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/linkedStorageAccounts/{storageType}
 
+rename-mapping:
+  WebTest.properties.Frequency: FrequencyInSeconds
+  WebTest.properties.Timeout: TimeoutInSeconds
+  ApplicationInsightsComponent.properties.DisableIpMasking: IsDisableIpMasking
+  ApplicationInsightsComponent.properties.ImmediatePurgeDataOn30Days: IsImmediatePurgeDataOn30Days
+  ApplicationInsightsComponent.properties.DisableLocalAuth: IsDisableLocalAuth
+  ApplicationInsightsComponent.properties.ForceCustomerStorageForProfiler: IsForceCustomerStorageForProfiler
+  MyWorkbook.properties.tags: Tags
+  Workbook.properties.tags: Tags
+  WebTest.properties.Enabled: IsEnabled
+  Workbook.properties.timeModified: ModifiedOn
+  WorkbookTemplate.properties.localized: LocalizedGalleries
+  ApplicationInsightsComponentDataVolumeCap.StopSendNotificationWhenHitThreshold: IsStopSendNotificationWhenHitThreshold
+  ApplicationInsightsComponentDataVolumeCap.StopSendNotificationWhenHitCap: IsStopSendNotificationWhenHitCap
+  ApplicationInsightsComponentProactiveDetectionConfiguration.Enabled: IsEnabled
+  WorkItemCreateConfiguration.ValidateOnly: IsValidateOnly
+  WebTest.properties.RetryEnabled: IsRetryEnabled
+  WebTestPropertiesValidationRules.SSLCheck: CheckSsl
+  ApplicationInsightsComponentFeature.ResouceId: ResourceId
+  ItemScopePath.myanalyticsItems: MyAnalyticsItems
+
+directive:
+  - from: webTestLocations_API.json
+    where: $.definitions
+    transform: >
+      $["ApplicationInsightsWebTestLocationsListResult"] = {
+        "description": "Describes the list of web test locations available to an Application Insights Component.",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/ApplicationInsightsComponentWebTestLocation"
+        },
+        "x-ms-identifiers": [
+          "DisplayName"
+        ]
+      }
+    reason: workaround incorrect definition in swagger
+  - where-operation: webTestLocations_List
+    debug: true
+    transform: >
+      delete $["x-ms-pageable"]
+
+override-operation-name:
+  ComponentQuotaStatus_Get: GetComponentQuotaStatus
 ```

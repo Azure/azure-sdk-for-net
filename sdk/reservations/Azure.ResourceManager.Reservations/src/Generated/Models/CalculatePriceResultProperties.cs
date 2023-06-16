@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of CalculatePriceResultProperties. </summary>
-        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency. Tax is not included. </param>
+        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </param>
         /// <param name="netTotal"> Net total amount in pricing currency. </param>
         /// <param name="taxTotal"> Tax amount in pricing currency. </param>
         /// <param name="grandTotal"> Total amount in pricing currency. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
             PaymentSchedule = paymentSchedule;
         }
 
-        /// <summary> Currency and amount that customer will be charged in customer&apos;s local currency. Tax is not included. </summary>
+        /// <summary> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </summary>
         public CalculatePriceResultPropertiesBillingCurrencyTotal BillingCurrencyTotal { get; }
         /// <summary> Net total amount in pricing currency. </summary>
         public double? NetTotal { get; }

@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.NewRelicObservability
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<NewrelicProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Optional<NewRelicProvisioningState> provisioningState = default;
+            Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
+            Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
             Optional<string> marketplaceSubscriptionId = default;
             Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<PlanData> planData = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
+            Optional<NewRelicObservabilityUserInfo> userInfo = default;
+            Optional<NewRelicPlanDetails> planData = default;
+            Optional<NewRelicLiftrResourceCategory> liftrResourceCategory = default;
             Optional<int> liftrResourcePreference = default;
-            Optional<OrgCreationSource> orgCreationSource = default;
-            Optional<AccountCreationSource> accountCreationSource = default;
+            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
+            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            provisioningState = new NewrelicProvisioningState(property0.Value.GetString());
+                            provisioningState = new NewRelicProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("monitoringStatus"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            monitoringStatus = new MonitoringStatus(property0.Value.GetString());
+                            monitoringStatus = new NewRelicObservabilityMonitoringStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("marketplaceSubscriptionStatus"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property0.Value.GetString());
+                            marketplaceSubscriptionStatus = new NewRelicObservabilityMarketplaceSubscriptionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("marketplaceSubscriptionId"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            userInfo = UserInfo.DeserializeUserInfo(property0.Value);
+                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planData"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            planData = PlanData.DeserializePlanData(property0.Value);
+                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            liftrResourceCategory = new LiftrResourceCategory(property0.Value.GetString());
+                            liftrResourceCategory = new NewRelicLiftrResourceCategory(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("liftrResourcePreference"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            orgCreationSource = new OrgCreationSource(property0.Value.GetString());
+                            orgCreationSource = new NewRelicObservabilityOrgCreationSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accountCreationSource"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            accountCreationSource = new AccountCreationSource(property0.Value.GetString());
+                            accountCreationSource = new NewRelicObservabilityAccountCreationSource(property0.Value.GetString());
                             continue;
                         }
                     }
