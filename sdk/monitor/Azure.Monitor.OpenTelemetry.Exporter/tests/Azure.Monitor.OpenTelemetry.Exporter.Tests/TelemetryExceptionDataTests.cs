@@ -204,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ExceptionDataContainsExceptionDetailsofAllInnerExceptionsOfAggregateException()
+        public void ExceptionDataContainsExceptionDetailsOfAllInnerExceptionsOfAggregateException()
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
