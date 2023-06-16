@@ -17,6 +17,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     /// </summary>
     public class AzureMonitorExporterEventSourceTests
     {
+        /// <summary>
+        /// This test uses reflection to invoke every Event method in our EventSource class.
+        /// This validates that paramaters are logged and helps to confirm that EventIds are correct.
+        /// </summary>
         [Fact]
         public void EventSourceTest_AzureMonitorExporterEventSource()
         {
