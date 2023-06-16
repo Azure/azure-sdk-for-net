@@ -1,6 +1,6 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.4.0 (2023-06-06)
+
+### Features Added
+
+- Added support for binding to `EventData` with the Event Hubs trigger in Functions using the isolated process model.
+
+### Bugs Fixed
+
+- Fixed a race condition when Function instances are scaling that could cause a checkpoint to be written before the Function code was invoked to process events.  This would result in the new owner for the partition skipping those events causing them to go unprocessed.
+
+- Fixed an issue that could cause the trigger to miss that a cancellation token has been signaled, slowing down responsiveness to scaling and shutdown.
 
 ## 5.3.0 (2023-04-11)
 

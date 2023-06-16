@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a hub virtual network connection if it doesn&apos;t exist else updates the existing one.
+        /// Creates a hub virtual network connection if it doesn't exist else updates the existing one.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a hub virtual network connection if it doesn&apos;t exist else updates the existing one.
+        /// Creates a hub virtual network connection if it doesn't exist else updates the existing one.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

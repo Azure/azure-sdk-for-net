@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public RoleManagementPrincipalType? PrincipalType { get; set; }
         /// <summary> Description of role assignment. </summary>
         public string Description { get; set; }
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         public string Condition { get; set; }
-        /// <summary> Version of the condition. Currently the only accepted value is &apos;2.0&apos;. </summary>
+        /// <summary> Version of the condition. Currently the only accepted value is '2.0'. </summary>
         public string ConditionVersion { get; set; }
         /// <summary> Time it was created. </summary>
         public DateTimeOffset? CreatedOn { get; }

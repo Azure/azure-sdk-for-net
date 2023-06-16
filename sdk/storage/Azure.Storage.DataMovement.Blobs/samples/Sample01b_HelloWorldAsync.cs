@@ -712,7 +712,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: destinationResource);
 
                 // Pause from the Transfer Manager using the DataTransfer object
-                bool pauseResult = await transferManager.TryPauseTransferAsync(dataTransfer);
+                await transferManager.PauseTransferIfRunningAsync(dataTransfer);
                 #endregion Snippet:TransferManagerTryPause_Async
 
                 #region Snippet:TransferManagerResume_Async
@@ -774,7 +774,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string transferId = dataTransfer.Id;
 
                 // Pause from the Transfer Manager using the Transfer Id
-                bool pauseResult = await transferManager.TryPauseTransferAsync(transferId);
+                await transferManager.PauseTransferIfRunningAsync(transferId);
                 #endregion Snippet:TransferManagerTryPauseId_Async
 
                 // Resume from checkpoint id
@@ -833,7 +833,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: destinationResource);
 
                 // Pause from the DataTransfer object
-                bool pauseResult = await dataTransfer.TryPauseAsync();
+                await dataTransfer.PauseIfRunningAsync();
                 #endregion Snippet:DataTransferTryPause_Async
 
                 // Resume from checkpoint id
@@ -862,9 +862,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         [Test]
         public async Task UploadDirectory()
         {
-            string localPath = CreateLocalTestDirectory();
-
-            string logFile = Path.GetTempFileName();
+            string localPath = CreateSampleDirectoryTree();
 
             string accountName = StorageAccountName;
             string accountKey = StorageAccountKey;
@@ -947,12 +945,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
 
+            await container.CreateIfNotExistsAsync();
+
             await CreateBlobTestFiles(container, count: 5);
 
             string blobDirectoryPrefix = await CreateBlobContainerTestDirectory(container);
-
-            // Make a service request to verify we've successfully authenticated
-            await container.CreateIfNotExistsAsync();
 
             try
             {

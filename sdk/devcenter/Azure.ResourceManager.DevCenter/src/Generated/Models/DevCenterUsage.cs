@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>
         /// <param name="name"> The name. </param>
-        internal DevCenterUsage(long? currentValue, long? limit, UsageUnit? unit, UsageName name)
+        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name)
         {
             CurrentValue = currentValue;
             Limit = limit;
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> The limit integer. </summary>
         public long? Limit { get; }
         /// <summary> The unit details. </summary>
-        public UsageUnit? Unit { get; }
+        public DevCenterUsageUnit? Unit { get; }
         /// <summary> The name. </summary>
-        public UsageName Name { get; }
+        public DevCenterUsageName Name { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of CaptureDescription. </summary>
         /// <param name="enabled"> A value that indicates whether capture description is enabled. </param>
-        /// <param name="encoding"> Enumerates the possible values for the encoding format of capture description. Note: &apos;AvroDeflate&apos; will be deprecated in New API Version. </param>
+        /// <param name="encoding"> Enumerates the possible values for the encoding format of capture description. Note: 'AvroDeflate' will be deprecated in New API Version. </param>
         /// <param name="intervalInSeconds"> The time window allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds. </param>
         /// <param name="sizeLimitInBytes"> The size window defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes. </param>
         /// <param name="destination"> Properties of Destination where capture will be stored. (Storage Account, Blob Names). </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> A value that indicates whether capture description is enabled. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> Enumerates the possible values for the encoding format of capture description. Note: &apos;AvroDeflate&apos; will be deprecated in New API Version. </summary>
+        /// <summary> Enumerates the possible values for the encoding format of capture description. Note: 'AvroDeflate' will be deprecated in New API Version. </summary>
         public EncodingCaptureDescription? Encoding { get; set; }
         /// <summary> The time window allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds. </summary>
         public int? IntervalInSeconds { get; set; }

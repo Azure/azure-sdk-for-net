@@ -169,6 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
                 Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
                 Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
+                Assert.IsTrue(rawReceived.DeliveryAnnotations.Count > 0);
 
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
@@ -185,6 +186,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+
+                // delivery annotations only apply to a single hop so they are cleared
+                Assert.AreEqual(0, rawSend.DeliveryAnnotations.Count);
 
                 AssertMessagesEqual(toSend, received);
 

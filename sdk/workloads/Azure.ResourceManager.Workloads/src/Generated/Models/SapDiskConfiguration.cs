@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The SAP Disk Configuration contains &apos;recommended disk&apos; details and list of supported disks detail for a volume type. </summary>
+    /// <summary> The SAP Disk Configuration contains 'recommended disk' details and list of supported disks detail for a volume type. </summary>
     public partial class SapDiskConfiguration
     {
         /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
