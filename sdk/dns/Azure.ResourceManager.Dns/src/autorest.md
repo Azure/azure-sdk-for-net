@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Dns
 namespace: Azure.ResourceManager.Dns
 require: https://github.com/Azure/azure-rest-api-specs/blob/c183bb012de8e9e1d0d2e67a0994748df4747d2c/specification/dns/resource-manager/readme.md
