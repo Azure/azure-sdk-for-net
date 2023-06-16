@@ -14,40 +14,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class RouterModelFactory
     {
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        /// <param name="id"> Unique identifier of this policy. </param>
-        /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
-        /// <param name="queueSelectors">
-        /// The queue selectors to resolve a queue for a given job.
-        /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConditionalQueueSelectorAttachment"/>, <see cref="PassThroughQueueSelectorAttachment"/>, <see cref="RuleEngineQueueSelectorAttachment"/>, <see cref="StaticQueueSelectorAttachment"/> and <see cref="WeightedAllocationQueueSelectorAttachment"/>.
-        /// </param>
-        /// <param name="prioritizationRule">
-        /// A rule of one of the following types:
-        ///             
-        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
-        /// DirectMapRule:  A rule that return the same labels as the input labels.
-        /// ExpressionRule: A rule providing inline expression rules.
-        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
-        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
-        /// </param>
-        /// <param name="workerSelectors">
-        /// The worker label selectors to attach to a given job.
-        /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConditionalWorkerSelectorAttachment"/>, <see cref="PassThroughWorkerSelectorAttachment"/>, <see cref="RuleEngineWorkerSelectorAttachment"/>, <see cref="StaticWorkerSelectorAttachment"/> and <see cref="WeightedAllocationWorkerSelectorAttachment"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.ClassificationPolicy"/> instance for mocking. </returns>
-        public static ClassificationPolicy ClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectors = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectors = null)
-        {
-            queueSelectors ??= new List<QueueSelectorAttachment>();
-            workerSelectors ??= new List<WorkerSelectorAttachment>();
-
-            return new ClassificationPolicy(id, name, fallbackQueueId, queueSelectors?.ToList(), prioritizationRule, workerSelectors?.ToList());
-        }
-
         /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>

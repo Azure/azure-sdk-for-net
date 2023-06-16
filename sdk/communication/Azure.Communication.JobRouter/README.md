@@ -98,7 +98,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 ### Queue
 Next, we can create the queue.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-Response<RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
+Response<Models.RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -116,7 +116,7 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
     {
         ChannelReference = "12345",
         Priority = 1,
-        RequestedWorkerSelectors = new List<RouterWorkerSelector>
+        RequestedWorkerSelectors =
         {
             new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
         }
@@ -127,19 +127,11 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
 Now, we register a worker to receive work from that queue, with a label of `Some-Skill` equal to 11.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
-    new CreateWorkerOptions(
-        workerId: "worker-1",
-        totalCapacity: 1)
+    new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
     {
-        QueueIds = { [queue.Value.Id] = new QueueAssignment() },
-        Labels =
-        {
-            ["Some-Skill"] = new LabelValue(11)
-        },
-        ChannelConfigurations =
-        {
-            ["my-channel"] = new ChannelConfiguration(1)
-        },
+        QueueIds = { [queue.Value.Id] = new RouterQueueAssignment() },
+        Labels = { ["Some-Skill"] = new LabelValue(11) },
+        ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
         AvailableForOffers = true,
     }
 );
@@ -183,7 +175,7 @@ foreach (EventGridEvent egEvent in egEvents)
 However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
 Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
-foreach (JobOffer? offer in result.Value.Offers)
+foreach (Models.RouterJobOffer? offer in result.Value.Offers)
 {
     Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
 }
@@ -193,7 +185,7 @@ foreach (JobOffer? offer in result.Value.Offers)
 Once a worker receives an offer, it can take two possible actions: accept or decline. We are going to accept the offer.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 // fetching the offer id
-JobOffer jobOffer = result.Value.Offers.First(x => x.JobId == job.Value.Id);
+Models.RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
 string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 
