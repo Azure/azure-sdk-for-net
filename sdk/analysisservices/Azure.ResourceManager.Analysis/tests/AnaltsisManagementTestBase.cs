@@ -16,16 +16,14 @@ namespace Azure.ResourceManager.Analysis.Tests
         protected AzureLocation DefaultLocation => TestEnvironment.Location;
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected AutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected AnaltsisManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$..uri");
         }
 
-        protected AutomationManagementTestBase(bool isAsync)
+        protected AnaltsisManagementTestBase(bool isAsync)
             : base(isAsync)
         {
-            JsonPathSanitizers.Add("$..uri");
         }
 
         [SetUp]
