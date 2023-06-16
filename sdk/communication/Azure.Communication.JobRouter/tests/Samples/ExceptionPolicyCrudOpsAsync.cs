@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task DistributionPolicyCrud()
         {
             // create a client
-            RouterAdministrationClient routerClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateExceptionPolicy_Async
 
@@ -133,7 +133,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     // you can update one or more properties of exception policy - here we are adding one additional exception rule
                     Name = "My updated exception policy",
-                    ExceptionRules = new Dictionary<string, ExceptionRule?>()
+                    ExceptionRules =
                     {
                         // adding new rule
                         ["EscalateJobOnWaitTimeExceededTrigger2Min"] = new ExceptionRule(

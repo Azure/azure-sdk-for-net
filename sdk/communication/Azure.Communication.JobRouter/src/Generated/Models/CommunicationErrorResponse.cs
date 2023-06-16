@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CommunicationErrorResponse(JobRouterError error)
+        internal CommunicationErrorResponse(CommunicationError error)
         {
             Argument.AssertNotNull(error, nameof(error));
 
@@ -25,6 +25,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The Communication Services error. </summary>
-        public JobRouterError Error { get; }
+        public CommunicationError Error { get; }
     }
 }
