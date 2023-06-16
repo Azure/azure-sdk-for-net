@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
-using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -35,8 +34,7 @@ namespace Azure.Core.Dynamic
                 }
 
                 Type type = value.GetType();
-
-                if (IsAllowedLeafType(type))
+                if (IsAllowedType(type))
                 {
                     return true;
                 }
@@ -49,7 +47,7 @@ namespace Azure.Core.Dynamic
                 return IsAllowedAnonymousValue(type, value);
             }
 
-            private static bool IsAllowedLeafType(Type type)
+            private static bool IsAllowedType(Type type)
             {
                 return type.IsPrimitive ||
                     type == typeof(decimal) ||
@@ -60,12 +58,8 @@ namespace Azure.Core.Dynamic
                     type == typeof(Uri) ||
                     type == typeof(Guid) ||
                     type == typeof(ETag) ||
-
-                    // Allowable for DynamicData assignments.
                     type == typeof(JsonElement) ||
                     type == typeof(JsonDocument) ||
-                    type == typeof(MutableJsonDocument) ||
-                    type == typeof(MutableJsonElement) ||
                     type == typeof(DynamicData);
             }
 
