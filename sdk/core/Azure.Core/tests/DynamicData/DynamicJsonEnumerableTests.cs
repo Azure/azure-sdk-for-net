@@ -203,6 +203,117 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ArrayEnumeratorUsesChanges()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("""
+                {
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            // Existing Property
+            json.Object.Two = new[] { 21, 22, 23 };
+
+            // New Property
+            json.Object.Three = new[] { 31, 32, 33 };
+
+            int expected = 21;
+            Assert.AreEqual(3, json.Object.Two.Length);
+            foreach (dynamic value in json.Object.Two)
+            {
+                Assert.AreEqual(expected++, (int)value);
+            }
+
+            expected = 31;
+            Assert.AreEqual(3, json.Object.Three.Length);
+            foreach (dynamic value in json.Object.Three)
+            {
+                Assert.AreEqual(expected++, (int)value);
+            }
+
+            // Verify changes over the change are recognized
+            json.Object.Two[1] = 23;
+            json.Object.Two[2] = 25;
+
+            expected = 21;
+            Assert.AreEqual(3, json.Object.Two.Length);
+            foreach (dynamic value in json.Object.Two)
+            {
+                Assert.AreEqual(expected, (int)value);
+                expected += 2;
+            }
+        }
+
+        [Test]
+        public void PropertyEnumeratorIncludesAddedPropertiesOverChanges()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("""
+                {
+                    "foo" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            var update = new
+            {
+                a = "a",
+                b = "b"
+            };
+
+            // Existing Property
+            json.foo = update;
+
+            // New Property
+            json.bar = update;
+
+            int i = 0;
+            string[] expected = new string[] { "a", "b" };
+
+            foreach (dynamic property in json.foo)
+            {
+                Assert.AreEqual(expected[i], property.Name);
+                Assert.AreEqual(expected[i], (string)property.Value);
+                i++;
+            }
+
+            i = 0;
+            foreach (dynamic property in json.bar)
+            {
+                Assert.AreEqual(expected[i], property.Name);
+                Assert.AreEqual(expected[i], (string)property.Value);
+                i++;
+            }
+
+            // Add to update
+            json.foo.c = "c";
+            json.bar.c = "c";
+
+            i = 0;
+            expected = new string[] { "a", "b", "c" };
+            foreach (dynamic property in json.foo)
+            {
+                Assert.AreEqual(expected[i], property.Name);
+                Assert.AreEqual(expected[i], (string)property.Value);
+                i++;
+            }
+
+            i = 0;
+            foreach (dynamic property in json.bar)
+            {
+                Assert.AreEqual(expected[i], property.Name);
+                Assert.AreEqual(expected[i], (string)property.Value);
+                i++;
+            }
+        }
+
+        [Test]
         public void PropertyEnumeratorExcludesRemovedProperties()
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("""
