@@ -1096,6 +1096,16 @@ namespace Azure.Core.Tests
             Assert.Throws<ObjectDisposedException>(() => { var foo = mdoc.RootElement.GetProperty("Foo"); });
         }
 
+        [Test]
+        public void CanChangeRootElement()
+        {
+            string json = "1";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.Set(2);
+
+            Assert.AreEqual(2, mdoc.RootElement.GetInt32());
+        }
+
         #region Helpers
 
         internal static void ValidateWriteTo(BinaryData json, MutableJsonDocument mdoc)

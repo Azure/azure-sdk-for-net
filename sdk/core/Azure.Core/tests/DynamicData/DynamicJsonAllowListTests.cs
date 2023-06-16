@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using Azure.Core.Serialization;
@@ -152,9 +153,17 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAssignAnonymousTypesWithCycles()
+        public void CannotAssignSubtypesOfAllowedTypes()
         {
-            // TODO: implement
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            SubUri subUri = new SubUri("https://subtype.azure.com");
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = subUri);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = subUri);
         }
 
         [Test]
@@ -186,7 +195,7 @@ namespace Azure.Core.Tests
                                                     {
                                                         Eleven = new
                                                         {
-                                                            Twelve =new
+                                                            Twelve = new
                                                             {
                                                                 Thirteen = new
                                                                 {
@@ -324,24 +333,6 @@ namespace Azure.Core.Tests
                         BinaryDataProperty = BinaryData.FromString("d")
                     }
                 }
-            };
-
-            // Existing property
-            Assert.Throws<NotSupportedException>(() => json.Foo = model);
-
-            // New property
-            Assert.Throws<NotSupportedException>(() => json.Bar = model);
-        }
-
-        [Test]
-        public void NewCyclesTest()
-        {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
-            Foo model = new()
-            {
-                BarProp = new Bar { N = 1 },
-                FooProp = new Foo { BarProp = new Bar { N = 2 } },
-                StreamProp = new MemoryStream()
             };
 
             // Existing property
@@ -713,6 +704,20 @@ namespace Azure.Core.Tests
             Assert.Throws<NotSupportedException>(() => json.Bar = dictionary);
         }
 
+        [Test]
+        public void CannotAssignListsOfUnallowedTypes()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNameFormat.CamelCase);
+
+            List<HttpClient> httpClientList = new() { new() };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = httpClientList);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = httpClientList);
+        }
+
         #region Helpers
         public class SubUri : Uri
         {
@@ -745,18 +750,6 @@ namespace Azure.Core.Tests
             protected SubUri(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
             {
             }
-        }
-
-        public class Foo
-        {
-            public Bar BarProp { get; set; }
-            public Foo FooProp { get; set; }
-            public Stream StreamProp { get; set; }
-        }
-
-        public class Bar
-        {
-            public int N { get; set; }
         }
 
         internal class BinaryDataModel

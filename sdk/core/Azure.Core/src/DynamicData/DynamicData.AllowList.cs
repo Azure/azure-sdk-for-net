@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -47,7 +46,7 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                return IsAllowedAnonymousValue(type, value, null, 0);
+                return IsAllowedAnonymousValue(type, value);
             }
 
             private static bool IsAllowedLeafType(Type type)
@@ -68,12 +67,6 @@ namespace Azure.Core.Dynamic
                     type == typeof(MutableJsonDocument) ||
                     type == typeof(MutableJsonElement) ||
                     type == typeof(DynamicData);
-            }
-
-            private static bool IsAllowedNonInheritableType(Type type)
-            {
-                return (type.IsValueType || type.IsSealed) &&
-                    IsAllowedLeafType(type);
             }
 
             private static bool IsAllowedCollectionValue<T>(Type type, T value)
@@ -97,7 +90,7 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                if (IsAllowedNonInheritableType(elementType))
+                if (elementType.IsPrimitive || elementType == typeof(string))
                 {
                     return true;
                 }
@@ -122,13 +115,13 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                Type elementType = type.GetGenericArguments()[0];
-                if (IsAllowedNonInheritableType(elementType))
+                Type genericArgument = type.GetGenericArguments()[0];
+                if (genericArgument.IsPrimitive || genericArgument == typeof(string))
                 {
                     return true;
                 }
 
-                return IsAllowedEnumerableValue(elementType, (IEnumerable)value);
+                return IsAllowedEnumerableValue(genericArgument, (IEnumerable)value);
             }
 
             private static bool IsAllowedDictionaryValue<T>(Type type, T value)
@@ -148,18 +141,18 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                Type[] types = type.GetGenericArguments();
-                if (types[0] != typeof(string))
+                Type[] genericArguments = type.GetGenericArguments();
+                if (genericArguments[0] != typeof(string))
                 {
                     return false;
                 }
 
-                if (IsAllowedNonInheritableType(types[1]))
+                if (genericArguments[1].IsPrimitive || genericArguments[1] == typeof(string))
                 {
                     return true;
                 }
 
-                return IsAllowedEnumerableValue(types[1], ((IDictionary)value).Values);
+                return IsAllowedEnumerableValue(genericArguments[1], ((IDictionary)value).Values);
             }
 
             private static bool IsAllowedEnumerableValue(Type elementType, IEnumerable enumerable)
@@ -186,7 +179,7 @@ namespace Azure.Core.Dynamic
                 return true;
             }
 
-            private static bool IsAllowedAnonymousValue<T>(Type type, T value, Type[]? visited, int depth)
+            private static bool IsAllowedAnonymousValue<T>(Type type, T value)
             {
                 if (!IsAnonymousType(type))
                 {
@@ -195,34 +188,9 @@ namespace Azure.Core.Dynamic
 
                 foreach (PropertyInfo property in type.GetProperties())
                 {
-                    if (IsAllowedLeafType(property.PropertyType))
-                    {
-                        continue;
-                    }
-
-                    object? propertyValue = property.GetValue(value);
-                    if (IsAllowedCollectionValue(property.PropertyType, propertyValue))
-                    {
-                        continue;
-                    }
-
-                    // Detect cycles: trust but verify
-                    if (ContainsType(visited, depth, property.PropertyType))
-                    {
-                        continue;
-                    }
-
-                    // Recurse
-                    visited = AddType(visited, depth, type);
-                    if (!IsAllowedAnonymousValue(property.PropertyType, propertyValue, visited, depth + 1))
+                    if (!IsAllowedValue(property.GetValue(value)))
                     {
                         return false;
-                    }
-
-                    if (depth == 0 && visited != null)
-                    {
-                        // We're back at the top of the stack
-                        ArrayPool<Type>.Shared.Return(visited);
                     }
                 }
 
@@ -232,45 +200,6 @@ namespace Azure.Core.Dynamic
             private static bool IsAnonymousType(Type type)
             {
                 return type.Name.StartsWith("<>f__AnonymousType");
-            }
-
-            private static bool ContainsType(Type[]? types, int count, Type type)
-            {
-                if (types == null)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < count; i++)
-                {
-                    if (types[i] == type)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            private const int _expandIncrement = 16;
-            private static Type[] AddType(Type[]? types, int count, Type type)
-            {
-                if (count % _expandIncrement == 0)
-                {
-                    int length = types == null ? 0 : types.Length;
-                    Type[] expanded = ArrayPool<Type>.Shared.Rent(length + _expandIncrement);
-
-                    if (types is not null)
-                    {
-                        Array.Copy(types, expanded, length);
-                        ArrayPool<Type>.Shared.Return(types);
-                    }
-
-                    types = expanded;
-                }
-
-                types![count] = type;
-                return types;
             }
         }
     }
