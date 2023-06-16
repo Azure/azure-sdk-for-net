@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class MessagingEventGridModelFactory
+    public static partial class EventGridModelFactory
     {
         /// <summary> Initializes a new instance of StorageBlobCreatedEventData. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>

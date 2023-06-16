@@ -270,7 +270,7 @@ namespace Azure.Analytics.Purview.Catalog
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class PurviewCatalogClientBuilderExtensions
+    public static partial class AnalyticsPurviewCatalogClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Catalog.PurviewCatalogClient, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions> AddPurviewCatalogClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Catalog.PurviewCatalogClient, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions> AddPurviewCatalogClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

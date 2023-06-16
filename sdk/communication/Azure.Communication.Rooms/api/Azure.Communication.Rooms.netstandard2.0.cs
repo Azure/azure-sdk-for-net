@@ -8,6 +8,10 @@ namespace Azure.Communication.Rooms
         public System.DateTimeOffset ValidFrom { get { throw null; } }
         public System.DateTimeOffset ValidUntil { get { throw null; } }
     }
+    public static partial class CommunicationRoomsModelFactory
+    {
+        public static Azure.Communication.Rooms.CommunicationRoom CommunicationRoom(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset validFrom = default(System.DateTimeOffset), System.DateTimeOffset validUntil = default(System.DateTimeOffset)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ParticipantRole : System.IEquatable<Azure.Communication.Rooms.ParticipantRole>
     {
@@ -67,7 +71,6 @@ namespace Azure.Communication.Rooms
     }
     public static partial class RoomsModelFactory
     {
-        public static Azure.Communication.Rooms.CommunicationRoom CommunicationRoom(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset validFrom = default(System.DateTimeOffset), System.DateTimeOffset validUntil = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Communication.Rooms.RoomParticipant RoomParticipant(string rawId, Azure.Communication.Rooms.ParticipantRole role) { throw null; }
     }
 }

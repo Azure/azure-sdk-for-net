@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query.Models
@@ -15,6 +16,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary>
     /// Model factory that enables mocking for the MetricsQueryResult class.
     /// </summary>
+    [CodeGenType("QueryModelFactory")]
     public static partial class MonitorQueryModelFactory
     {
         /// <summary> Enables the user to create an instance of a <see cref="MetricsQueryResult"/>. </summary>

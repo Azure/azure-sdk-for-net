@@ -24,6 +24,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 }
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
+    public static partial class AnalyticsSynapseManagedPrivateEndpointsModelFactory
+    {
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties properties = null) { throw null; }
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null) { throw null; }
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string name = null, string privateLinkResourceId = null, string groupId = null, string provisioningState = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = default(bool?), System.Collections.Generic.IEnumerable<string> fqdns = null, bool? isCompliant = default(bool?)) { throw null; }
+    }
     public partial class ManagedPrivateEndpoint
     {
         public ManagedPrivateEndpoint() { }
@@ -50,11 +56,5 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         public string Name { get { throw null; } set { } }
         public string PrivateLinkResourceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-    }
-    public static partial class ManagedPrivateEndpointsModelFactory
-    {
-        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties properties = null) { throw null; }
-        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null) { throw null; }
-        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string name = null, string privateLinkResourceId = null, string groupId = null, string provisioningState = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = default(bool?), System.Collections.Generic.IEnumerable<string> fqdns = null, bool? isCompliant = default(bool?)) { throw null; }
     }
 }
