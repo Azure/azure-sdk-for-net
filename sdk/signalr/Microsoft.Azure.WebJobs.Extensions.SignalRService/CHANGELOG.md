@@ -3,7 +3,7 @@
 ## 1.11.0 (2023-06-17)
 
 ### Bugs Fixed
-* Fixed the bug that a wrong excpetion is thrown when the SignalR connection is not found using REST API to close a connection or add a connection to group.
+* Fixed the bug that a wrong exception is thrown when the SignalR connection is not found using REST API to close a connection or add a connection to group.
 
 ### Other Changes
 * Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.21.3
