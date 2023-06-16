@@ -42,7 +42,28 @@ namespace Azure.Core
         /// <summary>
         /// Gets the parsed value of "Content-Length" header.
         /// </summary>
-        public int? ContentLength => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? int.Parse(stringValue, CultureInfo.InvariantCulture) : (int?)null;
+        public int? ContentLength
+        {
+            get
+            {
+                if (!TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue))
+                {
+                    return null;
+                }
+
+                if (!int.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
+                {
+                    throw new ContentLengthOverflowException($"Failed to parse value of 'Content-Length' header: '{stringValue}.  If value exceeds {int.MaxValue}, please use 'Response.Headers.ContentLengthLong' instead.'.");
+                }
+
+                return intValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets the parsed value of "Content-Length" header as a long.
+        /// </summary>
+        public long? ContentLengthLong => TryGetValue(HttpHeader.Names.ContentLength, out string? stringValue) ? long.Parse(stringValue, CultureInfo.InvariantCulture) : null;
 
         /// <summary>
         /// Gets the parsed value of "ETag" header.
@@ -135,6 +156,13 @@ namespace Azure.Core
         public bool Contains(string name)
         {
             return _response.ContainsHeader(name);
+        }
+
+        private class ContentLengthOverflowException : OverflowException
+        {
+            public ContentLengthOverflowException(string message) : base(message)
+            {
+            }
         }
     }
 }
