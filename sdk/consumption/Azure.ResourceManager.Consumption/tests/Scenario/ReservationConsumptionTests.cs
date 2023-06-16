@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Consumption.Tests
         public async Task GetReservationDetails()
         {
             ReservationConsumptionResource reservation = Client.GetReservationConsumptionResource(_scope);
-            var list = await reservation.GetReservationDetailsAsync(_filter).ToEnumerableAsync();
-            ValidateConsumptionReservationDetail(list.FirstOrDefault());
+            var first = await reservation.GetReservationDetailsAsync(_filter).FirstOrDefaultAsync(x => true);
+            ValidateConsumptionReservationDetail(first);
         }
 
         [RecordedTest]
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Consumption.Tests
         public async Task GetReservationSummaries()
         {
             ReservationConsumptionResource reservation = Client.GetReservationConsumptionResource(_scope);
-            var monthlyList = await reservation.GetReservationSummariesAsync(ReservationSummaryDataGrain.MonthlyGrain, _filter).ToEnumerableAsync();
-            ValidateConsumptionReservationSummary(monthlyList.FirstOrDefault());
+            var monthlyFirst = await reservation.GetReservationSummariesAsync(ReservationSummaryDataGrain.MonthlyGrain, _filter).FirstOrDefaultAsync(x => true);
+            ValidateConsumptionReservationSummary(monthlyFirst);
 
-            var daylyList = await reservation.GetReservationSummariesAsync(ReservationSummaryDataGrain.DailyGrain, _filter).ToEnumerableAsync();
-            ValidateConsumptionReservationSummary(daylyList.FirstOrDefault());
+            var daylyFirst = await reservation.GetReservationSummariesAsync(ReservationSummaryDataGrain.DailyGrain, _filter).FirstOrDefaultAsync(x => true);
+            ValidateConsumptionReservationSummary(daylyFirst);
         }
 
         private void ValidateConsumptionReservationDetail(ConsumptionReservationDetail detail)

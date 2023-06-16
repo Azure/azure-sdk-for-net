@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Consumption.Tests
         public async Task GetSubscriptionBillingPeriodConsumption()
         {
             var subscriptionBillingPeriodConsumption = Client.GetSubscriptionBillingPeriodConsumptionResource(_scope);
-            var PriceSheetResult = await subscriptionBillingPeriodConsumption.GetPriceSheetAsync();
-            Assert.IsNotNull(PriceSheetResult);
-            Assert.IsNotEmpty(PriceSheetResult.Value.Pricesheets.First().BillingPeriodId);
-            Assert.IsNotNull(PriceSheetResult.Value.Pricesheets.First().MeterId);
+            var priceSheetResult = await subscriptionBillingPeriodConsumption.GetPriceSheetAsync();
+            Assert.IsNotNull(priceSheetResult);
+            Assert.IsNotEmpty(priceSheetResult.Value.Pricesheets.First().BillingPeriodId);
+            Assert.IsNotNull(priceSheetResult.Value.Pricesheets.First().MeterId);
         }
     }
 }

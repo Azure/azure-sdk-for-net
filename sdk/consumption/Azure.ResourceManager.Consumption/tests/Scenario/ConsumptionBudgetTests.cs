@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Consumption.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private ConsumptionBudgetCollection _consumptionBudgetCollection;
+        private string _budgetName;
+        private ConsumptionBudgetResource _budget;
 
         public ConsumptionBudgetTests(bool isAsync) : base(isAsync)
         {
@@ -27,6 +29,8 @@ namespace Azure.ResourceManager.Consumption.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             _consumptionBudgetCollection = Client.GetConsumptionBudgets(scope: _resourceGroup.Id);
+            _budgetName = Recording.GenerateAssetName("budget");
+            await CreateBudget(_budgetName);
         }
 
         private async Task<ConsumptionBudgetResource> CreateBudget(string budgetName)
@@ -47,59 +51,49 @@ namespace Azure.ResourceManager.Consumption.Tests
         }
 
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public void CreateOrUpdate()
         {
-            string budgetName = Recording.GenerateAssetName("budget");
-            var budget = await CreateBudget(budgetName);
-            ValidateConsumptionBudget(budget.Data, budgetName);
+            ValidateConsumptionBudget(_budget.Data);
         }
 
         [RecordedTest]
         public async Task Exist()
         {
-            string budgetName = Recording.GenerateAssetName("budget");
-            await CreateBudget(budgetName);
-            var flag = await _consumptionBudgetCollection.ExistsAsync(budgetName);
+            var flag = await _consumptionBudgetCollection.ExistsAsync(_budgetName);
             Assert.IsTrue(flag);
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            string budgetName = Recording.GenerateAssetName("budget");
-            await CreateBudget(budgetName);
-            var budget = await _consumptionBudgetCollection.GetAsync(budgetName);
-            ValidateConsumptionBudget(budget.Value.Data, budgetName);
+            var budget = await _consumptionBudgetCollection.GetAsync(_budgetName);
+            ValidateConsumptionBudget(budget.Value.Data);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
-            string budgetName = Recording.GenerateAssetName("budget");
-            await CreateBudget(budgetName);
             var list = await _consumptionBudgetCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateConsumptionBudget(list.FirstOrDefault().Data, budgetName);
+            ValidateConsumptionBudget(list.FirstOrDefault().Data);
         }
 
         [RecordedTest]
         public async Task Delete()
         {
-            string budgetName = Recording.GenerateAssetName("budget");
-            var budget = await CreateBudget(budgetName);
-            var flag = await _consumptionBudgetCollection.ExistsAsync(budgetName);
+            var flag = await _consumptionBudgetCollection.ExistsAsync(_budgetName);
             Assert.IsTrue(flag);
 
-            await budget.DeleteAsync(WaitUntil.Completed);
-            flag = await _consumptionBudgetCollection.ExistsAsync(budgetName);
+            await _budget.DeleteAsync(WaitUntil.Completed);
+            flag = await _consumptionBudgetCollection.ExistsAsync(_budgetName);
             Assert.IsFalse(flag);
         }
 
-        private void ValidateConsumptionBudget(ConsumptionBudgetData budget, string budgetName)
+        private void ValidateConsumptionBudget(ConsumptionBudgetData budget)
         {
             Assert.IsNotNull(budget);
             Assert.IsNotEmpty(budget.Id);
-            Assert.AreEqual(budgetName, budget.Name);
+            Assert.AreEqual(_budgetName, budget.Name);
             Assert.AreEqual(100, budget.Amount);
             Assert.AreEqual(BudgetTimeGrainType.Monthly, budget.TimeGrain);
             Assert.AreEqual(BudgetCategory.Cost, budget.Category);
