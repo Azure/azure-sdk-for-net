@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> Updated QueueId. </param>
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        internal ManualReclassifyExceptionAction(string kind, string queueId, int? priority, IList<WorkerSelector> workerSelectors) : base(kind)
+        internal ManualReclassifyExceptionAction(string kind, string queueId, int? priority, IList<RouterWorkerSelector> workerSelectors) : base(kind)
         {
             QueueId = queueId;
             Priority = priority;
@@ -32,6 +32,6 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updated Priority. </summary>
         public int? Priority { get; set; }
         /// <summary> Updated WorkerSelectors. </summary>
-        public IList<WorkerSelector> WorkerSelectors { get; }
+        public IList<RouterWorkerSelector> WorkerSelectors { get; }
     }
 }
