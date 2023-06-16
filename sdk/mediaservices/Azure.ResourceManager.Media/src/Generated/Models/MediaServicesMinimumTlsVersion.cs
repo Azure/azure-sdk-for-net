@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The minimum TLS version allowed for this account&apos;s requests. This is an optional property. If unspecified, a secure default value will be used. </summary>
+    /// <summary> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </summary>
     public readonly partial struct MediaServicesMinimumTlsVersion : IEquatable<MediaServicesMinimumTlsVersion>
     {
         private readonly string _value;

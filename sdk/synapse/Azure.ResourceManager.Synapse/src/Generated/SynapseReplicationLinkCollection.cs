@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Lists a Sql pool&apos;s replication links.
+        /// Lists a Sql pool's replication links.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Lists a Sql pool&apos;s replication links.
+        /// Lists a Sql pool's replication links.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

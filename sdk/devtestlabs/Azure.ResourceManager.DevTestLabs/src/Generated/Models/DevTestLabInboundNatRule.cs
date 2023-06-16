@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> A rule for NAT - exposing a VM&apos;s port (backendPort) on the public IP address using a load balancer. </summary>
+    /// <summary> A rule for NAT - exposing a VM's port (backendPort) on the public IP address using a load balancer. </summary>
     public partial class DevTestLabInboundNatRule
     {
         /// <summary> Initializes a new instance of DevTestLabInboundNatRule. </summary>

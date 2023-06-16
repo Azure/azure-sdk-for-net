@@ -17,7 +17,7 @@ To run these tests locally you must first create your test resources.
 2. Then run the New-TestResources cmd which will create the required test resources.
 
     ```powershell
-    eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory monitor
+    eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory monitor -SubscriptionId 'YOUR SUBSCRIPTION ID' -ResourceGroupName 'YOUR RESOURCE GROUP NAME'
     ```
 
     If this script fails, it should instruct you to install any missing dependencies.

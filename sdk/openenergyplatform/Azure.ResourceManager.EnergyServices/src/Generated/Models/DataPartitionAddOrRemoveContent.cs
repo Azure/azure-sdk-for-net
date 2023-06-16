@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         }
 
         /// <summary> Initializes a new instance of DataPartitionAddOrRemoveContent. </summary>
-        /// <param name="name"> The list of Energy services resource&apos;s Data Partition Names. </param>
+        /// <param name="name"> The list of Energy services resource's Data Partition Names. </param>
         internal DataPartitionAddOrRemoveContent(DataPartitionName name)
         {
             Name = name;

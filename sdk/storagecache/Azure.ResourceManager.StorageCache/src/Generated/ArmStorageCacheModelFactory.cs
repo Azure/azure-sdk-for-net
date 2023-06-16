@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
         /// <param name="restrictionType"> The type of restrictions. In this version, the only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted. </param>
-        /// <param name="reasonCode"> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter. </param>
+        /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". "QuotaId" is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. "NotAvailableForSubscription" is related to capacity at the datacenter. </param>
         /// <returns> A new <see cref="Models.StorageCacheRestriction"/> instance for mocking. </returns>
         public static StorageCacheRestriction StorageCacheRestriction(string restrictionType = null, IEnumerable<string> values = null, StorageCacheRestrictionReasonCode? reasonCode = null)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
         /// <param name="limit"> The limit (quota) for this resource. </param>
-        /// <param name="unit"> Unit that the limit and usages are expressed in, such as &apos;Count&apos;. </param>
+        /// <param name="unit"> Unit that the limit and usages are expressed in, such as 'Count'. </param>
         /// <param name="currentValue"> The current usage of this resource. </param>
         /// <param name="name"> Naming information for this resource type. </param>
         /// <returns> A new <see cref="Models.StorageCacheUsage"/> instance for mocking. </returns>
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
-        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
-        /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
+        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
+        /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
-        /// <param name="domainNetBiosName"> The Active Directory domain&apos;s NetBIOS name. </param>
+        /// <param name="domainNetBiosName"> The Active Directory domain's NetBIOS name. </param>
         /// <param name="cacheNetBiosName"> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </param>
         /// <param name="domainJoined"> True if the HPC Cache is joined to the Active Directory domain. </param>
         /// <param name="credentials"> Active Directory admin credentials used to join the HPC Cache to a domain. </param>
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheUsernameDownloadSettings. </summary>
         /// <param name="enableExtendedGroups"> Whether or not Extended Groups is enabled. </param>
         /// <param name="usernameSource"> This setting determines how the cache gets username and group names for clients. </param>
-        /// <param name="groupFileUri"> The URI of the file containing group information (in /etc/group file format). This field must be populated when &apos;usernameSource&apos; is set to &apos;File&apos;. </param>
-        /// <param name="userFileUri"> The URI of the file containing user information (in /etc/passwd file format). This field must be populated when &apos;usernameSource&apos; is set to &apos;File&apos;. </param>
+        /// <param name="groupFileUri"> The URI of the file containing group information (in /etc/group file format). This field must be populated when 'usernameSource' is set to 'File'. </param>
+        /// <param name="userFileUri"> The URI of the file containing user information (in /etc/passwd file format). This field must be populated when 'usernameSource' is set to 'File'. </param>
         /// <param name="ldapServer"> The fully qualified domain name or IP address of the LDAP server to use. </param>
         /// <param name="ldapBaseDN"> The base distinguished name for the LDAP domain. </param>
         /// <param name="encryptLdapConnection"> Whether or not the LDAP connection should be encrypted. </param>
         /// <param name="requireValidCertificate"> Determines if the certificates must be validated by a certificate authority. When true, caCertificateURI must be provided. </param>
-        /// <param name="autoDownloadCertificate"> Determines if the certificate should be automatically downloaded. This applies to &apos;caCertificateURI&apos; only if &apos;requireValidCertificate&apos; is true. </param>
-        /// <param name="caCertificateUri"> The URI of the CA certificate to validate the LDAP secure connection. This field must be populated when &apos;requireValidCertificate&apos; is set to true. </param>
+        /// <param name="autoDownloadCertificate"> Determines if the certificate should be automatically downloaded. This applies to 'caCertificateURI' only if 'requireValidCertificate' is true. </param>
+        /// <param name="caCertificateUri"> The URI of the CA certificate to validate the LDAP secure connection. This field must be populated when 'requireValidCertificate' is set to true. </param>
         /// <param name="usernameDownloaded"> Indicates whether or not the HPC Cache has performed the username download successfully. </param>
         /// <param name="credentials"> When present, these are the credentials for the secure LDAP connection. </param>
         /// <returns> A new <see cref="Models.StorageCacheUsernameDownloadSettings"/> instance for mocking. </returns>
