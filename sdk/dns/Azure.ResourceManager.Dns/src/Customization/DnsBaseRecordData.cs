@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource) : base(id, name, resourceType, systemData)
+        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;

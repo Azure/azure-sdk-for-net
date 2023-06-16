@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task AaaaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsAaaaRecords();
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task ARecordOperationTest()
         {
             var collection = _dnsZone.GetDnsARecords();
@@ -146,6 +148,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task CaaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsCaaRecords();
@@ -204,6 +207,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task CnameRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsCnameRecords();
@@ -248,6 +252,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task MXRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsMXRecords();
@@ -311,6 +316,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task NSRecordOperationTest()
         {
             string _recordSetName = "ns";
@@ -361,6 +367,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task PtrRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsPtrRecords();
@@ -418,6 +425,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task SoaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsSoaRecords();
@@ -477,6 +485,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task SrvRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsSrvRecords();
@@ -540,6 +549,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task TxtRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsTxtRecords();

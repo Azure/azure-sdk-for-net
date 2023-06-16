@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Dns
             Optional<DnsZoneType> zoneType = default;
             Optional<IList<WritableSubResource>> registrationVirtualNetworks = default;
             Optional<IList<WritableSubResource>> resolutionVirtualNetworks = default;
+            Optional<IReadOnlyList<DnsSigningKey>> signingKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -231,11 +232,25 @@ namespace Azure.ResourceManager.Dns
                             resolutionVirtualNetworks = array;
                             continue;
                         }
+                        if (property0.NameEquals("signingKeys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DnsSigningKey> array = new List<DnsSigningKey>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DnsSigningKey.DeserializeDnsSigningKey(item));
+                            }
+                            signingKeys = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
+            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks), Optional.ToList(signingKeys));
         }
     }
 }
