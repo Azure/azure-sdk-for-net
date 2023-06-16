@@ -9,6 +9,7 @@
 
 ### Breaking Changes
 - [BREAKING CHANGE] Altered API signatures on `TransferManager` and `DataTransfer` for pausing.
+- [BREAKING CHANGE] `StorageResouceContainer.GetParentStorageResourceContainer()` removed.
 - [BREAKING CHANGE] Updated `StorageResource.CompleteTransferAsync` to have an added overwrite parameter: `StorageResource.CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)`.
 
 ### Bugs Fixed

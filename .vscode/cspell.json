@@ -1112,6 +1112,18 @@
         "Logprobs",
         "Logit"
       ]
+    },
+    {
+      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
+      "words": [
+        "RELRO",
+        "Relro",
+        "relro",
+        "Rpath",
+        "rpath",
+        "runpath",
+        "Cves"
+      ]
     }
   ],
   "allowCompoundWords": true
