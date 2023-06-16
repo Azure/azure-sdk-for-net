@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="expireOn"> Expiration date for the certificate. </param>
         /// <param name="role"> Role of the certificate (Root CA, etc). </param>
         /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
-        /// <param name="keySize"> Size of the certificate&apos;s key in bits. </param>
+        /// <param name="keySize"> Size of the certificate's key in bits. </param>
         /// <param name="keyAlgorithm"> Key algorithm used in the certificate. </param>
         /// <param name="encoding"> Encoding used for the certificate. </param>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isExpired"> Indicates if the certificate is expired. </param>
         /// <param name="isSelfSigned"> Indicates if the certificate was self-signed. </param>
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
-        /// <param name="isShortKeySize"> Indicates the certificate&apos;s key size is considered too small to be secure for the key algorithm. </param>
+        /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
         /// <returns> A new <see cref="Models.FirmwareCryptoCertificate"/> instance for mocking. </returns>
         public static FirmwareCryptoCertificate FirmwareCryptoCertificate(string cryptoCertId = null, string name = null, FirmwareCryptoCertificateEntity subject = null, FirmwareCryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsExpired? isExpired = null, IsSelfSigned? isSelfSigned = null, IsWeakSignature? isWeakSignature = null, IsShortKeySize? isShortKeySize = null)
         {

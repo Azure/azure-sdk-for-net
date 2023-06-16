@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="expireOn"> Expiration date for the certificate. </param>
         /// <param name="role"> Role of the certificate (Root CA, etc). </param>
         /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
-        /// <param name="keySize"> Size of the certificate&apos;s key in bits. </param>
+        /// <param name="keySize"> Size of the certificate's key in bits. </param>
         /// <param name="keyAlgorithm"> Key algorithm used in the certificate. </param>
         /// <param name="encoding"> Encoding used for the certificate. </param>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isExpired"> Indicates if the certificate is expired. </param>
         /// <param name="isSelfSigned"> Indicates if the certificate was self-signed. </param>
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
-        /// <param name="isShortKeySize"> Indicates the certificate&apos;s key size is considered too small to be secure for the key algorithm. </param>
+        /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
         internal FirmwareCryptoCertificate(string cryptoCertId, string name, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsExpired? isExpired, IsSelfSigned? isSelfSigned, IsWeakSignature? isWeakSignature, IsShortKeySize? isShortKeySize)
         {
             CryptoCertId = cryptoCertId;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string Role { get; }
         /// <summary> The signature algorithm used in the certificate. </summary>
         public string SignatureAlgorithm { get; }
-        /// <summary> Size of the certificate&apos;s key in bits. </summary>
+        /// <summary> Size of the certificate's key in bits. </summary>
         public long? KeySize { get; }
         /// <summary> Key algorithm used in the certificate. </summary>
         public string KeyAlgorithm { get; }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public IsSelfSigned? IsSelfSigned { get; }
         /// <summary> Indicates the signature algorithm used is insecure. </summary>
         public IsWeakSignature? IsWeakSignature { get; }
-        /// <summary> Indicates the certificate&apos;s key size is considered too small to be secure for the key algorithm. </summary>
+        /// <summary> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </summary>
         public IsShortKeySize? IsShortKeySize { get; }
     }
 }
