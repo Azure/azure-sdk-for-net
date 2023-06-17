@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
-    public partial class WaitTimeExceptionTrigger : JobExceptionTrigger
+    public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
 
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
