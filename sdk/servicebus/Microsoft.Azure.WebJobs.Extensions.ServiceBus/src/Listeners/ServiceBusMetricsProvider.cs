@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status: {e.Message}");
+                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status", e);
             }
 
             long totalNewMessageCount = 0;
