@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertSingleResourceMultipleMetricCriteria. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="allOf"> The list of metric criteria for this &apos;all of&apos; operation. </param>
+        /// <param name="allOf"> The list of metric criteria for this 'all of' operation. </param>
         internal MetricAlertSingleResourceMultipleMetricCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, IList<MetricCriteria> allOf) : base(odataType, additionalProperties)
         {
             AllOf = allOf;
             OdataType = odataType;
         }
 
-        /// <summary> The list of metric criteria for this &apos;all of&apos; operation. </summary>
+        /// <summary> The list of metric criteria for this 'all of' operation. </summary>
         public IList<MetricCriteria> AllOf { get; }
     }
 }

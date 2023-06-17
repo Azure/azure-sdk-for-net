@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </summary>
+    /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </summary>
     public readonly partial struct RequestSource : IEquatable<RequestSource>
     {
         private readonly string _value;

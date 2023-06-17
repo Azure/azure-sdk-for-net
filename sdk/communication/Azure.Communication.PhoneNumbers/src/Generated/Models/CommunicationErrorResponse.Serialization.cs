@@ -12,22 +12,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class CommunicationErrorResponse
     {
-        internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            CommunicationError error = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("error"u8))
-                {
-                    error = CommunicationError.DeserializeCommunicationError(property.Value);
-                    continue;
-                }
-            }
-            return new CommunicationErrorResponse(error);
-        }
     }
 }

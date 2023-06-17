@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of A2APolicyCreationInput. </summary>
         /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: A2APolicyCreationInput.multiVmSyncStatus
         /// </param>
         public A2APolicyCreationInput(SetMultiVmSyncStatus multiVmSyncStatus)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
         /// <summary>
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: A2APolicyCreationInput.multiVmSyncStatus
         /// </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }

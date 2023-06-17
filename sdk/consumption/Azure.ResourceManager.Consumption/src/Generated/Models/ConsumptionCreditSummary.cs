@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: CreditSummary.properties.billingCurrency
         /// </param>
         /// <param name="reseller">
-        /// Credit&apos;s reseller.
+        /// Credit's reseller.
         /// Serialized Name: CreditSummary.properties.reseller
         /// </param>
         /// <param name="etag">
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string BillingCurrency { get; }
         /// <summary>
-        /// Credit&apos;s reseller.
+        /// Credit's reseller.
         /// Serialized Name: CreditSummary.properties.reseller
         /// </summary>
         public ConsumptionReseller Reseller { get; }

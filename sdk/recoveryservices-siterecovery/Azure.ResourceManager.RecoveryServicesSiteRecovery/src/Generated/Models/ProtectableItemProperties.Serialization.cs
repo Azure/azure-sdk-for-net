@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryServicesProviderId = default;
             Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
             Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
-            Optional<ReplicationProviderSettings> customDetails = default;
+            Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = ReplicationProviderSettings.DeserializeReplicationProviderSettings(property.Value);
+                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value);
                     continue;
                 }
             }

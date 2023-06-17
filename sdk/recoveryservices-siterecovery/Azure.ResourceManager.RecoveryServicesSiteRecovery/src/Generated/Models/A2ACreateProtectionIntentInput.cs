@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public AgentAutoUpdateStatus? AgentAutoUpdateStatus { get; set; }
         /// <summary>
-        /// A value indicating the authentication type for automation account. The default value is &quot;RunAsAccount&quot;.
+        /// A value indicating the authentication type for automation account. The default value is "RunAsAccount".
         /// Serialized Name: A2ACreateProtectionIntentInput.automationAccountAuthenticationType
         /// </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; set; }

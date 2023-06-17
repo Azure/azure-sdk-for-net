@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Attaches labels to a worker when a RouterRule is resolved. </summary>
+    /// <summary> Attaches worker selectors to a job when a RouterRule is resolved. </summary>
     public partial class RuleEngineWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
+        /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
         /// <param name="rule">
         /// A rule of one of the following types:
         ///             

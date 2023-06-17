@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSVersionWrapper OSVersionWrapper(string version = null, string servicePack = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProcessServer ProcessServer(string friendlyName = null, string id = null, string ipAddress = null, string osType = null, string agentVersion = null, System.DateTimeOffset? lastHeartbeat = default(System.DateTimeOffset?), string versionStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MobilityServiceUpdate> mobilityServiceUpdates = null, string hostId = null, string machineCount = null, string replicationPairCount = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = null, long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = null, string psServiceStatus = null, System.DateTimeOffset? sslCertExpiryOn = default(System.DateTimeOffset?), int? sslCertExpiryRemainingDays = default(int?), string osVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HealthError> healthErrors = null, System.DateTimeOffset? agentExpiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VersionDetails agentVersionDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth? health = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth?), System.DateTimeOffset? psStatsRefreshOn = default(System.DateTimeOffset?), long? throughputUploadPendingDataInBytes = default(long?), long? throughputInMBps = default(long?), long? throughputInBytes = default(long?), string throughputStatus = null, string marsCommunicationStatus = null, string marsRegistrationStatus = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProcessServerDetails ProcessServerDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, System.Collections.Generic.IEnumerable<string> ipAddresses = null, string version = null, System.DateTimeOffset? lastHeartbeatUtc = default(System.DateTimeOffset?), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), long? usedMemoryInBytes = default(long?), double? memoryUsagePercentage = default(double?), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), long? usedSpaceInBytes = default(long?), double? freeSpacePercentage = default(double?), long? throughputUploadPendingDataInBytes = default(long?), long? throughputInBytes = default(long?), double? processorUsagePercentage = default(double?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus? throughputStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus?), long? systemLoad = default(long?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus? systemLoadStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus? diskUsageStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus? memoryUsageStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus? processorUsageStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RcmComponentStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth? health = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HealthError> healthErrors = null, int? protectedItemCount = default(int?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth? historicHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectableItemProperties ProtectableItemProperties(string friendlyName = null, string protectionStatus = null, string replicationProtectedItemId = null, string recoveryServicesProviderId = null, System.Collections.Generic.IEnumerable<string> protectionReadinessErrors = null, System.Collections.Generic.IEnumerable<string> supportedReplicationProviders = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings customDetails = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectableItemProperties ProtectableItemProperties(string friendlyName = null, string protectionStatus = null, string replicationProtectedItemId = null, string recoveryServicesProviderId = null, System.Collections.Generic.IEnumerable<string> protectionReadinessErrors = null, System.Collections.Generic.IEnumerable<string> supportedReplicationProviders = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings customDetails = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionContainerMappingProperties ProtectionContainerMappingProperties(string targetProtectionContainerId = null, string targetProtectionContainerFriendlyName = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = null, string health = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HealthError> healthErrorDetails = null, string policyId = null, string state = null, string sourceProtectionContainerFriendlyName = null, string sourceFabricFriendlyName = null, string targetFabricFriendlyName = null, string policyFriendlyName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionContainerProperties ProtectionContainerProperties(string fabricFriendlyName = null, string friendlyName = null, string fabricType = null, int? protectedItemCount = default(int?), string pairingStatus = null, string role = null, string fabricSpecificDetailsInstanceType = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProviderError ProviderError(int? errorCode = default(int?), string errorMessage = null, string errorId = null, string possibleCauses = null, string recommendedAction = null) { throw null; }
@@ -2724,7 +2724,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal HyperVSiteDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVHostDetails> HyperVHosts { get { throw null; } }
     }
-    public partial class HyperVVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings
+    public partial class HyperVVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings
     {
         internal HyperVVirtualMachineDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.DiskDetails> DiskDetails { get { throw null; } }
@@ -4298,7 +4298,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ProtectableItemProperties
     {
         internal ProtectableItemProperties() { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings CustomDetails { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings CustomDetails { get { throw null; } }
         public string FriendlyName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ProtectionReadinessErrors { get { throw null; } }
         public string ProtectionStatus { get { throw null; } }
@@ -4801,16 +4801,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ClientRequestId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationEligibilityResultsErrorInfo> Errors { get { throw null; } }
     }
-    public partial class ReplicationGroupDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings
+    public partial class ReplicationGroupDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings
     {
         internal ReplicationGroupDetails() { }
-    }
-    public partial class ReplicationNetworkMappingCreationProperties
-    {
-        public ReplicationNetworkMappingCreationProperties(string recoveryNetworkId) { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.FabricSpecificCreateNetworkMappingInput FabricSpecificDetails { get { throw null; } set { } }
-        public string RecoveryFabricName { get { throw null; } set { } }
-        public string RecoveryNetworkId { get { throw null; } }
     }
     public partial class ReplicationProtectedItemCreateOrUpdateContent
     {
@@ -4911,10 +4904,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public abstract partial class ReplicationProtectionIntentProviderSpecificSettings
     {
         protected ReplicationProtectionIntentProviderSpecificSettings() { }
-    }
-    public abstract partial class ReplicationProviderSettings
-    {
-        protected ReplicationProviderSettings() { }
     }
     public abstract partial class ReplicationProviderSpecificContainerCreationContent
     {
@@ -5183,8 +5172,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class SiteRecoveryNetworkMappingCreateOrUpdateContent
     {
-        public SiteRecoveryNetworkMappingCreateOrUpdateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationNetworkMappingCreationProperties properties) { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationNetworkMappingCreationProperties Properties { get { throw null; } }
+        public SiteRecoveryNetworkMappingCreateOrUpdateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationNetworkMappingCreationProperties properties) { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationNetworkMappingCreationProperties Properties { get { throw null; } }
     }
     public partial class SiteRecoveryNetworkMappingPatch
     {
@@ -5239,6 +5228,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         public SiteRecoveryRecoveryPlanPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryPlanGroup> UpdateRecoveryPlanInputGroups { get { throw null; } }
+    }
+    public partial class SiteRecoveryReplicationNetworkMappingCreationProperties
+    {
+        public SiteRecoveryReplicationNetworkMappingCreationProperties(string recoveryNetworkId) { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.FabricSpecificCreateNetworkMappingInput FabricSpecificDetails { get { throw null; } set { } }
+        public string RecoveryFabricName { get { throw null; } set { } }
+        public string RecoveryNetworkId { get { throw null; } }
+    }
+    public abstract partial class SiteRecoveryReplicationProviderSettings
+    {
+        protected SiteRecoveryReplicationProviderSettings() { }
     }
     public partial class SiteRecoveryServicesProviderCreateOrUpdateContent
     {
@@ -6041,7 +6041,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ServiceResourceId { get { throw null; } }
         public string VMwareSiteId { get { throw null; } }
     }
-    public partial class VMwareVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings
+    public partial class VMwareVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings
     {
         internal VMwareVirtualMachineDetails() { }
         public string AgentGeneratedId { get { throw null; } }

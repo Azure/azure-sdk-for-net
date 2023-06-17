@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         public KeyForDiskEncryptionSet ActiveKey { get; set; }
         /// <summary> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </summary>
         public bool? RotationToLatestKeyVersionEnabled { get; set; }
-        /// <summary> Multi-tenant application client id to access key vault in a different tenant. Setting the value to &apos;None&apos; will clear the property. </summary>
+        /// <summary> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </summary>
         public string FederatedClientId { get; set; }
     }
 }

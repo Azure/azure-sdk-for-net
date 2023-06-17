@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: CreateNetworkMappingInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryNetworkMappingCreateOrUpdateContent(ReplicationNetworkMappingCreationProperties properties)
+        public SiteRecoveryNetworkMappingCreateOrUpdateContent(SiteRecoveryReplicationNetworkMappingCreationProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Input properties for creating network mapping.
         /// Serialized Name: CreateNetworkMappingInput.properties
         /// </summary>
-        public ReplicationNetworkMappingCreationProperties Properties { get; }
+        public SiteRecoveryReplicationNetworkMappingCreationProperties Properties { get; }
     }
 }

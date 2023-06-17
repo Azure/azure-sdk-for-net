@@ -1451,5 +1451,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.AreEqual(0, remaining);
             }
         }
+
+        [Test]
+        public async Task MessageLockCancellationTokenSignaledAfterExpiration()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    await args.CompleteMessageAsync(args.Message);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    tcs.SetResult(true);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
     }
 }

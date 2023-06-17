@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- All developer credentials in the `DefaultAzureCredential` credential chain will fall through to the next credential in the chain on any failure. Previously, some exceptions would throw `AuthenticationFailedException`, which stops further progress in the chain.
 
 ## 1.9.0 (2023-05-09)
 

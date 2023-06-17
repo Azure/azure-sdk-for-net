@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceGitRepoVolume. </summary>
-        /// <param name="directory"> Target directory name. Must not contain or start with &apos;..&apos;.  If &apos;.&apos; is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
+        /// <param name="directory"> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
         /// <param name="repository"> Repository URL. </param>
         /// <param name="revision"> Commit hash for the specified revision. </param>
         internal ContainerInstanceGitRepoVolume(string directory, string repository, string revision)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Revision = revision;
         }
 
-        /// <summary> Target directory name. Must not contain or start with &apos;..&apos;.  If &apos;.&apos; is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </summary>
+        /// <summary> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </summary>
         public string Directory { get; set; }
         /// <summary> Repository URL. </summary>
         public string Repository { get; set; }

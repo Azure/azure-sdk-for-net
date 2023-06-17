@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
         /// <param name="version"> PostgreSQL Server version. </param>
         /// <param name="minorVersion"> The minor version of the server. </param>
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="network"> Network properties of a server. </param>
         /// <param name="highAvailability"> High availability properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or &apos;Replica&apos;. </param>
-        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos;. </param>
+        /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'Replica'. </param>
+        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore'. </param>
         /// <param name="availabilityZone"> availability zone information of the server. </param>
         /// <param name="replicationRole"> Replication role of the server. </param>
         /// <param name="replicaCapacity"> Replicas allowed for a server. </param>

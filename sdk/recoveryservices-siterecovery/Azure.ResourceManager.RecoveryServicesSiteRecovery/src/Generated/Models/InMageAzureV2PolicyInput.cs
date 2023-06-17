@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of InMageAzureV2PolicyInput. </summary>
         /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: InMageAzureV2PolicyInput.multiVmSyncStatus
         /// </param>
         public InMageAzureV2PolicyInput(SetMultiVmSyncStatus multiVmSyncStatus)
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
         /// <summary>
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: InMageAzureV2PolicyInput.multiVmSyncStatus
         /// </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }

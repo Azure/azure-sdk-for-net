@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: ReplicationProtectedItemProperties.allowedOperations
         /// </param>
         /// <param name="replicationHealth">
-        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration.
+        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration.
         /// Serialized Name: ReplicationProtectedItemProperties.replicationHealth
         /// </param>
         /// <param name="failoverHealth">
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public IReadOnlyList<string> AllowedOperations { get; }
         /// <summary>
-        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration.
+        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration.
         /// Serialized Name: ReplicationProtectedItemProperties.replicationHealth
         /// </summary>
         public string ReplicationHealth { get; }

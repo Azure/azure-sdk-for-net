@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
-        /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string). </param>
+        /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </param>
         /// <param name="loggingLevel"> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </param>
         /// <param name="environmentPath"> The environment path to execute the SSIS package. Type: string (or Expression with resultType string). </param>
         /// <param name="executionCredential"> The package execution credential. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> SSIS package location. </summary>
         public SsisPackageLocation PackageLocation { get; set; }
         /// <summary>
-        /// Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string).
+        /// Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

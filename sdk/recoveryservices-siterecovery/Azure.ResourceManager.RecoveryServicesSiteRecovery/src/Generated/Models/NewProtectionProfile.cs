@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: NewProtectionProfile.policyName
         /// </param>
         /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: NewProtectionProfile.multiVmSyncStatus
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: NewProtectionProfile.appConsistentFrequencyInMinutes
         /// </param>
         /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: NewProtectionProfile.multiVmSyncStatus
         /// </param>
         internal NewProtectionProfile(string resourceType, string policyName, int? recoveryPointHistory, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(resourceType)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
         /// <summary>
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
         /// Serialized Name: NewProtectionProfile.multiVmSyncStatus
         /// </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; set; }

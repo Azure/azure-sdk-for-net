@@ -39,7 +39,7 @@ namespace Azure.Template.Samples
             var credential = new DefaultAzureCredential();
             var client = new TemplateClient("<vaultBaseUrl>", credential);
 
-            Response response = client.GetSecret("<secretName>", new RequestContext());
+            Response response = client.GetSecret("<secretName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value").ToString());
@@ -70,7 +70,7 @@ namespace Azure.Template.Samples
             var credential = new DefaultAzureCredential();
             var client = new TemplateClient("<vaultBaseUrl>", credential);
 
-            Response response = await client.GetSecretAsync("<secretName>", new RequestContext());
+            Response response = await client.GetSecretAsync("<secretName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value").ToString());

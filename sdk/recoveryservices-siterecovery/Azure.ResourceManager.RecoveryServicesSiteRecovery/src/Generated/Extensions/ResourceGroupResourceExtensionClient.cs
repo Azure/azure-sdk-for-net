@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>

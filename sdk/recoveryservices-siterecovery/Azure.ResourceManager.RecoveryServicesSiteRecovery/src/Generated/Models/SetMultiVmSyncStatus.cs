@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
-    /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+    /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
     /// Serialized Name: SetMultiVmSyncStatus
     /// </summary>
     public readonly partial struct SetMultiVmSyncStatus : IEquatable<SetMultiVmSyncStatus>

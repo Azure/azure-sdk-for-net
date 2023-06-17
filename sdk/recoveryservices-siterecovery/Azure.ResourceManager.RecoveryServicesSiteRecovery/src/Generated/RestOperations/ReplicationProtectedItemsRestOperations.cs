@@ -2067,7 +2067,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -2098,7 +2098,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -2228,7 +2228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -2261,7 +2261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>

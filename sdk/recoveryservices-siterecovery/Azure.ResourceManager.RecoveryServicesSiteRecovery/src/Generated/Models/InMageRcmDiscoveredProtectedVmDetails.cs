@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vmFqdn
         /// </param>
         /// <param name="osName">
-        /// The VM&apos;s OS name.
+        /// The VM's OS name.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.osName
         /// </param>
         /// <param name="createdTimestamp">
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public string VmFqdn { get; }
         /// <summary>
-        /// The VM&apos;s OS name.
+        /// The VM's OS name.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.osName
         /// </summary>
         public string OSName { get; }

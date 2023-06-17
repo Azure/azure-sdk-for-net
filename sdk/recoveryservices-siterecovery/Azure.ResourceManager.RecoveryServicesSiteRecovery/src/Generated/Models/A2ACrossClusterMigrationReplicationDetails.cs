@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.vmProtectionStateDescription
         /// </param>
         /// <param name="lifecycleId">
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the &quot;same&quot; protected item even though other internal Ids/ARM Id might be changing.
+        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.lifecycleId
         /// </param>
         internal A2ACrossClusterMigrationReplicationDetails(string instanceType, string fabricObjectId, string primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public string VmProtectionStateDescription { get; }
         /// <summary>
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the &quot;same&quot; protected item even though other internal Ids/ARM Id might be changing.
+        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.lifecycleId
         /// </summary>
         public string LifecycleId { get; }

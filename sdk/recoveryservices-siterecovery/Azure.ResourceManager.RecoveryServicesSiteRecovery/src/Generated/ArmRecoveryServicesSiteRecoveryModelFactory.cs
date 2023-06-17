@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of HealthError. </summary>
         /// <param name="innerHealthErrors">
-        /// The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException.
+        /// The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException.
         /// Serialized Name: HealthError.innerHealthErrors
         /// </param>
         /// <param name="errorSource">
@@ -876,11 +876,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The Replication provider custom settings.
         /// Serialized Name: ProtectableItemProperties.customDetails
-        /// Please note <see cref="ReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HyperVVirtualMachineDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ProtectableItemProperties"/> instance for mocking. </returns>
-        public static ProtectableItemProperties ProtectableItemProperties(string friendlyName = null, string protectionStatus = null, string replicationProtectedItemId = null, string recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, ReplicationProviderSettings customDetails = null)
+        public static ProtectableItemProperties ProtectableItemProperties(string friendlyName = null, string protectionStatus = null, string replicationProtectedItemId = null, string recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)
         {
             protectionReadinessErrors ??= new List<string>();
             supportedReplicationProviders ??= new List<string>();
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: ReplicationProtectedItemProperties.allowedOperations
         /// </param>
         /// <param name="replicationHealth">
-        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration.
+        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration.
         /// Serialized Name: ReplicationProtectedItemProperties.replicationHealth
         /// </param>
         /// <param name="failoverHealth">
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.vmProtectionStateDescription
         /// </param>
         /// <param name="lifecycleId">
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the &quot;same&quot; protected item even though other internal Ids/ARM Id might be changing.
+        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.lifecycleId
         /// </param>
         /// <returns> A new <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/> instance for mocking. </returns>
@@ -2757,7 +2757,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: A2AReplicationDetails.vmProtectionStateDescription
         /// </param>
         /// <param name="lifecycleId">
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the &quot;same&quot; protected item even though other internal Ids/ARM Id might be changing.
+        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
         /// Serialized Name: A2AReplicationDetails.lifecycleId
         /// </param>
         /// <param name="testFailoverRecoveryFabricObjectId">
@@ -5599,7 +5599,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vmFqdn
         /// </param>
         /// <param name="osName">
-        /// The VM&apos;s OS name.
+        /// The VM's OS name.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.osName
         /// </param>
         /// <param name="createdTimestamp">
@@ -5776,7 +5776,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmFqdn
         /// </param>
         /// <param name="osName">
-        /// The VM&apos;s OS name.
+        /// The VM's OS name.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.osName
         /// </param>
         /// <param name="createdTimestamp">
@@ -7005,7 +7005,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of ProcessServer. </summary>
         /// <param name="friendlyName">
-        /// The Process Server&apos;s friendly name.
+        /// The Process Server's friendly name.
         /// Serialized Name: ProcessServer.friendlyName
         /// </param>
         /// <param name="id">

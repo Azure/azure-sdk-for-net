@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of ProcessServer. </summary>
         /// <param name="friendlyName">
-        /// The Process Server&apos;s friendly name.
+        /// The Process Server's friendly name.
         /// Serialized Name: ProcessServer.friendlyName
         /// </param>
         /// <param name="id">
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary>
-        /// The Process Server&apos;s friendly name.
+        /// The Process Server's friendly name.
         /// Serialized Name: ProcessServer.friendlyName
         /// </summary>
         public string FriendlyName { get; }
