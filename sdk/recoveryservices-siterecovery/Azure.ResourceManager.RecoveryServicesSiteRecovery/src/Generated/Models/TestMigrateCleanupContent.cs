@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: TestMigrateCleanupInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestMigrateCleanupContent(TestMigrateCleanupInputProperties properties)
+        public TestMigrateCleanupContent(TestMigrateCleanupContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Test migrate cleanup input properties.
         /// Serialized Name: TestMigrateCleanupInput.properties
         /// </summary>
-        internal TestMigrateCleanupInputProperties Properties { get; }
+        internal TestMigrateCleanupContentProperties Properties { get; }
         /// <summary>
         /// Test migrate cleanup comments.
         /// Serialized Name: TestMigrateCleanupInputProperties.comments
         /// </summary>
-        public string TestMigrateCleanupInputComments
+        public string TestMigrateCleanupContentComments
         {
             get => Properties?.Comments;
         }

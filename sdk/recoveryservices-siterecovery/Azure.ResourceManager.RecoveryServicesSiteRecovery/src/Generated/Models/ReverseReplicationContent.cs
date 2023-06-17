@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Reverse replication properties.
         /// Serialized Name: ReverseReplicationInput.properties
         /// </summary>
-        public ReverseReplicationInputProperties Properties { get; set; }
+        public ReverseReplicationContentProperties Properties { get; set; }
     }
 }

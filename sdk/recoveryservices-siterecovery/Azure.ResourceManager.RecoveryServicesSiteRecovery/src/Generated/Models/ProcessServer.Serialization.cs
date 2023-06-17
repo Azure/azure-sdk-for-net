@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> friendlyName = default;
             Optional<string> id = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<string> osType = default;
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
@@ -42,11 +43,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> availableSpaceInBytes = default;
             Optional<string> spaceUsageStatus = default;
             Optional<string> psServiceStatus = default;
-            Optional<DateTimeOffset> sslCertExpiryDate = default;
+            Optional<DateTimeOffset> sslCertExpireOn = default;
             Optional<int> sslCertExpiryRemainingDays = default;
             Optional<string> osVersion = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
             Optional<VersionDetails> agentVersionDetails = default;
             Optional<ProtectionHealth> health = default;
             Optional<DateTimeOffset> psStatsRefreshTime = default;
@@ -70,7 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -203,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sslCertExpiryDate = property.Value.GetDateTimeOffset("O");
+                    sslCertExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("sslCertExpiryRemainingDays"u8))
@@ -226,10 +231,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrors = array;
                     continue;
@@ -240,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("agentVersionDetails"u8))
@@ -313,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpiryDate), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpiryDate), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
+            return new ProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
         }
     }
 }

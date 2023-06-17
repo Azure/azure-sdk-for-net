@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> friendlyName = default;
-            Optional<string> primaryFabricId = default;
+            Optional<ResourceIdentifier> primaryFabricId = default;
             Optional<string> primaryFabricFriendlyName = default;
-            Optional<string> recoveryFabricId = default;
+            Optional<ResourceIdentifier> recoveryFabricId = default;
             Optional<string> recoveryFabricFriendlyName = default;
             Optional<string> failoverDeploymentModel = default;
             Optional<IReadOnlyList<string>> replicationProviders = default;
@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("primaryFabricId"u8))
                 {
-                    primaryFabricId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFabricId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryFabricFriendlyName"u8))
@@ -55,7 +59,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryFabricId"u8))
                 {
-                    recoveryFabricId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryFabricFriendlyName"u8))

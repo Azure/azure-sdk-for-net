@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery ExtendedLocation.
         /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
         /// </param>
-        internal A2AExtendedLocationDetails(ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation)
+        internal A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation)
         {
             PrimaryExtendedLocation = primaryExtendedLocation;
             RecoveryExtendedLocation = recoveryExtendedLocation;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary ExtendedLocation.
         /// Serialized Name: A2AExtendedLocationDetails.primaryExtendedLocation
         /// </summary>
-        public ExtendedLocation PrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary>
         /// The recovery ExtendedLocation.
         /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
         /// </summary>
-        public ExtendedLocation RecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

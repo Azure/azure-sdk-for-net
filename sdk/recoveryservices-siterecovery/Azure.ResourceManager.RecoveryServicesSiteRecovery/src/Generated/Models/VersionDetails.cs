@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The agent version.
         /// Serialized Name: VersionDetails.version
         /// </param>
-        /// <param name="expiryOn">
+        /// <param name="expireOn">
         /// Version expiry date.
         /// Serialized Name: VersionDetails.expiryDate
         /// </param>
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether security update required.
         /// Serialized Name: VersionDetails.status
         /// </param>
-        internal VersionDetails(string version, DateTimeOffset? expiryOn, AgentVersionStatus? status)
+        internal VersionDetails(string version, DateTimeOffset? expireOn, SiteRecoveryAgentVersionStatus? status)
         {
             Version = version;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             Status = status;
         }
 
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Version expiry date.
         /// Serialized Name: VersionDetails.expiryDate
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary>
         /// A value indicating whether security update required.
         /// Serialized Name: VersionDetails.status
         /// </summary>
-        public AgentVersionStatus? Status { get; }
+        public SiteRecoveryAgentVersionStatus? Status { get; }
     }
 }

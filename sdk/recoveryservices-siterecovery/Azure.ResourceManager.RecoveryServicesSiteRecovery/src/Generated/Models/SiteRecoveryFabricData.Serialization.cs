@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<FabricProperties> properties = default;
+            Optional<SiteRecoveryFabricProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = FabricProperties.DeserializeFabricProperties(property.Value);
+                    properties = SiteRecoveryFabricProperties.DeserializeSiteRecoveryFabricProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

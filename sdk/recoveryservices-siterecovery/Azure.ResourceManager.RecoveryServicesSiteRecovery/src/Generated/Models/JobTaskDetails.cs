@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents a task which is actually a workflow so that one can navigate to its individual drill down.
     /// Serialized Name: JobTaskDetails
     /// Please note <see cref="JobTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FabricReplicationGroupTaskDetails"/> and <see cref="VirtualMachineTaskDetails"/>.
+    /// The available derived classes include <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/> and <see cref="VirtualMachineTaskDetails"/>.
     /// </summary>
     public partial class JobTaskDetails : TaskTypeDetails
     {

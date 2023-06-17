@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
         internal MarsAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: MarsAgentDetails.healthErrors
         /// </param>
-        internal MarsAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
+        internal MarsAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
         {
             Id = id;
             Name = name;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric object Id.
         /// Serialized Name: MarsAgentDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// The Mars agent Fqdn.
         /// Serialized Name: MarsAgentDetails.fqdn
@@ -117,6 +117,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: MarsAgentDetails.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<int> resourceCount = default;
-            Optional<IReadOnlyList<HealthErrorSummary>> issues = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthErrorSummary>> issues = default;
             Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthErrorSummary> array = new List<HealthErrorSummary>();
+                    List<SiteRecoveryHealthErrorSummary> array = new List<SiteRecoveryHealthErrorSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item));
+                        array.Add(SiteRecoveryHealthErrorSummary.DeserializeSiteRecoveryHealthErrorSummary(item));
                     }
                     issues = array;
                     continue;

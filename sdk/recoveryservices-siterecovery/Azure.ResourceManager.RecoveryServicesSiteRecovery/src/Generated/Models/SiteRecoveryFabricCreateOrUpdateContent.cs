@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Fabric creation input.
         /// Serialized Name: FabricCreationInput.properties
         /// </summary>
-        internal FabricCreationInputProperties Properties { get; set; }
+        internal SiteRecoveryFabricCreationProperties Properties { get; set; }
         /// <summary>
         /// Fabric provider specific creation input.
         /// Serialized Name: FabricCreationInputProperties.customDetails
-        /// Please note <see cref="FabricSpecificCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFabricCreationInput"/>, <see cref="InMageRcmFabricCreationInput"/> and <see cref="VMwareV2FabricCreationInput"/>.
+        /// Please note <see cref="SiteRecoveryFabricSpecificCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SiteRecoveryFabricProviderCreationContent"/>, <see cref="InMageRcmFabricCreationContent"/> and <see cref="VMwareV2FabricCreationContent"/>.
         /// </summary>
-        public FabricSpecificCreationInput FabricCreationInputCustomDetails
+        public SiteRecoveryFabricSpecificCreationContent SiteRecoveryFabricCreationCustomDetails
         {
             get => Properties is null ? default : Properties.CustomDetails;
             set
             {
                 if (Properties is null)
-                    Properties = new FabricCreationInputProperties();
+                    Properties = new SiteRecoveryFabricCreationProperties();
                 Properties.CustomDetails = value;
             }
         }

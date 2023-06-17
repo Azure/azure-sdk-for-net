@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<double> uncompressedDataRateInMB = default;
             Optional<long> rpoInSeconds = default;
             Optional<IReadOnlyList<InMageProtectedDiskDetails>> protectedDisks = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> processServerId = default;
             Optional<string> masterTargetId = default;
@@ -50,9 +51,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> infrastructureVmId = default;
             Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
             Optional<string> discoveryType = default;
-            Optional<string> azureStorageAccountId = default;
+            Optional<ResourceIdentifier> azureStorageAccountId = default;
             Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<HealthError>> validationErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
             Optional<DateTimeOffset> lastUpdateReceivedTime = default;
             Optional<string> replicaId = default;
@@ -185,7 +186,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastHeartbeat"u8))
@@ -286,7 +291,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("azureStorageAccountId"u8))
                 {
-                    azureStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("datastores"u8))
@@ -309,10 +318,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     validationErrors = array;
                     continue;

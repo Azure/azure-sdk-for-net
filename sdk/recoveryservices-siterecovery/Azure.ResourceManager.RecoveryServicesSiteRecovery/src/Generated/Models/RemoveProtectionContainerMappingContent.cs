@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Configure protection input properties.
         /// Serialized Name: RemoveProtectionContainerMappingInput.properties
         /// </summary>
-        internal RemoveProtectionContainerMappingInputProperties Properties { get; set; }
+        internal RemoveProtectionContainerMappingContentProperties Properties { get; set; }
         /// <summary>
         /// The class type.
         /// Serialized Name: ReplicationProviderContainerUnmappingInput.instanceType
         /// </summary>
-        public string ProviderSpecificInputInstanceType
+        public string ProviderSpecificContentInstanceType
         {
-            get => Properties is null ? default : Properties.ProviderSpecificInputInstanceType;
+            get => Properties is null ? default : Properties.ProviderSpecificContentInstanceType;
             set
             {
                 if (Properties is null)
-                    Properties = new RemoveProtectionContainerMappingInputProperties();
-                Properties.ProviderSpecificInputInstanceType = value;
+                    Properties = new RemoveProtectionContainerMappingContentProperties();
+                Properties.ProviderSpecificContentInstanceType = value;
             }
         }
     }

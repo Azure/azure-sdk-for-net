@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address of the physical machine to be discovered.
         /// Serialized Name: DiscoverProtectableItemRequestProperties.ipAddress
         /// </summary>
-        public string IPAddress { get; set; }
+        public IPAddress IPAddress { get; set; }
         /// <summary>
         /// The OS type on the physical machine.
         /// Serialized Name: DiscoverProtectableItemRequestProperties.osType

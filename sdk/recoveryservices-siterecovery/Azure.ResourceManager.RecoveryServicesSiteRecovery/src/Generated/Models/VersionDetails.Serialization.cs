@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> version = default;
-            Optional<DateTimeOffset> expiryDate = default;
-            Optional<AgentVersionStatus> status = default;
+            Optional<DateTimeOffset> expireOn = default;
+            Optional<SiteRecoveryAgentVersionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    expiryDate = property.Value.GetDateTimeOffset("O");
+                    expireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    status = new AgentVersionStatus(property.Value.GetString());
+                    status = new SiteRecoveryAgentVersionStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new VersionDetails(version.Value, Optional.ToNullable(expiryDate), Optional.ToNullable(status));
+            return new VersionDetails(version.Value, Optional.ToNullable(expireOn), Optional.ToNullable(status));
         }
     }
 }

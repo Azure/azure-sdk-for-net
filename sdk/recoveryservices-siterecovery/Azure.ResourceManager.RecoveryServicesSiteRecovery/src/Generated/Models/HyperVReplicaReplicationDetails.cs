@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal HyperVReplicaReplicationDetails()
         {
             VmNics = new ChangeTrackingList<VmNicDetails>();
-            VmDiskDetails = new ChangeTrackingList<DiskDetails>();
+            VmDiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVReplica2012";
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// VM disk details.
         /// Serialized Name: HyperVReplicaReplicationDetails.vMDiskDetails
         /// </param>
-        internal HyperVReplicaReplicationDetails(string instanceType, DateTimeOffset? lastReplicatedOn, IReadOnlyList<VmNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<DiskDetails> vmDiskDetails) : base(instanceType)
+        internal HyperVReplicaReplicationDetails(string instanceType, DateTimeOffset? lastReplicatedOn, IReadOnlyList<VmNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails) : base(instanceType)
         {
             LastReplicatedOn = lastReplicatedOn;
             VmNics = vmNics;
@@ -104,6 +104,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// VM disk details.
         /// Serialized Name: HyperVReplicaReplicationDetails.vMDiskDetails
         /// </summary>
-        public IReadOnlyList<DiskDetails> VmDiskDetails { get; }
+        public IReadOnlyList<SiteRecoveryDiskDetails> VmDiskDetails { get; }
     }
 }

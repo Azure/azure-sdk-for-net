@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetProtectionContainerFriendlyName = default;
             Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
             Optional<string> health = default;
-            Optional<IReadOnlyList<HealthError>> healthErrorDetails = default;
-            Optional<string> policyId = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<string> state = default;
             Optional<string> sourceProtectionContainerFriendlyName = default;
             Optional<string> sourceFabricFriendlyName = default;
@@ -62,17 +62,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrorDetails = array;
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))

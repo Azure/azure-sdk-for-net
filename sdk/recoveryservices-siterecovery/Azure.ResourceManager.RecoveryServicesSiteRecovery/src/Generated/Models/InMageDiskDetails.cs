@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
         internal InMageDiskDetails()
         {
-            VolumeList = new ChangeTrackingList<DiskVolumeDetails>();
+            VolumeList = new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>();
         }
 
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Volumes of the disk.
         /// Serialized Name: InMageDiskDetails.volumeList
         /// </param>
-        internal InMageDiskDetails(string diskId, string diskName, string diskSizeInMB, string diskType, string diskConfiguration, IReadOnlyList<DiskVolumeDetails> volumeList)
+        internal InMageDiskDetails(string diskId, string diskName, string diskSizeInMB, string diskType, string diskConfiguration, IReadOnlyList<SiteRecoveryDiskVolumeDetails> volumeList)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Volumes of the disk.
         /// Serialized Name: InMageDiskDetails.volumeList
         /// </summary>
-        public IReadOnlyList<DiskVolumeDetails> VolumeList { get; }
+        public IReadOnlyList<SiteRecoveryDiskVolumeDetails> VolumeList { get; }
     }
 }

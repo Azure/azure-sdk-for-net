@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Event details for InMageRcm provider.
     /// Serialized Name: InMageRcmEventDetails
     /// </summary>
-    public partial class InMageRcmEventDetails : EventProviderSpecificDetails
+    public partial class InMageRcmEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
         internal InMageRcmEventDetails()
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The component display name.
         /// Serialized Name: InMageRcmEventDetails.componentDisplayName
         /// </param>
-        internal InMageRcmEventDetails(string instanceType, string protectedItemName, string vmName, string latestAgentVersion, string jobId, string fabricName, string applianceName, string serverType, string componentDisplayName) : base(instanceType)
+        internal InMageRcmEventDetails(string instanceType, string protectedItemName, string vmName, string latestAgentVersion, ResourceIdentifier jobId, string fabricName, string applianceName, string serverType, string componentDisplayName) : base(instanceType)
         {
             ProtectedItemName = protectedItemName;
             VmName = vmName;
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job Id.
         /// Serialized Name: InMageRcmEventDetails.jobId
         /// </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary>
         /// The fabric name.
         /// Serialized Name: InMageRcmEventDetails.fabricName

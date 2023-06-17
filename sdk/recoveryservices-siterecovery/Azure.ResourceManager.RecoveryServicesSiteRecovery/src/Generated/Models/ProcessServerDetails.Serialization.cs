@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> biosId = default;
-            Optional<string> fabricObjectId = default;
+            Optional<ResourceIdentifier> fabricObjectId = default;
             Optional<string> fqdn = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastHeartbeatUtc = default;
             Optional<long> totalMemoryInBytes = default;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<RcmComponentStatus> memoryUsageStatus = default;
             Optional<RcmComponentStatus> processorUsageStatus = default;
             Optional<ProtectionHealth> health = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<int> protectedItemCount = default;
             Optional<ProtectionHealth> historicHealth = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fqdn"u8))
@@ -82,10 +87,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     ipAddresses = array;
                     continue;
@@ -272,10 +284,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrors = array;
                     continue;

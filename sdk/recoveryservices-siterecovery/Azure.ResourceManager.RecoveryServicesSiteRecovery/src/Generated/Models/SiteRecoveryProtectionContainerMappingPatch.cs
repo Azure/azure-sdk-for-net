@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Update protection container mapping input properties.
         /// Serialized Name: UpdateProtectionContainerMappingInput.properties
         /// </summary>
-        internal UpdateProtectionContainerMappingInputProperties Properties { get; set; }
+        internal UpdateProtectionContainerMappingContentProperties Properties { get; set; }
         /// <summary>
         /// Provider specific input for updating protection container mapping.
         /// Serialized Name: UpdateProtectionContainerMappingInputProperties.providerSpecificInput
-        /// Please note <see cref="ReplicationProviderSpecificUpdateContainerMappingInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AUpdateContainerMappingInput"/> and <see cref="InMageRcmUpdateContainerMappingInput"/>.
+        /// Please note <see cref="ReplicationProviderSpecificUpdateContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUpdateContainerMappingContent"/> and <see cref="InMageRcmUpdateContainerMappingContent"/>.
         /// </summary>
-        public ReplicationProviderSpecificUpdateContainerMappingInput ProviderSpecificInput
+        public ReplicationProviderSpecificUpdateContainerMappingContent ProviderSpecificContent
         {
-            get => Properties is null ? default : Properties.ProviderSpecificInput;
+            get => Properties is null ? default : Properties.ProviderSpecificContent;
             set
             {
                 if (Properties is null)
-                    Properties = new UpdateProtectionContainerMappingInputProperties();
-                Properties.ProviderSpecificInput = value;
+                    Properties = new UpdateProtectionContainerMappingContentProperties();
+                Properties.ProviderSpecificContent = value;
             }
         }
     }

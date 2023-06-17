@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: TestMigrateInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestMigrateContent(TestMigrateInputProperties properties)
+        public TestMigrateContent(TestMigrateContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Test migrate input properties.
         /// Serialized Name: TestMigrateInput.properties
         /// </summary>
-        internal TestMigrateInputProperties Properties { get; }
+        internal TestMigrateContentProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
         /// Serialized Name: TestMigrateInputProperties.providerSpecificDetails
-        /// Please note <see cref="TestMigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtTestMigrateInput"/>.
+        /// Please note <see cref="TestMigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtTestMigrateContent"/>.
         /// </summary>
-        public TestMigrateProviderSpecificInput TestMigrateInputProviderSpecificDetails
+        public TestMigrateProviderSpecificContent TestMigrateContentProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

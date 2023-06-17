@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> internalIdentifier = default;
-            Optional<string> azureVirtualMachineId = default;
+            Optional<ResourceIdentifier> azureVirtualMachineId = default;
             Optional<string> multiVmGroupName = default;
             Optional<string> reprotectAgentId = default;
             Optional<string> reprotectAgentName = default;
             Optional<string> osType = default;
-            Optional<string> logStorageAccountId = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
             Optional<string> targetvCenterId = default;
             Optional<string> targetDataStoreName = default;
             Optional<string> targetVmName = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> lastPlannedFailoverStartTime = default;
             Optional<PlannedFailoverStatus> lastPlannedFailoverStatus = default;
             Optional<InMageRcmFailbackDiscoveredProtectedVmDetails> discoveredVmDetails = default;
-            Optional<string> lastUsedPolicyId = default;
+            Optional<ResourceIdentifier> lastUsedPolicyId = default;
             Optional<string> lastUsedPolicyFriendlyName = default;
             Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
             string instanceType = default;
@@ -59,7 +59,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("azureVirtualMachineId"u8))
                 {
-                    azureVirtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("multiVmGroupName"u8))
@@ -84,7 +88,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("logStorageAccountId"u8))
                 {
-                    logStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetvCenterId"u8))
@@ -254,7 +262,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lastUsedPolicyId"u8))
                 {
-                    lastUsedPolicyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUsedPolicyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastUsedPolicyFriendlyName"u8))

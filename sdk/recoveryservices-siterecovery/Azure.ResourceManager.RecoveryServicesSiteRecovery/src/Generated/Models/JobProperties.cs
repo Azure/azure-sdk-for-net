@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal JobProperties()
         {
             Tasks = new ChangeTrackingList<AsrTask>();
-            Errors = new ChangeTrackingList<JobErrorDetails>();
+            Errors = new ChangeTrackingList<SiteRecoveryJobErrorDetails>();
             AllowedActions = new ChangeTrackingList<string>();
         }
 
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The custom job details like test failover job details.
         /// Serialized Name: JobProperties.customDetails
         /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
+        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="SiteRecoveryFailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </param>
-        internal JobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<JobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, JobDetails customDetails)
+        internal JobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, JobDetails customDetails)
         {
             ActivityId = activityId;
             ScenarioName = scenarioName;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The errors.
         /// Serialized Name: JobProperties.errors
         /// </summary>
-        public IReadOnlyList<JobErrorDetails> Errors { get; }
+        public IReadOnlyList<SiteRecoveryJobErrorDetails> Errors { get; }
         /// <summary>
         /// The start time.
         /// Serialized Name: JobProperties.startTime
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The custom job details like test failover job details.
         /// Serialized Name: JobProperties.customDetails
         /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
+        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="SiteRecoveryFailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </summary>
         public JobDetails CustomDetails { get; }
     }

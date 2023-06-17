@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVVirtualMachineDetails. </summary>
         internal HyperVVirtualMachineDetails()
         {
-            DiskDetails = new ChangeTrackingList<DiskDetails>();
+            DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVVirtualMachine";
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Id of the hyper-v host in fabric.
         /// Serialized Name: HyperVVirtualMachineDetails.hyperVHostId
         /// </param>
-        internal HyperVVirtualMachineDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<DiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType)
+        internal HyperVVirtualMachineDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType)
         {
             SourceItemId = sourceItemId;
             Generation = generation;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Last successful failover time.
         /// Serialized Name: HyperVVirtualMachineDetails.diskDetails
         /// </summary>
-        public IReadOnlyList<DiskDetails> DiskDetails { get; }
+        public IReadOnlyList<SiteRecoveryDiskDetails> DiskDetails { get; }
         /// <summary>
         /// A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum.
         /// Serialized Name: HyperVVirtualMachineDetails.hasPhysicalDisk

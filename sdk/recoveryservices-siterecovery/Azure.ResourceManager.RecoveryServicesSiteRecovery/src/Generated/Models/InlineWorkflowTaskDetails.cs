@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents the inline workflow task details.
     /// Serialized Name: InlineWorkflowTaskDetails
     /// </summary>
-    public partial class InlineWorkflowTaskDetails : GroupTaskDetails
+    public partial class InlineWorkflowTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
         internal InlineWorkflowTaskDetails()

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="RecoveryPlanGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
     /// </summary>
-    public partial class RecoveryPlanGroupTaskDetails : GroupTaskDetails
+    public partial class RecoveryPlanGroupTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of RecoveryPlanGroupTaskDetails. </summary>
         internal RecoveryPlanGroupTaskDetails()

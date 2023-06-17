@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The agent version.
         /// Serialized Name: A2AReplicationDetails.agentVersion
         /// </param>
-        /// <param name="agentExpiryOn">
+        /// <param name="agentExpireOn">
         /// Agent expiry date.
         /// Serialized Name: A2AReplicationDetails.agentExpiryDate
         /// </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether replication agent update is required.
         /// Serialized Name: A2AReplicationDetails.isReplicationAgentUpdateRequired
         /// </param>
-        /// <param name="agentCertificateExpiryOn">
+        /// <param name="agentCertificateExpireOn">
         /// Agent certificate expiry date.
         /// Serialized Name: A2AReplicationDetails.agentCertificateExpiryDate
         /// </param>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery capacity reservation group Id.
         /// Serialized Name: A2AReplicationDetails.recoveryCapacityReservationGroupId
         /// </param>
-        internal A2AReplicationDetails(string instanceType, string fabricObjectId, string initialPrimaryZone, string initialPrimaryFabricLocation, string initialRecoveryZone, ExtendedLocation initialPrimaryExtendedLocation, ExtendedLocation initialRecoveryExtendedLocation, string initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, string recoveryBootDiagStorageAccountId, string primaryFabricLocation, string recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, string recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, string selectedRecoveryAzureNetworkId, string selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpiryOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpiryOn, bool? isReplicationAgentCertificateUpdateRequired, string recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, string testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation, VmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, string recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, string recoveryVirtualMachineScaleSetId, string recoveryCapacityReservationGroupId) : base(instanceType)
+        internal A2AReplicationDetails(string instanceType, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, VmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId) : base(instanceType)
         {
             FabricObjectId = fabricObjectId;
             InitialPrimaryZone = initialPrimaryZone;
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MonitoringJobType = monitoringJobType;
             LastHeartbeat = lastHeartbeat;
             AgentVersion = agentVersion;
-            AgentExpiryOn = agentExpiryOn;
+            AgentExpireOn = agentExpireOn;
             IsReplicationAgentUpdateRequired = isReplicationAgentUpdateRequired;
-            AgentCertificateExpiryOn = agentCertificateExpiryOn;
+            AgentCertificateExpireOn = agentCertificateExpireOn;
             IsReplicationAgentCertificateUpdateRequired = isReplicationAgentCertificateUpdateRequired;
             RecoveryFabricObjectId = recoveryFabricObjectId;
             VmProtectionState = vmProtectionState;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric specific object Id of the virtual machine.
         /// Serialized Name: A2AReplicationDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// The initial primary availability zone.
         /// Serialized Name: A2AReplicationDetails.initialPrimaryZone
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The initial primary fabric location.
         /// Serialized Name: A2AReplicationDetails.initialPrimaryFabricLocation
         /// </summary>
-        public string InitialPrimaryFabricLocation { get; }
+        public AzureLocation? InitialPrimaryFabricLocation { get; }
         /// <summary>
         /// The initial recovery availability zone.
         /// Serialized Name: A2AReplicationDetails.initialRecoveryZone
@@ -326,17 +326,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The initial primary extended location.
         /// Serialized Name: A2AReplicationDetails.initialPrimaryExtendedLocation
         /// </summary>
-        public ExtendedLocation InitialPrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
         /// <summary>
         /// The initial recovery extended location.
         /// Serialized Name: A2AReplicationDetails.initialRecoveryExtendedLocation
         /// </summary>
-        public ExtendedLocation InitialRecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
         /// <summary>
         /// The initial recovery fabric location.
         /// Serialized Name: A2AReplicationDetails.initialRecoveryFabricLocation
         /// </summary>
-        public string InitialRecoveryFabricLocation { get; }
+        public AzureLocation? InitialRecoveryFabricLocation { get; }
         /// <summary>
         /// The multi vm group Id.
         /// Serialized Name: A2AReplicationDetails.multiVmGroupId
@@ -376,17 +376,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery boot diagnostic storage account Arm Id.
         /// Serialized Name: A2AReplicationDetails.recoveryBootDiagStorageAccountId
         /// </summary>
-        public string RecoveryBootDiagStorageAccountId { get; }
+        public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; }
         /// <summary>
         /// Primary fabric location.
         /// Serialized Name: A2AReplicationDetails.primaryFabricLocation
         /// </summary>
-        public string PrimaryFabricLocation { get; }
+        public AzureLocation? PrimaryFabricLocation { get; }
         /// <summary>
         /// The recovery fabric location.
         /// Serialized Name: A2AReplicationDetails.recoveryFabricLocation
         /// </summary>
-        public string RecoveryFabricLocation { get; }
+        public AzureLocation? RecoveryFabricLocation { get; }
         /// <summary>
         /// The type of operating system.
         /// Serialized Name: A2AReplicationDetails.osType
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery resource group.
         /// Serialized Name: A2AReplicationDetails.recoveryAzureResourceGroupId
         /// </summary>
-        public string RecoveryAzureResourceGroupId { get; }
+        public ResourceIdentifier RecoveryAzureResourceGroupId { get; }
         /// <summary>
         /// The recovery cloud service.
         /// Serialized Name: A2AReplicationDetails.recoveryCloudService
@@ -421,12 +421,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery virtual network.
         /// Serialized Name: A2AReplicationDetails.selectedRecoveryAzureNetworkId
         /// </summary>
-        public string SelectedRecoveryAzureNetworkId { get; }
+        public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; }
         /// <summary>
         /// The test failover virtual network.
         /// Serialized Name: A2AReplicationDetails.selectedTfoAzureNetworkId
         /// </summary>
-        public string SelectedTfoAzureNetworkId { get; }
+        public ResourceIdentifier SelectedTfoAzureNetworkId { get; }
         /// <summary>
         /// The virtual machine nic details.
         /// Serialized Name: A2AReplicationDetails.vmNics
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The synced configuration details.
         /// Serialized Name: A2AReplicationDetails.vmSyncedConfigDetails
         /// </summary>
-        public AzureToAzureVmSyncedConfigDetails VmSyncedConfigDetails { get; }
+        public A2AVmSyncedConfigDetails VmSyncedConfigDetails { get; }
         /// <summary>
         /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
         /// Serialized Name: A2AReplicationDetails.monitoringPercentageCompletion
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Agent expiry date.
         /// Serialized Name: A2AReplicationDetails.agentExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary>
         /// A value indicating whether replication agent update is required.
         /// Serialized Name: A2AReplicationDetails.isReplicationAgentUpdateRequired
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Agent certificate expiry date.
         /// Serialized Name: A2AReplicationDetails.agentCertificateExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentCertificateExpiryOn { get; }
+        public DateTimeOffset? AgentCertificateExpireOn { get; }
         /// <summary>
         /// A value indicating whether agent certificate update is required.
         /// Serialized Name: A2AReplicationDetails.isReplicationAgentCertificateUpdateRequired
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery fabric object Id.
         /// Serialized Name: A2AReplicationDetails.recoveryFabricObjectId
         /// </summary>
-        public string RecoveryFabricObjectId { get; }
+        public ResourceIdentifier RecoveryFabricObjectId { get; }
         /// <summary>
         /// The protection state for the vm.
         /// Serialized Name: A2AReplicationDetails.vmProtectionState
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test failover fabric object Id.
         /// Serialized Name: A2AReplicationDetails.testFailoverRecoveryFabricObjectId
         /// </summary>
-        public string TestFailoverRecoveryFabricObjectId { get; }
+        public ResourceIdentifier TestFailoverRecoveryFabricObjectId { get; }
         /// <summary>
         /// The last RPO value in seconds.
         /// Serialized Name: A2AReplicationDetails.rpoInSeconds
@@ -526,12 +526,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary Extended Location.
         /// Serialized Name: A2AReplicationDetails.primaryExtendedLocation
         /// </summary>
-        public ExtendedLocation PrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary>
         /// The recovery Extended Location.
         /// Serialized Name: A2AReplicationDetails.recoveryExtendedLocation
         /// </summary>
-        public ExtendedLocation RecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
         /// <summary>
         /// The encryption type of the VM.
         /// Serialized Name: A2AReplicationDetails.vmEncryptionType
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery proximity placement group Id.
         /// Serialized Name: A2AReplicationDetails.recoveryProximityPlacementGroupId
         /// </summary>
-        public string RecoveryProximityPlacementGroupId { get; }
+        public ResourceIdentifier RecoveryProximityPlacementGroupId { get; }
         /// <summary>
         /// A value indicating whether the auto protection is enabled.
         /// Serialized Name: A2AReplicationDetails.autoProtectionOfDataDisk
@@ -561,11 +561,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery virtual machine scale set id.
         /// Serialized Name: A2AReplicationDetails.recoveryVirtualMachineScaleSetId
         /// </summary>
-        public string RecoveryVirtualMachineScaleSetId { get; }
+        public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; }
         /// <summary>
         /// The recovery capacity reservation group Id.
         /// Serialized Name: A2AReplicationDetails.recoveryCapacityReservationGroupId
         /// </summary>
-        public string RecoveryCapacityReservationGroupId { get; }
+        public ResourceIdentifier RecoveryCapacityReservationGroupId { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VCenterProperties. </summary>
         internal VCenterProperties()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of VCenterProperties. </summary>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors for this VCenter.
         /// Serialized Name: VCenterProperties.healthErrors
         /// </param>
-        internal VCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeat, string discoveryStatus, string processServerId, string ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<HealthError> healthErrors)
+        internal VCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeat, string discoveryStatus, string processServerId, IPAddress ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
         {
             FriendlyName = friendlyName;
             InternalId = internalId;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address of the vCenter.
         /// Serialized Name: VCenterProperties.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The infrastructure Id of vCenter.
         /// Serialized Name: VCenterProperties.infrastructureId
@@ -137,6 +138,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors for this VCenter.
         /// Serialized Name: VCenterProperties.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
     }
 }

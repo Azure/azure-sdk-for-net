@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
         internal HyperVReplicaAzureReplicationDetails()
         {
-            AzureVmDiskDetails = new ChangeTrackingList<AzureVmDiskDetails>();
+            AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
             VmNics = new ChangeTrackingList<VmNicDetails>();
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
             SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of protected managed disks.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.protectedManagedDisks
         /// </param>
-        internal HyperVReplicaAzureReplicationDetails(string instanceType, IReadOnlyList<AzureVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, string recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<VmNicDetails> vmNics, string selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, OSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, string recoveryAzureResourceGroupId, string recoveryAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks) : base(instanceType)
+        internal HyperVReplicaAzureReplicationDetails(string instanceType, IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, OSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks) : base(instanceType)
         {
             AzureVmDiskDetails = azureVmDiskDetails;
             RecoveryAzureVmName = recoveryAzureVmName;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Azure VM Disk details.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.azureVmDiskDetails
         /// </summary>
-        public IReadOnlyList<AzureVmDiskDetails> AzureVmDiskDetails { get; }
+        public IReadOnlyList<SiteRecoveryVmDiskDetails> AzureVmDiskDetails { get; }
         /// <summary>
         /// Recovery Azure given name.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureVmName
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureLogStorageAccountId
         /// </summary>
-        public string RecoveryAzureLogStorageAccountId { get; }
+        public ResourceIdentifier RecoveryAzureLogStorageAccountId { get; }
         /// <summary>
         /// The Last replication time.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.lastReplicatedTime
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The selected recovery azure network Id.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.selectedRecoveryAzureNetworkId
         /// </summary>
-        public string SelectedRecoveryAzureNetworkId { get; }
+        public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; }
         /// <summary>
         /// The selected source nic Id which will be used as the primary nic during failover.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.selectedSourceNicId
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target resource group Id.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureResourceGroupId
         /// </summary>
-        public string RecoveryAzureResourceGroupId { get; }
+        public ResourceIdentifier RecoveryAzureResourceGroupId { get; }
         /// <summary>
         /// The recovery availability set Id.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAvailabilitySetId
         /// </summary>
-        public string RecoveryAvailabilitySetId { get; }
+        public ResourceIdentifier RecoveryAvailabilitySetId { get; }
         /// <summary>
         /// The target availability zone.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetAvailabilityZone
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target proximity placement group Id.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetProximityPlacementGroupId
         /// </summary>
-        public string TargetProximityPlacementGroupId { get; }
+        public ResourceIdentifier TargetProximityPlacementGroupId { get; }
         /// <summary>
         /// A value indicating whether managed disks should be used during failover.
         /// Serialized Name: HyperVReplicaAzureReplicationDetails.useManagedDisks

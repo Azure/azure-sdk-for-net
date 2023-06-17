@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,15 +43,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> databaseServerLoad = default;
             Optional<string> databaseServerLoadStatus = default;
             Optional<string> csServiceStatus = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<string> agentVersion = default;
             Optional<string> hostName = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<DateTimeOffset> sslCertExpiryDate = default;
+            Optional<DateTimeOffset> sslCertExpireOn = default;
             Optional<int> sslCertExpiryRemainingDays = default;
             Optional<string> psTemplateVersion = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
             Optional<VersionDetails> agentVersionDetails = default;
             Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
@@ -211,7 +212,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("agentVersion"u8))
@@ -244,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sslCertExpiryDate = property.Value.GetDateTimeOffset("O");
+                    sslCertExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("sslCertExpiryRemainingDays"u8))
@@ -267,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("agentVersionDetails"u8))
@@ -299,7 +304,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpiryDate), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpiryDate), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
         }
     }
 }

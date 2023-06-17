@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The name for the target managed disk.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.targetDiskName
         /// </param>
-        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, DiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, string logStorageAccountId, string logStorageAccountSasSecretName, string diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
+        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The disk type.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.diskType
         /// </summary>
-        public DiskAccountType? DiskType { get; }
+        public SiteRecoveryDiskAccountType? DiskType { get; }
         /// <summary>
         /// The disk path.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.diskPath
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The log storage account ARM Id.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountId
         /// </summary>
-        public string LogStorageAccountId { get; }
+        public ResourceIdentifier LogStorageAccountId { get; }
         /// <summary>
         /// The key vault secret name of the log storage account.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountSasSecretName
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The DiskEncryptionSet ARM Id.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.diskEncryptionSetId
         /// </summary>
-        public string DiskEncryptionSetId { get; }
+        public ResourceIdentifier DiskEncryptionSetId { get; }
         /// <summary>
         /// The ARM Id of the seed managed disk.
         /// Serialized Name: VMwareCbtProtectedDiskDetails.seedManagedDiskId

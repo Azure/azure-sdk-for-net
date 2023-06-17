@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> sourceItemId = default;
             Optional<string> generation = default;
             Optional<OSDetails> osDetails = default;
-            Optional<IReadOnlyList<DiskDetails>> diskDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
             Optional<PresenceStatus> hasPhysicalDisk = default;
             Optional<PresenceStatus> hasFibreChannelAdapter = default;
             Optional<PresenceStatus> hasSharedVhd = default;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<DiskDetails> array = new List<DiskDetails>();
+                    List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DiskDetails.DeserializeDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
                     }
                     diskDetails = array;
                     continue;

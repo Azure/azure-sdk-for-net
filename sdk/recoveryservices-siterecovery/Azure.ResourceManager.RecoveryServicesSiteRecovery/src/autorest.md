@@ -22,9 +22,9 @@ rename-mapping:
   Alert: SiteRecoveryAlert
   AlertProperties: SiteRecoveryAlertProperties
   AlertCollection: SiteRecoveryAlertListResult
-  Event: SiteRecoveryEvent
   Fabric: SiteRecoveryFabric
   Job: SiteRecoveryJob
+  JobErrorDetails: SiteRecoveryJobErrorDetails
   LogicalNetwork: SiteRecoveryLogicalNetwork
   MigrationItem: SiteRecoveryMigrationItem
   MigrationItemCollection: SiteRecoveryMigrationItemListResult
@@ -47,25 +47,120 @@ rename-mapping:
   StorageClassificationMapping: SiteRecoveryStorageClassificationMapping
   VaultSetting: SiteRecoveryVaultSetting
   VCenter: SiteRecoveryVCenter
-  AddDisksInput: AddDisksContent
-  AddRecoveryServicesProviderInputProperties: AddSiteRecoveryServicesProviderProperties
   ReplicationAppliance: SiteRecoveryAppliance
   ApplianceCollection: SiteRecoveryApplianceListResult
   ApplianceSpecificDetails: SiteRecoveryApplianceSpecificDetails
-  ApplyRecoveryPointInput: ApplySiteRecoveryPointContent
-  ApplyRecoveryPointInputProperties: ApplySiteRecoveryPointProperties
-  ApplyRecoveryPointProviderSpecificInput: ApplySiteRecoveryPointProviderSpecificContent
   ASRTask: AsrTask
   ConfigurationSettings: SiteRecoveryReplicationProviderSettings
-  CreateNetworkMappingInput: SiteRecoveryNetworkMappingCreationContent
-  CreateNetworkMappingInputProperties: SiteRecoveryReplicationNetworkMappingCreationProperties
-  CreateProtectionContainerInputProperties: ReplicationProtectionContainerCreationProperties
-  CreateProtectionContainerMappingInputProperties: ReplicationProtectionContainerMappingProperties
-  ReplicationProviderSpecificContainerCreationInput: ReplicationProviderSpecificContainerCreationContent
+  CreateNetworkMappingInputProperties: SiteRecoveryCreateReplicationNetworkMappingProperties
+  CreateProtectionContainerInputProperties: SiteRecoveryCreateProtectionContainerProperties
+  CreateProtectionContainerMappingInputProperties: SiteRecoveryCreateProtectionContainerMappingProperties
   InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
   SecurityType: VirtualMachineSecurityType
-  VMwareCbtEnableMigrationInput.confidentialVmKeyVaultId: -|arm-id
-  VMwareCbtMigrationDetails.confidentialVmKeyVaultId: -|arm-id
+  A2ACrossClusterMigrationReplicationDetails.primaryFabricLocation: -|azure-location
+  A2AVmManagedDiskInputDetails: A2AVmManagedDiskDetails
+  A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
+  A2AProtectedManagedDiskDetails.recoveryTargetDiskId: -|arm-id
+  A2AProtectedManagedDiskDetails.recoveryReplicaDiskId: -|arm-id
+  A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId: -|arm-id
+  A2AProtectedManagedDiskDetails.resyncRequired: IsResyncRequired
+  A2AProtectionIntentDiskInputDetails: A2AProtectionIntentDiskDetails
+  A2AProtectionIntentManagedDiskInputDetails: A2AProtectionIntentManagedDiskDetails
+  A2AVmDiskInputDetails: A2AVmDiskDetails
+  AddDisksInput: SiteRecoveryAddDisksContent
+  AddDisksInputProperties: SiteRecoveryAddDisksProperties
+  AddDisksProviderSpecificInput: SiteRecoveryAddDisksProviderSpecificContent
+  AddVCenterRequestProperties: SiteRecoveryAddVCenterRequestProperties
+  AddVCenterRequestProperties.ipAddress: -|ip-address
+  AddRecoveryServicesProviderInputProperties: SiteRecoveryAddRecoveryServicesProviderProperties
+  AgentAutoUpdateStatus: SiteRecoveryAgentAutoUpdateStatus
+  AgentDetails: SiteRecoveryAgentDetails
+  AgentDiskDetails: SiteRecoveryAgentDiskDetails
+  AgentVersionStatus: SiteRecoveryAgentVersionStatus
+  ApplyRecoveryPointInput: SiteRecoveryApplyRecoveryPointContent
+  ApplyRecoveryPointInputProperties: SiteRecoveryApplyRecoveryPointProperties
+  ApplyRecoveryPointProviderSpecificInput: SiteRecoveryApplyRecoveryPointProviderSpecificContent
+  AzureFabricCreationInput: SiteRecoveryFabricProviderCreationContent
+  AzureFabricSpecificDetails: SiteRecoveryFabricProviderSpecificDetails
+  AzureFabricSpecificDetails.containerIds: -|arm-id
+  AzureToAzureCreateNetworkMappingInput: A2ACreateNetworkMappingContent
+  AzureToAzureNetworkMappingSettings: A2ANetworkMappingSettings
+  AzureToAzureUpdateNetworkMappingInput: A2AUpdateNetworkMappingContent
+  AzureToAzureVmSyncedConfigDetails: A2AVmSyncedConfigDetails
+  AzureVmDiskDetails: SiteRecoveryVmDiskDetails
+  ComputeSizeErrorDetails: SiteRecoveryComputeSizeErrorDetails
+  CreatePolicyInputProperties: SiteRecoveryCreatePolicyProperties
+  CreateProtectionIntentProperties: ReplicationCreateProtectionIntentProperties
+  CreateProtectionIntentProviderSpecificDetails: ReplicationCreateProtectionIntentProviderDetail
+  CreateRecoveryPlanInputProperties: SiteRecoveryCreateRecoveryPlanProperties
+  DataStore: SiteRecoveryDataStore
+  DataStore.uuid: -|uuid
+  DataSyncStatus: SiteRecoveryDataSyncStatus
+  DisableProtectionInputProperties: DisableProtectionProperties
+  DiskAccountType: SiteRecoveryDiskAccountType
+  DiskDetails: SiteRecoveryDiskDetails
+  DiskEncryptionInfo: SiteRecoveryDiskEncryptionInfo
+  DiskEncryptionKeyInfo: SiteRecoveryDiskEncryptionKeyInfo
+  DiskReplicationProgressHealth: SiteRecoveryDiskReplicationProgressHealth
+  DiskVolumeDetails: SiteRecoveryDiskVolumeDetails
+  DraDetails: SiteRecoveryDraDetails
+  DraDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  EnableMigrationInputProperties: EnableMigrationProperties
+  EnableProtectionInputProperties: EnableProtectionProperties
+  EncryptionDetails: SiteRecoveryEncryptionDetails
+  EthernetAddressType: SiteRecoveryEthernetAddressType
+  Event: SiteRecoveryEvent
+  EventCollection: SiteRecoveryListResult
+  EventProperties: SiteRecoveryEventProperties
+  EventProperties.timeOfOccurrence: OccurredOn
+  EventProviderSpecificDetails: SiteRecoveryEventProviderSpecificDetails
+  EventSpecificDetails: SiteRecoveryEventSpecificDetails
+  ExtendedLocation: SiteRecoveryExtendedLocation
+  ExtendedLocationType: SiteRecoveryExtendedLocationType
+  FabricCollection: SiteRecoveryFabricListResult
+  FabricCreationInputProperties: SiteRecoveryFabricCreationProperties
+  FabricProperties: SiteRecoveryFabricProperties
+  FabricReplicationGroupTaskDetails: SiteRecoveryFabricReplicationGroupTaskDetails
+  FabricSpecificCreateNetworkMappingInput: SiteRecoveryFabricSpecificCreateNetworkMappingContent
+  FabricSpecificCreationInput: SiteRecoveryFabricSpecificCreationContent
+  FabricSpecificDetails: SiteRecoveryFabricSpecificDetails
+  FabricSpecificUpdateNetworkMappingInput: SiteRecoveryFabricSpecificUpdateNetworkMappingContent
+  FailoverDeploymentModel: SiteRecoveryFailoverDeploymentModel
+  FailoverJobDetails: SiteRecoveryFailoverJobDetails
+  FailoverProcessServerRequest: SiteRecoveryFailoverProcessServerContent
+  FailoverProcessServerRequestProperties: SiteRecoveryFailoverProcessServerProperties
+  FailoverReplicationProtectedItemDetails: SiteRecoveryFailoverReplicationProtectedItemDetails
+  GroupTaskDetails: SiteRecoveryGroupTaskDetails
+  HealthError: SiteRecoveryHealthError
+  HealthErrorCategory: SiteRecoveryHealthErrorCategory
+  HealthErrorCustomerResolvability: SiteRecoveryHealthErrorCustomerResolvability
+  HealthErrorSummary: SiteRecoveryHealthErrorSummary
+  HyperVReplicaAzureDiskInputDetails: HyperVReplicaAzureDiskDetails
+  HyperVReplicaAzureEnableProtectionInput.hvHostVmId: HyperVHostVmId
+  HyperVReplicaAzureEnableProtectionInput.targetAzureSubnetId: -|arm-id
+  HyperVReplicaAzureReprotectInput.hvHostVmId: HyperVHostVmId
+  HyperVReplicaAzureReprotectInput.vHDId: VhdId
+  IdentityProviderDetails: SiteRecoveryIdentityProviderDetails
+  IdentityProviderInput: SiteRecoveryIdentityProviderContent
+  InMageAzureV2DiskInputDetails: InMageAzureV2DiskDetails
+  InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes: PSDataInMegaBytes
+  InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC: ResyncLastDataTransferOn
+  InMageAzureV2SwitchProviderDetails.targetVaultId: -|arm-id
+  InMageAzureV2SwitchProviderDetails.targetResourceId: -|arm-id
+  InMageAzureV2SwitchProviderInput.targetVaultID: -|arm-id
+  InMageProtectedDiskDetails.psDataInMB: PSDataInMB
+  InMageRcmDiscoveredProtectedVmDetails.createdTimestamp: CreatedOn
+  InMageRcmDiscoveredProtectedVmDetails.updatedTimestamp: UpdatedOn
+  InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp: CreatedOn
+  InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp: UpdatedOn
+  InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc: LastDiscoveredOn
+  InMageRcmFailbackMobilityAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  InMageRcmFailbackProtectedDiskDetails.lastSyncTime: LastSyncedOn
+  InMageRcmFailbackReplicationDetails.azureVirtualMachineId: -|arm-id
+  InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc: LastDataTransferOn|date-time
+  InMageRcmFailbackSyncDetails.startTime: StartOn|date-time
+  InMageRcmFailbackSyncDetails.lastRefreshTime: LastRefreshOn|date-time
+  InMageRcmMobilityAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -73,6 +168,28 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*ResourceGroupId': 'arm-id'
+  '*FabricObjectId': 'arm-id'
+  '*ArmId': 'arm-id'
+  'RecoveryContainerId': 'arm-id'
+  '*AvailabilitySetId': 'arm-id'
+  '*ProximityPlacementGroupId': 'arm-id'
+  '*StorageAccountId': 'arm-id'
+  '*VirtualMachineScaleSetId': 'arm-id'
+  '*NetworkId': 'arm-id'
+  '*CapacityReservationGroupId': 'arm-id'
+  '*KeyVaultId': 'arm-id'
+  '*FabricLocation': 'azure-location'
+  '*DiskEncryptionSetId': 'arm-id'
+  'PrimaryLocation': 'azure-location'
+  'RecoveryLocation': 'azure-location'
+  '*PolicyId': 'arm-id'
+  '*RecoveryPointId': 'arm-id'
+  '*FabricId': 'arm-id'
+  'JobId': 'arm-id'
+  'ProtectableItemId': 'arm-id'
+  '*IPAddress': 'ip-address'
+  '*IPAddresses': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -101,6 +218,9 @@ rename-rules:
   Vmware: VMware|vmware
   VCPUs: VCpus
   Vcenter: VCenter
+  ExpiryOn: ExpireOn
+  ExpiryDate: ExpireOn
+  Input: Content
 
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/export: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}

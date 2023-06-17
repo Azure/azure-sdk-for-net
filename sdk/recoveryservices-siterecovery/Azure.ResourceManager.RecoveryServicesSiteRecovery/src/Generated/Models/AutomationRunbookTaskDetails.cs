@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether it is a primary side script or not.
         /// Serialized Name: AutomationRunbookTaskDetails.isPrimarySideScript
         /// </param>
-        internal AutomationRunbookTaskDetails(string instanceType, string name, string cloudServiceName, string subscriptionId, string accountName, string runbookId, string runbookName, string jobId, string jobOutput, bool? isPrimarySideScript) : base(instanceType)
+        internal AutomationRunbookTaskDetails(string instanceType, string name, string cloudServiceName, string subscriptionId, string accountName, string runbookId, string runbookName, ResourceIdentifier jobId, string jobOutput, bool? isPrimarySideScript) : base(instanceType)
         {
             Name = name;
             CloudServiceName = cloudServiceName;
@@ -108,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job Id of the runbook execution.
         /// Serialized Name: AutomationRunbookTaskDetails.jobId
         /// </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary>
         /// The execution output of the runbook.
         /// Serialized Name: AutomationRunbookTaskDetails.jobOutput

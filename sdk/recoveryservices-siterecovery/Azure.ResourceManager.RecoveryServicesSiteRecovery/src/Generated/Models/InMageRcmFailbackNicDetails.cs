@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address.
         /// Serialized Name: InMageRcmFailbackNicDetails.sourceIpAddress
         /// </param>
-        internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, string sourceIPAddress)
+        internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, IPAddress sourceIPAddress)
         {
             MacAddress = macAddress;
             NetworkName = networkName;
@@ -62,6 +64,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address.
         /// Serialized Name: InMageRcmFailbackNicDetails.sourceIpAddress
         /// </summary>
-        public string SourceIPAddress { get; }
+        public IPAddress SourceIPAddress { get; }
     }
 }

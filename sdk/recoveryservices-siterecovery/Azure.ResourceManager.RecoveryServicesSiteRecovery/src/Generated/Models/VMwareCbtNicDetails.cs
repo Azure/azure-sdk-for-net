@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether this NIC is selected for migration.
         /// Serialized Name: VMwareCbtNicDetails.isSelectedForMigration
         /// </param>
-        internal VMwareCbtNicDetails(string nicId, string isPrimaryNic, string sourceIPAddress, EthernetAddressType? sourceIPAddressType, string sourceNetworkId, string targetIPAddress, EthernetAddressType? targetIPAddressType, string targetSubnetName, string testNetworkId, string testSubnetName, string testIPAddress, EthernetAddressType? testIPAddressType, string targetNicName, string isSelectedForMigration)
+        internal VMwareCbtNicDetails(string nicId, string isPrimaryNic, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, ResourceIdentifier testNetworkId, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType, string targetNicName, string isSelectedForMigration)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -107,27 +110,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source IP address.
         /// Serialized Name: VMwareCbtNicDetails.sourceIPAddress
         /// </summary>
-        public string SourceIPAddress { get; }
+        public IPAddress SourceIPAddress { get; }
         /// <summary>
         /// The source IP address type.
         /// Serialized Name: VMwareCbtNicDetails.sourceIPAddressType
         /// </summary>
-        public EthernetAddressType? SourceIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? SourceIPAddressType { get; }
         /// <summary>
         /// Source network Id.
         /// Serialized Name: VMwareCbtNicDetails.sourceNetworkId
         /// </summary>
-        public string SourceNetworkId { get; }
+        public ResourceIdentifier SourceNetworkId { get; }
         /// <summary>
         /// The target IP address.
         /// Serialized Name: VMwareCbtNicDetails.targetIPAddress
         /// </summary>
-        public string TargetIPAddress { get; }
+        public IPAddress TargetIPAddress { get; }
         /// <summary>
         /// The target IP address type.
         /// Serialized Name: VMwareCbtNicDetails.targetIPAddressType
         /// </summary>
-        public EthernetAddressType? TargetIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? TargetIPAddressType { get; }
         /// <summary>
         /// Target subnet name.
         /// Serialized Name: VMwareCbtNicDetails.targetSubnetName
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Source network Id.
         /// Serialized Name: VMwareCbtNicDetails.testNetworkId
         /// </summary>
-        public string TestNetworkId { get; }
+        public ResourceIdentifier TestNetworkId { get; }
         /// <summary>
         /// Test subnet name.
         /// Serialized Name: VMwareCbtNicDetails.testSubnetName
@@ -147,12 +150,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test IP address.
         /// Serialized Name: VMwareCbtNicDetails.testIPAddress
         /// </summary>
-        public string TestIPAddress { get; }
+        public IPAddress TestIPAddress { get; }
         /// <summary>
         /// The test IP address type.
         /// Serialized Name: VMwareCbtNicDetails.testIPAddressType
         /// </summary>
-        public EthernetAddressType? TestIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? TestIPAddressType { get; }
         /// <summary>
         /// Target NIC name.
         /// Serialized Name: VMwareCbtNicDetails.targetNicName

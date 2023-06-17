@@ -18,25 +18,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetVaultId = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> targetFabricId = default;
+            Optional<ResourceIdentifier> targetVaultId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
+            Optional<ResourceIdentifier> targetFabricId = default;
             Optional<string> targetApplianceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetVaultId"u8))
                 {
-                    targetVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetFabricId"u8))
                 {
-                    targetFabricId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetFabricId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetApplianceId"u8))

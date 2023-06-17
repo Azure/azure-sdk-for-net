@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Id of the fabric to search jobs under.
         /// Serialized Name: JobQueryParameter.fabricId
         /// </summary>
-        public string FabricId { get; set; }
+        public ResourceIdentifier FabricId { get; set; }
         /// <summary>
         /// The type of objects.
         /// Serialized Name: JobQueryParameter.affectedObjectTypes

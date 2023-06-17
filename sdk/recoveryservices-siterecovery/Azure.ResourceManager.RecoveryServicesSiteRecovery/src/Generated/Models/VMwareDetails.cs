@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Store the fabric details specific to the VMware fabric.
     /// Serialized Name: VMwareDetails
     /// </summary>
-    public partial class VMwareDetails : FabricSpecificDetails
+    public partial class VMwareDetails : SiteRecoveryFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareDetails. </summary>
         internal VMwareDetails()
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Version status.
         /// Serialized Name: VMwareDetails.versionStatus
         /// </param>
-        /// <param name="sslCertExpiryOn">
+        /// <param name="sslCertExpireOn">
         /// CS SSL cert expiry date.
         /// Serialized Name: VMwareDetails.sslCertExpiryDate
         /// </param>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// PS template version.
         /// Serialized Name: VMwareDetails.psTemplateVersion
         /// </param>
-        /// <param name="agentExpiryOn">
+        /// <param name="agentExpireOn">
         /// Agent expiry date.
         /// Serialized Name: VMwareDetails.agentExpiryDate
         /// </param>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The switch provider blocking error information.
         /// Serialized Name: VMwareDetails.switchProviderBlockingErrorDetails
         /// </param>
-        internal VMwareDetails(string instanceType, IReadOnlyList<ProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<RunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, string ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpiryOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpiryOn, VersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType)
+        internal VMwareDetails(string instanceType, IReadOnlyList<ProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<RunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, IPAddress ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpireOn, VersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType)
         {
             ProcessServers = processServers;
             MasterTargetServers = masterTargetServers;
@@ -193,10 +194,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HostName = hostName;
             LastHeartbeat = lastHeartbeat;
             VersionStatus = versionStatus;
-            SslCertExpiryOn = sslCertExpiryOn;
+            SslCertExpireOn = sslCertExpireOn;
             SslCertExpiryRemainingDays = sslCertExpiryRemainingDays;
             PsTemplateVersion = psTemplateVersion;
-            AgentExpiryOn = agentExpiryOn;
+            AgentExpireOn = agentExpireOn;
             AgentVersionDetails = agentVersionDetails;
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
             InstanceType = instanceType ?? "VMware";
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address.
         /// Serialized Name: VMwareDetails.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The agent Version.
         /// Serialized Name: VMwareDetails.agentVersion
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// CS SSL cert expiry date.
         /// Serialized Name: VMwareDetails.sslCertExpiryDate
         /// </summary>
-        public DateTimeOffset? SslCertExpiryOn { get; }
+        public DateTimeOffset? SslCertExpireOn { get; }
         /// <summary>
         /// CS SSL cert expiry date.
         /// Serialized Name: VMwareDetails.sslCertExpiryRemainingDays
@@ -356,7 +357,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Agent expiry date.
         /// Serialized Name: VMwareDetails.agentExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary>
         /// The agent version details.
         /// Serialized Name: VMwareDetails.agentVersionDetails

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Policy creation properties.
         /// Serialized Name: CreatePolicyInput.properties
         /// </summary>
-        internal CreatePolicyInputProperties Properties { get; set; }
+        internal SiteRecoveryCreatePolicyProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderSettings.
         /// Serialized Name: CreatePolicyInputProperties.providerSpecificInput
-        /// Please note <see cref="PolicyProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2APolicyCreationInput"/>, <see cref="A2ACrossClusterMigrationPolicyCreationInput"/>, <see cref="HyperVReplicaPolicyInput"/>, <see cref="HyperVReplicaBluePolicyInput"/>, <see cref="HyperVReplicaAzurePolicyInput"/>, <see cref="InMagePolicyInput"/>, <see cref="InMageAzureV2PolicyInput"/>, <see cref="InMageRcmPolicyCreationInput"/>, <see cref="InMageRcmFailbackPolicyCreationInput"/> and <see cref="VMwareCbtPolicyCreationInput"/>.
+        /// Please note <see cref="PolicyProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2APolicyCreationContent"/>, <see cref="A2ACrossClusterMigrationPolicyCreationContent"/>, <see cref="HyperVReplicaPolicyContent"/>, <see cref="HyperVReplicaBluePolicyContent"/>, <see cref="HyperVReplicaAzurePolicyContent"/>, <see cref="InMagePolicyContent"/>, <see cref="InMageAzureV2PolicyContent"/>, <see cref="InMageRcmPolicyCreationContent"/>, <see cref="InMageRcmFailbackPolicyCreationContent"/> and <see cref="VMwareCbtPolicyCreationContent"/>.
         /// </summary>
-        public PolicyProviderSpecificInput ProviderSpecificInput
+        public PolicyProviderSpecificContent SiteRecoveryCreateProviderSpecificContent
         {
-            get => Properties is null ? default : Properties.ProviderSpecificInput;
+            get => Properties is null ? default : Properties.ProviderSpecificContent;
             set
             {
                 if (Properties is null)
-                    Properties = new CreatePolicyInputProperties();
-                Properties.ProviderSpecificInput = value;
+                    Properties = new SiteRecoveryCreatePolicyProperties();
+                Properties.ProviderSpecificContent = value;
             }
         }
     }

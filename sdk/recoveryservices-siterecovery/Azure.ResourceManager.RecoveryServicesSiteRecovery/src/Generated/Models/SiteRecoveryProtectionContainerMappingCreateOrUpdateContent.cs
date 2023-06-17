@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Configure protection input properties.
         /// Serialized Name: CreateProtectionContainerMappingInput.properties
         /// </summary>
-        public ReplicationProtectionContainerMappingProperties Properties { get; set; }
+        public SiteRecoveryCreateProtectionContainerMappingProperties Properties { get; set; }
     }
 }

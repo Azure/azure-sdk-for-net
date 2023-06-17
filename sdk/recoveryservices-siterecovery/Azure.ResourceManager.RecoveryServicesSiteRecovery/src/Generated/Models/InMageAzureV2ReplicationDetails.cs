@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -21,10 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageAzureV2ReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>();
-            AzureVmDiskDetails = new ChangeTrackingList<AzureVmDiskDetails>();
+            AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
             VmNics = new ChangeTrackingList<VmNicDetails>();
             Datastores = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<HealthError>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             ProtectedManagedDisks = new ChangeTrackingList<InMageAzureV2ManagedDiskDetails>();
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
             SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The agent version.
         /// Serialized Name: InMageAzureV2ReplicationDetails.agentVersion
         /// </param>
-        /// <param name="agentExpiryOn">
+        /// <param name="agentExpireOn">
         /// Agent expiry date.
         /// Serialized Name: InMageAzureV2ReplicationDetails.agentExpiryDate
         /// </param>
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The switch provider blocking error information.
         /// Serialized Name: InMageAzureV2ReplicationDetails.switchProviderDetails
         /// </param>
-        internal InMageAzureV2ReplicationDetails(string instanceType, string infrastructureVmId, string vCenterInfrastructureId, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, int? resyncProgressPercentage, long? rpoInSeconds, double? compressedDataRateInMB, double? uncompressedDataRateInMB, string ipAddress, string agentVersion, DateTimeOffset? agentExpiryOn, string isAgentUpdateRequired, string isRebootAfterUpdateRequired, DateTimeOffset? lastHeartbeat, string processServerId, string processServerName, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, IReadOnlyList<InMageAzureV2ProtectedDiskDetails> protectedDisks, string diskResized, string masterTargetId, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, string osType, string vhdName, string osDiskId, IReadOnlyList<AzureVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, string recoveryAzureLogStorageAccountId, IReadOnlyList<VmNicDetails> vmNics, string selectedRecoveryAzureNetworkId, string selectedTfoAzureNetworkId, string selectedSourceNicId, string discoveryType, string enableRdpOnTargetOption, IReadOnlyList<string> datastores, string targetVmId, string recoveryAzureResourceGroupId, string recoveryAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, IReadOnlyList<HealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, IReadOnlyList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks, DateTimeOffset? lastRecoveryPointReceived, string firmwareType, string azureVmGeneration, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, InMageAzureV2SwitchProviderDetails switchProviderDetails) : base(instanceType)
+        internal InMageAzureV2ReplicationDetails(string instanceType, string infrastructureVmId, string vCenterInfrastructureId, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, int? resyncProgressPercentage, long? rpoInSeconds, double? compressedDataRateInMB, double? uncompressedDataRateInMB, IPAddress ipAddress, string agentVersion, DateTimeOffset? agentExpireOn, string isAgentUpdateRequired, string isRebootAfterUpdateRequired, DateTimeOffset? lastHeartbeat, string processServerId, string processServerName, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, IReadOnlyList<InMageAzureV2ProtectedDiskDetails> protectedDisks, string diskResized, string masterTargetId, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, string osType, string vhdName, string osDiskId, IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, IReadOnlyList<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string discoveryType, string enableRdpOnTargetOption, IReadOnlyList<string> datastores, string targetVmId, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, IReadOnlyList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks, DateTimeOffset? lastRecoveryPointReceived, string firmwareType, string azureVmGeneration, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, InMageAzureV2SwitchProviderDetails switchProviderDetails) : base(instanceType)
         {
             InfrastructureVmId = infrastructureVmId;
             VCenterInfrastructureId = vCenterInfrastructureId;
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             UncompressedDataRateInMB = uncompressedDataRateInMB;
             IPAddress = ipAddress;
             AgentVersion = agentVersion;
-            AgentExpiryOn = agentExpiryOn;
+            AgentExpireOn = agentExpireOn;
             IsAgentUpdateRequired = isAgentUpdateRequired;
             IsRebootAfterUpdateRequired = isRebootAfterUpdateRequired;
             LastHeartbeat = lastHeartbeat;
@@ -433,7 +434,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source IP address.
         /// Serialized Name: InMageAzureV2ReplicationDetails.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The agent version.
         /// Serialized Name: InMageAzureV2ReplicationDetails.agentVersion
@@ -443,7 +444,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Agent expiry date.
         /// Serialized Name: InMageAzureV2ReplicationDetails.agentExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary>
         /// A value indicating whether installed agent needs to be updated.
         /// Serialized Name: InMageAzureV2ReplicationDetails.isAgentUpdateRequired
@@ -528,7 +529,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Azure VM Disk details.
         /// Serialized Name: InMageAzureV2ReplicationDetails.azureVMDiskDetails
         /// </summary>
-        public IReadOnlyList<AzureVmDiskDetails> AzureVmDiskDetails { get; }
+        public IReadOnlyList<SiteRecoveryVmDiskDetails> AzureVmDiskDetails { get; }
         /// <summary>
         /// Recovery Azure given name.
         /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureVMName
@@ -548,7 +549,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection.
         /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureLogStorageAccountId
         /// </summary>
-        public string RecoveryAzureLogStorageAccountId { get; }
+        public ResourceIdentifier RecoveryAzureLogStorageAccountId { get; }
         /// <summary>
         /// The PE Network details.
         /// Serialized Name: InMageAzureV2ReplicationDetails.vmNics
@@ -558,12 +559,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The selected recovery azure network Id.
         /// Serialized Name: InMageAzureV2ReplicationDetails.selectedRecoveryAzureNetworkId
         /// </summary>
-        public string SelectedRecoveryAzureNetworkId { get; }
+        public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; }
         /// <summary>
         /// The test failover virtual network.
         /// Serialized Name: InMageAzureV2ReplicationDetails.selectedTfoAzureNetworkId
         /// </summary>
-        public string SelectedTfoAzureNetworkId { get; }
+        public ResourceIdentifier SelectedTfoAzureNetworkId { get; }
         /// <summary>
         /// The selected source nic Id which will be used as the primary nic during failover.
         /// Serialized Name: InMageAzureV2ReplicationDetails.selectedSourceNicId
@@ -593,12 +594,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target resource group Id.
         /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureResourceGroupId
         /// </summary>
-        public string RecoveryAzureResourceGroupId { get; }
+        public ResourceIdentifier RecoveryAzureResourceGroupId { get; }
         /// <summary>
         /// The recovery availability set Id.
         /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAvailabilitySetId
         /// </summary>
-        public string RecoveryAvailabilitySetId { get; }
+        public ResourceIdentifier RecoveryAvailabilitySetId { get; }
         /// <summary>
         /// The target availability zone.
         /// Serialized Name: InMageAzureV2ReplicationDetails.targetAvailabilityZone
@@ -608,7 +609,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target proximity placement group Id.
         /// Serialized Name: InMageAzureV2ReplicationDetails.targetProximityPlacementGroupId
         /// </summary>
-        public string TargetProximityPlacementGroupId { get; }
+        public ResourceIdentifier TargetProximityPlacementGroupId { get; }
         /// <summary>
         /// A value indicating whether managed disks should be used during failover.
         /// Serialized Name: InMageAzureV2ReplicationDetails.useManagedDisks
@@ -628,7 +629,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The validation errors of the on-premise machine Value can be list of validation errors.
         /// Serialized Name: InMageAzureV2ReplicationDetails.validationErrors
         /// </summary>
-        public IReadOnlyList<HealthError> ValidationErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> ValidationErrors { get; }
         /// <summary>
         /// The last RPO calculated time.
         /// Serialized Name: InMageAzureV2ReplicationDetails.lastRpoCalculatedTime

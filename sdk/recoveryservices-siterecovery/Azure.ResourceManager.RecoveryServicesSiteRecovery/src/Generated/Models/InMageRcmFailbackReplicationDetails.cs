@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether agent registration was successful after failover.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
         /// </param>
-        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, string azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, string logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, string lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
+        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
         {
             InternalIdentifier = internalIdentifier;
             AzureVirtualMachineId = azureVirtualMachineId;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ARM Id of the azure VM.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.azureVirtualMachineId
         /// </summary>
-        public string AzureVirtualMachineId { get; }
+        public ResourceIdentifier AzureVirtualMachineId { get; }
         /// <summary>
         /// The multi VM group name.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.multiVmGroupName
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The log storage account ARM Id.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.logStorageAccountId
         /// </summary>
-        public string LogStorageAccountId { get; }
+        public ResourceIdentifier LogStorageAccountId { get; }
         /// <summary>
         /// The target vCenter Id.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.targetvCenterId
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The policy Id used by the forward replication.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyId
         /// </summary>
-        public string LastUsedPolicyId { get; }
+        public ResourceIdentifier LastUsedPolicyId { get; }
         /// <summary>
         /// The policy friendly name used by the forward replication.
         /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyFriendlyName

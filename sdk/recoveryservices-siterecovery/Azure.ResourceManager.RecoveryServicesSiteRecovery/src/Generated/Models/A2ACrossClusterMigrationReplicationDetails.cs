@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.lifecycleId
         /// </param>
-        internal A2ACrossClusterMigrationReplicationDetails(string instanceType, string fabricObjectId, string primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType)
+        internal A2ACrossClusterMigrationReplicationDetails(string instanceType, ResourceIdentifier fabricObjectId, AzureLocation? primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType)
         {
             FabricObjectId = fabricObjectId;
             PrimaryFabricLocation = primaryFabricLocation;
@@ -63,12 +65,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric specific object Id of the virtual machine.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// Primary fabric location.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.primaryFabricLocation
         /// </summary>
-        public string PrimaryFabricLocation { get; }
+        public AzureLocation? PrimaryFabricLocation { get; }
         /// <summary>
         /// The type of operating system.
         /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.osType

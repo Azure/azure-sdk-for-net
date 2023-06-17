@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// VMM fabric specific details.
     /// Serialized Name: VmmDetails
     /// </summary>
-    public partial class VmmDetails : FabricSpecificDetails
+    public partial class VmmDetails : SiteRecoveryFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of VmmDetails. </summary>
         internal VmmDetails()

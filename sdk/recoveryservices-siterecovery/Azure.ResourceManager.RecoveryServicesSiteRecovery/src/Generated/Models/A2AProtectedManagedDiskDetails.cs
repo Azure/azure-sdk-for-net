@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The type of disk.
         /// Serialized Name: A2AProtectedManagedDiskDetails.diskType
         /// </param>
-        /// <param name="resyncRequired">
+        /// <param name="isResyncRequired">
         /// A value indicating whether resync is required for this disk.
         /// Serialized Name: A2AProtectedManagedDiskDetails.resyncRequired
         /// </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test failover name for the managed disk.
         /// Serialized Name: A2AProtectedManagedDiskDetails.tfoDiskName
         /// </param>
-        internal A2AProtectedManagedDiskDetails(string diskId, string recoveryResourceGroupId, string recoveryTargetDiskId, string recoveryReplicaDiskId, string recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, string recoveryDiskEncryptionSetId, string primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, string primaryStagingAzureStorageAccountId, string diskType, bool? resyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, string dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, string kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
+        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskCapacityInBytes = diskCapacityInBytes;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
             DiskType = diskType;
-            ResyncRequired = resyncRequired;
+            IsResyncRequired = isResyncRequired;
             MonitoringPercentageCompletion = monitoringPercentageCompletion;
             MonitoringJobType = monitoringJobType;
             DataPendingInStagingStorageAccountInMB = dataPendingInStagingStorageAccountInMB;
@@ -176,22 +176,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery disk resource group Arm Id.
         /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryResourceGroupId
         /// </summary>
-        public string RecoveryResourceGroupId { get; }
+        public ResourceIdentifier RecoveryResourceGroupId { get; }
         /// <summary>
         /// Recovery target disk Arm Id.
         /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryTargetDiskId
         /// </summary>
-        public string RecoveryTargetDiskId { get; }
+        public ResourceIdentifier RecoveryTargetDiskId { get; }
         /// <summary>
         /// Recovery replica disk Arm Id.
         /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryReplicaDiskId
         /// </summary>
-        public string RecoveryReplicaDiskId { get; }
+        public ResourceIdentifier RecoveryReplicaDiskId { get; }
         /// <summary>
         /// Recovery original target disk Arm Id.
         /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId
         /// </summary>
-        public string RecoveryOrignalTargetDiskId { get; }
+        public ResourceIdentifier RecoveryOrignalTargetDiskId { get; }
         /// <summary>
         /// The replica disk type. Its an optional value and will be same as source disk type if not user provided.
         /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryReplicaDiskAccountType
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery disk encryption set Id.
         /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryDiskEncryptionSetId
         /// </summary>
-        public string RecoveryDiskEncryptionSetId { get; }
+        public ResourceIdentifier RecoveryDiskEncryptionSetId { get; }
         /// <summary>
         /// The primary disk encryption set Id.
         /// Serialized Name: A2AProtectedManagedDiskDetails.primaryDiskEncryptionSetId
         /// </summary>
-        public string PrimaryDiskEncryptionSetId { get; }
+        public ResourceIdentifier PrimaryDiskEncryptionSetId { get; }
         /// <summary>
         /// The disk name.
         /// Serialized Name: A2AProtectedManagedDiskDetails.diskName
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary staging storage account.
         /// Serialized Name: A2AProtectedManagedDiskDetails.primaryStagingAzureStorageAccountId
         /// </summary>
-        public string PrimaryStagingAzureStorageAccountId { get; }
+        public ResourceIdentifier PrimaryStagingAzureStorageAccountId { get; }
         /// <summary>
         /// The type of disk.
         /// Serialized Name: A2AProtectedManagedDiskDetails.diskType
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether resync is required for this disk.
         /// Serialized Name: A2AProtectedManagedDiskDetails.resyncRequired
         /// </summary>
-        public bool? ResyncRequired { get; }
+        public bool? IsResyncRequired { get; }
         /// <summary>
         /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
         /// Serialized Name: A2AProtectedManagedDiskDetails.monitoringPercentageCompletion
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The KeyVault resource id for secret (BEK).
         /// Serialized Name: A2AProtectedManagedDiskDetails.dekKeyVaultArmId
         /// </summary>
-        public string DekKeyVaultArmId { get; }
+        public ResourceIdentifier DekKeyVaultArmId { get; }
         /// <summary>
         /// A value indicating whether disk key got encrypted or not.
         /// Serialized Name: A2AProtectedManagedDiskDetails.isDiskKeyEncrypted
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The KeyVault resource id for key (KEK).
         /// Serialized Name: A2AProtectedManagedDiskDetails.kekKeyVaultArmId
         /// </summary>
-        public string KekKeyVaultArmId { get; }
+        public ResourceIdentifier KekKeyVaultArmId { get; }
         /// <summary>
         /// The failover name for the managed disk.
         /// Serialized Name: A2AProtectedManagedDiskDetails.failoverDiskName

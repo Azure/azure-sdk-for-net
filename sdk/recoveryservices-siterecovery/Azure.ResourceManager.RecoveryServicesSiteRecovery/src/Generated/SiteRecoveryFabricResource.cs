@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to the failover process server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, SiteRecoveryFailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to the failover process server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryFabricResource> ReassociateGateway(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> ReassociateGateway(WaitUntil waitUntil, SiteRecoveryFailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

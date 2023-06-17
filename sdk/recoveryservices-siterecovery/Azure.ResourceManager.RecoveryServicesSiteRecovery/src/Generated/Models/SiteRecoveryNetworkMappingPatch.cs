@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The input properties needed to update network mapping.
         /// Serialized Name: UpdateNetworkMappingInput.properties
         /// </summary>
-        public UpdateNetworkMappingInputProperties Properties { get; set; }
+        public UpdateNetworkMappingContentProperties Properties { get; set; }
     }
 }

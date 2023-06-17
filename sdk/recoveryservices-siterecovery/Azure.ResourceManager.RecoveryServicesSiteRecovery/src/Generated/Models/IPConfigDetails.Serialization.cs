@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +23,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> name = default;
             Optional<bool> isPrimary = default;
             Optional<string> subnetName = default;
-            Optional<string> staticIPAddress = default;
+            Optional<IPAddress> staticIPAddress = default;
             Optional<string> ipAddressType = default;
             Optional<bool> isSeletedForFailover = default;
             Optional<string> recoverySubnetName = default;
-            Optional<string> recoveryStaticIPAddress = default;
+            Optional<IPAddress> recoveryStaticIPAddress = default;
             Optional<string> recoveryIPAddressType = default;
             Optional<string> recoveryPublicIPAddressId = default;
             Optional<IReadOnlyList<string>> recoveryLBBackendAddressPoolIds = default;
             Optional<string> tfoSubnetName = default;
-            Optional<string> tfoStaticIPAddress = default;
+            Optional<IPAddress> tfoStaticIPAddress = default;
             Optional<string> tfoPublicIPAddressId = default;
             Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +58,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("staticIPAddress"u8))
                 {
-                    staticIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staticIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipAddressType"u8))
@@ -81,7 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryStaticIPAddress"u8))
                 {
-                    recoveryStaticIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryStaticIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryIPAddressType"u8))
@@ -115,7 +124,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("tfoStaticIPAddress"u8))
                 {
-                    tfoStaticIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tfoStaticIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tfoPublicIPAddressId"u8))

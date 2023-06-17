@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal ReplicationProtectedItemProperties()
         {
             AllowedOperations = new ChangeTrackingList<string>();
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The correlation Id for events associated with this protected item.
         /// Serialized Name: ReplicationProtectedItemProperties.eventCorrelationId
         /// </param>
-        internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, string protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, string recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IReadOnlyList<string> allowedOperations, string replicationHealth, string failoverHealth, IReadOnlyList<HealthError> healthErrors, string policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, string failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, string recoveryContainerId, string eventCorrelationId)
+        internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, ResourceIdentifier protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IReadOnlyList<string> allowedOperations, string replicationHealth, string failoverHealth, IReadOnlyList<SiteRecoveryHealthError> healthErrors, ResourceIdentifier policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, ResourceIdentifier failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, ResourceIdentifier recoveryContainerId, string eventCorrelationId)
         {
             FriendlyName = friendlyName;
             ProtectedItemType = protectedItemType;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The protected item ARM Id.
         /// Serialized Name: ReplicationProtectedItemProperties.protectableItemId
         /// </summary>
-        public string ProtectableItemId { get; }
+        public ResourceIdentifier ProtectableItemId { get; }
         /// <summary>
         /// The recovery provider ARM Id.
         /// Serialized Name: ReplicationProtectedItemProperties.recoveryServicesProviderId
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Arm Id of recovery fabric.
         /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricId
         /// </summary>
-        public string RecoveryFabricId { get; }
+        public ResourceIdentifier RecoveryFabricId { get; }
         /// <summary>
         /// The name of primary protection container friendly name.
         /// Serialized Name: ReplicationProtectedItemProperties.primaryProtectionContainerFriendlyName
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// List of health errors.
         /// Serialized Name: ReplicationProtectedItemProperties.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary>
         /// The ID of Policy governing this PE.
         /// Serialized Name: ReplicationProtectedItemProperties.policyId
         /// </summary>
-        public string PolicyId { get; }
+        public ResourceIdentifier PolicyId { get; }
         /// <summary>
         /// The name of Policy governing this PE.
         /// Serialized Name: ReplicationProtectedItemProperties.policyFriendlyName
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery point ARM Id to which the Vm was failed over.
         /// Serialized Name: ReplicationProtectedItemProperties.failoverRecoveryPointId
         /// </summary>
-        public string FailoverRecoveryPointId { get; }
+        public ResourceIdentifier FailoverRecoveryPointId { get; }
         /// <summary>
         /// The Replication provider custom settings.
         /// Serialized Name: ReplicationProtectedItemProperties.providerSpecificDetails
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery container Id.
         /// Serialized Name: ReplicationProtectedItemProperties.recoveryContainerId
         /// </summary>
-        public string RecoveryContainerId { get; }
+        public ResourceIdentifier RecoveryContainerId { get; }
         /// <summary>
         /// The correlation Id for events associated with this protected item.
         /// Serialized Name: ReplicationProtectedItemProperties.eventCorrelationId

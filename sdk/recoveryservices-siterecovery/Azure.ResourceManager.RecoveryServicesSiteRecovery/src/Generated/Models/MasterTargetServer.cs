@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal MasterTargetServer()
         {
             RetentionVolumes = new ChangeTrackingList<RetentionVolume>();
-            DataStores = new ChangeTrackingList<DataStore>();
-            ValidationErrors = new ChangeTrackingList<HealthError>();
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            DataStores = new ChangeTrackingList<SiteRecoveryDataStore>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of MasterTargetServer. </summary>
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// OS Version of the master target.
         /// Serialized Name: MasterTargetServer.osVersion
         /// </param>
-        /// <param name="agentExpiryOn">
+        /// <param name="agentExpireOn">
         /// Agent expiry date.
         /// Serialized Name: MasterTargetServer.agentExpiryDate
         /// </param>
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// MARS agent version.
         /// Serialized Name: MasterTargetServer.marsAgentVersion
         /// </param>
-        /// <param name="marsAgentExpiryOn">
+        /// <param name="marsAgentExpireOn">
         /// MARS agent expiry date.
         /// Serialized Name: MasterTargetServer.marsAgentExpiryDate
         /// </param>
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Mars agent version details.
         /// Serialized Name: MasterTargetServer.marsAgentVersionDetails
         /// </param>
-        internal MasterTargetServer(string id, string ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeat, string versionStatus, IReadOnlyList<RetentionVolume> retentionVolumes, IReadOnlyList<DataStore> dataStores, IReadOnlyList<HealthError> validationErrors, IReadOnlyList<HealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpiryOn, string marsAgentVersion, DateTimeOffset? marsAgentExpiryOn, VersionDetails agentVersionDetails, VersionDetails marsAgentVersionDetails)
+        internal MasterTargetServer(string id, IPAddress ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeat, string versionStatus, IReadOnlyList<RetentionVolume> retentionVolumes, IReadOnlyList<SiteRecoveryDataStore> dataStores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpireOn, string marsAgentVersion, DateTimeOffset? marsAgentExpireOn, VersionDetails agentVersionDetails, VersionDetails marsAgentVersionDetails)
         {
             Id = id;
             IPAddress = ipAddress;
@@ -114,9 +115,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             DiskCount = diskCount;
             OSVersion = osVersion;
-            AgentExpiryOn = agentExpiryOn;
+            AgentExpireOn = agentExpireOn;
             MarsAgentVersion = marsAgentVersion;
-            MarsAgentExpiryOn = marsAgentExpiryOn;
+            MarsAgentExpireOn = marsAgentExpireOn;
             AgentVersionDetails = agentVersionDetails;
             MarsAgentVersionDetails = marsAgentVersionDetails;
         }
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address of the server.
         /// Serialized Name: MasterTargetServer.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The server name.
         /// Serialized Name: MasterTargetServer.name
@@ -165,17 +166,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of data stores in the fabric.
         /// Serialized Name: MasterTargetServer.dataStores
         /// </summary>
-        public IReadOnlyList<DataStore> DataStores { get; }
+        public IReadOnlyList<SiteRecoveryDataStore> DataStores { get; }
         /// <summary>
         /// Validation errors.
         /// Serialized Name: MasterTargetServer.validationErrors
         /// </summary>
-        public IReadOnlyList<HealthError> ValidationErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> ValidationErrors { get; }
         /// <summary>
         /// Health errors.
         /// Serialized Name: MasterTargetServer.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary>
         /// Disk count of the master target.
         /// Serialized Name: MasterTargetServer.diskCount
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Agent expiry date.
         /// Serialized Name: MasterTargetServer.agentExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary>
         /// MARS agent version.
         /// Serialized Name: MasterTargetServer.marsAgentVersion
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// MARS agent expiry date.
         /// Serialized Name: MasterTargetServer.marsAgentExpiryDate
         /// </summary>
-        public DateTimeOffset? MarsAgentExpiryOn { get; }
+        public DateTimeOffset? MarsAgentExpireOn { get; }
         /// <summary>
         /// Agent version details.
         /// Serialized Name: MasterTargetServer.agentVersionDetails

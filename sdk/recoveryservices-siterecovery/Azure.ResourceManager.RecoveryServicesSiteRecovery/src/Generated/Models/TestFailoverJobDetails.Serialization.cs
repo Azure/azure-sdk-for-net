@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> networkName = default;
             Optional<string> networkFriendlyName = default;
             Optional<string> networkType = default;
-            Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryFailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
             string instanceType = default;
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<FailoverReplicationProtectedItemDetails> array = new List<FailoverReplicationProtectedItemDetails>();
+                    List<SiteRecoveryFailoverReplicationProtectedItemDetails> array = new List<SiteRecoveryFailoverReplicationProtectedItemDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverReplicationProtectedItemDetails.DeserializeFailoverReplicationProtectedItemDetails(item));
+                        array.Add(SiteRecoveryFailoverReplicationProtectedItemDetails.DeserializeSiteRecoveryFailoverReplicationProtectedItemDetails(item));
                     }
                     protectedItemDetails = array;
                     continue;

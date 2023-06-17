@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: CreateRecoveryPlanInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryRecoveryPlanCreateOrUpdateContent(CreateRecoveryPlanInputProperties properties)
+        public SiteRecoveryRecoveryPlanCreateOrUpdateContent(SiteRecoveryCreateRecoveryPlanProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Recovery plan creation properties.
         /// Serialized Name: CreateRecoveryPlanInput.properties
         /// </summary>
-        public CreateRecoveryPlanInputProperties Properties { get; }
+        public SiteRecoveryCreateRecoveryPlanProperties Properties { get; }
     }
 }

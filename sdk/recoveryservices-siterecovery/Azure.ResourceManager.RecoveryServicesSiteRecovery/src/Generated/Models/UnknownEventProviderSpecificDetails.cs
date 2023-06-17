@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The UnknownEventProviderSpecificDetails.
     /// Serialized Name: UnknownEventProviderSpecificDetails
     /// </summary>
-    internal partial class UnknownEventProviderSpecificDetails : EventProviderSpecificDetails
+    internal partial class UnknownEventProviderSpecificDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of UnknownEventProviderSpecificDetails. </summary>
         /// <param name="instanceType">

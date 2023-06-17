@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery availability set Id. Will throw error, if resource does not exist.
         /// Serialized Name: ExistingRecoveryAvailabilitySet.recoveryAvailabilitySetId
         /// </param>
-        internal ExistingRecoveryAvailabilitySet(string resourceType, string recoveryAvailabilitySetId) : base(resourceType)
+        internal ExistingRecoveryAvailabilitySet(string resourceType, ResourceIdentifier recoveryAvailabilitySetId) : base(resourceType)
         {
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
             ResourceType = resourceType ?? "Existing";
@@ -38,6 +40,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery availability set Id. Will throw error, if resource does not exist.
         /// Serialized Name: ExistingRecoveryAvailabilitySet.recoveryAvailabilitySetId
         /// </summary>
-        public string RecoveryAvailabilitySetId { get; set; }
+        public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
     }
 }

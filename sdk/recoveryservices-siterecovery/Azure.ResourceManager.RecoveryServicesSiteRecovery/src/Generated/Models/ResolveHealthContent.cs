@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Disable resolve health input properties.
         /// Serialized Name: ResolveHealthInput.properties
         /// </summary>
-        internal ResolveHealthInputProperties Properties { get; set; }
+        internal ResolveHealthContentProperties Properties { get; set; }
         /// <summary>
         /// Health errors.
         /// Serialized Name: ResolveHealthInputProperties.healthErrors
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             get
             {
                 if (Properties is null)
-                    Properties = new ResolveHealthInputProperties();
+                    Properties = new ResolveHealthContentProperties();
                 return Properties.HealthErrors;
             }
         }

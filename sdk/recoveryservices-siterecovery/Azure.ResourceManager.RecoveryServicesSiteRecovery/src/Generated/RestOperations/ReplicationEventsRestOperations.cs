@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventCollection>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteRecoveryListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        EventCollection value = default;
+                        SiteRecoveryListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventCollection.DeserializeEventCollection(document.RootElement);
+                        value = SiteRecoveryListResult.DeserializeSiteRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventCollection> List(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SiteRecoveryListResult> List(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        EventCollection value = default;
+                        SiteRecoveryListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventCollection.DeserializeEventCollection(document.RootElement);
+                        value = SiteRecoveryListResult.DeserializeSiteRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteRecoveryListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        EventCollection value = default;
+                        SiteRecoveryListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventCollection.DeserializeEventCollection(document.RootElement);
+                        value = SiteRecoveryListResult.DeserializeSiteRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SiteRecoveryListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        EventCollection value = default;
+                        SiteRecoveryListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventCollection.DeserializeEventCollection(document.RootElement);
+                        value = SiteRecoveryListResult.DeserializeSiteRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

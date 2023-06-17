@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> serviceContainerId = default;
             Optional<Uri> dataPlaneUri = default;
             Optional<Uri> controlPlaneUri = default;
-            Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
+            Optional<SiteRecoveryIdentityProviderDetails> sourceAgentIdentityDetails = default;
             Optional<IReadOnlyList<ProcessServerDetails>> processServers = default;
             Optional<IReadOnlyList<RcmProxyDetails>> rcmProxies = default;
             Optional<IReadOnlyList<PushInstallerDetails>> pushInstallers = default;
             Optional<IReadOnlyList<ReplicationAgentDetails>> replicationAgents = default;
             Optional<IReadOnlyList<ReprotectAgentDetails>> reprotectAgents = default;
             Optional<IReadOnlyList<MarsAgentDetails>> marsAgents = default;
-            Optional<IReadOnlyList<DraDetails>> dras = default;
-            Optional<IReadOnlyList<AgentDetails>> agentDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
+            Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    sourceAgentIdentityDetails = SiteRecoveryIdentityProviderDetails.DeserializeSiteRecoveryIdentityProviderDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("processServers"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<DraDetails> array = new List<DraDetails>();
+                    List<SiteRecoveryDraDetails> array = new List<SiteRecoveryDraDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DraDetails.DeserializeDraDetails(item));
+                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item));
                     }
                     dras = array;
                     continue;
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<AgentDetails> array = new List<AgentDetails>();
+                    List<SiteRecoveryAgentDetails> array = new List<SiteRecoveryAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AgentDetails.DeserializeAgentDetails(item));
+                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item));
                     }
                     agentDetails = array;
                     continue;

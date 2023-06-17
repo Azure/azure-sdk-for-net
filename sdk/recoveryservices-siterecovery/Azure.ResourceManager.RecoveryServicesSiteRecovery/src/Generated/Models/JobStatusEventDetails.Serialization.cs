@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             Optional<string> jobFriendlyName = default;
             Optional<string> jobStatus = default;
             Optional<string> affectedObjectType = default;
@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobFriendlyName"u8))

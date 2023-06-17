@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Target NIC name.
         /// Serialized Name: VMNicDetails.targetNicName
         /// </param>
-        internal VmNicDetails(string nicId, string replicaNicId, string sourceNicArmId, string vmNetworkName, string recoveryVmNetworkId, IReadOnlyList<IPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnRecovery, string tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnTfo, string recoveryNicName, string recoveryNicResourceGroupName, bool? reuseExistingNic, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? tfoReuseExistingNic, string targetNicName)
+        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<IPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnRecovery, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnTfo, string recoveryNicName, string recoveryNicResourceGroupName, bool? reuseExistingNic, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? tfoReuseExistingNic, string targetNicName)
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source nic ARM Id.
         /// Serialized Name: VMNicDetails.sourceNicArmId
         /// </summary>
-        public string SourceNicArmId { get; }
+        public ResourceIdentifier SourceNicArmId { get; }
         /// <summary>
         /// VM network name.
         /// Serialized Name: VMNicDetails.vMNetworkName
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Recovery VM network Id.
         /// Serialized Name: VMNicDetails.recoveryVMNetworkId
         /// </summary>
-        public string RecoveryVmNetworkId { get; }
+        public ResourceIdentifier RecoveryVmNetworkId { get; }
         /// <summary>
         /// The IP configurations of the NIC.
         /// Serialized Name: VMNicDetails.ipConfigs
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The network to be used by NIC during test failover.
         /// Serialized Name: VMNicDetails.tfoVMNetworkId
         /// </summary>
-        public string TfoVmNetworkId { get; }
+        public ResourceIdentifier TfoVmNetworkId { get; }
         /// <summary>
         /// The NSG to be used by NIC during test failover.
         /// Serialized Name: VMNicDetails.tfoNetworkSecurityGroupId

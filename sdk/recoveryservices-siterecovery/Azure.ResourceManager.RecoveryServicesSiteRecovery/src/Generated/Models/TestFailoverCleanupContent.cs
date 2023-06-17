@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: TestFailoverCleanupInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestFailoverCleanupContent(TestFailoverCleanupInputProperties properties)
+        public TestFailoverCleanupContent(TestFailoverCleanupContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Test failover cleanup input properties.
         /// Serialized Name: TestFailoverCleanupInput.properties
         /// </summary>
-        internal TestFailoverCleanupInputProperties Properties { get; }
+        internal TestFailoverCleanupContentProperties Properties { get; }
         /// <summary>
         /// Test failover cleanup comments.
         /// Serialized Name: TestFailoverCleanupInputProperties.comments
         /// </summary>
-        public string TestFailoverCleanupInputComments
+        public string TestFailoverCleanupContentComments
         {
             get => Properties?.Comments;
         }

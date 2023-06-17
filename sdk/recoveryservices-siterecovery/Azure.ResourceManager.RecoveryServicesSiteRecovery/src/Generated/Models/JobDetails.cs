@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Job details based on specific job type.
     /// Serialized Name: JobDetails
     /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
+    /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="SiteRecoveryFailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
     /// </summary>
     public abstract partial class JobDetails
     {

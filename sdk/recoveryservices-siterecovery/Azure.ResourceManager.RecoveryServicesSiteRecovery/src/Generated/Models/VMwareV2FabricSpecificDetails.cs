@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// VMwareV2 fabric specific details.
     /// Serialized Name: VMwareV2FabricSpecificDetails
     /// </summary>
-    public partial class VMwareV2FabricSpecificDetails : FabricSpecificDetails
+    public partial class VMwareV2FabricSpecificDetails : SiteRecoveryFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
         internal VMwareV2FabricSpecificDetails()

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal VMwareVirtualMachineDetails()
         {
             DiskDetails = new ChangeTrackingList<InMageDiskDetails>();
-            ValidationErrors = new ChangeTrackingList<HealthError>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             InstanceType = "VMwareVirtualMachine";
         }
 
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The validation errors.
         /// Serialized Name: VMwareVirtualMachineDetails.validationErrors
         /// </param>
-        internal VMwareVirtualMachineDetails(string instanceType, string agentGeneratedId, string agentInstalled, string osType, string agentVersion, string ipAddress, string poweredOn, string vCenterInfrastructureId, string discoveryType, IReadOnlyList<InMageDiskDetails> diskDetails, IReadOnlyList<HealthError> validationErrors) : base(instanceType)
+        internal VMwareVirtualMachineDetails(string instanceType, string agentGeneratedId, string agentInstalled, string osType, string agentVersion, IPAddress ipAddress, string poweredOn, string vCenterInfrastructureId, string discoveryType, IReadOnlyList<InMageDiskDetails> diskDetails, IReadOnlyList<SiteRecoveryHealthError> validationErrors) : base(instanceType)
         {
             AgentGeneratedId = agentGeneratedId;
             AgentInstalled = agentInstalled;
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address.
         /// Serialized Name: VMwareVirtualMachineDetails.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The value indicating whether VM is powered on.
         /// Serialized Name: VMwareVirtualMachineDetails.poweredOn
@@ -133,6 +134,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The validation errors.
         /// Serialized Name: VMwareVirtualMachineDetails.validationErrors
         /// </summary>
-        public IReadOnlyList<HealthError> ValidationErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> ValidationErrors { get; }
     }
 }

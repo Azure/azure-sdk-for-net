@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element);
+                    case "FabricReplicationGroupTaskDetails": return SiteRecoveryFabricReplicationGroupTaskDetails.DeserializeSiteRecoveryFabricReplicationGroupTaskDetails(element);
                     case "VirtualMachineTaskDetails": return VirtualMachineTaskDetails.DeserializeVirtualMachineTaskDetails(element);
                 }
             }

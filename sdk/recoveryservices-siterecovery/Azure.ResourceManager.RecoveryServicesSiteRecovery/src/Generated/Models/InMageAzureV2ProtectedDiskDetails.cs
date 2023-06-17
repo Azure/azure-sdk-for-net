@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The resync last 15 minutes transferred bytes.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLast15MinutesTransferredBytes
         /// </param>
-        /// <param name="resyncLastDataTransferTimeUTC">
+        /// <param name="resyncLastDataTransferOn">
         /// The last data transfer time in UTC.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC
         /// </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The seconds to take for switch provider.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.secondsToTakeSwitchProvider
         /// </param>
-        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
+        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskCapacityInBytes = diskCapacityInBytes;
             FileSystemCapacityInBytes = fileSystemCapacityInBytes;
             SourceDataInMegaBytes = sourceDataInMegaBytes;
-            PsDataInMegaBytes = psDataInMegaBytes;
+            PSDataInMegaBytes = psDataInMegaBytes;
             TargetDataInMegaBytes = targetDataInMegaBytes;
             DiskResized = diskResized;
             LastRpoCalculatedOn = lastRpoCalculatedOn;
             ResyncProcessedBytes = resyncProcessedBytes;
             ResyncTotalTransferredBytes = resyncTotalTransferredBytes;
             ResyncLast15MinutesTransferredBytes = resyncLast15MinutesTransferredBytes;
-            ResyncLastDataTransferTimeUTC = resyncLastDataTransferTimeUTC;
+            ResyncLastDataTransferOn = resyncLastDataTransferOn;
             ResyncStartOn = resyncStartOn;
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The PS data transit in MB.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes
         /// </summary>
-        public double? PsDataInMegaBytes { get; }
+        public double? PSDataInMegaBytes { get; }
         /// <summary>
         /// The target data transit in MB.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.targetDataInMegaBytes
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last data transfer time in UTC.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC
         /// </summary>
-        public DateTimeOffset? ResyncLastDataTransferTimeUTC { get; }
+        public DateTimeOffset? ResyncLastDataTransferOn { get; }
         /// <summary>
         /// The resync start time.
         /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncStartTime

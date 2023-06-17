@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Switch protection properties.
         /// Serialized Name: SwitchProtectionInput.properties
         /// </summary>
-        public SwitchProtectionInputProperties Properties { get; set; }
+        public SwitchProtectionContentProperties Properties { get; set; }
     }
 }

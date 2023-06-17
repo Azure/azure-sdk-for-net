@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        internal SiteRecoveryEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal SiteRecoveryEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryEventProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Event related data.
         /// Serialized Name: Event.properties
         /// </summary>
-        public EventProperties Properties { get; }
+        public SiteRecoveryEventProperties Properties { get; }
         /// <summary>
         /// Resource Location
         /// Serialized Name: Resource.location

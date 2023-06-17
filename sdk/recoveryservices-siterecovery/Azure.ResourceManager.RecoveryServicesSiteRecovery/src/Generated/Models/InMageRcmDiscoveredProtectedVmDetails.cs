@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmDiscoveredProtectedVmDetails()
         {
             Datastores = new ChangeTrackingList<string>();
-            IPAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmDiscoveredProtectedVmDetails. </summary>
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The VM's OS name.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.osName
         /// </param>
-        /// <param name="createdTimestamp">
+        /// <param name="createdOn">
         /// The SDS created timestamp.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.createdTimestamp
         /// </param>
-        /// <param name="updatedTimestamp">
+        /// <param name="updatedOn">
         /// The SDS updated timestamp.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.updatedTimestamp
         /// </param>
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last time when SDS information discovered in SRS.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
         /// </param>
-        internal InMageRcmDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<string> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdTimestamp, DateTimeOffset? updatedTimestamp, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc)
+        internal InMageRcmDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<IPAddress> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc)
         {
             VCenterId = vCenterId;
             VCenterFqdn = vCenterFqdn;
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PowerStatus = powerStatus;
             VmFqdn = vmFqdn;
             OSName = osName;
-            CreatedTimestamp = createdTimestamp;
-            UpdatedTimestamp = updatedTimestamp;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             IsDeleted = isDeleted;
             LastDiscoveryTimeInUtc = lastDiscoveryTimeInUtc;
         }
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of IP addresses.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.ipAddresses
         /// </summary>
-        public IReadOnlyList<string> IPAddresses { get; }
+        public IReadOnlyList<IPAddress> IPAddresses { get; }
         /// <summary>
         /// The VMware tools status.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vmwareToolsStatus
@@ -133,12 +134,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The SDS created timestamp.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.createdTimestamp
         /// </summary>
-        public DateTimeOffset? CreatedTimestamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// The SDS updated timestamp.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.updatedTimestamp
         /// </summary>
-        public DateTimeOffset? UpdatedTimestamp { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary>
         /// A value indicating whether the VM is deleted.
         /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.isDeleted

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job name. Enum type ScenarioName.
         /// Serialized Name: JobEntity.jobScenarioName
         /// </param>
-        internal JobEntity(string jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName)
+        internal JobEntity(ResourceIdentifier jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName)
         {
             JobId = jobId;
             JobFriendlyName = jobFriendlyName;
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job id.
         /// Serialized Name: JobEntity.jobId
         /// </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary>
         /// The job display name.
         /// Serialized Name: JobEntity.jobFriendlyName

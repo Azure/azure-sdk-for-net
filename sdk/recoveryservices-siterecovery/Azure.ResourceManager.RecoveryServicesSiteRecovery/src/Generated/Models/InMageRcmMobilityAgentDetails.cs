@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The latest upgradeable version available without reboot.
         /// Serialized Name: InMageRcmMobilityAgentDetails.latestUpgradableVersionWithoutReboot
         /// </param>
-        /// <param name="agentVersionExpiryOn">
+        /// <param name="agentVersionExpireOn">
         /// The agent version expiry date.
         /// Serialized Name: InMageRcmMobilityAgentDetails.agentVersionExpiryDate
         /// </param>
-        /// <param name="driverVersionExpiryOn">
+        /// <param name="driverVersionExpireOn">
         /// The driver version expiry date.
         /// Serialized Name: InMageRcmMobilityAgentDetails.driverVersionExpiryDate
         /// </param>
-        /// <param name="lastHeartbeatUtc">
+        /// <param name="lastHeartbeatReceivedOn">
         /// The time of the last heartbeat received from the agent.
         /// Serialized Name: InMageRcmMobilityAgentDetails.lastHeartbeatUtc
         /// </param>
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether agent is upgradeable or not.
         /// Serialized Name: InMageRcmMobilityAgentDetails.isUpgradeable
         /// </param>
-        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpiryOn, DateTimeOffset? driverVersionExpiryOn, DateTimeOffset? lastHeartbeatUtc, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
+        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
         {
             Version = version;
             LatestVersion = latestVersion;
             LatestAgentReleaseDate = latestAgentReleaseDate;
             DriverVersion = driverVersion;
             LatestUpgradableVersionWithoutReboot = latestUpgradableVersionWithoutReboot;
-            AgentVersionExpiryOn = agentVersionExpiryOn;
-            DriverVersionExpiryOn = driverVersionExpiryOn;
-            LastHeartbeatUtc = lastHeartbeatUtc;
+            AgentVersionExpireOn = agentVersionExpireOn;
+            DriverVersionExpireOn = driverVersionExpireOn;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ReasonsBlockingUpgrade = reasonsBlockingUpgrade;
             IsUpgradeable = isUpgradeable;
         }
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The agent version expiry date.
         /// Serialized Name: InMageRcmMobilityAgentDetails.agentVersionExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentVersionExpiryOn { get; }
+        public DateTimeOffset? AgentVersionExpireOn { get; }
         /// <summary>
         /// The driver version expiry date.
         /// Serialized Name: InMageRcmMobilityAgentDetails.driverVersionExpiryDate
         /// </summary>
-        public DateTimeOffset? DriverVersionExpiryOn { get; }
+        public DateTimeOffset? DriverVersionExpireOn { get; }
         /// <summary>
         /// The time of the last heartbeat received from the agent.
         /// Serialized Name: InMageRcmMobilityAgentDetails.lastHeartbeatUtc
         /// </summary>
-        public DateTimeOffset? LastHeartbeatUtc { get; }
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
         /// <summary>
         /// The whether update is possible or not.
         /// Serialized Name: InMageRcmMobilityAgentDetails.reasonsBlockingUpgrade

@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> providerVersion = default;
             Optional<string> serverVersion = default;
             Optional<string> providerVersionState = default;
-            Optional<DateTimeOffset> providerVersionExpiryDate = default;
+            Optional<DateTimeOffset> providerVersionExpireOn = default;
             Optional<string> fabricFriendlyName = default;
             Optional<DateTimeOffset> lastHeartBeat = default;
             Optional<string> connectionStatus = default;
             Optional<int> protectedItemCount = default;
             Optional<IReadOnlyList<string>> allowedScenarios = default;
-            Optional<IReadOnlyList<HealthError>> healthErrorDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
             Optional<string> draIdentifier = default;
             Optional<string> machineId = default;
             Optional<string> machineName = default;
             Optional<string> biosId = default;
-            Optional<IdentityProviderDetails> authenticationIdentityDetails = default;
-            Optional<IdentityProviderDetails> resourceAccessIdentityDetails = default;
-            Optional<IdentityProviderDetails> dataPlaneAuthenticationIdentityDetails = default;
+            Optional<SiteRecoveryIdentityProviderDetails> authenticationIdentityDetails = default;
+            Optional<SiteRecoveryIdentityProviderDetails> resourceAccessIdentityDetails = default;
+            Optional<SiteRecoveryIdentityProviderDetails> dataPlaneAuthenticationIdentityDetails = default;
             Optional<VersionDetails> providerVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerVersionExpiryDate = property.Value.GetDateTimeOffset("O");
+                    providerVersionExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("fabricFriendlyName"u8))
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrorDetails = array;
                     continue;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    authenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    authenticationIdentityDetails = SiteRecoveryIdentityProviderDetails.DeserializeSiteRecoveryIdentityProviderDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentityDetails"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resourceAccessIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    resourceAccessIdentityDetails = SiteRecoveryIdentityProviderDetails.DeserializeSiteRecoveryIdentityProviderDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataPlaneAuthenticationIdentityDetails"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dataPlaneAuthenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    dataPlaneAuthenticationIdentityDetails = SiteRecoveryIdentityProviderDetails.DeserializeSiteRecoveryIdentityProviderDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerVersionDetails"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new RecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpiryDate), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value);
+            return new RecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value);
         }
     }
 }

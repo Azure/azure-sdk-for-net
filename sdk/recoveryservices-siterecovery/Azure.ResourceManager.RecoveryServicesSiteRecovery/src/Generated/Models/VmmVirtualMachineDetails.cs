@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Id of the hyper-v host in fabric.
         /// Serialized Name: HyperVVirtualMachineDetails.hyperVHostId
         /// </param>
-        internal VmmVirtualMachineDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<DiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType, sourceItemId, generation, osDetails, diskDetails, hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId)
+        internal VmmVirtualMachineDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType, sourceItemId, generation, osDetails, diskDetails, hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId)
         {
             InstanceType = instanceType ?? "VmmVirtualMachine";
         }

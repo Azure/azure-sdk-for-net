@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: RecoveryPlanPlannedFailoverInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public RecoveryPlanPlannedFailoverContent(RecoveryPlanPlannedFailoverInputProperties properties)
+        public RecoveryPlanPlannedFailoverContent(RecoveryPlanPlannedFailoverContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery plan planned failover input properties.
         /// Serialized Name: RecoveryPlanPlannedFailoverInput.properties
         /// </summary>
-        public RecoveryPlanPlannedFailoverInputProperties Properties { get; }
+        public RecoveryPlanPlannedFailoverContentProperties Properties { get; }
     }
 }

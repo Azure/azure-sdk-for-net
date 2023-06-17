@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: MigrateInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public MigrateContent(MigrateInputProperties properties)
+        public MigrateContent(MigrateContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Migrate input properties.
         /// Serialized Name: MigrateInput.properties
         /// </summary>
-        internal MigrateInputProperties Properties { get; }
+        internal MigrateContentProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
         /// Serialized Name: MigrateInputProperties.providerSpecificDetails
-        /// Please note <see cref="MigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtMigrateInput"/>.
+        /// Please note <see cref="MigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtMigrateContent"/>.
         /// </summary>
-        public MigrateProviderSpecificInput MigrateInputProviderSpecificDetails
+        public MigrateProviderSpecificContent MigrateContentProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

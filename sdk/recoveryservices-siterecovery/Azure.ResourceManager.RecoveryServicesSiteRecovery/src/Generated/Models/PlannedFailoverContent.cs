@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Planned failover input properties.
         /// Serialized Name: PlannedFailoverInput.properties
         /// </summary>
-        public PlannedFailoverInputProperties Properties { get; set; }
+        public PlannedFailoverContentProperties Properties { get; set; }
     }
 }

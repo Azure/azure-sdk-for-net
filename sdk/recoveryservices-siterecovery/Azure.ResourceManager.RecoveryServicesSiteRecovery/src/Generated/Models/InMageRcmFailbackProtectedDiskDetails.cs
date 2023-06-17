@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The resync details.
         /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.resyncDetails
         /// </param>
-        /// <param name="lastSyncOn">
+        /// <param name="lastSyncedOn">
         /// The last sync time.
         /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.lastSyncTime
         /// </param>
-        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncOn)
+        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncedOn)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsInitialReplicationComplete = isInitialReplicationComplete;
             IrDetails = irDetails;
             ResyncDetails = resyncDetails;
-            LastSyncOn = lastSyncOn;
+            LastSyncedOn = lastSyncedOn;
         }
 
         /// <summary>
@@ -134,6 +134,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last sync time.
         /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.lastSyncTime
         /// </summary>
-        public DateTimeOffset? LastSyncOn { get; }
+        public DateTimeOffset? LastSyncedOn { get; }
     }
 }

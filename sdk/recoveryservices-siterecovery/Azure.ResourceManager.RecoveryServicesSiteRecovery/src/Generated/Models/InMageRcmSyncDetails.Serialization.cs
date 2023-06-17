@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DiskReplicationProgressHealth> progressHealth = default;
+            Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
             Optional<long> transferredBytes = default;
             Optional<long> last15MinutesTransferredBytes = default;
             Optional<string> lastDataTransferTimeUtc = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    progressHealth = new DiskReplicationProgressHealth(property.Value.GetString());
+                    progressHealth = new SiteRecoveryDiskReplicationProgressHealth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transferredBytes"u8))

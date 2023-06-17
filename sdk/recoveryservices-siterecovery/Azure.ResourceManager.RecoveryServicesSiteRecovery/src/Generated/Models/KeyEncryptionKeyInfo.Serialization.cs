@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> keyIdentifier = default;
-            Optional<string> keyVaultResourceArmId = default;
+            Optional<ResourceIdentifier> keyVaultResourceArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))
@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("keyVaultResourceArmId"u8))
                 {
-                    keyVaultResourceArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultResourceArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

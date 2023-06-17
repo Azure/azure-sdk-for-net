@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Progress in percentage. Progress percentage is calculated based on processed bytes.
         /// Serialized Name: InMageRcmSyncDetails.progressPercentage
         /// </param>
-        internal InMageRcmSyncDetails(DiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
+        internal InMageRcmSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
             TransferredBytes = transferredBytes;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The progress health.
         /// Serialized Name: InMageRcmSyncDetails.progressHealth
         /// </summary>
-        public DiskReplicationProgressHealth? ProgressHealth { get; }
+        public SiteRecoveryDiskReplicationProgressHealth? ProgressHealth { get; }
         /// <summary>
         /// The transferred bytes from source VM to azure for the disk.
         /// Serialized Name: InMageRcmSyncDetails.transferredBytes

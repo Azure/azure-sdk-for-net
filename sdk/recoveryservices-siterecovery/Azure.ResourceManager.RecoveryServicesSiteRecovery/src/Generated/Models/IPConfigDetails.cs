@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoStaticIPAddress"> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </param>
         /// <param name="tfoPublicIPAddressId"> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </param>
         /// <param name="tfoLBBackendAddressPoolIds"> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </param>
-        internal IPConfigDetails(string name, bool? isPrimary, string subnetName, string staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, string recoveryStaticIPAddress, string recoveryIPAddressType, string recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, string tfoStaticIPAddress, string tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds)
+        internal IPConfigDetails(string name, bool? isPrimary, string subnetName, IPAddress staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, string recoveryIPAddressType, string recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, string tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds)
         {
             Name = name;
             IsPrimary = isPrimary;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigDetails.subnetName. </summary>
         public string SubnetName { get; }
         /// <summary> Serialized Name: IPConfigDetails.staticIPAddress. </summary>
-        public string StaticIPAddress { get; }
+        public IPAddress StaticIPAddress { get; }
         /// <summary> Serialized Name: IPConfigDetails.ipAddressType. </summary>
         public string IPAddressType { get; }
         /// <summary> Serialized Name: IPConfigDetails.isSeletedForFailover. </summary>
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigDetails.recoverySubnetName. </summary>
         public string RecoverySubnetName { get; }
         /// <summary> Serialized Name: IPConfigDetails.recoveryStaticIPAddress. </summary>
-        public string RecoveryStaticIPAddress { get; }
+        public IPAddress RecoveryStaticIPAddress { get; }
         /// <summary> Serialized Name: IPConfigDetails.recoveryIPAddressType. </summary>
         public string RecoveryIPAddressType { get; }
         /// <summary> Serialized Name: IPConfigDetails.recoveryPublicIPAddressId. </summary>
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigDetails.tfoSubnetName. </summary>
         public string TfoSubnetName { get; }
         /// <summary> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </summary>
-        public string TfoStaticIPAddress { get; }
+        public IPAddress TfoStaticIPAddress { get; }
         /// <summary> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </summary>
         public string TfoPublicIPAddressId { get; }
         /// <summary> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </summary>

@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ReplicationProviderSettings.
         /// Serialized Name: UpdatePolicyInput.properties
         /// </summary>
-        internal UpdatePolicyInputProperties Properties { get; set; }
+        internal UpdatePolicyContentProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderSettings.
         /// Serialized Name: UpdatePolicyInputProperties.replicationProviderSettings
-        /// Please note <see cref="PolicyProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2APolicyCreationInput"/>, <see cref="A2ACrossClusterMigrationPolicyCreationInput"/>, <see cref="HyperVReplicaPolicyInput"/>, <see cref="HyperVReplicaBluePolicyInput"/>, <see cref="HyperVReplicaAzurePolicyInput"/>, <see cref="InMagePolicyInput"/>, <see cref="InMageAzureV2PolicyInput"/>, <see cref="InMageRcmPolicyCreationInput"/>, <see cref="InMageRcmFailbackPolicyCreationInput"/> and <see cref="VMwareCbtPolicyCreationInput"/>.
+        /// Please note <see cref="PolicyProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2APolicyCreationContent"/>, <see cref="A2ACrossClusterMigrationPolicyCreationContent"/>, <see cref="HyperVReplicaPolicyContent"/>, <see cref="HyperVReplicaBluePolicyContent"/>, <see cref="HyperVReplicaAzurePolicyContent"/>, <see cref="InMagePolicyContent"/>, <see cref="InMageAzureV2PolicyContent"/>, <see cref="InMageRcmPolicyCreationContent"/>, <see cref="InMageRcmFailbackPolicyCreationContent"/> and <see cref="VMwareCbtPolicyCreationContent"/>.
         /// </summary>
-        public PolicyProviderSpecificInput UpdatePolicyInputReplicationProviderSettings
+        public PolicyProviderSpecificContent UpdatePolicyContentReplicationProviderSettings
         {
             get => Properties is null ? default : Properties.ReplicationProviderSettings;
             set
             {
                 if (Properties is null)
-                    Properties = new UpdatePolicyInputProperties();
+                    Properties = new UpdatePolicyContentProperties();
                 Properties.ReplicationProviderSettings = value;
             }
         }

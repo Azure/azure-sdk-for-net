@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// HyperVSite fabric specific details.
     /// Serialized Name: HyperVSiteDetails
     /// </summary>
-    public partial class HyperVSiteDetails : FabricSpecificDetails
+    public partial class HyperVSiteDetails : SiteRecoveryFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVSiteDetails. </summary>
         internal HyperVSiteDetails()

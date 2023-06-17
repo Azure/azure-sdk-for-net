@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The UnknownFabricSpecificDetails.
     /// Serialized Name: UnknownFabricSpecificDetails
     /// </summary>
-    internal partial class UnknownFabricSpecificDetails : FabricSpecificDetails
+    internal partial class UnknownFabricSpecificDetails : SiteRecoveryFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of UnknownFabricSpecificDetails. </summary>
         /// <param name="instanceType">

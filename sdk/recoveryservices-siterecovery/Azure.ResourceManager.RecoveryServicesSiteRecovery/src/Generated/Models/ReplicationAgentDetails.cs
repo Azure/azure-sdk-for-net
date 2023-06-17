@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
         internal ReplicationAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: ReplicationAgentDetails.healthErrors
         /// </param>
-        internal ReplicationAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
+        internal ReplicationAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
         {
             Id = id;
             Name = name;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric object Id.
         /// Serialized Name: ReplicationAgentDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// The replication agent Fqdn.
         /// Serialized Name: ReplicationAgentDetails.fqdn
@@ -117,6 +117,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: ReplicationAgentDetails.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
     }
 }

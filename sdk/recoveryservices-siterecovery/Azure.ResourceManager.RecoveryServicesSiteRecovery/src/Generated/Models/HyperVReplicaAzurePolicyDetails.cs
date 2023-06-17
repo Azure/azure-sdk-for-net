@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The active storage account Id.
         /// Serialized Name: HyperVReplicaAzurePolicyDetails.activeStorageAccountId
         /// </param>
-        internal HyperVReplicaAzurePolicyDetails(string instanceType, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, string activeStorageAccountId) : base(instanceType)
+        internal HyperVReplicaAzurePolicyDetails(string instanceType, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, ResourceIdentifier activeStorageAccountId) : base(instanceType)
         {
             RecoveryPointHistoryDurationInHours = recoveryPointHistoryDurationInHours;
             ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;
@@ -88,6 +90,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The active storage account Id.
         /// Serialized Name: HyperVReplicaAzurePolicyDetails.activeStorageAccountId
         /// </summary>
-        public string ActiveStorageAccountId { get; }
+        public ResourceIdentifier ActiveStorageAccountId { get; }
     }
 }

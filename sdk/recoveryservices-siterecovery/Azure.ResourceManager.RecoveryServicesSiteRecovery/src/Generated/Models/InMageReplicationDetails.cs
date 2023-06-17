@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ConsistencyPoints = new ChangeTrackingDictionary<string, DateTimeOffset>();
             VmNics = new ChangeTrackingList<VmNicDetails>();
             Datastores = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<HealthError>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             InstanceType = "InMage";
         }
 
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The progress health.
         /// Serialized Name: InMageReplicationDetails.totalProgressHealth
         /// </param>
-        internal InMageReplicationDetails(string instanceType, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, OSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStart, DateTimeOffset? retentionWindowEnd, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, string ipAddress, DateTimeOffset? lastHeartbeat, string processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, string azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<HealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType)
+        internal InMageReplicationDetails(string instanceType, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, OSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStart, DateTimeOffset? retentionWindowEnd, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, IPAddress ipAddress, DateTimeOffset? lastHeartbeat, string processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, ResourceIdentifier azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType)
         {
             ActiveSiteType = activeSiteType;
             SourceVmCpuCount = sourceVmCpuCount;
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source IP address.
         /// Serialized Name: InMageReplicationDetails.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The last heartbeat received from the source server.
         /// Serialized Name: InMageReplicationDetails.lastHeartbeat
@@ -392,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating the underlying Azure storage account. If the VM is not running in Azure, this value shall be set to null.
         /// Serialized Name: InMageReplicationDetails.azureStorageAccountId
         /// </summary>
-        public string AzureStorageAccountId { get; }
+        public ResourceIdentifier AzureStorageAccountId { get; }
         /// <summary>
         /// The datastores of the on-premise machine Value can be list of strings that contain datastore names.
         /// Serialized Name: InMageReplicationDetails.datastores
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The validation errors of the on-premise machine Value can be list of validation errors.
         /// Serialized Name: InMageReplicationDetails.validationErrors
         /// </summary>
-        public IReadOnlyList<HealthError> ValidationErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> ValidationErrors { get; }
         /// <summary>
         /// The last RPO calculated time.
         /// Serialized Name: InMageReplicationDetails.lastRpoCalculatedTime

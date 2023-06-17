@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Storage mapping input properties.
         /// Serialized Name: StorageClassificationMappingInput.properties
         /// </summary>
-        internal StorageMappingInputProperties Properties { get; set; }
+        internal StorageMappingContentProperties Properties { get; set; }
         /// <summary>
         /// The ID of the storage object.
         /// Serialized Name: StorageMappingInputProperties.targetStorageClassificationId
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             set
             {
                 if (Properties is null)
-                    Properties = new StorageMappingInputProperties();
+                    Properties = new StorageMappingContentProperties();
                 Properties.TargetStorageClassificationId = value;
             }
         }

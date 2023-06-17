@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal ProcessServer()
         {
             MobilityServiceUpdates = new ChangeTrackingList<MobilityServiceUpdate>();
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ProcessServer. </summary>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The PS service status.
         /// Serialized Name: ProcessServer.psServiceStatus
         /// </param>
-        /// <param name="sslCertExpiryOn">
+        /// <param name="sslCertExpireOn">
         /// The PS SSL cert expiry date.
         /// Serialized Name: ProcessServer.sslCertExpiryDate
         /// </param>
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Health errors.
         /// Serialized Name: ProcessServer.healthErrors
         /// </param>
-        /// <param name="agentExpiryOn">
+        /// <param name="agentExpireOn">
         /// Agent expiry date.
         /// Serialized Name: ProcessServer.agentExpiryDate
         /// </param>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The MARS registration status.
         /// Serialized Name: ProcessServer.marsRegistrationStatus
         /// </param>
-        internal ProcessServer(string friendlyName, string id, string ipAddress, string osType, string agentVersion, DateTimeOffset? lastHeartbeat, string versionStatus, IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates, string hostId, string machineCount, string replicationPairCount, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string psServiceStatus, DateTimeOffset? sslCertExpiryOn, int? sslCertExpiryRemainingDays, string osVersion, IReadOnlyList<HealthError> healthErrors, DateTimeOffset? agentExpiryOn, VersionDetails agentVersionDetails, ProtectionHealth? health, DateTimeOffset? psStatsRefreshOn, long? throughputUploadPendingDataInBytes, long? throughputInMBps, long? throughputInBytes, string throughputStatus, string marsCommunicationStatus, string marsRegistrationStatus)
+        internal ProcessServer(string friendlyName, string id, IPAddress ipAddress, string osType, string agentVersion, DateTimeOffset? lastHeartbeat, string versionStatus, IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates, string hostId, string machineCount, string replicationPairCount, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string psServiceStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string osVersion, IReadOnlyList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? agentExpireOn, VersionDetails agentVersionDetails, ProtectionHealth? health, DateTimeOffset? psStatsRefreshOn, long? throughputUploadPendingDataInBytes, long? throughputInMBps, long? throughputInBytes, string throughputStatus, string marsCommunicationStatus, string marsRegistrationStatus)
         {
             FriendlyName = friendlyName;
             Id = id;
@@ -193,11 +194,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AvailableSpaceInBytes = availableSpaceInBytes;
             SpaceUsageStatus = spaceUsageStatus;
             PsServiceStatus = psServiceStatus;
-            SslCertExpiryOn = sslCertExpiryOn;
+            SslCertExpireOn = sslCertExpireOn;
             SslCertExpiryRemainingDays = sslCertExpiryRemainingDays;
             OSVersion = osVersion;
             HealthErrors = healthErrors;
-            AgentExpiryOn = agentExpiryOn;
+            AgentExpireOn = agentExpireOn;
             AgentVersionDetails = agentVersionDetails;
             Health = health;
             PsStatsRefreshOn = psStatsRefreshOn;
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address of the server.
         /// Serialized Name: ProcessServer.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary>
         /// The OS type of the server.
         /// Serialized Name: ProcessServer.osType
@@ -323,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The PS SSL cert expiry date.
         /// Serialized Name: ProcessServer.sslCertExpiryDate
         /// </summary>
-        public DateTimeOffset? SslCertExpiryOn { get; }
+        public DateTimeOffset? SslCertExpireOn { get; }
         /// <summary>
         /// CS SSL cert expiry date.
         /// Serialized Name: ProcessServer.sslCertExpiryRemainingDays
@@ -338,12 +339,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Health errors.
         /// Serialized Name: ProcessServer.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary>
         /// Agent expiry date.
         /// Serialized Name: ProcessServer.agentExpiryDate
         /// </summary>
-        public DateTimeOffset? AgentExpiryOn { get; }
+        public DateTimeOffset? AgentExpireOn { get; }
         /// <summary>
         /// The agent version details.
         /// Serialized Name: ProcessServer.agentVersionDetails

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
         internal PushInstallerDetails()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: PushInstallerDetails.healthErrors
         /// </param>
-        internal PushInstallerDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
+        internal PushInstallerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
         {
             Id = id;
             Name = name;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric object Id.
         /// Serialized Name: PushInstallerDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// The push installer Fqdn.
         /// Serialized Name: PushInstallerDetails.fqdn
@@ -117,6 +117,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: PushInstallerDetails.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
     }
 }

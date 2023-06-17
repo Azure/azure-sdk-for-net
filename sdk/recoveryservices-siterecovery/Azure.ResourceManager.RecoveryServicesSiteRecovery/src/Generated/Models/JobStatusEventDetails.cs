@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Model class for event details of a job status event.
     /// Serialized Name: JobStatusEventDetails
     /// </summary>
-    public partial class JobStatusEventDetails : EventSpecificDetails
+    public partial class JobStatusEventDetails : SiteRecoveryEventSpecificDetails
     {
         /// <summary> Initializes a new instance of JobStatusEventDetails. </summary>
         internal JobStatusEventDetails()
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// AffectedObjectType for the event.
         /// Serialized Name: JobStatusEventDetails.affectedObjectType
         /// </param>
-        internal JobStatusEventDetails(string instanceType, string jobId, string jobFriendlyName, string jobStatus, string affectedObjectType) : base(instanceType)
+        internal JobStatusEventDetails(string instanceType, ResourceIdentifier jobId, string jobFriendlyName, string jobStatus, string affectedObjectType) : base(instanceType)
         {
             JobId = jobId;
             JobFriendlyName = jobFriendlyName;
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Job arm id for the event.
         /// Serialized Name: JobStatusEventDetails.jobId
         /// </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary>
         /// JobName for the Event.
         /// Serialized Name: JobStatusEventDetails.jobFriendlyName

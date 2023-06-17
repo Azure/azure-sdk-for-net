@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: VaultSettingCreationInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryVaultSettingCreateOrUpdateContent(VaultSettingCreationInputProperties properties)
+        public SiteRecoveryVaultSettingCreateOrUpdateContent(VaultSettingCreationContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Vault setting creation input properties.
         /// Serialized Name: VaultSettingCreationInput.properties
         /// </summary>
-        public VaultSettingCreationInputProperties Properties { get; }
+        public VaultSettingCreationContentProperties Properties { get; }
     }
 }

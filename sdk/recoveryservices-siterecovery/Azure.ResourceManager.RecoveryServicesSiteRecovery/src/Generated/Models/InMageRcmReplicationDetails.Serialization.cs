@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,25 +32,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> runAsAccountId = default;
             Optional<string> osType = default;
             Optional<string> firmwareType = default;
-            Optional<string> primaryNicIPAddress = default;
+            Optional<IPAddress> primaryNicIPAddress = default;
             Optional<string> targetGeneration = default;
             Optional<string> licenseType = default;
-            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
             Optional<string> targetVmName = default;
             Optional<string> targetVmSize = default;
-            Optional<string> targetResourceGroupId = default;
+            Optional<ResourceIdentifier> targetResourceGroupId = default;
             Optional<string> targetLocation = default;
-            Optional<string> targetAvailabilitySetId = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
             Optional<string> targetAvailabilityZone = default;
-            Optional<string> targetProximityPlacementGroupId = default;
-            Optional<string> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<string> failoverRecoveryPointId = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
+            Optional<ResourceIdentifier> targetNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
+            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
             Optional<DateTimeOffset> lastRecoveryPointReceived = default;
             Optional<long> lastRpoInSeconds = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<string> lastRecoveryPointId = default;
+            Optional<ResourceIdentifier> lastRecoveryPointId = default;
             Optional<int> initialReplicationProgressPercentage = default;
             Optional<long> initialReplicationProcessedBytes = default;
             Optional<long> initialReplicationTransferredBytes = default;
@@ -140,7 +141,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("primaryNicIpAddress"u8))
                 {
-                    primaryNicIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryNicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetGeneration"u8))
@@ -155,7 +160,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmName"u8))
@@ -170,7 +179,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetResourceGroupId"u8))
                 {
-                    targetResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
@@ -180,7 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetAvailabilitySetId"u8))
                 {
-                    targetAvailabilitySetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetAvailabilityZone"u8))
@@ -190,27 +207,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetProximityPlacementGroupId"u8))
                 {
-                    targetProximityPlacementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
                 {
-                    targetBootDiagnosticsStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetNetworkId"u8))
                 {
-                    targetNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failoverRecoveryPointId"u8))
                 {
-                    failoverRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failoverRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPointReceived"u8))
@@ -242,7 +279,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lastRecoveryPointId"u8))
                 {
-                    lastRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("initialReplicationProgressPercentage"u8))

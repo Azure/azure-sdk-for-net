@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: ResyncInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ResyncContent(ResyncInputProperties properties)
+        public ResyncContent(ResyncContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Resync input properties.
         /// Serialized Name: ResyncInput.properties
         /// </summary>
-        internal ResyncInputProperties Properties { get; }
+        internal ResyncContentProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
         /// Serialized Name: ResyncInputProperties.providerSpecificDetails
-        /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
+        /// Please note <see cref="ResyncProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtResyncContent"/>.
         /// </summary>
-        public ResyncProviderSpecificInput ResyncInputProviderSpecificDetails
+        public ResyncProviderSpecificContent ResyncContentProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

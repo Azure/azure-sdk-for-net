@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target appliance Id.
         /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetApplianceId
         /// </param>
-        internal InMageAzureV2SwitchProviderDetails(string targetVaultId, string targetResourceId, string targetFabricId, string targetApplianceId)
+        internal InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId, ResourceIdentifier targetResourceId, ResourceIdentifier targetFabricId, string targetApplianceId)
         {
             TargetVaultId = targetVaultId;
             TargetResourceId = targetResourceId;
@@ -47,17 +49,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target vault Id.
         /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetVaultId
         /// </summary>
-        public string TargetVaultId { get; }
+        public ResourceIdentifier TargetVaultId { get; }
         /// <summary>
         /// The target resource Id.
         /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetResourceId
         /// </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary>
         /// The target fabric Id.
         /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetFabricId
         /// </summary>
-        public string TargetFabricId { get; }
+        public ResourceIdentifier TargetFabricId { get; }
         /// <summary>
         /// The target appliance Id.
         /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetApplianceId

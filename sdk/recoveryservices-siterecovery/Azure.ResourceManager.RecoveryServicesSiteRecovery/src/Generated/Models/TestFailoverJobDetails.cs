@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
         internal TestFailoverJobDetails()
         {
-            ProtectedItemDetails = new ChangeTrackingList<FailoverReplicationProtectedItemDetails>();
+            ProtectedItemDetails = new ChangeTrackingList<SiteRecoveryFailoverReplicationProtectedItemDetails>();
             InstanceType = "TestFailoverJobDetails";
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test VM details.
         /// Serialized Name: TestFailoverJobDetails.protectedItemDetails
         /// </param>
-        internal TestFailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, string testFailoverStatus, string comments, string networkName, string networkFriendlyName, string networkType, IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails)
+        internal TestFailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, string testFailoverStatus, string comments, string networkName, string networkFriendlyName, string networkType, IReadOnlyList<SiteRecoveryFailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails)
         {
             TestFailoverStatus = testFailoverStatus;
             Comments = comments;
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test VM details.
         /// Serialized Name: TestFailoverJobDetails.protectedItemDetails
         /// </summary>
-        public IReadOnlyList<FailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; }
+        public IReadOnlyList<SiteRecoveryFailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; }
     }
 }

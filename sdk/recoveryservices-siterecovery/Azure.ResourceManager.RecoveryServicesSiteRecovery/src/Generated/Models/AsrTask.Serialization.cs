@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> stateDescription = default;
             Optional<string> taskType = default;
             Optional<TaskTypeDetails> customDetails = default;
-            Optional<GroupTaskDetails> groupTaskCustomDetails = default;
-            Optional<IReadOnlyList<JobErrorDetails>> errors = default;
+            Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    groupTaskCustomDetails = GroupTaskDetails.DeserializeGroupTaskDetails(property.Value);
+                    groupTaskCustomDetails = SiteRecoveryGroupTaskDetails.DeserializeSiteRecoveryGroupTaskDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<JobErrorDetails> array = new List<JobErrorDetails>();
+                    List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobErrorDetails.DeserializeJobErrorDetails(item));
+                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
                     }
                     errors = array;
                     continue;

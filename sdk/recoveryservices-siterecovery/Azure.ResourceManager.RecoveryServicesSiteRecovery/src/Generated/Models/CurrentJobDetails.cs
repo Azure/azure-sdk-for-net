@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The start time of the job.
         /// Serialized Name: CurrentJobDetails.startTime
         /// </param>
-        internal CurrentJobDetails(string jobName, string jobId, DateTimeOffset? startOn)
+        internal CurrentJobDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn)
         {
             JobName = jobName;
             JobId = jobId;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ARM Id of the job being executed.
         /// Serialized Name: CurrentJobDetails.jobId
         /// </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary>
         /// The start time of the job.
         /// Serialized Name: CurrentJobDetails.startTime

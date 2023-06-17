@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery fabric location info.
         /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryFabricLocation
         /// </param>
-        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, ExtendedLocation initialPrimaryExtendedLocation, ExtendedLocation initialRecoveryExtendedLocation, string initialPrimaryFabricLocation, string initialRecoveryFabricLocation, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation, string primaryFabricLocation, string recoveryFabricLocation)
+        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation)
         {
             InitialPrimaryZone = initialPrimaryZone;
             InitialRecoveryZone = initialRecoveryZone;
@@ -97,22 +99,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The initial primary ExtendedLocation.
         /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryExtendedLocation
         /// </summary>
-        public ExtendedLocation InitialPrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
         /// <summary>
         /// The initial recovery ExtendedLocation.
         /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryExtendedLocation
         /// </summary>
-        public ExtendedLocation InitialRecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
         /// <summary>
         /// Initial primary fabric location info.
         /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryFabricLocation
         /// </summary>
-        public string InitialPrimaryFabricLocation { get; }
+        public AzureLocation? InitialPrimaryFabricLocation { get; }
         /// <summary>
         /// The initial recovery fabric location info.
         /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryFabricLocation
         /// </summary>
-        public string InitialRecoveryFabricLocation { get; }
+        public AzureLocation? InitialRecoveryFabricLocation { get; }
         /// <summary>
         /// Source zone info.
         /// Serialized Name: A2AFabricSpecificLocationDetails.primaryZone
@@ -127,21 +129,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary ExtendedLocation.
         /// Serialized Name: A2AFabricSpecificLocationDetails.primaryExtendedLocation
         /// </summary>
-        public ExtendedLocation PrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary>
         /// The recovery ExtendedLocation.
         /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryExtendedLocation
         /// </summary>
-        public ExtendedLocation RecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
         /// <summary>
         /// Primary fabric location info.
         /// Serialized Name: A2AFabricSpecificLocationDetails.primaryFabricLocation
         /// </summary>
-        public string PrimaryFabricLocation { get; }
+        public AzureLocation? PrimaryFabricLocation { get; }
         /// <summary>
         /// The recovery fabric location info.
         /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryFabricLocation
         /// </summary>
-        public string RecoveryFabricLocation { get; }
+        public AzureLocation? RecoveryFabricLocation { get; }
     }
 }

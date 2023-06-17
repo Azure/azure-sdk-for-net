@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IPAddress.ToString());
             }
             if (Optional.IsDefined(ProcessServerId))
             {

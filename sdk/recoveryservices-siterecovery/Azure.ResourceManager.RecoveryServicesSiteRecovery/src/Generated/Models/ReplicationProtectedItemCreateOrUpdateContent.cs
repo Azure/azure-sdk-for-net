@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Enable protection input properties.
         /// Serialized Name: EnableProtectionInput.properties
         /// </summary>
-        public EnableProtectionInputProperties Properties { get; set; }
+        public EnableProtectionProperties Properties { get; set; }
     }
 }

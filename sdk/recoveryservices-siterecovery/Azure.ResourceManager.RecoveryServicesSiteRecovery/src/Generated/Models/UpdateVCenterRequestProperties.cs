@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP address of the vCenter to be discovered.
         /// Serialized Name: UpdateVCenterRequestProperties.ipAddress
         /// </summary>
-        public string IPAddress { get; set; }
+        public IPAddress IPAddress { get; set; }
         /// <summary>
         /// The process server Id from where the update can be orchestrated.
         /// Serialized Name: UpdateVCenterRequestProperties.processServerId

@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Switch provider input properties.
         /// Serialized Name: SwitchProviderInput.properties
         /// </summary>
-        public SwitchProviderInputProperties Properties { get; set; }
+        public SwitchProviderContentProperties Properties { get; set; }
     }
 }

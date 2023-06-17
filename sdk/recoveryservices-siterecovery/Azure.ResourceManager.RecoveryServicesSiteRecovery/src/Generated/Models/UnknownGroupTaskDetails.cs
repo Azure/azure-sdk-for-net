@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The UnknownGroupTaskDetails.
     /// Serialized Name: UnknownGroupTaskDetails
     /// </summary>
-    internal partial class UnknownGroupTaskDetails : GroupTaskDetails
+    internal partial class UnknownGroupTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of UnknownGroupTaskDetails. </summary>
         /// <param name="instanceType">

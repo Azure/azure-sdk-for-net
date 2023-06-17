@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// List of supported inplace OS Upgrade versions.
         /// Serialized Name: VMwareCbtMigrationDetails.supportedOSVersions
         /// </param>
-        internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions) : base(instanceType)
+        internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions) : base(instanceType)
         {
             VMwareMachineId = vmwareMachineId;
             OSType = osType;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
         /// Serialized Name: VMwareCbtMigrationDetails.storageAccountId
         /// </summary>
-        public string StorageAccountId { get; }
+        public ResourceIdentifier StorageAccountId { get; }
         /// <summary>
         /// Target VM name.
         /// Serialized Name: VMwareCbtMigrationDetails.targetVmName
@@ -319,12 +319,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target resource group Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetResourceGroupId
         /// </summary>
-        public string TargetResourceGroupId { get; }
+        public ResourceIdentifier TargetResourceGroupId { get; }
         /// <summary>
         /// The target availability set Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilitySetId
         /// </summary>
-        public string TargetAvailabilitySetId { get; }
+        public ResourceIdentifier TargetAvailabilitySetId { get; }
         /// <summary>
         /// The target availability zone.
         /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilityZone
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target proximity placement group Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetProximityPlacementGroupId
         /// </summary>
-        public string TargetProximityPlacementGroupId { get; }
+        public ResourceIdentifier TargetProximityPlacementGroupId { get; }
         /// <summary>
         /// The confidential VM key vault Id for ADE installation.
         /// Serialized Name: VMwareCbtMigrationDetails.confidentialVmKeyVaultId
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target boot diagnostics storage account ARM Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetBootDiagnosticsStorageAccountId
         /// </summary>
-        public string TargetBootDiagnosticsStorageAccountId { get; }
+        public ResourceIdentifier TargetBootDiagnosticsStorageAccountId { get; }
         /// <summary>
         /// The target VM tags.
         /// Serialized Name: VMwareCbtMigrationDetails.targetVmTags
@@ -364,12 +364,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target network Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetNetworkId
         /// </summary>
-        public string TargetNetworkId { get; }
+        public ResourceIdentifier TargetNetworkId { get; }
         /// <summary>
         /// The test network Id.
         /// Serialized Name: VMwareCbtMigrationDetails.testNetworkId
         /// </summary>
-        public string TestNetworkId { get; }
+        public ResourceIdentifier TestNetworkId { get; }
         /// <summary>
         /// The network details.
         /// Serialized Name: VMwareCbtMigrationDetails.vmNics
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery point Id to which the VM was migrated.
         /// Serialized Name: VMwareCbtMigrationDetails.migrationRecoveryPointId
         /// </summary>
-        public string MigrationRecoveryPointId { get; }
+        public ResourceIdentifier MigrationRecoveryPointId { get; }
         /// <summary>
         /// The last recovery point received time.
         /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointReceived
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last recovery point Id.
         /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointId
         /// </summary>
-        public string LastRecoveryPointId { get; }
+        public ResourceIdentifier LastRecoveryPointId { get; }
         /// <summary>
         /// The initial seeding progress percentage.
         /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingProgressPercentage

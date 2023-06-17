@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -55,9 +57,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric specific settings.
         /// Serialized Name: NetworkMappingProperties.fabricSpecificSettings
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureToAzureNetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
+        /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
-        internal NetworkMappingProperties(string state, string primaryNetworkFriendlyName, string primaryNetworkId, string primaryFabricFriendlyName, string recoveryNetworkFriendlyName, string recoveryNetworkId, string recoveryFabricArmId, string recoveryFabricFriendlyName, NetworkMappingFabricSpecificSettings fabricSpecificSettings)
+        internal NetworkMappingProperties(string state, string primaryNetworkFriendlyName, ResourceIdentifier primaryNetworkId, string primaryFabricFriendlyName, string recoveryNetworkFriendlyName, ResourceIdentifier recoveryNetworkId, ResourceIdentifier recoveryFabricArmId, string recoveryFabricFriendlyName, NetworkMappingFabricSpecificSettings fabricSpecificSettings)
         {
             State = state;
             PrimaryNetworkFriendlyName = primaryNetworkFriendlyName;
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary network id for network mapping.
         /// Serialized Name: NetworkMappingProperties.primaryNetworkId
         /// </summary>
-        public string PrimaryNetworkId { get; }
+        public ResourceIdentifier PrimaryNetworkId { get; }
         /// <summary>
         /// The primary fabric friendly name.
         /// Serialized Name: NetworkMappingProperties.primaryFabricFriendlyName
@@ -99,12 +101,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery network id for network mapping.
         /// Serialized Name: NetworkMappingProperties.recoveryNetworkId
         /// </summary>
-        public string RecoveryNetworkId { get; }
+        public ResourceIdentifier RecoveryNetworkId { get; }
         /// <summary>
         /// The recovery fabric ARM id.
         /// Serialized Name: NetworkMappingProperties.recoveryFabricArmId
         /// </summary>
-        public string RecoveryFabricArmId { get; }
+        public ResourceIdentifier RecoveryFabricArmId { get; }
         /// <summary>
         /// The recovery fabric friendly name.
         /// Serialized Name: NetworkMappingProperties.recoveryFabricFriendlyName
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric specific settings.
         /// Serialized Name: NetworkMappingProperties.fabricSpecificSettings
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureToAzureNetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
+        /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </summary>
         public NetworkMappingFabricSpecificSettings FabricSpecificSettings { get; }
     }

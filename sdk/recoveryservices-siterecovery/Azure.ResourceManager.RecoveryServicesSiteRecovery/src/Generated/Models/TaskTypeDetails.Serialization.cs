@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element);
                     case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element);
-                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element);
+                    case "FabricReplicationGroupTaskDetails": return SiteRecoveryFabricReplicationGroupTaskDetails.DeserializeSiteRecoveryFabricReplicationGroupTaskDetails(element);
                     case "JobTaskDetails": return JobTaskDetails.DeserializeJobTaskDetails(element);
                     case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element);
                     case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element);

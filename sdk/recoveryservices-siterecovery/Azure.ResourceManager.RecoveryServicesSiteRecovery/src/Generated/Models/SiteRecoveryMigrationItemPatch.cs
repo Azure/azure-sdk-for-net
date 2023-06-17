@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Update migration item input properties.
         /// Serialized Name: UpdateMigrationItemInput.properties
         /// </summary>
-        internal UpdateMigrationItemInputProperties Properties { get; set; }
+        internal UpdateMigrationItemContentProperties Properties { get; set; }
         /// <summary>
         /// The provider specific input to update migration item.
         /// Serialized Name: UpdateMigrationItemInputProperties.providerSpecificDetails
-        /// Please note <see cref="UpdateMigrationItemProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtUpdateMigrationItemInput"/>.
+        /// Please note <see cref="UpdateMigrationItemProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtUpdateMigrationItemContent"/>.
         /// </summary>
-        public UpdateMigrationItemProviderSpecificInput UpdateMigrationItemInputProviderSpecificDetails
+        public UpdateMigrationItemProviderSpecificContent UpdateMigrationItemContentProviderSpecificDetails
         {
             get => Properties is null ? default : Properties.ProviderSpecificDetails;
-            set => Properties = new UpdateMigrationItemInputProperties(value);
+            set => Properties = new UpdateMigrationItemContentProperties(value);
         }
     }
 }

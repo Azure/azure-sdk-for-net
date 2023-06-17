@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: EnableMigrationInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryMigrationItemCreateOrUpdateContent(EnableMigrationInputProperties properties)
+        public SiteRecoveryMigrationItemCreateOrUpdateContent(EnableMigrationProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Enable migration input properties.
         /// Serialized Name: EnableMigrationInput.properties
         /// </summary>
-        public EnableMigrationInputProperties Properties { get; }
+        public EnableMigrationProperties Properties { get; }
     }
 }

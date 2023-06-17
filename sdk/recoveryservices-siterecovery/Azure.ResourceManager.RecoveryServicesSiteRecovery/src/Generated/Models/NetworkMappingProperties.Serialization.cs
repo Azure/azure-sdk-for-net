@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> state = default;
             Optional<string> primaryNetworkFriendlyName = default;
-            Optional<string> primaryNetworkId = default;
+            Optional<ResourceIdentifier> primaryNetworkId = default;
             Optional<string> primaryFabricFriendlyName = default;
             Optional<string> recoveryNetworkFriendlyName = default;
-            Optional<string> recoveryNetworkId = default;
-            Optional<string> recoveryFabricArmId = default;
+            Optional<ResourceIdentifier> recoveryNetworkId = default;
+            Optional<ResourceIdentifier> recoveryFabricArmId = default;
             Optional<string> recoveryFabricFriendlyName = default;
             Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("primaryNetworkId"u8))
                 {
-                    primaryNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryFabricFriendlyName"u8))
@@ -56,12 +60,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryNetworkId"u8))
                 {
-                    recoveryNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryFabricArmId"u8))
                 {
-                    recoveryFabricArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryFabricFriendlyName"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
         internal SiteRecoveryMigrationItemProperties()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             AllowedOperations = new ChangeTrackingList<MigrationItemOperation>();
             CriticalJobHistory = new ChangeTrackingList<CriticalJobHistoryDetails>();
         }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
         /// </param>
-        internal SiteRecoveryMigrationItemProperties(string machineName, string policyId, string policyFriendlyName, string recoveryServicesProviderId, string replicationStatus, MigrationState? migrationState, string migrationStateDescription, DateTimeOffset? lastTestMigrationOn, string lastTestMigrationStatus, DateTimeOffset? lastMigrationOn, string lastMigrationStatus, TestMigrationState? testMigrateState, string testMigrateStateDescription, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, IReadOnlyList<MigrationItemOperation> allowedOperations, CurrentJobDetails currentJob, IReadOnlyList<CriticalJobHistoryDetails> criticalJobHistory, string eventCorrelationId, MigrationProviderSpecificSettings providerSpecificDetails)
+        internal SiteRecoveryMigrationItemProperties(string machineName, ResourceIdentifier policyId, string policyFriendlyName, string recoveryServicesProviderId, string replicationStatus, MigrationState? migrationState, string migrationStateDescription, DateTimeOffset? lastTestMigrationOn, string lastTestMigrationStatus, DateTimeOffset? lastMigrationOn, string lastMigrationStatus, TestMigrationState? testMigrateState, string testMigrateStateDescription, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IReadOnlyList<MigrationItemOperation> allowedOperations, CurrentJobDetails currentJob, IReadOnlyList<CriticalJobHistoryDetails> criticalJobHistory, string eventCorrelationId, MigrationProviderSpecificSettings providerSpecificDetails)
         {
             MachineName = machineName;
             PolicyId = policyId;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ARM Id of policy governing this item.
         /// Serialized Name: MigrationItemProperties.policyId
         /// </summary>
-        public string PolicyId { get; }
+        public ResourceIdentifier PolicyId { get; }
         /// <summary>
         /// The name of policy governing this item.
         /// Serialized Name: MigrationItemProperties.policyFriendlyName
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of health errors.
         /// Serialized Name: MigrationItemProperties.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary>
         /// The allowed operations on the migration item based on the current migration state of the item.
         /// Serialized Name: MigrationItemProperties.allowedOperations

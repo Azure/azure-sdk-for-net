@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
         internal ResourceHealthSummary()
         {
-            Issues = new ChangeTrackingList<HealthErrorSummary>();
+            Issues = new ChangeTrackingList<SiteRecoveryHealthErrorSummary>();
             CategorizedResourceCounts = new ChangeTrackingDictionary<string, int>();
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The categorized resource counts.
         /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts
         /// </param>
-        internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<HealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts)
+        internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<SiteRecoveryHealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts)
         {
             ResourceCount = resourceCount;
             Issues = issues;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of summary of health errors across the resources under the container.
         /// Serialized Name: ResourceHealthSummary.issues
         /// </summary>
-        public IReadOnlyList<HealthErrorSummary> Issues { get; }
+        public IReadOnlyList<SiteRecoveryHealthErrorSummary> Issues { get; }
         /// <summary>
         /// The categorized resource counts.
         /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
         internal TargetComputeSizeProperties()
         {
-            Errors = new ChangeTrackingList<ComputeSizeErrorDetails>();
+            Errors = new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>();
             HyperVGenerations = new ChangeTrackingList<string>();
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The supported HyperV Generations.
         /// Serialized Name: TargetComputeSizeProperties.hyperVGenerations
         /// </param>
-        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<ComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
+        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The reasons why the target compute size is not applicable for the protected item.
         /// Serialized Name: TargetComputeSizeProperties.errors
         /// </summary>
-        public IReadOnlyList<ComputeSizeErrorDetails> Errors { get; }
+        public IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> Errors { get; }
         /// <summary>
         /// The value indicating whether the target compute size supports high Iops.
         /// Serialized Name: TargetComputeSizeProperties.highIopsSupported

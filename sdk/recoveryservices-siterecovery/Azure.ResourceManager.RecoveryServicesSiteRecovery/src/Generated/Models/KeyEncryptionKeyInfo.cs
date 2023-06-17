@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The KeyVault resource ARM Id for key.
         /// Serialized Name: KeyEncryptionKeyInfo.keyVaultResourceArmId
         /// </param>
-        internal KeyEncryptionKeyInfo(string keyIdentifier, string keyVaultResourceArmId)
+        internal KeyEncryptionKeyInfo(string keyIdentifier, ResourceIdentifier keyVaultResourceArmId)
         {
             KeyIdentifier = keyIdentifier;
             KeyVaultResourceArmId = keyVaultResourceArmId;
@@ -42,6 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The KeyVault resource ARM Id for key.
         /// Serialized Name: KeyEncryptionKeyInfo.keyVaultResourceArmId
         /// </summary>
-        public string KeyVaultResourceArmId { get; set; }
+        public ResourceIdentifier KeyVaultResourceArmId { get; set; }
     }
 }

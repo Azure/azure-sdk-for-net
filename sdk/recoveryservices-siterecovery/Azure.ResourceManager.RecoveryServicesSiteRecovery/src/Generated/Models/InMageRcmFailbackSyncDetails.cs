@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The bytes transferred in last 15 minutes from source VM to target.
         /// Serialized Name: InMageRcmFailbackSyncDetails.last15MinutesTransferredBytes
         /// </param>
-        /// <param name="lastDataTransferTimeUtc">
+        /// <param name="lastDataTransferOn">
         /// The time of the last data transfer from source VM to target.
         /// Serialized Name: InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc
         /// </param>
@@ -39,11 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes.
         /// Serialized Name: InMageRcmFailbackSyncDetails.processedBytes
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// The start time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.startTime
         /// </param>
-        /// <param name="lastRefreshTime">
+        /// <param name="lastRefreshOn">
         /// The last refresh time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
         /// </param>
@@ -51,15 +53,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Progress in percentage. Progress percentage is calculated based on processed bytes.
         /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage
         /// </param>
-        internal InMageRcmFailbackSyncDetails(DiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
+        internal InMageRcmFailbackSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, DateTimeOffset? lastDataTransferOn, long? processedBytes, DateTimeOffset? startOn, DateTimeOffset? lastRefreshOn, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
             TransferredBytes = transferredBytes;
             Last15MinutesTransferredBytes = last15MinutesTransferredBytes;
-            LastDataTransferTimeUtc = lastDataTransferTimeUtc;
+            LastDataTransferOn = lastDataTransferOn;
             ProcessedBytes = processedBytes;
-            StartTime = startTime;
-            LastRefreshTime = lastRefreshTime;
+            StartOn = startOn;
+            LastRefreshOn = lastRefreshOn;
             ProgressPercentage = progressPercentage;
         }
 
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The progress health.
         /// Serialized Name: InMageRcmFailbackSyncDetails.progressHealth
         /// </summary>
-        public DiskReplicationProgressHealth? ProgressHealth { get; }
+        public SiteRecoveryDiskReplicationProgressHealth? ProgressHealth { get; }
         /// <summary>
         /// The transferred bytes from source VM to azure for the disk.
         /// Serialized Name: InMageRcmFailbackSyncDetails.transferredBytes
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The time of the last data transfer from source VM to target.
         /// Serialized Name: InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc
         /// </summary>
-        public string LastDataTransferTimeUtc { get; }
+        public DateTimeOffset? LastDataTransferOn { get; }
         /// <summary>
         /// The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes.
         /// Serialized Name: InMageRcmFailbackSyncDetails.processedBytes
@@ -92,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The start time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.startTime
         /// </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary>
         /// The last refresh time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
         /// </summary>
-        public string LastRefreshTime { get; }
+        public DateTimeOffset? LastRefreshOn { get; }
         /// <summary>
         /// Progress in percentage. Progress percentage is calculated based on processed bytes.
         /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage

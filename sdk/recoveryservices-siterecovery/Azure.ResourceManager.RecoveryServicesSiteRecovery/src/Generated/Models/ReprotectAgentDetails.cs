@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
         internal ReprotectAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             AccessibleDatastores = new ChangeTrackingList<string>();
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last time when SDS information discovered in SRS.
         /// Serialized Name: ReprotectAgentDetails.lastDiscoveryInUtc
         /// </param>
-        internal ReprotectAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? lastDiscoveryInUtc)
+        internal ReprotectAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? lastDiscoveryInUtc)
         {
             Id = id;
             Name = name;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric object Id.
         /// Serialized Name: ReprotectAgentDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// The reprotect agent Fqdn.
         /// Serialized Name: ReprotectAgentDetails.fqdn
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: ReprotectAgentDetails.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary>
         /// The protected item count.
         /// Serialized Name: ReprotectAgentDetails.protectedItemCount

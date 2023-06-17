@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        internal SiteRecoveryFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FabricProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal SiteRecoveryFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryFabricProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Fabric related data.
         /// Serialized Name: Fabric.properties
         /// </summary>
-        public FabricProperties Properties { get; }
+        public SiteRecoveryFabricProperties Properties { get; }
         /// <summary>
         /// Resource Location
         /// Serialized Name: Resource.location

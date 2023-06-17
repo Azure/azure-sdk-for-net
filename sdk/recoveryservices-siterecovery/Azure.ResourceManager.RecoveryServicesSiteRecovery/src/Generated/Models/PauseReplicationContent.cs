@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: PauseReplicationInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public PauseReplicationContent(PauseReplicationInputProperties properties)
+        public PauseReplicationContent(PauseReplicationContentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Pause replication input properties.
         /// Serialized Name: PauseReplicationInput.properties
         /// </summary>
-        internal PauseReplicationInputProperties Properties { get; }
+        internal PauseReplicationContentProperties Properties { get; }
         /// <summary>
         /// The class type.
         /// Serialized Name: PauseReplicationInputProperties.instanceType
         /// </summary>
-        public string PauseReplicationInputInstanceType
+        public string PauseReplicationContentInstanceType
         {
             get => Properties?.InstanceType;
         }

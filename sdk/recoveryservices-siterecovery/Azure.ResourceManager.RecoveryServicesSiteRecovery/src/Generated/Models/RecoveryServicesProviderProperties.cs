@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal RecoveryServicesProviderProperties()
         {
             AllowedScenarios = new ChangeTrackingList<string>();
-            HealthErrorDetails = new ChangeTrackingList<HealthError>();
+            HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesProviderProperties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// DRA version status.
         /// Serialized Name: RecoveryServicesProviderProperties.providerVersionState
         /// </param>
-        /// <param name="providerVersionExpiryOn">
+        /// <param name="providerVersionExpireOn">
         /// Expiry date of the version.
         /// Serialized Name: RecoveryServicesProviderProperties.providerVersionExpiryDate
         /// </param>
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The provider version details.
         /// Serialized Name: RecoveryServicesProviderProperties.providerVersionDetails
         /// </param>
-        internal RecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpiryOn, string fabricFriendlyName, DateTimeOffset? lastHeartBeat, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<HealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, VersionDetails providerVersionDetails)
+        internal RecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartBeat, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, SiteRecoveryIdentityProviderDetails authenticationIdentityDetails, SiteRecoveryIdentityProviderDetails resourceAccessIdentityDetails, SiteRecoveryIdentityProviderDetails dataPlaneAuthenticationIdentityDetails, VersionDetails providerVersionDetails)
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
             ProviderVersion = providerVersion;
             ServerVersion = serverVersion;
             ProviderVersionState = providerVersionState;
-            ProviderVersionExpiryOn = providerVersionExpiryOn;
+            ProviderVersionExpireOn = providerVersionExpireOn;
             FabricFriendlyName = fabricFriendlyName;
             LastHeartBeat = lastHeartBeat;
             ConnectionStatus = connectionStatus;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Expiry date of the version.
         /// Serialized Name: RecoveryServicesProviderProperties.providerVersionExpiryDate
         /// </summary>
-        public DateTimeOffset? ProviderVersionExpiryOn { get; }
+        public DateTimeOffset? ProviderVersionExpireOn { get; }
         /// <summary>
         /// The fabric friendly name.
         /// Serialized Name: RecoveryServicesProviderProperties.fabricFriendlyName
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery services provider health error details.
         /// Serialized Name: RecoveryServicesProviderProperties.healthErrorDetails
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrorDetails { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrorDetails { get; }
         /// <summary>
         /// The DRA Id.
         /// Serialized Name: RecoveryServicesProviderProperties.draIdentifier
@@ -213,17 +213,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The authentication identity details.
         /// Serialized Name: RecoveryServicesProviderProperties.authenticationIdentityDetails
         /// </summary>
-        public IdentityProviderDetails AuthenticationIdentityDetails { get; }
+        public SiteRecoveryIdentityProviderDetails AuthenticationIdentityDetails { get; }
         /// <summary>
         /// The resource access identity details.
         /// Serialized Name: RecoveryServicesProviderProperties.resourceAccessIdentityDetails
         /// </summary>
-        public IdentityProviderDetails ResourceAccessIdentityDetails { get; }
+        public SiteRecoveryIdentityProviderDetails ResourceAccessIdentityDetails { get; }
         /// <summary>
         /// The data plane authentication identity details.
         /// Serialized Name: RecoveryServicesProviderProperties.dataPlaneAuthenticationIdentityDetails
         /// </summary>
-        public IdentityProviderDetails DataPlaneAuthenticationIdentityDetails { get; }
+        public SiteRecoveryIdentityProviderDetails DataPlaneAuthenticationIdentityDetails { get; }
         /// <summary>
         /// The provider version details.
         /// Serialized Name: RecoveryServicesProviderProperties.providerVersionDetails

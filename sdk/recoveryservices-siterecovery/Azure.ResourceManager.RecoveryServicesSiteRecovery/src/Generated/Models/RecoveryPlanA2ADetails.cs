@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery extended location.
         /// Serialized Name: RecoveryPlanA2ADetails.recoveryExtendedLocation
         /// </param>
-        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation) : base(instanceType)
+        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation) : base(instanceType)
         {
             PrimaryZone = primaryZone;
             RecoveryZone = recoveryZone;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary extended location.
         /// Serialized Name: RecoveryPlanA2ADetails.primaryExtendedLocation
         /// </summary>
-        public ExtendedLocation PrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary>
         /// The recovery extended location.
         /// Serialized Name: RecoveryPlanA2ADetails.recoveryExtendedLocation
         /// </summary>
-        public ExtendedLocation RecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

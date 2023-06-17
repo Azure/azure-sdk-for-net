@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
         /// </param>
-        internal RecoveryPlanProperties(string friendlyName, string primaryFabricId, string primaryFabricFriendlyName, string recoveryFabricId, string recoveryFabricFriendlyName, string failoverDeploymentModel, IReadOnlyList<string> replicationProviders, IReadOnlyList<string> allowedOperations, DateTimeOffset? lastPlannedFailoverOn, DateTimeOffset? lastUnplannedFailoverOn, DateTimeOffset? lastTestFailoverOn, CurrentScenarioDetails currentScenario, string currentScenarioStatus, string currentScenarioStatusDescription, IReadOnlyList<RecoveryPlanGroup> groups, IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails)
+        internal RecoveryPlanProperties(string friendlyName, ResourceIdentifier primaryFabricId, string primaryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string recoveryFabricFriendlyName, string failoverDeploymentModel, IReadOnlyList<string> replicationProviders, IReadOnlyList<string> allowedOperations, DateTimeOffset? lastPlannedFailoverOn, DateTimeOffset? lastUnplannedFailoverOn, DateTimeOffset? lastTestFailoverOn, CurrentScenarioDetails currentScenario, string currentScenarioStatus, string currentScenarioStatusDescription, IReadOnlyList<RecoveryPlanGroup> groups, IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails)
         {
             FriendlyName = friendlyName;
             PrimaryFabricId = primaryFabricId;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The primary fabric Id.
         /// Serialized Name: RecoveryPlanProperties.primaryFabricId
         /// </summary>
-        public string PrimaryFabricId { get; }
+        public ResourceIdentifier PrimaryFabricId { get; }
         /// <summary>
         /// The primary fabric friendly name.
         /// Serialized Name: RecoveryPlanProperties.primaryFabricFriendlyName
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery fabric Id.
         /// Serialized Name: RecoveryPlanProperties.recoveryFabricId
         /// </summary>
-        public string RecoveryFabricId { get; }
+        public ResourceIdentifier RecoveryFabricId { get; }
         /// <summary>
         /// The recovery fabric friendly name.
         /// Serialized Name: RecoveryPlanProperties.recoveryFabricFriendlyName

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmFailbackDiscoveredProtectedVmDetails()
         {
             Datastores = new ChangeTrackingList<string>();
-            IPAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The VM's OS name.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.osName
         /// </param>
-        /// <param name="createdTimestamp">
+        /// <param name="createdOn">
         /// The SDS created timestamp.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp
         /// </param>
-        /// <param name="updatedTimestamp">
+        /// <param name="updatedOn">
         /// The SDS updated timestamp.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp
         /// </param>
@@ -69,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// A value indicating whether the VM is deleted.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.isDeleted
         /// </param>
-        /// <param name="lastDiscoveryTimeInUtc">
+        /// <param name="lastDiscoveredOn">
         /// The last time when SDS information discovered in SRS.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
         /// </param>
-        internal InMageRcmFailbackDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<string> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdTimestamp, DateTimeOffset? updatedTimestamp, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc)
+        internal InMageRcmFailbackDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<IPAddress> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, bool? isDeleted, DateTimeOffset? lastDiscoveredOn)
         {
             VCenterId = vCenterId;
             VCenterFqdn = vCenterFqdn;
@@ -83,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PowerStatus = powerStatus;
             VmFqdn = vmFqdn;
             OSName = osName;
-            CreatedTimestamp = createdTimestamp;
-            UpdatedTimestamp = updatedTimestamp;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             IsDeleted = isDeleted;
-            LastDiscoveryTimeInUtc = lastDiscoveryTimeInUtc;
+            LastDiscoveredOn = lastDiscoveredOn;
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of IP addresses.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.ipAddresses
         /// </summary>
-        public IReadOnlyList<string> IPAddresses { get; }
+        public IReadOnlyList<IPAddress> IPAddresses { get; }
         /// <summary>
         /// The VMware tools status.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmwareToolsStatus
@@ -133,12 +134,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The SDS created timestamp.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp
         /// </summary>
-        public DateTimeOffset? CreatedTimestamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// The SDS updated timestamp.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp
         /// </summary>
-        public DateTimeOffset? UpdatedTimestamp { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary>
         /// A value indicating whether the VM is deleted.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.isDeleted
@@ -148,6 +149,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last time when SDS information discovered in SRS.
         /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
         /// </summary>
-        public DateTimeOffset? LastDiscoveryTimeInUtc { get; }
+        public DateTimeOffset? LastDiscoveredOn { get; }
     }
 }

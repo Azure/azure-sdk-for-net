@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Event details for VMwareCbt provider.
     /// Serialized Name: VMwareCbtEventDetails
     /// </summary>
-    public partial class VMwareCbtEventDetails : EventProviderSpecificDetails
+    public partial class VMwareCbtEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareCbtEventDetails. </summary>
         internal VMwareCbtEventDetails()

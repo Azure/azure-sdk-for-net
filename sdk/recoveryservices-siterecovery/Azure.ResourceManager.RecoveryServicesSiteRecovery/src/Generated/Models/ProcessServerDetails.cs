@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProcessServerDetails. </summary>
         internal ProcessServerDetails()
         {
-            IPAddresses = new ChangeTrackingList<string>();
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            IPAddresses = new ChangeTrackingList<IPAddress>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ProcessServerDetails. </summary>
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The historic health of the process server based on the health in last 24 hours.
         /// Serialized Name: ProcessServerDetails.historicHealth
         /// </param>
-        internal ProcessServerDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, IReadOnlyList<string> ipAddresses, string version, DateTimeOffset? lastHeartbeatUtc, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, int? protectedItemCount, ProtectionHealth? historicHealth)
+        internal ProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatUtc, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, ProtectionHealth? historicHealth)
         {
             Id = id;
             Name = name;
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric object Id.
         /// Serialized Name: ProcessServerDetails.fabricObjectId
         /// </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary>
         /// The process server Fqdn.
         /// Serialized Name: ProcessServerDetails.fqdn
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of IP addresses for communicating with the RCM component.
         /// Serialized Name: ProcessServerDetails.ipAddresses
         /// </summary>
-        public IReadOnlyList<string> IPAddresses { get; }
+        public IReadOnlyList<IPAddress> IPAddresses { get; }
         /// <summary>
         /// The version.
         /// Serialized Name: ProcessServerDetails.version
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The health errors.
         /// Serialized Name: ProcessServerDetails.healthErrors
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary>
         /// The protected item count.
         /// Serialized Name: ProcessServerDetails.protectedItemCount

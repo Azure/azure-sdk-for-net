@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: DisableProtectionInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DisableProtectionContent(DisableProtectionInputProperties properties)
+        public DisableProtectionContent(DisableProtectionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Disable protection input properties.
         /// Serialized Name: DisableProtectionInput.properties
         /// </summary>
-        public DisableProtectionInputProperties Properties { get; }
+        public DisableProtectionProperties Properties { get; }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery resource group Id. Valid for V2 scenarios.
         /// Serialized Name: ExistingRecoveryResourceGroup.recoveryResourceGroupId
         /// </param>
-        internal ExistingRecoveryResourceGroup(string resourceType, string recoveryResourceGroupId) : base(resourceType)
+        internal ExistingRecoveryResourceGroup(string resourceType, ResourceIdentifier recoveryResourceGroupId) : base(resourceType)
         {
             RecoveryResourceGroupId = recoveryResourceGroupId;
             ResourceType = resourceType ?? "Existing";
@@ -38,6 +40,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery resource group Id. Valid for V2 scenarios.
         /// Serialized Name: ExistingRecoveryResourceGroup.recoveryResourceGroupId
         /// </summary>
-        public string RecoveryResourceGroupId { get; set; }
+        public ResourceIdentifier RecoveryResourceGroupId { get; set; }
     }
 }

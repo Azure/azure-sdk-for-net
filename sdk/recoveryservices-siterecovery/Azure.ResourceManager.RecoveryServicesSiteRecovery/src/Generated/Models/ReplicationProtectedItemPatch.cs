@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Update replication protected item properties.
         /// Serialized Name: UpdateReplicationProtectedItemInput.properties
         /// </summary>
-        public UpdateReplicationProtectedItemInputProperties Properties { get; set; }
+        public UpdateReplicationProtectedItemContentProperties Properties { get; set; }
     }
 }

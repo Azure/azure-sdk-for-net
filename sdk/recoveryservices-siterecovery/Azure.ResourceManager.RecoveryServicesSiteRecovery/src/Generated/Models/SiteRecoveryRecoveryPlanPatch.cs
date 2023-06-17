@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Recovery plan update properties.
         /// Serialized Name: UpdateRecoveryPlanInput.properties
         /// </summary>
-        internal UpdateRecoveryPlanInputProperties Properties { get; set; }
+        internal UpdateRecoveryPlanContentProperties Properties { get; set; }
         /// <summary>
         /// The recovery plan groups.
         /// Serialized Name: UpdateRecoveryPlanInputProperties.groups
         /// </summary>
-        public IList<RecoveryPlanGroup> UpdateRecoveryPlanInputGroups
+        public IList<RecoveryPlanGroup> UpdateRecoveryPlanContentGroups
         {
             get
             {
                 if (Properties is null)
-                    Properties = new UpdateRecoveryPlanInputProperties();
+                    Properties = new UpdateRecoveryPlanContentProperties();
                 return Properties.Groups;
             }
         }

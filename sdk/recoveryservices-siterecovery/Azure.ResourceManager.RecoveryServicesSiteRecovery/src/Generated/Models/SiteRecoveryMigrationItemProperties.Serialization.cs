@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> machineName = default;
-            Optional<string> policyId = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<string> policyFriendlyName = default;
             Optional<string> recoveryServicesProviderId = default;
             Optional<string> replicationStatus = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<TestMigrationState> testMigrateState = default;
             Optional<string> testMigrateStateDescription = default;
             Optional<ProtectionHealth> health = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<IReadOnlyList<MigrationItemOperation>> allowedOperations = default;
             Optional<CurrentJobDetails> currentJob = default;
             Optional<IReadOnlyList<CriticalJobHistoryDetails>> criticalJobHistory = default;
@@ -49,7 +49,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyFriendlyName"u8))
@@ -138,10 +142,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrors = array;
                     continue;

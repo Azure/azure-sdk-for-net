@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Value indicating whether the health error is customer resolvable.
         /// Serialized Name: InnerHealthError.customerResolvability
         /// </param>
-        internal InnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability)
+        internal InnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, SiteRecoveryHealthErrorCustomerResolvability? customerResolvability)
         {
             ErrorSource = errorSource;
             ErrorType = errorType;
@@ -164,6 +164,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Value indicating whether the health error is customer resolvable.
         /// Serialized Name: InnerHealthError.customerResolvability
         /// </summary>
-        public HealthErrorCustomerResolvability? CustomerResolvability { get; }
+        public SiteRecoveryHealthErrorCustomerResolvability? CustomerResolvability { get; }
     }
 }

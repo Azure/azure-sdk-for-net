@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test IP address type.
         /// Serialized Name: InMageRcmNicDetails.testIPAddressType
         /// </param>
-        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, string sourceIPAddress, EthernetAddressType? sourceIPAddressType, string sourceNetworkId, string sourceSubnetName, string targetIPAddress, EthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, string testIPAddress, EthernetAddressType? testIPAddressType)
+        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -107,17 +110,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source IP address.
         /// Serialized Name: InMageRcmNicDetails.sourceIPAddress
         /// </summary>
-        public string SourceIPAddress { get; }
+        public IPAddress SourceIPAddress { get; }
         /// <summary>
         /// The source IP address type.
         /// Serialized Name: InMageRcmNicDetails.sourceIPAddressType
         /// </summary>
-        public EthernetAddressType? SourceIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? SourceIPAddressType { get; }
         /// <summary>
         /// Source network Id.
         /// Serialized Name: InMageRcmNicDetails.sourceNetworkId
         /// </summary>
-        public string SourceNetworkId { get; }
+        public ResourceIdentifier SourceNetworkId { get; }
         /// <summary>
         /// Source subnet name.
         /// Serialized Name: InMageRcmNicDetails.sourceSubnetName
@@ -127,12 +130,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The target IP address.
         /// Serialized Name: InMageRcmNicDetails.targetIPAddress
         /// </summary>
-        public string TargetIPAddress { get; }
+        public IPAddress TargetIPAddress { get; }
         /// <summary>
         /// The target IP address type.
         /// Serialized Name: InMageRcmNicDetails.targetIPAddressType
         /// </summary>
-        public EthernetAddressType? TargetIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? TargetIPAddressType { get; }
         /// <summary>
         /// Target subnet name.
         /// Serialized Name: InMageRcmNicDetails.targetSubnetName
@@ -147,11 +150,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The test IP address.
         /// Serialized Name: InMageRcmNicDetails.testIPAddress
         /// </summary>
-        public string TestIPAddress { get; }
+        public IPAddress TestIPAddress { get; }
         /// <summary>
         /// The test IP address type.
         /// Serialized Name: InMageRcmNicDetails.testIPAddressType
         /// </summary>
-        public EthernetAddressType? TestIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? TestIPAddressType { get; }
     }
 }

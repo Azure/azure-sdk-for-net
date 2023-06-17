@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// InMageRcm fabric specific details.
     /// Serialized Name: InMageRcmFabricSpecificDetails
     /// </summary>
-    public partial class InMageRcmFabricSpecificDetails : FabricSpecificDetails
+    public partial class InMageRcmFabricSpecificDetails : SiteRecoveryFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
         internal InMageRcmFabricSpecificDetails()
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ReplicationAgents = new ChangeTrackingList<ReplicationAgentDetails>();
             ReprotectAgents = new ChangeTrackingList<ReprotectAgentDetails>();
             MarsAgents = new ChangeTrackingList<MarsAgentDetails>();
-            Dras = new ChangeTrackingList<DraDetails>();
-            AgentDetails = new ChangeTrackingList<AgentDetails>();
+            Dras = new ChangeTrackingList<SiteRecoveryDraDetails>();
+            AgentDetails = new ChangeTrackingList<SiteRecoveryAgentDetails>();
             InstanceType = "InMageRcm";
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of agent details.
         /// Serialized Name: InMageRcmFabricSpecificDetails.agentDetails
         /// </param>
-        internal InMageRcmFabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<ProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<DraDetails> dras, IReadOnlyList<AgentDetails> agentDetails) : base(instanceType)
+        internal InMageRcmFabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, SiteRecoveryIdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<ProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<SiteRecoveryDraDetails> dras, IReadOnlyList<SiteRecoveryAgentDetails> agentDetails) : base(instanceType)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source agent identity details.
         /// Serialized Name: InMageRcmFabricSpecificDetails.sourceAgentIdentityDetails
         /// </summary>
-        public IdentityProviderDetails SourceAgentIdentityDetails { get; }
+        public SiteRecoveryIdentityProviderDetails SourceAgentIdentityDetails { get; }
         /// <summary>
         /// The list of process servers.
         /// Serialized Name: InMageRcmFabricSpecificDetails.processServers
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of DRAs.
         /// Serialized Name: InMageRcmFabricSpecificDetails.dras
         /// </summary>
-        public IReadOnlyList<DraDetails> Dras { get; }
+        public IReadOnlyList<SiteRecoveryDraDetails> Dras { get; }
         /// <summary>
         /// The list of agent details.
         /// Serialized Name: InMageRcmFabricSpecificDetails.agentDetails
         /// </summary>
-        public IReadOnlyList<AgentDetails> AgentDetails { get; }
+        public IReadOnlyList<SiteRecoveryAgentDetails> AgentDetails { get; }
     }
 }

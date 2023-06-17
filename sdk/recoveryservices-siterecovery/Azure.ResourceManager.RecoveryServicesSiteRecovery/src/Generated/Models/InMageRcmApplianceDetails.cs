@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The switch provider blocking error information.
         /// Serialized Name: InMageRcmApplianceDetails.switchProviderBlockingErrorDetails
         /// </param>
-        internal InMageRcmApplianceDetails(string id, string name, string fabricArmId, ProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, DraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails)
+        internal InMageRcmApplianceDetails(string id, string name, ResourceIdentifier fabricArmId, ProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, SiteRecoveryDraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails)
         {
             Id = id;
             Name = name;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The fabric ARM Id.
         /// Serialized Name: InMageRcmApplianceDetails.fabricArmId
         /// </summary>
-        public string FabricArmId { get; }
+        public ResourceIdentifier FabricArmId { get; }
         /// <summary>
         /// The process server.
         /// Serialized Name: InMageRcmApplianceDetails.processServer
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The DRA.
         /// Serialized Name: InMageRcmApplianceDetails.dra
         /// </summary>
-        public DraDetails Dra { get; }
+        public SiteRecoveryDraDetails Dra { get; }
         /// <summary>
         /// The switch provider blocking error information.
         /// Serialized Name: InMageRcmApplianceDetails.switchProviderBlockingErrorDetails

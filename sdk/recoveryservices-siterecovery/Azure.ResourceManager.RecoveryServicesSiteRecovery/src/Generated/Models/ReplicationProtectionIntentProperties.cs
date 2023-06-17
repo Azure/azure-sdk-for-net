@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
         /// </param>
-        internal ReplicationProtectionIntentProperties(string friendlyName, string jobId, string jobState, bool? isActive, string creationTimeUTC, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails)
+        internal ReplicationProtectionIntentProperties(string friendlyName, ResourceIdentifier jobId, string jobState, bool? isActive, string creationTimeUTC, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails)
         {
             FriendlyName = friendlyName;
             JobId = jobId;
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job Id.
         /// Serialized Name: ReplicationProtectionIntentProperties.jobId
         /// </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary>
         /// The job state.
         /// Serialized Name: ReplicationProtectionIntentProperties.jobState

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
         internal ProtectionContainerMappingProperties()
         {
-            HealthErrorDetails = new ChangeTrackingList<HealthError>();
+            HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Friendly name of replication policy.
         /// Serialized Name: ProtectionContainerMappingProperties.policyFriendlyName
         /// </param>
-        internal ProtectionContainerMappingProperties(string targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<HealthError> healthErrorDetails, string policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
+        internal ProtectionContainerMappingProperties(string targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, ResourceIdentifier policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
         {
             TargetProtectionContainerId = targetProtectionContainerId;
             TargetProtectionContainerFriendlyName = targetProtectionContainerFriendlyName;
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Health error.
         /// Serialized Name: ProtectionContainerMappingProperties.healthErrorDetails
         /// </summary>
-        public IReadOnlyList<HealthError> HealthErrorDetails { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrorDetails { get; }
         /// <summary>
         /// Policy ARM Id.
         /// Serialized Name: ProtectionContainerMappingProperties.policyId
         /// </summary>
-        public string PolicyId { get; }
+        public ResourceIdentifier PolicyId { get; }
         /// <summary>
         /// Association Status.
         /// Serialized Name: ProtectionContainerMappingProperties.state

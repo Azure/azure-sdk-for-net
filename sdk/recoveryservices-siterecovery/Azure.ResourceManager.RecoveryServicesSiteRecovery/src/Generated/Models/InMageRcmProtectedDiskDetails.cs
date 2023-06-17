@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The resync details.
         /// Serialized Name: InMageRcmProtectedDiskDetails.resyncDetails
         /// </param>
-        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string logStorageAccountId, string diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, DiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
+        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -124,12 +125,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The log storage account ARM Id.
         /// Serialized Name: InMageRcmProtectedDiskDetails.logStorageAccountId
         /// </summary>
-        public string LogStorageAccountId { get; }
+        public ResourceIdentifier LogStorageAccountId { get; }
         /// <summary>
         /// The DiskEncryptionSet ARM Id.
         /// Serialized Name: InMageRcmProtectedDiskDetails.diskEncryptionSetId
         /// </summary>
-        public string DiskEncryptionSetId { get; }
+        public ResourceIdentifier DiskEncryptionSetId { get; }
         /// <summary>
         /// The ARM Id of the seed managed disk.
         /// Serialized Name: InMageRcmProtectedDiskDetails.seedManagedDiskId
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The disk type.
         /// Serialized Name: InMageRcmProtectedDiskDetails.diskType
         /// </summary>
-        public DiskAccountType? DiskType { get; }
+        public SiteRecoveryDiskAccountType? DiskType { get; }
         /// <summary>
         /// The data pending in log data store in MB.
         /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingInLogDataStoreInMB

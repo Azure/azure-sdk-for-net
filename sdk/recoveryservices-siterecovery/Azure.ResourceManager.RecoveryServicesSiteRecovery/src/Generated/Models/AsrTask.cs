@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal AsrTask()
         {
             AllowedActions = new ChangeTrackingList<string>();
-            Errors = new ChangeTrackingList<JobErrorDetails>();
+            Errors = new ChangeTrackingList<SiteRecoveryJobErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of AsrTask. </summary>
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The custom task details based on the task type.
         /// Serialized Name: ASRTask.customDetails
         /// Please note <see cref="TaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="JobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/>, <see cref="JobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
         /// </param>
         /// <param name="groupTaskCustomDetails">
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
         /// Serialized Name: ASRTask.groupTaskCustomDetails
-        /// Please note <see cref="GroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </param>
         /// <param name="errors">
         /// The task error details.
         /// Serialized Name: ASRTask.errors
         /// </param>
-        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, TaskTypeDetails customDetails, GroupTaskDetails groupTaskCustomDetails, IReadOnlyList<JobErrorDetails> errors)
+        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, TaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors)
         {
             TaskId = taskId;
             Name = name;
@@ -142,20 +142,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The custom task details based on the task type.
         /// Serialized Name: ASRTask.customDetails
         /// Please note <see cref="TaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="JobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/>, <see cref="JobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
         /// </summary>
         public TaskTypeDetails CustomDetails { get; }
         /// <summary>
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
         /// Serialized Name: ASRTask.groupTaskCustomDetails
-        /// Please note <see cref="GroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails { get; }
+        public SiteRecoveryGroupTaskDetails GroupTaskCustomDetails { get; }
         /// <summary>
         /// The task error details.
         /// Serialized Name: ASRTask.errors
         /// </summary>
-        public IReadOnlyList<JobErrorDetails> Errors { get; }
+        public IReadOnlyList<SiteRecoveryJobErrorDetails> Errors { get; }
     }
 }

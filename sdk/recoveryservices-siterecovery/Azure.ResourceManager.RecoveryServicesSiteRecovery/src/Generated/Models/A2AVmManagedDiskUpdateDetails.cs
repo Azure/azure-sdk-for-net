@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery os disk encryption information.
         /// Serialized Name: A2AVmManagedDiskUpdateDetails.diskEncryptionInfo
         /// </summary>
-        public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
+        public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
         /// <summary>
         /// The target disk name for unplanned failover operation.
         /// Serialized Name: A2AVmManagedDiskUpdateDetails.failoverDiskName
