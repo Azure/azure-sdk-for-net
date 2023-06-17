@@ -112,7 +112,7 @@ namespace Azure.Communication.CallAutomation
                 startDialogOptions.DialogContext);
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
             {
-                OperationContext = startDialogOptions.OperationContext
+                OperationContext = startDialogOptions.OperationContext == default ? Guid.NewGuid().ToString() : startDialogOptions.OperationContext
             };
             return startDialogRequestInternal;
         }

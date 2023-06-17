@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogOptions. </summary>
-    public partial class DialogOptionsInternal
+    internal partial class DialogOptionsInternal
     {
         /// <summary> Initializes a new instance of DialogOptionsInternal. </summary>
         /// <param name="botAppId"> Bot identifier. </param>

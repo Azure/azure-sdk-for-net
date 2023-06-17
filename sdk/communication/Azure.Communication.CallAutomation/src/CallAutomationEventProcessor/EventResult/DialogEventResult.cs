@@ -9,11 +9,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
         /// <summary>
         /// <see cref="DialogCompleted"/> event will be returned once the dialog is completed successfully.
         /// </summary>
-        public DialogCompleted DialogCompletedSuccessEvent { get; }
+        public DialogCompleted DialogCompletedSuccessResult { get; }
 
         /// <summary>
         /// <see cref="DialogConsent"/> event will be returned once the dialog consent is received.
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// <see cref="DialogFailed"/> event will be returned once the dialog failed.
         /// </summary>
-        public DialogFailed FailureEvent { get; }
+        public DialogFailed FailureResult { get; }
 
         /// <summary>
         /// <see cref="DialogHangup"/> event will be returned once the dialog has hung up.
@@ -48,28 +48,28 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// <see cref="DialogLanguageChange"/> event will be returned once the dialog has its language changed.
         /// </summary>
-        public DialogLanguageChange DialogLanguageChange { get; }
+        public DialogLanguageChange DialogLanguageChangeEvent { get; }
 
         internal DialogEventResult(
-            bool isSuccessEvent,
-            DialogCompleted successEvent,
+            bool isSuccess,
+            DialogCompleted successResult,
             DialogConsent dialogConsentSuccessEvent,
-            DialogFailed failureEvent,
+            DialogFailed failureResult,
             DialogHangup dialogHangupSuccessEvent,
             DialogStarted dialogStartedSuccessEvent,
             DialogTransfer dialogTransferSuccessEvent,
             DialogSensitivityUpdate dialogSensitivityUpdateEvent,
-            DialogLanguageChange dialogLanguageChange)
+            DialogLanguageChange dialogLanguageChangeEvent)
         {
-            IsSuccessEvent = isSuccessEvent;
-            DialogCompletedSuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            DialogCompletedSuccessResult = successResult;
+            FailureResult = failureResult;
             DialogConsentSuccessEvent = dialogConsentSuccessEvent;
             DialogHangupSuccessEvent = dialogHangupSuccessEvent;
             DialogStartedSuccessEvent = dialogStartedSuccessEvent;
             DialogTransferSuccessEvent = dialogTransferSuccessEvent;
             DialogSensitivityUpdateEvent = dialogSensitivityUpdateEvent;
-            DialogLanguageChange = dialogLanguageChange;
+            DialogLanguageChangeEvent = dialogLanguageChangeEvent;
         }
     }
 }

@@ -22,17 +22,6 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of DialogStateResponse. </summary>
-        /// <param name="dialogId"> The dialog ID. </param>
-        /// <param name="dialogOptions"> Defines options for dialog. </param>
-        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
-        /// <param name="operationContext"> The value to identify context of the operation. </param>
-        /// <returns> A new <see cref="CallAutomation.DialogStateResponse"/> instance for mocking. </returns>
-        public static DialogStateResponse DialogStateResponse(string dialogId = null, DialogOptionsInternal dialogOptions = null, DialogInputType? dialogInputType = null, string operationContext = null)
-        {
-            return new DialogStateResponse(dialogId, dialogOptions, dialogInputType, operationContext);
-        }
-
         /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>

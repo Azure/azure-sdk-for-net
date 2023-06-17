@@ -1,10 +1,5 @@
 # Release History
 
-## 1.0.1-beta.1 (Unreleased)
-- Adds support for Dialog API calls and related Events (Project Heavy Metal)
-- Start/Stop Dialog
-- Parse various events happening in the dialog, such as DialogTransfer, DialogHangup, and DialogStarted
-
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
